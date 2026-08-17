@@ -1,45 +1,42 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Blocked
+Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-005.contract.json [evidence: .ai/work-items/archive/2026/wi-005.contract.json]
-- Changed .ai/work-items/active/wi-005.summary.json [evidence: .ai/work-items/archive/2026/wi-005.summary.json]
-- Changed .ai/work-items/active/wi-005.outcome.json [evidence: .ai/work-items/archive/2026/wi-005.outcome.json]
-- Changed .ai/work-items/active/wi-005.outcome.md [evidence: .ai/work-items/archive/2026/wi-005.outcome.md]
+- Changed .ai/work-items/active/wi-006.contract.json [evidence: .ai/work-items/archive/2026/wi-006.contract.json]
+- Changed .ai/work-items/active/wi-006.summary.json [evidence: .ai/work-items/archive/2026/wi-006.summary.json]
+- Changed .ai/work-items/active/wi-006.outcome.json [evidence: .ai/work-items/archive/2026/wi-006.outcome.json]
+- Changed .ai/work-items/active/wi-006.outcome.md [evidence: .ai/work-items/archive/2026/wi-006.outcome.md]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/starts/wi-005.json [evidence: .ai/work-items/starts/wi-005.json]
-- Changed src/features/production_system/domain/mod.rs [evidence: src/features/production_system/domain/mod.rs]
-- Changed src/features/production_system/domain/mod_test.rs [evidence: src/features/production_system/domain/mod_test.rs]
-- Changed tests/production_system_domain.rs [evidence: tests/production_system_domain.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md]
-- Changed docs/superpowers/plans/2026-08-17-wi-005-production-system.md [evidence: docs/superpowers/plans/2026-08-17-wi-005-production-system.md]
+- Changed .ai/work-items/starts/wi-006.json [evidence: .ai/work-items/starts/wi-006.json]
+- Changed src/features/organization/domain/mod.rs [evidence: src/features/organization/domain/mod.rs]
+- Changed src/features/organization/domain/mod_test.rs [evidence: src/features/organization/domain/mod_test.rs]
+- Changed tests/organization_domain.rs [evidence: tests/organization_domain.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-006-organization-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-006-organization-design.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-006-organization.md [evidence: docs/superpowers/plans/2026-08-17-wi-006-organization.md]
 - Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
-- Changed .ai/work-items/archive/2026/wi-005.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-005.archive-manifest.json]
+- Changed .ai/work-items/archive/2026/wi-006.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-006.archive-manifest.json]
 
 Problems found
-- Total: 4
+- Total: 2
 - Blocking: 0
 - Warning: 2
 
 Stops triggered
-- Reason: aiScenarioCoverage failed before the retry. | Stage: verification | Resolution: Retry aiScenarioCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
+- None recorded.
 
 Problems resolved
-- Problem: aiScenarioCoverage failed before the retry.
-  Solution: Re-ran aiScenarioCoverage after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
+- None recorded.
 
 Risks avoided
-- If not detected, could have led to a stale completion claim. (inference)
+- None recorded.
 
 Remaining risks
-- observed issue (inference)
-- Role references are preserved as opaque identities; validating that referenced roles exist in a larger aggregate is deferred to a future composition boundary. [evidence: residualRisks]
-- The Domain does not execute workflows, agents, scheduling, or persistence by design. [evidence: residualRisks]
+- Organization facts alone cannot prove a production-system stage; later composition must require independent evidence and counter-evidence. [evidence: residualRisks]
+- Amounts, permissions, responsibilities, and decisions remain retained facts; no runtime enforcement or allocation occurs by design. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
@@ -66,9 +63,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
+- Rework avoided: None recorded.
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
+- Major risk prevented: None recorded.
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

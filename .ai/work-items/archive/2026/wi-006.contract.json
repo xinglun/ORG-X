@@ -1,0 +1,250 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-006",
+  "mode": "code",
+  "title": "Organization Evidence Domain",
+  "baseCommit": "3b7de478850bd1b4c911fcbba845b050f3fdc140",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-006.contract.json",
+    ".ai/work-items/active/wi-006.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-006.outcome.json",
+    ".ai/work-items/active/wi-006.outcome.md",
+    "src/features/organization/domain/**",
+    "tests/organization_domain.rs",
+    "docs/superpowers/specs/2026-08-17-wi-006-organization-design.md",
+    "docs/superpowers/plans/2026-08-17-wi-006-organization.md"
+  ],
+  "outOfScope": [
+    "Evidence acquisition, source adapters, persistence, scheduling, reporting, Telegram delivery, scoring, ranking, and stage transitions",
+    "Runtime enforcement of budgets, permissions, responsibilities, or management decisions; external system calls and new dependencies",
+    "Cross-feature imports and interpretation of organization facts as proof of a production-system stage without additional evidence"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository operating rules and validation requirements."},
+    {"path": ".ai/glossary.md", "reason": "Canonical Work Item and governance terminology."},
+    {"path": "docs/architecture/ARCHITECTURE.md", "reason": "Layer direction and Domain isolation rules."},
+    {"path": "docs/architecture/BOUNDED_CONTEXTS.md", "reason": "Organization context concepts and boundary."},
+    {"path": "docs/architecture/DEPENDENCY_RULES.md", "reason": "Domain dependency guardrails."},
+    {"path": "docs/adr/ADR-004-organization-as-evidence.md", "reason": "Organization is evidence for production-system rewrite, not a standalone stage decision."},
+    {"path": "docs/domain/PRODUCTION_SYSTEM_MODEL.md", "reason": "Production-system relationship and responsibility context."},
+    {"path": "docs/domain/EVIDENCE_MODEL.md", "reason": "Evidence-first boundary that keeps organization facts separate from interpretation."},
+    {"path": "docs/scoring/STAGE_GATE_SPEC.md", "reason": "Organization facts cannot independently upgrade transformation stage."},
+    {"path": "docs/product/PRD.md", "reason": "Research pipeline and no-score-before-domain-engine constraint."},
+    {"path": "docs/product/SCOPE.md", "reason": "No-trading, no-capital-action, and no-runtime-operation constraints."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WI-006 deliverables and dependency position."},
+    {"path": "docs/superpowers/specs/2026-08-17-phase-0-foundation-design.md", "reason": "Organization bounded-context boundary and architecture-test strategy."},
+    {"path": "docs/superpowers/plans/2026-08-17-wi-005-production-system.md", "reason": "Predecessor domain boundary and current-WI execution convention."},
+    {"path": "src/features/organization/domain/mod.rs", "reason": "Existing Organization Domain boundary marker."},
+    {"path": "tests/architecture/dependency_rules.rs", "reason": "Executable Domain dependency guard."},
+    {"path": "Cargo.toml", "reason": "Existing dependency and test configuration."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["domain_model", "evidence_semantics", "architecture_boundary"],
+    "reason": "Organization facts influence later production-system evidence review, so the Domain must preserve descriptive facts without turning management, budget, or responsibility changes into automatic stage conclusions.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "Runtime enforcement, persistence, source linkage, and stage/scoring interpretation are intentionally deferred."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Organization evidence code and tests require the standard governed review route."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The explicit user authorization covers execution and Contract recording for all 24 roadmap Work Items."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "src/features/organization/domain exposes OrganizationEvidence, ManagementCommitment, Responsibility, Budget, DecisionRight, and OrganizationAdaptation with validated identities and descriptive facts.",
+    "OrganizationEvidence rejects blank identity/name/statement fields and duplicate commitment, responsibility, budget, decision-right, and adaptation identities deterministically.",
+    "ManagementCommitment, Responsibility, Budget, and DecisionRight preserve who/what/amount-or-scope facts without enforcing external permissions or performing decisions.",
+    "OrganizationAdaptation preserves an explicit description of how an organization change relates to a production-system target without inferring a stage or score.",
+    "The Domain remains independent of infrastructure, interface, network, database, LLM, external source, and other feature modules.",
+    "Focused unit and integration tests cover validation, duplicate rejection, collection order, commitment, responsibility, budget, decision-right, and adaptation fact preservation.",
+    "The design spec and execution plan record the organization-evidence boundary, no-goals, authorization, current-WI issue rule, and verification commands."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep Organization Domain independent of external systems and other feature modules.",
+    "Preserve organization facts as evidence; do not infer transformation stages, scores, or production conclusions.",
+    "Keep management commitment, responsibility, budget, decision rights, and adaptation relationships explicit.",
+    "Do not add dependencies for this contract.",
+    "Resolve issues within the current Work Item when they remain inside its Contract scope; open a successor only for a distinct or materially expanded boundary.",
+    "Do not introduce trading, price prediction, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "The repository lacks a typed, evidence-preserving model for management commitment, responsibility, budget, decision rights, and organization adaptation related to a changed production system.",
+    "constraints": [
+      "The Domain must retain supplied organization facts without enforcing permissions, allocating resources, or making management decisions.",
+      "Organization changes must remain evidence that can be related to a production-system target but cannot independently upgrade a transformation stage.",
+      "The implementation must remain provider-agnostic, use existing Rust conventions, and avoid cross-feature imports."
+    ],
+    "rationale": "A pure organization-evidence model gives later stage and reporting WIs a stable, auditable structure for evaluating whether management, responsibility, budget, and decision-right changes support a production-system rewrite."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:10:00+09:00"
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:10:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "Explicit human authorization is recorded above."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "OrganizationEvidence retains validated management, responsibility, budget, decision-right, and adaptation facts in collection order.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "Construction succeeds and getters preserve the supplied organization facts and opaque target relationships.",
+      "verificationPlan": "Run focused Organization unit/integration tests and cargo test --all."
+    },
+    {
+      "scenario": "Blank required fields and duplicate organization identities are rejected deterministically.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "Each blank required field and repeated collection identity returns a stable domain error.",
+      "verificationPlan": "Run focused validation and duplicate tests."
+    },
+    {
+      "scenario": "Organization adaptation remains explicit evidence and does not perform stage, score, permission, or resource-allocation behavior.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "Adaptation descriptions and target references are retained as facts while architecture checks confirm Domain isolation.",
+      "verificationPlan": "Run focused adaptation tests, architecture dependency checks, and make check."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 9
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-006.json",
+    "baseCommit": "3b7de478850bd1b4c911fcbba845b050f3fdc140",
+    "initialScopeDigest": "eb458f71230a25d7b7f36ebbd99f24e365d3698cd55efc7a19b8cb8aa66d7205",
+    "contractSkeletonDigest": "4a9ed4178a0fb655a49f456e83d0338678639354a961b8221353e3c2a0cc302a"
+  }
+}

@@ -1,40 +1,49 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Partial
+Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-roadmap.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap.contract.json]
-- Changed .ai/work-items/active/wi-roadmap.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap.summary.json]
+- Changed .ai/work-items/active/wi-003.contract.json [evidence: .ai/work-items/archive/2026/wi-003.contract.json]
+- Changed .ai/work-items/active/wi-003.summary.json [evidence: .ai/work-items/archive/2026/wi-003.summary.json]
+- Changed .ai/work-items/active/wi-003.outcome.json [evidence: .ai/work-items/archive/2026/wi-003.outcome.json]
+- Changed .ai/work-items/active/wi-003.outcome.md [evidence: .ai/work-items/archive/2026/wi-003.outcome.md]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/work-items/starts/wi-roadmap.json [evidence: .ai/work-items/starts/wi-roadmap.json]
-- Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
-- Changed README.md [evidence: README.md]
-- Changed .ai/work-items/active/wi-roadmap.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap.outcome.json]
-- Changed .ai/work-items/active/wi-roadmap.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap.outcome.md]
+- Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
+- Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
+- Changed .ai/work-items/starts/wi-003.json [evidence: .ai/work-items/starts/wi-003.json]
+- Changed src/features/ingestion/domain/mod.rs [evidence: src/features/ingestion/domain/mod.rs]
+- Changed src/features/ingestion/domain/mod_test.rs [evidence: src/features/ingestion/domain/mod_test.rs]
+- Changed src/features/ingestion/application/mod.rs [evidence: src/features/ingestion/application/mod.rs]
+- Changed src/features/ingestion/application/mod_test.rs [evidence: src/features/ingestion/application/mod_test.rs]
+- Changed tests/ingestion_domain.rs [evidence: tests/ingestion_domain.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-003-ingestion-domain-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-003-ingestion-domain-design.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-003-ingestion-domain.md [evidence: docs/superpowers/plans/2026-08-17-wi-003-ingestion-domain.md]
 
 Problems found
-- Total: 2
+- Total: 3
 - Blocking: 0
 - Warning: 2
 
 Stops triggered
-- None recorded.
+- Reason: aiScenarioCoverage failed before the retry. | Stage: verification | Resolution: Retry aiScenarioCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
 
 Problems resolved
-- None recorded.
+- Problem: aiScenarioCoverage failed before the retry.
+  Solution: Re-ran aiScenarioCoverage after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- The roadmap names future candidate Work Items but does not create their Contracts; each candidate must be revalidated against the latest base and repository evidence when started. [evidence: residualRisks]
+- Observation time, effective date, and content hash are validated for non-empty input but not parsed or recomputed at this boundary; downstream contracts must preserve that limitation. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- None recorded.
+- 对应中如果发现问题，尽量在当前的WI中解决，不要轻易开新的WI，防止扩散。 (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]
@@ -55,9 +64,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

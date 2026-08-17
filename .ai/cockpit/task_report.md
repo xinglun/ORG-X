@@ -1,43 +1,39 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Blocked
+Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-003.contract.json [evidence: .ai/work-items/archive/2026/wi-003.contract.json]
-- Changed .ai/work-items/active/wi-003.summary.json [evidence: .ai/work-items/archive/2026/wi-003.summary.json]
-- Changed .ai/work-items/active/wi-003.outcome.json [evidence: .ai/work-items/archive/2026/wi-003.outcome.json]
-- Changed .ai/work-items/active/wi-003.outcome.md [evidence: .ai/work-items/archive/2026/wi-003.outcome.md]
+- Changed .ai/work-items/active/wi-004.contract.json [evidence: .ai/work-items/archive/2026/wi-004.contract.json]
+- Changed .ai/work-items/active/wi-004.summary.json [evidence: .ai/work-items/archive/2026/wi-004.summary.json]
+- Changed .ai/work-items/active/wi-004.outcome.json [evidence: .ai/work-items/archive/2026/wi-004.outcome.json]
+- Changed .ai/work-items/active/wi-004.outcome.md [evidence: .ai/work-items/archive/2026/wi-004.outcome.md]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/starts/wi-003.json [evidence: .ai/work-items/starts/wi-003.json]
-- Changed src/features/ingestion/domain/mod.rs [evidence: src/features/ingestion/domain/mod.rs]
-- Changed src/features/ingestion/domain/mod_test.rs [evidence: src/features/ingestion/domain/mod_test.rs]
-- Changed src/features/ingestion/application/mod.rs [evidence: src/features/ingestion/application/mod.rs]
-- Changed src/features/ingestion/application/mod_test.rs [evidence: src/features/ingestion/application/mod_test.rs]
-- Changed tests/ingestion_domain.rs [evidence: tests/ingestion_domain.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-003-ingestion-domain-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-003-ingestion-domain-design.md]
-- Changed docs/superpowers/plans/2026-08-17-wi-003-ingestion-domain.md [evidence: docs/superpowers/plans/2026-08-17-wi-003-ingestion-domain.md]
+- Changed .ai/work-items/starts/wi-004.json [evidence: .ai/work-items/starts/wi-004.json]
+- Changed src/features/evidence/domain/mod.rs [evidence: src/features/evidence/domain/mod.rs]
+- Changed src/features/evidence/domain/mod_test.rs [evidence: src/features/evidence/domain/mod_test.rs]
+- Changed tests/evidence_domain.rs [evidence: tests/evidence_domain.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-004-evidence-domain-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-004-evidence-domain-design.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-004-evidence-domain.md [evidence: docs/superpowers/plans/2026-08-17-wi-004-evidence-domain.md]
 
 Problems found
 - Total: 3
 - Blocking: 0
-- Warning: 2
+- Warning: 3
 
 Stops triggered
-- Reason: aiScenarioCoverage failed before the retry. | Stage: verification | Resolution: Retry aiScenarioCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
+- None recorded.
 
 Problems resolved
-- Problem: aiScenarioCoverage failed before the retry.
-  Solution: Re-ran aiScenarioCoverage after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
+- None recorded.
 
 Risks avoided
-- If not detected, could have led to a stale completion claim. (inference)
+- None recorded.
 
 Remaining risks
-- Observation time, effective date, and content hash are validated for non-empty input but not parsed or recomputed at this boundary; downstream contracts must preserve that limitation. [evidence: residualRisks]
+- Dates and content hashes are retained but not parsed or recomputed here; downstream persistence and extraction boundaries must preserve their source semantics. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
@@ -64,9 +60,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
+- Rework avoided: None recorded.
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
+- Major risk prevented: None recorded.
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

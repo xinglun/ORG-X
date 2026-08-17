@@ -1,0 +1,133 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-003",
+  "mode": "code",
+  "title": "Top5 Weekly Read Model",
+  "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-wr-003.contract.json",
+    ".ai/work-items/active/wi-wr-003.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-003.outcome.json",
+    ".ai/work-items/active/wi-wr-003.outcome.md",
+    "src/features/weekly_radar/domain/top5_weekly_read_model.rs",
+    "src/features/weekly_radar/domain/top5_weekly_read_model_test.rs",
+    "tests/weekly_radar_top5.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-003-top5-weekly-read-model.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-003-top5-weekly-read-model.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/domain/mod.rs, src/features/weekly_radar/mod.rs, src/features/mod.rs, and tests/architecture/module_boundaries.rs",
+    "Ranking, sorting, Stage calculation, Direction calculation, Confidence calculation, Key Change calculation, Distance calculation, or any other upstream conclusion",
+    "Snapshot persistence, rendering, Markdown, Telegram, scheduling, retry, publication receipts, external adapters, and runtime dependencies",
+    "Cross-feature imports, new dependencies, trading, price prediction, target price, portfolio allocation, or capital-action behavior",
+    "The shared .ai/guards/coverage_policy.yaml; this WI resolves its test association through an owned module-local test file instead"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository Work Item lifecycle, exclusive write scope, evidence handoff, and current-WI issue policy."},
+    {"path": ".ai/glossary.md", "reason": "Canonical governance terminology and architecture boundary vocabulary."},
+    {"path": ".ai/cockpit/README.md", "reason": "AI Cockpit Contract, Summary, checkpoint, Finish, and archive requirements."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WI-WR-003 responsibility, dependencies, output fields, and Weekly Radar boundary."},
+    {"path": ".ai/work-items/archive/2026/wi-wr-001.contract.json", "reason": "Established Weekly Radar boundary, future-WI exclusions, and authorization record shape."},
+    {"path": "src/features/weekly_radar/domain/mod.rs", "reason": "Existing snapshot/publication vocabulary; this file is reference-only and is explicitly not modified."},
+    {"path": "src/features/reporting/domain/mod.rs", "reason": "Existing read-only Top5 container and reporting boundary; WR-003 must not alter its semantics."},
+    {"path": "tests/weekly_radar_contract.rs", "reason": "Existing Weekly Radar integration-test style and public boundary coverage."},
+    {"path": "Cargo.toml", "reason": "Rust edition, dependency, and test configuration; no dependency change is planned."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["identity_integrity", "ordering_integrity", "architecture_boundary"],
+    "reason": "The read model must preserve supplied Top5 facts exactly and deterministically reject duplicate candidate identities without taking ownership of upstream calculations or shared module registration.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "Candidate identity is the stable entry identity. All seven display facts are opaque validated text values; the read model never ranks or derives them. Shared module registration and coverage policy remain untouched; the user-approved module-local companion test satisfies the existing byModule coverage association."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["Medium-risk bounded-context read model with deterministic local verification."],
+    "override": null
+  },
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly authorized execution and Contract recording for all 24 roadmap Work Items; this WI has a bounded independent write set, concrete acceptance, and local verification evidence. The user additionally approved the current-WI module-local test scope amendment without changing shared coverage policy."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record checkpoints before implementation and Finish to bind scope and verification evidence."
+  },
+  "acceptance": [
+    "The module exposes validated text values for candidate, company, stage, direction, confidence, key_change, and next with public API documentation; blank-only inputs are rejected while nonblank input is retained exactly.",
+    "Top5Entry retains all seven supplied values unchanged and exposes them through accessors without calculating, normalizing, ranking, or inferring any field.",
+    "Top5WeeklyReadModel accepts zero through five supplied entries, preserves insertion order, and returns the entries without sorting or changing membership.",
+    "Adding a sixth entry returns a deterministic Top5LimitExceeded error and does not mutate the existing read model.",
+    "Repeated candidate identity returns a deterministic DuplicateIdentity error and does not mutate the existing read model; duplicate validation is performed before the capacity check.",
+    "Focused unit and integration tests verify exact seven-field retention and insertion order.",
+    "Focused unit and integration tests verify empty input, five-entry capacity, sixth-entry rejection, duplicate rejection, and non-mutating errors.",
+    "The module-local companion test file is loaded by the independent module, matches the existing coverage association, and does not require shared module registration or coverage-policy changes.",
+    "Focused source review confirms the independent module has no cross-feature imports and no upstream calculation functions.",
+    "The design spec and execution plan record the exclusive write set, current-WI issue policy, authorization, explicit non-goals, and verification commands."
+  ],
+  "guidelines": [
+    "Document every new public API.",
+    "Treat all Top5 fields as supplied upstream facts; do not calculate or infer Stage, Direction, Confidence, Key Change, Distance, or membership.",
+    "Preserve supplied entry order and exact nonblank text values.",
+    "Use candidate identity for duplicate detection and reject duplicates deterministically.",
+    "Do not modify shared Weekly Radar module registration or architecture guard files; the parent composition Work Item owns those paths.",
+    "Do not add dependencies or import internal modules from other features.",
+    "If a problem is discovered within this WI, resolve it in this WI by amending scope/evidence when needed; do not open a new WI merely to contain a current-WI defect.",
+    "Do not introduce trading, price prediction, target price, portfolio allocation, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "The Weekly Radar Contract now exists, but the Top5-specific weekly output boundary is not yet typed. Later snapshot and renderer Work Items need a deterministic container that consumes already-decided Top5 facts without re-ranking or inventing narrative fields.",
+    "constraints": [
+      "Only the independent top5_weekly_read_model.rs module, its owned module-local companion test, its focused integration test, dedicated docs, and this WI's lifecycle evidence may be changed; shared module registration files are forbidden.",
+      "Candidate, company, stage, direction, confidence, key_change, and next are supplied facts. Preserve their exact nonblank values and input order.",
+      "The collection is capped at five entries and rejects duplicate candidate identity. Rendering, persistence, scheduling, retry, external systems, and capital decisions remain outside this WI."
+    ],
+    "rationale": "A small read-only boundary lets later Weekly Radar composition consume a stable Top5 projection while preventing a renderer or downstream publisher from silently re-ranking candidates or recalculating research conclusions."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {"type": "human", "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.", "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "authorityEvidence": {"type": "human_authorization", "granted": true, "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract. The current WI scope amendment is also approved: add the module-local companion test, update Contract/Summary/scenario evidence, and do not modify shared coverage policy.", "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。 Current WI approval: 按用户已写入 Contract 的总授权，批准在当前 WR-003 内采用方案 1。", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "software_design", "test_automation"], "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]},
+  "requestedOperation": {"type": "repository_governance", "action": "modify", "target": "repository_governance", "environment": "repository", "effect": "enforce", "authorityRequired": false, "authorityReason": "Explicit human authorization is recorded above."},
+  "scenarioCoverage": [
+    {"scenario": "A supplied Top5 entry retains candidate, company, stage, direction, confidence, key_change, and next exactly.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/domain/top5_weekly_read_model.rs", "src/features/weekly_radar/domain/top5_weekly_read_model_test.rs", "tests/weekly_radar_top5.rs"], "expected": "Each accessor returns the same nonblank string supplied to the entry constructor, including internal or surrounding whitespace that is not all whitespace.", "verificationPlan": "Run the focused module-local and integration tests that construct one entry with distinct values and assert all seven accessors."},
+    {"scenario": "The read model preserves supplied order and permits an empty Top5.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/domain/top5_weekly_read_model.rs", "src/features/weekly_radar/domain/top5_weekly_read_model_test.rs", "tests/weekly_radar_top5.rs"], "expected": "Zero entries is valid; one through five entries are returned in the exact insertion order and no field or membership is recomputed.", "verificationPlan": "Run focused module-local and integration tests for empty input, five ordered entries, and stable accessor values."},
+    {"scenario": "Capacity and identity guards are deterministic and non-mutating.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/domain/top5_weekly_read_model.rs", "src/features/weekly_radar/domain/top5_weekly_read_model_test.rs", "tests/weekly_radar_top5.rs"], "expected": "A sixth entry returns Top5LimitExceeded; a repeated candidate identity returns DuplicateIdentity before capacity and neither error changes the existing entries.", "verificationPlan": "Run focused module-local and integration tests for sixth-entry and duplicate rejection, then run full make check."}
+  ],
+  "verification": [
+    {"check": "aiWorkItem", "required": true},
+    {"check": "aiScope", "required": true},
+    {"check": "aiGuards", "required": true},
+    {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true},
+    {"check": "aiReviewPolicy", "required": true},
+    {"check": "aiBacktrack", "required": true},
+    {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true},
+    {"check": "aiGuidelines", "required": true},
+    {"check": "aiSummary", "required": true},
+    {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true},
+    {"check": "aiStatusConsistency", "required": true},
+    {"check": "aiDiffOwnership", "required": true},
+    {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {"approved": true, "approvedBy": "user-authorized", "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."},
+  "rollbackNote": "Revert this Work Item diff and restore its focused tests, docs, and lifecycle evidence; no shared module registration is changed.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 14}},
+  "startReceipt": {"path": ".ai/work-items/starts/wi-wr-003.json", "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c", "initialScopeDigest": "67627351e6415cdb843ce055abedc82602aea75b6c24b716cf6aa4dd8ed330bf", "contractSkeletonDigest": "6590fb35928e081f70e8d6f22110a5bd27937542e33df94899fb02df3802ffc4"}
+}

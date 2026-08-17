@@ -11,3 +11,11 @@ path = "src/lib.rs"
 [[bin]]
 name = "org-x"
 path = "src/main.rs"
+
+[[test]]
+name = "dependency_rules"
+path = "tests/architecture/dependency_rules.rs"
+
+[[test]]
+name = "module_boundaries"
+path = "tests/architecture/module_boundaries.rs"

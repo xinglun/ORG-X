@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-001",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "5f55a18a43b820b4ae58b117888930eb02951ddfa6cffb4b2480bbd732624f2c"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-001",
+    "contractDigest": "e9a3d8066a83046b34ffdc1c5fd05aff695c2836d6a96d3c5c3a44da4475001a",
+    "summaryDigest": "42db23873cc091c16148157156044cd9264486a116432d9466a805b966853468",
+    "verificationDigest": "0cd9719571104b3b84d6dfd399882b7a7b04852deb012412e66341f0455e2597",
+    "baseCommit": "ec1352f24a44e12bea889dec7f1b8e191e91aa56",
+    "headCommit": "ec1352f24a44e12bea889dec7f1b8e191e91aa56",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "296c8a5e8b6dc6004436e37b776c3552ab12edfbeb80d471dd5952f606640a79",
+      "binding": {
+        "baseCommit": "ec1352f24a44e12bea889dec7f1b8e191e91aa56",
+        "candidateHead": "ec1352f24a44e12bea889dec7f1b8e191e91aa56",
+        "candidateTreeDigest": "7ca9220e79deb0dbad1003e02ac2d9b8aca9baad3b01eeacbd99a2ae197c8100",
+        "candidateDiffDigest": "255b970bd3602c8353162baf12e79a459bceed6223f75790fe29ed76194e75ee"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-001 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-001 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-001",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-001.contract.json",
       ".ai/work-items/archive/2026/wi-001.summary.json",
@@ -19,49 +42,76 @@
       "tests/ai_cockpit/close_work_item_test.py",
       ".ai/work-items/archive/2026/wi-001.outcome.json",
       ".ai/work-items/archive/2026/wi-001.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Project-specific quality commands and readiness remain not_configured by design."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Project-specific quality commands and readiness remain not_configured by design.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Project-specific quality commands and readiness remain not_configured by design.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "project_quality",
+        "severity": "medium",
+        "title": "project_quality",
+        "detail": "Project-specific AI Cockpit quality commands remain not_configured; WI-001 verifies configured Rust and governance gates without claiming production readiness.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-001.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-001.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-001.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-001.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Project-specific quality commands and readiness remain not_configured by design.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Project-specific AI Cockpit quality commands remain not_configured; WI-001 verifies configured Rust and governance gates without claiming production readiness.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-001.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -612,6 +662,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

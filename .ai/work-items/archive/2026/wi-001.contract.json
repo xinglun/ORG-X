@@ -1,0 +1,257 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-001",
+  "mode": "investigate",
+  "title": "Engineering Foundation Verification",
+  "baseCommit": "ec1352f24a44e12bea889dec7f1b8e191e91aa56",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-001.contract.json",
+    ".ai/work-items/active/wi-001.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-001.outcome.json",
+    ".ai/work-items/active/wi-001.outcome.md",
+    "scripts/ai_close_work_item.py",
+    "tests/ai_cockpit/close_work_item_test.py"
+  ],
+  "outOfScope": [
+    "src/**",
+    "Cargo.toml",
+    "Cargo.lock",
+    "docs/**",
+    "NORTH_STAR.md",
+    "ENGINEERING_PRINCIPLES.md",
+    "Makefile",
+    ".ai/install/**",
+    ".ai/guards/**",
+    "Business feature implementation or product behavior changes"
+  ],
+  "sources": [
+    {
+      "path": "NORTH_STAR.md",
+      "reason": "Defines the project north star and prevents this verification from becoming a business feature task."
+    },
+    {
+      "path": "ENGINEERING_PRINCIPLES.md",
+      "reason": "Defines Evidence First, Rust decision authority, and bounded engineering changes."
+    },
+    {
+      "path": "docs/architecture/ARCHITECTURE.md",
+      "reason": "Defines the Clean Architecture and bounded-context baseline to verify."
+    },
+    {
+      "path": "docs/architecture/DEPENDENCY_RULES.md",
+      "reason": "Defines the dependency rules covered by the existing architecture tests."
+    },
+    {
+      "path": "docs/validation/VALIDATION_STRATEGY.md",
+      "reason": "Defines the required validation layers for the foundation."
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "Defines the installed Work Item lifecycle and evidence gates."
+    },
+    {
+      "path": ".ai/cockpit/adoption.md",
+      "reason": "Defines adoption closure, readiness boundaries, and the non-claim of project readiness."
+    },
+    {
+      "path": ".ai/cockpit/adoption-runtime-verification.json",
+      "reason": "Records the actual adoption checks and the remaining not_configured readiness state."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+      "reason": "Provides the archived adoption Contract and its base commit for lifecycle verification."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.json",
+      "reason": "Provides the archived adoption outcome evidence to validate the predecessor boundary."
+    },
+    {
+      "path": "scripts/ai_close_work_item.py",
+      "reason": "The released close implementation exposed the adoption branch identity mismatch verified by WI-001."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "low",
+    "riskTypes": [
+      "governance_lifecycle",
+      "verification_scope"
+    ],
+    "reason": "The change is a narrow governance predicate plus a focused regression test; no production data or product source is touched."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item is bounded to governance verification and a small lifecycle compatibility correction."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The scope is bounded to governance verification and the observed adoption-branch closure defect."
+  },
+  "preReviewWarnings": [
+    "Project-specific quality commands remain not_configured; this Work Item must not claim production readiness.",
+    "The adoption close compatibility fix must remain restricted to the recorded adoption branch identity."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "The v2 Contract and Summary pass the complete AI Cockpit preflight and finish gates.",
+    "make check passes, including Rust formatting, linting, unit tests, and architecture tests.",
+    "A focused regression test proves that the close lifecycle accepts the installer-created adoption branch identity.",
+    "The close lifecycle no longer needs a runtime compatibility shim for adopt_ai_cockpit.",
+    "The Work Item diff contains no src, product documentation, or business feature changes.",
+    "The archived evidence passes check-ai-pr and the merged PR has a passing hosted required check.",
+    "The final report preserves the not_configured project-quality limitation and does not claim production readiness."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features."
+  ],
+  "intent": {
+    "problem": "The first formal Work Item must prove that the Phase 0 Rust foundation and installed AI Cockpit lifecycle are executable, including the adoption close path.",
+    "constraints": [
+      "Do not change src, product documentation, Cargo manifests, or business behavior.",
+      "Do not claim project-specific AI Cockpit quality configuration or production readiness.",
+      "Use repository and command evidence; do not rely on chat-only claims.",
+      "Keep the close compatibility correction limited to the recorded adopt_ai_cockpit branch identity."
+    ],
+    "rationale": "A deterministic foundation check must expose and resolve lifecycle defects before any business Work Item is allowed to begin."
+  },
+  "problemStatement": "Verify the Phase 0 Rust architecture, the installed AI Cockpit gates, and the complete Work Item lifecycle; correct the released adoption branch identity mismatch found during predecessor closure.",
+  "scenarioCoverage": [
+    {
+      "scenario": "Phase 0 Rust foundation and architecture checks",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "make check exits successfully with architecture tests included",
+      "verificationPlan": "Run make check on the WI-001 worktree and record the finish evidence."
+    },
+    {
+      "scenario": "AI Cockpit Contract, Summary, status, and lifecycle gates",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "ai-preflight, ai-finish, archive, check-ai-pr, and closure evidence complete",
+      "verificationPlan": "Run the registered AI Cockpit checks, archive the Work Item, then verify PR and closure receipts."
+    },
+    {
+      "scenario": "Adoption branch identity during close verification",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "The focused regression test passes without a runtime monkeypatch",
+      "verificationPlan": "Run tests/ai_cockpit/close_work_item_test.py against the real close helper."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 2
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-001.json",
+    "baseCommit": "ec1352f24a44e12bea889dec7f1b8e191e91aa56",
+    "initialScopeDigest": "92935211e18e77b029332ae706b15b9ae85b90b1676644fcf8008d53b1507b8c",
+    "contractSkeletonDigest": "c55da5dbc1b69e2536bcac0d2da476b6acacdb5da3649ec9cf4874eddaee8dfe"
+  }
+}

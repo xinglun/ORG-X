@@ -1,0 +1,1018 @@
+{
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
+  "workItemId": "wi-wr-005",
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-005",
+    "contractDigest": "5a23bb774031885254f9f009c0fd241412e790da1269c62d49b43c693cebd471",
+    "summaryDigest": "ca81adccd923527ca4c05db6c6d484e4a23a1284fcbf2a722a9c50eaf1db3785",
+    "verificationDigest": "17da2a27b1987ea4dff5a3f6fb89648b0072c71a2613fb9eab9308db8340a7fe",
+    "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "headCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "936e3850a37969bc770c4530e36194337fe71d4418c18d607be0a098396de4e1",
+      "binding": {
+        "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateHead": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateTreeDigest": "e355156d78648ac85af514e97b24f411fff39b072c8d248957d2515da5365dfa",
+        "candidateDiffDigest": "d296536d4a874019a7a030642aa77eaca2942fccac893064013f9085f7512ee7"
+      }
+    }
+  },
+  "sections": {
+    "outcomeSummary": "Task wi-wr-005 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-wr-005",
+    "deliveredChanges": [
+      ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+      ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+      ".ai/cockpit/current_status.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md",
+      ".ai/work-items/starts/wi-wr-005.json",
+      ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+      ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+      ".ai/work-items/archive/2026/wi-wr-005.outcome.json",
+      ".ai/work-items/archive/2026/wi-wr-005.outcome.md",
+      "src/features/weekly_radar/domain/threshold_distance.rs",
+      "src/features/weekly_radar/domain/threshold_distance_test.rs",
+      "tests/weekly_radar_threshold_distance.rs",
+      "docs/superpowers/specs/2026-08-17-wi-wr-005-threshold-distance.md",
+      "docs/superpowers/plans/2026-08-17-wi-wr-005-threshold-distance.md",
+      ".ai/work-items/archive/2026/wi-wr-005.outcome.json",
+      ".ai/work-items/archive/2026/wi-wr-005.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "No authoritative Distance formula is provided; this WI intentionally receives Distance as a supplied value and does not calculate it.",
+      "Shared Weekly Radar module export and later assembly remain owned by other Work Items; this WI does not modify shared mod.rs files."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "No authoritative Distance formula is provided; this WI intentionally receives Distance as a supplied value and does not calculate it.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "Shared Weekly Radar module export and later assembly remain owned by other Work Items; this WI does not modify shared mod.rs files.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "No authoritative Distance formula is provided; this WI intentionally receives Distance as a supplied value and does not calculate it.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "Shared Weekly Radar module export and later assembly remain owned by other Work Items; this WI does not modify shared mod.rs files.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [
+      {
+        "problem": "observed issue",
+        "action": "Added the legitimate module-local Rust test path src/features/weekly_radar/domain/threshold_distance_test.rs and registered it in this Contract; retained the requested integration test unchanged.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/domain/threshold_distance.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "src/features/weekly_radar/domain/threshold_distance_test.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "tests/weekly_radar_threshold_distance.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": ".ai/guards/coverage_policy.yaml",
+            "subject": "observedIssues[0] observed issue"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/domain/threshold_distance.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "src/features/weekly_radar/domain/threshold_distance_test.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "tests/weekly_radar_threshold_distance.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": ".ai/guards/coverage_policy.yaml",
+            "subject": "observedIssues[0] observed issue"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "threshold_distance_semantics",
+        "severity": "medium",
+        "title": "threshold_distance_semantics",
+        "detail": "The authoritative Distance formula is not part of this WI; a future producer must supply the value and preserve the documented labels without downstream recomputation.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "integration_boundary",
+        "severity": "low",
+        "title": "integration_boundary",
+        "detail": "The source is intentionally not exported through shared Weekly Radar mod.rs in this WI; a later assembly WI must add an explicit integration boundary if needed.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+        "subject": "Summary"
+      }
+    ]
+  },
+  "humanHandoff": {
+    "locale": "zh-CN",
+    "completed": [
+      {
+        "claim": "Changed .ai/work-items/active/wi-wr-005.contract.json",
+        "title": "Changed .ai/work-items/active/wi-wr-005.contract.json",
+        "detail": "Records the explicit authorization, supplied-value Distance boundary, exclusive scope, acceptance, scenarios, and current-WI issue policy.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.contract.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.contract.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/active/wi-wr-005.summary.json",
+        "title": "Changed .ai/work-items/active/wi-wr-005.summary.json",
+        "detail": "Records the WR-005 implementation and verification handoff.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.summary.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.summary.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/current_status.md",
+        "title": "Changed .ai/cockpit/current_status.md",
+        "detail": "Generated Cockpit projection for the active Work Item.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/cockpit/current_status.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/cockpit/current_status.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/task_report.json",
+        "title": "Changed .ai/cockpit/task_report.json",
+        "detail": "Generated machine-readable human benefit report from the active Outcome.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/task_report.md",
+        "title": "Changed .ai/cockpit/task_report.md",
+        "detail": "Generated human-readable task report from the active Outcome.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/cockpit/task_report.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/cockpit/task_report.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/starts/wi-wr-005.json",
+        "title": "Changed .ai/work-items/starts/wi-wr-005.json",
+        "detail": "Immutable Work Item start receipt bound to the latest origin/main base.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/starts/wi-wr-005.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/starts/wi-wr-005.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/archive/2026/wi-wr-005.contract.json",
+        "title": "Changed .ai/work-items/archive/2026/wi-wr-005.contract.json",
+        "detail": "Archived Contract evidence after Finish and archive.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.contract.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.contract.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/archive/2026/wi-wr-005.summary.json",
+        "title": "Changed .ai/work-items/archive/2026/wi-wr-005.summary.json",
+        "detail": "Archived Summary evidence after Finish and archive.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.summary.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.summary.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/archive/2026/wi-wr-005.outcome.json",
+        "title": "Changed .ai/work-items/archive/2026/wi-wr-005.outcome.json",
+        "detail": "Mandatory archived Task Outcome evidence generated by Finish.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.outcome.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.outcome.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/archive/2026/wi-wr-005.outcome.md",
+        "title": "Changed .ai/work-items/archive/2026/wi-wr-005.outcome.md",
+        "detail": "Localized archived Outcome report delivered before archive.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.outcome.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.outcome.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed src/features/weekly_radar/domain/threshold_distance.rs",
+        "title": "Changed src/features/weekly_radar/domain/threshold_distance.rs",
+        "detail": "Standalone Threshold Distance supplied-value read-only boundary and module-local tests.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "src/features/weekly_radar/domain/threshold_distance.rs"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "src/features/weekly_radar/domain/threshold_distance.rs"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed src/features/weekly_radar/domain/threshold_distance_test.rs",
+        "title": "Changed src/features/weekly_radar/domain/threshold_distance_test.rs",
+        "detail": "Module-local test path required by the repository coverage association for threshold_distance.rs; it is compiled through the source module and preserves the supplied-value test boundary.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "src/features/weekly_radar/domain/threshold_distance_test.rs"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "src/features/weekly_radar/domain/threshold_distance_test.rs"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed tests/weekly_radar_threshold_distance.rs",
+        "title": "Changed tests/weekly_radar_threshold_distance.rs",
+        "detail": "Integration coverage through #[path] without modifying shared module exports.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "tests/weekly_radar_threshold_distance.rs"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "tests/weekly_radar_threshold_distance.rs"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed docs/superpowers/specs/2026-08-17-wi-wr-005-threshold-distance.md",
+        "title": "Changed docs/superpowers/specs/2026-08-17-wi-wr-005-threshold-distance.md",
+        "detail": "Design boundary, no-formula rule, invariants, and no-goals.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "docs/superpowers/specs/2026-08-17-wi-wr-005-threshold-distance.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "docs/superpowers/specs/2026-08-17-wi-wr-005-threshold-distance.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed docs/superpowers/plans/2026-08-17-wi-wr-005-threshold-distance.md",
+        "title": "Changed docs/superpowers/plans/2026-08-17-wi-wr-005-threshold-distance.md",
+        "detail": "TDD execution plan, verification route, and current-WI issue handling.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "docs/superpowers/plans/2026-08-17-wi-wr-005-threshold-distance.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "docs/superpowers/plans/2026-08-17-wi-wr-005-threshold-distance.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/active/wi-wr-005.outcome.json",
+        "title": "Changed .ai/work-items/active/wi-wr-005.outcome.json",
+        "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.outcome.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.outcome.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/active/wi-wr-005.outcome.md",
+        "title": "Changed .ai/work-items/active/wi-wr-005.outcome.md",
+        "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.outcome.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-wr-005.outcome.md"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "passed": [
+      {
+        "claim": "aiWorkItem",
+        "title": "aiWorkItem",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-wr-005.contract.json work item contract check passed: .ai/work-items/active/wi-wr-005.contract.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiWorkItem",
+            "digest": "d08a1e1ca23aaddfb32b65db4e21a2d6a93a7518e2f62eaf6c35183d4f1eb867"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiWorkItem",
+            "digest": "d08a1e1ca23aaddfb32b65db4e21a2d6a93a7518e2f62eaf6c35183d4f1eb867"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiScope",
+        "title": "aiScope",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-wr-005.contract.json scope guard passed: 13 changed path(s) covered",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiScope",
+            "digest": "3184fa3057a7795e2db83985067d3596074c39a4bfd25818a31edb83c5b223f9"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiScope",
+            "digest": "3184fa3057a7795e2db83985067d3596074c39a4bfd25818a31edb83c5b223f9"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiGuards",
+        "title": "aiGuards",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-wr-005.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiGuards",
+            "digest": "0acaaace13de525f08c0c2b1b2b3bdba68f46c6b50e976b07e4f439e96b6bafd"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiGuards",
+            "digest": "0acaaace13de525f08c0c2b1b2b3bdba68f46c6b50e976b07e4f439e96b6bafd"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiCheckpoint",
+        "title": "aiCheckpoint",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-wr-005.contract.json --summary .ai/work-items/active/wi-wr-005.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-wr-005` - Contract Hash: `5a23bb7740318852` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `7` - Unknown Count: `0` - Required Checks: `16` - Required Checks Passed: `3` ## Intent Context -",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiCheckpoint",
+            "digest": "c2d50f12ba879078cd7bd92050850ece1f08aa3cb32c4c63992eaf82228e7860"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiCheckpoint",
+            "digest": "c2d50f12ba879078cd7bd92050850ece1f08aa3cb32c4c63992eaf82228e7860"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiReviewPolicy",
+        "title": "aiReviewPolicy",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-wr-005.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-wr-005.contract.json [review] .ai/work-items/active/wi-wr-005.outcome.json [review] .ai/work-items/active/wi-wr-005.outcome.md [review] .ai/work-items/starts/wi-wr-005.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md review focus recorde",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiReviewPolicy",
+            "digest": "5c5bafe7c516c3072a623f6d362d48c24f87c25fbe6d9d548cca6592e2cf0f2f"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiReviewPolicy",
+            "digest": "5c5bafe7c516c3072a623f6d362d48c24f87c25fbe6d9d548cca6592e2cf0f2f"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiBacktrack",
+        "title": "aiBacktrack",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiBacktrack",
+            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiBacktrack",
+            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiCoverage",
+        "title": "aiCoverage",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiCoverage",
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiCoverage",
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiScenarioCoverage",
+        "title": "aiScenarioCoverage",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-wr-005.contract.json --summary .ai/work-items/active/wi-wr-005.summary.json report: target/ai_scenario_coverage_report.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiScenarioCoverage",
+            "digest": "7978923d1d2da25a98f1f79691fe63d342782132e42eadc749f5d53cd1b8ad21"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiScenarioCoverage",
+            "digest": "7978923d1d2da25a98f1f79691fe63d342782132e42eadc749f5d53cd1b8ad21"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiGuidelines",
+        "title": "aiGuidelines",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-wr-005.contract.json --summary .ai/work-items/active/wi-wr-005.summary.json guidelines compliance check passed: 8 guideline(s) verified",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiGuidelines",
+            "digest": "6f709ae4fb584f9037ee21f71286e35c8cf751860b585ebc810c290f0f31d476"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiGuidelines",
+            "digest": "6f709ae4fb584f9037ee21f71286e35c8cf751860b585ebc810c290f0f31d476"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiDiffOwnership",
+        "title": "aiDiffOwnership",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-wr-005.contract.json ## Diff Ownership Preview - active_owned: `13`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiDiffOwnership",
+            "digest": "3365b6d8275a37dac8a407a2eb9fb37ce3b3f966d8efd9f186543ce2e720d591"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiDiffOwnership",
+            "digest": "3365b6d8275a37dac8a407a2eb9fb37ce3b3f966d8efd9f186543ce2e720d591"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "quality",
+        "title": "quality",
+        "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\"], \"level\": \"strict\", \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"c90349ff42b8a87ba6146bbd62bc9e357951786c\", \"changedPaths\": [ \".ai/cockpit/current_status.md\", \".ai/cockpit/task_report.json\", \".ai/cockpit/task_report.md\", \".ai/work-items/active/wi-wr-005.contract.json\", \".ai/work-items/active/wi-wr-005.outcome.js",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "quality",
+            "digest": "f6765845149463d30c779f309d4bc4e37519b3327cdb5e0055ce2cfec283ea36"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "quality",
+            "digest": "f6765845149463d30c779f309d4bc4e37519b3327cdb5e0055ce2cfec283ea36"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiStatus",
+        "title": "aiStatus",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-wr-005.contract.json --summary .ai/work-items/active/wi-wr-005.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiStatus",
+            "digest": "6ac296942271accb44137a42a4219a1fe824c103b2a8f4c2e1e9f1a668061054"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiStatus",
+            "digest": "6ac296942271accb44137a42a4219a1fe824c103b2a8f4c2e1e9f1a668061054"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiStatusCheck",
+        "title": "aiStatusCheck",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-wr-005.contract.json --summary .ai/work-items/active/wi-wr-005.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiStatusCheck",
+            "digest": "5269e88cddeaa59f013935c02d8ec2fef338c0b99b98bda810d658547f13854d"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiStatusCheck",
+            "digest": "5269e88cddeaa59f013935c02d8ec2fef338c0b99b98bda810d658547f13854d"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiStatusConsistency",
+        "title": "aiStatusConsistency",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiStatusConsistency",
+            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiStatusConsistency",
+            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiAgentRisk",
+        "title": "aiAgentRisk",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-wr-005.contract.json --summary .ai/work-items/active/wi-wr-005.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiAgentRisk",
+            "digest": "cf3b4a8fce8e323ff4808ce5afcfff7a921778064b55cbcf104af21e5247abf2"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiAgentRisk",
+            "digest": "cf3b4a8fce8e323ff4808ce5afcfff7a921778064b55cbcf104af21e5247abf2"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiSummary",
+        "title": "aiSummary",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-wr-005.summary.json --contract .ai/work-items/active/wi-wr-005.contract.json ai summary check passed: .ai/work-items/active/wi-wr-005.summary.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiSummary",
+            "digest": "1aab34cc717f358101dfe6021d899ed248959f0ec1184ba409a30f83545b6dbd"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+            "subject": "aiSummary",
+            "digest": "1aab34cc717f358101dfe6021d899ed248959f0ec1184ba409a30f83545b6dbd"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "retained": [
+      {
+        "claim": "Retained limitation",
+        "title": "Retained limitation",
+        "detail": "No authoritative Distance formula is provided; this WI intentionally receives Distance as a supplied value and does not calculate it.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "knownGaps"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "knownGaps"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Retained limitation",
+        "title": "Retained limitation",
+        "detail": "Shared Weekly Radar module export and later assembly remain owned by other Work Items; this WI does not modify shared mod.rs files.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "knownGaps"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "knownGaps"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "risks": [
+      {
+        "claim": "threshold_distance_semantics",
+        "severity": "medium",
+        "title": "threshold_distance_semantics",
+        "detail": "The authoritative Distance formula is not part of this WI; a future producer must supply the value and preserve the documented labels without downstream recomputation.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "integration_boundary",
+        "severity": "low",
+        "title": "integration_boundary",
+        "detail": "The source is intentionally not exported through shared Weekly Radar mod.rs in this WI; a later assembly WI must add an explicit integration boundary if needed.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "redReasons": [],
+    "questions": {
+      "problemCount": 3,
+      "problemCountEvidenceRefs": [
+        {
+          "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+          "subject": "observedIssues"
+        },
+        {
+          "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+          "subject": "knownGaps"
+        }
+      ],
+      "blockedProblems": [],
+      "resolvedProblems": [
+        {
+          "claim": "observed issue",
+          "evidenceRefs": [
+            {
+              "source": "src/features/weekly_radar/domain/threshold_distance.rs",
+              "subject": "observedIssues[0] observed issue"
+            },
+            {
+              "source": "src/features/weekly_radar/domain/threshold_distance_test.rs",
+              "subject": "observedIssues[0] observed issue"
+            },
+            {
+              "source": "tests/weekly_radar_threshold_distance.rs",
+              "subject": "observedIssues[0] observed issue"
+            },
+            {
+              "source": ".ai/guards/coverage_policy.yaml",
+              "subject": "observedIssues[0] observed issue"
+            }
+          ],
+          "inference": false
+        }
+      ],
+      "resolutionApproach": [
+        {
+          "claim": "Added the legitimate module-local Rust test path src/features/weekly_radar/domain/threshold_distance_test.rs and registered it in this Contract; retained the requested integration test unchanged.",
+          "evidenceRefs": [
+            {
+              "source": "src/features/weekly_radar/domain/threshold_distance.rs",
+              "subject": "observedIssues[0] observed issue"
+            },
+            {
+              "source": "src/features/weekly_radar/domain/threshold_distance_test.rs",
+              "subject": "observedIssues[0] observed issue"
+            },
+            {
+              "source": "tests/weekly_radar_threshold_distance.rs",
+              "subject": "observedIssues[0] observed issue"
+            },
+            {
+              "source": ".ai/guards/coverage_policy.yaml",
+              "subject": "observedIssues[0] observed issue"
+            }
+          ],
+          "inference": false
+        }
+      ],
+      "avoidedRisks": [],
+      "remainingRisks": [
+        {
+          "claim": "The authoritative Distance formula is not part of this WI; a future producer must supply the value and preserve the documented labels without downstream recomputation.",
+          "evidenceRefs": [
+            {
+              "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+              "subject": "residualRisks"
+            }
+          ],
+          "inference": false
+        },
+        {
+          "claim": "The source is intentionally not exported through shared Weekly Radar mod.rs in this WI; a later assembly WI must add an explicit integration boundary if needed.",
+          "evidenceRefs": [
+            {
+              "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+              "subject": "residualRisks"
+            }
+          ],
+          "inference": false
+        }
+      ],
+      "agentUnknowns": [],
+      "humanConfirmations": [],
+      "recurrenceLikelihood": {
+        "claim": "unknown: no direct recurrence probability evidence was recorded.",
+        "evidenceRefs": [],
+        "inference": true
+      },
+      "nextTime": {
+        "claim": "Bind conversation locale and preserve evidence details before the next Work Item starts.",
+        "evidenceRefs": [],
+        "inference": true
+      }
+    }
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-005",
+  "mode": "code",
+  "title": "Threshold Distance",
+  "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-wr-005.contract.json",
+    ".ai/work-items/active/wi-wr-005.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-005.outcome.json",
+    ".ai/work-items/active/wi-wr-005.outcome.md",
+    "src/features/weekly_radar/domain/threshold_distance.rs",
+    "src/features/weekly_radar/domain/threshold_distance_test.rs",
+    "tests/weekly_radar_threshold_distance.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-005-threshold-distance.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-005-threshold-distance.md"
+  ],
+  "outOfScope": [
+    "Distance formula, threshold comparison, or any inference from current_stage, next_stage, or evidence",
+    "Stage inference, Stage Transition detection, Ranking, score calculation, Top5 membership, Rising, Dropped, or Weekly Change compression",
+    "Evidence acquisition, evidence validation beyond local identity/collection invariants, persistence, Snapshot storage, rendering, Markdown, Telegram, Scheduler, publishing, retry, and external adapters",
+    "Changes to src/features/weekly_radar/domain/mod.rs, src/features/weekly_radar/mod.rs, src/features/mod.rs, tests/architecture/module_boundaries.rs, or any other Work Item",
+    "Cross-feature imports, infrastructure/runtime dependencies, new Cargo dependencies, trading, price prediction, portfolio allocation, or capital-action behavior"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository Work Item lifecycle, exclusive path rules, Finish/Archive requirements, and current-WI issue policy."},
+    {"path": ".ai/glossary.md", "reason": "Canonical repository and AI Cockpit terminology."},
+    {"path": ".ai/cockpit/README.md", "reason": "Contract, checkpoint, Summary, Finish, and archive lifecycle rules."},
+    {"path": "docs/architecture/ARCHITECTURE.md", "reason": "Domain isolation and layer direction."},
+    {"path": "docs/architecture/BOUNDED_CONTEXTS.md", "reason": "Bounded Context ownership and explicit boundary exchange."},
+    {"path": "docs/architecture/DEPENDENCY_RULES.md", "reason": "No cross-feature implementation dependency in the Domain."},
+    {"path": "docs/domain/TRANSFORMATION_STAGE_MODEL.md", "reason": "Canonical six-stage vocabulary; WR-005 retains supplied stage labels and does not infer or rank them."},
+    {"path": "docs/domain/EVIDENCE_MODEL.md", "reason": "Evidence identity and evidence-first model context."},
+    {"path": "docs/domain/RANKING_MODEL.md", "reason": "Explicit separation between ranking and Threshold Distance."},
+    {"path": "docs/product/PRD.md", "reason": "Research Radar evidence-first product boundary."},
+    {"path": "docs/product/SCOPE.md", "reason": "No-trading and no-capital-action product boundary."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WR-005 deliverables, dependencies, and planned position in Weekly Radar."},
+    {"path": ".ai/work-items/archive/2026/wi-wr-001.contract.json", "reason": "Established Weekly Radar Domain boundary and future-WI exclusions."},
+    {"path": "src/features/weekly_radar/domain/mod.rs", "reason": "Existing Weekly Radar boundary to avoid modifying or importing from the shared module during this isolated WI."},
+    {"path": "src/features/transformation/domain/mod.rs", "reason": "Existing stage/value validation conventions and canonical stage ownership."},
+    {"path": "tests/architecture/module_boundaries.rs", "reason": "Executable architecture guard consulted; this WI intentionally does not modify the shared guard."},
+    {"path": "Cargo.toml", "reason": "Existing Rust test configuration; no dependency change is planned."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "threshold_distance_semantics",
+      "evidence_integrity",
+      "architecture_boundary"
+    ],
+    "reason": "The main risk is allowing downstream code to mistake a supplied Distance value for a locally calculated judgment, or to lose evidence identity/order while building a read-only per-company boundary.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The Distance formula is intentionally not provided and is not guessed; this WI receives Distance as an explicit upstream-supplied value. WR-004 owns transition output, WR-007 owns compression, and later WIs own persistence/rendering/delivery."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Typed Domain boundary, tests, documentation, and governance evidence require the standard governed review route."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The explicit user authorization covers execution and Contract recording for all 24 roadmap Work Items, and the supplied-value boundary is codable without guessing a Distance formula."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "ThresholdDistance exposes exactly four supplied Distance variants with stable labels FAR, DEVELOPING, NEAR, and CANDIDATE.",
+    "ThresholdDistance retains the supplied company reference, current_stage, next_stage, confirmed evidence order, missing evidence order, and Distance value through public accessors.",
+    "Construction accepts Distance as an explicit upstream value and contains no formula, threshold comparison, Stage inference, Transition detection, score calculation, or evidence conclusion logic.",
+    "Construction rejects blank company/stage/evidence values and rejects empty confirmed or missing evidence collections with deterministic domain errors.",
+    "Construction rejects duplicate evidence identities within either collection and rejects any identity appearing in both confirmed and missing evidence collections.",
+    "The implementation is standalone standard-library Domain code and does not modify or import the shared Weekly Radar modules, architecture guard, persistence, renderer, Telegram, Scheduler, or another Work Item.",
+    "Focused unit and integration tests plus the design spec and execution plan cover supplied-value retention, four Distance labels, ordering, blank input, duplicate evidence, overlap rejection, no-formula behavior, authorization, and current-WI issue handling."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Threshold Distance receives Distance as an upstream-supplied value; never guess or implement a Distance formula in this WI.",
+    "Preserve current_stage, next_stage, confirmed evidence, missing evidence, Distance, evidence identity, and collection order exactly as supplied.",
+    "Reject blank values, duplicate evidence identities, and Confirmed/Missing evidence overlap deterministically.",
+    "Keep this source standalone and independent of shared Weekly Radar modules, other feature implementations, persistence, rendering, Telegram, Scheduler, and external runtime dependencies.",
+    "Do not add dependencies for this Contract.",
+    "Resolve issues within the current Work Item when they remain inside its Contract scope; open a successor only for a distinct or materially expanded boundary.",
+    "Do not introduce trading, price prediction, target price, portfolio allocation, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "Weekly Radar needs a typed per-company Threshold Distance read-only boundary, but the repository must not silently invent a Far/Developing/Near/Candidate formula or lose the evidence lists that explain the supplied value.",
+    "constraints": [
+      "Receive Distance as an explicit upstream-supplied value because no authoritative Distance formula is provided; retain it without inference or recalculation.",
+      "Retain current_stage, next_stage, confirmed evidence, and missing evidence in input order, while rejecting blank values, duplicate evidence identities, and Confirmed/Missing overlap.",
+      "Write only the exclusive threshold_distance.rs, its integration test, dedicated docs, and this WI's governed evidence; do not modify shared Weekly Radar module files or other Work Items."
+    ],
+    "rationale": "A small standalone read-only boundary gives later Weekly Radar assembly and rendering WIs a deterministic container while keeping stage semantics, evidence judgment, persistence, and delivery in their owning boundaries."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {"type": "human", "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.", "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "authorityEvidence": {"type": "human_authorization", "granted": true, "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.", "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "software_design", "test_automation"], "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]},
+  "requestedOperation": {"type": "repository_governance", "action": "modify", "target": "repository_governance", "environment": "repository", "effect": "enforce", "authorityRequired": false, "authorityReason": "Explicit human authorization is recorded above."},
+  "scenarioCoverage": [
+    {"scenario": "Supplied stage and Distance values are retained without formula or Stage inference.", "required": true, "status": "unverified", "evidence": [], "expected": "Accessors return the exact current_stage, next_stage, and supplied Distance; changing stage text or evidence does not cause local recalculation.", "verificationPlan": "Run the focused unit test that constructs arbitrary opaque stage labels with each Distance variant and asserts exact retention."},
+    {"scenario": "Evidence order and identity invariants are deterministic.", "required": true, "status": "unverified", "evidence": [], "expected": "Confirmed and Missing evidence retain insertion order; duplicate identities and cross-collection overlap return the documented domain errors.", "verificationPlan": "Run focused unit and integration tests for order, duplicate, overlap, blank values, and empty collections."},
+    {"scenario": "The exclusive source has no shared-module, persistence, renderer, Telegram, or Scheduler coupling.", "required": true, "status": "unverified", "evidence": [], "expected": "The implementation compiles through an integration test using #[path] without editing shared mod.rs files, and full make check passes.", "verificationPlan": "Inspect git diff path ownership, run the focused integration test and make check, and run check-ai-pr before commit."}
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 16
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-005.json",
+    "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "initialScopeDigest": "ea7c7ee8c26bfe88df07f1d2534978402bbf569b093337f412484533c6e7dcd7",
+    "contractSkeletonDigest": "836426d05676e4bd3f6657cfbd8adb0ceba034e4abfc780ac51a32513f0ccb1b"
+  }
+}

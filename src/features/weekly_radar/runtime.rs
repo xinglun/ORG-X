@@ -15,7 +15,7 @@ pub mod sec;
 pub mod sources;
 pub mod telegram;
 
-pub use archive::{retain_recent, write_run, write_run_guarded, ArchiveError, ArchiveManifest};
+pub use archive::{retain_recent, write_run, ArchiveError, ArchiveManifest};
 pub use config::{CompanyConfig, CompanySourceRegistry};
 pub use error::RuntimeError;
 pub use http::{FixtureHttpClient, HttpClient, HttpResponse, HttpTimeouts, UreqHttpClient};

@@ -8,6 +8,7 @@ use chrono::{Duration, NaiveDate};
 use serde::Serialize;
 
 use super::report::RenderedReport;
+use super::telegram::TelegramDeliveryReceipt;
 
 const ARCHIVE_DIRECTORY: &str = "weekly-radar";
 const REPORTS_DIRECTORY: &str = "reports";
@@ -26,6 +27,9 @@ pub enum ArchiveError {
     NonDataBranch { branch: String },
     /// A report date could not produce a valid archive name.
     InvalidDate,
+    /// A report cannot be archived without at least one successful message ID
+    /// and one corresponding delivery attempt.
+    InvalidDeliveryReceipt,
 }
 
 impl fmt::Display for ArchiveError {
@@ -40,6 +44,9 @@ impl fmt::Display for ArchiveError {
                 )
             }
             Self::InvalidDate => formatter.write_str("archive report date is invalid"),
+            Self::InvalidDeliveryReceipt => {
+                formatter.write_str("archive requires a successful Telegram delivery receipt")
+            }
         }
     }
 }
@@ -102,9 +109,15 @@ fn ensure_archive_directories(root: &Path) -> Result<PathBuf, ArchiveError> {
 /// Removes only date-prefixed files older than the requested retention window.
 pub fn retain_recent(
     root: &Path,
+    branch: &str,
     as_of: NaiveDate,
     retention_days: i64,
 ) -> Result<usize, ArchiveError> {
+    if branch != "data" {
+        return Err(ArchiveError::NonDataBranch {
+            branch: branch.to_owned(),
+        });
+    }
     if retention_days < 0 {
         return Err(ArchiveError::InvalidRetention);
     }
@@ -150,10 +163,22 @@ fn write_file(path: &Path, content: &str) -> Result<(), ArchiveError> {
 /// Writes the deterministic report, snapshot, receipt, and manifest files.
 pub fn write_run(
     root: &Path,
+    branch: &str,
     rendered_report: &RenderedReport,
+    delivery_receipt: &TelegramDeliveryReceipt,
 ) -> Result<ArchiveManifest, ArchiveError> {
+    if branch != "data" {
+        return Err(ArchiveError::NonDataBranch {
+            branch: branch.to_owned(),
+        });
+    }
+    if delivery_receipt.message_ids().is_empty()
+        || delivery_receipt.message_ids().len() != delivery_receipt.attempts().len()
+    {
+        return Err(ArchiveError::InvalidDeliveryReceipt);
+    }
     let date = rendered_report.as_of();
-    retain_recent(root, date, DEFAULT_RETENTION_DAYS)?;
+    retain_recent(root, branch, date, DEFAULT_RETENTION_DAYS)?;
     let archive = ensure_archive_directories(root)?;
     let date_text = date.format("%Y-%m-%d").to_string();
     let report_relative = format!("{ARCHIVE_DIRECTORY}/{REPORTS_DIRECTORY}/{date_text}.md");
@@ -177,9 +202,25 @@ pub fn write_run(
             .join(format!("{date_text}.json")),
         rendered_report.snapshot_json(),
     )?;
-    let receipt = format!(
-        "{{\n  \"as_of\": \"{date_text}\",\n  \"status\": \"NOT_PUBLISHED\",\n  \"message_ids\": []\n}}\n"
-    );
+    #[derive(Serialize)]
+    struct ArchiveReceipt {
+        as_of: NaiveDate,
+        status: &'static str,
+        message_ids: Vec<String>,
+        attempts: Vec<u32>,
+    }
+    let receipt = serde_json::to_string_pretty(&ArchiveReceipt {
+        as_of: date,
+        status: "PUBLISHED",
+        message_ids: delivery_receipt
+            .message_ids()
+            .iter()
+            .map(|message_id| message_id.as_str().to_owned())
+            .collect(),
+        attempts: delivery_receipt.attempts().to_vec(),
+    })
+    .map_err(|_| ArchiveError::InvalidDeliveryReceipt)?
+        + "\n";
     write_file(
         &archive
             .join(RECEIPTS_DIRECTORY)
@@ -190,18 +231,4 @@ pub fn write_run(
         serde_json::to_string_pretty(&manifest).map_err(|_| ArchiveError::InvalidDate)? + "\n";
     write_file(&archive.join("manifest.json"), &manifest_json)?;
     Ok(manifest)
-}
-
-/// Performs a write only when the caller explicitly identifies the data branch.
-pub fn write_run_guarded(
-    root: &Path,
-    branch: &str,
-    rendered_report: &RenderedReport,
-) -> Result<ArchiveManifest, ArchiveError> {
-    if branch != "data" {
-        return Err(ArchiveError::NonDataBranch {
-            branch: branch.to_owned(),
-        });
-    }
-    write_run(root, rendered_report)
 }

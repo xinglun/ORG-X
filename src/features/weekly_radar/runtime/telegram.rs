@@ -40,6 +40,10 @@ pub enum TelegramError {
         attempts: u32,
         /// Number of earlier chunks accepted by Telegram.
         delivered_chunks: usize,
+        /// Message IDs accepted before the failed chunk.
+        successful_message_ids: Vec<TelegramMessageId>,
+        /// Attempts used for the accepted message IDs, in the same order.
+        successful_attempts: Vec<u32>,
     },
 }
 
@@ -55,6 +59,7 @@ impl fmt::Display for TelegramError {
                 chunk_index,
                 attempts,
                 delivered_chunks,
+                ..
             } => write!(
                 formatter,
                 "Telegram delivery failed for chunk {chunk_index} after {attempts} attempt(s); {delivered_chunks} earlier chunk(s) were accepted"
@@ -64,6 +69,30 @@ impl fmt::Display for TelegramError {
 }
 
 impl std::error::Error for TelegramError {}
+
+impl TelegramError {
+    /// Returns accepted message IDs without exposing any provider error text.
+    pub fn successful_message_ids(&self) -> &[TelegramMessageId] {
+        match self {
+            Self::DeliveryFailed {
+                successful_message_ids,
+                ..
+            } => successful_message_ids,
+            _ => &[],
+        }
+    }
+
+    /// Returns attempts corresponding to [`Self::successful_message_ids`].
+    pub fn successful_attempts(&self) -> &[u32] {
+        match self {
+            Self::DeliveryFailed {
+                successful_attempts,
+                ..
+            } => successful_attempts,
+            _ => &[],
+        }
+    }
+}
 
 /// Fixed retry policy for one rendered report delivery.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -288,12 +317,26 @@ fn map_publisher_error(
     chunk_index: usize,
     attempts: u32,
     delivered_chunks: usize,
+    prior_message_ids: &[TelegramMessageId],
+    prior_attempts: &[u32],
 ) -> Result<TelegramDeliveryReceipt, TelegramError> {
-    let _ = error;
+    let publisher_message_ids = match error {
+        TelegramPublisherError::Transport {
+            successful_message_ids,
+            ..
+        } => successful_message_ids,
+        _ => Vec::new(),
+    };
+    let mut successful_message_ids = prior_message_ids.to_vec();
+    successful_message_ids.extend(publisher_message_ids.iter().cloned());
+    let mut successful_attempts = prior_attempts.to_vec();
+    successful_attempts.extend(std::iter::repeat_n(attempts, publisher_message_ids.len()));
     Err(TelegramError::DeliveryFailed {
         chunk_index,
         attempts,
         delivered_chunks,
+        successful_message_ids,
+        successful_attempts,
     })
 }
 
@@ -349,7 +392,14 @@ pub fn send_rendered_report_with_transport<T: TelegramTransport + ?Sized>(
                     }
                 }
                 Err(error) => {
-                    return map_publisher_error(error, chunk_index, attempt, message_ids.len())
+                    return map_publisher_error(
+                        error,
+                        chunk_index,
+                        attempt,
+                        message_ids.len(),
+                        &message_ids,
+                        &attempts_used,
+                    )
                 }
             }
         }
@@ -360,6 +410,8 @@ pub fn send_rendered_report_with_transport<T: TelegramTransport + ?Sized>(
                 chunk_index,
                 attempts: policy.max_attempts(),
                 delivered_chunks: message_ids.len(),
+                successful_message_ids: message_ids,
+                successful_attempts: attempts_used,
             });
         }
     }

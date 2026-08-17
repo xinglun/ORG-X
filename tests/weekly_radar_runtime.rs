@@ -7,9 +7,7 @@ use chrono::{DateTime, NaiveDate, Utc};
 use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
     TelegramMessageId, TelegramTransport, TelegramTransportError,
 };
-use org_x::features::weekly_radar::runtime::archive::{
-    retain_recent, write_run, write_run_guarded, ArchiveError,
-};
+use org_x::features::weekly_radar::runtime::archive::{retain_recent, write_run, ArchiveError};
 use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
 use org_x::features::weekly_radar::runtime::error::RuntimeError;
 use org_x::features::weekly_radar::runtime::http::{
@@ -25,7 +23,7 @@ use org_x::features::weekly_radar::runtime::sources::{
     collect_configured_sources, SourceKind, SourceStatus, SourceTier,
 };
 use org_x::features::weekly_radar::runtime::telegram::{
-    send_rendered_report_with_transport, TelegramRetryPolicy,
+    send_rendered_report_with_transport, TelegramError, TelegramRetryPolicy,
 };
 
 #[test]
@@ -1357,6 +1355,30 @@ impl TelegramTransport for Task4SecretFailingTransport {
     }
 }
 
+#[derive(Clone, Default)]
+struct Task4PartialFailingTransport(std::sync::Arc<std::sync::Mutex<Vec<String>>>);
+
+impl TelegramTransport for Task4PartialFailingTransport {
+    fn send_message(
+        &self,
+        _destination: &str,
+        markdown: &str,
+    ) -> Result<TelegramMessageId, TelegramTransportError> {
+        let mut sent = self.0.lock().expect("partial transport lock should work");
+        sent.push(markdown.to_owned());
+        if sent.len() == 2 {
+            return Err(TelegramTransportError::Failed {
+                reason: "token=task4-secret chat_id=task4-chat".to_owned(),
+            });
+        }
+        TelegramMessageId::new(format!("partial-message-{}", sent.len())).map_err(|error| {
+            TelegramTransportError::Failed {
+                reason: error.to_string(),
+            }
+        })
+    }
+}
+
 #[test]
 fn task4_telegram_delivery_preserves_chunk_order_and_redacts_errors() {
     let report = task4_report();
@@ -1391,6 +1413,36 @@ fn task4_telegram_delivery_preserves_chunk_order_and_redacts_errors() {
     assert!(!display.contains("chat_id="));
 }
 
+#[test]
+fn task4_telegram_partial_failure_preserves_accepted_ids_and_attempts() {
+    let report = task4_report();
+    let error = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &Task4PartialFailingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect_err("second chunk failure should produce a partial delivery error");
+
+    match error {
+        TelegramError::DeliveryFailed {
+            successful_message_ids,
+            successful_attempts,
+            ..
+        } => {
+            assert_eq!(
+                successful_message_ids
+                    .iter()
+                    .map(TelegramMessageId::as_str)
+                    .collect::<Vec<_>>(),
+                ["partial-message-1"]
+            );
+            assert_eq!(successful_attempts, [1]);
+        }
+        other => panic!("expected partial delivery error, got {other:?}"),
+    }
+}
+
 fn task4_temp_root(label: &str) -> std::path::PathBuf {
     std::env::temp_dir().join(format!(
         "org-x-task4-{label}-{}-{}",
@@ -1422,23 +1474,55 @@ fn task4_archive_retains_365_days_and_guards_the_data_branch() {
         .unwrap();
     }
 
-    let removed = retain_recent(&root, NaiveDate::from_ymd_opt(2026, 8, 17).unwrap(), 365)
-        .expect("retention should complete");
+    let as_of = NaiveDate::from_ymd_opt(2026, 8, 17).unwrap();
+    let retention_error = retain_recent(&root, "main", as_of, 365)
+        .expect_err("retention must reject non-data branches before deletion");
+    assert!(matches!(
+        retention_error,
+        ArchiveError::NonDataBranch { .. }
+    ));
+    let removed = retain_recent(&root, "data", as_of, 365).expect("retention should complete");
     assert_eq!(removed, 3);
     assert!(!weekly_radar.join("reports/2025-08-16.expired").exists());
     assert!(weekly_radar.join("reports/2025-08-17.retained").exists());
 
     let report = task4_report();
-    let error = write_run_guarded(&root, "main", &report)
-        .expect_err("non-data branch writes must be rejected");
+    let transport = Task4RecordingTransport::default();
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &transport,
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("a successful delivery receipt is required for archiving");
+    let error = write_run(&root, "main", &report, &receipt)
+        .expect_err("non-data branch writes must be rejected at write_run");
     assert!(matches!(error, ArchiveError::NonDataBranch { .. }));
 
-    write_run(&root, &report).expect("unguarded fixture archive should write");
+    write_run(&root, "data", &report, &receipt).expect("published data archive should write");
     let markdown = std::fs::read_to_string(weekly_radar.join("reports/2026-08-17.md"))
         .expect("report should be archived");
     assert_eq!(markdown, report.markdown());
     assert!(weekly_radar.join("snapshots/2026-08-17.json").exists());
-    assert!(weekly_radar.join("receipts/2026-08-17.json").exists());
+    let archived_receipt = std::fs::read_to_string(weekly_radar.join("receipts/2026-08-17.json"))
+        .expect("receipt should be archived");
+    let archived_receipt: serde_json::Value =
+        serde_json::from_str(&archived_receipt).expect("archived receipt should be JSON");
+    assert_eq!(archived_receipt["status"], "PUBLISHED");
+    let expected_message_ids = receipt
+        .message_ids()
+        .iter()
+        .map(TelegramMessageId::as_str)
+        .collect::<Vec<_>>();
+    assert_eq!(
+        archived_receipt["message_ids"],
+        serde_json::json!(expected_message_ids)
+    );
+    assert_eq!(
+        archived_receipt["attempts"],
+        serde_json::json!(receipt.attempts())
+    );
+    assert_ne!(archived_receipt["status"], "NOT_PUBLISHED");
     assert!(weekly_radar.join("manifest.json").exists());
 
     std::fs::remove_dir_all(root).expect("task 4 temporary archive should be removable");

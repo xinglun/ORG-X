@@ -8,6 +8,8 @@ pub mod config;
 pub mod error;
 pub mod http;
 pub mod model;
+pub mod rules;
+pub mod sec;
 
 pub use config::{CompanyConfig, CompanySourceRegistry};
 pub use error::RuntimeError;
@@ -15,3 +17,5 @@ pub use http::{FixtureHttpClient, HttpClient, HttpResponse, HttpTimeouts, UreqHt
 pub use model::{
     Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput, SourceCoverage,
 };
+pub use rules::extract_employee_count;
+pub use sec::{CompanyEvidence, SecClient};

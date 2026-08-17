@@ -3,7 +3,8 @@ use std::net::TcpListener;
 use std::thread;
 use std::time::Duration;
 
-use org_x::features::weekly_radar::runtime::config::CompanySourceRegistry;
+use chrono::NaiveDate;
+use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
 use org_x::features::weekly_radar::runtime::error::RuntimeError;
 use org_x::features::weekly_radar::runtime::http::{
     FixtureHttpClient, HttpClient, HttpResponse, UreqHttpClient,
@@ -11,6 +12,8 @@ use org_x::features::weekly_radar::runtime::http::{
 use org_x::features::weekly_radar::runtime::model::{
     Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput, SourceCoverage,
 };
+use org_x::features::weekly_radar::runtime::rules::extract_employee_count;
+use org_x::features::weekly_radar::runtime::sec::SecClient;
 
 #[test]
 fn registry_validation_preserves_optional_source_semantics() {
@@ -61,6 +64,242 @@ fn registry_validation_preserves_optional_source_semantics() {
         }"#,
     );
     assert!(invalid.is_err(), "duplicate identities must be rejected");
+}
+
+fn sec_test_company() -> CompanyConfig {
+    CompanyConfig::new(
+        "acme",
+        "Acme Corporation",
+        "ACME",
+        Some("0001234567".to_owned()),
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("SEC fixture company should be valid")
+}
+
+#[test]
+fn sec_collects_annual_aliases_and_sends_user_agent() {
+    let company = sec_test_company();
+    let submissions_url = "https://data.sec.gov/submissions/CIK0001234567.json";
+    let facts_url = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json";
+    let user_agent = "ORG-X weekly-radar test contact@example.test";
+    let client = FixtureHttpClient::new();
+    client.insert(
+        submissions_url,
+        HttpResponse::ok(r#"{"filings":{"recent":{}}}"#),
+    );
+    client.insert(
+        facts_url,
+        HttpResponse::ok(
+            r#"
+            {
+              "facts": {
+                "us-gaap": {
+                  "RevenueFromContractWithCustomerExcludingAssessedTax": {
+                    "units": {"USD": [
+                      {"start":"2023-01-01","end":"2023-12-31","val":90,"accn":"000123456724000001","fy":2023,"fp":"FY","form":"10-K","filed":"2024-02-15"},
+                      {"start":"2024-01-01","end":"2024-09-30","val":999,"accn":"000123456724000002","fy":2024,"fp":"Q3","form":"10-Q","filed":"2024-11-01"},
+                      {"start":"2024-01-01","end":"2024-12-31","val":100,"accn":"000123456725000001","fy":2024,"fp":"FY","form":"10-K","filed":"2025-02-15"}
+                    ]}
+                  },
+                  "OperatingIncomeLoss": {"units": {"USD": [
+                    {"start":"2024-01-01","end":"2024-12-31","val":20,"accn":"000123456725000001","fy":2024,"fp":"FY","form":"10-K","filed":"2025-02-15"}
+                  ]}},
+                  "NetIncomeLoss": {"units": {"USD": [
+                    {"start":"2024-01-01","end":"2024-12-31","val":15,"accn":"000123456725000001","fy":2024,"fp":"FY","form":"10-K","filed":"2025-02-15"}
+                  ]}},
+                  "NetCashProvidedByUsedInOperatingActivities": {"units": {"USD": [
+                    {"start":"2024-01-01","end":"2024-12-31","val":30,"accn":"000123456725000001","fy":2024,"fp":"FY","form":"10-K","filed":"2025-02-15"}
+                  ]}},
+                  "PaymentsToAcquirePropertyPlantAndEquipment": {"units": {"USD": [
+                    {"start":"2024-01-01","end":"2024-12-31","val":5,"accn":"000123456725000001","fy":2024,"fp":"FY","form":"10-K","filed":"2025-02-15"}
+                  ]}},
+                  "ResearchAndDevelopmentExpense": {"units": {"USD": [
+                    {"start":"2024-01-01","end":"2024-12-31","val":7,"accn":"000123456725000001","fy":2024,"fp":"FY","form":"10-K","filed":"2025-02-15"}
+                  ]}},
+                  "ShareBasedCompensation": {"units": {"USD": [
+                    {"start":"2024-01-01","end":"2024-12-31","val":3,"accn":"000123456725000001","fy":2024,"fp":"FY","form":"10-K","filed":"2025-02-15"}
+                  ]}},
+                  "EntityNumberOfEmployees": {"units": {"employees": [
+                    {"end":"2023-12-31","val":900,"accn":"000123456724000001","fy":2023,"fp":"FY","form":"10-K","filed":"2024-02-15"},
+                    {"end":"2024-12-31","val":1000,"accn":"000123456725000001","fy":2024,"fp":"FY","form":"10-K","filed":"2025-02-15"}
+                  ]}
+                }
+              }
+            }
+            }
+            "#,
+        ),
+    );
+
+    let evidence = SecClient::collect(&company, &client, user_agent)
+        .expect("Company Facts fixture should collect");
+
+    let requests = client.requests();
+    for fact in evidence.facts() {
+        let request = requests
+            .iter()
+            .find(|request| request.url() == fact.provenance().source_uri())
+            .expect("each fact source should have a captured request");
+        assert_eq!(
+            request.headers(),
+            &[("User-Agent".to_owned(), user_agent.to_owned())]
+        );
+    }
+    assert_eq!(evidence.facts().len(), 8);
+    assert_eq!(evidence.fact("revenue").unwrap().value(), Some("100"));
+    assert_eq!(
+        evidence.fact("operating_income").unwrap().value(),
+        Some("20")
+    );
+    assert_eq!(evidence.fact("net_income").unwrap().value(), Some("15"));
+    assert_eq!(
+        evidence.fact("operating_cash_flow").unwrap().value(),
+        Some("30")
+    );
+    assert_eq!(evidence.fact("capex").unwrap().value(), Some("5"));
+    assert_eq!(evidence.fact("r_and_d").unwrap().value(), Some("7"));
+    assert_eq!(evidence.fact("sbc").unwrap().value(), Some("3"));
+    assert_eq!(
+        evidence.fact("employee_count").unwrap().value(),
+        Some("1000")
+    );
+    assert_eq!(
+        evidence
+            .fact("revenue")
+            .unwrap()
+            .provenance()
+            .effective_date(),
+        NaiveDate::from_ymd_opt(2024, 12, 31).as_ref()
+    );
+}
+
+#[test]
+fn sec_selects_latest_10k_metadata_and_preserves_employee_passage() {
+    let company = sec_test_company();
+    let submissions_url = "https://data.sec.gov/submissions/CIK0001234567.json";
+    let facts_url = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json";
+    let filing_url =
+        "https://www.sec.gov/Archives/edgar/data/1234567/000123456725000002/acme-2024.htm";
+    let user_agent = "ORG-X weekly-radar test contact@example.test";
+    let client = FixtureHttpClient::new();
+    client.insert(
+        submissions_url,
+        HttpResponse::ok(
+            r#"
+            {
+              "filings": {"recent": {
+                "accessionNumber": ["0001234567-25-000002", "0001234567-25-000001", "0001234567-24-000001"],
+                "filingDate": ["2025-02-15", "2025-01-31", "2024-02-15"],
+                "reportDate": ["2024-12-31", "2024-09-30", "2023-12-31"],
+                "form": ["10-K", "10-Q", "10-K"],
+                "primaryDocument": ["acme-2024.htm", "acme-q3.htm", "acme-2023.htm"]
+              }}
+            }
+            "#,
+        ),
+    );
+    client.insert(facts_url, HttpResponse::ok(r#"{"facts":{"us-gaap":{}}}"#));
+    client.insert(
+        filing_url,
+        HttpResponse::ok(
+            "<html><body>As of December 31, 2024, we had approximately 1,234 employees.</body></html>",
+        ),
+    );
+
+    let evidence = SecClient::collect(&company, &client, user_agent)
+        .expect("submissions and filing fixtures should collect");
+    let employee = evidence
+        .fact("employee_count")
+        .expect("employee fact should be present");
+
+    assert_eq!(employee.status(), &FactStatus::Known);
+    assert_eq!(employee.value(), Some("1234"));
+    assert_eq!(employee.confidence(), &Confidence::Approximate);
+    assert_eq!(employee.provenance().source_uri(), filing_url);
+    assert!(employee
+        .provenance()
+        .source_field_or_passage()
+        .contains("1,234 employees"));
+    assert_eq!(
+        employee.provenance().effective_date(),
+        NaiveDate::from_ymd_opt(2024, 12, 31).as_ref()
+    );
+    assert_eq!(client.requests().len(), 3);
+    for request in client.requests() {
+        assert_eq!(
+            request.headers(),
+            &[("User-Agent".to_owned(), user_agent.to_owned())]
+        );
+    }
+    assert!(client
+        .requests()
+        .iter()
+        .any(|request| request.url() == filing_url));
+}
+
+#[test]
+fn employee_rule_accepts_one_explicit_dated_workforce_candidate() {
+    assert_eq!(
+        extract_employee_count(
+            "As of December 31, 2024, we had 1,234 employees.",
+            Some(NaiveDate::from_ymd_opt(2024, 12, 31).unwrap()),
+            "https://example.test/filing/2024"
+        ),
+        FactStatus::Known
+    );
+}
+
+#[test]
+fn employee_rule_accepts_approximate_workforce_wording() {
+    assert_eq!(
+        extract_employee_count(
+            "At year end, our workforce was approximately 1,200 employees.",
+            Some(NaiveDate::from_ymd_opt(2024, 12, 31).unwrap()),
+            "https://example.test/filing/2024"
+        ),
+        FactStatus::Known
+    );
+}
+
+#[test]
+fn employee_rule_marks_conflicting_candidates_unknown() {
+    assert_eq!(
+        extract_employee_count(
+            "As of December 31, 2024, we had 1,000 employees. At year end, our workforce was 1,100 employees.",
+            Some(NaiveDate::from_ymd_opt(2024, 12, 31).unwrap()),
+            "https://example.test/filing/2024"
+        ),
+        FactStatus::Unknown
+    );
+}
+
+#[test]
+fn employee_rule_marks_missing_date_unknown() {
+    assert_eq!(
+        extract_employee_count(
+            "We had 1,000 employees.",
+            None,
+            "https://example.test/filing/2024"
+        ),
+        FactStatus::Unknown
+    );
+}
+
+#[test]
+fn employee_rule_ignores_unrelated_customer_counts() {
+    assert_eq!(
+        extract_employee_count(
+            "We served more than 1,000 customers during 2024.",
+            Some(NaiveDate::from_ymd_opt(2024, 12, 31).unwrap()),
+            "https://example.test/filing/2024"
+        ),
+        FactStatus::Unknown
+    );
 }
 
 #[test]

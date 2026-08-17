@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "requestedText": "Add a deterministic provider-agnostic Telegram Markdown summary boundary for explicit Weekly Radar facts.",
+  "target": {
+    "type": "file",
+    "name": "wi_wr_009_telegram_renderer_source",
+    "path": "src/features/weekly_radar/interface/telegram_renderer.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [
+    ],
+    "testReferences": [
+    ],
+    "documentationReferences": [
+    ],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The renderer stores and formats in-memory explicit facts only; it has no runtime loading, network, or dynamic reference mechanism."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "No publisher or external adapter is added; later delivery work consumes the immutable TelegramMessage boundary."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The Work Item adds no telemetry, monitoring, delivery, HTTP, or provider integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-009.contract.json",
+      "The Contract declares an additive interface renderer and explicitly excludes domain calculation, provider integration, architecture-test, and global-policy changes.",
+      "WR-007 archive evidence supplies the upstream explicit change-section boundary."
+    ]
+  }
+}

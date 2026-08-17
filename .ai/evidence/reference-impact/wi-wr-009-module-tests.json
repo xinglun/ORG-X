@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "requestedText": "Add module-local regression tests for the provider-agnostic Telegram renderer boundary.",
+  "target": {
+    "type": "file",
+    "name": "wi_wr_009_renderer_module_tests",
+    "path": "src/features/weekly_radar/interface/telegram_renderer_test.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [],
+    "testReferences": [],
+    "documentationReferences": [],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The module-local test source executes deterministic in-memory cases and has no runtime loading or dynamic reference mechanism."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The test source has no production or external consumer; it verifies only the local renderer boundary."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The test source adds no telemetry, monitoring, delivery, HTTP, or provider integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-009.contract.json",
+      "The Contract requires module-local renderer tests and excludes provider integration, architecture-test, and global-policy changes."
+    ]
+  }
+}

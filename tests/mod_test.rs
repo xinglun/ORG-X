@@ -13,3 +13,10 @@ fn weekly_radar_domain_module_exports_explicit_health_facts() {
     assert_eq!(health.status(), HealthStatus::Unknown);
     assert_eq!(health.freshness(), Freshness::Unknown);
 }
+
+#[test]
+fn weekly_radar_interface_registers_the_renderer_module() {
+    let _ = std::any::TypeId::of::<
+        org_x::features::weekly_radar::interface::telegram_renderer::TelegramRenderer,
+    >();
+}

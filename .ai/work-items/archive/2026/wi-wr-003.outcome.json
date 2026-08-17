@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-003",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "bd5963486abcd06db97a889f8e98a99dfbd73fce7a7a9e3181e6c04dbea3f14d"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-003",
+    "contractDigest": "006d5e198f5d01d74d5366c93e37a3c0a9b7d4d63d1d0effd3c240b3a2905706",
+    "summaryDigest": "b01331b2b2feceabb5dae575e6de29678c251a37a2d225c92d4a7270143bfb24",
+    "verificationDigest": "02c92ad1b6bf892179855b88ab71b3da5a02eda1b63d2c5e52ba5716e60b7e7d",
+    "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "headCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "70ec4095b4281582a724d0eab24194f6c84559c45413a56981e35919b703e258",
+      "binding": {
+        "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateHead": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateTreeDigest": "580145528c30c0992862376d083f11ce32ffde540cc2584c647cb45c5d6b784b",
+        "candidateDiffDigest": "d977ab122a96da8e45ab03f8564f36f8d1fa2930ab44dbfc5e70424d46574a5b"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-003 generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-003 generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-wr-003",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-003.contract.json",
       ".ai/work-items/archive/2026/wi-wr-003.summary.json",
@@ -24,153 +47,206 @@
       ".ai/work-items/archive/2026/wi-wr-003.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "No upstream Top5 calculator is implemented in this WI; the input facts are deliberately modeled as opaque supplied values.",
+      "The module is not exported by shared mod.rs files by design; integration coverage uses a path-bound test until a future composition WI owns registration."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "The module is not exported by shared mod.rs files by design; integration coverage uses a path-bound test until a future composition WI owns registration.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "No upstream Top5 calculator is implemented in this WI; the input facts are deliberately modeled as opaque supplied values.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "The module is not exported by shared mod.rs files by design; integration coverage uses a path-bound test until a future composition WI owns registration.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "No upstream Top5 calculator is implemented in this WI; the input facts are deliberately modeled as opaque supplied values.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiCoverage failed before the retry.",
+        "policyOrGuard": "required verification: aiCoverage",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiCoverage after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "verificationHistory[0] aiCoverage failed",
+            "digest": "4601829f4339b9003b8457ff2dc19798218bf44044a7acbdff7431866d057620"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "verification[aiCoverage] retry passed",
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "verificationHistory[1] aiGuidelines failed",
+            "digest": "2c690bf56662368849b32b4727945e0d691800aa20f08af7d4bbfac7af415dd5"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "b931f7c9406c724850e68745bb33ad9e24d086b827c1b8aa2339696203530c02"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiCoverage failed before the retry.",
+        "action": "Re-ran aiCoverage after the correction; the latest attempt passed.",
+        "verification": "aiCoverage latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "verificationHistory[0] aiCoverage failed",
+            "digest": "4601829f4339b9003b8457ff2dc19798218bf44044a7acbdff7431866d057620"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "verification[aiCoverage] retry passed",
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+          }
+        ]
+      },
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "verificationHistory[1] aiGuidelines failed",
+            "digest": "2c690bf56662368849b32b4727945e0d691800aa20f08af7d4bbfac7af415dd5"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "b931f7c9406c724850e68745bb33ad9e24d086b827c1b8aa2339696203530c02"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "composition_boundary",
+        "severity": "low",
+        "title": "composition_boundary",
+        "detail": "The independent module is intentionally not registered in shared mod.rs files; a later composition WI must expose it without changing this WI's read-model semantics.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "Do not push, open a PR, merge, or close; parent agent owns provider lifecycle and closure.",
+      "Keep the implementation in the exclusive write set and do not edit shared module registration files.",
+      "When a problem is found, resolve it in the current WI where possible instead of opening a new WI.",
+      "User approved the current-WI scope amendment to add the module-local companion test file; shared coverage policy remains unchanged."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-003.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+        "subject": "verificationHistory[0] aiCoverage failed",
+        "digest": "4601829f4339b9003b8457ff2dc19798218bf44044a7acbdff7431866d057620"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+        "subject": "verification[aiCoverage] retry passed",
+        "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+        "subject": "verificationHistory[1] aiGuidelines failed",
+        "digest": "2c690bf56662368849b32b4727945e0d691800aa20f08af7d4bbfac7af415dd5"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "b931f7c9406c724850e68745bb33ad9e24d086b827c1b8aa2339696203530c02"
+      }
     ]
   },
-  "issues": {
-    "detected": 4,
-    "hardStops": 2,
-    "warnings": 2,
-    "resolved": 2,
-    "unresolved": 2
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiCoverage",
-      "action": "blocked",
-      "resolution": "Retry aiCoverage after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
-          "subject": "verificationHistory[0] aiCoverage failed",
-          "digest": "4601829f4339b9003b8457ff2dc19798218bf44044a7acbdff7431866d057620"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
-          "subject": "verification[aiCoverage] retry passed",
-          "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
-          "subject": "verificationHistory[1] aiGuidelines failed",
-          "digest": "2c690bf56662368849b32b4727945e0d691800aa20f08af7d4bbfac7af415dd5"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "b931f7c9406c724850e68745bb33ad9e24d086b827c1b8aa2339696203530c02"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiCoverage failed before the retry.",
-      "policyOrGuard": "required verification: aiCoverage",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiCoverage after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
-          "subject": "verificationHistory[0] aiCoverage failed",
-          "digest": "4601829f4339b9003b8457ff2dc19798218bf44044a7acbdff7431866d057620"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
-          "subject": "verification[aiCoverage] retry passed",
-          "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
-          "subject": "verificationHistory[1] aiGuidelines failed",
-          "digest": "2c690bf56662368849b32b4727945e0d691800aa20f08af7d4bbfac7af415dd5"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "b931f7c9406c724850e68745bb33ad9e24d086b827c1b8aa2339696203530c02"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "Do not push, open a PR, merge, or close; parent agent owns provider lifecycle and closure.",
-    "Keep the implementation in the exclusive write set and do not edit shared module registration files.",
-    "When a problem is found, resolve it in the current WI where possible instead of opening a new WI.",
-    "User approved the current-WI scope amendment to add the module-local companion test file; shared coverage policy remains unchanged."
-  ],
-  "limitations": [
-    {
-      "sourceWarning": "The module is not exported by shared mod.rs files by design; integration coverage uses a path-bound test until a future composition WI owns registration.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "No upstream Top5 calculator is implemented in this WI; the input facts are deliberately modeled as opaque supplied values.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "The independent module is intentionally not registered in shared mod.rs files; a later composition WI must expose it without changing this WI's read-model semantics.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-003.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -995,6 +1071,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry aiGuidelines after correcting the recorded failure."
+  }
 }

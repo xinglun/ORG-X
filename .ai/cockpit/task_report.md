@@ -1,52 +1,59 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Partial
+Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-wr-005.contract.json [evidence: .ai/work-items/archive/2026/wi-wr-005.contract.json]
-- Changed .ai/work-items/active/wi-wr-005.summary.json [evidence: .ai/work-items/archive/2026/wi-wr-005.summary.json]
+- Changed .ai/work-items/active/wi-wr-003.contract.json [evidence: .ai/work-items/archive/2026/wi-wr-003.contract.json]
+- Changed .ai/work-items/active/wi-wr-003.summary.json [evidence: .ai/work-items/archive/2026/wi-wr-003.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/work-items/starts/wi-wr-003.json [evidence: .ai/work-items/starts/wi-wr-003.json]
+- Changed src/features/weekly_radar/domain/top5_weekly_read_model.rs [evidence: src/features/weekly_radar/domain/top5_weekly_read_model.rs]
+- Changed src/features/weekly_radar/domain/top5_weekly_read_model_test.rs [evidence: src/features/weekly_radar/domain/top5_weekly_read_model_test.rs]
+- Changed tests/weekly_radar_top5.rs [evidence: tests/weekly_radar_top5.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-wr-003-top5-weekly-read-model.md [evidence: docs/superpowers/specs/2026-08-17-wi-wr-003-top5-weekly-read-model.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-wr-003-top5-weekly-read-model.md [evidence: docs/superpowers/plans/2026-08-17-wi-wr-003-top5-weekly-read-model.md]
+- Changed .ai/work-items/active/wi-wr-003.outcome.json [evidence: .ai/work-items/archive/2026/wi-wr-003.outcome.json]
+- Changed .ai/work-items/active/wi-wr-003.outcome.md [evidence: .ai/work-items/archive/2026/wi-wr-003.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/starts/wi-wr-005.json [evidence: .ai/work-items/starts/wi-wr-005.json]
-- Changed .ai/work-items/archive/2026/wi-wr-005.contract.json [evidence: .ai/work-items/archive/2026/wi-wr-005.contract.json]
-- Changed .ai/work-items/archive/2026/wi-wr-005.summary.json [evidence: .ai/work-items/archive/2026/wi-wr-005.summary.json]
-- Changed .ai/work-items/archive/2026/wi-wr-005.outcome.json [evidence: .ai/work-items/archive/2026/wi-wr-005.outcome.json]
-- Changed .ai/work-items/archive/2026/wi-wr-005.outcome.md [evidence: .ai/work-items/archive/2026/wi-wr-005.outcome.md]
-- Changed src/features/weekly_radar/domain/threshold_distance.rs [evidence: src/features/weekly_radar/domain/threshold_distance.rs]
-- Changed src/features/weekly_radar/domain/threshold_distance_test.rs [evidence: src/features/weekly_radar/domain/threshold_distance_test.rs]
-- Changed tests/weekly_radar_threshold_distance.rs [evidence: tests/weekly_radar_threshold_distance.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-wr-005-threshold-distance.md [evidence: docs/superpowers/specs/2026-08-17-wi-wr-005-threshold-distance.md]
-- Changed docs/superpowers/plans/2026-08-17-wi-wr-005-threshold-distance.md [evidence: docs/superpowers/plans/2026-08-17-wi-wr-005-threshold-distance.md]
-- Changed .ai/work-items/active/wi-wr-005.outcome.json [evidence: .ai/work-items/archive/2026/wi-wr-005.outcome.json]
-- Changed .ai/work-items/active/wi-wr-005.outcome.md [evidence: .ai/work-items/archive/2026/wi-wr-005.outcome.md]
 
 Problems found
-- Total: 3
+- Total: 8
 - Blocking: 0
 - Warning: 2
 
 Stops triggered
-- None recorded.
+- Reason: aiCoverage failed before the retry. | Stage: verification | Resolution: Retry aiCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiCoverage failed, verification[aiCoverage] retry passed]
+- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[1] aiGuidelines failed, verification[aiGuidelines] retry passed]
 
 Problems resolved
-- Problem: observed issue
-  Solution: Added the legitimate module-local Rust test path src/features/weekly_radar/domain/threshold_distance_test.rs and registered it in this Contract; retained the requested integration test unchanged.
-  Evidence: [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue, observedIssues[0] observed issue, observedIssues[0] observed issue]
+- Problem: aiCoverage failed before the retry.
+  Solution: Re-ran aiCoverage after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiCoverage failed, verification[aiCoverage] retry passed]
+- Problem: aiGuidelines failed before the retry.
+  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[1] aiGuidelines failed, verification[aiGuidelines] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- The authoritative Distance formula is not part of this WI; a future producer must supply the value and preserve the documented labels without downstream recomputation. [evidence: residualRisks]
-- The source is intentionally not exported through shared Weekly Radar mod.rs in this WI; a later assembly WI must add an explicit integration boundary if needed. [evidence: residualRisks]
+- observed issue [evidence: observedIssues[0] observed issue]
+- observed issue [evidence: observedIssues[1] observed issue, observedIssues[1] observed issue]
+- observed issue [evidence: observedIssues[2] observed issue, observedIssues[2] observed issue]
+- observed issue [evidence: observedIssues[3] observed issue, observedIssues[3] observed issue, observedIssues[3] observed issue, observedIssues[3] observed issue]
+- The independent module is intentionally not registered in shared mod.rs files; a later composition WI must expose it without changing this WI's read-model semantics. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- None recorded.
+- Do not push, open a PR, merge, or close; parent agent owns provider lifecycle and closure. (inference)
+- Keep the implementation in the exclusive write set and do not edit shared module registration files. (inference)
+- When a problem is found, resolve it in the current WI where possible instead of opening a new WI. (inference)
+- User approved the current-WI scope amendment to add the module-local companion test file; shared coverage policy remains unchanged. (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]
@@ -67,9 +74,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

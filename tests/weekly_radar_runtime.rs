@@ -138,6 +138,27 @@ fn non_confirmed_fact_statuses_cannot_retain_concrete_values() {
 }
 
 #[test]
+fn confirmed_fact_without_value_is_rejected_by_constructor() {
+    let provenance = Provenance::from_rfc3339(
+        "https://example.test/filing/2026",
+        "facts.revenue",
+        "2026-08-17T00:00:00Z",
+        Some("2026-06-30"),
+    )
+    .expect("fixture provenance should be valid");
+
+    let result = NormalizedFact::without_value(
+        "acme",
+        "revenue",
+        FactStatus::Known,
+        Confidence::High,
+        provenance,
+    );
+
+    assert!(matches!(result, Err(RuntimeError::InvalidModel { .. })));
+}
+
+#[test]
 fn deserializing_non_confirmed_fact_clears_concrete_value() {
     let fact: NormalizedFact = serde_json::from_str(
         r#"
@@ -183,6 +204,37 @@ fn deserializing_malformed_normalized_fact_fails_cleanly() {
     );
 
     assert!(result.is_err(), "blank fact identity must be rejected");
+}
+
+#[test]
+fn deserializing_confirmed_fact_with_null_or_missing_value_is_rejected() {
+    let value_variants = [r#""value": null,"#, r#""#];
+
+    for value_field in value_variants {
+        let json = format!(
+            r#"
+            {{
+              "company_id": "acme",
+              "kind": "revenue",
+              {value_field}
+              "status": "KNOWN",
+              "confidence": "HIGH",
+              "provenance": {{
+                "source_uri": "https://example.test/filing/2026",
+                "source_field_or_passage": "facts.revenue",
+                "retrieved_at": "2026-08-17T00:00:00Z",
+                "effective_date": "2026-06-30"
+              }}
+            }}
+            "#
+        );
+
+        let result = serde_json::from_str::<NormalizedFact>(&json);
+        assert!(
+            matches!(result, Err(ref error) if error.to_string().contains("value")),
+            "confirmed fact JSON without a value must be rejected: {result:?}"
+        );
+    }
 }
 
 #[test]

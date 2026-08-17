@@ -226,7 +226,9 @@ impl NormalizedFact {
         provenance: Provenance,
     ) -> Result<Self, RuntimeError> {
         let value = match status {
-            FactStatus::Known => value,
+            FactStatus::Known => Some(value.ok_or_else(|| {
+                RuntimeError::invalid_model("confirmed fact value cannot be absent")
+            })?),
             FactStatus::Unknown | FactStatus::Unavailable | FactStatus::Unconfirmed => None,
         };
         let fact = Self {

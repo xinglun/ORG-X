@@ -5,14 +5,16 @@ use std::path::PathBuf;
 
 use chrono::{NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::CompanySourceRegistry;
-use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpClient, UreqHttpClient};
+use org_x::features::weekly_radar::runtime::http::{HttpClient, UreqHttpClient};
 use org_x::features::weekly_radar::runtime::model::{
     FactStatus, RuntimeReportInput, SourceCoverage,
 };
 use org_x::features::weekly_radar::runtime::report::{render_report, RenderedReport};
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources, SourceStatus};
-use org_x::features::weekly_radar::runtime::{send_rendered_report, write_run};
+use org_x::features::weekly_radar::runtime::{
+    normalize_source_observation, send_rendered_report, write_run,
+};
 
 const DEFAULT_REGISTRY: &str = "config/weekly_radar/companies.json";
 const DEFAULT_ARCHIVE_DIR: &str = ".";
@@ -158,6 +160,7 @@ fn acquire_runtime_input(
 
         let observations = collect_configured_sources(company, http, observed_at);
         let mut available_kinds = BTreeSet::new();
+        let mut source_indices = BTreeMap::<&str, usize>::new();
         for observation in &observations {
             let kind = observation.kind().as_str().to_owned();
             let source_coverage = coverage.entry(kind).or_default();
@@ -168,6 +171,15 @@ fn acquire_runtime_input(
             if observation.is_authoritative() && observation.status() == SourceStatus::Known {
                 has_primary_evidence = true;
             }
+            let index = source_indices
+                .entry(observation.kind().as_str())
+                .and_modify(|index| *index += 1)
+                .or_insert(1);
+            let fact = normalize_source_observation(observation, *index)
+                .map_err(|error| CliError::Failure(error.to_string()))?;
+            input
+                .add_fact(fact)
+                .map_err(|error| CliError::Failure(error.to_string()))?;
         }
         for kind in available_kinds {
             coverage
@@ -241,13 +253,8 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
             "cannot publish weekly radar without primary evidence".to_owned(),
         ));
     }
-    let fixture = FixtureHttpClient::new();
     let production = UreqHttpClient::new();
-    let http: &dyn HttpClient = if options.dry_run {
-        &fixture
-    } else {
-        &production
-    };
+    let http: &dyn HttpClient = &production;
 
     let acquired = acquire_runtime_input(&registry, http, &user_agent, options.as_of)?;
     let report = render_report(&acquired.input);

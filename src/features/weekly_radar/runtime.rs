@@ -36,3 +36,82 @@ pub use telegram::{
     send_rendered_report, send_rendered_report_with_transport, EnvTelegramTransport,
     TelegramDeliveryReceipt, TelegramError, TelegramRetryPolicy,
 };
+
+/// Converts one acquired source observation into a provider-neutral fact.
+///
+/// `index` is a one-based, stable index within the observation's source kind
+/// for one company. Official known observations retain their text as a
+/// confirmed value. Structured hiring and discovery observations retain their
+/// text in provenance while remaining unconfirmed, and missing/ambiguous
+/// observations retain no concrete value.
+pub fn normalize_source_observation(
+    observation: &SourceObservation,
+    index: usize,
+) -> Result<NormalizedFact, RuntimeError> {
+    if index == 0 {
+        return Err(RuntimeError::invalid_model(
+            "source observation index must be one-based",
+        ));
+    }
+
+    let kind = format!("source_{}_{index:03}", observation.kind().as_str());
+    let status = match observation.status() {
+        SourceStatus::Known if observation.tier() == SourceTier::OfficialPrimary => {
+            FactStatus::Known
+        }
+        SourceStatus::Known | SourceStatus::DiscoveryOnly => FactStatus::Unconfirmed,
+        SourceStatus::Unknown => FactStatus::Unknown,
+        SourceStatus::Unavailable => FactStatus::Unavailable,
+    };
+    let confidence = match status {
+        FactStatus::Known => Confidence::High,
+        FactStatus::Unconfirmed => match observation.tier() {
+            SourceTier::StructuredHiring => Confidence::Medium,
+            SourceTier::DiscoveryOnly => Confidence::Low,
+            SourceTier::OfficialPrimary => Confidence::Unknown,
+        },
+        FactStatus::Unknown | FactStatus::Unavailable => Confidence::Unknown,
+    };
+    let passage = if status == FactStatus::Known || observation.text().trim().is_empty() {
+        observation
+            .provenance()
+            .source_field_or_passage()
+            .to_owned()
+    } else {
+        format!(
+            "{}; passage: {}",
+            observation.provenance().source_field_or_passage(),
+            observation.text()
+        )
+    };
+    let provenance = Provenance::new(
+        observation.provenance().source_uri(),
+        passage,
+        *observation.provenance().retrieved_at(),
+        observation.provenance().effective_date().copied(),
+    )?;
+
+    if status == FactStatus::Known {
+        if observation.text().trim().is_empty() {
+            return Err(RuntimeError::invalid_model(
+                "confirmed source observation text cannot be blank",
+            ));
+        }
+        NormalizedFact::new(
+            observation.company_id(),
+            kind,
+            observation.text(),
+            status,
+            confidence,
+            provenance,
+        )
+    } else {
+        NormalizedFact::without_value(
+            observation.company_id(),
+            kind,
+            status,
+            confidence,
+            provenance,
+        )
+    }
+}

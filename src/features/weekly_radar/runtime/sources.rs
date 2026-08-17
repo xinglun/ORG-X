@@ -235,9 +235,10 @@ impl SourceObservation {
 /// company using the injected HTTP boundary.
 ///
 /// The number of requests is bounded to three configured official pages, one
-/// Greenhouse endpoint, one Lever endpoint, and one GDELT query. Individual
-/// failures become explicit source statuses so optional source gaps do not
-/// abort collection for the remaining sources.
+/// Greenhouse endpoint, one Lever endpoint, and, when a company source
+/// endpoint is configured, one GDELT query. Individual failures become
+/// explicit source statuses so optional source gaps do not abort collection
+/// for the remaining sources.
 pub fn collect_configured_sources(
     company: &CompanyConfig,
     http: &dyn HttpClient,
@@ -268,10 +269,20 @@ pub fn collect_configured_sources(
         company.engineering_ai_blog_url(),
         &mut observations,
     );
-    collect_greenhouse(company, http, observed_at.clone(), &mut observations);
-    collect_lever(company, http, observed_at.clone(), &mut observations);
-    collect_gdelt(company, http, observed_at, &mut observations);
+    collect_greenhouse(company, http, observed_at, &mut observations);
+    collect_lever(company, http, observed_at, &mut observations);
+    if has_configured_source_endpoint(company) {
+        collect_gdelt(company, http, observed_at, &mut observations);
+    }
     observations
+}
+
+fn has_configured_source_endpoint(company: &CompanyConfig) -> bool {
+    company.official_ir_url().is_some()
+        || company.careers_url().is_some()
+        || company.engineering_ai_blog_url().is_some()
+        || company.greenhouse_board().is_some()
+        || company.lever_site().is_some()
 }
 
 fn collect_official(

@@ -18,6 +18,7 @@ use org_x::features::weekly_radar::runtime::http::{
 use org_x::features::weekly_radar::runtime::model::{
     Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput, SourceCoverage,
 };
+use org_x::features::weekly_radar::runtime::normalize_source_observation;
 use org_x::features::weekly_radar::runtime::report::{render_report, RenderedReport};
 use org_x::features::weekly_radar::runtime::rules::extract_employee_count;
 use org_x::features::weekly_radar::runtime::sec::SecClient;
@@ -185,6 +186,37 @@ fn gdelt_fixture_url() -> &'static str {
 }
 
 #[test]
+fn source_collection_skips_gdelt_without_configured_source_endpoints() {
+    let company = CompanyConfig::new(
+        "beta",
+        "Beta Systems",
+        "BETA",
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("source-free company fixture should be valid");
+    let client = FixtureHttpClient::new();
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+
+    let observations = collect_configured_sources(&company, &client, observed_at);
+
+    assert!(
+        observations
+            .iter()
+            .all(|observation| observation.kind() != SourceKind::Gdelt),
+        "GDELT must be skipped when no configured source endpoint exists"
+    );
+    assert!(
+        client.requests().is_empty(),
+        "source-free collection must not issue a discovery request"
+    );
+}
+
+#[test]
 fn source_adapter_extracts_official_html_without_provider_markup() {
     let company = source_test_company();
     let client = FixtureHttpClient::new();
@@ -349,6 +381,87 @@ fn source_adapter_marks_gdelt_records_as_discovery_only() {
         .provenance()
         .source_field_or_passage()
         .contains("GDELT query"));
+}
+
+#[test]
+fn source_observations_normalize_to_facts_with_status_and_passage_provenance() {
+    let company = source_test_company();
+    let client = FixtureHttpClient::new();
+    client.insert(
+        company.official_ir_url().unwrap(),
+        HttpResponse::ok("<html><body>Official strategy update</body></html>"),
+    );
+    client.insert(
+        "https://boards-api.greenhouse.io/v1/boards/acme/jobs?content=true",
+        HttpResponse::ok(
+            r#"{"jobs":[{"id":101,"title":"Systems Engineer","updated_at":"2026-08-15T12:00:00Z","absolute_url":"https://boards.greenhouse.io/acme/jobs/101","content":"<p>Build reliable systems.</p>"}]}"#,
+        ),
+    );
+    client.insert(
+        "https://api.lever.co/v0/postings/acme?mode=json",
+        HttpResponse::ok(
+            r#"[{"id":"posting-1","text":"Data Platform Engineer","hostedUrl":"https://jobs.lever.co/acme/posting-1","descriptionPlain":"Own the data platform."}]"#,
+        ),
+    );
+    client.insert(
+        gdelt_fixture_url(),
+        HttpResponse::ok(
+            r#"{"articles":[{"url":"https://news.example.test/acme","title":"Acme expands its platform","seendate":"20260817T120000Z"}]}"#,
+        ),
+    );
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+    let observations = collect_configured_sources(&company, &client, observed_at);
+
+    let official = observations
+        .iter()
+        .find(|observation| observation.kind() == SourceKind::OfficialIr)
+        .expect("official observation should exist");
+    let official_fact =
+        normalize_source_observation(official, 1).expect("official observation should normalize");
+    assert_eq!(official_fact.kind(), "source_official_ir_001");
+    assert_eq!(official_fact.status(), &FactStatus::Known);
+    assert_eq!(official_fact.value(), Some("Official strategy update"));
+    assert_eq!(
+        official_fact.provenance().source_field_or_passage(),
+        "official page text"
+    );
+
+    let greenhouse = observations
+        .iter()
+        .find(|observation| observation.kind() == SourceKind::Greenhouse)
+        .expect("Greenhouse observation should exist");
+    let greenhouse_fact = normalize_source_observation(greenhouse, 1)
+        .expect("Greenhouse observation should normalize");
+    assert_eq!(greenhouse_fact.kind(), "source_greenhouse_001");
+    assert_eq!(greenhouse_fact.status(), &FactStatus::Unconfirmed);
+    assert_eq!(greenhouse_fact.value(), None);
+    assert!(greenhouse_fact
+        .provenance()
+        .source_field_or_passage()
+        .contains("Build reliable systems."));
+
+    let gdelt = observations
+        .iter()
+        .find(|observation| observation.kind() == SourceKind::Gdelt)
+        .expect("GDELT observation should exist");
+    let gdelt_fact =
+        normalize_source_observation(gdelt, 1).expect("GDELT observation should normalize");
+    assert_eq!(gdelt_fact.kind(), "source_gdelt_001");
+    assert_eq!(gdelt_fact.status(), &FactStatus::Unconfirmed);
+    assert_eq!(gdelt_fact.value(), None);
+    assert!(gdelt_fact
+        .provenance()
+        .source_field_or_passage()
+        .contains("Acme expands its platform"));
+
+    let unavailable = observations
+        .iter()
+        .find(|observation| observation.kind() == SourceKind::Careers)
+        .expect("missing careers observation should exist");
+    let unavailable_fact = normalize_source_observation(unavailable, 1)
+        .expect("unavailable observation should normalize");
+    assert_eq!(unavailable_fact.status(), &FactStatus::Unavailable);
+    assert_eq!(unavailable_fact.value(), None);
 }
 
 #[test]
@@ -1659,6 +1772,8 @@ fn task5_cli_accepts_weekly_radar_dry_run_without_archive_mutation() {
         String::from_utf8_lossy(&output.stdout).contains("DRY-RUN"),
         "dry-run should identify its non-mutating mode"
     );
+    assert!(String::from_utf8_lossy(&output.stdout).contains("## System Health"));
+    assert!(String::from_utf8_lossy(&output.stdout).contains("official_ir: 0/1"));
     assert!(
         !archive.exists(),
         "dry-run must not create or mutate archive output"

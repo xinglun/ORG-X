@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "companies": [
+    {
+      "id": "meta",
+      "name": "Meta Platforms, Inc.",
+      "ticker": "META",
+      "sec_cik": "0001326801",
+      "official_ir": "https://investor.atmeta.com/",
+      "engineering_ai_blog": "https://engineering.fb.com/"
+    },
+    {
+      "id": "pltr",
+      "name": "Palantir Technologies Inc.",
+      "ticker": "PLTR",
+      "sec_cik": "0001321655",
+      "official_ir": "https://investors.palantir.com/",
+      "careers": "https://www.palantir.com/careers/"
+    },
+    {
+      "id": "msft",
+      "name": "Microsoft Corporation",
+      "ticker": "MSFT",
+      "sec_cik": "0000789019",
+      "official_ir": "https://www.microsoft.com/en-us/Investor/",
+      "careers": "https://jobs.careers.microsoft.com/"
+    },
+    {
+      "id": "goog",
+      "name": "Alphabet Inc.",
+      "ticker": "GOOG",
+      "sec_cik": "0001652044",
+      "official_ir": "https://abc.xyz/investor/",
+      "careers": "https://careers.google.com/",
+      "engineering_ai_blog": "https://research.google/"
+    },
+    {
+      "id": "amzn",
+      "name": "Amazon.com, Inc.",
+      "ticker": "AMZN",
+      "sec_cik": "0001018724",
+      "official_ir": "https://ir.aboutamazon.com/",
+      "careers": "https://www.amazon.jobs/"
+    },
+    {
+      "id": "nvda",
+      "name": "NVIDIA Corporation",
+      "ticker": "NVDA",
+      "sec_cik": "0001045810",
+      "official_ir": "https://investor.nvidia.com/",
+      "careers": "https://www.nvidia.com/en-us/about-nvidia/careers/"
+    },
+    {
+      "id": "crm",
+      "name": "Salesforce, Inc.",
+      "ticker": "CRM",
+      "sec_cik": "0001108524",
+      "official_ir": "https://investor.salesforce.com/",
+      "careers": "https://careers.salesforce.com/"
+    },
+    {
+      "id": "adbe",
+      "name": "Adobe Inc.",
+      "ticker": "ADBE",
+      "sec_cik": "0000796343",
+      "official_ir": "https://www.adobe.com/investor-relations.html",
+      "careers": "https://www.adobe.com/careers.html"
+    },
+    {
+      "id": "ibm",
+      "name": "International Business Machines Corporation",
+      "ticker": "IBM",
+      "sec_cik": "0000051143",
+      "official_ir": "https://www.ibm.com/investor",
+      "careers": "https://www.ibm.com/careers"
+    },
+    {
+      "id": "wmt",
+      "name": "Walmart Inc.",
+      "ticker": "WMT",
+      "sec_cik": "0000104169",
+      "official_ir": "https://stock.walmart.com/",
+      "careers": "https://careers.walmart.com/"
+    }
+  ]
+}

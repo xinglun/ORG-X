@@ -10,6 +10,7 @@ pub mod http;
 pub mod model;
 pub mod rules;
 pub mod sec;
+pub mod sources;
 
 pub use config::{CompanyConfig, CompanySourceRegistry};
 pub use error::RuntimeError;
@@ -19,3 +20,6 @@ pub use model::{
 };
 pub use rules::extract_employee_count;
 pub use sec::{CompanyEvidence, SecClient};
+pub use sources::{
+    collect_configured_sources, SourceKind, SourceObservation, SourceStatus, SourceTier,
+};

@@ -1,0 +1,771 @@
+//! Free, provider-specific source adapters behind provider-neutral observations.
+//!
+//! The adapters intentionally make a small, bounded number of public GET
+//! requests. Provider response types and parsing stay in this module; callers
+//! receive only normalized text, source classification, status, and provenance.
+
+use chrono::{DateTime, NaiveDate, Utc};
+use regex::Regex;
+use serde::de::DeserializeOwned;
+use serde::Deserialize;
+
+use super::config::CompanyConfig;
+use super::http::HttpClient;
+use super::model::Provenance;
+
+const MAX_GDELT_ARTICLES: usize = 10;
+const GDELT_ENDPOINT: &str = "https://api.gdeltproject.org/api/v2/doc/doc";
+const GDELT_USER_AGENT: &str = "ORG-X weekly-radar source adapter";
+
+/// Provider-neutral source family for one runtime observation.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SourceKind {
+    /// Configured official investor-relations material.
+    OfficialIr,
+    /// Configured official careers material.
+    Careers,
+    /// Configured official engineering or AI material.
+    EngineeringAiBlog,
+    /// Public Greenhouse job-board material.
+    Greenhouse,
+    /// Public Lever job-board material.
+    Lever,
+    /// GDELT article discovery material.
+    Gdelt,
+}
+
+impl SourceKind {
+    /// Returns the stable source-family label.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::OfficialIr => "official_ir",
+            Self::Careers => "careers",
+            Self::EngineeringAiBlog => "engineering_ai_blog",
+            Self::Greenhouse => "greenhouse",
+            Self::Lever => "lever",
+            Self::Gdelt => "gdelt",
+        }
+    }
+}
+
+/// Status of one source observation, independent of downstream fact status.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum SourceStatus {
+    /// A usable deterministic source observation was retained.
+    Known,
+    /// The source responded, but no usable observation could be extracted.
+    Unknown,
+    /// The source was absent or could not be reached.
+    Unavailable,
+    /// The record is intentionally limited to discovery and corroboration.
+    DiscoveryOnly,
+}
+
+impl SourceStatus {
+    /// Returns the stable status label.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Known => "KNOWN",
+            Self::Unknown => "UNKNOWN",
+            Self::Unavailable => "UNAVAILABLE",
+            Self::DiscoveryOnly => "DISCOVERY_ONLY",
+        }
+    }
+}
+
+/// Authority tier assigned by the source adapter.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum SourceTier {
+    /// Official company material used as primary evidence.
+    OfficialPrimary,
+    /// Structured public hiring material.
+    StructuredHiring,
+    /// Secondary discovery material that cannot be authoritative here.
+    DiscoveryOnly,
+}
+
+impl SourceTier {
+    /// Returns the stable authority-tier label.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::OfficialPrimary => "OFFICIAL_PRIMARY",
+            Self::StructuredHiring => "STRUCTURED_HIRING",
+            Self::DiscoveryOnly => "DISCOVERY_ONLY",
+        }
+    }
+
+    /// Returns whether this tier can be used as primary authority by this
+    /// adapter boundary.
+    pub const fn is_authoritative(self) -> bool {
+        matches!(self, Self::OfficialPrimary)
+    }
+}
+
+/// Provider-neutral source material with explicit status and provenance.
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct SourceObservation {
+    company_id: String,
+    kind: SourceKind,
+    status: SourceStatus,
+    tier: SourceTier,
+    url: Option<String>,
+    title: Option<String>,
+    text: String,
+    provenance: Provenance,
+}
+
+impl SourceObservation {
+    fn new(
+        company_id: &str,
+        kind: SourceKind,
+        status: SourceStatus,
+        tier: SourceTier,
+        url: Option<String>,
+        title: Option<String>,
+        text: String,
+        source_uri: String,
+        source_field_or_passage: String,
+        observed_at: DateTime<Utc>,
+        effective_date: Option<NaiveDate>,
+    ) -> Self {
+        let provenance = Provenance::new(
+            source_uri,
+            source_field_or_passage,
+            observed_at,
+            effective_date,
+        )
+        .expect("source adapter must construct nonblank provenance");
+        Self {
+            company_id: company_id.to_owned(),
+            kind,
+            status,
+            tier,
+            url,
+            title,
+            text,
+            provenance,
+        }
+    }
+
+    /// Returns the configured company identity.
+    pub fn company_id(&self) -> &str {
+        &self.company_id
+    }
+
+    /// Returns the source family.
+    pub const fn kind(&self) -> SourceKind {
+        self.kind
+    }
+
+    /// Returns the source status.
+    pub const fn status(&self) -> SourceStatus {
+        self.status
+    }
+
+    /// Returns the source authority tier.
+    pub const fn tier(&self) -> SourceTier {
+        self.tier
+    }
+
+    /// Returns the source family as a stable label.
+    pub const fn source_kind(&self) -> SourceKind {
+        self.kind()
+    }
+
+    /// Returns the source status as a stable enum.
+    pub const fn source_status(&self) -> SourceStatus {
+        self.status()
+    }
+
+    /// Returns the source tier as a stable enum.
+    pub const fn source_tier(&self) -> SourceTier {
+        self.tier()
+    }
+
+    /// Returns the optional record URL. Unconfigured sources never get a
+    /// guessed URL.
+    pub fn url(&self) -> Option<&str> {
+        self.url.as_deref()
+    }
+
+    /// Returns the optional source title.
+    pub fn title(&self) -> Option<&str> {
+        self.title.as_deref()
+    }
+
+    /// Returns normalized source text.
+    pub fn text(&self) -> &str {
+        &self.text
+    }
+
+    /// Returns complete source provenance.
+    pub const fn provenance(&self) -> &Provenance {
+        &self.provenance
+    }
+
+    /// Returns whether this observation is eligible as primary authority.
+    pub const fn is_authoritative(&self) -> bool {
+        self.tier.is_authoritative()
+    }
+
+    /// Returns whether this observation is explicitly discovery-only.
+    pub const fn is_discovery_only(&self) -> bool {
+        matches!(self.tier, SourceTier::DiscoveryOnly)
+    }
+}
+
+/// Collects all configured official, hiring, and discovery observations for a
+/// company using the injected HTTP boundary.
+///
+/// The number of requests is bounded to three configured official pages, one
+/// Greenhouse endpoint, one Lever endpoint, and one GDELT query. Individual
+/// failures become explicit source statuses so optional source gaps do not
+/// abort collection for the remaining sources.
+pub fn collect_configured_sources(
+    company: &CompanyConfig,
+    http: &dyn HttpClient,
+    observed_at: DateTime<Utc>,
+) -> Vec<SourceObservation> {
+    let mut observations = Vec::new();
+    collect_official(
+        company,
+        http,
+        observed_at.clone(),
+        SourceKind::OfficialIr,
+        company.official_ir_url(),
+        &mut observations,
+    );
+    collect_official(
+        company,
+        http,
+        observed_at.clone(),
+        SourceKind::Careers,
+        company.careers_url(),
+        &mut observations,
+    );
+    collect_official(
+        company,
+        http,
+        observed_at.clone(),
+        SourceKind::EngineeringAiBlog,
+        company.engineering_ai_blog_url(),
+        &mut observations,
+    );
+    collect_greenhouse(company, http, observed_at.clone(), &mut observations);
+    collect_lever(company, http, observed_at.clone(), &mut observations);
+    collect_gdelt(company, http, observed_at, &mut observations);
+    observations
+}
+
+fn collect_official(
+    company: &CompanyConfig,
+    http: &dyn HttpClient,
+    observed_at: DateTime<Utc>,
+    kind: SourceKind,
+    configured_url: Option<&str>,
+    observations: &mut Vec<SourceObservation>,
+) {
+    let Some(url) = configured_url else {
+        observations.push(unavailable_observation(
+            company,
+            kind,
+            SourceTier::OfficialPrimary,
+            None,
+            observed_at,
+            "optional official source is not configured",
+        ));
+        return;
+    };
+
+    let result = http.get(
+        url,
+        &[(
+            "Accept".to_owned(),
+            "text/html,application/xhtml+xml".to_owned(),
+        )],
+    );
+    match result {
+        Ok(response) if response.is_success() => {
+            let text = normalize_html_text(response.body());
+            let status = if text.is_empty() {
+                SourceStatus::Unknown
+            } else {
+                SourceStatus::Known
+            };
+            observations.push(SourceObservation::new(
+                company.id(),
+                kind,
+                status,
+                SourceTier::OfficialPrimary,
+                Some(url.to_owned()),
+                None,
+                text,
+                url.to_owned(),
+                "official page text".to_owned(),
+                observed_at,
+                None,
+            ));
+        }
+        Ok(_) | Err(_) => observations.push(unavailable_observation(
+            company,
+            kind,
+            SourceTier::OfficialPrimary,
+            Some(url),
+            observed_at,
+            "official page request unavailable",
+        )),
+    }
+}
+
+fn collect_greenhouse(
+    company: &CompanyConfig,
+    http: &dyn HttpClient,
+    observed_at: DateTime<Utc>,
+    observations: &mut Vec<SourceObservation>,
+) {
+    let Some(board) = company.greenhouse_board() else {
+        observations.push(unavailable_observation(
+            company,
+            SourceKind::Greenhouse,
+            SourceTier::StructuredHiring,
+            None,
+            observed_at,
+            "optional Greenhouse board is not configured",
+        ));
+        return;
+    };
+
+    let endpoint = format!("https://boards-api.greenhouse.io/v1/boards/{board}/jobs?content=true");
+    let response = match get_json::<GreenhouseResponse>(http, &endpoint) {
+        Ok(response) => response,
+        Err(FetchFailure::Unavailable) => {
+            observations.push(unavailable_observation(
+                company,
+                SourceKind::Greenhouse,
+                SourceTier::StructuredHiring,
+                Some(&endpoint),
+                observed_at,
+                "Greenhouse request unavailable",
+            ));
+            return;
+        }
+        Err(FetchFailure::InvalidPayload) => {
+            observations.push(unknown_observation(
+                company,
+                SourceKind::Greenhouse,
+                SourceTier::StructuredHiring,
+                Some(&endpoint),
+                observed_at,
+                "greenhouse payload",
+            ));
+            return;
+        }
+    };
+
+    let mut retained = 0;
+    for job in response.jobs {
+        let title = normalize_plain_text(&job.title);
+        if title.is_empty() {
+            continue;
+        }
+        let text = job
+            .content
+            .as_deref()
+            .map(normalize_html_text)
+            .filter(|text| !text.is_empty())
+            .unwrap_or_else(|| title.clone());
+        let url = job.absolute_url.clone();
+        let source_uri = url.clone().unwrap_or_else(|| endpoint.clone());
+        let field = format!("greenhouse.jobs[{}].content", job.id);
+        observations.push(SourceObservation::new(
+            company.id(),
+            SourceKind::Greenhouse,
+            SourceStatus::Known,
+            SourceTier::StructuredHiring,
+            url,
+            Some(title),
+            text,
+            source_uri,
+            field,
+            observed_at.clone(),
+            job.updated_at.as_deref().and_then(parse_rfc3339_date),
+        ));
+        retained += 1;
+    }
+    if retained == 0 {
+        observations.push(unknown_observation(
+            company,
+            SourceKind::Greenhouse,
+            SourceTier::StructuredHiring,
+            Some(&endpoint),
+            observed_at,
+            "greenhouse jobs list",
+        ));
+    }
+}
+
+fn collect_lever(
+    company: &CompanyConfig,
+    http: &dyn HttpClient,
+    observed_at: DateTime<Utc>,
+    observations: &mut Vec<SourceObservation>,
+) {
+    let Some(site) = company.lever_site() else {
+        observations.push(unavailable_observation(
+            company,
+            SourceKind::Lever,
+            SourceTier::StructuredHiring,
+            None,
+            observed_at,
+            "optional Lever site is not configured",
+        ));
+        return;
+    };
+
+    let endpoint = format!("https://api.lever.co/v0/postings/{site}?mode=json");
+    let postings = match get_json::<Vec<LeverPosting>>(http, &endpoint) {
+        Ok(postings) => postings,
+        Err(FetchFailure::Unavailable) => {
+            observations.push(unavailable_observation(
+                company,
+                SourceKind::Lever,
+                SourceTier::StructuredHiring,
+                Some(&endpoint),
+                observed_at,
+                "Lever request unavailable",
+            ));
+            return;
+        }
+        Err(FetchFailure::InvalidPayload) => {
+            observations.push(unknown_observation(
+                company,
+                SourceKind::Lever,
+                SourceTier::StructuredHiring,
+                Some(&endpoint),
+                observed_at,
+                "lever payload",
+            ));
+            return;
+        }
+    };
+
+    let mut retained = 0;
+    for posting in postings {
+        let title = normalize_plain_text(&posting.text);
+        if title.is_empty() {
+            continue;
+        }
+        let (text, field) = match posting
+            .description_plain
+            .as_deref()
+            .map(normalize_plain_text)
+            .filter(|text| !text.is_empty())
+        {
+            Some(text) => (text, "descriptionPlain".to_owned()),
+            None => (
+                posting
+                    .description
+                    .as_deref()
+                    .map(normalize_html_text)
+                    .unwrap_or_else(|| title.clone()),
+                "description".to_owned(),
+            ),
+        };
+        let url = posting.hosted_url.or(posting.apply_url);
+        let source_uri = url.clone().unwrap_or_else(|| endpoint.clone());
+        let field = format!("lever.postings[{}].{field}", posting.id);
+        observations.push(SourceObservation::new(
+            company.id(),
+            SourceKind::Lever,
+            SourceStatus::Known,
+            SourceTier::StructuredHiring,
+            url,
+            Some(title),
+            text,
+            source_uri,
+            field,
+            observed_at.clone(),
+            posting
+                .updated_at
+                .or(posting.created_at)
+                .and_then(parse_epoch_date),
+        ));
+        retained += 1;
+    }
+    if retained == 0 {
+        observations.push(unknown_observation(
+            company,
+            SourceKind::Lever,
+            SourceTier::StructuredHiring,
+            Some(&endpoint),
+            observed_at,
+            "lever postings list",
+        ));
+    }
+}
+
+fn collect_gdelt(
+    company: &CompanyConfig,
+    http: &dyn HttpClient,
+    observed_at: DateTime<Utc>,
+    observations: &mut Vec<SourceObservation>,
+) {
+    let endpoint = gdelt_endpoint(company.name());
+    let response = match get_json::<GdeltResponse>(http, &endpoint) {
+        Ok(response) => response,
+        Err(FetchFailure::Unavailable) => {
+            observations.push(unavailable_observation(
+                company,
+                SourceKind::Gdelt,
+                SourceTier::DiscoveryOnly,
+                Some(&endpoint),
+                observed_at,
+                "GDELT discovery request unavailable",
+            ));
+            return;
+        }
+        Err(FetchFailure::InvalidPayload) => {
+            observations.push(unknown_observation(
+                company,
+                SourceKind::Gdelt,
+                SourceTier::DiscoveryOnly,
+                Some(&endpoint),
+                observed_at,
+                "GDELT query context",
+            ));
+            return;
+        }
+    };
+
+    let mut retained = 0;
+    for article in response.articles.into_iter().take(MAX_GDELT_ARTICLES) {
+        let (Some(url), Some(title)) = (article.url, article.title) else {
+            continue;
+        };
+        let title = normalize_plain_text(&title);
+        if title.is_empty() || url.trim().is_empty() {
+            continue;
+        }
+        observations.push(SourceObservation::new(
+            company.id(),
+            SourceKind::Gdelt,
+            SourceStatus::DiscoveryOnly,
+            SourceTier::DiscoveryOnly,
+            Some(url.clone()),
+            Some(title.clone()),
+            title,
+            url,
+            format!("GDELT query context: {endpoint}"),
+            observed_at.clone(),
+            article.seendate.as_deref().and_then(parse_gdelt_date),
+        ));
+        retained += 1;
+    }
+    if retained == 0 {
+        observations.push(unknown_observation(
+            company,
+            SourceKind::Gdelt,
+            SourceTier::DiscoveryOnly,
+            Some(&endpoint),
+            observed_at,
+            "GDELT query context",
+        ));
+    }
+}
+
+fn unavailable_observation(
+    company: &CompanyConfig,
+    kind: SourceKind,
+    tier: SourceTier,
+    url: Option<&str>,
+    observed_at: DateTime<Utc>,
+    field: &str,
+) -> SourceObservation {
+    let source_uri = url
+        .map(str::to_owned)
+        .unwrap_or_else(|| format!("source://weekly-radar/{}/{}", company.id(), kind.as_str()));
+    SourceObservation::new(
+        company.id(),
+        kind,
+        SourceStatus::Unavailable,
+        tier,
+        url.map(str::to_owned),
+        None,
+        String::new(),
+        source_uri,
+        field.to_owned(),
+        observed_at,
+        None,
+    )
+}
+
+fn unknown_observation(
+    company: &CompanyConfig,
+    kind: SourceKind,
+    tier: SourceTier,
+    url: Option<&str>,
+    observed_at: DateTime<Utc>,
+    field: &str,
+) -> SourceObservation {
+    let source_uri = url
+        .map(str::to_owned)
+        .unwrap_or_else(|| format!("source://weekly-radar/{}/{}", company.id(), kind.as_str()));
+    SourceObservation::new(
+        company.id(),
+        kind,
+        SourceStatus::Unknown,
+        tier,
+        url.map(str::to_owned),
+        None,
+        String::new(),
+        source_uri,
+        field.to_owned(),
+        observed_at,
+        None,
+    )
+}
+
+enum FetchFailure {
+    Unavailable,
+    InvalidPayload,
+}
+
+fn get_json<T: DeserializeOwned>(http: &dyn HttpClient, url: &str) -> Result<T, FetchFailure> {
+    let response = http
+        .get(
+            url,
+            &[
+                ("Accept".to_owned(), "application/json".to_owned()),
+                ("User-Agent".to_owned(), GDELT_USER_AGENT.to_owned()),
+            ],
+        )
+        .map_err(|_| FetchFailure::Unavailable)?;
+    if !response.is_success() {
+        return Err(FetchFailure::Unavailable);
+    }
+    serde_json::from_str(response.body()).map_err(|_| FetchFailure::InvalidPayload)
+}
+
+fn normalize_html_text(html: &str) -> String {
+    let scripts = Regex::new(r"(?is)<script\b[^>]*>.*?</script\s*>").expect("valid script regex");
+    let styles = Regex::new(r"(?is)<style\b[^>]*>.*?</style\s*>").expect("valid style regex");
+    let tags = Regex::new(r"(?s)<[^>]+>").expect("valid HTML tag regex");
+    let text = scripts.replace_all(html, " ");
+    let text = styles.replace_all(&text, " ");
+    let text = tags.replace_all(&text, " ");
+    normalize_plain_text(&decode_html_entities(&text))
+}
+
+fn normalize_plain_text(text: &str) -> String {
+    text.split_whitespace().collect::<Vec<_>>().join(" ")
+}
+
+fn decode_html_entities(text: &str) -> String {
+    text.replace("&nbsp;", " ")
+        .replace("&amp;", "&")
+        .replace("&lt;", "<")
+        .replace("&gt;", ">")
+        .replace("&quot;", "\"")
+        .replace("&#39;", "'")
+        .replace("&#x27;", "'")
+}
+
+fn gdelt_endpoint(company_name: &str) -> String {
+    format!(
+        "{GDELT_ENDPOINT}?query=%22{}%22&mode=artlist&format=json&maxrecords={MAX_GDELT_ARTICLES}&sort=HybridRel",
+        percent_encode_query(company_name)
+    )
+}
+
+fn percent_encode_query(value: &str) -> String {
+    let mut encoded = String::with_capacity(value.len());
+    for byte in value.as_bytes() {
+        if byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'.' | b'_' | b'~') {
+            encoded.push(*byte as char);
+        } else {
+            encoded.push('%');
+            encoded.push(hex_digit(byte >> 4));
+            encoded.push(hex_digit(byte & 0x0f));
+        }
+    }
+    encoded
+}
+
+fn hex_digit(value: u8) -> char {
+    match value {
+        0..=9 => (b'0' + value) as char,
+        10..=15 => (b'A' + value - 10) as char,
+        _ => unreachable!("nibble is at most four bits"),
+    }
+}
+
+fn parse_rfc3339_date(value: &str) -> Option<NaiveDate> {
+    DateTime::parse_from_rfc3339(value)
+        .ok()
+        .map(|date| date.date_naive())
+}
+
+fn parse_epoch_date(value: i64) -> Option<NaiveDate> {
+    DateTime::from_timestamp_millis(value).map(|date| date.date_naive())
+}
+
+fn parse_gdelt_date(value: &str) -> Option<NaiveDate> {
+    value
+        .get(..8)
+        .and_then(|date| NaiveDate::parse_from_str(date, "%Y%m%d").ok())
+}
+
+#[derive(Debug, Deserialize)]
+struct GreenhouseResponse {
+    #[serde(default)]
+    jobs: Vec<GreenhouseJob>,
+}
+
+#[derive(Debug, Deserialize)]
+struct GreenhouseJob {
+    id: u64,
+    title: String,
+    #[serde(default)]
+    updated_at: Option<String>,
+    #[serde(default)]
+    absolute_url: Option<String>,
+    #[serde(default)]
+    content: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+struct LeverPosting {
+    id: String,
+    text: String,
+    #[serde(default, rename = "hostedUrl")]
+    hosted_url: Option<String>,
+    #[serde(default, rename = "applyUrl")]
+    apply_url: Option<String>,
+    #[serde(default, rename = "descriptionPlain")]
+    description_plain: Option<String>,
+    #[serde(default)]
+    description: Option<String>,
+    #[serde(default, rename = "createdAt")]
+    created_at: Option<i64>,
+    #[serde(default, rename = "updatedAt")]
+    updated_at: Option<i64>,
+}
+
+#[derive(Debug, Deserialize)]
+struct GdeltResponse {
+    #[serde(default)]
+    articles: Vec<GdeltArticle>,
+}
+
+#[derive(Debug, Deserialize)]
+struct GdeltArticle {
+    #[serde(default)]
+    url: Option<String>,
+    #[serde(default)]
+    title: Option<String>,
+    #[serde(default)]
+    seendate: Option<String>,
+}

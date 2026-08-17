@@ -3,7 +3,7 @@ use std::net::TcpListener;
 use std::thread;
 use std::time::Duration;
 
-use chrono::NaiveDate;
+use chrono::{DateTime, NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
 use org_x::features::weekly_radar::runtime::error::RuntimeError;
 use org_x::features::weekly_radar::runtime::http::{
@@ -14,6 +14,9 @@ use org_x::features::weekly_radar::runtime::model::{
 };
 use org_x::features::weekly_radar::runtime::rules::extract_employee_count;
 use org_x::features::weekly_radar::runtime::sec::SecClient;
+use org_x::features::weekly_radar::runtime::sources::{
+    collect_configured_sources, SourceKind, SourceStatus, SourceTier,
+};
 
 #[test]
 fn registry_validation_preserves_optional_source_semantics() {
@@ -64,6 +67,263 @@ fn registry_validation_preserves_optional_source_semantics() {
         }"#,
     );
     assert!(invalid.is_err(), "duplicate identities must be rejected");
+}
+
+#[test]
+fn calibration_registry_contains_only_configured_prd_companies() {
+    let registry = CompanySourceRegistry::from_path("config/weekly_radar/companies.json")
+        .expect("calibration registry should satisfy runtime validation");
+    let expected = [
+        ("meta", "META", "0001326801"),
+        ("pltr", "PLTR", "0001321655"),
+        ("msft", "MSFT", "0000789019"),
+        ("goog", "GOOG", "0001652044"),
+        ("amzn", "AMZN", "0001018724"),
+        ("nvda", "NVDA", "0001045810"),
+        ("crm", "CRM", "0001108524"),
+        ("adbe", "ADBE", "0000796343"),
+        ("ibm", "IBM", "0000051143"),
+        ("wmt", "WMT", "0000104169"),
+    ];
+
+    assert_eq!(registry.companies().len(), expected.len());
+    for (id, ticker, cik) in expected {
+        let company = registry
+            .company(id)
+            .expect("expected company should be configured");
+        assert_eq!(company.ticker(), ticker);
+        assert_eq!(company.sec_cik(), Some(cik));
+        assert!(company.official_ir_url().is_some());
+        assert_eq!(company.greenhouse_board(), None);
+        assert_eq!(company.lever_site(), None);
+    }
+}
+
+fn source_test_company() -> CompanyConfig {
+    CompanyConfig::new(
+        "acme",
+        "Acme Corporation",
+        "ACME",
+        None,
+        Some("https://example.test/investors".to_owned()),
+        Some("https://example.test/careers".to_owned()),
+        Some("https://example.test/engineering".to_owned()),
+        Some("acme".to_owned()),
+        Some("acme".to_owned()),
+    )
+    .expect("source fixture company should be valid")
+}
+
+fn gdelt_fixture_url() -> &'static str {
+    "https://api.gdeltproject.org/api/v2/doc/doc?query=%22Acme%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel"
+}
+
+#[test]
+fn source_adapter_extracts_official_html_without_provider_markup() {
+    let company = source_test_company();
+    let client = FixtureHttpClient::new();
+    client.insert(
+        company.official_ir_url().unwrap(),
+        HttpResponse::ok(
+            r#"<html><head><style>hidden</style></head><body>Investor <strong>relations</strong> &amp; updates<script>ignore()</script></body></html>"#,
+        ),
+    );
+    client.insert(gdelt_fixture_url(), HttpResponse::ok(r#"{"articles":[]}"#));
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+
+    let observations = collect_configured_sources(&company, &client, observed_at);
+    let official = observations
+        .iter()
+        .find(|observation| observation.kind() == SourceKind::OfficialIr)
+        .expect("configured official IR should produce an observation");
+
+    assert_eq!(official.status(), SourceStatus::Known);
+    assert_eq!(official.tier(), SourceTier::OfficialPrimary);
+    assert_eq!(official.text(), "Investor relations & updates");
+    assert_eq!(official.url(), company.official_ir_url());
+    assert_eq!(
+        official.provenance().source_field_or_passage(),
+        "official page text"
+    );
+    assert_eq!(official.provenance().retrieved_at(), &observed_at);
+}
+
+#[test]
+fn source_adapter_parses_greenhouse_jobs_with_provenance() {
+    let company = source_test_company();
+    let client = FixtureHttpClient::new();
+    client.insert(
+        "https://boards-api.greenhouse.io/v1/boards/acme/jobs?content=true",
+        HttpResponse::ok(
+            r#"
+            {
+              "jobs": [
+                {
+                  "id": 101,
+                  "title": "Senior Systems Engineer",
+                  "updated_at": "2026-08-15T12:00:00Z",
+                  "absolute_url": "https://boards.greenhouse.io/acme/jobs/101",
+                  "location": {"name": "Remote"},
+                  "content": "<p>Build <strong>reliable</strong> systems.</p>"
+                }
+              ]
+            }
+            "#,
+        ),
+    );
+    client.insert(gdelt_fixture_url(), HttpResponse::ok(r#"{"articles":[]}"#));
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+
+    let observations = collect_configured_sources(&company, &client, observed_at);
+    let job = observations
+        .iter()
+        .find(|observation| observation.kind() == SourceKind::Greenhouse)
+        .expect("configured Greenhouse job should produce an observation");
+
+    assert_eq!(job.status(), SourceStatus::Known);
+    assert_eq!(job.tier(), SourceTier::StructuredHiring);
+    assert_eq!(job.title(), Some("Senior Systems Engineer"));
+    assert_eq!(job.text(), "Build reliable systems.");
+    assert_eq!(
+        job.url(),
+        Some("https://boards.greenhouse.io/acme/jobs/101")
+    );
+    assert_eq!(
+        job.provenance().source_field_or_passage(),
+        "greenhouse.jobs[101].content"
+    );
+    assert_eq!(
+        job.provenance().effective_date(),
+        Some(&NaiveDate::from_ymd_opt(2026, 8, 15).unwrap())
+    );
+}
+
+#[test]
+fn source_adapter_parses_lever_postings_with_provenance() {
+    let company = source_test_company();
+    let client = FixtureHttpClient::new();
+    client.insert(
+        "https://api.lever.co/v0/postings/acme?mode=json",
+        HttpResponse::ok(
+            r#"
+            [
+              {
+                "id": "posting-1",
+                "text": "Data Platform Engineer",
+                "hostedUrl": "https://jobs.lever.co/acme/posting-1",
+                "applyUrl": "https://jobs.lever.co/acme/posting-1/apply",
+                "descriptionPlain": "Own the data platform.",
+                "description": "<p>Own the <em>data</em> platform.</p>",
+                "categories": {"location": "Remote", "team": "Engineering"}
+              }
+            ]
+            "#,
+        ),
+    );
+    client.insert(gdelt_fixture_url(), HttpResponse::ok(r#"{"articles":[]}"#));
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+
+    let observations = collect_configured_sources(&company, &client, observed_at);
+    let posting = observations
+        .iter()
+        .find(|observation| observation.kind() == SourceKind::Lever)
+        .expect("configured Lever posting should produce an observation");
+
+    assert_eq!(posting.status(), SourceStatus::Known);
+    assert_eq!(posting.tier(), SourceTier::StructuredHiring);
+    assert_eq!(posting.title(), Some("Data Platform Engineer"));
+    assert_eq!(posting.text(), "Own the data platform.");
+    assert_eq!(posting.url(), Some("https://jobs.lever.co/acme/posting-1"));
+    assert_eq!(
+        posting.provenance().source_field_or_passage(),
+        "lever.postings[posting-1].descriptionPlain"
+    );
+}
+
+#[test]
+fn source_adapter_marks_gdelt_records_as_discovery_only() {
+    let company = source_test_company();
+    let client = FixtureHttpClient::new();
+    client.insert(
+        gdelt_fixture_url(),
+        HttpResponse::ok(
+            r#"
+        {
+          "articles": [
+            {
+              "url": "https://news.example.test/acme",
+              "title": "Acme expands its platform",
+              "seendate": "20260817T120000Z",
+              "domain": "news.example.test"
+            }
+          ]
+        }
+        "#,
+        ),
+    );
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+
+    let observations = collect_configured_sources(&company, &client, observed_at);
+    let article = observations
+        .iter()
+        .find(|observation| observation.kind() == SourceKind::Gdelt)
+        .expect("GDELT article should produce an observation");
+
+    assert_eq!(article.status(), SourceStatus::DiscoveryOnly);
+    assert_eq!(article.tier(), SourceTier::DiscoveryOnly);
+    assert!(!article.is_authoritative());
+    assert_eq!(article.title(), Some("Acme expands its platform"));
+    assert_eq!(article.url(), Some("https://news.example.test/acme"));
+    assert_eq!(article.text(), "Acme expands its platform");
+    assert_eq!(
+        article.provenance().effective_date(),
+        Some(&NaiveDate::from_ymd_opt(2026, 8, 17).unwrap())
+    );
+    assert!(article
+        .provenance()
+        .source_field_or_passage()
+        .contains("GDELT query"));
+}
+
+#[test]
+fn absent_optional_sources_are_unavailable_without_guessed_urls() {
+    let company = CompanyConfig::new(
+        "beta",
+        "Beta Systems",
+        "BETA",
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("minimal source fixture company should be valid");
+    let client = FixtureHttpClient::with_response(
+        "https://api.gdeltproject.org/api/v2/doc/doc?query=%22Beta%20Systems%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel",
+        HttpResponse::ok(r#"{"articles":[]}"#),
+    );
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+
+    let observations = collect_configured_sources(&company, &client, observed_at);
+    for kind in [
+        SourceKind::OfficialIr,
+        SourceKind::Careers,
+        SourceKind::EngineeringAiBlog,
+        SourceKind::Greenhouse,
+        SourceKind::Lever,
+    ] {
+        let observation = observations
+            .iter()
+            .find(|observation| observation.kind() == kind)
+            .expect("each optional source slot should be represented");
+        assert_eq!(observation.status(), SourceStatus::Unavailable);
+        assert_eq!(observation.url(), None);
+        assert!(observation
+            .provenance()
+            .source_uri()
+            .starts_with("source://weekly-radar/"));
+    }
 }
 
 fn sec_test_company() -> CompanyConfig {

@@ -1,0 +1,602 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "wi-010",
+  "contractPath": ".ai/work-items/archive/2026/wi-010.contract.json",
+  "changedFiles": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-010.contract.json",
+      "reason": "Contract records the stage-isolated Ranking boundary, authorization, and current-WI issue policy."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-010.summary.json",
+      "reason": "Summary records implementation, verification, risks, and evidence alignment."
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "Generated Cockpit projection for the active Work Item."
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "reason": "Generated machine-readable human benefit report."
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "reason": "Generated human-readable task report."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-010.outcome.json",
+      "reason": "Mandatory Task Outcome evidence generated during Finish."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-010.outcome.md",
+      "reason": "Localized Task Outcome report for direct human review before archive."
+    },
+    {
+      "path": ".ai/work-items/starts/wi-010.json",
+      "reason": "Immutable Work Item start receipt bound to the base commit."
+    },
+    {
+      "path": "src/features/ranking/domain/mod.rs",
+      "reason": "Adds explicit stages, independent ranking dimensions, and stage-filtered deterministic ordering."
+    },
+    {
+      "path": "src/features/ranking/domain/mod_test.rs",
+      "reason": "Unit tests cover key order, stage isolation, bounded values, and duplicate identity."
+    },
+    {
+      "path": "tests/ranking_domain.rs",
+      "reason": "Integration test covers the public stage-isolated ranking API."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md",
+      "reason": "Documents the Ranking boundary, key directions, no-goals, authorization, and verification."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-wi-010-ranking.md",
+      "reason": "Records the implementation sequence and current-WI issue policy."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Generated archive discovery index."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-010.archive-manifest.json",
+      "reason": "Immutable archive evidence root."
+    }
+  ],
+  "sourcesUsed": [
+    ".ai/work-items/archive/2026/wi-010.contract.json",
+    "AGENTS.md",
+    ".ai/glossary.md",
+    "docs/architecture/ARCHITECTURE.md",
+    "docs/architecture/BOUNDED_CONTEXTS.md",
+    "docs/architecture/DEPENDENCY_RULES.md",
+    "docs/domain/RANKING_MODEL.md",
+    "docs/domain/EVIDENCE_MODEL.md",
+    "docs/scoring/SCORING_SPEC.md",
+    "docs/adr/ADR-006-stage-before-ranking.md",
+    "docs/adr/ADR-007-counter-evidence-mandatory.md",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+    "src/features/transformation/domain/mod.rs",
+    "tests/architecture/dependency_rules.rs",
+    "Cargo.toml",
+    "docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md",
+    "docs/superpowers/plans/2026-08-17-wi-010-ranking.md"
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Candidates in one Stage are ordered by the fixed independent key sequence.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/ranking/domain/mod_test.rs",
+        "tests/ranking_domain.rs"
+      ],
+      "expected": "Confidence desc, score desc, counter-evidence risk asc, freshness desc, then stable identity."
+    },
+    {
+      "scenario": "Candidates from different Stages are not compared by one total score.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/ranking/domain/mod_test.rs",
+        "tests/ranking_domain.rs"
+      ],
+      "expected": "The public API requires an explicit Stage and returns only that Stage's ordered candidates."
+    },
+    {
+      "scenario": "Duplicate candidates and forbidden coupling are rejected.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/ranking/domain/mod_test.rs",
+        "tests/architecture/dependency_rules.rs",
+        "make check"
+      ],
+      "expected": "Duplicate identity returns a deterministic error and architecture checks pass."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "command": "make check-ai-contract CONTRACT=.ai/work-items/active/wi-010.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:21.159869+00:00",
+      "exitCode": 0,
+      "durationMs": 58,
+      "outputDigest": "0165f7712cf7b624189d043bba681220a665fd64207393c34692cc8369e61d76",
+      "commandHash": "9d0c5ebd336578e9a9ab0c611418a59dfc01e517064800f5aab0bc61cbdc06ad",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "3e927c04317da1e2437e6d70f3ae048f353df6f84ebedc33e431d809f6dd77d0",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-010.contract.json work item contract check passed: .ai/work-items/active/wi-010.contract.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-010.contract.json work item contract check passed: .ai/work-items/active/wi-010.contract.json",
+      "outputBytes": 244
+    },
+    {
+      "check": "aiScope",
+      "command": "make check-ai-scope CONTRACT=.ai/work-items/active/wi-010.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:21.489895+00:00",
+      "exitCode": 0,
+      "durationMs": 192,
+      "outputDigest": "045648b25d5d28c30d5fb7c96a3397f9869140e97d01d5c6db040b8ca7ea4ecf",
+      "commandHash": "769c0ff9584f39447d6cdf155d2960cd9755e8faa72159999d819d9937d2299c",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "cdfe3e6c52d8888f594d8fbc4a6fcff113a97b8f0761080ee77cb1a0ffd14e20",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-010.contract.json scope guard passed: 9 changed path(s) covered",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-010.contract.json scope guard passed: 9 changed path(s) covered",
+      "outputBytes": 210
+    },
+    {
+      "check": "aiGuards",
+      "command": "make check-ai-guards",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:21.844289+00:00",
+      "exitCode": 0,
+      "durationMs": 212,
+      "outputDigest": "bf1ccafc7ebba1bc2a4f0efadd78fbd21c518196b829941b6acc51e4ca6c20dc",
+      "commandHash": "769f935b899dad1a2abcf23ef3cd08c6904b7f7d03a988b5ce6aa573d18b1e83",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "e5ca90e1c6d9a1832d14559d2305e528ff798585f0f93925b70e77a0b04477ae",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-010.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-010.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
+      "outputBytes": 248
+    },
+    {
+      "check": "aiCheckpoint",
+      "command": "make ai-checkpoint CONTRACT=.ai/work-items/active/wi-010.contract.json SUMMARY=.ai/work-items/active/wi-010.summary.json STAGE=before_finish",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:22.510491+00:00",
+      "exitCode": 0,
+      "durationMs": 530,
+      "outputDigest": "b0c8f96c1897dad8c0afc98027d908132a5084179553c31e6381d6e7a27ca63c",
+      "commandHash": "1af167c9cf363ea6f18416ad4077e7a9750f880f6a8791aced031766adbb329d",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "9439dec5443f4571c68df03c757ba5ba9b06dfbcfba97cf648e5018d4f0ba138",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-010` - Contract Hash: `c7ef647c137ea5d0` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `7` - Unknown Count: `0` - Required Checks: `16` - Required Checks Passed: `3` ## Intent Context - problem:",
+      "outputTail": "-system, rendering, persistence, or other-feature coupling. - Focused unit and integration tests cover stage isolation, key ordering, risk direction, tie-breaks, duplicate rejection, and no-trading behavior. - The design spec and execution plan record the ranking boundary, no-goals, authorization, current-WI issue rule, and verification commands. ## Required Verification - `aiWorkItem`: passed - `aiScope`: passed - `aiGuards`: passed - `aiCheckpoint`: not_recorded - `aiAgentRisk`: not_recorded - `aiReviewPolicy`: not_recorded - `aiBacktrack`: not_recorded - `aiCoverage`: not_recorded - `aiScenarioCoverage`: not_recorded - `aiGuidelines`: not_recorded - `aiSummary`: not_recorded - `aiStatus`: not_recorded - `aiStatusCheck`: not_recorded - `aiStatusConsistency`: not_recorded - `aiDiffOwnership`: not_recorded - `quality`: not_recorded ## Review Focus - Stage is an explicit grouping boundary - Counter Evidence Risk is independent and ascending - No cross-Stage total ranking or capital-action behavior ## Diff Ownership Preview - active_owned: `9`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-010.contract.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-010.summary.json` — covered by Contract scope - [active_owned] `.ai/work-items/starts/wi-010.json` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-17-wi-010-ranking.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md` — covered by Contract scope - [active_owned] `src/features/ranking/domain/mod.rs` — covered by Contract scope - [active_owned] `src/features/ranking/domain/mod_test.rs` — covered by Contract scope - [active_owned] `tests/ranking_domain.rs` — covered by Contract scope ## Next Action - Run or record required verification: aiCheckpoint",
+      "outputBytes": 4888
+    },
+    {
+      "check": "aiReviewPolicy",
+      "command": "make check-ai-review-policy SUMMARY=.ai/work-items/active/wi-010.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:22.845527+00:00",
+      "exitCode": 0,
+      "durationMs": 194,
+      "outputDigest": "c26ccada7b2091c1f037c0b366ba73f3deafd387e15b735c32f5f39b7fab662c",
+      "commandHash": "9b6acc33b412a036dff8c01053068c339ba5e34db06b40b9ad9e5e599451b4f8",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "e7035cab3ae97edb1b464b99881ab3837e7cbbf1493a3d49cda72f8a4e916c78",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-010.summary.json review policy matched 3 path(s) [review] .ai/work-items/active/wi-010.contract.json [review] .ai/work-items/starts/wi-010.json [review] .ai/cockpit/current_status.md review focus recorded: 3 item(s) report: target/ai_review_policy_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-010.summary.json review policy matched 3 path(s) [review] .ai/work-items/active/wi-010.contract.json [review] .ai/work-items/starts/wi-010.json [review] .ai/cockpit/current_status.md review focus recorded: 3 item(s) report: target/ai_review_policy_report.json",
+      "outputBytes": 424
+    },
+    {
+      "check": "aiBacktrack",
+      "command": "make check-ai-backtrack",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:23.177144+00:00",
+      "exitCode": 0,
+      "durationMs": 196,
+      "outputDigest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+      "commandHash": "3ae95e96677b5ecabc3d873ff9cda8d7d3c807724cd86bda76ebb00cef4e4f88",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "8f7b48c7809912eb5ad28af198dfba7eb63bf621493e94f3da02767dded0dc37",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputBytes": 192
+    },
+    {
+      "check": "aiCoverage",
+      "command": "make check-ai-coverage-guard",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:23.496308+00:00",
+      "exitCode": 0,
+      "durationMs": 187,
+      "outputDigest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+      "commandHash": "296a9883f8b9ad27f3d57afdee3ebdea5c75869c899a00e55d80563bc889328a",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "dc8365fb15f3250e0119778f1ec06c03c29ccfdf5c8714859d0cf2e5161b497d",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputBytes": 201
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "command": "make check-ai-scenario-coverage CONTRACT=.ai/work-items/active/wi-010.contract.json SUMMARY=.ai/work-items/active/wi-010.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:23.737279+00:00",
+      "exitCode": 0,
+      "durationMs": 57,
+      "outputDigest": "9ca520460f83736b7f0c3fff1159e4aab2c51049ad44a36ed34546bfa776bb13",
+      "commandHash": "f0793ba18af6fdf3dece134ed96c6165b564e8194071c859657d675352ac44d8",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "c8adb3cdc28abf788ad995965d50b931131b48c6b0ecd89e8516aaf290fead8b",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputBytes": 287
+    },
+    {
+      "check": "aiGuidelines",
+      "command": "make check-ai-guidelines CONTRACT=.ai/work-items/active/wi-010.contract.json SUMMARY=.ai/work-items/active/wi-010.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:23.931595+00:00",
+      "exitCode": 0,
+      "durationMs": 54,
+      "outputDigest": "9f891fae69768d759beca01f59630042a3b9223db118f219ee0cec065e17c001",
+      "commandHash": "432d2ee41d08a2a0abd9c06b6b25d6f9b626e824c15d645a25cac4cf04219897",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "81c286c5bbd3eadd3aaac70394c8c629c12a55b9719d84b9fea4da44221b8c6a",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json guidelines compliance check passed: 7 guideline(s) verified",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json guidelines compliance check passed: 7 guideline(s) verified",
+      "outputBytes": 292
+    },
+    {
+      "check": "aiDiffOwnership",
+      "command": "make check-ai-diff-ownership CONTRACT=.ai/work-items/active/wi-010.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:24.591729+00:00",
+      "exitCode": 0,
+      "durationMs": 517,
+      "outputDigest": "b0249484dfb6bb99c3571971633dcafe8c56db9ee3e8b913371c8fb8f1261174",
+      "commandHash": "184c02d3a5f4d860c3c7b15560aa4daaecf8cc92dd6ffdda28c9b510f5948b52",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "091578c69198f2c912be5e8406bd5c011ee84e1809071f709f3a9782846e8970",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-010.contract.json ## Diff Ownership Preview - active_owned: `9`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-010.contract.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-010.summary.json` — co",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-010.contract.json ## Diff Ownership Preview - active_owned: `9`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-010.contract.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-010.summary.json` — covered by Contract scope - [active_owned] `.ai/work-items/starts/wi-010.json` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-17-wi-010-ranking.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md` — covered by Contract scope - [active_owned] `src/features/ranking/domain/mod.rs` — covered by Contract scope - [active_owned] `src/features/ranking/domain/mod_test.rs` — covered by Contract scope - [active_owned] `tests/ranking_domain.rs` — covered by Contract scope",
+      "outputBytes": 1125
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=standard",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:26.600790+00:00",
+      "exitCode": 0,
+      "durationMs": 1735,
+      "outputDigest": "8a0fe342b6a567343dac3d641803518f6c53bcfeb30410e35c72690851011ac5",
+      "commandHash": "f8ba96b5afceaa393f091bd180d3300671c86bd3540cf2959df684bfe07cf74b",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "a0864b71cb04b22d8976351cfe6eb44f7110733d9d1f2619b7a8cf7737db8cba",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=standard\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\"], \"level\": \"standard\", \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"0ba4158dba7261c223a330eeb8c2de8c4aeab3a8\", \"changedPaths\": [ \".ai/cockpit/current_status.md\", \".ai/work-items/active/wi-010.contract.json\", \".ai/work-items/active/wi-010.summary.json\", \".ai/work-items/starts/wi-010.json\", \"docs/superpowers/plans/2026-08",
+      "outputTail": "omain-4385a59fb1b613a2) running 1 test test public_ranking_api_orders_only_the_requested_stage ... ok test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/transformation_domain.rs (target/debug/deps/transformation_domain-110c42acb889c63e) running 2 tests test public_transformation_api_supports_correction_transitions_without_recommendation ... ok test public_transformation_api_retains_explicit_proof_categories ... ok test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/universe_domain.rs (target/debug/deps/universe_domain-f4407294920d17ec) running 6 tests test policy_evaluates_only_the_facts_it_receives ... ok test rejects_empty_identity_and_display_values ... ok test rejects_snapshot_references_to_missing_entities ... ok test admits_active_common_equity_with_supported_index_membership ... ok test deduplicates_index_membership_and_returns_stable_security_order ... ok test rejects_inactive_unsupported_non_common_and_unindexed_listings ... ok test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Doc-tests org_x running 0 tests test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-reference-impact \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-test-weakening PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_test_weakening.py --root . --mode full --policy .ai/guards/test_weakening_policy.yaml {\"baseRef\": \"0ba4158dba7261c223a330eeb8c2de8c4aeab3a8\", \"decision\": \"continue\", \"limitations\": [\"Static signals do not prove semantic equivalence or complete test coverage.\"], \"mode\": \"full\", \"recoveryCondition\": \"No recovery action is required for the analyzed diff.\", \"requiredExplanation\": false, \"signals\": [], \"version\": 1}",
+      "outputBytes": 12511
+    },
+    {
+      "check": "aiStatus",
+      "command": "make generate-cockpit-status CONTRACT=.ai/work-items/active/wi-010.contract.json SUMMARY=.ai/work-items/active/wi-010.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:27.584040+00:00",
+      "exitCode": 0,
+      "durationMs": 557,
+      "outputDigest": "321f863bf03f438741bafe53edbcd6877edc6ee7a17391f324e29d4122abcb0a",
+      "commandHash": "09239eab7a828e42fca691e459d07fd5a08702da8839c8208805158f99867e7a",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "d638adcf7e716a4a7e5006bf78a0191f71149e854237cf52beb3054a49d45266",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputBytes": 336
+    },
+    {
+      "check": "aiStatusCheck",
+      "command": "make check-ai-status CONTRACT=.ai/work-items/active/wi-010.contract.json SUMMARY=.ai/work-items/active/wi-010.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:28.820963+00:00",
+      "exitCode": 0,
+      "durationMs": 552,
+      "outputDigest": "4aea6cdda9befac5206d7e86bc00c27f005ba3f96639a921825205ffa272b7af",
+      "commandHash": "37d1bf61ca9d46df6941bfde3412d9cc9203771178ba99af5357fef84247b98f",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "7c72b46135158ed8b991a91c4cbeb862e573d4d70731328da6725413d54239c1",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputBytes": 317
+    },
+    {
+      "check": "aiStatusConsistency",
+      "command": "make check-ai-status-consistency",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:29.547773+00:00",
+      "exitCode": 0,
+      "durationMs": 54,
+      "outputDigest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+      "commandHash": "ddd5a0e5fa9b289b1ab3ba23cf37c1a7f01d48f31e2ad99e85762ba20f93c2a6",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "75d4c73c9708c87f2ed94c323af1fb99208d73e6cfb8f70f0b4636ba3b85cf57",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputBytes": 169
+    },
+    {
+      "check": "aiAgentRisk",
+      "command": "make check-ai-agent-risk CONTRACT=.ai/work-items/active/wi-010.contract.json SUMMARY=.ai/work-items/active/wi-010.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:29.747871+00:00",
+      "exitCode": 0,
+      "durationMs": 55,
+      "outputDigest": "b93e1537734244d89fabdb9669fe82f2bb27c7b0e69f6dafbd6e0f6e33686b95",
+      "commandHash": "7bb0d6ab89a6d3c8123b6d1dafd499182039c83916ef6d35388b536e118c1f78",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "0bb3996f8170a35f2172679797979598cc784bb148777e0b4228646b0621d8e6",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-010.contract.json --summary .ai/work-items/active/wi-010.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputBytes": 297
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/wi-010.summary.json CONTRACT=.ai/work-items/active/wi-010.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:47:31.944025+00:00",
+      "exitCode": 0,
+      "durationMs": 314,
+      "outputDigest": "f34f885150ac65fd2b9cbee4380eeb3466ed3623339e41a4e7858a9f9d57e714",
+      "commandHash": "2008a476f19694abe386d3fb1f129db45b89007c65c188763262e7d937f2eb15",
+      "contractHash": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+      "commitSha": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+      "executionContractPath": ".ai/work-items/active/wi-010.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-010.summary.json",
+      "worktreeDigest": "759827087899142e6bcb4f6b0d78050dc2eb3ad400a87a20e12d8608ece2eb01",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-010.summary.json --contract .ai/work-items/active/wi-010.contract.json ai summary check passed: .ai/work-items/active/wi-010.summary.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-010.summary.json --contract .ai/work-items/active/wi-010.contract.json ai summary check passed: .ai/work-items/active/wi-010.summary.json",
+      "outputBytes": 287,
+      "outcomeInputDigest": "457c9f4e2a7d7184dfab6d2b981d510a2118d77bdbc29ac18bb5534360cd1bb4"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "New public APIs must be documented.",
+      "compliant": true,
+      "evidence": "Public Ranking APIs have Rust documentation comments in src/features/ranking/domain/mod.rs."
+    },
+    {
+      "guideline": "Keep Ranking Domain independent of external systems and other feature modules.",
+      "compliant": true,
+      "evidence": "The implementation uses standard-library logic only; make check architecture tests pass."
+    },
+    {
+      "guideline": "Stage precedes Ranking; never use a total score to compare different stages.",
+      "compliant": true,
+      "evidence": "ranked_within_stage requires an explicit Stage and filters before sorting; focused tests verify isolation."
+    },
+    {
+      "guideline": "Keep EvidenceConfidence, TransformationScore, CounterEvidenceRisk, and EvidenceFreshness independent.",
+      "compliant": true,
+      "evidence": "Each dimension is a separate bounded value object and comparator key."
+    },
+    {
+      "guideline": "Do not add dependencies for this Contract.",
+      "compliant": true,
+      "evidence": "No Cargo dependency or external runtime was added."
+    },
+    {
+      "guideline": "Resolve issues within the current Work Item when they remain inside its Contract scope; open a successor only for a distinct or materially expanded boundary.",
+      "compliant": true,
+      "evidence": "Contract, design spec, and plan record this policy; no successor WI was opened for in-scope issues."
+    },
+    {
+      "guideline": "Do not introduce trading, price prediction, or capital-action behavior.",
+      "compliant": true,
+      "evidence": "The Read Model stores research priority dimensions only."
+    }
+  ],
+  "unknownsRemaining": [],
+  "risk": {
+    "level": "medium",
+    "detail": "Independent ranking dimensions can be misused by later consumers; Stage assignment and score calculation remain outside this WI."
+  },
+  "generatedFiles": [],
+  "destructiveChanges": [],
+  "observedIssues": [],
+  "residualRisks": [
+    {
+      "level": "medium",
+      "area": "ranking_semantics",
+      "detail": "The Read Model preserves supplied dimensions but does not validate the underlying evidence or assign a Stage.",
+      "reviewRecommended": true,
+      "followUpCandidate": false
+    },
+    {
+      "level": "medium",
+      "area": "consumer_boundary",
+      "detail": "Consumers must call ranked_within_stage rather than inventing a cross-Stage total order.",
+      "reviewRecommended": true,
+      "followUpCandidate": false
+    }
+  ],
+  "reviewReadiness": {
+    "status": "ready_with_risks",
+    "reason": "All required verification passed; residual risk remains documented.",
+    "expectedReviewFocus": [
+      "Stage is an explicit grouping boundary",
+      "Counter Evidence Risk is independent and ascending",
+      "No cross-Stage total ranking or capital-action behavior"
+    ]
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "not_applicable",
+    "userVisibleOutput": "not_applicable",
+    "persistence": "not_applicable",
+    "localization": "not_applicable",
+    "generatedArtifacts": "not_applicable",
+    "makeEntrypoints": "not_applicable"
+  },
+  "userCorrectionsCaptured": [
+    {
+      "correction": "If an issue is discovered during the corresponding work, resolve it within the current WI whenever it remains in scope; do not casually open a new WI to prevent scope diffusion.",
+      "source": "User instruction",
+      "capturedAt": "2026-08-17"
+    }
+  ],
+  "userCorrectionSolidification": [
+    {
+      "correction": "Keep in-scope fixes in the current WI and avoid WI proliferation.",
+      "evidence": "Contract, design spec, and plan include the current-WI issue policy."
+    }
+  ],
+  "checkpointEvidence": [
+    {
+      "stage": "before_edit",
+      "recorded": true,
+      "contractHash": "c7ef647c137ea5d0",
+      "acceptanceCount": 7,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0
+    },
+    {
+      "stage": "before_finish",
+      "recorded": true,
+      "contractHash": "c7ef647c137ea5d0",
+      "acceptanceCount": 7,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 3
+    }
+  ],
+  "knownGaps": [
+    "Underlying evidence quality and Stage assignment are upstream concerns; this Read Model retains supplied values only."
+  ],
+  "overclaimPrevention": "Do not report completion for checks or behavior that were not verified.",
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "aligned",
+    "checkedAt": "2026-08-17T13:55:00+09:00",
+    "checks": [
+      {
+        "area": "plan",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/plans/2026-08-17-wi-010-ranking.md"
+        ],
+        "reason": "Implementation sequence and scope are recorded in the plan."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/wi-010.contract.json",
+          ".ai/work-items/archive/2026/wi-010.summary.json"
+        ],
+        "reason": "Contract, Summary, and generated Outcome describe the same stage-isolated Ranking boundary."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md",
+          "docs/superpowers/plans/2026-08-17-wi-010-ranking.md",
+          ".ai/cockpit/task_report.md",
+          ".ai/work-items/archive/2026/wi-010.outcome.md"
+        ],
+        "reason": "Documentation and command surface record the verified implementation and generated human benefit report."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/wi-010.contract.json"
+        ],
+        "reason": "English model names and the Chinese authorization text retain the same execution and scope meaning."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/wi-010.contract.json",
+          "docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md"
+        ],
+        "reason": "No-goals, residual risks, and deferred Stage/evidence validation are recorded consistently."
+      }
+    ]
+  },
+  "taskOutcome": {
+    "status": "completed_with_warnings",
+    "jsonPath": ".ai/work-items/active/wi-010.outcome.json",
+    "markdownPath": ".ai/work-items/active/wi-010.outcome.md",
+    "rawEvidencePath": "derived:pre_merge",
+    "evidenceCount": 2,
+    "humanStatusColor": "yellow"
+  },
+  "archiveSequence": 13
+}

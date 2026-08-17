@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-010",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "4804c19c89a086f72150a7da134c97fe028cbfe20f7c2a8f17bc1cab63fec981"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-010",
+    "contractDigest": "c7ef647c137ea5d096a12f5736096718dc07dc87e1768739779aa0ca408d4277",
+    "summaryDigest": "d13076a555642a3ad0894375f08140256cd35a7507e003f77058fe3509e3de90",
+    "verificationDigest": "ffce17888284a907e219a2c954a41f8995c0cc47e2fabe475f2d79284ea725dd",
+    "baseCommit": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+    "headCommit": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "8f48f19f52b4673be5f0f8077d0065b9adabd5d8ad53912ff8af266caf542209",
+      "binding": {
+        "baseCommit": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+        "candidateHead": "0ba4158dba7261c223a330eeb8c2de8c4aeab3a8",
+        "candidateTreeDigest": "26f08416eb9744711fe07424520293474e55089edaedfb13940650b7fca71f0b",
+        "candidateDiffDigest": "ae7d2876a1a6aba4f59ae398be601883b1d7b6f18f0414dea2f4f4820aae6414"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-010 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-010 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-010",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-010.contract.json",
       ".ai/work-items/archive/2026/wi-010.summary.json",
@@ -26,59 +49,96 @@
       "docs/superpowers/plans/2026-08-17-wi-010-ranking.md",
       ".ai/work-items/archive/index.json",
       ".ai/work-items/archive/2026/wi-010.archive-manifest.json"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Underlying evidence quality and Stage assignment are upstream concerns; this Read Model retains supplied values only."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Underlying evidence quality and Stage assignment are upstream concerns; this Read Model retains supplied values only.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Underlying evidence quality and Stage assignment are upstream concerns; this Read Model retains supplied values only.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "ranking_semantics",
+        "severity": "medium",
+        "title": "ranking_semantics",
+        "detail": "The Read Model preserves supplied dimensions but does not validate the underlying evidence or assign a Stage.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-010.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-010.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "consumer_boundary",
+        "severity": "medium",
+        "title": "consumer_boundary",
+        "detail": "Consumers must call ranked_within_stage rather than inventing a cross-Stage total order.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-010.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-010.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-010.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-010.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Underlying evidence quality and Stage assignment are upstream concerns; this Read Model retains supplied values only.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The Read Model preserves supplied dimensions but does not validate the underlying evidence or assign a Stage.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-010.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "Consumers must call ranked_within_stage rather than inventing a cross-Stage total order.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-010.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -785,6 +845,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

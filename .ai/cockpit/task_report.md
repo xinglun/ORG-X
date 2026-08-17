@@ -4,21 +4,21 @@ Task Result
 Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-009.contract.json [evidence: .ai/work-items/archive/2026/wi-009.contract.json]
-- Changed .ai/work-items/active/wi-009.summary.json [evidence: .ai/work-items/archive/2026/wi-009.summary.json]
+- Changed .ai/work-items/active/wi-010.contract.json [evidence: .ai/work-items/archive/2026/wi-010.contract.json]
+- Changed .ai/work-items/active/wi-010.summary.json [evidence: .ai/work-items/archive/2026/wi-010.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/active/wi-009.outcome.json [evidence: .ai/work-items/archive/2026/wi-009.outcome.json]
-- Changed .ai/work-items/active/wi-009.outcome.md [evidence: .ai/work-items/archive/2026/wi-009.outcome.md]
-- Changed .ai/work-items/starts/wi-009.json [evidence: .ai/work-items/starts/wi-009.json]
-- Changed src/features/diffusion/domain/mod.rs [evidence: src/features/diffusion/domain/mod.rs]
-- Changed src/features/diffusion/domain/mod_test.rs [evidence: src/features/diffusion/domain/mod_test.rs]
-- Changed tests/diffusion_domain.rs [evidence: tests/diffusion_domain.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-009-diffusion-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-009-diffusion-design.md]
-- Changed docs/superpowers/plans/2026-08-17-wi-009-diffusion.md [evidence: docs/superpowers/plans/2026-08-17-wi-009-diffusion.md]
+- Changed .ai/work-items/active/wi-010.outcome.json [evidence: .ai/work-items/archive/2026/wi-010.outcome.json]
+- Changed .ai/work-items/active/wi-010.outcome.md [evidence: .ai/work-items/archive/2026/wi-010.outcome.md]
+- Changed .ai/work-items/starts/wi-010.json [evidence: .ai/work-items/starts/wi-010.json]
+- Changed src/features/ranking/domain/mod.rs [evidence: src/features/ranking/domain/mod.rs]
+- Changed src/features/ranking/domain/mod_test.rs [evidence: src/features/ranking/domain/mod_test.rs]
+- Changed tests/ranking_domain.rs [evidence: tests/ranking_domain.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-010-ranking.md [evidence: docs/superpowers/plans/2026-08-17-wi-010-ranking.md]
 - Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
-- Changed .ai/work-items/archive/2026/wi-009.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-009.archive-manifest.json]
+- Changed .ai/work-items/archive/2026/wi-010.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-010.archive-manifest.json]
 
 Problems found
 - Total: 1
@@ -35,8 +35,8 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- The Domain retains diffusion facts but does not establish that an industry has adopted a pattern. [evidence: residualRisks]
-- Cross-company identity resolution remains an upstream responsibility. [evidence: residualRisks]
+- The Read Model preserves supplied dimensions but does not validate the underlying evidence or assign a Stage. [evidence: residualRisks]
+- Consumers must call ranked_within_stage rather than inventing a cross-Stage total order. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

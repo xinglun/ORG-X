@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "requestedText": "Split already-rendered Weekly Radar Markdown into complete semantic chunks without truncating Markdown or company cards.",
+  "target": {
+    "type": "file",
+    "name": "wr011_semantic_splitter_boundary",
+    "path": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [
+      "src/features/weekly_radar/interface/mod.rs",
+      "src/features/weekly_radar/interface/telegram_renderer.rs"
+    ],
+    "testReferences": [
+      "src/features/weekly_radar/interface/semantic_message_splitter_test.rs",
+      "tests/semantic_message_splitter_test.rs",
+      "tests/weekly_radar_semantic_message_splitter.rs"
+    ],
+    "documentationReferences": [
+      "docs/superpowers/specs/2026-08-17-wi-wr-011-semantic-message-splitter.md",
+      "docs/superpowers/plans/2026-08-17-wi-wr-011-semantic-message-splitter.md"
+    ],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The splitter consumes a supplied Markdown string and does not load files, modules, network resources, or runtime providers."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "No publisher, scheduler, persistence adapter, provider, or transport consumer is added by this WI."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The splitter has no monitoring, telemetry, delivery, retry, or receipt behavior."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-011.contract.json",
+      "The Contract limits this WI to source-preserving interface splitting and tests."
+    ]
+  },
+  "approval": null
+}

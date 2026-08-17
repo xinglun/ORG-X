@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-011",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "6717dc0711be11ee5a0608e0a864ad7fd1ec437c4fbde62bb1e4b4f651a31ad6"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-011",
+    "contractDigest": "f01a7c0bf5324df822c2f9580b63c1f7ffa75c39efdbb54bd49ebef14e0fe77a",
+    "summaryDigest": "4b5e9608bb2bc1824099f4b48439ef2b478a48bc7742b3cfcdb19e136fb9772f",
+    "verificationDigest": "104e9d332784165949e55d84d8039b0ee6e60fa52d6aa6113f6121ceef0688de",
+    "baseCommit": "5d256d35335755b408c243f339805c9080afc3e2",
+    "headCommit": "5d256d35335755b408c243f339805c9080afc3e2",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "7263b7b27a92123d797feeb5f6f2d6013816a8e7152596988dd4ba2717cf00cc",
+      "binding": {
+        "baseCommit": "5d256d35335755b408c243f339805c9080afc3e2",
+        "candidateHead": "5d256d35335755b408c243f339805c9080afc3e2",
+        "candidateTreeDigest": "e0f61ccbb5c6b1a4276f24439084486f8ca0da256b0970aa0273e3c51b039e87",
+        "candidateDiffDigest": "3b4264ec33a83d7595242eb657f066e85a490756319e367278e4cf42fe9b92eb"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-011 generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-011 generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-wr-011",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-011.contract.json",
       ".ai/work-items/archive/2026/wi-wr-011.summary.json",
@@ -27,119 +50,158 @@
       "tests/weekly_radar_semantic_message_splitter.rs",
       "docs/superpowers/specs/2026-08-17-wi-wr-011-semantic-message-splitter.md",
       "docs/superpowers/plans/2026-08-17-wi-wr-011-semantic-message-splitter.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "1d40ae5ff38a2a72f7ea9d6c0bbda2b702283b9e9e41e8b3d1981e3949556d69"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "b2ea30a2d280dcfa6c686a8caddb7af195fcbee487ee6dfe1acb73596ee9befa"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "aiSummary failed before the retry.",
+        "policyOrGuard": "required verification: aiSummary",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiSummary after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "69736fe8a8e31ff21b61bc25c09af6ed5979fb953681f1a1eed91293c09d71b7"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "e7425084f4e8660b4ef563fe44983621c4315d09ede0f42a745775ba06466690"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "1d40ae5ff38a2a72f7ea9d6c0bbda2b702283b9e9e41e8b3d1981e3949556d69"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "b2ea30a2d280dcfa6c686a8caddb7af195fcbee487ee6dfe1acb73596ee9befa"
+          }
+        ]
+      },
+      {
+        "problem": "aiSummary failed before the retry.",
+        "action": "Re-ran aiSummary after the correction; the latest attempt passed.",
+        "verification": "aiSummary latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "69736fe8a8e31ff21b61bc25c09af6ed5979fb953681f1a1eed91293c09d71b7"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "e7425084f4e8660b4ef563fe44983621c4315d09ede0f42a745775ba06466690"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "message_limits",
+        "severity": "medium",
+        "title": "message_limits",
+        "detail": "A rendered section larger than the caller limit returns a typed error and must be handled by a later publisher policy; this WI intentionally does not truncate or re-render it.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-011.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "1d40ae5ff38a2a72f7ea9d6c0bbda2b702283b9e9e41e8b3d1981e3949556d69"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "b2ea30a2d280dcfa6c686a8caddb7af195fcbee487ee6dfe1acb73596ee9befa"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+        "subject": "verificationHistory[1] aiSummary failed",
+        "digest": "69736fe8a8e31ff21b61bc25c09af6ed5979fb953681f1a1eed91293c09d71b7"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
+        "subject": "verification[aiSummary] retry passed",
+        "digest": "e7425084f4e8660b4ef563fe44983621c4315d09ede0f42a745775ba06466690"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "1d40ae5ff38a2a72f7ea9d6c0bbda2b702283b9e9e41e8b3d1981e3949556d69"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "b2ea30a2d280dcfa6c686a8caddb7af195fcbee487ee6dfe1acb73596ee9befa"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiSummary",
-      "action": "blocked",
-      "resolution": "Retry aiSummary after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "69736fe8a8e31ff21b61bc25c09af6ed5979fb953681f1a1eed91293c09d71b7"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "e7425084f4e8660b4ef563fe44983621c4315d09ede0f42a745775ba06466690"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "1d40ae5ff38a2a72f7ea9d6c0bbda2b702283b9e9e41e8b3d1981e3949556d69"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "b2ea30a2d280dcfa6c686a8caddb7af195fcbee487ee6dfe1acb73596ee9befa"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "aiSummary failed before the retry.",
-      "policyOrGuard": "required verification: aiSummary",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiSummary after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "69736fe8a8e31ff21b61bc25c09af6ed5979fb953681f1a1eed91293c09d71b7"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "e7425084f4e8660b4ef563fe44983621c4315d09ede0f42a745775ba06466690"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "A rendered section larger than the caller limit returns a typed error and must be handled by a later publisher policy; this WI intentionally does not truncate or re-render it.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-011.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -892,6 +954,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry aiSummary after correcting the recorded failure."
+  }
 }

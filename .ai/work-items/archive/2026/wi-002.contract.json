@@ -1,0 +1,294 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-002",
+  "mode": "code",
+  "title": "Universe Domain",
+  "baseCommit": "d48867af32f50415d591d2b9f2899bb942a8f816",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-002.contract.json",
+    ".ai/work-items/active/wi-002.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-002.outcome.json",
+    ".ai/work-items/active/wi-002.outcome.md",
+    "docs/superpowers/specs/2026-08-17-wi-002-universe-domain-design.md",
+    "docs/superpowers/plans/2026-08-17-wi-002-universe-domain.md",
+    "src/features/universe/mod.rs",
+    "src/features/universe/domain/**",
+    "tests/universe_domain.rs"
+  ],
+  "outOfScope": [
+    "src/features/ingestion/**",
+    "src/features/evidence/**",
+    "src/features/production_system/**",
+    "src/features/organization/**",
+    "src/features/productivity/**",
+    "src/features/transformation/**",
+    "src/features/diffusion/**",
+    "src/features/ranking/**",
+    "src/features/reporting/**",
+    "network clients, provider adapters, CSV parsing, database persistence, and external data acquisition",
+    "scoring, ranking, stage transitions, reporting, trading decisions, and capital actions",
+    "Sentinel Decision, Score, Gate, or business Domain behavior",
+    "Cargo.toml, Cargo.lock, and new third-party dependencies",
+    "product documentation outside the Universe design/spec and execution plan"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository AI Cockpit, DDD, Clean Architecture, and Work Item lifecycle rules."
+    },
+    {
+      "path": ".ai/project_profile.yaml",
+      "reason": "Confirmed adopter boundaries and quality calibration."
+    },
+    {
+      "path": "docs/product/PRD.md",
+      "reason": "Product sequence, Evidence First, and deterministic Rust decision boundary."
+    },
+    {
+      "path": "docs/product/SCOPE.md",
+      "reason": "Universe funnel and explicit no-trading boundary."
+    },
+    {
+      "path": "docs/architecture/BOUNDED_CONTEXTS.md",
+      "reason": "Universe context responsibility and core object names."
+    },
+    {
+      "path": "docs/architecture/ARCHITECTURE.md",
+      "reason": "Five-layer structure and dependency direction."
+    },
+    {
+      "path": "Cargo.toml",
+      "reason": "Rust crate and dependency baseline."
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "reason": "Rust toolchain baseline used by project quality checks."
+    },
+    {
+      "path": "src/features/universe/domain/mod.rs",
+      "reason": "Existing Universe Domain boundary marker to be implemented."
+    },
+    {
+      "path": "tests/architecture/dependency_rules.rs",
+      "reason": "Existing architecture test forbids provider/infrastructure dependencies in Domain."
+    },
+    {
+      "path": "tests/architecture/module_boundaries.rs",
+      "reason": "Existing five-layer and module export architecture tests."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "api_change",
+      "domain_model"
+    ],
+    "reason": "The first public Universe Domain model establishes identity and deterministic eligibility contracts, so scope and dependency boundaries require strict review.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "user-authorized",
+    "reviewedAt": "2026-08-17T11:36:00+09:00",
+    "reviewNote": "Temporal semantics, provider mapping, persistence, and downstream scoring are explicitly deferred to later Work Items; this slice uses opaque SnapshotId and supplied facts only."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user authorized continuation; the documented minimal pure Universe Domain scope is codable and verifiable."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "The Universe Domain exposes public Company, Security, Listing, UniverseSnapshot, and EligibilityPolicy contracts without provider, persistence, or trading dependencies.",
+    "Identity and invariant validation rejects empty identifiers/names and invalid cross-entity references deterministically.",
+    "EligibilityPolicy admits only active common-equity listings on supported US exchanges with S&P 500 or Nasdaq 100 membership.",
+    "UniverseSnapshot deduplicates a security represented in both supported indexes and returns deterministic eligible SecurityId output.",
+    "Focused Universe tests cover eligible, rejected, duplicate-membership, invalid-input, and snapshot referential-integrity scenarios.",
+    "`make check`, `make ai-cockpit-quality GOVERNANCE_PROFILE=strict`, and the architecture tests pass with no changes to non-Universe business contexts, external adapters, scoring, ranking, or trading decisions.",
+    "The design spec and execution plan document the pure-domain boundary, assumptions, non-goals, and verification evidence."
+  ],
+  "guidelines": [
+    "Every new public Universe Domain type and method must have Rust documentation.",
+    "Universe Domain code must remain provider-, network-, persistence-, renderer-, and trading-agnostic.",
+    "Eligibility must be a pure deterministic function of supplied facts; it must not acquire or infer external facts.",
+    "Do not import internal modules from other features or add new third-party dependencies.",
+    "The model must not expose scoring, ranking, stage, NO_TRADE, PROBE, READY, Gate, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "ORG-X has the Universe bounded-context boundary but no domain model for representing companies, securities, listings, snapshots, or deterministic eligibility over supplied market facts.",
+    "constraints": [
+      "Implement only the pure Universe Domain layer plus its module export, focused tests, design spec, and execution plan.",
+      "Keep DDD/Clean Architecture dependency direction: Domain must not know network, database, provider, LLM, renderer, or other bounded contexts.",
+      "Use no new third-party dependencies; do not acquire external data or make trading/capital decisions.",
+      "The first MVP universe is the deduplicated intersection of eligible US-listed common equity and S&P 500/Nasdaq 100 membership facts.",
+      "Use explicit rejection for invalid identities and cross-entity references rather than silently repairing input."
+    ],
+    "rationale": "A small, deterministic Universe Domain gives later ingestion and application layers a stable contract while preserving Evidence First and the project's explicit no-trading boundary."
+  },
+  "rawUserRequest": "目标还没结束，继续。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "user continuation instruction for ORG-X execution",
+    "capturedAt": "2026-08-17T11:36:00+09:00",
+    "digest": "5153bc983399f3966338fd5e9c8e32a176c55b83dce081361b317df5b3ce3104"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "software_design",
+      "test_automation"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "trading_decision",
+      "capital_action"
+    ],
+    "requestedOutcome": "Implement and verify the minimal pure Universe Domain contract for WI-002.",
+    "decisionBoundary": "Rust validates deterministic domain invariants and eligibility facts; it does not fetch data or decide trades."
+  },
+  "requestedOperation": {
+    "target": "repository_governance",
+    "action": "modify",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Deterministic eligibility policy",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "Only active common-equity listings on supported US exchanges with S&P 500 or Nasdaq 100 membership are eligible; all other supplied facts are rejected.",
+      "verificationPlan": "Add focused tests for eligible, inactive, unsupported exchange, non-common instrument, and missing-index cases, then run the targeted test and full quality route."
+    },
+    {
+      "scenario": "Universe snapshot integrity and deduplication",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "A security present in both supported indexes appears once, and invalid company/security/listing references are rejected rather than repaired.",
+      "verificationPlan": "Test snapshot construction and eligible SecurityId output with duplicate memberships and invalid references."
+    },
+    {
+      "scenario": "Clean Architecture and no-trading boundary",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "Universe Domain compiles and passes architecture checks without provider/network/persistence/trading dependencies or imports from other features.",
+      "verificationPlan": "Run architecture tests, cargo fmt/clippy/test, and inspect the changed-path diff for excluded capabilities."
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user authorized continuation; only the active Contract/Summary and generated lifecycle evidence are governance files, while production changes are limited to the Universe Domain scope."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 4
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-002.json",
+    "baseCommit": "d48867af32f50415d591d2b9f2899bb942a8f816",
+    "initialScopeDigest": "a3037b1107e53738e1e1229375fe8b1439ae30ef50fa5e18816934461ae1fb94",
+    "contractSkeletonDigest": "a571818804420ffd7a9eaa5c84986224ab2237fea7ecbf0e29599256861334e5"
+  }
+}

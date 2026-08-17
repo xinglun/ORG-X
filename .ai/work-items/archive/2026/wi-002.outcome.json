@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-002",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "9a5c299f7b6da03e5e6653f81cd6a534ee384de3f320e3b215c3cd3d1ca93888"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-002",
+    "contractDigest": "8e73c6fb23da17476707deed208d9fe483adf4b1f768db686e4af36a48870006",
+    "summaryDigest": "96b15c7105950ecfabbd18eb7cd9b06b3a45f7fd92e43f1089842260d6045a49",
+    "verificationDigest": "a278663695de68a7e008f82d4ebddc0b4a12c7a7ec81fd28118a52e83cc96bea",
+    "baseCommit": "d48867af32f50415d591d2b9f2899bb942a8f816",
+    "headCommit": "d48867af32f50415d591d2b9f2899bb942a8f816",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "af76d372dadbc531a07ea37f7bd3709f222ce488019cec45c82db661af893ce4",
+      "binding": {
+        "baseCommit": "d48867af32f50415d591d2b9f2899bb942a8f816",
+        "candidateHead": "d48867af32f50415d591d2b9f2899bb942a8f816",
+        "candidateTreeDigest": "8384436b59c275416f27ea082ff799a9b5b1b04b3baf5a8c7def02eb13429174",
+        "candidateDiffDigest": "833e7cac65b70501b1afa7976a5214e37e748ea467091f1d7fc4faab9daf8016"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-002 generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-002 generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-002",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-002.contract.json",
       ".ai/work-items/archive/2026/wi-002.summary.json",
@@ -22,106 +45,150 @@
       "tests/universe_domain.rs",
       ".ai/work-items/archive/2026/wi-002.outcome.json",
       ".ai/work-items/archive/2026/wi-002.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Hosted PR results are unavailable until the Work Item branch is pushed.",
+      "Temporal date semantics and provider-to-domain mapping are intentionally deferred."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Hosted PR results are unavailable until the Work Item branch is pushed.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "Temporal date semantics and provider-to-domain mapping are intentionally deferred.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Hosted PR results are unavailable until the Work Item branch is pushed.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "Temporal date semantics and provider-to-domain mapping are intentionally deferred.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiCoverage failed before the retry.",
+        "policyOrGuard": "required verification: aiCoverage",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiCoverage after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-002.summary.json",
+            "subject": "verificationHistory[0] aiCoverage failed",
+            "digest": "4dd0670bbc402cfa4baeb101e1ad2ee398cf278540a4d590627efa5d5776920d"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-002.summary.json",
+            "subject": "verification[aiCoverage] retry passed",
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiCoverage failed before the retry.",
+        "action": "Re-ran aiCoverage after the correction; the latest attempt passed.",
+        "verification": "aiCoverage latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-002.summary.json",
+            "subject": "verificationHistory[0] aiCoverage failed",
+            "digest": "4dd0670bbc402cfa4baeb101e1ad2ee398cf278540a4d590627efa5d5776920d"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-002.summary.json",
+            "subject": "verification[aiCoverage] retry passed",
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "scope",
+        "severity": "medium",
+        "title": "scope",
+        "detail": "The model is intentionally limited to supplied facts and opaque SnapshotId; later ingestion and temporal Work Items must define freshness/date semantics.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-002.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-002.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-002.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-002.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-002.summary.json",
+        "subject": "verificationHistory[0] aiCoverage failed",
+        "digest": "4dd0670bbc402cfa4baeb101e1ad2ee398cf278540a4d590627efa5d5776920d"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-002.summary.json",
+        "subject": "verification[aiCoverage] retry passed",
+        "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+      }
     ]
   },
-  "issues": {
-    "detected": 3,
-    "hardStops": 1,
-    "warnings": 2,
-    "resolved": 1,
-    "unresolved": 2
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiCoverage",
-      "action": "blocked",
-      "resolution": "Retry aiCoverage after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-002.summary.json",
-          "subject": "verificationHistory[0] aiCoverage failed",
-          "digest": "4dd0670bbc402cfa4baeb101e1ad2ee398cf278540a4d590627efa5d5776920d"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-002.summary.json",
-          "subject": "verification[aiCoverage] retry passed",
-          "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiCoverage failed before the retry.",
-      "policyOrGuard": "required verification: aiCoverage",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiCoverage after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-002.summary.json",
-          "subject": "verificationHistory[0] aiCoverage failed",
-          "digest": "4dd0670bbc402cfa4baeb101e1ad2ee398cf278540a4d590627efa5d5776920d"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-002.summary.json",
-          "subject": "verification[aiCoverage] retry passed",
-          "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Hosted PR results are unavailable until the Work Item branch is pushed.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "Temporal date semantics and provider-to-domain mapping are intentionally deferred.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The model is intentionally limited to supplied facts and opaque SnapshotId; later ingestion and temporal Work Items must define freshness/date semantics.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-002.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -788,6 +855,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry aiCoverage after correcting the recorded failure."
+  }
 }

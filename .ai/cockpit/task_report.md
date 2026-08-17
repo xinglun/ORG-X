@@ -1,45 +1,39 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Partial
+Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/configure_ai_cockpit.contract.json [evidence: .ai/work-items/archive/2026/configure_ai_cockpit.contract.json]
-- Changed .ai/work-items/active/configure_ai_cockpit.summary.json [evidence: .ai/work-items/archive/2026/configure_ai_cockpit.summary.json]
-- Changed .ai/project_profile.yaml [evidence: .ai/project_profile.yaml]
-- Changed .ai/guards/coverage_policy.yaml [evidence: .ai/guards/coverage_policy.yaml]
-- Changed Makefile.ai.stack [evidence: Makefile.ai.stack]
-- Changed .github/workflows/ai-cockpit.yml [evidence: .github/workflows/ai-cockpit.yml]
-- Changed .github/CODEOWNERS [evidence: .github/CODEOWNERS]
-- Changed SECURITY.md [evidence: SECURITY.md]
-- Changed docs/superpowers/plans/2026-08-17-configure-ai-cockpit.md [evidence: docs/superpowers/plans/2026-08-17-configure-ai-cockpit.md]
-- Changed .ai/evidence/reference-impact/configure_ai_cockpit_ci.json [evidence: .ai/evidence/reference-impact/configure_ai_cockpit_ci.json]
-- Changed .ai/work-items/active/configure_ai_cockpit.outcome.json [evidence: .ai/work-items/archive/2026/configure_ai_cockpit.outcome.json]
-- Changed .ai/work-items/active/configure_ai_cockpit.outcome.md [evidence: .ai/work-items/archive/2026/configure_ai_cockpit.outcome.md]
+- Changed .ai/work-items/active/wi-002.contract.json [evidence: .ai/work-items/archive/2026/wi-002.contract.json]
+- Changed .ai/work-items/active/wi-002.summary.json [evidence: .ai/work-items/archive/2026/wi-002.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
-- Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
-- Changed .ai/work-items/archive/2026/configure_ai_cockpit.archive-manifest.json [evidence: .ai/work-items/archive/2026/configure_ai_cockpit.archive-manifest.json]
+- Changed .ai/work-items/starts/wi-002.json [evidence: .ai/work-items/starts/wi-002.json]
+- Changed docs/superpowers/specs/2026-08-17-wi-002-universe-domain-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-002-universe-domain-design.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-002-universe-domain.md [evidence: docs/superpowers/plans/2026-08-17-wi-002-universe-domain.md]
+- Changed src/features/universe/domain/mod.rs [evidence: src/features/universe/domain/mod.rs]
+- Changed src/features/universe/domain/mod_test.rs [evidence: src/features/universe/domain/mod_test.rs]
+- Changed tests/universe_domain.rs [evidence: tests/universe_domain.rs]
+- Changed .ai/work-items/active/wi-002.outcome.json [evidence: .ai/work-items/archive/2026/wi-002.outcome.json]
+- Changed .ai/work-items/active/wi-002.outcome.md [evidence: .ai/work-items/archive/2026/wi-002.outcome.md]
 
 Problems found
 - Total: 3
 - Blocking: 0
-- Warning: 1
+- Warning: 2
 
 Stops triggered
-- None recorded.
+- Reason: aiCoverage failed before the retry. | Stage: verification | Resolution: Retry aiCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiCoverage failed, verification[aiCoverage] retry passed]
 
 Problems resolved
-- None recorded.
+- Problem: aiCoverage failed before the retry.
+  Solution: Re-ran aiCoverage after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiCoverage failed, verification[aiCoverage] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- observed issue (inference)
-- observed issue (inference)
-- The installation runtime verification remains a historical adoption record with projectQualityState not_configured; readiness must be proven by current Profile, Guard, quality, and hosted CI evidence. [evidence: residualRisks]
+- The model is intentionally limited to supplied facts and opaque SnapshotId; later ingestion and temporal Work Items must define freshness/date semantics. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
@@ -66,9 +60,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

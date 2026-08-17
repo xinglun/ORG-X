@@ -178,6 +178,64 @@ fn sec_collects_annual_aliases_and_sends_user_agent() {
     );
 }
 
+fn collect_revenue_alias_fixture(
+    second_value: i64,
+) -> org_x::features::weekly_radar::runtime::sec::CompanyEvidence {
+    let company = sec_test_company();
+    let submissions_url = "https://data.sec.gov/submissions/CIK0001234567.json";
+    let facts_url = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json";
+    let client = FixtureHttpClient::new();
+    client.insert(
+        submissions_url,
+        HttpResponse::ok(r#"{"filings":{"recent":{}}}"#),
+    );
+    client.insert(
+        facts_url,
+        HttpResponse::ok(&format!(
+            r#"
+            {{
+              "facts": {{
+                "us-gaap": {{
+                  "RevenueFromContractWithCustomerExcludingAssessedTax": {{"units": {{"USD": [
+                    {{"start":"2023-01-01","end":"2023-12-31","val":90,"accn":"000123456724000001","fp":"FY","form":"10-K","filed":"2024-02-15"}},
+                    {{"start":"2024-01-01","end":"2024-12-31","val":100,"accn":"000123456725000001","fp":"FY","form":"10-K","filed":"2025-02-15"}}
+                  ]}}}},
+                  "Revenues": {{"units": {{"USD": [
+                    {{"start":"2024-01-01","end":"2024-12-31","val":{second_value},"accn":"000123456725000002","fp":"FY","form":"10-K","filed":"2025-02-15"}}
+                  ]}}}}
+                }}
+              }}
+            }}
+            "#
+        )),
+    );
+
+    SecClient::collect(&company, &client, "ORG-X test contact@example.test")
+        .expect("ambiguous Company Facts fixture should collect as UNKNOWN")
+}
+
+#[test]
+fn sec_marks_conflicting_latest_aliases_unknown() {
+    let evidence = collect_revenue_alias_fixture(110);
+    let revenue = evidence
+        .fact("revenue")
+        .expect("revenue fact should be present");
+
+    assert_eq!(revenue.status(), &FactStatus::Unknown);
+    assert_eq!(revenue.value(), None);
+}
+
+#[test]
+fn sec_marks_same_value_latest_alias_duplicates_unknown() {
+    let evidence = collect_revenue_alias_fixture(100);
+    let revenue = evidence
+        .fact("revenue")
+        .expect("revenue fact should be present");
+
+    assert_eq!(revenue.status(), &FactStatus::Unknown);
+    assert_eq!(revenue.value(), None);
+}
+
 #[test]
 fn sec_selects_latest_10k_metadata_and_preserves_employee_passage() {
     let company = sec_test_company();
@@ -295,6 +353,18 @@ fn employee_rule_ignores_unrelated_customer_counts() {
     assert_eq!(
         extract_employee_count(
             "We served more than 1,000 customers during 2024.",
+            Some(NaiveDate::from_ymd_opt(2024, 12, 31).unwrap()),
+            "https://example.test/filing/2024"
+        ),
+        FactStatus::Unknown
+    );
+}
+
+#[test]
+fn employee_rule_rejects_customer_population_that_mentions_employees() {
+    assert_eq!(
+        extract_employee_count(
+            "Our customers collectively employ 1,000 employees.",
             Some(NaiveDate::from_ymd_opt(2024, 12, 31).unwrap()),
             "https://example.test/filing/2024"
         ),

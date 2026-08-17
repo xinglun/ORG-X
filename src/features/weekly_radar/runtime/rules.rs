@@ -66,6 +66,11 @@ fn employee_candidates(text: &str) -> Vec<EmployeeCandidate> {
     let mut candidates = Vec::new();
 
     for capture in pattern.captures_iter(text) {
+        let full_match = capture.get(0).expect("full match");
+        let (passage_start, _) = passage_bounds(text, full_match);
+        if unrelated_population_precedes_candidate(&text[passage_start..full_match.start()]) {
+            continue;
+        }
         let phrase = capture
             .name("phrase")
             .map(|value| value.as_str())
@@ -85,7 +90,6 @@ fn employee_candidates(text: &str) -> Vec<EmployeeCandidate> {
         if value.is_empty() {
             continue;
         }
-        let full_match = capture.get(0).expect("full match");
         let passage = passage_for_match(text, full_match);
         let effective_date = parse_date(&passage);
         let approximate = capture.name("approx").is_some();
@@ -101,6 +105,11 @@ fn employee_candidates(text: &str) -> Vec<EmployeeCandidate> {
 }
 
 fn passage_for_match(text: &str, matched: regex::Match<'_>) -> String {
+    let (start, end) = passage_bounds(text, matched);
+    text[start..end].trim().to_owned()
+}
+
+fn passage_bounds(text: &str, matched: regex::Match<'_>) -> (usize, usize) {
     let start = text[..matched.start()]
         .rfind(|character: char| matches!(character, '.' | '!' | '?' | '\n'))
         .map(|index| index + 1)
@@ -109,7 +118,14 @@ fn passage_for_match(text: &str, matched: regex::Match<'_>) -> String {
         .find(|character: char| matches!(character, '.' | '!' | '?' | '\n'))
         .map(|index| matched.end() + index + 1)
         .unwrap_or(text.len());
-    text[start..end].trim().to_owned()
+    (start, end)
+}
+
+fn unrelated_population_precedes_candidate(prefix: &str) -> bool {
+    let prefix = prefix.to_ascii_lowercase();
+    ["customer", "client", "user", "supplier", "vendor"]
+        .iter()
+        .any(|population| prefix.contains(population))
 }
 
 fn parse_date(text: &str) -> Option<NaiveDate> {

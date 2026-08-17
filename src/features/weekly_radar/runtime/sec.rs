@@ -332,7 +332,7 @@ fn select_annual_observation<'a>(
     document: &'a CompanyFactsDocument,
     spec: &FactSpec,
 ) -> Option<SelectedObservation<'a>> {
-    let mut selected = None;
+    let mut candidates = Vec::new();
     for (namespace, concepts) in &document.facts {
         for alias in spec.aliases {
             let Some(concept) = concepts.get(*alias) else {
@@ -352,17 +352,34 @@ fn select_annual_observation<'a>(
                         unit,
                         observation,
                     };
-                    if selected
-                        .as_ref()
-                        .is_none_or(|current| is_newer(&candidate, current))
-                    {
-                        selected = Some(candidate);
-                    }
+                    candidates.push(candidate);
                 }
             }
         }
     }
-    selected
+
+    let latest_end = candidates
+        .iter()
+        .filter_map(|candidate| parse_date(candidate.observation.end.as_deref()))
+        .max()?;
+    let latest_filed = candidates
+        .iter()
+        .filter(|candidate| parse_date(candidate.observation.end.as_deref()) == Some(latest_end))
+        .filter_map(|candidate| parse_date(candidate.observation.filed.as_deref()))
+        .max();
+    let latest_candidates: Vec<_> = candidates
+        .into_iter()
+        .filter(|candidate| {
+            parse_date(candidate.observation.end.as_deref()) == Some(latest_end)
+                && parse_date(candidate.observation.filed.as_deref()) == latest_filed
+        })
+        .collect();
+
+    if latest_candidates.len() == 1 {
+        latest_candidates.into_iter().next()
+    } else {
+        None
+    }
 }
 
 fn unit_matches(unit: &str, kind: UnitKind) -> bool {
@@ -391,17 +408,6 @@ fn is_annual_observation(observation: &FactObservation, kind: UnitKind) -> bool 
     };
     let duration = end.signed_duration_since(start);
     (Duration::days(300)..=Duration::days(400)).contains(&duration)
-}
-
-fn is_newer(candidate: &SelectedObservation<'_>, current: &SelectedObservation<'_>) -> bool {
-    let candidate_end = parse_date(candidate.observation.end.as_deref());
-    let current_end = parse_date(current.observation.end.as_deref());
-    if candidate_end != current_end {
-        return candidate_end > current_end;
-    }
-    let candidate_filed = parse_date(candidate.observation.filed.as_deref());
-    let current_filed = parse_date(current.observation.filed.as_deref());
-    candidate_filed > current_filed
 }
 
 fn observation_description(selected: &SelectedObservation<'_>, value: &str) -> String {

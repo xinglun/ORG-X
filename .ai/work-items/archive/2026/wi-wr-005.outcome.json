@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-005",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "3ad916455c08477d1ba581761f3628b10564809c026aabf4937d5f7ff867537c"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-005",
+    "contractDigest": "5a23bb774031885254f9f009c0fd241412e790da1269c62d49b43c693cebd471",
+    "summaryDigest": "ca81adccd923527ca4c05db6c6d484e4a23a1284fcbf2a722a9c50eaf1db3785",
+    "verificationDigest": "17da2a27b1987ea4dff5a3f6fb89648b0072c71a2613fb9eab9308db8340a7fe",
+    "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "headCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "936e3850a37969bc770c4530e36194337fe71d4418c18d607be0a098396de4e1",
+      "binding": {
+        "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateHead": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateTreeDigest": "e355156d78648ac85af514e97b24f411fff39b072c8d248957d2515da5365dfa",
+        "candidateDiffDigest": "d296536d4a874019a7a030642aa77eaca2942fccac893064013f9085f7512ee7"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-005 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-005 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-wr-005",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-005.contract.json",
       ".ai/work-items/archive/2026/wi-wr-005.summary.json",
@@ -28,72 +51,159 @@
       "docs/superpowers/plans/2026-08-17-wi-wr-005-threshold-distance.md",
       ".ai/work-items/archive/2026/wi-wr-005.outcome.json",
       ".ai/work-items/archive/2026/wi-wr-005.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "No authoritative Distance formula is provided; this WI intentionally receives Distance as a supplied value and does not calculate it.",
+      "Shared Weekly Radar module export and later assembly remain owned by other Work Items; this WI does not modify shared mod.rs files."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "No authoritative Distance formula is provided; this WI intentionally receives Distance as a supplied value and does not calculate it.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "Shared Weekly Radar module export and later assembly remain owned by other Work Items; this WI does not modify shared mod.rs files.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "No authoritative Distance formula is provided; this WI intentionally receives Distance as a supplied value and does not calculate it.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "Shared Weekly Radar module export and later assembly remain owned by other Work Items; this WI does not modify shared mod.rs files.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [
+      {
+        "problem": "observed issue",
+        "action": "Added the legitimate module-local Rust test path src/features/weekly_radar/domain/threshold_distance_test.rs and registered it in this Contract; retained the requested integration test unchanged.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/domain/threshold_distance.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "src/features/weekly_radar/domain/threshold_distance_test.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "tests/weekly_radar_threshold_distance.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": ".ai/guards/coverage_policy.yaml",
+            "subject": "observedIssues[0] observed issue"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/domain/threshold_distance.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "src/features/weekly_radar/domain/threshold_distance_test.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "tests/weekly_radar_threshold_distance.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": ".ai/guards/coverage_policy.yaml",
+            "subject": "observedIssues[0] observed issue"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "threshold_distance_semantics",
+        "severity": "medium",
+        "title": "threshold_distance_semantics",
+        "detail": "The authoritative Distance formula is not part of this WI; a future producer must supply the value and preserve the documented labels without downstream recomputation.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "integration_boundary",
+        "severity": "low",
+        "title": "integration_boundary",
+        "detail": "The source is intentionally not exported through shared Weekly Radar mod.rs in this WI; a later assembly WI must add an explicit integration boundary if needed.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-005.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 0,
-    "warnings": 2,
-    "resolved": 0,
-    "unresolved": 2
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "No authoritative Distance formula is provided; this WI intentionally receives Distance as a supplied value and does not calculate it.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "Shared Weekly Radar module export and later assembly remain owned by other Work Items; this WI does not modify shared mod.rs files.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The authoritative Distance formula is not part of this WI; a future producer must supply the value and preserve the documented labels without downstream recomputation.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "The source is intentionally not exported through shared Weekly Radar mod.rs in this WI; a later assembly WI must add an explicit integration boundary if needed.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-005.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -904,6 +1014,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

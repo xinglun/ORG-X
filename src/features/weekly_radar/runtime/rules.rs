@@ -41,9 +41,7 @@ pub(crate) fn extract_employee_candidate(
 
     let mut candidate = candidates.into_iter().next()?;
     let candidate_date = candidate.effective_date.or(effective_date);
-    if candidate_date.is_none() {
-        return None;
-    }
+    candidate_date?;
     if candidate.effective_date.is_some()
         && effective_date.is_some()
         && candidate.effective_date != effective_date
@@ -106,11 +104,11 @@ fn passage_for_match(text: &str, matched: regex::Match<'_>) -> String {
 
 fn passage_bounds(text: &str, matched: regex::Match<'_>) -> (usize, usize) {
     let start = text[..matched.start()]
-        .rfind(|character: char| matches!(character, '.' | '!' | '?' | '\n'))
+        .rfind(|character: char| ['.', '!', '?', '\n'].contains(&character))
         .map(|index| index + 1)
         .unwrap_or(0);
     let end = text[matched.end()..]
-        .find(|character: char| matches!(character, '.' | '!' | '?' | '\n'))
+        .find(|character: char| ['.', '!', '?', '\n'].contains(&character))
         .map(|index| matched.end() + index + 1)
         .unwrap_or(text.len());
     (start, end)

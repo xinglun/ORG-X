@@ -740,7 +740,7 @@ fn collect_revenue_alias_fixture(
     );
     client.insert(
         facts_url,
-        HttpResponse::ok(&format!(
+        HttpResponse::ok(format!(
             r#"
             {{
               "facts": {{

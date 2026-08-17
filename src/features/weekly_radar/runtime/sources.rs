@@ -131,35 +131,37 @@ pub struct SourceObservation {
     provenance: Provenance,
 }
 
+struct SourceObservationInput {
+    company_id: String,
+    kind: SourceKind,
+    status: SourceStatus,
+    tier: SourceTier,
+    url: Option<String>,
+    title: Option<String>,
+    text: String,
+    source_uri: String,
+    source_field_or_passage: String,
+    observed_at: DateTime<Utc>,
+    effective_date: Option<NaiveDate>,
+}
+
 impl SourceObservation {
-    fn new(
-        company_id: &str,
-        kind: SourceKind,
-        status: SourceStatus,
-        tier: SourceTier,
-        url: Option<String>,
-        title: Option<String>,
-        text: String,
-        source_uri: String,
-        source_field_or_passage: String,
-        observed_at: DateTime<Utc>,
-        effective_date: Option<NaiveDate>,
-    ) -> Self {
+    fn new(input: SourceObservationInput) -> Self {
         let provenance = Provenance::new(
-            source_uri,
-            source_field_or_passage,
-            observed_at,
-            effective_date,
+            input.source_uri,
+            input.source_field_or_passage,
+            input.observed_at,
+            input.effective_date,
         )
         .expect("source adapter must construct nonblank provenance");
         Self {
-            company_id: company_id.to_owned(),
-            kind,
-            status,
-            tier,
-            url,
-            title,
-            text,
+            company_id: input.company_id,
+            kind: input.kind,
+            status: input.status,
+            tier: input.tier,
+            url: input.url,
+            title: input.title,
+            text: input.text,
             provenance,
         }
     }
@@ -248,7 +250,7 @@ pub fn collect_configured_sources(
     collect_official(
         company,
         http,
-        observed_at.clone(),
+        observed_at,
         SourceKind::OfficialIr,
         company.official_ir_url(),
         &mut observations,
@@ -256,7 +258,7 @@ pub fn collect_configured_sources(
     collect_official(
         company,
         http,
-        observed_at.clone(),
+        observed_at,
         SourceKind::Careers,
         company.careers_url(),
         &mut observations,
@@ -264,7 +266,7 @@ pub fn collect_configured_sources(
     collect_official(
         company,
         http,
-        observed_at.clone(),
+        observed_at,
         SourceKind::EngineeringAiBlog,
         company.engineering_ai_blog_url(),
         &mut observations,
@@ -335,19 +337,19 @@ fn collect_official(
             } else {
                 SourceStatus::Known
             };
-            observations.push(SourceObservation::new(
-                company.id(),
+            observations.push(SourceObservation::new(SourceObservationInput {
+                company_id: company.id().to_owned(),
                 kind,
                 status,
-                SourceTier::OfficialPrimary,
-                Some(url.to_owned()),
-                None,
+                tier: SourceTier::OfficialPrimary,
+                url: Some(url.to_owned()),
+                title: None,
                 text,
-                url.to_owned(),
-                "official page text".to_owned(),
+                source_uri: url.to_owned(),
+                source_field_or_passage: "official page text".to_owned(),
                 observed_at,
-                None,
-            ));
+                effective_date: None,
+            }));
         }
         Ok(_) | Err(_) => observations.push(unavailable_observation(
             company,
@@ -431,19 +433,19 @@ fn collect_greenhouse(
         let url = job.absolute_url.clone();
         let source_uri = url.clone().unwrap_or_else(|| endpoint.clone());
         let field = format!("greenhouse.jobs[{}].content", job.id);
-        observations.push(SourceObservation::new(
-            company.id(),
-            SourceKind::Greenhouse,
-            SourceStatus::Known,
-            SourceTier::StructuredHiring,
+        observations.push(SourceObservation::new(SourceObservationInput {
+            company_id: company.id().to_owned(),
+            kind: SourceKind::Greenhouse,
+            status: SourceStatus::Known,
+            tier: SourceTier::StructuredHiring,
             url,
-            Some(title),
+            title: Some(title),
             text,
             source_uri,
-            field,
-            observed_at.clone(),
-            job.updated_at.as_deref().and_then(parse_rfc3339_date),
-        ));
+            source_field_or_passage: field,
+            observed_at,
+            effective_date: job.updated_at.as_deref().and_then(parse_rfc3339_date),
+        }));
         retained += 1;
     }
     if retained == 0 {
@@ -539,22 +541,22 @@ fn collect_lever(
         let url = posting.hosted_url.or(posting.apply_url);
         let source_uri = url.clone().unwrap_or_else(|| endpoint.clone());
         let field = format!("lever.postings[{}].{field}", posting.id);
-        observations.push(SourceObservation::new(
-            company.id(),
-            SourceKind::Lever,
-            SourceStatus::Known,
-            SourceTier::StructuredHiring,
+        observations.push(SourceObservation::new(SourceObservationInput {
+            company_id: company.id().to_owned(),
+            kind: SourceKind::Lever,
+            status: SourceStatus::Known,
+            tier: SourceTier::StructuredHiring,
             url,
-            Some(title),
+            title: Some(title),
             text,
             source_uri,
-            field,
-            observed_at.clone(),
-            posting
+            source_field_or_passage: field,
+            observed_at,
+            effective_date: posting
                 .updated_at
                 .or(posting.created_at)
                 .and_then(parse_epoch_date),
-        ));
+        }));
         retained += 1;
     }
     if retained == 0 {
@@ -611,19 +613,19 @@ fn collect_gdelt(
         if title.is_empty() || url.trim().is_empty() {
             continue;
         }
-        observations.push(SourceObservation::new(
-            company.id(),
-            SourceKind::Gdelt,
-            SourceStatus::DiscoveryOnly,
-            SourceTier::DiscoveryOnly,
-            Some(url.clone()),
-            Some(title.clone()),
-            title,
-            url,
-            format!("GDELT query context: {endpoint}"),
-            observed_at.clone(),
-            article.seendate.as_deref().and_then(parse_gdelt_date),
-        ));
+        observations.push(SourceObservation::new(SourceObservationInput {
+            company_id: company.id().to_owned(),
+            kind: SourceKind::Gdelt,
+            status: SourceStatus::DiscoveryOnly,
+            tier: SourceTier::DiscoveryOnly,
+            url: Some(url.clone()),
+            title: Some(title.clone()),
+            text: title,
+            source_uri: url,
+            source_field_or_passage: format!("GDELT query context: {endpoint}"),
+            observed_at,
+            effective_date: article.seendate.as_deref().and_then(parse_gdelt_date),
+        }));
         retained += 1;
     }
     if retained == 0 {
@@ -649,19 +651,19 @@ fn unavailable_observation(
     let source_uri = url
         .map(str::to_owned)
         .unwrap_or_else(|| format!("source://weekly-radar/{}/{}", company.id(), kind.as_str()));
-    SourceObservation::new(
-        company.id(),
+    SourceObservation::new(SourceObservationInput {
+        company_id: company.id().to_owned(),
         kind,
-        SourceStatus::Unavailable,
+        status: SourceStatus::Unavailable,
         tier,
-        url.map(str::to_owned),
-        None,
-        String::new(),
+        url: url.map(str::to_owned),
+        title: None,
+        text: String::new(),
         source_uri,
-        field.to_owned(),
+        source_field_or_passage: field.to_owned(),
         observed_at,
-        None,
-    )
+        effective_date: None,
+    })
 }
 
 fn unknown_observation(
@@ -675,19 +677,19 @@ fn unknown_observation(
     let source_uri = url
         .map(str::to_owned)
         .unwrap_or_else(|| format!("source://weekly-radar/{}/{}", company.id(), kind.as_str()));
-    SourceObservation::new(
-        company.id(),
+    SourceObservation::new(SourceObservationInput {
+        company_id: company.id().to_owned(),
         kind,
-        SourceStatus::Unknown,
+        status: SourceStatus::Unknown,
         tier,
-        url.map(str::to_owned),
-        None,
-        String::new(),
+        url: url.map(str::to_owned),
+        title: None,
+        text: String::new(),
         source_uri,
-        field.to_owned(),
+        source_field_or_passage: field.to_owned(),
         observed_at,
-        None,
-    )
+        effective_date: None,
+    })
 }
 
 enum FetchFailure {

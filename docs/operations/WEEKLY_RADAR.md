@@ -36,9 +36,9 @@ must not be committed to this repository.
 
 ## Local dry-run
 
-Use `--dry-run` to validate the registry, fixture-safe source boundaries, the
-normalized report shape, and sanitized deterministic output without sending
-Telegram or creating, deleting, or changing archive files:
+Use `--dry-run` to run the normal acquisition and report-validation path with
+the production `UreqHttpClient` against configured public source endpoints.
+It never sends Telegram or creates, deletes, or changes archive files:
 
 ```sh
 ORGX_SEC_USER_AGENT='ORG-X local dry-run contact@example.test' \
@@ -49,9 +49,11 @@ cargo run -- weekly-radar \
   --dry-run
 ```
 
-Dry-run uses the injected fixture-safe HTTP boundary. A real publication
-requires reachable primary evidence, Telegram credentials, and a successful
-bound delivery receipt; dry-run does not bypass those publication gates.
+Offline tests can inject a fixture HTTP client, and a source-free registry
+skips discovery acquisition so it performs no network requests. A real
+publication requires reachable primary evidence, Telegram credentials, and a
+successful bound delivery receipt; dry-run does not bypass those publication
+gates.
 
 ## Source priorities and UNKNOWN
 

@@ -46,10 +46,12 @@
     ".ai/work-items/active/wi-wr-016-runtime.outcome.json",
     ".ai/work-items/active/wi-wr-016-runtime.outcome.md",
     ".ai/evidence/reference-impact/wi-wr-016-runtime-*.json",
+    ".ai/guards/coverage_policy.yaml",
     ".github/workflows/weekly-radar.yml",
     "Cargo.toml",
     "Cargo.lock",
     "src/main.rs",
+    "src/features/weekly_radar/mod.rs",
     "src/features/weekly_radar/runtime.rs",
     "src/features/weekly_radar/runtime/**",
     "tests/weekly_radar_runtime.rs",
@@ -86,7 +88,8 @@
     { "path": ".github/workflows/ai-cockpit.yml", "reason": "Current checkout@v5 and quality workflow conventions." },
     { "path": "user-provided Weekly Radar free-data design", "reason": "Approved P0/P1/P2 stack, no-paid-API rule, rule-only extraction, and evidence pyramid." },
     { "path": "https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github", "reason": "GitHub repository size guidance for retention design." },
-    { "path": "https://docs.github.com/en/billing/reference/product-usage-included", "reason": "GitHub Free Actions storage guidance for artifact retention." }
+    { "path": "https://docs.github.com/en/billing/reference/product-usage-included", "reason": "GitHub Free Actions storage guidance for artifact retention." },
+    { "path": ".ai/guards/coverage_policy.yaml", "reason": "Existing coverage association policy; the current WI adds one bounded association for the runtime integration test." }
   ],
   "problemStatement": "Weekly Radar boundaries are locally testable but have no runtime that collects the approved free evidence stack, assembles a report, publishes it to Telegram, or retains bounded longitudinal history.",
   "unknowns": [],

@@ -95,7 +95,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan data
-          git rm -rf . >/dev/null 2>&1 || true
+          git rm -rf . >/dev/null 2>&1
           git add -- weekly-radar
           if git diff --cached --quiet; then
             echo "No data files are staged; refusing to create an empty update." >&2

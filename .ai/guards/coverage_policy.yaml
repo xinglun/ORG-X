@@ -357,6 +357,14 @@ associations:
       - "tests/test_lightweight_verification.py"
       - "tests/test_verification_policy.py"
       - "tests/test_finish_e2e.py"
+  weeklyRadarRuntime:
+    production:
+      - "src/main.rs"
+      - "src/features/weekly_radar/mod.rs"
+      - "src/features/weekly_radar/runtime.rs"
+      - "src/features/weekly_radar/runtime/**"
+    tests:
+      - "tests/weekly_radar_runtime.rs"
   startReceipt:
     production:
       - "scripts/ai_start_receipt.py"

@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-016-runtime",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "e8b3940c576c7ab65e7cff7017b26b1b7c6e9ecc2ef8aa1dc3394b7a050b0952"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-016-runtime",
+    "contractDigest": "0c587ac299ca76842ce3aafa11178713478231b022427089882a5c4bd243e16d",
+    "summaryDigest": "40129f46ecfa5e8bd11b1249c4250f733b1d2061ff6d437ac58f0724898418e5",
+    "verificationDigest": "7f28886d1805332e161a0b7eed1f7c8b042f2ed37d1939fab74de5ba8033ca4a",
+    "baseCommit": "7551095fb84f961bdc49c6b0faae760409e5ddbd",
+    "headCommit": "cfd417d37d29eb51bbb34402cf4d7200b42a6265",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "95751cc1f4008916d718344b52311f2193f30bdaa1e677a8401f820cb9ca4a8c",
+      "binding": {
+        "baseCommit": "7551095fb84f961bdc49c6b0faae760409e5ddbd",
+        "candidateHead": "cfd417d37d29eb51bbb34402cf4d7200b42a6265",
+        "candidateTreeDigest": "12f1f23d6f7c952fa4d02b612a2b3de7f0d3dcde43bbaefd16a8447799b09d8f",
+        "candidateDiffDigest": "78eeaf0fdf8437a4a683395cc7d8ee569e9168d67026e2c845ee9eddddc7d030"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-016-runtime generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-016-runtime generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-wr-016-runtime",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-016-runtime.contract.json",
       ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
@@ -45,139 +68,216 @@
       "docs/operations/WEEKLY_RADAR.md",
       "docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md",
       "docs/superpowers/plans/2026-08-17-wi-wr-016-runtime.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "c833474ef1987e4a3342a47a83c2e0ac39d2759c970b9544bc72128da4f07d77"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "7f76ffa60df77d1f1738137cfb27cb6a813c56a23721e5cde93c9da3e4eca082"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "quality failed before the retry.",
+        "policyOrGuard": "required verification: quality",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry quality after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "verificationHistory[1] quality failed",
+            "digest": "e3261faead207be643f02a0173cf916359631705b63769e54a50a4f9e99e54fa"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "019fcc8bd9881585759d8ce1132be291bb7fa2e1f6961af85bc73c3e9a69eb71"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "c833474ef1987e4a3342a47a83c2e0ac39d2759c970b9544bc72128da4f07d77"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "7f76ffa60df77d1f1738137cfb27cb6a813c56a23721e5cde93c9da3e4eca082"
+          }
+        ]
+      },
+      {
+        "problem": "quality failed before the retry.",
+        "action": "Re-ran quality after the correction; the latest attempt passed.",
+        "verification": "quality latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "verificationHistory[1] quality failed",
+            "digest": "e3261faead207be643f02a0173cf916359631705b63769e54a50a4f9e99e54fa"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "019fcc8bd9881585759d8ce1132be291bb7fa2e1f6961af85bc73c3e9a69eb71"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "external_sources",
+        "severity": "high",
+        "title": "external_sources",
+        "detail": "Public source schemas and availability can change; failures remain explicit UNKNOWN or UNAVAILABLE and do not publish without primary evidence.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "Fresh SEC and source fixture/CI verification"
+        ],
+        "decisionOwner": "ORG-X maintainer",
+        "mitigation": "Keep bounded parsers, provenance, and fail-closed source status handling.",
+        "acceptanceStatus": "accepted_with_guards"
+      },
+      {
+        "claim": "delivery",
+        "severity": "high",
+        "title": "delivery",
+        "detail": "Telegram credentials and network delivery are runtime dependencies; the workflow fails closed on missing credentials or unsuccessful receipt binding.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "Successful Telegram receipt in the configured production environment"
+        ],
+        "decisionOwner": "ORG-X maintainer",
+        "mitigation": "Keep secrets environment-only, redact diagnostics, retry finite chunks, and archive only a bound successful receipt.",
+        "acceptanceStatus": "accepted_with_guards"
+      },
+      {
+        "claim": "data_branch",
+        "severity": "high",
+        "title": "data_branch",
+        "detail": "The data branch update is intentionally lease-guarded and orphan-based; a concurrent or protected-branch rejection fails the run without touching main.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "Hosted Actions run and post-merge data-branch inspection"
+        ],
+        "decisionOwner": "ORG-X maintainer",
+        "mitigation": "Target only refs/heads/data, use force-with-lease, serialize runs, and refuse main.",
+        "acceptanceStatus": "accepted_with_guards"
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "c833474ef1987e4a3342a47a83c2e0ac39d2759c970b9544bc72128da4f07d77"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "7f76ffa60df77d1f1738137cfb27cb6a813c56a23721e5cde93c9da3e4eca082"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+        "subject": "verificationHistory[1] quality failed",
+        "digest": "e3261faead207be643f02a0173cf916359631705b63769e54a50a4f9e99e54fa"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
+        "subject": "verification[quality] retry passed",
+        "digest": "019fcc8bd9881585759d8ce1132be291bb7fa2e1f6961af85bc73c3e9a69eb71"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "c833474ef1987e4a3342a47a83c2e0ac39d2759c970b9544bc72128da4f07d77"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "7f76ffa60df77d1f1738137cfb27cb6a813c56a23721e5cde93c9da3e4eca082"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: quality",
-      "action": "blocked",
-      "resolution": "Retry quality after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "e3261faead207be643f02a0173cf916359631705b63769e54a50a4f9e99e54fa"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "019fcc8bd9881585759d8ce1132be291bb7fa2e1f6961af85bc73c3e9a69eb71"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "c833474ef1987e4a3342a47a83c2e0ac39d2759c970b9544bc72128da4f07d77"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "7f76ffa60df77d1f1738137cfb27cb6a813c56a23721e5cde93c9da3e4eca082"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "quality failed before the retry.",
-      "policyOrGuard": "required verification: quality",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry quality after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "e3261faead207be643f02a0173cf916359631705b63769e54a50a4f9e99e54fa"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "019fcc8bd9881585759d8ce1132be291bb7fa2e1f6961af85bc73c3e9a69eb71"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "high",
-      "detail": "Public source schemas and availability can change; failures remain explicit UNKNOWN or UNAVAILABLE and do not publish without primary evidence.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "high",
-      "detail": "Telegram credentials and network delivery are runtime dependencies; the workflow fails closed on missing credentials or unsuccessful receipt binding.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "high",
-      "detail": "The data branch update is intentionally lease-guarded and orphan-based; a concurrent or protected-branch rejection fails the run without touching main.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-016-runtime.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -1336,6 +1436,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry quality after correcting the recorded failure."
+  }
 }

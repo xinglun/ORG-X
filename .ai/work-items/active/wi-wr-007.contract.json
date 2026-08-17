@@ -1,0 +1,281 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-007",
+  "mode": "code",
+  "title": "Weekly Change Compression",
+  "baseCommit": "ba346c2bbd538d2f734951ca05f3ad0322979cfa",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-wr-007.contract.json",
+    ".ai/work-items/active/wi-wr-007.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/wi-wr-007.json",
+    ".ai/work-items/archive/**/wi-wr-007.*",
+    ".ai/work-items/active/wi-wr-007.outcome.json",
+    ".ai/work-items/active/wi-wr-007.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-007-weekly-change-compression.json",
+    "src/features/weekly_radar/domain/change_compression.rs",
+    "tests/weekly_radar_change_compression.rs",
+    "tests/change_compression_test.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-007-weekly-change-compression.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-007-weekly-change-compression.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/domain/mod.rs, src/features/weekly_radar/mod.rs, src/features/mod.rs, tests/architecture/module_boundaries.rs, .ai/guards/coverage_policy.yaml, and every other Work Item file",
+    "Threshold Distance, Stage inference, Ranking, score calculation, Top5 membership calculation, or any recomputation from raw values",
+    "Narrative generation, Markdown or Telegram rendering, persistence, scheduling, retry, delivery, runtime/provider integration, or external side effects",
+    "Cross-feature imports, dependencies, credentials, trading decisions, price prediction, target price, portfolio allocation, or capital action"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository Work Item lifecycle, scope ownership, strict Finish, archive, evidence handoff, and current-WI issue policy."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Canonical governance and domain terminology, including evidence-over-self-declaration."
+    },
+    {
+      "path": ".ai/README.md",
+      "reason": "Active Contract/Summary, generated status, and governance loop requirements."
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "AI Cockpit lifecycle order, Preflight pause, Finish, archive, and local-only handoff boundary."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "WR-007 responsibility, priority context, no-change requirement, and dependency order WR-002 through WR-006."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-002-weekly-radar-snapshot.md",
+      "reason": "Upstream snapshot facts are supplied and retained; this WI must not recalculate them."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-003-top5-weekly-read-model.md",
+      "reason": "Top5 facts are opaque upstream values and must remain ordered and unmodified."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-004-stage-transition-output.md",
+      "reason": "Stage Transition is an explicit supplied output, not an inference performed here."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-005-threshold-distance.md",
+      "reason": "Distance is an upstream-supplied value and is explicitly excluded from this compression boundary."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-006-rising-dropped.md",
+      "reason": "Rising and Dropped events retain supplied facts and insertion order; this WI consumes them without re-derivation."
+    },
+    {
+      "path": "src/features/weekly_radar/domain/rising_dropped.rs",
+      "reason": "Existing standalone upstream event shape and fact-preserving boundary pattern."
+    },
+    {
+      "path": "src/features/weekly_radar/domain/stage_transition_output.rs",
+      "reason": "Existing standalone Stage Transition output and ordered proof boundary pattern."
+    },
+    {
+      "path": "src/features/weekly_radar/domain/top5_weekly_read_model.rs",
+      "reason": "Existing standalone Top5 fact-retention and deterministic collection pattern."
+    },
+    {
+      "path": "src/features/weekly_radar/domain/mod.rs",
+      "reason": "Inspected only; intentionally unchanged because shared module registration is out of scope for this WI."
+    },
+    {
+      "path": "tests/architecture/module_boundaries.rs",
+      "reason": "Inspected only; intentionally unchanged because shared architecture tests are out of scope."
+    },
+    {
+      "path": ".ai/guards/coverage_policy.yaml",
+      "reason": "Inspected only; intentionally unchanged. If coverage association requires more tests, add same-boundary tests inside this WI."
+    },
+    {
+      "path": "Cargo.toml",
+      "reason": "Rust test target and dependency boundary; no dependency or shared test registration change is planned."
+    },
+    {
+      "path": "Makefile",
+      "reason": "Project quality command and AI Cockpit Make target entrypoint."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-007-weekly-change-compression.md",
+      "reason": "Approved design for the explicit compression sections and stable No Change output."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-wi-wr-007-weekly-change-compression.md",
+      "reason": "TDD implementation and verification plan for this WI."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["fact_integrity", "ordering", "semantic_boundary", "architecture_boundary"],
+    "reason": "The boundary compresses multiple upstream event collections while preserving exact supplied values and order; a mistaken inference or unstable No Change shape would alter downstream reporting semantics.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The API is standalone and path-loaded by focused tests so shared module registration, architecture tests, and coverage policy remain untouched."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["Bounded standard-library domain compression with deterministic validation and no external side effects."],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user approved the explicit section-preserving design and authorized execution, verification, and governance evidence writes for all 24 planned Work Items."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Bind the completed Contract before implementation and bind final Summary evidence before strict Finish."
+  },
+  "acceptance": [
+    "The standalone boundary accepts explicit Important Structural Change, Top5 Change, Stage Transition, Rising, and Dropped facts and preserves every supplied event identity, period, company, opaque fact value, and per-section insertion order.",
+    "WeeklyChangeCompression exposes explicit sections in deterministic order: Important Structural Change, Top5 Change, Stage Transition, Rising, Dropped, and No Change; no section is inferred from Stage, Ranking, Distance, score, or raw evidence.",
+    "The compression rejects blank boundary values, period mismatches, and duplicate event identities deterministically without mutating accepted input collections.",
+    "When no change events are supplied, No Change is emitted with the stable label NO_CHANGE, the supplied period, and zero counts for all five change sections; it emits no narrative text.",
+    "When change events are supplied, the same stable No Change section boundary remains inspectable without fabricating a No Change event; all non-empty event sections retain their exact input facts and order.",
+    "The standalone source imports only Rust standard-library facilities, contains no crate or cross-feature imports, is not registered through src/features/weekly_radar/domain/mod.rs, and contains no Threshold Distance, Stage inference, Ranking, score, persistence, renderer, scheduler, delivery, or runtime/provider implementation.",
+    "Focused module-local and integration tests exercise all five event sections, specified section ordering, fact/order retention, stable No Change, duplicate/period guards, and source-level non-inference boundaries.",
+    "The design spec, implementation plan, reference-impact evidence, Summary, Outcome, and strict AI Cockpit lifecycle records capture the authorization, scope, verification evidence, limitations, and local-only next action."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep the compression boundary standalone and independent of shared Weekly Radar module registration and other feature implementations.",
+    "Consume only explicit upstream facts; do not infer or recalculate Stage, Ranking, Distance, score, Top5 membership, Rising, or Dropped.",
+    "Preserve supplied event identity, field values, and insertion order exactly; do not manufacture narrative text.",
+    "Reject duplicate event identities and period conflicts deterministically without silently merging or overwriting input.",
+    "Resolve problems discovered within this Work Item in the current Work Item and record the fix in Summary, checkpoints, and Outcome; do not open a new WI for an in-scope correction.",
+    "Do not introduce rendering, persistence, delivery, scheduler, retry, trading, price prediction, target price, portfolio allocation, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "WR-002 through WR-006 provide explicit Weekly Radar facts, but there is no deterministic boundary that compresses the five important weekly-change sections into a stable downstream shape while retaining the supplied facts and order.",
+    "constraints": [
+      "Only write the declared WR-007 source, focused module-local/integration tests, design/plan, reference-impact, and governed evidence paths; do not edit shared mod.rs, architecture tests, or the shared coverage policy.",
+      "Important Structural Change, Top5 Change, Stage Transition, Rising, and Dropped inputs are already explicit upstream facts. Preserve them without recomputing Stage, Ranking, Distance, score, membership, or event meaning.",
+      "No Change must have a stable deterministic output with a fixed label and explicit zero counts when the input has no events; no narrative text may be generated.",
+      "The user authorized execution, verification, publication, merge, close, and archive for all 24 planned Work Items, while this local WI execution is explicitly limited to no push, no PR, no merge, and no close."
+    ],
+    "rationale": "A standalone section-preserving aggregate gives later renderers a deterministic compression boundary without allowing compression to reinterpret domain facts or depend on shared module wiring owned by another Work Item."
+  },
+  "verification": [
+    {"check": "aiWorkItem", "required": true},
+    {"check": "aiScope", "required": true},
+    {"check": "aiGuards", "required": true},
+    {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true},
+    {"check": "aiReviewPolicy", "required": true},
+    {"check": "aiBacktrack", "required": true},
+    {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true},
+    {"check": "aiGuidelines", "required": true},
+    {"check": "aiSummary", "required": true},
+    {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true},
+    {"check": "aiStatusConsistency", "required": true},
+    {"check": "aiDiffOwnership", "required": true},
+    {"check": "quality", "required": true}
+  ],
+  "rollbackNote": "Revert this Work Item commit and restore the standalone WR-007 source, tests, design/plan, reference-impact, and governed evidence paths.",
+  "budgetImpact": {
+    "expectedMetrics": {"archiveGrowth": 16}
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "All five explicit change sections retain facts and order",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_change_compression.rs", "tests/change_compression_test.rs"],
+      "expected": "Important Structural Change, Top5 Change, Stage Transition, Rising, and Dropped records are exposed in their fixed section order with exact supplied identities, periods, companies, facts, and within-section order.",
+      "verificationPlan": "Run the focused integration test and module-local test covering every section and ordered accessors."
+    },
+    {
+      "scenario": "No event input produces stable No Change",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_change_compression.rs", "tests/change_compression_test.rs"],
+      "expected": "An empty input produces a stable NO_CHANGE label, the supplied period, zero counts, and no generated narrative.",
+      "verificationPlan": "Run focused stable-No-Change tests and the source assertion that no narrative builder exists."
+    },
+    {
+      "scenario": "Events are supplied without fabricating No Change",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_change_compression.rs"],
+      "expected": "Non-empty input retains all event sections while the No Change accessor is absent rather than inventing a no-change event.",
+      "verificationPlan": "Run the focused non-empty compression test and inspect the stable section shape."
+    },
+    {
+      "scenario": "Duplicate identity or period mismatch",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_change_compression.rs", "tests/change_compression_test.rs"],
+      "expected": "Duplicate event identities and records with a different period are rejected deterministically before compression output is built.",
+      "verificationPlan": "Run duplicate and period-guard tests and assert the typed error values."
+    },
+    {
+      "scenario": "No forbidden recomputation or shared registration",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_change_compression.rs"],
+      "expected": "The standalone source has no imports of shared mod.rs, other features, Stage/Ranking/Distance calculators, renderers, or runtime providers.",
+      "verificationPlan": "Run the focused source-boundary assertions plus project architecture and quality checks."
+    }
+  ],
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 planned Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "execute, verify, publish, merge, close, archive all 24 planned WIs.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "Explicit human authorization is recorded above; local instructions additionally prohibit push, PR, merge, and close for this WI."
+  },
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-007.json",
+    "baseCommit": "ba346c2bbd538d2f734951ca05f3ad0322979cfa",
+    "initialScopeDigest": "bc0bc76aa92328db441871eb0a9ebe04096e147d2694faa374a1b8ff16ce3b5f",
+    "contractSkeletonDigest": "276e346771241951611d9f34a70836b82aeee9136e5ff9077776fde08617c4df"
+  }
+}

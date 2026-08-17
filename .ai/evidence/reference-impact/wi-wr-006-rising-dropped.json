@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "target": {
+    "type": "file",
+    "name": "wr_006_rising_dropped_domain_boundary",
+    "path": "src/features/weekly_radar/domain/rising_dropped.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The standalone WR-006 domain file uses only supplied in-memory facts and does not load runtime references dynamically."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The source is intentionally not registered in shared Weekly Radar modules; no external consumer is changed by this Work Item."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The source has no monitoring, telemetry, or delivery integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-006.contract.json",
+      "The Contract declares an isolated additive domain boundary, prohibits shared-module edits, and requires deterministic fact-preserving behavior."
+    ]
+  }
+}

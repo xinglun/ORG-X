@@ -17,6 +17,7 @@
     ".ai/work-items/active/wi-wr-007.outcome.md",
     ".ai/evidence/reference-impact/wi-wr-007-weekly-change-compression.json",
     "src/features/weekly_radar/domain/change_compression.rs",
+    "src/features/weekly_radar/domain/change_compression_test.rs",
     "tests/weekly_radar_change_compression.rs",
     "tests/change_compression_test.rs",
     "docs/superpowers/specs/2026-08-17-wi-wr-007-weekly-change-compression.md",

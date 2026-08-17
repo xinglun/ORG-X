@@ -67,19 +67,15 @@ fn employee_candidates(text: &str) -> Vec<EmployeeCandidate> {
 
     for capture in pattern.captures_iter(text) {
         let full_match = capture.get(0).expect("full match");
-        let (passage_start, _) = passage_bounds(text, full_match);
-        if unrelated_population_precedes_candidate(&text[passage_start..full_match.start()]) {
+        let passage = passage_for_match(text, full_match);
+        if unrelated_population_context(&passage) {
             continue;
         }
         let phrase = capture
             .name("phrase")
             .map(|value| value.as_str())
             .unwrap_or("");
-        if phrase.eq_ignore_ascii_case("people")
-            && !passage_for_match(text, capture.get(0).expect("full match"))
-                .to_lowercase()
-                .contains("workforce")
-        {
+        if phrase.eq_ignore_ascii_case("people") && !passage.to_lowercase().contains("workforce") {
             continue;
         }
         let value = capture
@@ -90,7 +86,6 @@ fn employee_candidates(text: &str) -> Vec<EmployeeCandidate> {
         if value.is_empty() {
             continue;
         }
-        let passage = passage_for_match(text, full_match);
         let effective_date = parse_date(&passage);
         let approximate = capture.name("approx").is_some();
         candidates.push(EmployeeCandidate {
@@ -121,11 +116,22 @@ fn passage_bounds(text: &str, matched: regex::Match<'_>) -> (usize, usize) {
     (start, end)
 }
 
-fn unrelated_population_precedes_candidate(prefix: &str) -> bool {
-    let prefix = prefix.to_ascii_lowercase();
-    ["customer", "client", "user", "supplier", "vendor"]
-        .iter()
-        .any(|population| prefix.contains(population))
+fn unrelated_population_context(passage: &str) -> bool {
+    let passage = passage.to_ascii_lowercase();
+    [
+        "customer",
+        "client",
+        "user",
+        "supplier",
+        "vendor",
+        "partner",
+        "competitor",
+        "rival",
+        "peer",
+        "prospect",
+    ]
+    .iter()
+    .any(|population| passage.contains(population))
 }
 
 fn parse_date(text: &str) -> Option<NaiveDate> {

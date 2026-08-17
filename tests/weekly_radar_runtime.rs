@@ -373,6 +373,30 @@ fn employee_rule_rejects_customer_population_that_mentions_employees() {
 }
 
 #[test]
+fn employee_rule_rejects_customer_suffix_context() {
+    assert_eq!(
+        extract_employee_count(
+            "The filing lists 1,000 employees of our customers.",
+            Some(NaiveDate::from_ymd_opt(2024, 12, 31).unwrap()),
+            "https://example.test/filing/2024"
+        ),
+        FactStatus::Unknown
+    );
+}
+
+#[test]
+fn employee_rule_rejects_competitor_context() {
+    assert_eq!(
+        extract_employee_count(
+            "The report lists 1,000 employees of a competitor.",
+            Some(NaiveDate::from_ymd_opt(2024, 12, 31).unwrap()),
+            "https://example.test/filing/2024"
+        ),
+        FactStatus::Unknown
+    );
+}
+
+#[test]
 fn normalized_fact_retains_status_confidence_and_full_provenance() {
     let provenance = Provenance::from_rfc3339(
         "https://example.test/filing/2026",

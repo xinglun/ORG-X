@@ -1,0 +1,205 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-011",
+  "mode": "code",
+  "title": "Reporting Read Model",
+  "baseCommit": "3a8bda98f2dbd2e312509180f2efe5ed0f238143",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-011.contract.json",
+    ".ai/work-items/active/wi-011.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-011.outcome.json",
+    ".ai/work-items/active/wi-011.outcome.md",
+    "src/features/reporting/domain/**",
+    "tests/reporting_domain.rs",
+    "docs/superpowers/specs/2026-08-17-wi-011-reporting-design.md",
+    "docs/superpowers/plans/2026-08-17-wi-011-reporting.md"
+  ],
+  "outOfScope": [
+    "Stage inference, ranking, score calculation, threshold distance, evidence acquisition, persistence, rendering, scheduling, delivery, and retry",
+    "Mutating source facts or recomputing Top5, Rising, Watch, or Dropped membership",
+    "External integrations, cross-feature imports, and new dependencies"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository operating rules and validation requirements."},
+    {"path": ".ai/glossary.md", "reason": "Canonical Work Item and governance terminology."},
+    {"path": "docs/architecture/ARCHITECTURE.md", "reason": "Layer direction and Domain isolation rules."},
+    {"path": "docs/architecture/BOUNDED_CONTEXTS.md", "reason": "Reporting context boundary."},
+    {"path": "docs/architecture/DEPENDENCY_RULES.md", "reason": "Reporting dependency guardrails."},
+    {"path": "docs/domain/RANKING_MODEL.md", "reason": "Top5, Rising, Watch, and Dropped research views."},
+    {"path": "docs/domain/EVIDENCE_MODEL.md", "reason": "Evidence, counter evidence, and missing proof fields retained by research cards."},
+    {"path": "docs/product/PRD.md", "reason": "Research radar output and evidence-first sequence."},
+    {"path": "docs/product/SCOPE.md", "reason": "No-trading and no-capital-action boundary."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WI-011 deliverables and dependency position."},
+    {"path": "src/features/ranking/domain/mod.rs", "reason": "Upstream ranking boundary; Reporting consumes supplied read-model fields only."},
+    {"path": "tests/architecture/dependency_rules.rs", "reason": "Executable Reporting dependency guard."},
+    {"path": "Cargo.toml", "reason": "Existing dependency and test configuration."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["reporting_semantics", "evidence_integrity", "architecture_boundary"],
+    "reason": "Reporting can accidentally recompute or mutate upstream judgments. This Read Model must preserve supplied card facts and fixed buckets without creating new conclusions.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "Ranking, Stage assignment, threshold distance, rendering, persistence, and delivery remain outside this WI."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Reporting Read Model code, tests, and evidence require the standard governed review route."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The explicit user authorization covers execution and Contract recording for all 24 roadmap Work Items."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "ResearchCard retains supplied identity, company, Stage label, headline, evidence summary, counter evidence, missing proof, and next-step facts without recomputation.",
+    "Top5 enforces a maximum of five ordered cards and rejects duplicate card identities.",
+    "Rising, Watch, and Dropped sections preserve ordered supplied cards and reject duplicate identities within each section.",
+    "ResearchPacket groups Top5, Rising, Watch, and Dropped into a read-only output boundary without recalculating membership or Stage.",
+    "Reporting Domain source contains only pure Read Model logic and standard-library types with no external-system, rendering, persistence, or other-feature coupling.",
+    "Focused unit and integration tests cover card facts, Top5 limit, section order, duplicate rejection, packet grouping, and no-recomputation behavior.",
+    "The design spec and execution plan record the Reporting boundary, no-goals, authorization, current-WI issue rule, and verification commands."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep Reporting Domain independent of external systems and other feature modules.",
+    "Reporting preserves supplied membership and facts; it does not recompute Stage, Ranking, Distance, or evidence conclusions.",
+    "Preserve ordered cards and explicit counter/missing proof text.",
+    "Do not add dependencies for this Contract.",
+    "Resolve issues within the current Work Item when they remain inside its Contract scope; open a successor only for a distinct or materially expanded boundary.",
+    "Do not introduce trading, price prediction, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "The repository has no typed Reporting Read Model that packages Top5, Rising, Watch, Dropped, and research cards without recomputing upstream judgments.",
+    "constraints": [
+      "Retain supplied card identity, Stage label, evidence, counter evidence, missing proof, and next-step facts as opaque read-model values.",
+      "Enforce Top5 capacity and deterministic duplicate rejection while preserving insertion order in every section.",
+      "Reporting Domain stays provider-agnostic and does not import another feature module or render/publish output."
+    ],
+    "rationale": "A pure Reporting Read Model gives later Markdown, Telegram, and Weekly Radar WIs a stable read-only contract while keeping Stage, Ranking, and evidence decisions upstream."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {"type": "human", "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.", "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "authorityEvidence": {"type": "human_authorization", "granted": true, "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.", "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "software_design", "test_automation"], "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]},
+  "requestedOperation": {"type": "repository_governance", "action": "modify", "target": "repository_governance", "environment": "repository", "effect": "enforce", "authorityRequired": false, "authorityReason": "Explicit human authorization is recorded above."},
+  "scenarioCoverage": [
+    {"scenario": "ResearchCard preserves all supplied read-model facts without recomputation.", "required": true, "status": "verified", "evidence": ["src/features/reporting/domain/mod_test.rs", "tests/reporting_domain.rs"], "expected": "Identity, company, Stage label, evidence, counter evidence, missing proof, and next step are returned unchanged.", "verificationPlan": "Run focused card accessor and packet tests."},
+    {"scenario": "Top5 capacity and section ordering are deterministic.", "required": true, "status": "verified", "evidence": ["src/features/reporting/domain/mod_test.rs", "tests/reporting_domain.rs"], "expected": "Top5 rejects the sixth card; Rising, Watch, and Dropped preserve insertion order.", "verificationPlan": "Run capacity, duplicate, and order tests."},
+    {"scenario": "ResearchPacket groups read-only sections without cross-feature coupling.", "required": true, "status": "verified", "evidence": ["src/features/reporting/domain/mod_test.rs", "tests/reporting_domain.rs", "tests/architecture/dependency_rules.rs"], "expected": "Packet accessors expose the four sections and architecture checks pass.", "verificationPlan": "Run integration tests, architecture tests, and make check."}
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 14
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-011.json",
+    "baseCommit": "3a8bda98f2dbd2e312509180f2efe5ed0f238143",
+    "initialScopeDigest": "eac95e486d3a13b69b972b1695e5601317c4287168c2134b790cd347621d12d6",
+    "contractSkeletonDigest": "cc6cbfad90e9d09513466c5a67088ac20e5a91440c081d3a4bb1eb8768502854"
+  }
+}

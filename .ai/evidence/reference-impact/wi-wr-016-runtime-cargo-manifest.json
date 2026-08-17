@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "requestedText": "Add the approved Weekly Radar runtime dependencies and keep the manifest compatible with the existing Rust build and CI checks.",
+  "target": {
+    "type": "file",
+    "name": "wi_wr_016_runtime_cargo_manifest",
+    "path": "Cargo.toml",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The manifest change adds compile-time Rust dependencies only; it does not load runtime references dynamically."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "No external consumer contract is changed; the package remains the existing repository crate and the dependency set is exercised by the runtime tests and build."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The manifest change adds no monitoring, telemetry, scheduler, or operational integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-016-runtime.contract.json",
+      "The Contract explicitly scopes Cargo.toml and Cargo.lock, authorizes the runtime dependency boundary, and requires cargo check, tests, and formatting verification."
+    ]
+  },
+  "approval": null
+}

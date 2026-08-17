@@ -29,8 +29,10 @@ boundary:
   facts retain provider-neutral provenance.
 
 Publication is fail-closed when the configured universe has no usable primary
-evidence. Dry-run validates the registry, bounded fixture-safe acquisition
-boundary, and sanitized report without Telegram delivery or archive mutation.
+evidence. Dry-run validates the registry, performs the same bounded public
+source acquisition through the production HTTP client, and renders a
+sanitized report without Telegram delivery or archive mutation. Offline tests
+may inject fixtures; a source-free registry also skips discovery acquisition.
 
 ## Ingestion boundary
 

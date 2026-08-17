@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-011",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "8d2f3bf591f25e994c84f5e98167b58e338f5b8c1aad53a8fc7e372aaf79c5d7"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-011",
+    "contractDigest": "da5596c12dd0120ce8bc3304a0d150bf604d402c89bb44b88c0959e22989e486",
+    "summaryDigest": "e4de7537d3221832aa642315009f02fa3793aacb430838b684314ec6c689b1e2",
+    "verificationDigest": "a3b5874240b785756f3b783a0f4df102db9500bf7ebd69576306d4346612289b",
+    "baseCommit": "3a8bda98f2dbd2e312509180f2efe5ed0f238143",
+    "headCommit": "3a8bda98f2dbd2e312509180f2efe5ed0f238143",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "f857d8751104d425800e7fad15b4eaa83873e8935596d012426372779087262e",
+      "binding": {
+        "baseCommit": "3a8bda98f2dbd2e312509180f2efe5ed0f238143",
+        "candidateHead": "3a8bda98f2dbd2e312509180f2efe5ed0f238143",
+        "candidateTreeDigest": "cc0029df1935e3884b1b4bfdf2746ad52f68ae5e9cf1c5b6bf0cca73057ceb37",
+        "candidateDiffDigest": "3a05062107d12f706eaf5411a52e8e4aa3c1f21a80e69d15fd7e19abafe08c46"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-011 generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-011 generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-011",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-011.contract.json",
       ".ai/work-items/archive/2026/wi-011.summary.json",
@@ -26,103 +49,151 @@
       "docs/superpowers/plans/2026-08-17-wi-011-reporting.md",
       ".ai/work-items/archive/index.json",
       ".ai/work-items/archive/2026/wi-011.archive-manifest.json"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Upstream Stage, Ranking, evidence quality, and section membership are not validated by this read model."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Upstream Stage, Ranking, evidence quality, and section membership are not validated by this read model.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Upstream Stage, Ranking, evidence quality, and section membership are not validated by this read model.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiScenarioCoverage failed before the retry.",
+        "policyOrGuard": "required verification: aiScenarioCoverage",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "38e986dc1a1a57262974561ed78dc74e7f10d499703c744fa84cf07ef8bf64e4"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "b617fa5cb44cc9fced9b81647a58a764e7131f2342f6068b2571312e8482b7ce"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiScenarioCoverage failed before the retry.",
+        "action": "Re-ran aiScenarioCoverage after the correction; the latest attempt passed.",
+        "verification": "aiScenarioCoverage latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "38e986dc1a1a57262974561ed78dc74e7f10d499703c744fa84cf07ef8bf64e4"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "b617fa5cb44cc9fced9b81647a58a764e7131f2342f6068b2571312e8482b7ce"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "reporting_semantics",
+        "severity": "medium",
+        "title": "reporting_semantics",
+        "detail": "The packet preserves supplied membership but does not validate whether the upstream membership is justified.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "consumer_boundary",
+        "severity": "medium",
+        "title": "consumer_boundary",
+        "detail": "Future renderers must consume one packet without recalculating Stage, Ranking, or section membership.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-011.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+        "subject": "verificationHistory[0] aiScenarioCoverage failed",
+        "digest": "38e986dc1a1a57262974561ed78dc74e7f10d499703c744fa84cf07ef8bf64e4"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-011.summary.json",
+        "subject": "verification[aiScenarioCoverage] retry passed",
+        "digest": "b617fa5cb44cc9fced9b81647a58a764e7131f2342f6068b2571312e8482b7ce"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 1,
-    "warnings": 1,
-    "resolved": 1,
-    "unresolved": 1
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiScenarioCoverage",
-      "action": "blocked",
-      "resolution": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-011.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "38e986dc1a1a57262974561ed78dc74e7f10d499703c744fa84cf07ef8bf64e4"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-011.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "b617fa5cb44cc9fced9b81647a58a764e7131f2342f6068b2571312e8482b7ce"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiScenarioCoverage failed before the retry.",
-      "policyOrGuard": "required verification: aiScenarioCoverage",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-011.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "38e986dc1a1a57262974561ed78dc74e7f10d499703c744fa84cf07ef8bf64e4"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-011.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "b617fa5cb44cc9fced9b81647a58a764e7131f2342f6068b2571312e8482b7ce"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Upstream Stage, Ranking, evidence quality, and section membership are not validated by this read model.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The packet preserves supplied membership but does not validate whether the upstream membership is justified.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-011.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "Future renderers must consume one packet without recalculating Stage, Ranking, or section membership.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-011.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -873,6 +944,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry aiScenarioCoverage after correcting the recorded failure."
+  }
 }

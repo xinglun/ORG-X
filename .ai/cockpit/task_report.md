@@ -1,42 +1,44 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Partial
+Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-010.contract.json [evidence: .ai/work-items/archive/2026/wi-010.contract.json]
-- Changed .ai/work-items/active/wi-010.summary.json [evidence: .ai/work-items/archive/2026/wi-010.summary.json]
+- Changed .ai/work-items/active/wi-011.contract.json [evidence: .ai/work-items/archive/2026/wi-011.contract.json]
+- Changed .ai/work-items/active/wi-011.summary.json [evidence: .ai/work-items/archive/2026/wi-011.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/active/wi-010.outcome.json [evidence: .ai/work-items/archive/2026/wi-010.outcome.json]
-- Changed .ai/work-items/active/wi-010.outcome.md [evidence: .ai/work-items/archive/2026/wi-010.outcome.md]
-- Changed .ai/work-items/starts/wi-010.json [evidence: .ai/work-items/starts/wi-010.json]
-- Changed src/features/ranking/domain/mod.rs [evidence: src/features/ranking/domain/mod.rs]
-- Changed src/features/ranking/domain/mod_test.rs [evidence: src/features/ranking/domain/mod_test.rs]
-- Changed tests/ranking_domain.rs [evidence: tests/ranking_domain.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-010-ranking-design.md]
-- Changed docs/superpowers/plans/2026-08-17-wi-010-ranking.md [evidence: docs/superpowers/plans/2026-08-17-wi-010-ranking.md]
+- Changed .ai/work-items/active/wi-011.outcome.json [evidence: .ai/work-items/archive/2026/wi-011.outcome.json]
+- Changed .ai/work-items/active/wi-011.outcome.md [evidence: .ai/work-items/archive/2026/wi-011.outcome.md]
+- Changed .ai/work-items/starts/wi-011.json [evidence: .ai/work-items/starts/wi-011.json]
+- Changed src/features/reporting/domain/mod.rs [evidence: src/features/reporting/domain/mod.rs]
+- Changed src/features/reporting/domain/mod_test.rs [evidence: src/features/reporting/domain/mod_test.rs]
+- Changed tests/reporting_domain.rs [evidence: tests/reporting_domain.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-011-reporting-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-011-reporting-design.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-011-reporting.md [evidence: docs/superpowers/plans/2026-08-17-wi-011-reporting.md]
 - Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
-- Changed .ai/work-items/archive/2026/wi-010.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-010.archive-manifest.json]
+- Changed .ai/work-items/archive/2026/wi-011.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-011.archive-manifest.json]
 
 Problems found
-- Total: 1
+- Total: 2
 - Blocking: 0
 - Warning: 1
 
 Stops triggered
-- None recorded.
+- Reason: aiScenarioCoverage failed before the retry. | Stage: verification | Resolution: Retry aiScenarioCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
 
 Problems resolved
-- None recorded.
+- Problem: aiScenarioCoverage failed before the retry.
+  Solution: Re-ran aiScenarioCoverage after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- The Read Model preserves supplied dimensions but does not validate the underlying evidence or assign a Stage. [evidence: residualRisks]
-- Consumers must call ranked_within_stage rather than inventing a cross-Stage total order. [evidence: residualRisks]
+- The packet preserves supplied membership but does not validate whether the upstream membership is justified. [evidence: residualRisks]
+- Future renderers must consume one packet without recalculating Stage, Ranking, or section membership. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
@@ -63,9 +65,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

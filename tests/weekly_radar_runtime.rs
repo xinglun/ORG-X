@@ -4,6 +4,12 @@ use std::thread;
 use std::time::Duration;
 
 use chrono::{DateTime, NaiveDate, Utc};
+use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
+    TelegramMessageId, TelegramTransport, TelegramTransportError,
+};
+use org_x::features::weekly_radar::runtime::archive::{
+    retain_recent, write_run, write_run_guarded, ArchiveError,
+};
 use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
 use org_x::features::weekly_radar::runtime::error::RuntimeError;
 use org_x::features::weekly_radar::runtime::http::{
@@ -12,10 +18,14 @@ use org_x::features::weekly_radar::runtime::http::{
 use org_x::features::weekly_radar::runtime::model::{
     Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput, SourceCoverage,
 };
+use org_x::features::weekly_radar::runtime::report::{render_report, RenderedReport};
 use org_x::features::weekly_radar::runtime::rules::extract_employee_count;
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{
     collect_configured_sources, SourceKind, SourceStatus, SourceTier,
+};
+use org_x::features::weekly_radar::runtime::telegram::{
+    send_rendered_report_with_transport, TelegramRetryPolicy,
 };
 
 #[test]
@@ -1157,4 +1167,279 @@ fn fixture_and_ureq_reject_response_bodies_over_one_mib() {
         "HTTP response body exceeded configured limit"
     );
     server.join().expect("local server should finish");
+}
+
+fn task4_provenance(field: &str) -> Provenance {
+    Provenance::from_rfc3339(
+        "https://example.test/evidence/2026?token=must-not-appear#fragment",
+        field,
+        "2026-08-17T00:00:00Z",
+        Some("2026-08-15"),
+    )
+    .expect("task 4 provenance should be valid")
+}
+
+fn task4_report_input() -> RuntimeReportInput {
+    let mut input = RuntimeReportInput::new("2026-08-17").expect("task 4 date should be valid");
+    let facts = [
+        (
+            "acme",
+            "structural_change",
+            Some("Operating model changed"),
+            FactStatus::Known,
+            Confidence::High,
+        ),
+        (
+            "acme",
+            "revenue",
+            Some("123000000"),
+            FactStatus::Known,
+            Confidence::High,
+        ),
+        (
+            "beta",
+            "employees",
+            None,
+            FactStatus::Unknown,
+            Confidence::Unknown,
+        ),
+        (
+            "gamma",
+            "operating_income",
+            None,
+            FactStatus::Unavailable,
+            Confidence::Unknown,
+        ),
+        (
+            "delta",
+            "research_and_development",
+            None,
+            FactStatus::Unconfirmed,
+            Confidence::Low,
+        ),
+        (
+            "epsilon",
+            "cash_flow",
+            Some("45000000"),
+            FactStatus::Known,
+            Confidence::Medium,
+        ),
+        (
+            "zeta",
+            "employees",
+            Some("1200"),
+            FactStatus::Known,
+            Confidence::Approximate,
+        ),
+    ];
+
+    for (company, kind, value, status, confidence) in facts {
+        let fact = match value {
+            Some(value) => NormalizedFact::new(
+                company,
+                kind,
+                value,
+                status,
+                confidence,
+                task4_provenance(kind),
+            ),
+            None => NormalizedFact::without_value(
+                company,
+                kind,
+                status,
+                confidence,
+                task4_provenance(kind),
+            ),
+        }
+        .expect("task 4 fact should be valid");
+        input.add_fact(fact).expect("task 4 fact should be unique");
+    }
+
+    input
+        .add_source_coverage(SourceCoverage::new("official", 5, 5).unwrap())
+        .unwrap();
+    input
+        .add_source_coverage(SourceCoverage::new("sec", 5, 4).unwrap())
+        .unwrap();
+    input
+        .add_source_coverage(SourceCoverage::new("gdelt-discovery", 5, 1).unwrap())
+        .unwrap();
+    input
+}
+
+fn task4_report() -> RenderedReport {
+    render_report(&task4_report_input())
+}
+
+#[test]
+fn task4_report_is_deterministic_and_uses_the_mobile_first_contract() {
+    let first = task4_report();
+    let second = task4_report();
+
+    assert_eq!(first.markdown(), second.markdown());
+    assert_eq!(first.snapshot_json(), second.snapshot_json());
+
+    let headings: Vec<&str> = first
+        .markdown()
+        .lines()
+        .filter_map(|line| line.strip_prefix("## "))
+        .collect();
+    assert_eq!(headings.first(), Some(&"Executive Summary"));
+    assert_eq!(headings.last(), Some(&"System Health"));
+    assert!(headings.iter().all(|heading| {
+        matches!(
+            *heading,
+            "Executive Summary"
+                | "Important Structural Change"
+                | "Top5"
+                | "Rising"
+                | "Dropped"
+                | "System Health"
+        )
+    }));
+    assert!(first.markdown().matches("### Change ").count() <= 3);
+    assert!(first.markdown().matches("### ").count() <= 8);
+    assert!(first.markdown().contains("## Important Structural Change"));
+    assert!(first.markdown().contains("## Top5"));
+    assert!(!first.markdown().contains("Stage"));
+    assert!(!first.markdown().contains("rank"));
+    assert!(!first.markdown().contains("score"));
+    assert!(!first.markdown().contains("invest"));
+    assert!(!first.markdown().contains("token=must-not-appear"));
+    assert!(!first.snapshot_json().contains("token=must-not-appear"));
+}
+
+#[test]
+fn task4_report_exposes_explicit_statuses_and_discovery_health_review_items() {
+    let report = task4_report();
+    let markdown = report.markdown();
+
+    assert!(markdown.contains("CONFIRMED"));
+    assert!(markdown.contains("UNKNOWN"));
+    assert!(markdown.contains("UNAVAILABLE"));
+    assert!(markdown.contains("UNCONFIRMED"));
+    assert!(markdown.contains("DISCOVERY ONLY"));
+    assert!(markdown.contains("needing review"));
+    assert!(markdown.contains("official: 5/5"));
+    assert!(markdown.contains("sec: 4/5"));
+}
+
+#[derive(Clone, Default)]
+struct Task4RecordingTransport(std::sync::Arc<std::sync::Mutex<Vec<String>>>);
+
+impl TelegramTransport for Task4RecordingTransport {
+    fn send_message(
+        &self,
+        _destination: &str,
+        markdown: &str,
+    ) -> Result<TelegramMessageId, TelegramTransportError> {
+        let mut sent = self.0.lock().expect("task 4 recording lock should work");
+        sent.push(markdown.to_owned());
+        TelegramMessageId::new(format!("task4-message-{}", sent.len())).map_err(|error| {
+            TelegramTransportError::Failed {
+                reason: error.to_string(),
+            }
+        })
+    }
+}
+
+struct Task4SecretFailingTransport;
+
+impl TelegramTransport for Task4SecretFailingTransport {
+    fn send_message(
+        &self,
+        _destination: &str,
+        _markdown: &str,
+    ) -> Result<TelegramMessageId, TelegramTransportError> {
+        Err(TelegramTransportError::Failed {
+            reason: "token=task4-secret chat_id=task4-chat".to_owned(),
+        })
+    }
+}
+
+#[test]
+fn task4_telegram_delivery_preserves_chunk_order_and_redacts_errors() {
+    let report = task4_report();
+    let transport = Task4RecordingTransport::default();
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &transport,
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("recording transport should receive every report chunk");
+    let sent = transport.0.lock().unwrap().clone();
+
+    assert_eq!(receipt.message_ids().len(), sent.len());
+    assert_eq!(receipt.message_ids()[0].as_str(), "task4-message-1");
+    assert_eq!(sent[0], report.markdown()[..sent[0].len()]);
+    for pair in sent.windows(2) {
+        assert_ne!(pair[0], pair[1]);
+    }
+
+    let error = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &Task4SecretFailingTransport,
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect_err("failing transport should return a typed error");
+    let display = error.to_string();
+    assert!(!display.contains("task4-secret"));
+    assert!(!display.contains("task4-chat"));
+    assert!(!display.contains("token="));
+    assert!(!display.contains("chat_id="));
+}
+
+fn task4_temp_root(label: &str) -> std::path::PathBuf {
+    std::env::temp_dir().join(format!(
+        "org-x-task4-{label}-{}-{}",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system clock should be after epoch")
+            .as_nanos()
+    ))
+}
+
+#[test]
+fn task4_archive_retains_365_days_and_guards_the_data_branch() {
+    let root = task4_temp_root("archive");
+    let weekly_radar = root.join("weekly-radar");
+    for directory in ["reports", "snapshots", "receipts"] {
+        std::fs::create_dir_all(weekly_radar.join(directory)).unwrap();
+    }
+    for directory in ["reports", "snapshots", "receipts"] {
+        std::fs::write(
+            weekly_radar.join(directory).join("2025-08-16.expired"),
+            "expired",
+        )
+        .unwrap();
+        std::fs::write(
+            weekly_radar.join(directory).join("2025-08-17.retained"),
+            "retained",
+        )
+        .unwrap();
+    }
+
+    let removed = retain_recent(&root, NaiveDate::from_ymd_opt(2026, 8, 17).unwrap(), 365)
+        .expect("retention should complete");
+    assert_eq!(removed, 3);
+    assert!(!weekly_radar.join("reports/2025-08-16.expired").exists());
+    assert!(weekly_radar.join("reports/2025-08-17.retained").exists());
+
+    let report = task4_report();
+    let error = write_run_guarded(&root, "main", &report)
+        .expect_err("non-data branch writes must be rejected");
+    assert!(matches!(error, ArchiveError::NonDataBranch { .. }));
+
+    write_run(&root, &report).expect("unguarded fixture archive should write");
+    let markdown = std::fs::read_to_string(weekly_radar.join("reports/2026-08-17.md"))
+        .expect("report should be archived");
+    assert_eq!(markdown, report.markdown());
+    assert!(weekly_radar.join("snapshots/2026-08-17.json").exists());
+    assert!(weekly_radar.join("receipts/2026-08-17.json").exists());
+    assert!(weekly_radar.join("manifest.json").exists());
+
+    std::fs::remove_dir_all(root).expect("task 4 temporary archive should be removable");
 }

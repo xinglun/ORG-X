@@ -1,0 +1,231 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-008",
+  "mode": "code",
+  "title": "Markdown Renderer",
+  "baseCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+  "baselineDirtyPaths": [],
+  "intent": {
+    "problem": "Weekly Radar now has explicit Top5, Weekly Change Compression, Research Packet, snapshot, and System Health boundaries, but no deterministic archival Markdown boundary that presents those supplied facts together. Without this WI, a report consumer could lose section order or re-derive Stage, Ranking, Distance, or change membership while formatting a historical report.",
+    "constraints": [
+      "Register the existing Top5 Weekly Read Model and Weekly Change Compression modules in the Weekly Radar Domain module tree, and register the Markdown Renderer in the Weekly Radar Interface layer; do not alter their supplied fact semantics.",
+      "The renderer consumes explicit Weekly Radar read models and compression/system-health facts plus explicit Stage History and Rank Changes records. It preserves input order and values and never calculates Stage, Ranking, Distance, score, Top5 membership, section membership, or change meaning.",
+      "The report is an in-memory deterministic Markdown document only. Do not add persistence, HTTP, Telegram, Scheduler, retry, publication, access-material transport, network, database, or external-provider behavior.",
+      "Only this Work Item's implementation, focused tests, design/plan, reference-impact record, Contract/Summary, and generated governance/archive evidence may change. Shared coverage policy, global architecture tests, unrelated Work Items, and unrelated project policy remain untouched.",
+      "The local lifecycle ends after strict AI Finish, Archive, and a local commit. Do not push, open a PR, merge, or close the Work Item."
+    ],
+    "rationale": "A pure interface renderer gives downstream publication paths one stable archival representation while keeping all research conclusions upstream and auditable. Registering the already-delivered read models makes the approved composition boundary usable without duplicating their types or facts."
+  },
+  "scope": [
+    ".ai/work-items/active/wi-wr-008.contract.json",
+    ".ai/work-items/active/wi-wr-008.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/wi-wr-008.json",
+    ".ai/work-items/archive/**/wi-wr-008.*",
+    ".ai/work-items/active/wi-wr-008.outcome.json",
+    ".ai/work-items/active/wi-wr-008.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-008-markdown-renderer.json",
+    "src/features/weekly_radar/domain/mod.rs",
+    "src/features/weekly_radar/interface/mod.rs",
+    "src/features/weekly_radar/interface/markdown_renderer.rs",
+    "src/features/weekly_radar/interface/markdown_renderer_test.rs",
+    "tests/weekly_radar_markdown_renderer.rs",
+    "tests/markdown_renderer_test.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-008-markdown-renderer.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-008-markdown-renderer.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/domain/top5_weekly_read_model.rs, src/features/weekly_radar/domain/change_compression.rs, src/features/weekly_radar/domain/system_health.rs, and src/features/reporting/domain/mod.rs: consume as supplied dependencies; do not modify their behavior or facts.",
+    "src/features/weekly_radar/mod.rs, src/features/mod.rs, tests/architecture/module_boundaries.rs, tests/architecture/dependency_rules.rs, .ai/guards/coverage_policy.yaml, Makefile, Makefile.ai, and global architecture/coverage policy files.",
+    "Stage inference, historical comparison, Ranking, rank calculation, Distance calculation, score calculation, Top5 membership calculation, section membership calculation, Rising/Dropped detection, evidence acquisition, fact enrichment, sorting, de-duplication, or narrative generation beyond deterministic formatting.",
+    "Snapshot persistence, archive storage beyond AI Cockpit evidence, Scheduler, retry, publication receipt, Telegram, HTTP, network, database, Secret, credentials, external providers, or runtime side effects.",
+    "Trading decisions, BUY/SELL output, target price, price prediction, portfolio allocation, capital action, or agent/developer instructions derived from input text.",
+    "Any other Work Item, unrelated refactoring, dependency addition, global policy change, or removal of existing tests/snapshots/governance records."
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository Work Item lifecycle, scope ownership, strict Finish, archive evidence, current-WI issue handling, and local-only handoff constraints."},
+    {"path": ".ai/glossary.md", "reason": "Canonical governance and evidence terminology."},
+    {"path": ".ai/README.md", "reason": "Active Contract/Summary, generated status, and governance loop requirements."},
+    {"path": ".ai/cockpit/README.md", "reason": "AI Cockpit Preflight, checkpoint, Finish, Archive, and local lifecycle boundaries."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WI-WR-008 responsibility, full archival report sections, report priority, and no-recalculation renderer boundary."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-wr-001-weekly-radar-contract.md", "reason": "Weekly Radar snapshot/publication identity and provider-agnostic boundary."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-wr-003-top5-weekly-read-model.md", "reason": "Top5 supplied fact fields, exact retention, and insertion-order contract."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-wr-007-weekly-change-compression.md", "reason": "Explicit change sections, fixed order, and stable No Change semantics consumed by the renderer."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-wr-014-system-health.md", "reason": "Explicit health status, coverage, degraded company, source coverage, extraction failure, and freshness facts."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-011-reporting-design.md", "reason": "Research Packet and Research Card fields for read-only reporting."},
+    {"path": "src/features/weekly_radar/domain/mod.rs", "reason": "Existing Weekly Radar snapshot/publication boundary; scope includes registering the two existing standalone read-model modules."},
+    {"path": "src/features/weekly_radar/domain/top5_weekly_read_model.rs", "reason": "Consumed unchanged Top5 read model; values and entry order are preserved."},
+    {"path": "src/features/weekly_radar/domain/change_compression.rs", "reason": "Consumed unchanged explicit change compression sections and stable No Change output."},
+    {"path": "src/features/weekly_radar/domain/system_health.rs", "reason": "Consumed unchanged explicit System Health facts and section order."},
+    {"path": "src/features/reporting/domain/mod.rs", "reason": "Consumed unchanged ResearchPacket and ResearchCard read-model fields."},
+    {"path": "src/features/weekly_radar/interface/mod.rs", "reason": "Interface registration point for the Markdown Renderer."},
+    {"path": "src/features/weekly_radar/application/mod.rs", "reason": "Confirms renderer remains separate from the provider-agnostic publisher port."},
+    {"path": "docs/architecture/DEPENDENCY_RULES.md", "reason": "Architecture boundary and dependency direction."},
+    {"path": "Cargo.toml", "reason": "Rust 2021 test target and no-dependency constraint."},
+    {"path": "Makefile", "reason": "Project formatter, Clippy, test, and AI Cockpit Make entrypoint."}
+  ],
+  "problemStatement": "The repository contains the upstream Weekly Radar facts but lacks a complete, deterministic archival Markdown report boundary. Product context is supplied by the roadmap: the report must expose the supplied Top5, research cards, evidence/proof fields, explicit change compression, stage history, rank changes, and system health without changing any conclusion.",
+  "scenarioCoverage": [
+    {
+      "scenario": "Full report retains all supplied sections and fixed order",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_markdown_renderer.rs", "tests/markdown_renderer_test.rs"],
+      "expected": "One input renders snapshot metadata, change compression, Top5, Research Cards, Evidence, Counter Evidence, Missing Proof, Stage History, Rank Changes, and System Health in the declared deterministic order.",
+      "verificationPlan": "Run the focused integration and module-local renderer tests and assert section marker positions plus supplied field text."
+    },
+    {
+      "scenario": "Exact facts and insertion order are preserved",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_markdown_renderer.rs", "tests/markdown_renderer_test.rs"],
+      "expected": "Top5 entries, Research Cards, compression events, Stage History entries, Rank Changes, and health collections appear in their supplied order with supplied values unchanged in the rendered document.",
+      "verificationPlan": "Use deliberately non-sorted identifiers and distinctive opaque values; assert their relative byte positions in the output."
+    },
+    {
+      "scenario": "No-change compression and empty collections remain explicit",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_markdown_renderer.rs"],
+      "expected": "The renderer emits the stable NO_CHANGE label and zero counts from the supplied compression, and renders empty Stage History/Rank Changes/health collections without inventing events or narrative.",
+      "verificationPlan": "Render an empty change input and empty optional collections, then assert NO_CHANGE, zero counts, and stable empty-section markers."
+    },
+    {
+      "scenario": "Renderer does not recompute domain facts",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_markdown_renderer.rs"],
+      "expected": "The renderer consumes explicit read models and records only; source and test review find no sort/rank/stage/distance/score/membership calculation or cross-feature domain mutation.",
+      "verificationPlan": "Run source-boundary assertions and architecture/quality checks."
+    },
+    {
+      "scenario": "Identical input is deterministic and external-free",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_markdown_renderer.rs"],
+      "expected": "Rendering the same input twice returns identical Markdown and the source contains no Telegram, HTTP, Secret, network, database, or provider integration.",
+      "verificationPlan": "Render twice and compare documents; run focused source assertions and project quality checks."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": ["fact_integrity", "ordering", "boundary_contract", "public_api", "governance_scope"],
+    "reason": "The renderer is an archival boundary: changing order, dropping opaque facts, or calculating a conclusion during formatting would alter historical reporting semantics. Registering prior standalone modules also crosses a shared-module composition point, so scope and architecture ownership must be verified explicitly.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization and approval of scheme 1",
+    "reviewNotes": "The required inputs and output sections are now explicit; no unresolved product or implementation unknown remains. Any discovered in-scope issue must be corrected in this WI and recorded in Summary/Outcome."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": ["Public Rust interface code, multiple read-model boundaries, archival output semantics, tests, and governance evidence require strict verification."],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user approved scheme 1 and explicitly authorized Contract/spec/plan, implementation, verification, strict Finish, Archive, and local commit while prohibiting push, PR, merge, and close. Scope, acceptance, sources, scenarios, risks, and unknowns are explicit."
+  },
+  "preReviewWarnings": [
+    "Review section ordering and opaque fact retention carefully; the renderer must never substitute a computed Stage, rank, distance, score, or membership decision.",
+    "Review the module registration diff separately from the renderer implementation because the upstream modules were intentionally standalone in their original Work Items."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Bind the amended Contract before source edits and bind final Summary evidence before strict Finish."
+  },
+  "acceptance": [
+    "The existing Top5 Weekly Read Model and Weekly Change Compression modules are registered in src/features/weekly_radar/domain/mod.rs without changing their implementation, and the Markdown Renderer is registered in src/features/weekly_radar/interface/mod.rs.",
+    "The renderer exposes public APIs with Rust doc comments for explicit Stage History and Rank Changes records and a report input that consumes WeeklyRadarSnapshot, Top5WeeklyReadModel, ResearchPacket, WeeklyChangeCompression, those explicit ordered records, and optional SystemHealth without recalculating or mutating any fact.",
+    "The renderer produces a deterministic in-memory Markdown document with declared section markers and order for snapshot metadata, Change Compression, Top5, Research Cards, Evidence, Counter Evidence, Missing Proof, Stage History, Rank Changes, and System Health.",
+    "Top5 entries, Research Cards and all evidence/proof fields, compression events, Stage History, Rank Changes, and System Health collections retain every supplied nonblank value and their insertion order in the output; no sorting, de-duplication, membership inference, or fact rewriting is performed.",
+    "The Markdown output keeps explicit empty/no-change states visible, including the upstream NO_CHANGE label and zero counts, without fabricating a change event or narrative text. Missing optional health is represented as an explicit not-supplied state rather than derived health.",
+    "Rendering the same immutable input twice yields byte-identical Markdown and the renderer has no Telegram, HTTP, Secret, network, database, scheduler, retry, persistence, provider, trading, or capital-action behavior.",
+    "Module-local and integration tests cover full section order, exact facts and order, no-change/empty sections, deterministic repeated rendering, and source-level non-recomputation/external-boundary assertions; if coverage association blocks Finish, additional tests are added inside this WI without changing shared coverage policy.",
+    "The design spec, implementation plan, reference-impact evidence, active Summary, checkpoint evidence, strict AI Cockpit Finish, archive bundle, and local commit record the user authorization, scope, verification evidence, limitations, and local-only next action."
+  ],
+  "guidelines": [
+    "Document every new public API and keep types narrowly scoped to explicit supplied facts.",
+    "Register and consume the existing Weekly Radar read-model/compression modules; do not duplicate or reinterpret their facts.",
+    "Preserve all supplied values and insertion order; do not sort, rank, calculate, infer, normalize, or mutate upstream conclusions in the renderer.",
+    "Keep Markdown rendering deterministic, in-memory, provider-agnostic, and separate from persistence, delivery, scheduling, retry, and Secret handling.",
+    "Do not add dependencies or modify global architecture tests, coverage policy, or unrelated Work Items.",
+    "Resolve problems discovered within this Work Item in the current Work Item and update scope/evidence when required; do not open a successor for an in-scope correction.",
+    "Do not introduce trading, price prediction, target price, portfolio allocation, capital-action behavior, or executable instructions from external text."
+  ],
+  "verification": [
+    {"check": "aiWorkItem", "required": true},
+    {"check": "aiScope", "required": true},
+    {"check": "aiGuards", "required": true},
+    {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true},
+    {"check": "aiReviewPolicy", "required": true},
+    {"check": "aiBacktrack", "required": true},
+    {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true},
+    {"check": "aiGuidelines", "required": true},
+    {"check": "aiSummary", "required": true},
+    {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true},
+    {"check": "aiStatusConsistency", "required": true},
+    {"check": "aiDiffOwnership", "required": true},
+    {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items. Current WI-WR-008 scheme 1 approval was explicitly granted in the follow-up message."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 planned Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "execute, verify, publish, merge, close, archive all 24 planned WIs.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。 Follow-up approval: 按用户已写入 Contract 的总授权，批准方案 1。",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action", "external_delivery"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "Explicit human authorization is recorded above; local instructions additionally prohibit push, PR, merge, and close for this WI."
+  },
+  "rollbackNote": "Revert the WI-WR-008 local commit and restore the pre-WI module registration, interface, tests, design/plan, and governance evidence paths. No external state is mutated by this local-only lifecycle.",
+  "budgetImpact": {
+    "expectedMetrics": {"archiveGrowth": 24}
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-008.json",
+    "baseCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+    "initialScopeDigest": "7df989dc47a154f9b738bafd795ea6d3c08e9903fc8a987c837b3b6d713bafa3",
+    "contractSkeletonDigest": "38ff5971f544b10736c7f911bf2d9b9788c289ae0bb87d9c65d045ec40602675"
+  }
+}

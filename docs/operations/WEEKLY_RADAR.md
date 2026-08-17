@@ -23,6 +23,13 @@ primary-evidence validation, Telegram publication, and the data-branch archive
 in that order. A successful publication archives only after the Telegram
 receipt is bound to the rendered report ID.
 
+GitHub Actions checks out `main` with `actions/checkout@v5`, reconstructs the
+existing `weekly-radar/` tree from the dedicated `data` branch when present,
+and runs the same CLI. The resulting files are committed as a new orphan
+`data` commit and pushed only to `refs/heads/data` with a lease. The workflow
+has `contents: write` solely for that data-branch update and serializes runs
+with the `weekly-radar-data` concurrency group.
+
 ## Environment variables
 
 - `ORGX_SEC_USER_AGENT` is required before acquisition. Use an identifying

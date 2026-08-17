@@ -1843,3 +1843,72 @@ fn task5_cli_blocks_publication_without_primary_evidence() {
     );
     fs::remove_dir_all(root).expect("task 5 primary-evidence fixture should be removable");
 }
+
+fn task6_workflow_text() -> String {
+    fs::read_to_string(".github/workflows/weekly-radar.yml").expect("Task 6 workflow should exist")
+}
+
+#[test]
+fn task6_workflow_declares_schedule_dispatch_checkout_permissions_and_secrets() {
+    let workflow = task6_workflow_text();
+
+    assert!(workflow.contains("cron: '0 0 * * 1'"));
+    assert!(workflow.contains("workflow_dispatch:"));
+    assert!(workflow.contains("uses: actions/checkout@v5"));
+    assert!(!workflow.contains("actions/checkout@v4"));
+    assert!(workflow.contains("permissions:\n  contents: write"));
+    assert!(workflow.contains("group: weekly-radar-data"));
+    for secret in [
+        "ORGX_SEC_USER_AGENT",
+        "ORGX_TELEGRAM_BOT_TOKEN",
+        "ORGX_TELEGRAM_CHAT_ID",
+    ] {
+        assert!(
+            workflow.contains(&format!("secrets.{secret}")),
+            "missing {secret}"
+        );
+    }
+}
+
+#[test]
+fn task6_workflow_reconstructs_data_and_creates_a_rolling_orphan_update() {
+    let workflow = task6_workflow_text();
+
+    assert!(workflow.contains("git fetch --no-tags origin main"));
+    assert!(workflow.contains("git ls-remote --exit-code --heads origin data"));
+    assert!(workflow.contains("git archive origin/data -- weekly-radar"));
+    assert!(workflow.contains("365"));
+    assert!(workflow.contains("git checkout --orphan"));
+    assert!(workflow.contains("git add -- weekly-radar"));
+    assert!(workflow.contains("force-with-lease=refs/heads/data:"));
+    assert!(workflow.contains("HEAD:refs/heads/data"));
+    assert!(!workflow.contains("HEAD:refs/heads/main"));
+}
+
+#[test]
+fn task6_workflow_fails_safe_for_absent_concurrent_protected_and_empty_cases() {
+    let workflow = task6_workflow_text();
+
+    assert!(workflow.contains("if git ls-remote --exit-code --heads origin data"));
+    assert!(workflow.contains("refs/heads/main"));
+    assert!(workflow.contains("GITHUB_REF"));
+    assert!(workflow.contains("target_ref=\"refs/heads/data\""));
+    assert!(workflow.contains("if [[ \"$target_ref\" == \"refs/heads/main\" ]]"));
+    assert!(workflow.contains("if [[ ! -s \"$run_output\" ]]"));
+    assert!(workflow.contains("if ! git push --force-with-lease"));
+    assert!(workflow.contains("concurrent"));
+}
+
+#[test]
+fn task6_workflow_runs_the_cli_and_rejects_empty_or_unpublished_output() {
+    let workflow = task6_workflow_text();
+
+    assert!(workflow.contains("cargo run --release -- weekly-radar"));
+    assert!(workflow.contains("--archive-dir \"$GITHUB_WORKSPACE\""));
+    assert!(
+        workflow.contains("--registry \"$GITHUB_WORKSPACE/config/weekly_radar/companies.json\"")
+    );
+    assert!(workflow.contains("PUBLISHED:"));
+    assert!(workflow.contains("weekly-radar/reports/"));
+    assert!(workflow.contains("set -euo pipefail"));
+}

@@ -1,0 +1,231 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-002",
+  "mode": "code",
+  "title": "Weekly Radar Snapshot",
+  "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-wr-002.contract.json",
+    ".ai/work-items/active/wi-wr-002.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-002.outcome.json",
+    ".ai/work-items/active/wi-wr-002.outcome.md",
+    "src/features/weekly_radar/application/mod.rs",
+    "src/features/weekly_radar/application/mod_test.rs",
+    "src/features/weekly_radar/application/snapshot_store.rs",
+    "src/features/weekly_radar/application/snapshot_store_test.rs",
+    "tests/weekly_radar_snapshot.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-002-weekly-radar-snapshot.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-002-weekly-radar-snapshot.md"
+  ],
+  "outOfScope": [
+    "External database/filesystem persistence, scheduler, renderer, Telegram delivery, retry, publication receipt, and typed weekly calculations",
+    "Recomputing snapshot metadata, Stage, Ranking, Threshold Distance, Top5, Rising, Dropped, or System Health",
+    "Cross-feature implementation imports, new dependencies, credentials, trading, price prediction, or capital-action behavior"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository Work Item lifecycle, evidence, and current-WI issue policy."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Canonical Work Item and governance terminology."
+    },
+    {
+      "path": "docs/architecture/ARCHITECTURE.md",
+      "reason": "Layer direction and persistence boundary rules."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "WR-002 deliverables and dependency position."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-wi-wr-001-weekly-radar-contract.md",
+      "reason": "Upstream Weekly Radar Snapshot identity and publication boundary."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-wr-001.contract.json",
+      "reason": "Archived WR-001 Contract for the snapshot metadata boundary."
+    },
+    {
+      "path": "src/features/weekly_radar/domain/mod.rs",
+      "reason": "Typed WeeklyRadarSnapshot and identity values consumed by this store."
+    },
+    {
+      "path": "src/features/ingestion/domain/mod.rs",
+      "reason": "Existing append-only receipt and duplicate identity patterns."
+    },
+    {
+      "path": "Cargo.toml",
+      "reason": "Dependency and test configuration; no new dependency is planned."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+      "riskTypes": ["historical_integrity", "snapshot_identity", "boundary_scope"],
+      "reason": "A snapshot store must reject identity reuse and preserve supplied metadata while keeping external persistence and publication orchestration out of this WI.",
+      "unknownsReviewComplete": true,
+      "reviewedBy": "Codex under explicit user authorization",
+      "reviewNotes": "This WI owns an append-only in-memory store and its port shape; external persistence and retry remain future boundaries."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The explicit user authorization covers execution and Contract recording for all 24 roadmap Work Items."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "SnapshotStore accepts a WeeklyRadarSnapshot once, rejects duplicate SnapshotId, and preserves insertion order for historical records.",
+    "Snapshot retrieval returns the exact supplied as_of, evidence cutoff, universe snapshot, model version, and scoring version without recomputation or mutation.",
+    "The store port and in-memory implementation remain provider-agnostic and do not know Telegram, rendering, scheduling, retry, external persistence, or credentials.",
+    "The application layer registers the SnapshotStore boundary without changing WR-001 Domain types or adding dependencies.",
+    "Focused unit and integration tests cover append-only behavior, duplicate identity rejection, stable retrieval order, metadata retention, and empty history.",
+    "The design spec and execution plan record historical integrity, exclusions, authorization, current-WI issue policy, and verification commands."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep Snapshot Store independent of external systems and other feature implementations.",
+    "Snapshot identity is immutable: reject reuse rather than overwrite historical data.",
+    "Preserve supplied metadata and insertion order; do not recalculate research conclusions.",
+    "Keep external persistence, rendering, delivery, retry, receipt, and scheduling outside this Contract.",
+    "Do not add dependencies for this Contract.",
+    "Resolve issues within the current Work Item when they remain inside its Contract scope; open a successor only for a distinct or materially expanded boundary.",
+    "Do not introduce trading, price prediction, target price, portfolio allocation, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "Weekly Radar has a snapshot identity boundary but no append-only store that can preserve one computed snapshot for later rendering, delivery, and retry without recomputation.",
+    "constraints": [
+      "Accept only a fully formed WeeklyRadarSnapshot and retain all supplied metadata exactly.",
+      "Reject duplicate SnapshotId instead of overwriting historical state; preserve insertion order for deterministic history reads.",
+      "The store is an in-memory application boundary for this WI; external persistence and delivery remain out of scope."
+    ],
+    "rationale": "An append-only Snapshot Store makes the Compute → Persist → Render → Publish sequence testable and gives later WIs one stable historical identity to reuse on retry."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {"type": "human", "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.", "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "authorityEvidence": {"type": "human_authorization", "granted": true, "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.", "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "software_design", "test_automation"], "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]},
+  "requestedOperation": {"type": "repository_governance", "action": "modify", "target": "repository_governance", "environment": "repository", "effect": "enforce", "authorityRequired": false, "authorityReason": "Explicit human authorization is recorded above."},
+  "scenarioCoverage": [
+    {"scenario": "Snapshot Store preserves metadata and insertion order.", "required": true, "status": "verified", "evidence": ["tests/weekly_radar_snapshot.rs::stores_exact_metadata_and_retrieves_in_append_order", "make check"], "expected": "Stored snapshots return the exact supplied metadata in append order.", "verificationPlan": "Run focused store metadata and order tests."},
+    {"scenario": "Snapshot identity cannot be overwritten.", "required": true, "status": "verified", "evidence": ["tests/weekly_radar_snapshot.rs::duplicate_identity_is_rejected_without_overwriting_first_snapshot", "make check"], "expected": "Saving a second snapshot with the same SnapshotId returns a deterministic duplicate error and leaves the first record unchanged.", "verificationPlan": "Run duplicate identity and immutability tests."},
+    {"scenario": "Snapshot Store stays outside external persistence and delivery.", "required": true, "status": "verified", "evidence": ["src/features/weekly_radar/application/snapshot_store.rs", "make check"], "expected": "Application port compiles with standard-library types and full architecture/quality checks pass.", "verificationPlan": "Run integration tests, make check, and AI quality checks."}
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 16
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-002.json",
+    "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "initialScopeDigest": "c36a09a856c4cb410cefa393ae772d60b3d0eafadc9049eea6fba328c76e848d",
+    "contractSkeletonDigest": "8d0bb274b70d50f450d10119c326e85b50a574df1c567fa927efe048c1e66de5"
+  }
+}

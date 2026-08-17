@@ -15,11 +15,11 @@
     "prohibitedCapabilities": ["runtime_behavior_change", "secret_mutation", "external_service_operation"]
   },
   "requestedOperation": {
-    "type": "documentation",
+    "type": "repository_governance",
     "action": "modify",
-    "target": "documentation",
+    "target": "repository_governance",
     "environment": "repository",
-    "effect": "document",
+    "effect": "enforce",
     "authorityRequired": false,
     "authorityReason": "The user explicitly authorized the documentation Work Item and its complete lifecycle.",
     "authorizedExternalEffects": []
@@ -54,6 +54,8 @@
     "docs/scoring/STAGE_GATE_SPEC.md",
     "docs/validation/VALIDATION_STRATEGY.md",
     "docs/operations/WEEKLY_RADAR.md",
+    "scripts/check_docs_metadata.py",
+    "Makefile.ai",
     "docs/superpowers/specs/2026-08-18-docs-reader-design.md",
     "docs/superpowers/plans/2026-08-18-docs-reader.md"
   ],
@@ -78,6 +80,7 @@
     {"path": "docs/scoring/**", "reason": "Score dimensions and stage transition gates."},
     {"path": "docs/validation/VALIDATION_STRATEGY.md", "reason": "Longitudinal validation model and baselines."},
     {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "Current operational commands, secrets, schedule, and data-branch behavior."},
+    {"path": "Makefile.ai", "reason": "Existing check-docs-metadata entry point that must remain executable."},
     {"path": "src/features/weekly_radar/runtime/**", "reason": "Implementation truth for the reader-facing Weekly Radar operations documentation."},
     {"path": ".github/workflows/weekly-radar.yml", "reason": "Hosted schedule, checkout version, secret names, and data branch update behavior."},
     {"path": "user request and explicit confirmation in conversation", "reason": "Reader-first documentation scope, internal superpowers retention, and full WI authorization."}

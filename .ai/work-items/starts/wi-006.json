@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-006",
+  "receiptPath": ".ai/work-items/starts/wi-006.json",
+  "baseCommit": "3b7de478850bd1b4c911fcbba845b050f3fdc140",
+  "baseBranch": "codex/wi-006",
+  "startTimestamp": "2026-08-17T04:07:02.711170+00:00",
+  "initialScopeDigest": "eb458f71230a25d7b7f36ebbd99f24e365d3698cd55efc7a19b8cb8aa66d7205",
+  "contractSkeletonDigest": "4a9ed4178a0fb655a49f456e83d0338678639354a961b8221353e3c2a0cc302a"
+}

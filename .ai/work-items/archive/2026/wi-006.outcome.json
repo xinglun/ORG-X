@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-006",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "06d7214d1c893b3411fd90d954bdd8aafdbbf208ebbbe3bccdfca6e8f10e41c7"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-006",
+    "contractDigest": "d919b0051b15f1a8352b3ed88f75732f4dce4d5df199203a6d3618f18e5d7869",
+    "summaryDigest": "51f71813594c8ac4ede14a31f7956bed6c09e92b68058288a27733d24cea653a",
+    "verificationDigest": "701cc4248cb4e33109727e343d34c61ada9274624ae4fae0448de5fdc846c6b0",
+    "baseCommit": "3b7de478850bd1b4c911fcbba845b050f3fdc140",
+    "headCommit": "3b7de478850bd1b4c911fcbba845b050f3fdc140",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "b42c045babc2461fd0d8a0f1a9d2b4495e0f3cc1b94734e8a3d8bf94ba74533a",
+      "binding": {
+        "baseCommit": "3b7de478850bd1b4c911fcbba845b050f3fdc140",
+        "candidateHead": "3b7de478850bd1b4c911fcbba845b050f3fdc140",
+        "candidateTreeDigest": "d1d49d92dfd5c87a6e5f195f195254460d0ea11ee5aa50ce770ba74d2d5b09ff",
+        "candidateDiffDigest": "ae63ad838850e150f4adf0a66b26f892b1454bf6a71f5d14b348e70e58c9c3d6"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-006 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-006 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-006",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-006.contract.json",
       ".ai/work-items/archive/2026/wi-006.summary.json",
@@ -26,74 +49,117 @@
       "docs/superpowers/plans/2026-08-17-wi-006-organization.md",
       ".ai/work-items/archive/index.json",
       ".ai/work-items/archive/2026/wi-006.archive-manifest.json"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Source linkage, persistence, runtime enforcement, stage interpretation, scoring, and reporting remain outside WI-006 by Contract design.",
+      "The Domain preserves opaque target descriptions and does not resolve relationships across Feature aggregates."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Source linkage, persistence, runtime enforcement, stage interpretation, scoring, and reporting remain outside WI-006 by Contract design.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "The Domain preserves opaque target descriptions and does not resolve relationships across Feature aggregates.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Source linkage, persistence, runtime enforcement, stage interpretation, scoring, and reporting remain outside WI-006 by Contract design.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "The Domain preserves opaque target descriptions and does not resolve relationships across Feature aggregates.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "evidence_semantics",
+        "severity": "medium",
+        "title": "evidence_semantics",
+        "detail": "Organization facts alone cannot prove a production-system stage; later composition must require independent evidence and counter-evidence.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-006.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-006.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "runtime_behavior",
+        "severity": "low",
+        "title": "runtime_behavior",
+        "detail": "Amounts, permissions, responsibilities, and decisions remain retained facts; no runtime enforcement or allocation occurs by design.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-006.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-006.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "If an issue is discovered during the corresponding work, resolve it within the current WI whenever it remains in scope; do not casually open a new WI to prevent scope diffusion."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-006.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-006.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 0,
-    "warnings": 2,
-    "resolved": 0,
-    "unresolved": 2
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [
-    "If an issue is discovered during the corresponding work, resolve it within the current WI whenever it remains in scope; do not casually open a new WI to prevent scope diffusion."
-  ],
-  "limitations": [
-    {
-      "sourceWarning": "Source linkage, persistence, runtime enforcement, stage interpretation, scoring, and reporting remain outside WI-006 by Contract design.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "The Domain preserves opaque target descriptions and does not resolve relationships across Feature aggregates.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Organization facts alone cannot prove a production-system stage; later composition must require independent evidence and counter-evidence.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-006.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "Amounts, permissions, responsibilities, and decisions remain retained facts; no runtime enforcement or allocation occurs by design.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-006.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -824,6 +890,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

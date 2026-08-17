@@ -1,0 +1,65 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/jdk-lane-runtime-validation-620-current-main.archive-manifest.json",
+      "sha256": "79f0f33445e66efd3a00df5e4a80d1835807511cfc534a2d7ecd8ba58532c0cc"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/jdk-lane-runtime-validation-620-current-main.contract.json",
+      "sha256": "09b2753779eade0fe1e847326acc95dcf0c8be4464a37e2f06d1d465da5def2f"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/jdk-lane-runtime-validation-620-current-main.outcome.json",
+      "sha256": "df7f5497bfe71d8daac7cb6ffebe4ad14f14def946038ee943d3b61652bcbb12"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/jdk-lane-runtime-validation-620-current-main.summary.json",
+      "sha256": "d20bfbba92b32ea326b21c42724fc63a30fc82492a6a853df584cd15ff4036a7"
+    }
+  },
+  "failure": {
+    "gate": "hostedFunctionalFailure"
+  },
+  "humanAuthorization": {
+    "reference": "User authorization: automatic execution; current Work Item must root-fix process defects without creating a new Issue.",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/620",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-09T05:37:45.042858+00:00",
+  "prBaseCommit": "d9d7fd4193c7f50d5b1fd1d2676166647187f612",
+  "provider": {
+    "event": "pull_request",
+    "failedCandidateHead": "3a84d75a264c9dc2e67253882d74b8a2f5c5198d",
+    "failureMarker": "blocked_recovery",
+    "jobConclusion": "failure",
+    "jobId": 93202901738,
+    "jobName": "extended-real-stack-quality (java)",
+    "kind": "github_actions",
+    "logSha256": "91a4c20c791def0696a4e134526e30f844fa150adcbad44be6c79d06689ce4aa",
+    "pullRequest": 765,
+    "repository": "spirex-ds-dev/ai-cockpit-template",
+    "runAttempt": 1,
+    "runConclusion": "failure",
+    "runId": 31296717300,
+    "runStatus": "completed",
+    "runUrl": "https://github.com/spirex-ds-dev/ai-cockpit-template/actions/runs/31296717300",
+    "workflowPath": ".github/workflows/compatibility.yml"
+  },
+  "receiptVersion": 3,
+  "recoveryPaths": [
+    "Makefile",
+    ".github/workflows/compatibility.yml",
+    "scripts/ai_post_archive_recovery.py",
+    "tests/test_ai_post_archive_recovery.py",
+    "tests/test_workflows.py",
+    "scripts/ai_check_pr.py",
+    "tests/test_pr_aggregate.py",
+    "docs/reference/capability-truth-matrix.json",
+    "docs/reference/japanese-capability-assessment.json",
+    "docs/reference/japanese-capability-assessment.md",
+    "docs/reference/pre-release-documentation-alignment.json",
+    "docs/reference/pre-release-documentation-alignment.md"
+  ],
+  "workItemId": "jdk-lane-runtime-validation-620-current-main"
+}

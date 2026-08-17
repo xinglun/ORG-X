@@ -1,0 +1,28 @@
+{
+  "receiptVersion": 1,
+  "prBaseCommit": "bc0d3a81fecc4c272c2237dae94628573f0fac6b",
+  "humanAuthorization": {
+    "type": "human",
+    "reference": "conversation:continue-all-work-items-and-authorize-bounded-decisions"
+  },
+  "archives": [
+    {
+      "workItemId": "wi-09-external-identity-boundary",
+      "contractPath": ".ai/work-items/archive/2026/wi-09-external-identity-boundary.contract.json",
+      "summaryPath": ".ai/work-items/archive/2026/wi-09-external-identity-boundary.summary.json",
+      "baseCommit": "bc0d3a81fecc4c272c2237dae94628573f0fac6b",
+      "archiveSequence": 734,
+      "contractDigest": "3dbd57dd9c0ec834b6c502bd5286433e2db62696451e8df7cc2f738e95d02690",
+      "summaryDigest": "28c7a72a431087a04ae229e81f94f15734f0c7ec85fa14abfbb3ad9c1ae80f6e"
+    },
+    {
+      "workItemId": "wi-09-changed-critical-coverage-corrective",
+      "contractPath": ".ai/work-items/archive/2026/wi-09-changed-critical-coverage-corrective.contract.json",
+      "summaryPath": ".ai/work-items/archive/2026/wi-09-changed-critical-coverage-corrective.summary.json",
+      "baseCommit": "0dd20f464056ef0407bb818c079b423e1e363880",
+      "archiveSequence": 735,
+      "contractDigest": "bc4869461e088908aee17d36dc167882e985900f692862502f15907ea06daec7",
+      "summaryDigest": "da878b0a9557e55bc7fd5c966a9eb19606a67347de8c86567b0108b19d348e17"
+    }
+  ]
+}

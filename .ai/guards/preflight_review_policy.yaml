@@ -1,0 +1,13 @@
+# Preflight Review policy.
+# Enforced by default. A repository may opt into the explicit advisory
+# compatibility profile by setting profile: advisory, gateEnabled: false, and
+# blockedStatuses: [].
+# In enforced mode, a fresh ready Preflight is required before the start and
+# finish lifecycle paths can proceed.
+
+version: 1
+profile: enforced
+gateEnabled: true
+blockedStatuses:
+  - needs_human_confirmation
+  - not_ready

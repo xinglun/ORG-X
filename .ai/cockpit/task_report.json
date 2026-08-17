@@ -1,0 +1,4123 @@
+{
+  "reportVersion": 1,
+  "workItemId": "adopt_ai_cockpit",
+  "phase": "review",
+  "result": "completed_with_warnings",
+  "sourceOutcome": {
+    "format": "ai-cockpit-task-outcome",
+    "schemaVersion": 1,
+    "digest": "bcb8e2fc9a5f1e13ab1e0405af0fd6aab3cf46725d55d63f7ee9134bcf2015a7"
+  },
+  "task": {
+    "summary": "Task adopt_ai_cockpit generated an evidence-derived outcome with status completed_with_warnings.",
+    "deliveredChanges": [
+      ".ai/README.md",
+      ".ai/calibration/profiles.yaml",
+      ".ai/cockpit/README.ja.md",
+      ".ai/cockpit/README.md",
+      ".ai/cockpit/adoption-runtime-verification.json",
+      ".ai/cockpit/adoption.ja.md",
+      ".ai/cockpit/adoption.md",
+      ".ai/cockpit/checks.yaml",
+      ".ai/cockpit/current_status.md",
+      ".ai/cockpit/derived_artifacts.json",
+      ".ai/cockpit/system_invariants.json",
+      ".ai/cockpit/version.json",
+      ".ai/cockpit/work-items/index.json",
+      ".ai/cockpit/work-items/wi-06-status-interface.status.json",
+      ".ai/decisions/.gitkeep",
+      ".ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json",
+      ".ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json",
+      ".ai/evidence/test-weakening/foreign-duplicate-start-v1.json",
+      ".ai/evidence/test-weakening/remove-cancelled-provider-validation.json",
+      ".ai/evidence/test-weakening/v057-public-projection-role-retirement.json",
+      ".ai/glossary.md",
+      ".ai/guards/agent_risk_policy.yaml",
+      ".ai/guards/ai_review_policy.yaml",
+      ".ai/guards/backtrack_policy.yaml",
+      ".ai/guards/changed_critical_coverage_policy.json",
+      ".ai/guards/cockpit_status_policy.yaml",
+      ".ai/guards/coverage_policy.yaml",
+      ".ai/guards/file_boundary.yaml",
+      ".ai/guards/file_ownership.yaml",
+      ".ai/guards/governance_complexity_policy.yaml",
+      ".ai/guards/operation_impact_policy.yaml",
+      ".ai/guards/preflight_review_policy.yaml",
+      ".ai/guards/reference_impact_policy.yaml",
+      ".ai/guards/scenario_coverage_policy.yaml",
+      ".ai/guards/scope_policy.yaml",
+      ".ai/guards/summary_policy.yaml",
+      ".ai/guards/test_weakening_policy.yaml",
+      ".ai/install/managed-regions.json",
+      ".ai/install/manifest.json",
+      ".ai/install/release-identity.json",
+      ".ai/install/rollback-baseline.json",
+      ".ai/install/version.json",
+      ".ai/policies/complexity_trend.yaml",
+      ".ai/policies/raw-request-exemptions.yaml",
+      ".ai/policies/requested-operation.yaml",
+      ".ai/policies/verification_impact.yaml",
+      ".ai/project/capabilities.json",
+      ".ai/project/success_criteria.json",
+      ".ai/quality/gates.yaml",
+      ".ai/quality/governance-routing.yaml",
+      ".ai/schemas/canonical_evidence.schema.json",
+      ".ai/schemas/cross-wi-integration-report.schema.json",
+      ".ai/schemas/evidence-binding.schema.json",
+      ".ai/schemas/external_handoff.schema.json",
+      ".ai/schemas/governance-cost-report.schema.json",
+      ".ai/schemas/operation-impact.schema.json",
+      ".ai/schemas/parallel-verification-plan.schema.json",
+      ".ai/schemas/performance-diagnosis-report.schema.json",
+      ".ai/schemas/reference_impact.schema.json",
+      ".ai/schemas/task_outcome.schema.json",
+      ".ai/schemas/test_weakening.schema.json",
+      ".ai/schemas/unknown_assessment.schema.json",
+      ".ai/schemas/work-item-intelligence-snapshot.schema.json",
+      ".ai/schemas/work-item-status-interface.schema.json",
+      ".ai/trust/schema/approval.schema.json",
+      ".ai/trust/schema/baseline_evidence.schema.json",
+      ".ai/trust/schema/human_decision_evidence.schema.json",
+      ".ai/trust/schema/human_decision_request.schema.json",
+      ".ai/trust/schema/repository_capabilities.schema.json",
+      ".ai/trust/schema/success_criteria.schema.json",
+      ".ai/work-items/_templates/work_item_contract.example.json",
+      ".ai/work-items/_templates/work_item_summary.example.json",
+      ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+      ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+      ".ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json",
+      ".ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json",
+      ".ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json",
+      ".ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json",
+      ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json",
+      ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json",
+      ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json",
+      ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json",
+      ".ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json",
+      ".ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json",
+      ".ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json",
+      ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json",
+      ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json",
+      ".ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json",
+      ".ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json",
+      ".ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json",
+      ".ai/work-items/runtime/.gitignore",
+      ".ai/work-items/starts/adopt_ai_cockpit.json",
+      ".cursor/rules/ai-cockpit.mdc",
+      ".gitignore",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "GEMINI.md",
+      "Makefile",
+      "Makefile.ai",
+      "Makefile.ai.stack",
+      "scripts/ai_acceptance_policy.py",
+      "scripts/ai_adoption_evidence.py",
+      "scripts/ai_archive_work_item.py",
+      "scripts/ai_baseline_evidence.py",
+      "scripts/ai_calibrate.py",
+      "scripts/ai_calibration_corrective.py",
+      "scripts/ai_calibration_inventory.py",
+      "scripts/ai_calibration_profiles.py",
+      "scripts/ai_check_adoption_ready.py",
+      "scripts/ai_check_agent_risk.py",
+      "scripts/ai_check_backtrack.py",
+      "scripts/ai_check_budget_impact.py",
+      "scripts/ai_check_coverage_guard.py",
+      "scripts/ai_check_diff_ownership.py",
+      "scripts/ai_check_guard_calibration.py",
+      "scripts/ai_check_guards.py",
+      "scripts/ai_check_guidelines.py",
+      "scripts/ai_check_pr.py",
+      "scripts/ai_check_reference_impact.py",
+      "scripts/ai_check_review_policy.py",
+      "scripts/ai_check_scenario_coverage.py",
+      "scripts/ai_check_scope.py",
+      "scripts/ai_check_serial_order.py",
+      "scripts/ai_check_status.py",
+      "scripts/ai_check_status_consistency.py",
+      "scripts/ai_check_summary.py",
+      "scripts/ai_check_task_outcome.py",
+      "scripts/ai_check_test_weakening.py",
+      "scripts/ai_check_work_item.py",
+      "scripts/ai_checkpoint.py",
+      "scripts/ai_classify_operation_impact.py",
+      "scripts/ai_close_work_item.py",
+      "scripts/ai_common.py",
+      "scripts/ai_critical_domain_guards.py",
+      "scripts/ai_decision_protocol.py",
+      "scripts/ai_detached_uninstaller.py",
+      "scripts/ai_disable_enable.py",
+      "scripts/ai_doctor.py",
+      "scripts/ai_evidence_dependencies.py",
+      "scripts/ai_external_handoff.py",
+      "scripts/ai_external_identity.py",
+      "scripts/ai_finish.py",
+      "scripts/ai_generate_human_report.py",
+      "scripts/ai_generate_status.py",
+      "scripts/ai_generate_task_outcome.py",
+      "scripts/ai_governance_compression.py",
+      "scripts/ai_impact_classifier.py",
+      "scripts/ai_input_trust.py",
+      "scripts/ai_install_facts.py",
+      "scripts/ai_install_status.py",
+      "scripts/ai_installer_bootstrap.py",
+      "scripts/ai_installer_catalog.json",
+      "scripts/ai_installer_detection.py",
+      "scripts/ai_installer_evidence.py",
+      "scripts/ai_installer_managed_regions.py",
+      "scripts/ai_installer_ownership.py",
+      "scripts/ai_installer_repository.py",
+      "scripts/ai_installer_transaction.py",
+      "scripts/ai_installer_upgrade.py",
+      "scripts/ai_intent_policy.py",
+      "scripts/ai_lifecycle_facts.py",
+      "scripts/ai_lifecycle_truth.py",
+      "scripts/ai_observability.py",
+      "scripts/ai_onboard.py",
+      "scripts/ai_ownership.py",
+      "scripts/ai_post_archive_recovery.py",
+      "scripts/ai_preflight_review.py",
+      "scripts/ai_project_doctor.py",
+      "scripts/ai_project_profile.py",
+      "scripts/ai_projection_lease.py",
+      "scripts/ai_readiness_policy.py",
+      "scripts/ai_render_task_outcome.py",
+      "scripts/ai_render_task_outcome_multilingual.py",
+      "scripts/ai_required_evidence.py",
+      "scripts/ai_review_readiness_policy.py",
+      "scripts/ai_risk_policy.py",
+      "scripts/ai_rollback.py",
+      "scripts/ai_scenario_policy.py",
+      "scripts/ai_start.py",
+      "scripts/ai_start_receipt.py",
+      "scripts/ai_task_event_log.py",
+      "scripts/ai_trust_guards.py",
+      "scripts/ai_trust_schema.py",
+      "scripts/ai_uninstall_facts.py",
+      "scripts/ai_uninstall_proposal.py",
+      "scripts/ai_upgrade_apply.py",
+      "scripts/ai_upgrade_conflict_report.py",
+      "scripts/ai_upgrade_proposal.py",
+      "scripts/ai_validate_java_runtime.py",
+      "scripts/ai_verification_policy.py",
+      "scripts/ai_work_item_intelligence.py",
+      "scripts/ai_work_item_status.py",
+      "scripts/bootstrap_repository.py",
+      "scripts/bootstrap_wizard.py",
+      "scripts/bootstrap_write_boundary.py",
+      "scripts/check_changed_critical_coverage.py",
+      "scripts/check_critical_coverage.py",
+      "scripts/determine_governance_profile.py",
+      ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.json",
+      ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md"
+    ]
+  },
+  "issues": {
+    "detected": 1,
+    "hardStops": 0,
+    "warnings": 1,
+    "resolved": 0,
+    "unresolved": 1
+  },
+  "preventedRisks": [],
+  "interventions": [],
+  "forcedStops": [],
+  "humanDecisions": [],
+  "limitations": [
+    {
+      "sourceWarning": "Project-specific quality commands are not configured by adoption.",
+      "title": "Unresolved evidence is explicitly limited",
+      "affectedClaims": [
+        "completion_claim"
+      ],
+      "requiredEvidence": [
+        "fresh verification evidence"
+      ],
+      "forbiddenClaims": [
+        "Do not claim this warning was verified or resolved."
+      ]
+    }
+  ],
+  "forbiddenClaims": [
+    "Do not claim an unresolved warning was verified or resolved."
+  ],
+  "remainingRisks": [
+    {
+      "severity": "medium",
+      "detail": "Configure and require project quality checks after adoption.",
+      "evidence": [
+        {
+          "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+          "subject": "residualRisks"
+        }
+      ]
+    }
+  ],
+  "humanHandoff": {
+    "locale": "zh-CN",
+    "completed": [
+      {
+        "claim": "Changed .ai/README.md",
+        "title": "Changed .ai/README.md",
+        "detail": "from .ai/README.md",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/README.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/README.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/calibration/profiles.yaml",
+        "title": "Changed .ai/calibration/profiles.yaml",
+        "detail": "from .ai/calibration/profiles.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/calibration/profiles.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/calibration/profiles.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/README.ja.md",
+        "title": "Changed .ai/cockpit/README.ja.md",
+        "detail": "from .ai/cockpit/README.ja.md",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/README.ja.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/README.ja.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/README.md",
+        "title": "Changed .ai/cockpit/README.md",
+        "detail": "from .ai/cockpit/README.md",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/README.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/README.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/adoption-runtime-verification.json",
+        "title": "Changed .ai/cockpit/adoption-runtime-verification.json",
+        "detail": "write adopter Runtime Verification evidence",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/adoption-runtime-verification.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/adoption-runtime-verification.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/adoption.ja.md",
+        "title": "Changed .ai/cockpit/adoption.ja.md",
+        "detail": "from .ai/cockpit/adoption.ja.md",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/adoption.ja.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/adoption.ja.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/adoption.md",
+        "title": "Changed .ai/cockpit/adoption.md",
+        "detail": "from .ai/cockpit/adoption.md",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/adoption.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/adoption.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/checks.yaml",
+        "title": "Changed .ai/cockpit/checks.yaml",
+        "detail": "from .ai/cockpit/checks.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/checks.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/checks.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/current_status.md",
+        "title": "Changed .ai/cockpit/current_status.md",
+        "detail": "generate adoption Work Item status",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/current_status.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/current_status.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/derived_artifacts.json",
+        "title": "Changed .ai/cockpit/derived_artifacts.json",
+        "detail": "from .ai/cockpit/derived_artifacts.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/derived_artifacts.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/derived_artifacts.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/system_invariants.json",
+        "title": "Changed .ai/cockpit/system_invariants.json",
+        "detail": "from .ai/cockpit/system_invariants.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/system_invariants.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/system_invariants.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/version.json",
+        "title": "Changed .ai/cockpit/version.json",
+        "detail": "from .ai/cockpit/version.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/version.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/version.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/work-items/index.json",
+        "title": "Changed .ai/cockpit/work-items/index.json",
+        "detail": "from .ai/cockpit/work-items/index.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/work-items/index.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/work-items/index.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/work-items/wi-06-status-interface.status.json",
+        "title": "Changed .ai/cockpit/work-items/wi-06-status-interface.status.json",
+        "detail": "from .ai/cockpit/work-items/wi-06-status-interface.status.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/work-items/wi-06-status-interface.status.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/work-items/wi-06-status-interface.status.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/decisions/.gitkeep",
+        "title": "Changed .ai/decisions/.gitkeep",
+        "detail": "from .ai/decisions/.gitkeep",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/decisions/.gitkeep"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/decisions/.gitkeep"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json",
+        "title": "Changed .ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json",
+        "detail": "from .ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json",
+        "title": "Changed .ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json",
+        "detail": "from .ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/evidence/test-weakening/foreign-duplicate-start-v1.json",
+        "title": "Changed .ai/evidence/test-weakening/foreign-duplicate-start-v1.json",
+        "detail": "from .ai/evidence/test-weakening/foreign-duplicate-start-v1.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/foreign-duplicate-start-v1.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/foreign-duplicate-start-v1.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/evidence/test-weakening/remove-cancelled-provider-validation.json",
+        "title": "Changed .ai/evidence/test-weakening/remove-cancelled-provider-validation.json",
+        "detail": "from .ai/evidence/test-weakening/remove-cancelled-provider-validation.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/remove-cancelled-provider-validation.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/remove-cancelled-provider-validation.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/evidence/test-weakening/v057-public-projection-role-retirement.json",
+        "title": "Changed .ai/evidence/test-weakening/v057-public-projection-role-retirement.json",
+        "detail": "from .ai/evidence/test-weakening/v057-public-projection-role-retirement.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/v057-public-projection-role-retirement.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/evidence/test-weakening/v057-public-projection-role-retirement.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/glossary.md",
+        "title": "Changed .ai/glossary.md",
+        "detail": "install project glossary template",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/glossary.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/glossary.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/agent_risk_policy.yaml",
+        "title": "Changed .ai/guards/agent_risk_policy.yaml",
+        "detail": "from .ai/guards/agent_risk_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/agent_risk_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/agent_risk_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/ai_review_policy.yaml",
+        "title": "Changed .ai/guards/ai_review_policy.yaml",
+        "detail": "from .ai/guards/ai_review_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/ai_review_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/ai_review_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/backtrack_policy.yaml",
+        "title": "Changed .ai/guards/backtrack_policy.yaml",
+        "detail": "from .ai/guards/backtrack_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/backtrack_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/backtrack_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/changed_critical_coverage_policy.json",
+        "title": "Changed .ai/guards/changed_critical_coverage_policy.json",
+        "detail": "from .ai/guards/changed_critical_coverage_policy.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/changed_critical_coverage_policy.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/changed_critical_coverage_policy.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/cockpit_status_policy.yaml",
+        "title": "Changed .ai/guards/cockpit_status_policy.yaml",
+        "detail": "from .ai/guards/cockpit_status_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/cockpit_status_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/cockpit_status_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/coverage_policy.yaml",
+        "title": "Changed .ai/guards/coverage_policy.yaml",
+        "detail": "from .ai/guards/coverage_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/coverage_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/coverage_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/file_boundary.yaml",
+        "title": "Changed .ai/guards/file_boundary.yaml",
+        "detail": "from .ai/guards/file_boundary.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/file_boundary.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/file_boundary.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/file_ownership.yaml",
+        "title": "Changed .ai/guards/file_ownership.yaml",
+        "detail": "from .ai/guards/file_ownership.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/file_ownership.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/file_ownership.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/governance_complexity_policy.yaml",
+        "title": "Changed .ai/guards/governance_complexity_policy.yaml",
+        "detail": "from .ai/guards/governance_complexity_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/governance_complexity_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/governance_complexity_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/operation_impact_policy.yaml",
+        "title": "Changed .ai/guards/operation_impact_policy.yaml",
+        "detail": "from .ai/guards/operation_impact_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/operation_impact_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/operation_impact_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/preflight_review_policy.yaml",
+        "title": "Changed .ai/guards/preflight_review_policy.yaml",
+        "detail": "from .ai/guards/preflight_review_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/preflight_review_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/preflight_review_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/reference_impact_policy.yaml",
+        "title": "Changed .ai/guards/reference_impact_policy.yaml",
+        "detail": "from .ai/guards/reference_impact_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/reference_impact_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/reference_impact_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/scenario_coverage_policy.yaml",
+        "title": "Changed .ai/guards/scenario_coverage_policy.yaml",
+        "detail": "from .ai/guards/scenario_coverage_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/scenario_coverage_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/scenario_coverage_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/scope_policy.yaml",
+        "title": "Changed .ai/guards/scope_policy.yaml",
+        "detail": "from .ai/guards/scope_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/scope_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/scope_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/summary_policy.yaml",
+        "title": "Changed .ai/guards/summary_policy.yaml",
+        "detail": "from .ai/guards/summary_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/summary_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/summary_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/guards/test_weakening_policy.yaml",
+        "title": "Changed .ai/guards/test_weakening_policy.yaml",
+        "detail": "from .ai/guards/test_weakening_policy.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/test_weakening_policy.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/guards/test_weakening_policy.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/install/managed-regions.json",
+        "title": "Changed .ai/install/managed-regions.json",
+        "detail": "write installed lifecycle fact",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/managed-regions.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/managed-regions.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/install/manifest.json",
+        "title": "Changed .ai/install/manifest.json",
+        "detail": "write installed lifecycle fact",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/manifest.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/manifest.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/install/release-identity.json",
+        "title": "Changed .ai/install/release-identity.json",
+        "detail": "write installed lifecycle fact",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/release-identity.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/release-identity.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/install/rollback-baseline.json",
+        "title": "Changed .ai/install/rollback-baseline.json",
+        "detail": "write installed lifecycle fact",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/rollback-baseline.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/rollback-baseline.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/install/version.json",
+        "title": "Changed .ai/install/version.json",
+        "detail": "write installed lifecycle fact",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/version.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/install/version.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/policies/complexity_trend.yaml",
+        "title": "Changed .ai/policies/complexity_trend.yaml",
+        "detail": "from .ai/policies/complexity_trend.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/policies/complexity_trend.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/policies/complexity_trend.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/policies/raw-request-exemptions.yaml",
+        "title": "Changed .ai/policies/raw-request-exemptions.yaml",
+        "detail": "from .ai/policies/raw-request-exemptions.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/policies/raw-request-exemptions.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/policies/raw-request-exemptions.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/policies/requested-operation.yaml",
+        "title": "Changed .ai/policies/requested-operation.yaml",
+        "detail": "from .ai/policies/requested-operation.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/policies/requested-operation.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/policies/requested-operation.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/policies/verification_impact.yaml",
+        "title": "Changed .ai/policies/verification_impact.yaml",
+        "detail": "from .ai/policies/verification_impact.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/policies/verification_impact.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/policies/verification_impact.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/project/capabilities.json",
+        "title": "Changed .ai/project/capabilities.json",
+        "detail": "from .ai/project/capabilities.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/project/capabilities.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/project/capabilities.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/project/success_criteria.json",
+        "title": "Changed .ai/project/success_criteria.json",
+        "detail": "from .ai/project/success_criteria.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/project/success_criteria.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/project/success_criteria.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/quality/gates.yaml",
+        "title": "Changed .ai/quality/gates.yaml",
+        "detail": "from .ai/quality/gates.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/quality/gates.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/quality/gates.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/quality/governance-routing.yaml",
+        "title": "Changed .ai/quality/governance-routing.yaml",
+        "detail": "from .ai/quality/governance-routing.yaml",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/quality/governance-routing.yaml"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/quality/governance-routing.yaml"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/canonical_evidence.schema.json",
+        "title": "Changed .ai/schemas/canonical_evidence.schema.json",
+        "detail": "from .ai/schemas/canonical_evidence.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/canonical_evidence.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/canonical_evidence.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/cross-wi-integration-report.schema.json",
+        "title": "Changed .ai/schemas/cross-wi-integration-report.schema.json",
+        "detail": "from .ai/schemas/cross-wi-integration-report.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/cross-wi-integration-report.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/cross-wi-integration-report.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/evidence-binding.schema.json",
+        "title": "Changed .ai/schemas/evidence-binding.schema.json",
+        "detail": "from .ai/schemas/evidence-binding.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/evidence-binding.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/evidence-binding.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/external_handoff.schema.json",
+        "title": "Changed .ai/schemas/external_handoff.schema.json",
+        "detail": "from .ai/schemas/external_handoff.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/external_handoff.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/external_handoff.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/governance-cost-report.schema.json",
+        "title": "Changed .ai/schemas/governance-cost-report.schema.json",
+        "detail": "from .ai/schemas/governance-cost-report.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/governance-cost-report.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/governance-cost-report.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/operation-impact.schema.json",
+        "title": "Changed .ai/schemas/operation-impact.schema.json",
+        "detail": "from .ai/schemas/operation-impact.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/operation-impact.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/operation-impact.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/parallel-verification-plan.schema.json",
+        "title": "Changed .ai/schemas/parallel-verification-plan.schema.json",
+        "detail": "from .ai/schemas/parallel-verification-plan.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/parallel-verification-plan.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/parallel-verification-plan.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/performance-diagnosis-report.schema.json",
+        "title": "Changed .ai/schemas/performance-diagnosis-report.schema.json",
+        "detail": "from .ai/schemas/performance-diagnosis-report.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/performance-diagnosis-report.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/performance-diagnosis-report.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/reference_impact.schema.json",
+        "title": "Changed .ai/schemas/reference_impact.schema.json",
+        "detail": "from .ai/schemas/reference_impact.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/reference_impact.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/reference_impact.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/task_outcome.schema.json",
+        "title": "Changed .ai/schemas/task_outcome.schema.json",
+        "detail": "from .ai/schemas/task_outcome.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/task_outcome.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/task_outcome.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/test_weakening.schema.json",
+        "title": "Changed .ai/schemas/test_weakening.schema.json",
+        "detail": "from .ai/schemas/test_weakening.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/test_weakening.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/test_weakening.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/unknown_assessment.schema.json",
+        "title": "Changed .ai/schemas/unknown_assessment.schema.json",
+        "detail": "from .ai/schemas/unknown_assessment.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/unknown_assessment.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/unknown_assessment.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/work-item-intelligence-snapshot.schema.json",
+        "title": "Changed .ai/schemas/work-item-intelligence-snapshot.schema.json",
+        "detail": "from .ai/schemas/work-item-intelligence-snapshot.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/work-item-intelligence-snapshot.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/work-item-intelligence-snapshot.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/schemas/work-item-status-interface.schema.json",
+        "title": "Changed .ai/schemas/work-item-status-interface.schema.json",
+        "detail": "from .ai/schemas/work-item-status-interface.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/work-item-status-interface.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/schemas/work-item-status-interface.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/trust/schema/approval.schema.json",
+        "title": "Changed .ai/trust/schema/approval.schema.json",
+        "detail": "from .ai/trust/schema/approval.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/approval.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/approval.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/trust/schema/baseline_evidence.schema.json",
+        "title": "Changed .ai/trust/schema/baseline_evidence.schema.json",
+        "detail": "from .ai/trust/schema/baseline_evidence.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/baseline_evidence.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/baseline_evidence.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/trust/schema/human_decision_evidence.schema.json",
+        "title": "Changed .ai/trust/schema/human_decision_evidence.schema.json",
+        "detail": "from .ai/trust/schema/human_decision_evidence.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/human_decision_evidence.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/human_decision_evidence.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/trust/schema/human_decision_request.schema.json",
+        "title": "Changed .ai/trust/schema/human_decision_request.schema.json",
+        "detail": "from .ai/trust/schema/human_decision_request.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/human_decision_request.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/human_decision_request.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/trust/schema/repository_capabilities.schema.json",
+        "title": "Changed .ai/trust/schema/repository_capabilities.schema.json",
+        "detail": "from .ai/trust/schema/repository_capabilities.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/repository_capabilities.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/repository_capabilities.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/trust/schema/success_criteria.schema.json",
+        "title": "Changed .ai/trust/schema/success_criteria.schema.json",
+        "detail": "from .ai/trust/schema/success_criteria.schema.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/success_criteria.schema.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/trust/schema/success_criteria.schema.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/_templates/work_item_contract.example.json",
+        "title": "Changed .ai/work-items/_templates/work_item_contract.example.json",
+        "detail": "from .ai/work-items/_templates/work_item_contract.example.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/_templates/work_item_contract.example.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/_templates/work_item_contract.example.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/_templates/work_item_summary.example.json",
+        "title": "Changed .ai/work-items/_templates/work_item_summary.example.json",
+        "detail": "from .ai/work-items/_templates/work_item_summary.example.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/_templates/work_item_summary.example.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/_templates/work_item_summary.example.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/active/adopt_ai_cockpit.contract.json",
+        "title": "Changed .ai/work-items/active/adopt_ai_cockpit.contract.json",
+        "detail": "create adoption Contract",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/active/adopt_ai_cockpit.summary.json",
+        "title": "Changed .ai/work-items/active/adopt_ai_cockpit.summary.json",
+        "detail": "create adoption Summary",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json",
+        "title": "Changed .ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json",
+        "detail": "from .ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json",
+        "title": "Changed .ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json",
+        "detail": "from .ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json",
+        "title": "Changed .ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json",
+        "detail": "from .ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json",
+        "title": "Changed .ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json",
+        "detail": "from .ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json",
+        "title": "Changed .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json",
+        "detail": "from .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json",
+        "title": "Changed .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json",
+        "detail": "from .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json",
+        "title": "Changed .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json",
+        "detail": "from .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json",
+        "title": "Changed .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json",
+        "detail": "from .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json",
+        "title": "Changed .ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json",
+        "detail": "from .ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json",
+        "title": "Changed .ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json",
+        "detail": "from .ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json",
+        "title": "Changed .ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json",
+        "detail": "from .ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json",
+        "title": "Changed .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json",
+        "detail": "from .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json",
+        "title": "Changed .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json",
+        "detail": "from .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json",
+        "title": "Changed .ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json",
+        "detail": "from .ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json",
+        "title": "Changed .ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json",
+        "detail": "from .ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json",
+        "title": "Changed .ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json",
+        "detail": "from .ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/runtime/.gitignore",
+        "title": "Changed .ai/work-items/runtime/.gitignore",
+        "detail": "from .ai/work-items/runtime/.gitignore",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/runtime/.gitignore"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/runtime/.gitignore"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/starts/adopt_ai_cockpit.json",
+        "title": "Changed .ai/work-items/starts/adopt_ai_cockpit.json",
+        "detail": "create adoption Start Receipt",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/starts/adopt_ai_cockpit.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/starts/adopt_ai_cockpit.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .cursor/rules/ai-cockpit.mdc",
+        "title": "Changed .cursor/rules/ai-cockpit.mdc",
+        "detail": "from .cursor/rules/ai-cockpit.mdc",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".cursor/rules/ai-cockpit.mdc"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".cursor/rules/ai-cockpit.mdc"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .gitignore",
+        "title": "Changed .gitignore",
+        "detail": "add missing AI Cockpit local-state ignore rules",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".gitignore"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".gitignore"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed AGENTS.md",
+        "title": "Changed AGENTS.md",
+        "detail": "install managed AI Cockpit section",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "AGENTS.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "AGENTS.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed CLAUDE.md",
+        "title": "Changed CLAUDE.md",
+        "detail": "install managed AI Cockpit section",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "CLAUDE.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "CLAUDE.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed GEMINI.md",
+        "title": "Changed GEMINI.md",
+        "detail": "install managed AI Cockpit section",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "GEMINI.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "GEMINI.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed Makefile",
+        "title": "Changed Makefile",
+        "detail": "include Makefile.ai",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "Makefile"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "Makefile"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed Makefile.ai",
+        "title": "Changed Makefile.ai",
+        "detail": "from templates/make/Makefile.ai",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "Makefile.ai"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "Makefile.ai"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed Makefile.ai.stack",
+        "title": "Changed Makefile.ai.stack",
+        "detail": "from templates/stacks/rust.mk",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "Makefile.ai.stack"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "Makefile.ai.stack"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_acceptance_policy.py",
+        "title": "Changed scripts/ai_acceptance_policy.py",
+        "detail": "from scripts/ai_acceptance_policy.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_acceptance_policy.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_acceptance_policy.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_adoption_evidence.py",
+        "title": "Changed scripts/ai_adoption_evidence.py",
+        "detail": "from scripts/ai_adoption_evidence.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_adoption_evidence.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_adoption_evidence.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_archive_work_item.py",
+        "title": "Changed scripts/ai_archive_work_item.py",
+        "detail": "from scripts/ai_archive_work_item.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_archive_work_item.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_archive_work_item.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_baseline_evidence.py",
+        "title": "Changed scripts/ai_baseline_evidence.py",
+        "detail": "from scripts/ai_baseline_evidence.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_baseline_evidence.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_baseline_evidence.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_calibrate.py",
+        "title": "Changed scripts/ai_calibrate.py",
+        "detail": "from scripts/ai_calibrate.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_calibrate.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_calibrate.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_calibration_corrective.py",
+        "title": "Changed scripts/ai_calibration_corrective.py",
+        "detail": "from scripts/ai_calibration_corrective.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_calibration_corrective.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_calibration_corrective.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_calibration_inventory.py",
+        "title": "Changed scripts/ai_calibration_inventory.py",
+        "detail": "from scripts/ai_calibration_inventory.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_calibration_inventory.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_calibration_inventory.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_calibration_profiles.py",
+        "title": "Changed scripts/ai_calibration_profiles.py",
+        "detail": "from scripts/ai_calibration_profiles.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_calibration_profiles.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_calibration_profiles.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_adoption_ready.py",
+        "title": "Changed scripts/ai_check_adoption_ready.py",
+        "detail": "from scripts/ai_check_adoption_ready.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_adoption_ready.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_adoption_ready.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_agent_risk.py",
+        "title": "Changed scripts/ai_check_agent_risk.py",
+        "detail": "from scripts/ai_check_agent_risk.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_agent_risk.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_agent_risk.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_backtrack.py",
+        "title": "Changed scripts/ai_check_backtrack.py",
+        "detail": "from scripts/ai_check_backtrack.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_backtrack.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_backtrack.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_budget_impact.py",
+        "title": "Changed scripts/ai_check_budget_impact.py",
+        "detail": "from scripts/ai_check_budget_impact.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_budget_impact.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_budget_impact.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_coverage_guard.py",
+        "title": "Changed scripts/ai_check_coverage_guard.py",
+        "detail": "from scripts/ai_check_coverage_guard.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_coverage_guard.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_coverage_guard.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_diff_ownership.py",
+        "title": "Changed scripts/ai_check_diff_ownership.py",
+        "detail": "from scripts/ai_check_diff_ownership.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_diff_ownership.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_diff_ownership.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_guard_calibration.py",
+        "title": "Changed scripts/ai_check_guard_calibration.py",
+        "detail": "from scripts/ai_check_guard_calibration.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_guard_calibration.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_guard_calibration.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_guards.py",
+        "title": "Changed scripts/ai_check_guards.py",
+        "detail": "from scripts/ai_check_guards.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_guards.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_guards.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_guidelines.py",
+        "title": "Changed scripts/ai_check_guidelines.py",
+        "detail": "from scripts/ai_check_guidelines.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_guidelines.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_guidelines.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_pr.py",
+        "title": "Changed scripts/ai_check_pr.py",
+        "detail": "from scripts/ai_check_pr.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_pr.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_pr.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_reference_impact.py",
+        "title": "Changed scripts/ai_check_reference_impact.py",
+        "detail": "from scripts/ai_check_reference_impact.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_reference_impact.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_reference_impact.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_review_policy.py",
+        "title": "Changed scripts/ai_check_review_policy.py",
+        "detail": "from scripts/ai_check_review_policy.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_review_policy.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_review_policy.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_scenario_coverage.py",
+        "title": "Changed scripts/ai_check_scenario_coverage.py",
+        "detail": "from scripts/ai_check_scenario_coverage.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_scenario_coverage.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_scenario_coverage.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_scope.py",
+        "title": "Changed scripts/ai_check_scope.py",
+        "detail": "from scripts/ai_check_scope.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_scope.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_scope.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_serial_order.py",
+        "title": "Changed scripts/ai_check_serial_order.py",
+        "detail": "from scripts/ai_check_serial_order.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_serial_order.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_serial_order.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_status.py",
+        "title": "Changed scripts/ai_check_status.py",
+        "detail": "from scripts/ai_check_status.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_status.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_status.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_status_consistency.py",
+        "title": "Changed scripts/ai_check_status_consistency.py",
+        "detail": "from scripts/ai_check_status_consistency.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_status_consistency.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_status_consistency.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_summary.py",
+        "title": "Changed scripts/ai_check_summary.py",
+        "detail": "from scripts/ai_check_summary.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_summary.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_summary.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_task_outcome.py",
+        "title": "Changed scripts/ai_check_task_outcome.py",
+        "detail": "from scripts/ai_check_task_outcome.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_task_outcome.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_task_outcome.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_test_weakening.py",
+        "title": "Changed scripts/ai_check_test_weakening.py",
+        "detail": "from scripts/ai_check_test_weakening.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_test_weakening.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_test_weakening.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_check_work_item.py",
+        "title": "Changed scripts/ai_check_work_item.py",
+        "detail": "from scripts/ai_check_work_item.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_work_item.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_check_work_item.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_checkpoint.py",
+        "title": "Changed scripts/ai_checkpoint.py",
+        "detail": "from scripts/ai_checkpoint.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_checkpoint.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_checkpoint.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_classify_operation_impact.py",
+        "title": "Changed scripts/ai_classify_operation_impact.py",
+        "detail": "from scripts/ai_classify_operation_impact.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_classify_operation_impact.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_classify_operation_impact.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_close_work_item.py",
+        "title": "Changed scripts/ai_close_work_item.py",
+        "detail": "from scripts/ai_close_work_item.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_close_work_item.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_close_work_item.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_common.py",
+        "title": "Changed scripts/ai_common.py",
+        "detail": "from scripts/ai_common.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_common.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_common.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_critical_domain_guards.py",
+        "title": "Changed scripts/ai_critical_domain_guards.py",
+        "detail": "from scripts/ai_critical_domain_guards.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_critical_domain_guards.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_critical_domain_guards.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_decision_protocol.py",
+        "title": "Changed scripts/ai_decision_protocol.py",
+        "detail": "from scripts/ai_decision_protocol.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_decision_protocol.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_decision_protocol.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_detached_uninstaller.py",
+        "title": "Changed scripts/ai_detached_uninstaller.py",
+        "detail": "from scripts/ai_detached_uninstaller.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_detached_uninstaller.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_detached_uninstaller.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_disable_enable.py",
+        "title": "Changed scripts/ai_disable_enable.py",
+        "detail": "from scripts/ai_disable_enable.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_disable_enable.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_disable_enable.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_doctor.py",
+        "title": "Changed scripts/ai_doctor.py",
+        "detail": "from scripts/ai_doctor.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_doctor.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_doctor.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_evidence_dependencies.py",
+        "title": "Changed scripts/ai_evidence_dependencies.py",
+        "detail": "from scripts/ai_evidence_dependencies.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_evidence_dependencies.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_evidence_dependencies.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_external_handoff.py",
+        "title": "Changed scripts/ai_external_handoff.py",
+        "detail": "from scripts/ai_external_handoff.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_external_handoff.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_external_handoff.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_external_identity.py",
+        "title": "Changed scripts/ai_external_identity.py",
+        "detail": "from scripts/ai_external_identity.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_external_identity.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_external_identity.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_finish.py",
+        "title": "Changed scripts/ai_finish.py",
+        "detail": "from scripts/ai_finish.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_finish.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_finish.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_generate_human_report.py",
+        "title": "Changed scripts/ai_generate_human_report.py",
+        "detail": "from scripts/ai_generate_human_report.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_generate_human_report.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_generate_human_report.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_generate_status.py",
+        "title": "Changed scripts/ai_generate_status.py",
+        "detail": "from scripts/ai_generate_status.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_generate_status.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_generate_status.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_generate_task_outcome.py",
+        "title": "Changed scripts/ai_generate_task_outcome.py",
+        "detail": "from scripts/ai_generate_task_outcome.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_generate_task_outcome.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_generate_task_outcome.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_governance_compression.py",
+        "title": "Changed scripts/ai_governance_compression.py",
+        "detail": "from scripts/ai_governance_compression.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_governance_compression.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_governance_compression.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_impact_classifier.py",
+        "title": "Changed scripts/ai_impact_classifier.py",
+        "detail": "from scripts/ai_impact_classifier.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_impact_classifier.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_impact_classifier.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_input_trust.py",
+        "title": "Changed scripts/ai_input_trust.py",
+        "detail": "from scripts/ai_input_trust.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_input_trust.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_input_trust.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_install_facts.py",
+        "title": "Changed scripts/ai_install_facts.py",
+        "detail": "from scripts/ai_install_facts.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_install_facts.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_install_facts.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_install_status.py",
+        "title": "Changed scripts/ai_install_status.py",
+        "detail": "from scripts/ai_install_status.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_install_status.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_install_status.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_installer_bootstrap.py",
+        "title": "Changed scripts/ai_installer_bootstrap.py",
+        "detail": "from scripts/ai_installer_bootstrap.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_bootstrap.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_bootstrap.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_installer_catalog.json",
+        "title": "Changed scripts/ai_installer_catalog.json",
+        "detail": "from scripts/ai_installer_catalog.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_catalog.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_catalog.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_installer_detection.py",
+        "title": "Changed scripts/ai_installer_detection.py",
+        "detail": "from scripts/ai_installer_detection.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_detection.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_detection.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_installer_evidence.py",
+        "title": "Changed scripts/ai_installer_evidence.py",
+        "detail": "from scripts/ai_installer_evidence.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_evidence.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_evidence.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_installer_managed_regions.py",
+        "title": "Changed scripts/ai_installer_managed_regions.py",
+        "detail": "from scripts/ai_installer_managed_regions.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_managed_regions.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_managed_regions.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_installer_ownership.py",
+        "title": "Changed scripts/ai_installer_ownership.py",
+        "detail": "from scripts/ai_installer_ownership.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_ownership.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_ownership.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_installer_repository.py",
+        "title": "Changed scripts/ai_installer_repository.py",
+        "detail": "from scripts/ai_installer_repository.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_repository.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_repository.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_installer_transaction.py",
+        "title": "Changed scripts/ai_installer_transaction.py",
+        "detail": "from scripts/ai_installer_transaction.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_transaction.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_transaction.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_installer_upgrade.py",
+        "title": "Changed scripts/ai_installer_upgrade.py",
+        "detail": "from scripts/ai_installer_upgrade.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_upgrade.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_installer_upgrade.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_intent_policy.py",
+        "title": "Changed scripts/ai_intent_policy.py",
+        "detail": "from scripts/ai_intent_policy.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_intent_policy.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_intent_policy.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_lifecycle_facts.py",
+        "title": "Changed scripts/ai_lifecycle_facts.py",
+        "detail": "from scripts/ai_lifecycle_facts.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_lifecycle_facts.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_lifecycle_facts.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_lifecycle_truth.py",
+        "title": "Changed scripts/ai_lifecycle_truth.py",
+        "detail": "from scripts/ai_lifecycle_truth.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_lifecycle_truth.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_lifecycle_truth.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_observability.py",
+        "title": "Changed scripts/ai_observability.py",
+        "detail": "from scripts/ai_observability.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_observability.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_observability.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_onboard.py",
+        "title": "Changed scripts/ai_onboard.py",
+        "detail": "from scripts/ai_onboard.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_onboard.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_onboard.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_ownership.py",
+        "title": "Changed scripts/ai_ownership.py",
+        "detail": "from scripts/ai_ownership.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_ownership.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_ownership.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_post_archive_recovery.py",
+        "title": "Changed scripts/ai_post_archive_recovery.py",
+        "detail": "from scripts/ai_post_archive_recovery.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_post_archive_recovery.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_post_archive_recovery.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_preflight_review.py",
+        "title": "Changed scripts/ai_preflight_review.py",
+        "detail": "from scripts/ai_preflight_review.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_preflight_review.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_preflight_review.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_project_doctor.py",
+        "title": "Changed scripts/ai_project_doctor.py",
+        "detail": "from scripts/ai_project_doctor.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_project_doctor.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_project_doctor.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_project_profile.py",
+        "title": "Changed scripts/ai_project_profile.py",
+        "detail": "from scripts/ai_project_profile.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_project_profile.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_project_profile.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_projection_lease.py",
+        "title": "Changed scripts/ai_projection_lease.py",
+        "detail": "from scripts/ai_projection_lease.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_projection_lease.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_projection_lease.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_readiness_policy.py",
+        "title": "Changed scripts/ai_readiness_policy.py",
+        "detail": "from scripts/ai_readiness_policy.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_readiness_policy.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_readiness_policy.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_render_task_outcome.py",
+        "title": "Changed scripts/ai_render_task_outcome.py",
+        "detail": "from scripts/ai_render_task_outcome.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_render_task_outcome.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_render_task_outcome.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_render_task_outcome_multilingual.py",
+        "title": "Changed scripts/ai_render_task_outcome_multilingual.py",
+        "detail": "from scripts/ai_render_task_outcome_multilingual.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_render_task_outcome_multilingual.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_render_task_outcome_multilingual.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_required_evidence.py",
+        "title": "Changed scripts/ai_required_evidence.py",
+        "detail": "from scripts/ai_required_evidence.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_required_evidence.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_required_evidence.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_review_readiness_policy.py",
+        "title": "Changed scripts/ai_review_readiness_policy.py",
+        "detail": "from scripts/ai_review_readiness_policy.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_review_readiness_policy.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_review_readiness_policy.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_risk_policy.py",
+        "title": "Changed scripts/ai_risk_policy.py",
+        "detail": "from scripts/ai_risk_policy.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_risk_policy.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_risk_policy.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_rollback.py",
+        "title": "Changed scripts/ai_rollback.py",
+        "detail": "from scripts/ai_rollback.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_rollback.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_rollback.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_scenario_policy.py",
+        "title": "Changed scripts/ai_scenario_policy.py",
+        "detail": "from scripts/ai_scenario_policy.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_scenario_policy.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_scenario_policy.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_start.py",
+        "title": "Changed scripts/ai_start.py",
+        "detail": "from scripts/ai_start.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_start.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_start.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_start_receipt.py",
+        "title": "Changed scripts/ai_start_receipt.py",
+        "detail": "from scripts/ai_start_receipt.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_start_receipt.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_start_receipt.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_task_event_log.py",
+        "title": "Changed scripts/ai_task_event_log.py",
+        "detail": "from scripts/ai_task_event_log.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_task_event_log.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_task_event_log.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_trust_guards.py",
+        "title": "Changed scripts/ai_trust_guards.py",
+        "detail": "from scripts/ai_trust_guards.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_trust_guards.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_trust_guards.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_trust_schema.py",
+        "title": "Changed scripts/ai_trust_schema.py",
+        "detail": "from scripts/ai_trust_schema.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_trust_schema.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_trust_schema.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_uninstall_facts.py",
+        "title": "Changed scripts/ai_uninstall_facts.py",
+        "detail": "from scripts/ai_uninstall_facts.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_uninstall_facts.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_uninstall_facts.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_uninstall_proposal.py",
+        "title": "Changed scripts/ai_uninstall_proposal.py",
+        "detail": "from scripts/ai_uninstall_proposal.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_uninstall_proposal.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_uninstall_proposal.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_upgrade_apply.py",
+        "title": "Changed scripts/ai_upgrade_apply.py",
+        "detail": "from scripts/ai_upgrade_apply.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_upgrade_apply.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_upgrade_apply.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_upgrade_conflict_report.py",
+        "title": "Changed scripts/ai_upgrade_conflict_report.py",
+        "detail": "from scripts/ai_upgrade_conflict_report.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_upgrade_conflict_report.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_upgrade_conflict_report.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_upgrade_proposal.py",
+        "title": "Changed scripts/ai_upgrade_proposal.py",
+        "detail": "from scripts/ai_upgrade_proposal.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_upgrade_proposal.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_upgrade_proposal.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_validate_java_runtime.py",
+        "title": "Changed scripts/ai_validate_java_runtime.py",
+        "detail": "from scripts/ai_validate_java_runtime.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_validate_java_runtime.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_validate_java_runtime.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_verification_policy.py",
+        "title": "Changed scripts/ai_verification_policy.py",
+        "detail": "from scripts/ai_verification_policy.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_verification_policy.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_verification_policy.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_work_item_intelligence.py",
+        "title": "Changed scripts/ai_work_item_intelligence.py",
+        "detail": "from scripts/ai_work_item_intelligence.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_work_item_intelligence.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_work_item_intelligence.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/ai_work_item_status.py",
+        "title": "Changed scripts/ai_work_item_status.py",
+        "detail": "from scripts/ai_work_item_status.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_work_item_status.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/ai_work_item_status.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/bootstrap_repository.py",
+        "title": "Changed scripts/bootstrap_repository.py",
+        "detail": "from scripts/bootstrap_repository.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/bootstrap_repository.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/bootstrap_repository.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/bootstrap_wizard.py",
+        "title": "Changed scripts/bootstrap_wizard.py",
+        "detail": "from scripts/bootstrap_wizard.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/bootstrap_wizard.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/bootstrap_wizard.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/bootstrap_write_boundary.py",
+        "title": "Changed scripts/bootstrap_write_boundary.py",
+        "detail": "from scripts/bootstrap_write_boundary.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/bootstrap_write_boundary.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/bootstrap_write_boundary.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/check_changed_critical_coverage.py",
+        "title": "Changed scripts/check_changed_critical_coverage.py",
+        "detail": "from scripts/check_changed_critical_coverage.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/check_changed_critical_coverage.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/check_changed_critical_coverage.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/check_critical_coverage.py",
+        "title": "Changed scripts/check_critical_coverage.py",
+        "detail": "from scripts/check_critical_coverage.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/check_critical_coverage.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/check_critical_coverage.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed scripts/determine_governance_profile.py",
+        "title": "Changed scripts/determine_governance_profile.py",
+        "detail": "from scripts/determine_governance_profile.py",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/determine_governance_profile.py"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "scripts/determine_governance_profile.py"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/active/adopt_ai_cockpit.outcome.json",
+        "title": "Changed .ai/work-items/active/adopt_ai_cockpit.outcome.json",
+        "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/active/adopt_ai_cockpit.outcome.md",
+        "title": "Changed .ai/work-items/active/adopt_ai_cockpit.outcome.md",
+        "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/task_report.json",
+        "title": "Changed .ai/cockpit/task_report.json",
+        "detail": "Generated machine-readable Human Benefit Review Report.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/task_report.md",
+        "title": "Changed .ai/cockpit/task_report.md",
+        "detail": "Generated human-readable Human Benefit Review Report.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/task_report.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": ".ai/cockpit/task_report.md"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "passed": [
+      {
+        "claim": "aiWorkItem",
+        "title": "aiWorkItem",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/adopt_ai_cockpit.contract.json work item contract check passed: .ai/work-items/active/adopt_ai_cockpit.contract.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiWorkItem",
+            "digest": "c2aed2629054967cefcd4090c4d613ccc45496e18836046b25114f0c8c1999b6"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiWorkItem",
+            "digest": "c2aed2629054967cefcd4090c4d613ccc45496e18836046b25114f0c8c1999b6"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiScope",
+        "title": "aiScope",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/adopt_ai_cockpit.contract.json scope guard passed: 198 changed path(s) covered",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiScope",
+            "digest": "c7c61b9cf2d36a4c47c6c762f2520adaaf386ff5e7d1eadd8dfa2892c78c8af6"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiScope",
+            "digest": "c7c61b9cf2d36a4c47c6c762f2520adaaf386ff5e7d1eadd8dfa2892c78c8af6"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiStatus",
+        "title": "aiStatus",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/adopt_ai_cockpit.contract.json --summary .ai/work-items/active/adopt_ai_cockpit.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiStatus",
+            "digest": "65d7515321d200d8c9547db29b057f097b4c082b494be32344df1428ba74203b"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiStatus",
+            "digest": "65d7515321d200d8c9547db29b057f097b4c082b494be32344df1428ba74203b"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiStatusCheck",
+        "title": "aiStatusCheck",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/adopt_ai_cockpit.contract.json --summary .ai/work-items/active/adopt_ai_cockpit.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiStatusCheck",
+            "digest": "8bddf29e0432c9768bbb774fae49c08a2a00bd97435c81c5a0addd0d85988715"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiStatusCheck",
+            "digest": "8bddf29e0432c9768bbb774fae49c08a2a00bd97435c81c5a0addd0d85988715"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiStatusConsistency",
+        "title": "aiStatusConsistency",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiStatusConsistency",
+            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiStatusConsistency",
+            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiAgentRisk",
+        "title": "aiAgentRisk",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/adopt_ai_cockpit.contract.json --summary .ai/work-items/active/adopt_ai_cockpit.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiAgentRisk",
+            "digest": "27ac06330d240e8a8aef3d441de898e863b22c9bd271a1deb5770b61b77d1f8c"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiAgentRisk",
+            "digest": "27ac06330d240e8a8aef3d441de898e863b22c9bd271a1deb5770b61b77d1f8c"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "aiSummary",
+        "title": "aiSummary",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/adopt_ai_cockpit.summary.json --contract .ai/work-items/active/adopt_ai_cockpit.contract.json ai summary check passed: .ai/work-items/active/adopt_ai_cockpit.summary.json",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiSummary",
+            "digest": "acaf32021e3bf78417e67d8f69d84ab3f4085e412a6ee744e29058fad03c0721"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+            "subject": "aiSummary",
+            "digest": "acaf32021e3bf78417e67d8f69d84ab3f4085e412a6ee744e29058fad03c0721"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "retained": [
+      {
+        "claim": "Retained limitation",
+        "title": "Retained limitation",
+        "detail": "Project-specific quality commands are not configured by adoption.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "knownGaps"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "knownGaps"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "risks": [
+      {
+        "claim": "project_quality",
+        "severity": "medium",
+        "title": "project_quality",
+        "detail": "Configure and require project quality checks after adoption.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "redReasons": [],
+    "questions": {
+      "problemCount": 1,
+      "problemCountEvidenceRefs": [
+        {
+          "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+          "subject": "knownGaps"
+        }
+      ],
+      "blockedProblems": [],
+      "resolvedProblems": [],
+      "resolutionApproach": [],
+      "avoidedRisks": [],
+      "remainingRisks": [
+        {
+          "claim": "Configure and require project quality checks after adoption.",
+          "evidenceRefs": [
+            {
+              "source": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+              "subject": "residualRisks"
+            }
+          ],
+          "inference": false
+        }
+      ],
+      "agentUnknowns": [],
+      "humanConfirmations": [],
+      "recurrenceLikelihood": {
+        "claim": "unknown: no direct recurrence probability evidence was recorded.",
+        "evidenceRefs": [],
+        "inference": true
+      },
+      "nextTime": {
+        "claim": "Bind conversation locale and preserve evidence details before the next Work Item starts.",
+        "evidenceRefs": [],
+        "inference": true
+      }
+    }
+  },
+  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+}

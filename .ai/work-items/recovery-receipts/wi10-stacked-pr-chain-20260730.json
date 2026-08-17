@@ -1,0 +1,37 @@
+{
+  "receiptVersion": 1,
+  "prBaseCommit": "2616ef8c6f5b3a18b270a0d641bf2de6568ea415",
+  "humanAuthorization": {
+    "type": "human",
+    "reference": "conversation:2026-07-30 user authorized correction of the stacked PR process before release"
+  },
+  "archives": [
+    {
+      "workItemId": "wi10-installation-information-architecture-20260730",
+      "contractPath": ".ai/work-items/archive/2026/wi10-installation-information-architecture-20260730.contract.json",
+      "summaryPath": ".ai/work-items/archive/2026/wi10-installation-information-architecture-20260730.summary.json",
+      "baseCommit": "2616ef8c6f5b3a18b270a0d641bf2de6568ea415",
+      "archiveSequence": 674,
+      "contractDigest": "3f132ed6caa36017cc16993f6a434c4a16dcf243538829f9dacdd61aabfb9483",
+      "summaryDigest": "a08c55c96bcc7c63d0463e5a851027321b65a476351ac184a8fc75362389dbc8"
+    },
+    {
+      "workItemId": "stabilize-quality-coverage-and-pr-body-20260730",
+      "contractPath": ".ai/work-items/archive/2026/stabilize-quality-coverage-and-pr-body-20260730.contract.json",
+      "summaryPath": ".ai/work-items/archive/2026/stabilize-quality-coverage-and-pr-body-20260730.summary.json",
+      "baseCommit": "0aba6ff27a9a789e9fa5b7c91a9f784793cafacb",
+      "archiveSequence": 675,
+      "contractDigest": "1948a9ec57e2fe9c6fef708b03417e790db77a791c234031e46bf6557fa3210d",
+      "summaryDigest": "5b2cc63ab1c263944ccd65d585939e86cec25b7da7f5a86fa4dd5047ae3791c8"
+    },
+    {
+      "workItemId": "stacked-pr-closure-recovery-corrective-20260730",
+      "contractPath": ".ai/work-items/archive/2026/stacked-pr-closure-recovery-corrective-20260730.contract.json",
+      "summaryPath": ".ai/work-items/archive/2026/stacked-pr-closure-recovery-corrective-20260730.summary.json",
+      "baseCommit": "a878a1eadcd39aecf9a601654e32dad89ee366a6",
+      "archiveSequence": 676,
+      "contractDigest": "ee3ca34628bb66e617026c1f275ea79cfab7f21044bd8d0af7cf3aa102e83437",
+      "summaryDigest": "3f0e95df716fcdf2298e27fb2e9eca4538370016b0df4325840458cd6996a07f"
+    }
+  ]
+}

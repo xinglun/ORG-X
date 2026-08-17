@@ -10,3 +10,5 @@ test:
 	cargo test --all
 
 check: fmt-check clippy test
+
+include Makefile.ai

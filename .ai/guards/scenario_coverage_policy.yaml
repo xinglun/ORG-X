@@ -1,0 +1,16 @@
+# Scenario Coverage policy.
+# Keep the mechanism generic; scenario content stays in Work Items.
+
+version: 1
+
+reportOnly: false
+
+hardRiskTypes:
+  - release
+  - release_distribution
+  - installer
+  - auth
+  - ci
+  - migration
+  - security
+  - api_change

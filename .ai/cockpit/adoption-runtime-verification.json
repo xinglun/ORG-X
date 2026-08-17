@@ -1,0 +1,50 @@
+{
+  "verificationVersion": 1,
+  "workItemId": "adopt_ai_cockpit",
+  "contractDigest": "3b19dfde83aa58ae9c23423fe50bf88a4a395b0b7be69742d038b148f47c4eea",
+  "summaryDigest": "e68cec9744693d7d6a69d8fb27ba1b8e6b66bc269f078c1f915917accb2e8596",
+  "receiptBinding": {
+    "path": ".ai/work-items/starts/adopt_ai_cockpit.json",
+    "baseCommit": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+    "initialScopeDigest": "25e91c34a8fec85539f8c2936fd4d07a2e2a576b7543eee6c8c8f54ad661fdeb",
+    "contractSkeletonDigest": "3bcc28a67c7815e897493e69dc5a94a1157cf823be4f514e5f324aa12b1f4bcf"
+  },
+  "sourceReleaseTag": "v0.5.63",
+  "sourceRepository": "local source",
+  "verifiedAt": "2026-08-17T01:37:41.166217+00:00",
+  "checks": [
+    {
+      "check": "aiWorkItem",
+      "result": "not_run",
+      "reason": "Adopter project quality is owned by configure_ai_cockpit."
+    },
+    {
+      "check": "aiScope",
+      "result": "not_run",
+      "reason": "Adopter project quality is owned by configure_ai_cockpit."
+    },
+    {
+      "check": "aiAgentRisk",
+      "result": "not_run",
+      "reason": "Adopter project quality is owned by configure_ai_cockpit."
+    },
+    {
+      "check": "aiSummary",
+      "result": "not_run",
+      "reason": "Adopter project quality is owned by configure_ai_cockpit."
+    },
+    {
+      "check": "aiStatus",
+      "result": "not_run",
+      "reason": "Adopter project quality is owned by configure_ai_cockpit."
+    },
+    {
+      "check": "aiStatusCheck",
+      "result": "not_run",
+      "reason": "Adopter project quality is owned by configure_ai_cockpit."
+    }
+  ],
+  "projectQualityState": "not_configured",
+  "readiness": "not_ready",
+  "enterpriseAssurance": "not_claimed"
+}

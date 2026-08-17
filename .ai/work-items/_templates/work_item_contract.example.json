@@ -1,0 +1,172 @@
+{
+  "contractVersion": 2,
+  "workItemId": "example-task",
+  "mode": "code",
+  "title": "Example task",
+  "baseCommit": "replace-with-git-head-at-task-start",
+  "baselineDirtyPaths": [],
+  "intent": {
+    "problem": null,
+    "constraints": [],
+    "rationale": null
+  },
+  "scope": [
+    "src/example_module.ext",
+    "tests/example_module_test.ext"
+  ],
+  "outOfScope": [
+    "config/secrets.example"
+  ],
+  "sources": [
+    {
+      "path": "docs/specs/example.md",
+      "reason": "Defines the expected behavior for this task."
+    }
+  ],
+  "problemStatement": "Describe the problem this task solves, or state that no product context was provided for a mechanical change.",
+  "scenarioCoverage": [
+    {
+      "scenario": "example verified scenario",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "make example-check"
+      ]
+    },
+    {
+      "scenario": "example unverified scenario",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "reason": "Awaiting an external system run."
+    },
+    {
+      "scenario": "example not applicable scenario",
+      "required": false,
+      "status": "not_applicable",
+      "evidence": [],
+      "reason": "This Work Item does not touch the legacy path."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "scope",
+      "verification"
+    ],
+    "reason": "State the implementation and review risks before coding."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Replace with the deterministic routing reason for this Work Item."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "Scope, sources, acceptance, and verification are explicit."
+  },
+  "preReviewWarnings": [
+    "Record any area that should receive focused human review."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record checkpoints so scope, acceptance, unknowns, and verification stay visible during long-running work."
+  },
+  "acceptance": [
+    "The expected behavior is implemented and covered by tests or documented verification.",
+    "Runtime entrypoints, user-visible output, persistence, generated artifacts, localization, and Makefile entrypoints are marked as changed, verified, or not applicable.",
+    "problemStatement, acceptance, riskAssessment, agentCapability, and executionDecision explain why the task is ready to implement."
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only after explicit human approval for restricted paths."
+  },
+  "rollbackNote": "Revert the diff for this task and restore related tests and docs."
+}

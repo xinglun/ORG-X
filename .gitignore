@@ -21,3 +21,13 @@ target
 #.idea/
 
 /.worktrees/
+
+# AI Cockpit local state
+# Active Contract and Summary evidence is committed with the Work Item branch.
+.ai/work-items/active/*.review.json
+.ai/cockpit/upgrade-backups/
+.ai/project_profile.proposed.yaml
+target/ai_*.json
+target/ai_*.jsonl
+target/changed-critical-coverage.json
+target/quality/governance-profile.json

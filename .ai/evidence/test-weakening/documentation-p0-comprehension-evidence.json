@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "decision": "retire_cancelled_requirement",
+  "baseRef": "3305e2bab4b37a4f87a721fd48398fb17ada1eac",
+  "retiredPaths": [
+    "tests/test_documentation_comprehension_results.py"
+  ],
+  "allowedSignals": [
+    "test_case_removed",
+    "negative_test_removed"
+  ],
+  "humanAuthorization": {
+    "approvedBy": "user",
+    "reference": "conversation:2026-08-15-comprehension-feedback-consent",
+    "digest": "sha256:consented-tri-language-reader-evidence-supersedes-pending-only-result"
+  }
+}

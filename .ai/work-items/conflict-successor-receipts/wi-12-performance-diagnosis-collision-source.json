@@ -1,0 +1,44 @@
+{
+  "receiptVersion": 1,
+  "kind": "synchronization_conflict_successor",
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/861",
+  "authority": "User approval recorded in current execution thread",
+  "reason": "Original WI-12 archived sequence 920 collides with current-main WI-13 ownership; preserve predecessor evidence byte-for-byte and redeliver the same bounded performance diagnosis from current origin/main.",
+  "targetBaseCommit": "971d40338ddafc2b53a184266245577f46e44a45",
+  "source": {
+    "workItemId": "wi-12-performance-diagnosis-collision-source",
+    "branch": "codex/wi-12-performance-diagnosis-collision-source",
+    "baseCommit": "e187b6254e0f8db289cd57b4207a8e9d53c44fc1",
+    "checkpointHead": "c5312e8083686628d8423bbc741e6449c7e56db8",
+    "startReceipt": {
+      "path": ".ai/work-items/starts/wi-12-performance-diagnosis-collision-source.json",
+      "sha256": "25f9992431aa009c5d5e38fc6acb35ac082b7f79e6b92db794822f508fa36d4e"
+    },
+    "contract": {
+      "path": ".ai/work-items/active/wi-12-performance-diagnosis-collision-source.contract.json",
+      "sha256": "51efccb359d3a3c2d50cc31d65947bf940ecd9635a16fef27de5079016841960"
+    },
+    "summary": {
+      "path": ".ai/work-items/active/wi-12-performance-diagnosis-collision-source.summary.json",
+      "sha256": "fa4b4dd5cacf7926554030b045aa16cc98bb89e1d65a8da55a693d3832cf3aca"
+    },
+    "outcome": {
+      "path": ".ai/work-items/active/wi-12-performance-diagnosis-collision-source.outcome.json",
+      "sha256": "74f814f76f4b74272a2dfd237fd1d712ad6cee7d31e0d44d17dd4fcb20246301"
+    }
+  },
+  "successor": {
+    "workItemId": "wi-12-performance-diagnosis-successor",
+    "branch": "codex/wi-12-performance-diagnosis-successor",
+    "baseCommit": "971d40338ddafc2b53a184266245577f46e44a45",
+    "startReceipt": {
+      "path": ".ai/work-items/starts/wi-12-performance-diagnosis-successor.json",
+      "sha256": "785e6ebc41edc8b62fe8a6681d7fa44c41b77b0f9cf00d5b58e627e1083f6c61"
+    },
+    "contract": {
+      "path": ".ai/work-items/active/wi-12-performance-diagnosis-successor.contract.json",
+      "sha256": "b7274c553c62c4d47e4d49ec979c3ecb8430b6e974d0e1aa1edfffb2c9a6a81e"
+    }
+  },
+  "recordedAt": "2026-08-16T08:35:44.995161+00:00"
+}

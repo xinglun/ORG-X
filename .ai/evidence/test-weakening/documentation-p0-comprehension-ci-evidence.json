@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "decision": "retire_cancelled_requirement",
+  "baseRef": "a3cf1deda0d9577817b2ffeb8078068f77f48340",
+  "retiredPaths": [
+    "tests/test_documentation_comprehension_results.py"
+  ],
+  "allowedSignals": [
+    "test_case_removed",
+    "negative_test_removed"
+  ],
+  "humanAuthorization": {
+    "approvedBy": "Ray",
+    "reference": "conversation:2026-08-15-comprehension-ci-correction-approval",
+    "digest": "sha256:user-approved-ci-base-bound-requirement-evidence"
+  }
+}

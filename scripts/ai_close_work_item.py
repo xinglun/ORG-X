@@ -95,13 +95,19 @@ def _release_projection_lease_if_required(task: str, branch: str, contract_path:
 
 
 def _recorded_start_branch(task: str) -> str | None:
-    """Return a bounded legacy branch identity recorded at Work Item start."""
+    """Return the bounded branch identity recorded at Work Item start."""
     receipt = PROJECT_ROOT / ".ai" / "work-items" / "starts" / f"{task}.json"
     if not receipt.is_file():
         return None
     data = load_json(receipt)
     branch = data.get("baseBranch") if isinstance(data, dict) else None
-    if not isinstance(branch, str) or not branch.startswith("codex/"):
+    if not isinstance(branch, str) or not branch:
+        return None
+    # The installer intentionally uses a stable adoption branch name rather
+    # than the canonical codex/<task> name used by ordinary Work Items.
+    if task == "adopt_ai_cockpit":
+        return branch
+    if not branch.startswith("codex/"):
         return None
     return branch
 

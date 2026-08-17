@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-004",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "f70cea1704741a94351c44a222d644bd99eda8e18ed84434d435a443af614c91"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-004",
+    "contractDigest": "8a09b3bf0b5dd992dce35ea4b93a53d3b37f6178c293f4e94def9eb79ab43cef",
+    "summaryDigest": "65ad2506b2aca7577d33581eeb7f4c570103c5b236e39baba03c064812dfb096",
+    "verificationDigest": "97ed0fa56ef4271a7f788e945fdd86cf65bfba6076a23d3b86ba1dee8dbeecbf",
+    "baseCommit": "2ebe316f36dd3863257065085e789556da511719",
+    "headCommit": "2ebe316f36dd3863257065085e789556da511719",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "bce028921581b9ff523f8628e0a1956c37168a64323f5f1dda898a03f54af69b",
+      "binding": {
+        "baseCommit": "2ebe316f36dd3863257065085e789556da511719",
+        "candidateHead": "2ebe316f36dd3863257065085e789556da511719",
+        "candidateTreeDigest": "f2988126f6b628e72b8898b86126e359495ef9dd91e36d2d8f0bbc7b2167d819",
+        "candidateDiffDigest": "d197c97f9e1ec927c328a076066432aed5efe3f1870210f443b5aef14c0067f1"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-004 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-004 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-004",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-004.contract.json",
       ".ai/work-items/archive/2026/wi-004.summary.json",
@@ -24,77 +47,116 @@
       "tests/evidence_domain.rs",
       "docs/superpowers/specs/2026-08-17-wi-004-evidence-domain-design.md",
       "docs/superpowers/plans/2026-08-17-wi-004-evidence-domain.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "ContentHash is preserved as supplied; hash computation and rechecking are outside WI-004.",
+      "External extraction and persistence are represented by later application and infrastructure boundaries, not this Domain WI.",
+      "ObservationTime and EffectiveDate remain validated opaque strings; temporal parsing is deferred to a downstream contract."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "ObservationTime and EffectiveDate remain validated opaque strings; temporal parsing is deferred to a downstream contract.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "ContentHash is preserved as supplied; hash computation and rechecking are outside WI-004.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "External extraction and persistence are represented by later application and infrastructure boundaries, not this Domain WI.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "ObservationTime and EffectiveDate remain validated opaque strings; temporal parsing is deferred to a downstream contract.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "ContentHash is preserved as supplied; hash computation and rechecking are outside WI-004.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "External extraction and persistence are represented by later application and infrastructure boundaries, not this Domain WI.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "provenance",
+        "severity": "medium",
+        "title": "provenance",
+        "detail": "Dates and content hashes are retained but not parsed or recomputed here; downstream persistence and extraction boundaries must preserve their source semantics.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-004.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-004.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "对应中如果发现问题，尽量在当前的WI中解决，不要轻易开新的WI，防止扩散。"
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-004.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-004.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 3,
-    "hardStops": 0,
-    "warnings": 3,
-    "resolved": 0,
-    "unresolved": 3
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [
-    "对应中如果发现问题，尽量在当前的WI中解决，不要轻易开新的WI，防止扩散。"
-  ],
-  "limitations": [
-    {
-      "sourceWarning": "ObservationTime and EffectiveDate remain validated opaque strings; temporal parsing is deferred to a downstream contract.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "ContentHash is preserved as supplied; hash computation and rechecking are outside WI-004.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "External extraction and persistence are represented by later application and infrastructure boundaries, not this Domain WI.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Dates and content hashes are retained but not parsed or recomputed here; downstream persistence and extraction boundaries must preserve their source semantics.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-004.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -777,6 +839,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

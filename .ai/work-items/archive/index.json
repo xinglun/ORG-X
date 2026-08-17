@@ -73,6 +73,18 @@
       "summarySha256": "32aae2c058cd6ff86045bbdf2bf577948adda3df1dc23f4b2ec8ee0c9441e847",
       "manifestPath": ".ai/work-items/archive/2026/wi-003.archive-manifest.json",
       "manifestSha256": "6b9728da14e3de50f339939ca23d429c008296473a7af162835cb6b6a497fa4c"
+    },
+    {
+      "workItemId": "wi-004",
+      "archiveSequence": 7,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-004.contract.json",
+      "contractSha256": "8a09b3bf0b5dd992dce35ea4b93a53d3b37f6178c293f4e94def9eb79ab43cef",
+      "archivedAt": "2026-08-17T12:49:35.519665+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-004.summary.json",
+      "summarySha256": "9abc0d78f2b1330f58ec99592bd27d1bfd74c0153f55cfaa5f3d14814f8285a2",
+      "manifestPath": ".ai/work-items/archive/2026/wi-004.archive-manifest.json",
+      "manifestSha256": "1200683bc7f810affc132ac598704db08a785b8c0ebd8a6cd0fa3d19aa89bc3b"
     }
   ]
 }

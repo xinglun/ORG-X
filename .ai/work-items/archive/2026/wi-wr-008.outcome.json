@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-008",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "55fcd9bdffd435e05a264b9063aa468de11ea30bd05cd3a46661624e414f0160"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-008",
+    "contractDigest": "e8602b3f91cbfc3b858a3ed20a1aa87f8da6979227bf96b60a0d5581b701504f",
+    "summaryDigest": "cfe200ab554e92c6ba1200b85da763bd32e82a004fbf9dc02e6ec7f8b65ea2a0",
+    "verificationDigest": "962c82b7d7eb91c4e7f599eb0269bd5984f43c4a58b4ac419610ba54c87b11b0",
+    "baseCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+    "headCommit": "89e633a2854cc620511ca4b9fd88346f13c609b0",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "83b2234ed8b8482aa608888cc26a1ca65cf6d71b8e30f91bb1833bb25571834f",
+      "binding": {
+        "baseCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+        "candidateHead": "89e633a2854cc620511ca4b9fd88346f13c609b0",
+        "candidateTreeDigest": "8d2cc74367798626e190a2f3dc0850767ae9798c953b79b1603ba79243a10a47",
+        "candidateDiffDigest": "8d4a68c6d725812a5f796a3462d018f6d5b35d2a721517351a7b82784cb119f4"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-008 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-008 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-wr-008",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-008.contract.json",
       ".ai/work-items/archive/2026/wi-wr-008.summary.json",
@@ -32,72 +55,115 @@
       ".ai/work-items/archive/2026/wi-wr-008.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Markdown escaping, downstream publication, persistence, scheduling, retries, and transport are intentionally outside this renderer Work Item.",
+      "Semantic consistency across upstream read models remains the responsibility of their producing boundaries."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Markdown escaping, downstream publication, persistence, scheduling, retries, and transport are intentionally outside this renderer Work Item.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "Semantic consistency across upstream read models remains the responsibility of their producing boundaries.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Markdown escaping, downstream publication, persistence, scheduling, retries, and transport are intentionally outside this renderer Work Item.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "Semantic consistency across upstream read models remains the responsibility of their producing boundaries.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "markdown-boundary",
+        "severity": "low",
+        "title": "markdown-boundary",
+        "detail": "The renderer preserves supplied strings verbatim within Markdown text; Markdown escaping or presentation policy for future producers remains outside this WI.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-008.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-008.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "upstream-facts",
+        "severity": "low",
+        "title": "upstream-facts",
+        "detail": "The renderer does not validate semantic consistency among upstream read models beyond the explicit nonblank requirements of new ordered records, by design.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-008.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-008.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-008.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-008.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 0,
-    "warnings": 2,
-    "resolved": 0,
-    "unresolved": 2
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Markdown escaping, downstream publication, persistence, scheduling, retries, and transport are intentionally outside this renderer Work Item.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "Semantic consistency across upstream read models remains the responsibility of their producing boundaries.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "The renderer preserves supplied strings verbatim within Markdown text; Markdown escaping or presentation policy for future producers remains outside this WI.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-008.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "The renderer does not validate semantic consistency among upstream read models beyond the explicit nonblank requirements of new ordered records, by design.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-008.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -954,6 +1020,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

@@ -17,22 +17,16 @@ pub enum RuntimeError {
     /// A local configuration file could not be read.
     ConfigurationIo { path: String },
     /// An HTTP request failed before receiving a usable response.
-    HttpRequest { url: String },
+    HttpRequest,
     /// An HTTP response body could not be read.
-    HttpResponse { url: String },
+    HttpResponse,
     /// A fixture transport has no response for the requested URL.
-    FixtureMissing { url: String },
+    FixtureMissing,
     /// A shared fixture transport could not be accessed.
     FixtureState,
 }
 
 impl RuntimeError {
-    pub(crate) fn sanitized_endpoint(_url: &str) -> String {
-        // A generic label is safer than attempting to preserve a path that may
-        // itself contain a provider token (for example, Telegram bot paths).
-        "HTTP endpoint".to_owned()
-    }
-
     pub(crate) fn invalid_configuration(reason: impl Into<String>) -> Self {
         Self::InvalidConfiguration {
             reason: reason.into(),
@@ -57,13 +51,9 @@ impl fmt::Display for RuntimeError {
             Self::ConfigurationIo { path } => {
                 write!(formatter, "could not read runtime configuration at {path}")
             }
-            Self::HttpRequest { url } => write!(formatter, "HTTP request failed for {url}"),
-            Self::HttpResponse { url } => {
-                write!(formatter, "HTTP response body could not be read for {url}")
-            }
-            Self::FixtureMissing { url } => {
-                write!(formatter, "fixture response is missing for {url}")
-            }
+            Self::HttpRequest => formatter.write_str("HTTP request failed"),
+            Self::HttpResponse => formatter.write_str("HTTP response body could not be read"),
+            Self::FixtureMissing => formatter.write_str("fixture response is missing"),
             Self::FixtureState => formatter.write_str("fixture transport state is unavailable"),
         }
     }

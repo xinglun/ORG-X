@@ -133,9 +133,7 @@ impl HttpClient for FixtureHttpClient {
             .responses
             .get(url)
             .cloned()
-            .ok_or_else(|| RuntimeError::FixtureMissing {
-                url: RuntimeError::sanitized_endpoint(url),
-            })
+            .ok_or(RuntimeError::FixtureMissing)
     }
 }
 
@@ -247,9 +245,7 @@ impl HttpClient for UreqHttpClient {
             // them after receiving the same HttpResponse as fixture clients.
             Err(ureq::Error::Status(_, response)) => response,
             Err(ureq::Error::Transport(_)) => {
-                return Err(RuntimeError::HttpRequest {
-                    url: RuntimeError::sanitized_endpoint(url),
-                });
+                return Err(RuntimeError::HttpRequest);
             }
         };
         let status = response.status();
@@ -260,9 +256,7 @@ impl HttpClient for UreqHttpClient {
             .collect();
         let body = response
             .into_string()
-            .map_err(|_| RuntimeError::HttpResponse {
-                url: RuntimeError::sanitized_endpoint(url),
-            })?;
+            .map_err(|_| RuntimeError::HttpResponse)?;
 
         Ok(HttpResponse {
             status,

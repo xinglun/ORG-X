@@ -1,7 +1,7 @@
 //! Provider-neutral normalized facts and report input models.
 
 use chrono::{DateTime, NaiveDate, Utc};
-use serde::{Deserialize, Serialize};
+use serde::{de::Error as _, Deserialize, Deserializer, Serialize};
 
 use super::error::RuntimeError;
 
@@ -147,7 +147,7 @@ impl Provenance {
 }
 
 /// One provider-neutral fact ready for deterministic report assembly.
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 pub struct NormalizedFact {
     company_id: String,
     kind: String,
@@ -155,6 +155,34 @@ pub struct NormalizedFact {
     status: FactStatus,
     confidence: Confidence,
     provenance: Provenance,
+}
+
+impl<'de> Deserialize<'de> for NormalizedFact {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        #[derive(Deserialize)]
+        struct NormalizedFactWire {
+            company_id: String,
+            kind: String,
+            value: Option<String>,
+            status: FactStatus,
+            confidence: Confidence,
+            provenance: Provenance,
+        }
+
+        let wire = NormalizedFactWire::deserialize(deserializer)?;
+        Self::build(
+            wire.company_id,
+            wire.kind,
+            wire.value,
+            wire.status,
+            wire.confidence,
+            wire.provenance,
+        )
+        .map_err(|error| D::Error::custom(error.to_string()))
+    }
 }
 
 impl NormalizedFact {

@@ -138,6 +138,54 @@ fn non_confirmed_fact_statuses_cannot_retain_concrete_values() {
 }
 
 #[test]
+fn deserializing_non_confirmed_fact_clears_concrete_value() {
+    let fact: NormalizedFact = serde_json::from_str(
+        r#"
+        {
+          "company_id": "acme",
+          "kind": "revenue",
+          "value": "must-not-survive-deserialization",
+          "status": "UNKNOWN",
+          "confidence": "UNKNOWN",
+          "provenance": {
+            "source_uri": "https://example.test/filing/2026",
+            "source_field_or_passage": "facts.revenue",
+            "retrieved_at": "2026-08-17T00:00:00Z",
+            "effective_date": "2026-06-30"
+          }
+        }
+        "#,
+    )
+    .expect("valid normalized fact JSON should deserialize");
+
+    assert_eq!(fact.status(), &FactStatus::Unknown);
+    assert_eq!(fact.value(), None);
+}
+
+#[test]
+fn deserializing_malformed_normalized_fact_fails_cleanly() {
+    let result = serde_json::from_str::<NormalizedFact>(
+        r#"
+        {
+          "company_id": "",
+          "kind": "revenue",
+          "value": "123",
+          "status": "CONFIRMED",
+          "confidence": "HIGH",
+          "provenance": {
+            "source_uri": "https://example.test/filing/2026",
+            "source_field_or_passage": "facts.revenue",
+            "retrieved_at": "2026-08-17T00:00:00Z",
+            "effective_date": null
+          }
+        }
+        "#,
+    );
+
+    assert!(result.is_err(), "blank fact identity must be rejected");
+}
+
+#[test]
 fn fact_status_labels_are_provider_neutral_and_confirmed_is_human_facing() {
     assert_eq!(FactStatus::Known.as_str(), "CONFIRMED");
     assert_eq!(FactStatus::Unknown.as_str(), "UNKNOWN");
@@ -181,16 +229,32 @@ fn http_errors_do_not_retain_token_or_chat_id_values() {
         .get(&url, &[])
         .expect_err("missing fixture should return a typed error");
 
-    assert_eq!(
-        error,
-        RuntimeError::FixtureMissing {
-            url: "HTTP endpoint".to_owned()
-        }
-    );
+    assert_eq!(error, RuntimeError::FixtureMissing);
     assert!(!error.to_string().contains(token));
     assert!(!error.to_string().contains(chat_id));
     assert!(!format!("{error:?}").contains(token));
     assert!(!format!("{error:?}").contains(chat_id));
+}
+
+#[test]
+fn public_http_errors_are_unit_variants_without_secret_bearing_diagnostics() {
+    let token = "super-secret-token";
+    let chat_id = "super-secret-chat";
+    let errors = [
+        RuntimeError::HttpRequest,
+        RuntimeError::HttpResponse,
+        RuntimeError::FixtureMissing,
+        RuntimeError::FixtureState,
+    ];
+
+    for error in errors {
+        let display = error.to_string();
+        let debug = format!("{error:?}");
+        assert!(!display.contains(token));
+        assert!(!display.contains(chat_id));
+        assert!(!debug.contains(token));
+        assert!(!debug.contains(chat_id));
+    }
 }
 
 #[test]

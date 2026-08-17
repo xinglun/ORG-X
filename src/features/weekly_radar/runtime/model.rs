@@ -9,13 +9,14 @@ use super::error::RuntimeError;
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum FactStatus {
-    /// A deterministic value was found and retained.
+    /// A deterministic value was found and retained as a confirmed fact.
     Known,
     /// The source was available but the requested fact was ambiguous or absent.
     Unknown,
     /// The configured source was not available for this run.
     Unavailable,
-    /// The observation is retained for review but is not authoritative.
+    /// The observation is retained for review but is not authoritative. The
+    /// status is provider-neutral; source/provider details remain in provenance.
     Unconfirmed,
 }
 
@@ -23,7 +24,7 @@ impl FactStatus {
     /// Returns the stable report/status label.
     pub const fn as_str(self) -> &'static str {
         match self {
-            Self::Known => "KNOWN",
+            Self::Known => "CONFIRMED",
             Self::Unknown => "UNKNOWN",
             Self::Unavailable => "UNAVAILABLE",
             Self::Unconfirmed => "UNCONFIRMED",
@@ -196,6 +197,10 @@ impl NormalizedFact {
         confidence: Confidence,
         provenance: Provenance,
     ) -> Result<Self, RuntimeError> {
+        let value = match status {
+            FactStatus::Known => value,
+            FactStatus::Unknown | FactStatus::Unavailable | FactStatus::Unconfirmed => None,
+        };
         let fact = Self {
             company_id: company_id.into(),
             kind: kind.into(),

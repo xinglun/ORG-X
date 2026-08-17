@@ -2,6 +2,7 @@
 
 use std::collections::BTreeMap;
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
 
 use super::error::RuntimeError;
 
@@ -133,8 +134,65 @@ impl HttpClient for FixtureHttpClient {
             .get(url)
             .cloned()
             .ok_or_else(|| RuntimeError::FixtureMissing {
-                url: url.to_owned(),
+                url: RuntimeError::sanitized_endpoint(url),
             })
+    }
+}
+
+/// Finite timeout budget applied to every production HTTP request.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct HttpTimeouts {
+    connect: Duration,
+    read: Duration,
+    write: Duration,
+    overall: Duration,
+}
+
+impl HttpTimeouts {
+    /// Creates a timeout budget from finite phase and overall durations.
+    pub const fn new(
+        connect: Duration,
+        read: Duration,
+        write: Duration,
+        overall: Duration,
+    ) -> Self {
+        Self {
+            connect,
+            read,
+            write,
+            overall,
+        }
+    }
+
+    /// Returns the connection timeout.
+    pub const fn connect(self) -> Duration {
+        self.connect
+    }
+
+    /// Returns the response-read timeout.
+    pub const fn read(self) -> Duration {
+        self.read
+    }
+
+    /// Returns the request-write timeout.
+    pub const fn write(self) -> Duration {
+        self.write
+    }
+
+    /// Returns the overall request deadline.
+    pub const fn overall(self) -> Duration {
+        self.overall
+    }
+}
+
+impl Default for HttpTimeouts {
+    fn default() -> Self {
+        Self::new(
+            Duration::from_secs(5),
+            Duration::from_secs(30),
+            Duration::from_secs(30),
+            Duration::from_secs(60),
+        )
     }
 }
 
@@ -142,14 +200,31 @@ impl HttpClient for FixtureHttpClient {
 #[derive(Clone, Debug)]
 pub struct UreqHttpClient {
     agent: ureq::Agent,
+    timeouts: HttpTimeouts,
 }
 
 impl UreqHttpClient {
     /// Creates a production HTTP client with a reusable connection agent.
     pub fn new() -> Self {
+        Self::with_timeouts(HttpTimeouts::default())
+    }
+
+    /// Creates a production client with an explicit finite timeout budget.
+    pub fn with_timeouts(timeouts: HttpTimeouts) -> Self {
         Self {
-            agent: ureq::AgentBuilder::new().build(),
+            agent: ureq::AgentBuilder::new()
+                .timeout_connect(timeouts.connect())
+                .timeout_read(timeouts.read())
+                .timeout_write(timeouts.write())
+                .timeout(timeouts.overall())
+                .build(),
+            timeouts,
         }
+    }
+
+    /// Returns the timeout budget configured on this client.
+    pub const fn timeouts(&self) -> HttpTimeouts {
+        self.timeouts
     }
 }
 
@@ -166,15 +241,17 @@ impl HttpClient for UreqHttpClient {
             request = request.set(name, value);
         }
 
-        let response = request.call().map_err(|error| match error {
-            ureq::Error::Status(status, _) => RuntimeError::HttpStatus {
-                url: url.to_owned(),
-                status,
-            },
-            ureq::Error::Transport(_) => RuntimeError::HttpRequest {
-                url: url.to_owned(),
-            },
-        })?;
+        let response = match request.call() {
+            Ok(response) => response,
+            // HTTP status codes are data at this boundary. Adapters classify
+            // them after receiving the same HttpResponse as fixture clients.
+            Err(ureq::Error::Status(_, response)) => response,
+            Err(ureq::Error::Transport(_)) => {
+                return Err(RuntimeError::HttpRequest {
+                    url: RuntimeError::sanitized_endpoint(url),
+                });
+            }
+        };
         let status = response.status();
         let headers = response
             .headers_names()
@@ -184,7 +261,7 @@ impl HttpClient for UreqHttpClient {
         let body = response
             .into_string()
             .map_err(|_| RuntimeError::HttpResponse {
-                url: url.to_owned(),
+                url: RuntimeError::sanitized_endpoint(url),
             })?;
 
         Ok(HttpResponse {

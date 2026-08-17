@@ -18,8 +18,6 @@ pub enum RuntimeError {
     ConfigurationIo { path: String },
     /// An HTTP request failed before receiving a usable response.
     HttpRequest { url: String },
-    /// An HTTP endpoint returned a non-success status.
-    HttpStatus { url: String, status: u16 },
     /// An HTTP response body could not be read.
     HttpResponse { url: String },
     /// A fixture transport has no response for the requested URL.
@@ -29,6 +27,12 @@ pub enum RuntimeError {
 }
 
 impl RuntimeError {
+    pub(crate) fn sanitized_endpoint(_url: &str) -> String {
+        // A generic label is safer than attempting to preserve a path that may
+        // itself contain a provider token (for example, Telegram bot paths).
+        "HTTP endpoint".to_owned()
+    }
+
     pub(crate) fn invalid_configuration(reason: impl Into<String>) -> Self {
         Self::InvalidConfiguration {
             reason: reason.into(),
@@ -54,9 +58,6 @@ impl fmt::Display for RuntimeError {
                 write!(formatter, "could not read runtime configuration at {path}")
             }
             Self::HttpRequest { url } => write!(formatter, "HTTP request failed for {url}"),
-            Self::HttpStatus { url, status } => {
-                write!(formatter, "HTTP request for {url} returned status {status}")
-            }
             Self::HttpResponse { url } => {
                 write!(formatter, "HTTP response body could not be read for {url}")
             }

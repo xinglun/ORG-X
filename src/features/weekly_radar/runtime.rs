@@ -11,7 +11,7 @@ pub mod model;
 
 pub use config::{CompanyConfig, CompanySourceRegistry};
 pub use error::RuntimeError;
-pub use http::{FixtureHttpClient, HttpClient, HttpResponse, UreqHttpClient};
+pub use http::{FixtureHttpClient, HttpClient, HttpResponse, HttpTimeouts, UreqHttpClient};
 pub use model::{
     Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput, SourceCoverage,
 };

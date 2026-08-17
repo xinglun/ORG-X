@@ -1,0 +1,208 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-008",
+  "mode": "code",
+  "title": "Transformation Stage Domain",
+  "baseCommit": "e53d406e713965b69420fa6570d55cfc561faca6",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-008.contract.json",
+    ".ai/work-items/active/wi-008.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-008.outcome.json",
+    ".ai/work-items/active/wi-008.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    "src/features/transformation/domain/**",
+    "tests/transformation_domain.rs",
+    "docs/superpowers/specs/2026-08-17-wi-008-transformation-design.md",
+    "docs/superpowers/plans/2026-08-17-wi-008-transformation.md"
+  ],
+  "outOfScope": [
+    "Evidence acquisition, source adapters, persistence, scheduling, ranking, reporting, Telegram delivery, scoring, and stage recommendation",
+    "Automatic stage inference, proof quality calculation, external identity resolution, or runtime enforcement of transition policy",
+    "Cross-feature imports and new Cargo dependencies"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository operating rules and validation requirements."},
+    {"path": ".ai/glossary.md", "reason": "Canonical Work Item and governance terminology."},
+    {"path": "docs/architecture/ARCHITECTURE.md", "reason": "Layer direction and Domain isolation rules."},
+    {"path": "docs/architecture/BOUNDED_CONTEXTS.md", "reason": "Transformation context concepts and boundary."},
+    {"path": "docs/architecture/DEPENDENCY_RULES.md", "reason": "Domain dependency guardrails."},
+    {"path": "docs/domain/TRANSFORMATION_STAGE_MODEL.md", "reason": "Six stages, transition discipline, persistence, and explicit proof categories."},
+    {"path": "docs/domain/EVIDENCE_MODEL.md", "reason": "Evidence polarity, confidence, freshness, and explicit missing requirements."},
+    {"path": "docs/scoring/STAGE_GATE_SPEC.md", "reason": "Stage upgrade boundaries and persistence requirements."},
+    {"path": "docs/scoring/SCORING_SPEC.md", "reason": "Stage is not replaced by a score."},
+    {"path": "docs/product/PRD.md", "reason": "Research pipeline and no-score-before-domain-engine constraint."},
+    {"path": "docs/product/SCOPE.md", "reason": "No-trading, no-capital-action, and no-prediction constraints."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WI-008 deliverables and dependency position."},
+    {"path": "docs/superpowers/plans/2026-08-17-wi-004-evidence-domain.md", "reason": "Predecessor evidence boundary and current-WI execution convention."},
+    {"path": "src/features/transformation/domain/mod.rs", "reason": "Existing Transformation Domain boundary marker."},
+    {"path": "tests/architecture/dependency_rules.rs", "reason": "Executable Domain dependency guard."},
+    {"path": "Cargo.toml", "reason": "Existing dependency and test configuration."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["stage_semantics", "evidence_integrity", "architecture_boundary"],
+    "reason": "Transformation stage is a high-leverage research conclusion. The Domain must retain explicit transitions and proof polarity without automatically inferring or recommending a stage.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "Evidence quality, source acquisition, persistence calculation, ranking, and stage recommendation remain deferred."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Transformation stage code and tests require the standard governed review route."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The explicit user authorization covers execution and Contract recording for all 24 roadmap Work Items."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "src/features/transformation/domain exposes the six Stage variants TOOL, SUBSTITUTION, WORKFLOW, PRODUCTION_SYSTEM, PRODUCTIVITY_BREAKOUT, and REFERENCE_MODEL with stable ordering metadata.",
+    "StageTransition preserves explicit from/to stages, rejects same-stage transitions, allows both upgrades and corrections/downgrades, and retains transition date facts.",
+    "TransformationProofSet preserves supporting, counter, and missing proof collections in insertion order with deterministic duplicate rejection.",
+    "PersistenceFact preserves the supplied persistence window and observation count without calculating persistence or promoting a stage.",
+    "The Domain remains independent of infrastructure, interface, network, database, LLM, external source, and other feature modules.",
+    "Focused unit and integration tests cover six stages, transition boundaries, proof polarity, missing proof, persistence facts, duplicate rejection, and downgrade support.",
+    "The design spec and execution plan record the transformation boundary, no-goals, authorization, current-WI issue rule, and verification commands."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep Transformation Domain independent of external systems and other feature modules.",
+    "Keep Stage distinct from Score; preserve explicit transition direction and evidence proof polarity.",
+    "Represent missing proof explicitly; do not turn absence into support or a stage conclusion.",
+    "Do not add dependencies for this contract.",
+    "Resolve issues within the current Work Item when they remain inside its Contract scope; open a successor only for a distinct or materially expanded boundary.",
+    "Do not introduce trading, price prediction, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "The repository lacks a typed model for six transformation stages, explicit stage transitions, supporting/counter/missing proof, and persistence facts.",
+    "constraints": [
+      "Retain supplied stage, transition, proof, missing-requirement, persistence-window, and observation-count facts. Perform no stage recommendation.",
+      "Preserve transition direction, counter evidence, missing proof, and downgrade support as explicit facts. Perform no automatic inference.",
+      "Transformation Domain stays provider-agnostic. Use existing Rust conventions. No cross-feature imports."
+    ],
+    "rationale": "A pure transformation model gives later Stage Gate, Ranking, and Reporting WIs an auditable state structure while keeping evidence interpretation outside the Domain."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {"type": "human", "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.", "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "authorityEvidence": {"type": "human_authorization", "granted": true, "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.", "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "software_design", "test_automation"], "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]},
+  "requestedOperation": {"type": "repository_governance", "action": "modify", "target": "repository_governance", "environment": "repository", "effect": "enforce", "authorityRequired": false, "authorityReason": "Explicit human authorization is recorded above."},
+  "scenarioCoverage": [
+    {"scenario": "All six stages retain stable identity and ordering metadata.", "required": true, "status": "unverified", "evidence": [], "expected": "Stage values expose the six documented variants with deterministic order values and no score field.", "verificationPlan": "Run focused Stage tests and cargo test --all."},
+    {"scenario": "StageTransition preserves explicit direction, date, upgrades, and downgrades while rejecting same-stage transitions.", "required": true, "status": "unverified", "evidence": [], "expected": "A transition retains from/to/date facts, supports correction transitions, and returns a stable error for same-stage input.", "verificationPlan": "Run focused transition boundary tests."},
+    {"scenario": "TransformationProofSet preserves supporting/counter/missing proof and PersistenceFact without inference.", "required": true, "status": "unverified", "evidence": [], "expected": "Proof polarity, missing requirements, persistence window, and observation count remain explicit facts while architecture checks pass.", "verificationPlan": "Run proof/persistence tests, architecture dependency checks, and make check."}
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 11
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-008.json",
+    "baseCommit": "e53d406e713965b69420fa6570d55cfc561faca6",
+    "initialScopeDigest": "0072f9af36f3f1f1257c3508e1c355eca196cbf8f484e42e56e223a25ed81d76",
+    "contractSkeletonDigest": "6fffa3add1b73a94bb46beb847a53ddb4275322147571a2f6df952a8f8d4069e"
+  }
+}

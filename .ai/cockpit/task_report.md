@@ -4,24 +4,24 @@ Task Result
 Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-007.contract.json [evidence: .ai/work-items/archive/2026/wi-007.contract.json]
-- Changed .ai/work-items/active/wi-007.summary.json [evidence: .ai/work-items/archive/2026/wi-007.summary.json]
-- Changed .ai/work-items/active/wi-007.outcome.json [evidence: .ai/work-items/archive/2026/wi-007.outcome.json]
-- Changed .ai/work-items/active/wi-007.outcome.md [evidence: .ai/work-items/archive/2026/wi-007.outcome.md]
+- Changed .ai/work-items/active/wi-008.contract.json [evidence: .ai/work-items/archive/2026/wi-008.contract.json]
+- Changed .ai/work-items/active/wi-008.summary.json [evidence: .ai/work-items/archive/2026/wi-008.summary.json]
+- Changed .ai/work-items/active/wi-008.outcome.json [evidence: .ai/work-items/archive/2026/wi-008.outcome.json]
+- Changed .ai/work-items/active/wi-008.outcome.md [evidence: .ai/work-items/archive/2026/wi-008.outcome.md]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/starts/wi-007.json [evidence: .ai/work-items/starts/wi-007.json]
-- Changed src/features/productivity/domain/mod.rs [evidence: src/features/productivity/domain/mod.rs]
-- Changed src/features/productivity/domain/mod_test.rs [evidence: src/features/productivity/domain/mod_test.rs]
-- Changed tests/productivity_domain.rs [evidence: tests/productivity_domain.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-007-productivity-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-007-productivity-design.md]
-- Changed docs/superpowers/plans/2026-08-17-wi-007-productivity.md [evidence: docs/superpowers/plans/2026-08-17-wi-007-productivity.md]
+- Changed .ai/work-items/starts/wi-008.json [evidence: .ai/work-items/starts/wi-008.json]
+- Changed src/features/transformation/domain/mod.rs [evidence: src/features/transformation/domain/mod.rs]
+- Changed src/features/transformation/domain/mod_test.rs [evidence: src/features/transformation/domain/mod_test.rs]
+- Changed tests/transformation_domain.rs [evidence: tests/transformation_domain.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-008-transformation-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-008-transformation-design.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-008-transformation.md [evidence: docs/superpowers/plans/2026-08-17-wi-008-transformation.md]
 - Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
-- Changed .ai/work-items/archive/2026/wi-007.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-007.archive-manifest.json]
+- Changed .ai/work-items/archive/2026/wi-008.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-008.archive-manifest.json]
 
 Problems found
-- Total: 3
+- Total: 2
 - Blocking: 0
 - Warning: 2
 
@@ -35,9 +35,8 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- observed issue (inference)
-- Values remain opaque and are not normalized across currencies, periods, or source definitions; a later evidence/composition boundary owns comparability policy. [evidence: residualRisks]
-- The Domain does not calculate divergence, infer causality, update a stage, or make an investment decision by design. [evidence: residualRisks]
+- The Domain permits explicit transitions and retains proof but does not decide whether evidence is sufficient for a stage update. [evidence: residualRisks]
+- Persistence window and observation count are opaque facts; sufficiency calculation belongs to a later gate boundary. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "requestedText": "Add module-local regression tests for the provider-agnostic Semantic Message Splitter interface.",
+  "target": {
+    "type": "file",
+    "name": "wr011_local_splitter_test_boundary",
+    "path": "src/features/weekly_radar/interface/semantic_message_splitter_test.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [],
+    "testReferences": [],
+    "documentationReferences": [],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The module-local tests execute deterministic in-memory Markdown cases and do not load runtime modules, files, network resources, or providers."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The test source has no production or external consumer; it verifies only the local splitter boundary."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The test source adds no telemetry, monitoring, delivery, HTTP, retry, or provider integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-011.contract.json",
+      "The Contract requires module-local splitter tests and excludes provider integration, shared coverage policy, and unrelated architecture-test changes."
+    ]
+  },
+  "approval": null
+}

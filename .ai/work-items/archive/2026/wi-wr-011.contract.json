@@ -1,0 +1,264 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-011",
+  "mode": "code",
+  "title": "Semantic Message Splitter",
+  "baseCommit": "5d256d35335755b408c243f339805c9080afc3e2",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "execute, verify, publish, merge, close, archive all 24 planned WIs.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user authorization is recorded for all 24 Work Items; this local WI stops after archive and local commit without push, PR, merge, or close."
+  },
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "scope": [
+    ".ai/work-items/active/wi-wr-011.contract.json",
+    ".ai/work-items/active/wi-wr-011.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-011.outcome.json",
+    ".ai/work-items/active/wi-wr-011.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-011-semantic-message-splitter.json",
+    ".ai/evidence/reference-impact/wi-wr-011-semantic-message-splitter-test.json",
+    "src/features/weekly_radar/interface/mod.rs",
+    "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+    "src/features/weekly_radar/interface/semantic_message_splitter_test.rs",
+    "tests/weekly_radar_semantic_message_splitter.rs",
+    "tests/semantic_message_splitter_test.rs",
+    "tests/mod_test.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-011-semantic-message-splitter.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-011-semantic-message-splitter.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/interface/telegram_renderer.rs: consume its rendered Markdown shape only; do not modify WR-009 behavior.",
+    "Telegram HTTP/API clients, Publisher adapters, secrets, credentials, runtime configuration, retry, scheduling, persistence, publication receipts, and external providers",
+    "Raw evidence acquisition, Markdown rendering, section generation, Stage detection, Ranking, Distance calculation, Top5 membership, Rising/Dropped derivation, System Health calculation, or No Change inference",
+    "Recomputing, normalizing, sorting, merging, or rewriting any supplied rendered section, Stage, Ranking, Distance, company card, or health fact",
+    "Changes to shared architecture tests, global coverage policy, unrelated Work Items, or unrelated bounded contexts",
+    "Push, PR creation, merge, Work Item close, remote branch deletion, or provider-side publication in this local execution"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository Work Item lifecycle, authorization, scope, Finish, archive, and local-only handoff rules."},
+    {"path": ".ai/glossary.md", "reason": "Canonical governance and architecture terminology."},
+    {"path": ".ai/cockpit/README.md", "reason": "V2 Contract, Preflight, checkpoint, Summary, Finish, and archive workflow."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WR-011 semantic boundary, dependency on WR-009, and no-truncation roadmap requirement."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-wr-009-telegram-renderer.md", "reason": "WR-009 rendered Markdown section order, complete fragment/card retention, and provider-agnostic boundary."},
+    {"path": ".ai/work-items/archive/2026/wi-wr-009.contract.json", "reason": "Archived predecessor Contract and explicit WR-009 non-goals consumed by this splitter."},
+    {"path": ".ai/work-items/archive/2026/wi-wr-009.archive-manifest.json", "reason": "Evidence that the WR-009 predecessor is archived and available as the input boundary."},
+    {"path": "src/features/weekly_radar/interface/telegram_renderer.rs", "reason": "Existing rendered Markdown shape and section headings; splitter consumes output without importing domain facts."},
+    {"path": "src/features/weekly_radar/interface/mod.rs", "reason": "Existing Weekly Radar interface module registration point."},
+    {"path": "Cargo.toml", "reason": "Rust 2021 module and integration-test conventions with no dependency additions."},
+    {"path": "Makefile", "reason": "Project quality command entrypoint used by Finish."}
+  ],
+  "unknowns": [],
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "problemStatement": "WR-009 can render one complete Telegram Markdown summary, but a later publisher needs deterministic semantic messages instead of character slicing. Without a rendered-section splitter, message-size handling could cut Markdown fences or company cards and could accidentally reinterpret upstream Weekly Radar facts.",
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["markdown_integrity", "semantic_boundary", "architecture_isolation"],
+    "reason": "The splitter must parse rendered Markdown without treating headings inside fenced code as sections, preserve complete top-level sections and company-card bodies, and remain independent of domain calculations and Telegram infrastructure.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The input is the explicit rendered Markdown emitted by WR-009. A top-level section is the atomic unit; if one section is larger than caller limits, the splitter returns a typed error instead of attempting unsafe card/body parsing or truncation."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["Medium-risk project code with explicit local tests and no production operation."],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "Scope, acceptance, sources, scenario coverage, verification, and non-goals are explicit; the user authorized execution and governance evidence writes for all 24 planned Work Items."
+  },
+  "preReviewWarnings": [
+    "Review that only top-level rendered sections outside fenced code blocks become split units.",
+    "Review that every output chunk retains complete source sections and that oversized atomic sections fail without partial output.",
+    "Review that the module has no imports or logic for Stage, Ranking, Distance, Publisher, HTTP, Secret, Retry, or Receipt."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Rendered WR-009 sections map to the five semantic boundaries in source order.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/interface/semantic_message_splitter_test.rs", "tests/weekly_radar_semantic_message_splitter.rs"],
+      "expected": "Executive Summary, Important Structural Change plus Stage Transition, Top5 plus Threshold Distance, Rising plus Dropped, and System Health become complete semantic chunks.",
+      "verificationPlan": "Run module-local and public integration tests with one complete rendered fixture and assert boundary labels, order, and exact section content."
+    },
+    {
+      "scenario": "Markdown fences and company-card sections remain atomic.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/interface/semantic_message_splitter_test.rs", "tests/weekly_radar_semantic_message_splitter.rs"],
+      "expected": "Headings and card-like lines inside fenced code remain in their source section; an oversized section returns an atomic-limit error rather than a shortened chunk.",
+      "verificationPlan": "Run exact substring assertions with fenced code and multiline card Markdown, then run a limit below one complete section and assert typed failure."
+    },
+    {
+      "scenario": "Caller limits split only between complete explicit sections.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/interface/semantic_message_splitter_test.rs", "tests/weekly_radar_semantic_message_splitter.rs"],
+      "expected": "Sections in the same semantic boundary are packed while they fit; when they do not, a new chunk starts at the next complete section and no content is lost.",
+      "verificationPlan": "Run limit-packing tests with separate Important Transition and Top5 sections and compare every output section to its original source text."
+    },
+    {
+      "scenario": "Invalid rendered input is rejected without domain or provider behavior.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/interface/semantic_message_splitter.rs", "tests/weekly_radar_semantic_message_splitter.rs", ".ai/evidence/reference-impact/wi-wr-011-semantic-message-splitter.json"],
+      "expected": "Zero limits, unknown top-level headings, empty input, and unclosed code fences return deterministic local errors; source has no forbidden imports or terms indicating external delivery.",
+      "verificationPlan": "Run focused error tests, source-boundary assertions, formatter, Clippy, all tests, architecture checks, and AI Cockpit guards."
+    }
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "A provider-agnostic SemanticMessageSplitter consumes one already-rendered Markdown string and emits typed semantic chunks labeled Executive Summary, Important Transition, Top5, Rising/Dropped, or System Health in source order.",
+    "Only explicit top-level rendered sections are recognized; headings inside fenced Markdown code blocks are retained as content, and unclosed fences or unknown top-level sections return typed errors.",
+    "Chunks are assembled only from complete rendered sections under caller-supplied character and line limits. Markdown, fenced code blocks, nested Markdown, and company-card content are never truncated or split; an oversized atomic section returns a typed error and no partial result.",
+    "The splitter preserves source section text and order without calculating or changing Stage, Ranking, Distance, Top5, Rising, Dropped, System Health, or No Change facts.",
+    "Module-local, same-stem companion, and public integration tests cover all five semantic boundaries, WR-009 section aliases, code-fence protection, card/Markdown atomicity, limit packing, invalid input, and provider isolation without changing shared coverage or architecture tests.",
+    "The WR-011 spec, implementation plan, reference-impact evidence, active Summary, strict AI Cockpit Finish, archive bundle, and local commit record the delivered boundary, verification, user authorization, remaining non-goals, and local-only next action."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Do not edit shared coverage policy or unrelated architecture tests."
+  ],
+  "intent": {
+    "problem": "WR-009 produces complete explicit Markdown, while Telegram delivery may need several semantically meaningful messages. Arbitrary character slicing would damage Markdown and lose company-card context.",
+    "constraints": [
+      "Consume only already-rendered explicit sections; do not re-render, parse domain facts, or recalculate Stage, Ranking, Distance, Top5, Rising, Dropped, System Health, or No Change.",
+      "Use top-level rendered sections outside fenced code blocks as atomic units. Preserve Markdown, code fences, nested content, and company cards; return typed errors for oversized atomic sections instead of truncating.",
+      "Keep the splitter provider-agnostic in the Weekly Radar interface layer. Do not implement network, delivery, retry, receipt, scheduling, persistence, runtime configuration, or external provider integration.",
+      "Complete Contract, spec/plan, TDD, focused/module-local/integration verification, strict AI Finish, archive, and local commit. Do not push, open a PR, merge, close, or delete the remote branch."
+    ],
+    "rationale": "A source-preserving section splitter provides a deterministic handoff for a later Publisher while keeping formatting and domain judgment in their existing Work Items. Section-level atomicity is the smallest safe boundary that guarantees Markdown and company-card integrity."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 25
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-011.json",
+    "baseCommit": "5d256d35335755b408c243f339805c9080afc3e2",
+    "initialScopeDigest": "65f37830dfd314cf432f04489e011609870ce5258f4127be131d96a27fe741ef",
+    "contractSkeletonDigest": "413fdaf8703ed5225825c9c6a503097d64f3ec3471f781ba45ca4689066e4f3b"
+  }
+}

@@ -19,4 +19,7 @@ fn weekly_radar_interface_registers_the_renderer_module() {
     let _ = std::any::TypeId::of::<
         org_x::features::weekly_radar::interface::telegram_renderer::TelegramRenderer,
     >();
+    let _ = std::any::TypeId::of::<
+        org_x::features::weekly_radar::interface::semantic_message_splitter::SemanticMessageSplitter,
+    >();
 }

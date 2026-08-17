@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "target": {
+    "type": "file",
+    "name": "weekly_radar_domain_shared_registration_boundary",
+    "path": "src/features/weekly_radar/domain/mod.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The shared Weekly Radar Domain module is repository-local and this Work Item does not add runtime loading or dynamic references."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "No external consumer is changed; the shared module registration path is intentionally untouched by WI-WR-004."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "No monitoring integration or existing shared module contract is replaced by this standalone output file."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-004.contract.json",
+      "The shared module path is explicitly out of scope; the implementation is loaded only through the exclusive source path and #[path] test."
+    ]
+  },
+  "schemaVersion": 1,
+  "workItemId": "wi-wr-004",
+  "artifact": "Stage Transition Detection Output",
+  "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+  "exclusiveImplementationPaths": [
+    "src/features/weekly_radar/domain/stage_transition_output.rs",
+    "src/features/weekly_radar/domain/stage_transition_output_test.rs",
+    "tests/weekly_radar_stage_transition.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-004-stage-transition-output.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-004-stage-transition-output.md"
+  ],
+  "sharedPathsIntentionallyUnchanged": [
+    "src/features/weekly_radar/domain/mod.rs",
+    "src/features/weekly_radar/mod.rs",
+    "src/features/mod.rs",
+    "tests/architecture/module_boundaries.rs"
+  ],
+  "boundary": "Organize explicitly supplied Confirmed or Candidate transition facts; do not infer, mutate, compare history, rank, score, persist, render, publish, schedule, retry, or import another feature.",
+  "priorityRule": "Only explicit PRODUCTION_SYSTEM to PRODUCTIVITY_BREAKOUT labels receive ProductivityBreakoutHigh; this reads no raw Evidence.",
+  "currentWorkItemIssuePolicy": "Resolve in-scope validation, test, documentation, Clippy, and governance evidence issues in wi-wr-004; do not open a new WI for them.",
+  "authorization": {
+    "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00",
+    "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items; this WI execution is locally limited to commit per the current user request."
+  }
+}

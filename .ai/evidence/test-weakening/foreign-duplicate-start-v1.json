@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "baseRef": "2e09db7068cfb6654afc8e545927df2e8bc1f825",
+  "decision": "retire_cancelled_requirement",
+  "retiredPaths": [
+    "tests/test_start_and_archive.py"
+  ],
+  "allowedSignals": [
+    "negative_test_removed",
+    "test_case_removed"
+  ],
+  "humanAuthorization": {
+    "reference": "conversation: user authorized autonomous corrective Work Item execution and required a corrective Work Item before any workflow fix",
+    "digest": "sha256:936665dbb447c8657de8d29d499c28b6652e1c61f37b0e67cc5b0c4f490775db",
+    "approvedBy": "RayIori"
+  },
+  "changedRequirementEvidence": [
+    "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/653",
+    "test_linked_worktree_foreign_duplicate_for_requested_task_stays_fail_closed",
+    "test_ai_start_main_creates_unrelated_contract_despite_real_foreign_duplicate"
+  ],
+  "rationale": "The removed test required global rejection of every recoverable foreign duplicate. Issue #653 replaces that obsolete requirement with task-aware handling: unrelated Work Items must start, while requested-task duplicates remain fail closed. The two listed regressions preserve and strengthen the safety boundary through same-task and normal ai-start coverage."
+}

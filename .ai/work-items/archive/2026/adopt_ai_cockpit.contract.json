@@ -1,0 +1,169 @@
+{
+  "contractVersion": 2,
+  "workItemId": "adopt_ai_cockpit",
+  "mode": "code",
+  "title": "Adopt AI Cockpit governance",
+  "baseCommit": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "sourceReleaseTag": "v0.5.63",
+  "sourceRepository": "local source",
+  "baselineDirtyPaths": [],
+  "adoptionBootstrapPaths": [
+    "scripts/ai_*.py",
+    "scripts/check_changed_critical_coverage.py",
+    "scripts/check_critical_coverage.py"
+  ],
+  "scope": [
+    ".ai/**",
+    ".ai/work-items/starts/**",
+    ".cursor/**",
+    "scripts/ai_*.py",
+    "scripts/determine_governance_profile.py",
+    "scripts/ai_installer_catalog.json",
+    "scripts/check_changed_critical_coverage.py",
+    "scripts/check_critical_coverage.py",
+    "scripts/bootstrap_*.py",
+    "Makefile.ai",
+    "Makefile.ai.stack",
+    "AGENTS.md",
+    "GEMINI.md",
+    "CLAUDE.md",
+    ".gitignore",
+    "Makefile",
+    "examples/**"
+  ],
+  "outOfScope": [
+    "Product source changes",
+    "Claiming project-specific quality checks are configured"
+  ],
+  "sources": [
+    {
+      "path": ".ai/cockpit/adoption.md",
+      "reason": "Installed first-adoption and production-readiness workflow."
+    },
+    {
+      "path": "installer action log",
+      "reason": "Records the files and source identity written during adoption."
+    }
+  ],
+  "intent": {
+    "problem": "The adopter repository needs an auditable AI Cockpit governance baseline before product Work Items begin.",
+    "constraints": [
+      "Record installation and governance files only; do not claim project quality checks are configured.",
+      "Use the adopter repository's discovered base commit and remote context."
+    ],
+    "rationale": "A structured adoption Contract must itself be ready under the enforced Preflight profile so the first governance PR can be verified without bypassing the Trust Gate."
+  },
+  "problemStatement": "Install the AI Cockpit governance baseline and record the adopter-specific source identity and ownership evidence.",
+  "scenarioCoverage": [
+    {
+      "scenario": "Fresh adoption Contract has sufficient intent and evidence for enforced Preflight.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "installer action log",
+        ".ai/cockpit/adoption.md"
+      ]
+    },
+    {
+      "scenario": "Project quality remains explicitly unconfigured after adoption.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "adoption Contract outOfScope",
+        "adoption guideline"
+      ]
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "low",
+    "riskTypes": [
+      "governance_bootstrap"
+    ],
+    "reason": "The first governance PR is bounded to installer-created governance files and has explicit adoption evidence."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "Adoption installs governed runtime and policy surfaces."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The installer records the complete clean-worktree adoption diff."
+  },
+  "preReviewWarnings": [
+    "Protected platform review remains required for trusted approval."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": false,
+    "requiredStages": [],
+    "reason": "Installer-generated bounded adoption record."
+  },
+  "acceptance": [
+    "All installer-created changes are owned by this Contract and Summary.",
+    "The archived pair passes check-ai-pr for the complete adoption diff."
+  ],
+  "guidelines": [
+    "Do not claim project quality checks are configured by adoption."
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "installer adoption workflow",
+    "reason": "The user explicitly invoked --create-adoption to introduce governance files."
+  },
+  "rollbackNote": "Revert the adoption commit to remove AI Cockpit governance files.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 1
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/adopt_ai_cockpit.json",
+    "baseCommit": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+    "initialScopeDigest": "25e91c34a8fec85539f8c2936fd4d07a2e2a576b7543eee6c8c8f54ad661fdeb",
+    "contractSkeletonDigest": "3bcc28a67c7815e897493e69dc5a94a1157cf823be4f514e5f324aa12b1f4bcf"
+  }
+}

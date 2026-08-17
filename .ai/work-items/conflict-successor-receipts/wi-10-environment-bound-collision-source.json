@@ -1,0 +1,44 @@
+{
+  "receiptVersion": 1,
+  "kind": "synchronization_conflict_successor",
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/856",
+  "authority": "User approval recorded in successor Contract and Issue #856",
+  "reason": "Original WI-10 archived sequence 917 from divergent base collides with current-main ownership; preserve predecessor evidence and redeliver same bounded environment policy from current origin/main.",
+  "targetBaseCommit": "2d08ebd26157a9894c5d103f7fa159840558e8c0",
+  "source": {
+    "workItemId": "wi-10-environment-bound-collision-source",
+    "branch": "codex/wi-10-environment-bound-collision-source",
+    "baseCommit": "cc9ad16ed014bbd25526e51916fda7f52148ef9f",
+    "checkpointHead": "f9e91367eca33940c8df9659982ebb37fcd48c38",
+    "startReceipt": {
+      "path": ".ai/work-items/starts/wi-10-environment-bound-collision-source.json",
+      "sha256": "81802029b1e9672a01774b4f91cefd1b49047201beca87798701c0ba014a1484"
+    },
+    "contract": {
+      "path": ".ai/work-items/active/wi-10-environment-bound-collision-source.contract.json",
+      "sha256": "7c3dbc8e00ea7e0d95ad79011bf32b4d3ffda1af8b049ea085b7b90384483e40"
+    },
+    "summary": {
+      "path": ".ai/work-items/active/wi-10-environment-bound-collision-source.summary.json",
+      "sha256": "ef360b16c868486b30533c8a8ebbeaa80a7852c989412704144b4e588079dc2a"
+    },
+    "outcome": {
+      "path": ".ai/work-items/active/wi-10-environment-bound-collision-source.outcome.json",
+      "sha256": "4a91d4ae3f29e09fee107d01e35381882079c60c540bdfdf6b2f442a6f859d64"
+    }
+  },
+  "successor": {
+    "workItemId": "wi-10-environment-bound-reuse-successor",
+    "branch": "codex/wi-10-environment-bound-reuse-successor",
+    "baseCommit": "2d08ebd26157a9894c5d103f7fa159840558e8c0",
+    "startReceipt": {
+      "path": ".ai/work-items/starts/wi-10-environment-bound-reuse-successor.json",
+      "sha256": "2d4662921a223b35358ee50d32f95f2e21ba08fca66b5f71b0969467f3157ad7"
+    },
+    "contract": {
+      "path": ".ai/work-items/active/wi-10-environment-bound-reuse-successor.contract.json",
+      "sha256": "843fc1665681ca13c5fff43762218b2fae7bbfe794cedffdaa98d407f1a11013"
+    }
+  },
+  "recordedAt": "2026-08-16T06:10:18.505832+00:00"
+}

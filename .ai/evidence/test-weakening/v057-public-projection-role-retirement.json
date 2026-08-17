@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "decision": "retire_cancelled_requirement",
+  "baseRef": "184077fc90f38a3cf9c73d6d5a7c332fd5b1c3bd",
+  "retiredPaths": [
+    "tests/test_supply_chain.py"
+  ],
+  "allowedSignals": [
+    "assertion_condition_relaxed"
+  ],
+  "humanAuthorization": {
+    "approvedBy": "user",
+    "reference": "conversation:2026-08-11-complete-all-work-items-release-authorization",
+    "digest": "sha256:539ce510d0dcd7bf15cdaafc4174a6036a57c2f422a399fc1014826b6b2afe74"
+  }
+}

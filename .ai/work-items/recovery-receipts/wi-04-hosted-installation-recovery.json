@@ -1,0 +1,28 @@
+{
+  "receiptVersion": 1,
+  "prBaseCommit": "2eae170ad702bd237be304e29f28d795848aeb9f",
+  "humanAuthorization": {
+    "type": "human",
+    "reference": "user-goal:continue-all-work-items-and-hosted-recovery"
+  },
+  "archives": [
+    {
+      "workItemId": "wi-04-human-benefit-report",
+      "contractPath": ".ai/work-items/archive/2026/wi-04-human-benefit-report.contract.json",
+      "summaryPath": ".ai/work-items/archive/2026/wi-04-human-benefit-report.summary.json",
+      "baseCommit": "2eae170ad702bd237be304e29f28d795848aeb9f",
+      "archiveSequence": 727,
+      "contractDigest": "046f20597970343769c949033f3a866787e4d65e2aac3230dbeb5bc3143211ba",
+      "summaryDigest": "f3b4d30c3beed528cdfb925ef4e24475d93951a1d4ed31ecb00a4a57c447e9b2"
+    },
+    {
+      "workItemId": "wi-04-hosted-installation-recovery",
+      "contractPath": ".ai/work-items/archive/2026/wi-04-hosted-installation-recovery.contract.json",
+      "summaryPath": ".ai/work-items/archive/2026/wi-04-hosted-installation-recovery.summary.json",
+      "baseCommit": "fba5c40ff0660e777b3c8888f5e95b289714c8df",
+      "archiveSequence": 728,
+      "contractDigest": "09edfe30ddc6286344db18ad160d98f00ee223d7ab04d7377d5326cff8bf312e",
+      "summaryDigest": "9044ff138510f380816876f7e500ab88acdb6a36f00fb706ff9a4b830db650f0"
+    }
+  ]
+}

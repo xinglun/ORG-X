@@ -1,0 +1,44 @@
+{
+  "receiptVersion": 1,
+  "kind": "synchronization_conflict_successor",
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/854",
+  "authority": "User approval recorded in the successor Contract and Issue #854",
+  "reason": "Original WI-08 archived sequence 917 from a divergent base collides with current-main WI-09 ownership; preserve the predecessor evidence and redeliver the same bounded policy from current origin/main.",
+  "targetBaseCommit": "c1795eb5ca2ef4b170df3dfc196627f2a9ada682",
+  "source": {
+    "workItemId": "wi-08-content-bound-reuse-collision-source",
+    "branch": "codex/wi-08-content-bound-reuse-collision-source",
+    "baseCommit": "cc9ad16ed014bbd25526e51916fda7f52148ef9f",
+    "checkpointHead": "00e5d32cef80dc9fa01f6b24009d3436c36379db",
+    "startReceipt": {
+      "path": ".ai/work-items/starts/wi-08-content-bound-reuse-collision-source.json",
+      "sha256": "bb6e9edbe89d04698e983637e3297dfa353e201d4709394bf8c3fb663ed17b96"
+    },
+    "contract": {
+      "path": ".ai/work-items/active/wi-08-content-bound-reuse-collision-source.contract.json",
+      "sha256": "2ac562f5c124f5669fe2bb1d902925d5b8277a94eb7b5ebd1eb59b381fb6fa41"
+    },
+    "summary": {
+      "path": ".ai/work-items/active/wi-08-content-bound-reuse-collision-source.summary.json",
+      "sha256": "073367f4ecc0dac2cf731caa4ebd73ad12ab23048f4679916a130bdd4932dd2e"
+    },
+    "outcome": {
+      "path": ".ai/work-items/active/wi-08-content-bound-reuse-collision-source.outcome.json",
+      "sha256": "146259044e70212feb5e27e82bf07bf7382cd5b3fc2df0afddf642987d747bbe"
+    }
+  },
+  "successor": {
+    "workItemId": "wi-08-content-bound-reuse-successor",
+    "branch": "codex/wi-08-content-bound-reuse-successor",
+    "baseCommit": "c1795eb5ca2ef4b170df3dfc196627f2a9ada682",
+    "startReceipt": {
+      "path": ".ai/work-items/starts/wi-08-content-bound-reuse-successor.json",
+      "sha256": "5b08f0c55e7e3aeab14a44cf31f597e2931ca6252ac260bed22149f4e51d4710"
+    },
+    "contract": {
+      "path": ".ai/work-items/active/wi-08-content-bound-reuse-successor.contract.json",
+      "sha256": "10f000c49663612f595d3031542d6e4864fb7902f2b3b1e9db6a0a7a26546011"
+    }
+  },
+  "recordedAt": "2026-08-16T05:30:41.308323+00:00"
+}

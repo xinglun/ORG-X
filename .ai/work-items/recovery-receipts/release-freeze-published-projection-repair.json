@@ -1,0 +1,47 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/release-freeze-published-projection-repair.archive-manifest.json",
+      "sha256": "3ddaaa1022bc5e9c103e260b0eca413d47e3ec9d474e4edffce9ded51be8296a"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/release-freeze-published-projection-repair.contract.json",
+      "sha256": "a8fb20c58b995de0e0955f4d605cf95a21ec267de1e7e4572061fe81523c0ad6"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/release-freeze-published-projection-repair.outcome.json",
+      "sha256": "012998c63d5ff239936484fb4a386042b6143308a99d1dfc3a445bdfe281b050"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/release-freeze-published-projection-repair.summary.json",
+      "sha256": "87b432e0a9d05c21e3a1ae677ade25e6bf48fe8f66fa8a2d9a6b4f3e072588ba"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=1de3bd2fefa94feb0ac0adf41b66dfa1b2868d45"
+    ],
+    "exitCode": 2,
+    "gate": "changedCriticalCoverage",
+    "outputDigest": "9827c147e303cf5b1094bc50a7517fd0163f8066ce11673b4c7211ef5bb66944"
+  },
+  "humanAuthorization": {
+    "reference": "conversation:2026-08-11-complete-all-work-items-release-authorization",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/783",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-11T14:19:44.053982+00:00",
+  "prBaseCommit": "1de3bd2fefa94feb0ac0adf41b66dfa1b2868d45",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/cockpit/release-digests.json",
+    ".ai/cockpit/release-freeze.json",
+    "docs/reference/capability-truth-matrix.json",
+    "docs/reference/pre-release-documentation-alignment.json",
+    "docs/reference/pre-release-documentation-alignment.md"
+  ],
+  "workItemId": "release-freeze-published-projection-repair"
+}

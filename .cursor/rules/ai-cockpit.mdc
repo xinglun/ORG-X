@@ -1,0 +1,34 @@
+---
+description: AI Cockpit governance workflow for Cursor agents.
+globs:
+  - "**/*"
+alwaysApply: false
+---
+
+# AI Cockpit Rules
+
+Use the AI Cockpit workflow before changing code, docs, CI, build files, or AI governance files.
+
+The rule is installed with `alwaysApply: false` so read-only investigation does not force a Work Item. Enable **Always Apply** in Cursor rule settings when you want governance on every session.
+
+## Required Flow
+
+1. Create or identify a Work Item Contract in `.ai/work-items/active/`.
+2. Confirm `scope`, `outOfScope`, `sources`, `acceptance`, and `verification`.
+3. Edit only files covered by `scope`.
+4. Update the Contract first if the required change crosses the declared boundary.
+5. Update the matching Summary before finishing.
+6. Run `make ai-finish TASK=<task>` when ready.
+
+## Guardrails
+
+- Do not remove tests, snapshots, or Work Item records without documenting the reason.
+- Do not hand-edit `.ai/cockpit/current_status.md`; generate it with `make generate-cockpit-status`.
+- Do not commit secrets, personal paths, API keys, local credentials, or machine-specific runtime config.
+- Prefer repository-local Makefile targets and `.ai/cockpit/checks.yaml` over ad hoc commands.
+- Never revert user changes unless the user explicitly asks for that revert.
+
+## Finish Criteria
+
+A task is ready for review only when required Contract checks are represented in the Summary as `passed`, `make check-ai-status` passes, and the Cockpit status is `ready_for_review`.
+

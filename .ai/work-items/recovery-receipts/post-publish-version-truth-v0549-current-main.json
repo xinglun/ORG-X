@@ -1,0 +1,60 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/post-publish-version-truth-v0549-current-main.archive-manifest.json",
+      "sha256": "28e91438532504cd5c7f903508b7778ff33b2a6dda66e0ddddeb07151be087df"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/post-publish-version-truth-v0549-current-main.contract.json",
+      "sha256": "ce52d417cdbe26a1336d6c4e905e31df57dd68ba81a006e3f5d9fca16f5791dd"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/post-publish-version-truth-v0549-current-main.outcome.json",
+      "sha256": "7828c43f621a8a133386dddbf28c8d0611a27af1e07954ec60abde326557c8eb"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/post-publish-version-truth-v0549-current-main.summary.json",
+      "sha256": "69e8135bd37a6ca5a2c8a0c9be4ee612c213b7ebac63f81b5d308f82818e3d2e"
+    }
+  },
+  "failure": {
+    "gate": "hostedAggregateCoverage"
+  },
+  "humanAuthorization": {
+    "reference": "conversation:2026-08-10-automatic-completion-authorization",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/625",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-09T18:19:16.392381+00:00",
+  "prBaseCommit": "5f1ab9c5523b31492fec97c358ae83e640be180c",
+  "provider": {
+    "event": "pull_request",
+    "failedCandidateHead": "036a51b1ee54e2780a73aa72c02c368638cd8bb4",
+    "jobConclusion": "failure",
+    "jobId": 93281833266,
+    "jobName": "template-smoke",
+    "kind": "github_actions",
+    "logSha256": "0a333fed11b5ef7919a39bcde5e2cfd29e2bb8c8644a986f6e38dd71a80c4743",
+    "observedCoverage": {
+      "actual": 85.08,
+      "parserVersion": 1,
+      "required": 85.1
+    },
+    "pullRequest": 771,
+    "repository": "spirex-ds-dev/ai-cockpit-template",
+    "runAttempt": 1,
+    "runConclusion": "failure",
+    "runId": 31328153138,
+    "runStatus": "completed",
+    "runUrl": "https://github.com/spirex-ds-dev/ai-cockpit-template/actions/runs/31328153138",
+    "workflowPath": ".github/workflows/smoke.yml"
+  },
+  "receiptVersion": 2,
+  "recoveryPaths": [
+    "Makefile",
+    "scripts/check_critical_coverage.py",
+    "tests/test_critical_coverage.py"
+  ],
+  "workItemId": "post-publish-version-truth-v0549-current-main"
+}

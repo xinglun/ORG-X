@@ -1,0 +1,18 @@
+{
+  "indexVersion": 1,
+  "description": "Discovery index; archived Contract and Summary files remain authoritative.",
+  "entries": [
+    {
+      "workItemId": "adopt_ai_cockpit",
+      "archiveSequence": 1,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+      "contractSha256": "f6cab7443c87a4fa326d58824b462328e9e07f4f2e9984ecbb414a5389743809",
+      "archivedAt": "2026-08-17T10:39:20.687837+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+      "summarySha256": "16c3c85df4816f008b082262ae7c5a61f1887b62cd44424edd28eb1e71abc15d",
+      "manifestPath": ".ai/work-items/archive/2026/adopt_ai_cockpit.archive-manifest.json",
+      "manifestSha256": "cafe6dc2ab6bd821300134b5db17cb5a338c4e25ccbf825361fcb7036d0c76dd"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-17-stale-code-doc-cleanup.archive-manifest.json",
+      "sha256": "47c3894d853a83858dbd12bc0925d63151f206a98d274b36c10b45250360c905"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-17-stale-code-doc-cleanup.contract.json",
+      "sha256": "d44a65fecac4810e91b7d95683c42e93da5d3fa34dcc0728bb14c3cd8823e008"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-17-stale-code-doc-cleanup.outcome.json",
+      "sha256": "a85fa19e36bbf32e3024ad43d7a11640b0c7986e415179e00ba1994553bdf731"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-17-stale-code-doc-cleanup.summary.json",
+      "sha256": "873eba227a68fe11649e61252a64c9cbd42ad7c2f89e823a93b42f497959befd"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=603fd85a1ced489b165a3d59a1f17c5939895921"
+    ],
+    "exitCode": 2,
+    "gate": "changedCriticalCoverage",
+    "outputDigest": "719e1d023059a1ebbcf5a508fa63de145c2b13f64a7bb8f722b3b45bd955ebc2"
+  },
+  "humanAuthorization": {
+    "reference": "User-authorized current-task repair of the WI-17 post-archive PR ownership gate",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/866",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-16T15:02:13.574895+00:00",
+  "prBaseCommit": "603fd85a1ced489b165a3d59a1f17c5939895921",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    "scripts/ai_check_pr.py",
+    "scripts/ai_post_archive_recovery.py",
+    "tests/test_pr_aggregate.py",
+    "tests/test_ai_post_archive_recovery.py"
+  ],
+  "workItemId": "wi-17-stale-code-doc-cleanup"
+}

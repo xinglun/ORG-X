@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "facts": [
+    {
+      "id": "active_contract",
+      "path": ".ai/work-items/active/*.contract.json"
+    },
+    {
+      "id": "active_summary",
+      "path": ".ai/work-items/active/*.summary.json"
+    },
+    {
+      "id": "work_item_events",
+      "path": ".ai/work-items/active/task-event-log.events.jsonl"
+    },
+    {
+      "id": "archived_outcome",
+      "path": ".ai/work-items/archive/**/*.outcome.json"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "authority": "derived",
+      "generator": "scripts/ai_generate_status.py",
+      "factInputs": ["active_contract", "active_summary", "work_item_events"],
+      "artifactInputs": [],
+      "fields": {
+        "governanceSignals": "fact:active_contract.governanceProfile",
+        "verification": "fact:active_summary.verification",
+        "nextAction": "fact:active_summary.nextAction"
+      }
+    },
+    {
+      "path": ".ai/work-items/active/*.outcome.json",
+      "authority": "derived",
+      "generator": "scripts/ai_generate_task_outcome.py",
+      "factInputs": ["active_contract", "active_summary", "work_item_events"],
+      "artifactInputs": [],
+      "fields": {
+        "workItemId": "fact:active_contract.workItemId",
+        "verification": "fact:active_summary.verification",
+        "evidence": "fact:work_item_events.events"
+      }
+    },
+    {
+      "path": ".ai/work-items/active/*.outcome.md",
+      "authority": "derived",
+      "generator": "scripts/ai_render_task_outcome.py",
+      "factInputs": [],
+      "artifactInputs": [".ai/work-items/active/*.outcome.json"],
+      "fields": {
+        "humanReadableOutcome": "artifact:.ai/work-items/active/*.outcome.json.sections"
+      }
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "authority": "derived",
+      "generator": "scripts/ai_generate_human_report.py",
+      "factInputs": ["archived_outcome"],
+      "artifactInputs": [],
+      "fields": {
+        "benefits": "fact:archived_outcome.sections",
+        "remainingRisks": "fact:archived_outcome.sections"
+      }
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "authority": "derived",
+      "generator": "scripts/ai_render_human_report.py",
+      "factInputs": [],
+      "artifactInputs": [".ai/cockpit/task_report.json"],
+      "fields": {
+        "humanReadableReport": "artifact:.ai/cockpit/task_report.json.sections"
+      }
+    }
+  ]
+}

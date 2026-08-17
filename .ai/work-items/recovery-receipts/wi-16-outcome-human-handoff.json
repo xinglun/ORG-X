@@ -1,0 +1,64 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-16-outcome-human-handoff.archive-manifest.json",
+      "sha256": "9584fcb9ea7f33e33b926a9fad6910e3a020a2473abd0f2c5188c2423949ada9"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-16-outcome-human-handoff.contract.json",
+      "sha256": "821a70b1b33ce58389fbd22a9411c5b281f52023494e11b085436bb2cd40020d"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-16-outcome-human-handoff.outcome.json",
+      "sha256": "defceab0aad9c28c4346d4cd47a95debea7ce4518d02b3cfe36a5611d1da7736"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-16-outcome-human-handoff.summary.json",
+      "sha256": "b286d2e9aae0213c628e2a4eeaf53302f1f3620f806624f8bb8d480401192ad1"
+    }
+  },
+  "failure": {
+    "gate": "hostedFunctionalFailure"
+  },
+  "humanAuthorization": {
+    "reference": "User authorization: automatic execution; current Work Item must root-fix process defects without creating a new Issue.",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/865",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-16T14:15:08.330792+00:00",
+  "prBaseCommit": "5200f1ee5813f9468b49d95d4ea8d46ec15754d3",
+  "provider": {
+    "event": "pull_request",
+    "failedCandidateHead": "24e57fbebd41bfcd9b9ba889a299a9345143d43c",
+    "failureMarker": "junit_artifact_failure",
+    "jobConclusion": "failure",
+    "jobId": 95176288562,
+    "jobName": "project-test-lifecycle",
+    "junitArtifact": {
+      "failedTestcases": 1,
+      "id": 9264873714,
+      "name": "project-test-shard-lifecycle-31951774632-1",
+      "sha256": "fa5920f1bcf58675ebc3226a7fe26295349fd17633b77fd6908679fd685640bf"
+    },
+    "kind": "github_actions",
+    "logSha256": "352ec7aafb45c7a28334c28572e8750db5e979190e23288a07a33b32e992b47c",
+    "pullRequest": 865,
+    "repository": "spirex-ds-dev/ai-cockpit-template",
+    "runAttempt": 1,
+    "runConclusion": "failure",
+    "runId": 31951774632,
+    "runStatus": "completed",
+    "runUrl": "https://github.com/spirex-ds-dev/ai-cockpit-template/actions/runs/31951774632",
+    "workflowPath": ".github/workflows/smoke.yml"
+  },
+  "receiptVersion": 3,
+  "recoveryPaths": [
+    ".github/workflows/smoke.yml",
+    "docs/reference/japanese-capability-assessment.json",
+    "docs/reference/japanese-capability-assessment.md",
+    "docs/reference/pre-release-documentation-alignment.json",
+    "docs/reference/pre-release-documentation-alignment.md"
+  ],
+  "workItemId": "wi-16-outcome-human-handoff"
+}

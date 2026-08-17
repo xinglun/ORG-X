@@ -1,0 +1,1100 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "adopt_ai_cockpit",
+  "contractPath": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+  "changedFiles": [
+    {
+      "path": ".ai/README.md",
+      "reason": "from .ai/README.md"
+    },
+    {
+      "path": ".ai/calibration/profiles.yaml",
+      "reason": "from .ai/calibration/profiles.yaml"
+    },
+    {
+      "path": ".ai/cockpit/README.ja.md",
+      "reason": "from .ai/cockpit/README.ja.md"
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "from .ai/cockpit/README.md"
+    },
+    {
+      "path": ".ai/cockpit/adoption-runtime-verification.json",
+      "reason": "write adopter Runtime Verification evidence"
+    },
+    {
+      "path": ".ai/cockpit/adoption.ja.md",
+      "reason": "from .ai/cockpit/adoption.ja.md"
+    },
+    {
+      "path": ".ai/cockpit/adoption.md",
+      "reason": "from .ai/cockpit/adoption.md"
+    },
+    {
+      "path": ".ai/cockpit/checks.yaml",
+      "reason": "from .ai/cockpit/checks.yaml"
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "generate adoption Work Item status"
+    },
+    {
+      "path": ".ai/cockpit/derived_artifacts.json",
+      "reason": "from .ai/cockpit/derived_artifacts.json"
+    },
+    {
+      "path": ".ai/cockpit/system_invariants.json",
+      "reason": "from .ai/cockpit/system_invariants.json"
+    },
+    {
+      "path": ".ai/cockpit/version.json",
+      "reason": "from .ai/cockpit/version.json"
+    },
+    {
+      "path": ".ai/cockpit/work-items/index.json",
+      "reason": "from .ai/cockpit/work-items/index.json"
+    },
+    {
+      "path": ".ai/cockpit/work-items/wi-06-status-interface.status.json",
+      "reason": "from .ai/cockpit/work-items/wi-06-status-interface.status.json"
+    },
+    {
+      "path": ".ai/decisions/.gitkeep",
+      "reason": "from .ai/decisions/.gitkeep"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json",
+      "reason": "from .ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json",
+      "reason": "from .ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/foreign-duplicate-start-v1.json",
+      "reason": "from .ai/evidence/test-weakening/foreign-duplicate-start-v1.json"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/remove-cancelled-provider-validation.json",
+      "reason": "from .ai/evidence/test-weakening/remove-cancelled-provider-validation.json"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/v057-public-projection-role-retirement.json",
+      "reason": "from .ai/evidence/test-weakening/v057-public-projection-role-retirement.json"
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "install project glossary template"
+    },
+    {
+      "path": ".ai/guards/agent_risk_policy.yaml",
+      "reason": "from .ai/guards/agent_risk_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/ai_review_policy.yaml",
+      "reason": "from .ai/guards/ai_review_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/backtrack_policy.yaml",
+      "reason": "from .ai/guards/backtrack_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/changed_critical_coverage_policy.json",
+      "reason": "from .ai/guards/changed_critical_coverage_policy.json"
+    },
+    {
+      "path": ".ai/guards/cockpit_status_policy.yaml",
+      "reason": "from .ai/guards/cockpit_status_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/coverage_policy.yaml",
+      "reason": "from .ai/guards/coverage_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/file_boundary.yaml",
+      "reason": "from .ai/guards/file_boundary.yaml"
+    },
+    {
+      "path": ".ai/guards/file_ownership.yaml",
+      "reason": "from .ai/guards/file_ownership.yaml"
+    },
+    {
+      "path": ".ai/guards/governance_complexity_policy.yaml",
+      "reason": "from .ai/guards/governance_complexity_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/operation_impact_policy.yaml",
+      "reason": "from .ai/guards/operation_impact_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/preflight_review_policy.yaml",
+      "reason": "from .ai/guards/preflight_review_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/reference_impact_policy.yaml",
+      "reason": "from .ai/guards/reference_impact_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/scenario_coverage_policy.yaml",
+      "reason": "from .ai/guards/scenario_coverage_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/scope_policy.yaml",
+      "reason": "from .ai/guards/scope_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/summary_policy.yaml",
+      "reason": "from .ai/guards/summary_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/test_weakening_policy.yaml",
+      "reason": "from .ai/guards/test_weakening_policy.yaml"
+    },
+    {
+      "path": ".ai/install/managed-regions.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/install/manifest.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/install/release-identity.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/install/rollback-baseline.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/install/version.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/policies/complexity_trend.yaml",
+      "reason": "from .ai/policies/complexity_trend.yaml"
+    },
+    {
+      "path": ".ai/policies/raw-request-exemptions.yaml",
+      "reason": "from .ai/policies/raw-request-exemptions.yaml"
+    },
+    {
+      "path": ".ai/policies/requested-operation.yaml",
+      "reason": "from .ai/policies/requested-operation.yaml"
+    },
+    {
+      "path": ".ai/policies/verification_impact.yaml",
+      "reason": "from .ai/policies/verification_impact.yaml"
+    },
+    {
+      "path": ".ai/project/capabilities.json",
+      "reason": "from .ai/project/capabilities.json"
+    },
+    {
+      "path": ".ai/project/success_criteria.json",
+      "reason": "from .ai/project/success_criteria.json"
+    },
+    {
+      "path": ".ai/quality/gates.yaml",
+      "reason": "from .ai/quality/gates.yaml"
+    },
+    {
+      "path": ".ai/quality/governance-routing.yaml",
+      "reason": "from .ai/quality/governance-routing.yaml"
+    },
+    {
+      "path": ".ai/schemas/canonical_evidence.schema.json",
+      "reason": "from .ai/schemas/canonical_evidence.schema.json"
+    },
+    {
+      "path": ".ai/schemas/cross-wi-integration-report.schema.json",
+      "reason": "from .ai/schemas/cross-wi-integration-report.schema.json"
+    },
+    {
+      "path": ".ai/schemas/evidence-binding.schema.json",
+      "reason": "from .ai/schemas/evidence-binding.schema.json"
+    },
+    {
+      "path": ".ai/schemas/external_handoff.schema.json",
+      "reason": "from .ai/schemas/external_handoff.schema.json"
+    },
+    {
+      "path": ".ai/schemas/governance-cost-report.schema.json",
+      "reason": "from .ai/schemas/governance-cost-report.schema.json"
+    },
+    {
+      "path": ".ai/schemas/operation-impact.schema.json",
+      "reason": "from .ai/schemas/operation-impact.schema.json"
+    },
+    {
+      "path": ".ai/schemas/parallel-verification-plan.schema.json",
+      "reason": "from .ai/schemas/parallel-verification-plan.schema.json"
+    },
+    {
+      "path": ".ai/schemas/performance-diagnosis-report.schema.json",
+      "reason": "from .ai/schemas/performance-diagnosis-report.schema.json"
+    },
+    {
+      "path": ".ai/schemas/reference_impact.schema.json",
+      "reason": "from .ai/schemas/reference_impact.schema.json"
+    },
+    {
+      "path": ".ai/schemas/task_outcome.schema.json",
+      "reason": "from .ai/schemas/task_outcome.schema.json"
+    },
+    {
+      "path": ".ai/schemas/test_weakening.schema.json",
+      "reason": "from .ai/schemas/test_weakening.schema.json"
+    },
+    {
+      "path": ".ai/schemas/unknown_assessment.schema.json",
+      "reason": "from .ai/schemas/unknown_assessment.schema.json"
+    },
+    {
+      "path": ".ai/schemas/work-item-intelligence-snapshot.schema.json",
+      "reason": "from .ai/schemas/work-item-intelligence-snapshot.schema.json"
+    },
+    {
+      "path": ".ai/schemas/work-item-status-interface.schema.json",
+      "reason": "from .ai/schemas/work-item-status-interface.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/approval.schema.json",
+      "reason": "from .ai/trust/schema/approval.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/baseline_evidence.schema.json",
+      "reason": "from .ai/trust/schema/baseline_evidence.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/human_decision_evidence.schema.json",
+      "reason": "from .ai/trust/schema/human_decision_evidence.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/human_decision_request.schema.json",
+      "reason": "from .ai/trust/schema/human_decision_request.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/repository_capabilities.schema.json",
+      "reason": "from .ai/trust/schema/repository_capabilities.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/success_criteria.schema.json",
+      "reason": "from .ai/trust/schema/success_criteria.schema.json"
+    },
+    {
+      "path": ".ai/work-items/_templates/work_item_contract.example.json",
+      "reason": "from .ai/work-items/_templates/work_item_contract.example.json"
+    },
+    {
+      "path": ".ai/work-items/_templates/work_item_summary.example.json",
+      "reason": "from .ai/work-items/_templates/work_item_summary.example.json"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json",
+      "reason": "create adoption Contract"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/adopt_ai_cockpit.summary.json",
+      "reason": "create adoption Summary"
+    },
+    {
+      "path": ".ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json",
+      "reason": "from .ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json"
+    },
+    {
+      "path": ".ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json",
+      "reason": "from .ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json"
+    },
+    {
+      "path": ".ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json",
+      "reason": "from .ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json"
+    },
+    {
+      "path": ".ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json",
+      "reason": "from .ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json",
+      "reason": "from .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json",
+      "reason": "from .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json",
+      "reason": "from .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json",
+      "reason": "from .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json",
+      "reason": "from .ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json"
+    },
+    {
+      "path": ".ai/work-items/runtime/.gitignore",
+      "reason": "from .ai/work-items/runtime/.gitignore"
+    },
+    {
+      "path": ".ai/work-items/starts/adopt_ai_cockpit.json",
+      "reason": "create adoption Start Receipt"
+    },
+    {
+      "path": ".cursor/rules/ai-cockpit.mdc",
+      "reason": "from .cursor/rules/ai-cockpit.mdc"
+    },
+    {
+      "path": ".gitignore",
+      "reason": "add missing AI Cockpit local-state ignore rules"
+    },
+    {
+      "path": "AGENTS.md",
+      "reason": "install managed AI Cockpit section"
+    },
+    {
+      "path": "CLAUDE.md",
+      "reason": "install managed AI Cockpit section"
+    },
+    {
+      "path": "GEMINI.md",
+      "reason": "install managed AI Cockpit section"
+    },
+    {
+      "path": "Makefile",
+      "reason": "include Makefile.ai"
+    },
+    {
+      "path": "Makefile.ai",
+      "reason": "from templates/make/Makefile.ai"
+    },
+    {
+      "path": "Makefile.ai.stack",
+      "reason": "from templates/stacks/rust.mk"
+    },
+    {
+      "path": "scripts/ai_acceptance_policy.py",
+      "reason": "from scripts/ai_acceptance_policy.py"
+    },
+    {
+      "path": "scripts/ai_adoption_evidence.py",
+      "reason": "from scripts/ai_adoption_evidence.py"
+    },
+    {
+      "path": "scripts/ai_archive_work_item.py",
+      "reason": "from scripts/ai_archive_work_item.py"
+    },
+    {
+      "path": "scripts/ai_baseline_evidence.py",
+      "reason": "from scripts/ai_baseline_evidence.py"
+    },
+    {
+      "path": "scripts/ai_calibrate.py",
+      "reason": "from scripts/ai_calibrate.py"
+    },
+    {
+      "path": "scripts/ai_calibration_corrective.py",
+      "reason": "from scripts/ai_calibration_corrective.py"
+    },
+    {
+      "path": "scripts/ai_calibration_inventory.py",
+      "reason": "from scripts/ai_calibration_inventory.py"
+    },
+    {
+      "path": "scripts/ai_calibration_profiles.py",
+      "reason": "from scripts/ai_calibration_profiles.py"
+    },
+    {
+      "path": "scripts/ai_check_adoption_ready.py",
+      "reason": "from scripts/ai_check_adoption_ready.py"
+    },
+    {
+      "path": "scripts/ai_check_agent_risk.py",
+      "reason": "from scripts/ai_check_agent_risk.py"
+    },
+    {
+      "path": "scripts/ai_check_backtrack.py",
+      "reason": "from scripts/ai_check_backtrack.py"
+    },
+    {
+      "path": "scripts/ai_check_budget_impact.py",
+      "reason": "from scripts/ai_check_budget_impact.py"
+    },
+    {
+      "path": "scripts/ai_check_coverage_guard.py",
+      "reason": "from scripts/ai_check_coverage_guard.py"
+    },
+    {
+      "path": "scripts/ai_check_diff_ownership.py",
+      "reason": "from scripts/ai_check_diff_ownership.py"
+    },
+    {
+      "path": "scripts/ai_check_guard_calibration.py",
+      "reason": "from scripts/ai_check_guard_calibration.py"
+    },
+    {
+      "path": "scripts/ai_check_guards.py",
+      "reason": "from scripts/ai_check_guards.py"
+    },
+    {
+      "path": "scripts/ai_check_guidelines.py",
+      "reason": "from scripts/ai_check_guidelines.py"
+    },
+    {
+      "path": "scripts/ai_check_pr.py",
+      "reason": "from scripts/ai_check_pr.py"
+    },
+    {
+      "path": "scripts/ai_check_reference_impact.py",
+      "reason": "from scripts/ai_check_reference_impact.py"
+    },
+    {
+      "path": "scripts/ai_check_review_policy.py",
+      "reason": "from scripts/ai_check_review_policy.py"
+    },
+    {
+      "path": "scripts/ai_check_scenario_coverage.py",
+      "reason": "from scripts/ai_check_scenario_coverage.py"
+    },
+    {
+      "path": "scripts/ai_check_scope.py",
+      "reason": "from scripts/ai_check_scope.py"
+    },
+    {
+      "path": "scripts/ai_check_serial_order.py",
+      "reason": "from scripts/ai_check_serial_order.py"
+    },
+    {
+      "path": "scripts/ai_check_status.py",
+      "reason": "from scripts/ai_check_status.py"
+    },
+    {
+      "path": "scripts/ai_check_status_consistency.py",
+      "reason": "from scripts/ai_check_status_consistency.py"
+    },
+    {
+      "path": "scripts/ai_check_summary.py",
+      "reason": "from scripts/ai_check_summary.py"
+    },
+    {
+      "path": "scripts/ai_check_task_outcome.py",
+      "reason": "from scripts/ai_check_task_outcome.py"
+    },
+    {
+      "path": "scripts/ai_check_test_weakening.py",
+      "reason": "from scripts/ai_check_test_weakening.py"
+    },
+    {
+      "path": "scripts/ai_check_work_item.py",
+      "reason": "from scripts/ai_check_work_item.py"
+    },
+    {
+      "path": "scripts/ai_checkpoint.py",
+      "reason": "from scripts/ai_checkpoint.py"
+    },
+    {
+      "path": "scripts/ai_classify_operation_impact.py",
+      "reason": "from scripts/ai_classify_operation_impact.py"
+    },
+    {
+      "path": "scripts/ai_close_work_item.py",
+      "reason": "from scripts/ai_close_work_item.py"
+    },
+    {
+      "path": "scripts/ai_common.py",
+      "reason": "from scripts/ai_common.py"
+    },
+    {
+      "path": "scripts/ai_critical_domain_guards.py",
+      "reason": "from scripts/ai_critical_domain_guards.py"
+    },
+    {
+      "path": "scripts/ai_decision_protocol.py",
+      "reason": "from scripts/ai_decision_protocol.py"
+    },
+    {
+      "path": "scripts/ai_detached_uninstaller.py",
+      "reason": "from scripts/ai_detached_uninstaller.py"
+    },
+    {
+      "path": "scripts/ai_disable_enable.py",
+      "reason": "from scripts/ai_disable_enable.py"
+    },
+    {
+      "path": "scripts/ai_doctor.py",
+      "reason": "from scripts/ai_doctor.py"
+    },
+    {
+      "path": "scripts/ai_evidence_dependencies.py",
+      "reason": "from scripts/ai_evidence_dependencies.py"
+    },
+    {
+      "path": "scripts/ai_external_handoff.py",
+      "reason": "from scripts/ai_external_handoff.py"
+    },
+    {
+      "path": "scripts/ai_external_identity.py",
+      "reason": "from scripts/ai_external_identity.py"
+    },
+    {
+      "path": "scripts/ai_finish.py",
+      "reason": "from scripts/ai_finish.py"
+    },
+    {
+      "path": "scripts/ai_generate_human_report.py",
+      "reason": "from scripts/ai_generate_human_report.py"
+    },
+    {
+      "path": "scripts/ai_generate_status.py",
+      "reason": "from scripts/ai_generate_status.py"
+    },
+    {
+      "path": "scripts/ai_generate_task_outcome.py",
+      "reason": "from scripts/ai_generate_task_outcome.py"
+    },
+    {
+      "path": "scripts/ai_governance_compression.py",
+      "reason": "from scripts/ai_governance_compression.py"
+    },
+    {
+      "path": "scripts/ai_impact_classifier.py",
+      "reason": "from scripts/ai_impact_classifier.py"
+    },
+    {
+      "path": "scripts/ai_input_trust.py",
+      "reason": "from scripts/ai_input_trust.py"
+    },
+    {
+      "path": "scripts/ai_install_facts.py",
+      "reason": "from scripts/ai_install_facts.py"
+    },
+    {
+      "path": "scripts/ai_install_status.py",
+      "reason": "from scripts/ai_install_status.py"
+    },
+    {
+      "path": "scripts/ai_installer_bootstrap.py",
+      "reason": "from scripts/ai_installer_bootstrap.py"
+    },
+    {
+      "path": "scripts/ai_installer_catalog.json",
+      "reason": "from scripts/ai_installer_catalog.json"
+    },
+    {
+      "path": "scripts/ai_installer_detection.py",
+      "reason": "from scripts/ai_installer_detection.py"
+    },
+    {
+      "path": "scripts/ai_installer_evidence.py",
+      "reason": "from scripts/ai_installer_evidence.py"
+    },
+    {
+      "path": "scripts/ai_installer_managed_regions.py",
+      "reason": "from scripts/ai_installer_managed_regions.py"
+    },
+    {
+      "path": "scripts/ai_installer_ownership.py",
+      "reason": "from scripts/ai_installer_ownership.py"
+    },
+    {
+      "path": "scripts/ai_installer_repository.py",
+      "reason": "from scripts/ai_installer_repository.py"
+    },
+    {
+      "path": "scripts/ai_installer_transaction.py",
+      "reason": "from scripts/ai_installer_transaction.py"
+    },
+    {
+      "path": "scripts/ai_installer_upgrade.py",
+      "reason": "from scripts/ai_installer_upgrade.py"
+    },
+    {
+      "path": "scripts/ai_intent_policy.py",
+      "reason": "from scripts/ai_intent_policy.py"
+    },
+    {
+      "path": "scripts/ai_lifecycle_facts.py",
+      "reason": "from scripts/ai_lifecycle_facts.py"
+    },
+    {
+      "path": "scripts/ai_lifecycle_truth.py",
+      "reason": "from scripts/ai_lifecycle_truth.py"
+    },
+    {
+      "path": "scripts/ai_observability.py",
+      "reason": "from scripts/ai_observability.py"
+    },
+    {
+      "path": "scripts/ai_onboard.py",
+      "reason": "from scripts/ai_onboard.py"
+    },
+    {
+      "path": "scripts/ai_ownership.py",
+      "reason": "from scripts/ai_ownership.py"
+    },
+    {
+      "path": "scripts/ai_post_archive_recovery.py",
+      "reason": "from scripts/ai_post_archive_recovery.py"
+    },
+    {
+      "path": "scripts/ai_preflight_review.py",
+      "reason": "from scripts/ai_preflight_review.py"
+    },
+    {
+      "path": "scripts/ai_project_doctor.py",
+      "reason": "from scripts/ai_project_doctor.py"
+    },
+    {
+      "path": "scripts/ai_project_profile.py",
+      "reason": "from scripts/ai_project_profile.py"
+    },
+    {
+      "path": "scripts/ai_projection_lease.py",
+      "reason": "from scripts/ai_projection_lease.py"
+    },
+    {
+      "path": "scripts/ai_readiness_policy.py",
+      "reason": "from scripts/ai_readiness_policy.py"
+    },
+    {
+      "path": "scripts/ai_render_task_outcome.py",
+      "reason": "from scripts/ai_render_task_outcome.py"
+    },
+    {
+      "path": "scripts/ai_render_task_outcome_multilingual.py",
+      "reason": "from scripts/ai_render_task_outcome_multilingual.py"
+    },
+    {
+      "path": "scripts/ai_required_evidence.py",
+      "reason": "from scripts/ai_required_evidence.py"
+    },
+    {
+      "path": "scripts/ai_review_readiness_policy.py",
+      "reason": "from scripts/ai_review_readiness_policy.py"
+    },
+    {
+      "path": "scripts/ai_risk_policy.py",
+      "reason": "from scripts/ai_risk_policy.py"
+    },
+    {
+      "path": "scripts/ai_rollback.py",
+      "reason": "from scripts/ai_rollback.py"
+    },
+    {
+      "path": "scripts/ai_scenario_policy.py",
+      "reason": "from scripts/ai_scenario_policy.py"
+    },
+    {
+      "path": "scripts/ai_start.py",
+      "reason": "from scripts/ai_start.py"
+    },
+    {
+      "path": "scripts/ai_start_receipt.py",
+      "reason": "from scripts/ai_start_receipt.py"
+    },
+    {
+      "path": "scripts/ai_task_event_log.py",
+      "reason": "from scripts/ai_task_event_log.py"
+    },
+    {
+      "path": "scripts/ai_trust_guards.py",
+      "reason": "from scripts/ai_trust_guards.py"
+    },
+    {
+      "path": "scripts/ai_trust_schema.py",
+      "reason": "from scripts/ai_trust_schema.py"
+    },
+    {
+      "path": "scripts/ai_uninstall_facts.py",
+      "reason": "from scripts/ai_uninstall_facts.py"
+    },
+    {
+      "path": "scripts/ai_uninstall_proposal.py",
+      "reason": "from scripts/ai_uninstall_proposal.py"
+    },
+    {
+      "path": "scripts/ai_upgrade_apply.py",
+      "reason": "from scripts/ai_upgrade_apply.py"
+    },
+    {
+      "path": "scripts/ai_upgrade_conflict_report.py",
+      "reason": "from scripts/ai_upgrade_conflict_report.py"
+    },
+    {
+      "path": "scripts/ai_upgrade_proposal.py",
+      "reason": "from scripts/ai_upgrade_proposal.py"
+    },
+    {
+      "path": "scripts/ai_validate_java_runtime.py",
+      "reason": "from scripts/ai_validate_java_runtime.py"
+    },
+    {
+      "path": "scripts/ai_verification_policy.py",
+      "reason": "from scripts/ai_verification_policy.py"
+    },
+    {
+      "path": "scripts/ai_work_item_intelligence.py",
+      "reason": "from scripts/ai_work_item_intelligence.py"
+    },
+    {
+      "path": "scripts/ai_work_item_status.py",
+      "reason": "from scripts/ai_work_item_status.py"
+    },
+    {
+      "path": "scripts/bootstrap_repository.py",
+      "reason": "from scripts/bootstrap_repository.py"
+    },
+    {
+      "path": "scripts/bootstrap_wizard.py",
+      "reason": "from scripts/bootstrap_wizard.py"
+    },
+    {
+      "path": "scripts/bootstrap_write_boundary.py",
+      "reason": "from scripts/bootstrap_write_boundary.py"
+    },
+    {
+      "path": "scripts/check_changed_critical_coverage.py",
+      "reason": "from scripts/check_changed_critical_coverage.py"
+    },
+    {
+      "path": "scripts/check_critical_coverage.py",
+      "reason": "from scripts/check_critical_coverage.py"
+    },
+    {
+      "path": "scripts/determine_governance_profile.py",
+      "reason": "from scripts/determine_governance_profile.py"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.json",
+      "reason": "Mandatory Task Outcome evidence generated by ai-finish."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.md",
+      "reason": "Mandatory Task Outcome evidence generated by ai-finish."
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "reason": "Generated machine-readable Human Benefit Review Report."
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "reason": "Generated human-readable Human Benefit Review Report."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Generated archive discovery index."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/adopt_ai_cockpit.archive-manifest.json",
+      "reason": "Immutable archive evidence root."
+    }
+  ],
+  "sourcesUsed": [
+    ".ai/cockpit/adoption.md",
+    "installer action log",
+    "adopter repository Git remote HEAD",
+    "release.json or AI_COCKPIT_TEMPLATE_REF"
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Fresh adoption Contract has sufficient intent and evidence for enforced Preflight.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "installer action log",
+        ".ai/cockpit/adoption.md"
+      ]
+    },
+    {
+      "scenario": "Project quality remains explicitly unconfigured after adoption.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "adoption Contract outOfScope",
+        "adoption guideline"
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "command": "make check-ai-contract CONTRACT=.ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T01:39:02.869387+00:00",
+      "exitCode": 0,
+      "durationMs": 61,
+      "outputDigest": "c2aed2629054967cefcd4090c4d613ccc45496e18836046b25114f0c8c1999b6",
+      "commandHash": "c125a8da42dca99967b1ea9ce2829ad8c70be87ff4f75ec058d00289be144360",
+      "contractHash": "f6cab7443c87a4fa326d58824b462328e9e07f4f2e9984ecbb414a5389743809",
+      "commitSha": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+      "executionContractPath": ".ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "worktreeDigest": "bb126622ae4863a7aeb5aa667085869261fe73def74bfbcc61fb552c721aa021",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/adopt_ai_cockpit.contract.json work item contract check passed: .ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/adopt_ai_cockpit.contract.json work item contract check passed: .ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "outputBytes": 264
+    },
+    {
+      "check": "aiScope",
+      "command": "make check-ai-scope CONTRACT=.ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T01:39:03.030425+00:00",
+      "exitCode": 0,
+      "durationMs": 108,
+      "outputDigest": "c7c61b9cf2d36a4c47c6c762f2520adaaf386ff5e7d1eadd8dfa2892c78c8af6",
+      "commandHash": "cb137f6ed61d7ef5191d9a46a9269c493e80ac567c71555afaf97176eeb0827e",
+      "contractHash": "f6cab7443c87a4fa326d58824b462328e9e07f4f2e9984ecbb414a5389743809",
+      "commitSha": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+      "executionContractPath": ".ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "worktreeDigest": "10107f07adfbf33b5d61d275f13780223de88f28d82c452daa7ad4a9fbaf5562",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/adopt_ai_cockpit.contract.json scope guard passed: 198 changed path(s) covered",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/adopt_ai_cockpit.contract.json scope guard passed: 198 changed path(s) covered",
+      "outputBytes": 222
+    },
+    {
+      "check": "aiStatus",
+      "command": "make generate-cockpit-status CONTRACT=.ai/work-items/active/adopt_ai_cockpit.contract.json SUMMARY=.ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T01:39:03.556188+00:00",
+      "exitCode": 0,
+      "durationMs": 234,
+      "outputDigest": "65d7515321d200d8c9547db29b057f097b4c082b494be32344df1428ba74203b",
+      "commandHash": "378455c04bcbddbb9b0b93788825c2a210a209f96d818b837499378c832a50e7",
+      "contractHash": "f6cab7443c87a4fa326d58824b462328e9e07f4f2e9984ecbb414a5389743809",
+      "commitSha": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+      "executionContractPath": ".ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "worktreeDigest": "6ab80586bad8e9eda5c3d1b2d54fa9d7d7e8fc1ca3c968104d8b78ffffc12a49",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/adopt_ai_cockpit.contract.json --summary .ai/work-items/active/adopt_ai_cockpit.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/adopt_ai_cockpit.contract.json --summary .ai/work-items/active/adopt_ai_cockpit.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputBytes": 338
+    },
+    {
+      "check": "aiStatusCheck",
+      "command": "make check-ai-status CONTRACT=.ai/work-items/active/adopt_ai_cockpit.contract.json SUMMARY=.ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T01:39:04.085445+00:00",
+      "exitCode": 0,
+      "durationMs": 245,
+      "outputDigest": "8bddf29e0432c9768bbb774fae49c08a2a00bd97435c81c5a0addd0d85988715",
+      "commandHash": "35d4a7fd718fa5c27eb74c01d8bddd98b18d2acbf4eed8a5563b2ed3dce368d1",
+      "contractHash": "f6cab7443c87a4fa326d58824b462328e9e07f4f2e9984ecbb414a5389743809",
+      "commitSha": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+      "executionContractPath": ".ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "worktreeDigest": "dcc72e4c11a54e494089d14ee15dd5bb29be36f2801bab491019ef73588c2305",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/adopt_ai_cockpit.contract.json --summary .ai/work-items/active/adopt_ai_cockpit.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/adopt_ai_cockpit.contract.json --summary .ai/work-items/active/adopt_ai_cockpit.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputBytes": 337
+    },
+    {
+      "check": "aiStatusConsistency",
+      "command": "make check-ai-status-consistency",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T01:39:04.439280+00:00",
+      "exitCode": 0,
+      "durationMs": 52,
+      "outputDigest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+      "commandHash": "ddd5a0e5fa9b289b1ab3ba23cf37c1a7f01d48f31e2ad99e85762ba20f93c2a6",
+      "contractHash": "f6cab7443c87a4fa326d58824b462328e9e07f4f2e9984ecbb414a5389743809",
+      "commitSha": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+      "executionContractPath": ".ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "worktreeDigest": "6ada1fe2d8fc16392889022a82c83ee5c04f1e9686ab17a69e771f127c83fba1",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputBytes": 169
+    },
+    {
+      "check": "aiAgentRisk",
+      "command": "make check-ai-agent-risk CONTRACT=.ai/work-items/active/adopt_ai_cockpit.contract.json SUMMARY=.ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T01:39:04.676744+00:00",
+      "exitCode": 0,
+      "durationMs": 161,
+      "outputDigest": "27ac06330d240e8a8aef3d441de898e863b22c9bd271a1deb5770b61b77d1f8c",
+      "commandHash": "f7235ef4415b84f839943ed4eb56df690ecc839df8a6c77fcc12bb6d8f5e5c30",
+      "contractHash": "f6cab7443c87a4fa326d58824b462328e9e07f4f2e9984ecbb414a5389743809",
+      "commitSha": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+      "executionContractPath": ".ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "worktreeDigest": "f9cca6eddef5ba2a2f1db0bb07842e805c29f8d539a5d68360605c4bd5e32adb",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/adopt_ai_cockpit.contract.json --summary .ai/work-items/active/adopt_ai_cockpit.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/adopt_ai_cockpit.contract.json --summary .ai/work-items/active/adopt_ai_cockpit.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputBytes": 317
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/adopt_ai_cockpit.summary.json CONTRACT=.ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T01:39:05.744589+00:00",
+      "exitCode": 0,
+      "durationMs": 197,
+      "outputDigest": "acaf32021e3bf78417e67d8f69d84ab3f4085e412a6ee744e29058fad03c0721",
+      "commandHash": "ca06156aaf2c72b4758f70855ea23ca71c44f2b9b380b46830d1ee23c828c107",
+      "contractHash": "f6cab7443c87a4fa326d58824b462328e9e07f4f2e9984ecbb414a5389743809",
+      "commitSha": "741895b05ded378870bcf1d608b8d1387afd6e4f",
+      "executionContractPath": ".ai/work-items/active/adopt_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "worktreeDigest": "f88786e4cac0ee27967aaa82e5a100759a6448568e433b6bfa520ee51a110229",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/adopt_ai_cockpit.summary.json --contract .ai/work-items/active/adopt_ai_cockpit.contract.json ai summary check passed: .ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/adopt_ai_cockpit.summary.json --contract .ai/work-items/active/adopt_ai_cockpit.contract.json ai summary check passed: .ai/work-items/active/adopt_ai_cockpit.summary.json",
+      "outputBytes": 317,
+      "outcomeInputDigest": "dddf1cc57f7241cff61ab75cf76bd32719e0520ec9827c16995bf478fc541432"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "Do not claim project quality checks are configured by adoption.",
+      "compliant": true,
+      "evidence": "Adoption verification excludes unconfigured project quality commands."
+    }
+  ],
+  "unknownsRemaining": [],
+  "risk": {
+    "level": "low",
+    "detail": "Trusted approval must still be enforced by the code-hosting platform; project quality remains a documented follow-up."
+  },
+  "generatedFiles": [
+    ".ai/cockpit/current_status.md"
+  ],
+  "destructiveChanges": [],
+  "observedIssues": [],
+  "residualRisks": [
+    {
+      "level": "medium",
+      "area": "project_quality",
+      "detail": "Configure and require project quality checks after adoption.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    }
+  ],
+  "reviewReadiness": {
+    "status": "ready_with_risks",
+    "reason": "All required verification passed; residual risk remains documented.",
+    "expectedReviewFocus": [
+      "Complete installation path ownership",
+      "External trusted approval"
+    ]
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "verified",
+    "userVisibleOutput": "verified",
+    "persistence": "verified",
+    "localization": "verified",
+    "generatedArtifacts": "verified",
+    "makeEntrypoints": "verified"
+  },
+  "userCorrectionsCaptured": [],
+  "userCorrectionSolidification": [],
+  "checkpointEvidence": [],
+  "knownGaps": [
+    "Project-specific quality commands are not configured by adoption."
+  ],
+  "overclaimPrevention": "This record covers governance adoption only, not product quality validation.",
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "aligned",
+    "checkedAt": "2026-08-17T01:37:40.961158+00:00",
+    "checks": [
+      {
+        "area": "plan",
+        "status": "not_applicable",
+        "evidence": [],
+        "reason": "The bounded installer record has no remediation-plan scope."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json"
+        ],
+        "reason": "The generated Contract is declared in the final installer write set."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "aligned",
+        "evidence": [
+          ".ai/README.md",
+          ".ai/cockpit/README.ja.md",
+          ".ai/cockpit/README.md",
+          ".ai/cockpit/adoption.ja.md",
+          ".ai/cockpit/adoption.md",
+          ".ai/glossary.md",
+          "AGENTS.md",
+          "CLAUDE.md",
+          "GEMINI.md",
+          "Makefile",
+          ".ai/cockpit/task_report.md",
+          ".ai/work-items/archive/2026/adopt_ai_cockpit.outcome.md"
+        ],
+        "reason": "Every installer-written documentation and command surface is enumerated."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "aligned",
+        "evidence": [
+          ".ai/cockpit/README.ja.md",
+          ".ai/cockpit/adoption.ja.md"
+        ],
+        "reason": "Installer-written Japanese or Chinese surfaces remain explicit for review."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/adopt_ai_cockpit.contract.json"
+        ],
+        "reason": "The generated Contract retains adoption or upgrade boundaries and follow-ups."
+      }
+    ]
+  },
+  "taskOutcome": {
+    "status": "completed_with_warnings",
+    "jsonPath": ".ai/work-items/active/adopt_ai_cockpit.outcome.json",
+    "markdownPath": ".ai/work-items/active/adopt_ai_cockpit.outcome.md",
+    "rawEvidencePath": "derived:pre_merge",
+    "evidenceCount": 2,
+    "humanStatusColor": "yellow"
+  },
+  "archiveSequence": 1
+}

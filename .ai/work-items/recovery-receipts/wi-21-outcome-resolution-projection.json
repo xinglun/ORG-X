@@ -1,0 +1,62 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-21-outcome-resolution-projection.archive-manifest.json",
+      "sha256": "72cfcf2b434546174eb2285aa81aee581cbc42ae07fbbda5f26b754346ebc286"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-21-outcome-resolution-projection.contract.json",
+      "sha256": "5b1893792994abfd1d8df9d0c7c988a8ed563e865139c624af56f97898b0380e"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-21-outcome-resolution-projection.outcome.json",
+      "sha256": "2edf8691c97b8ac32fb5749e8dddc5af9dfaede97bb190fe8f6710bfdea0981d"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-21-outcome-resolution-projection.summary.json",
+      "sha256": "f1d0c38c7a79b1ae17bfdfab3b67b1291d3e973dfbf5970de16b69027f5aa02a"
+    }
+  },
+  "failure": {
+    "gate": "hostedFunctionalFailure"
+  },
+  "humanAuthorization": {
+    "reference": "human-user-current-task",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/681",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-16T18:49:01.662628+00:00",
+  "prBaseCommit": "31a999c1e38d3b3e80eacc53a95ea9ca750efef3",
+  "provider": {
+    "event": "pull_request",
+    "failedCandidateHead": "27fb59babf0d280763c8f6c2e28677618dc1c86d",
+    "failureMarker": "junit_artifact_failure",
+    "jobConclusion": "failure",
+    "jobId": 95210137192,
+    "jobName": "template-smoke",
+    "junitArtifact": {
+      "failedTestcases": 2,
+      "id": 9268371160,
+      "name": "project-test-shard-lifecycle-31965385792-1",
+      "sha256": "53756b9971f6a366dba61ec070adf8e91c5b86fe47f7308526d6828c19ccf7be"
+    },
+    "kind": "github_actions",
+    "logSha256": "7ffd6fe13a57bdfb7f1c1f45cbae1e47adf8936f41649e7bb8feeab326e04c45",
+    "pullRequest": 870,
+    "repository": "spirex-ds-dev/ai-cockpit-template",
+    "runAttempt": 1,
+    "runConclusion": "failure",
+    "runId": 31965385792,
+    "runStatus": "completed",
+    "runUrl": "https://github.com/spirex-ds-dev/ai-cockpit-template/actions/runs/31965385792",
+    "workflowPath": ".github/workflows/smoke.yml"
+  },
+  "receiptVersion": 3,
+  "recoveryPaths": [
+    "docs/reference/capability-truth-matrix.json",
+    "docs/reference/pre-release-documentation-alignment.json",
+    "docs/reference/pre-release-documentation-alignment.md"
+  ],
+  "workItemId": "wi-21-outcome-resolution-projection"
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "decision": "retire_cancelled_requirement",
+  "baseRef": "9c652c0f8b1fd72606a0d184d6292e4b32926698",
+  "retiredPaths": ["tests/test_provider_backed_governance_validation.py"],
+  "allowedSignals": ["assertion_reduction", "test_case_removed", "negative_test_removed", "exception_assertion_removed"],
+  "humanAuthorization": {
+    "approvedBy": "user",
+    "reference": "conversation:current-cycle-plan-and-heartbeat",
+    "digest": "sha256:user-authorized-cycle-remediation-without-provider-configuration"
+  }
+}

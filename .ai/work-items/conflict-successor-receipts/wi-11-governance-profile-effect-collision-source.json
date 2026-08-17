@@ -1,0 +1,44 @@
+{
+  "receiptVersion": 1,
+  "kind": "synchronization_conflict_successor",
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/859",
+  "authority": "User approval recorded in current execution thread",
+  "reason": "Original WI-11 archived sequence 920 collides with current-main WI-13 ownership; preserve predecessor evidence byte-for-byte and redeliver the same bounded governance profile effect from current origin/main.",
+  "targetBaseCommit": "f490d9dbc7e3a36eed0ec7fe6b53ef0cf01379f3",
+  "source": {
+    "workItemId": "wi-11-governance-profile-effect-collision-source",
+    "branch": "codex/wi-11-governance-profile-effect-collision-source",
+    "baseCommit": "e187b6254e0f8db289cd57b4207a8e9d53c44fc1",
+    "checkpointHead": "218a57bfb7016c0faf1f3471afd027c00b2ccc44",
+    "startReceipt": {
+      "path": ".ai/work-items/starts/wi-11-governance-profile-effect-collision-source.json",
+      "sha256": "2735662019474576a179a985413ceaf5058e30b10b97cd375e8698119e49f9a5"
+    },
+    "contract": {
+      "path": ".ai/work-items/active/wi-11-governance-profile-effect-collision-source.contract.json",
+      "sha256": "2c069d9d0758b959593fd068fa6b669daf07d3cd05a364a29f60e34e13b9a6db"
+    },
+    "summary": {
+      "path": ".ai/work-items/active/wi-11-governance-profile-effect-collision-source.summary.json",
+      "sha256": "dc44c7214afb290715d9ad35f01c1251fdcdfa7b036f4c47c5d8f96455001939"
+    },
+    "outcome": {
+      "path": ".ai/work-items/active/wi-11-governance-profile-effect-collision-source.outcome.json",
+      "sha256": "b166084aeee9f57ce91f3036242aa2f60aa4d3e6c622060ba1a4b0c0d29fc62c"
+    }
+  },
+  "successor": {
+    "workItemId": "wi-11-governance-profile-effect-successor",
+    "branch": "codex/wi-11-governance-profile-effect-successor",
+    "baseCommit": "f490d9dbc7e3a36eed0ec7fe6b53ef0cf01379f3",
+    "startReceipt": {
+      "path": ".ai/work-items/starts/wi-11-governance-profile-effect-successor.json",
+      "sha256": "0f6d2dc46595dea9f255ae26bb77df63e9a429de18f84bc25459f178f88dcdb8"
+    },
+    "contract": {
+      "path": ".ai/work-items/active/wi-11-governance-profile-effect-successor.contract.json",
+      "sha256": "c9e9bb19a8b9b97c3b532507d0fdf8a61cc17be56dc0cfb15d02dd579785ef94"
+    }
+  },
+  "recordedAt": "2026-08-16T07:50:29.156810+00:00"
+}

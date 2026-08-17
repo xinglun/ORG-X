@@ -6,13 +6,17 @@
 
 use chrono::{DateTime, NaiveDate, Utc};
 use regex::Regex;
-use serde::de::DeserializeOwned;
+use serde::de::{DeserializeOwned, Error as DeError};
 use serde::Deserialize;
 
-use super::config::CompanyConfig;
-use super::http::HttpClient;
+use super::config::{is_safe_source_identifier, CompanyConfig};
+use super::http::{HttpClient, HttpResponse};
 use super::model::Provenance;
 
+/// Maximum response body size accepted by source adapters.
+pub const MAX_SOURCE_BODY_BYTES: usize = 1_048_576;
+/// Maximum number of Greenhouse or Lever records retained from one response.
+pub const MAX_HIRING_RECORDS: usize = 100;
 const MAX_GDELT_ARTICLES: usize = 10;
 const GDELT_ENDPOINT: &str = "https://api.gdeltproject.org/api/v2/doc/doc";
 const GDELT_USER_AGENT: &str = "ORG-X weekly-radar source adapter";
@@ -105,7 +109,7 @@ impl SourceTier {
 }
 
 /// Provider-neutral source material with explicit status and provenance.
-#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct SourceObservation {
     company_id: String,
     kind: SourceKind,
@@ -115,6 +119,47 @@ pub struct SourceObservation {
     title: Option<String>,
     text: String,
     provenance: Provenance,
+}
+
+impl<'de> Deserialize<'de> for SourceObservation {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        #[derive(Deserialize)]
+        struct SourceObservationWire {
+            company_id: String,
+            kind: SourceKind,
+            status: SourceStatus,
+            tier: SourceTier,
+            url: Option<String>,
+            title: Option<String>,
+            text: String,
+            provenance: Provenance,
+        }
+
+        let wire = SourceObservationWire::deserialize(deserializer)?;
+        if wire.company_id.trim().is_empty() {
+            return Err(D::Error::custom(
+                "source observation company ID cannot be blank",
+            ));
+        }
+        validate_status_and_tier(wire.kind, wire.status, wire.tier).map_err(D::Error::custom)?;
+        wire.provenance
+            .validate()
+            .map_err(|error| D::Error::custom(error.to_string()))?;
+
+        Ok(Self {
+            company_id: wire.company_id,
+            kind: wire.kind,
+            status: wire.status,
+            tier: wire.tier,
+            url: wire.url,
+            title: wire.title,
+            text: wire.text,
+            provenance: wire.provenance,
+        })
+    }
 }
 
 impl SourceObservation {
@@ -289,7 +334,22 @@ fn collect_official(
     );
     match result {
         Ok(response) if response.is_success() => {
-            let text = normalize_html_text(response.body());
+            let body = match bounded_body(&response) {
+                Ok(body) => body,
+                Err(FetchFailure::Unavailable) => {
+                    observations.push(unavailable_observation(
+                        company,
+                        kind,
+                        SourceTier::OfficialPrimary,
+                        Some(url),
+                        observed_at,
+                        "official page response exceeds size limit",
+                    ));
+                    return;
+                }
+                Err(FetchFailure::InvalidPayload) => unreachable!("body bounds do not decode"),
+            };
+            let text = normalize_html_text(body);
             let status = if text.is_empty() {
                 SourceStatus::Unknown
             } else {
@@ -337,6 +397,17 @@ fn collect_greenhouse(
         ));
         return;
     };
+    if !is_safe_source_identifier(board) {
+        observations.push(unavailable_observation(
+            company,
+            SourceKind::Greenhouse,
+            SourceTier::StructuredHiring,
+            None,
+            observed_at,
+            "Greenhouse board identifier is unsafe",
+        ));
+        return;
+    }
 
     let endpoint = format!("https://boards-api.greenhouse.io/v1/boards/{board}/jobs?content=true");
     let response = match get_json::<GreenhouseResponse>(http, &endpoint) {
@@ -366,7 +437,7 @@ fn collect_greenhouse(
     };
 
     let mut retained = 0;
-    for job in response.jobs {
+    for job in response.jobs.into_iter().take(MAX_HIRING_RECORDS) {
         let title = normalize_plain_text(&job.title);
         if title.is_empty() {
             continue;
@@ -424,6 +495,17 @@ fn collect_lever(
         ));
         return;
     };
+    if !is_safe_source_identifier(site) {
+        observations.push(unavailable_observation(
+            company,
+            SourceKind::Lever,
+            SourceTier::StructuredHiring,
+            None,
+            observed_at,
+            "Lever site identifier is unsafe",
+        ));
+        return;
+    }
 
     let endpoint = format!("https://api.lever.co/v0/postings/{site}?mode=json");
     let postings = match get_json::<Vec<LeverPosting>>(http, &endpoint) {
@@ -453,7 +535,7 @@ fn collect_lever(
     };
 
     let mut retained = 0;
-    for posting in postings {
+    for posting in postings.into_iter().take(MAX_HIRING_RECORDS) {
         let title = normalize_plain_text(&posting.text);
         if title.is_empty() {
             continue;
@@ -633,6 +715,51 @@ enum FetchFailure {
     InvalidPayload,
 }
 
+fn validate_status_and_tier(
+    kind: SourceKind,
+    status: SourceStatus,
+    tier: SourceTier,
+) -> Result<(), String> {
+    let valid = match kind {
+        SourceKind::OfficialIr | SourceKind::Careers | SourceKind::EngineeringAiBlog => {
+            matches!(tier, SourceTier::OfficialPrimary)
+                && matches!(
+                    status,
+                    SourceStatus::Known | SourceStatus::Unknown | SourceStatus::Unavailable
+                )
+        }
+        SourceKind::Greenhouse | SourceKind::Lever => {
+            matches!(tier, SourceTier::StructuredHiring)
+                && matches!(
+                    status,
+                    SourceStatus::Known | SourceStatus::Unknown | SourceStatus::Unavailable
+                )
+        }
+        SourceKind::Gdelt => {
+            matches!(tier, SourceTier::DiscoveryOnly)
+                && matches!(
+                    status,
+                    SourceStatus::DiscoveryOnly | SourceStatus::Unknown | SourceStatus::Unavailable
+                )
+        }
+    };
+    if valid {
+        Ok(())
+    } else {
+        Err(format!(
+            "invalid source status/tier combination for {}",
+            kind.as_str()
+        ))
+    }
+}
+
+fn bounded_body(response: &HttpResponse) -> Result<&str, FetchFailure> {
+    if response.body().len() > MAX_SOURCE_BODY_BYTES {
+        return Err(FetchFailure::Unavailable);
+    }
+    Ok(response.body())
+}
+
 fn get_json<T: DeserializeOwned>(http: &dyn HttpClient, url: &str) -> Result<T, FetchFailure> {
     let response = http
         .get(
@@ -646,7 +773,8 @@ fn get_json<T: DeserializeOwned>(http: &dyn HttpClient, url: &str) -> Result<T, 
     if !response.is_success() {
         return Err(FetchFailure::Unavailable);
     }
-    serde_json::from_str(response.body()).map_err(|_| FetchFailure::InvalidPayload)
+    let body = bounded_body(&response)?;
+    serde_json::from_str(body).map_err(|_| FetchFailure::InvalidPayload)
 }
 
 fn normalize_html_text(html: &str) -> String {

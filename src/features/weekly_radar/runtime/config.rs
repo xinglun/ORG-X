@@ -255,6 +255,17 @@ fn validate_optional_identifier(
 ) -> Result<(), RuntimeError> {
     if let Some(value) = value {
         validate_required(field, value)?;
+        if !is_safe_source_identifier(value) {
+            return Err(RuntimeError::invalid_configuration(format!(
+                "{field} must contain only ASCII letters, digits, '-' or '_'"
+            )));
+        }
     }
     Ok(())
+}
+
+pub(crate) fn is_safe_source_identifier(value: &str) -> bool {
+    value
+        .bytes()
+        .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'_'))
 }

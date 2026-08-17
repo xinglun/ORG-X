@@ -15,7 +15,7 @@ use org_x::features::weekly_radar::runtime::model::{
 use org_x::features::weekly_radar::runtime::rules::extract_employee_count;
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{
-    collect_configured_sources, SourceKind, SourceStatus, SourceTier,
+    collect_configured_sources, SourceKind, SourceObservation, SourceStatus, SourceTier,
 };
 
 #[test]
@@ -97,6 +97,62 @@ fn calibration_registry_contains_only_configured_prd_companies() {
         assert_eq!(company.greenhouse_board(), None);
         assert_eq!(company.lever_site(), None);
     }
+}
+
+#[test]
+fn configured_hiring_identifiers_reject_path_query_fragment_and_whitespace() {
+    for invalid in [
+        "acme/jobs",
+        "acme?token=1",
+        "acme#fragment",
+        "acme board",
+        "acme.board",
+    ] {
+        let greenhouse = CompanyConfig::new(
+            "acme",
+            "Acme Corporation",
+            "ACME",
+            None,
+            None,
+            None,
+            None,
+            Some(invalid.to_owned()),
+            None,
+        );
+        assert!(
+            greenhouse.is_err(),
+            "unsafe Greenhouse identifier must be rejected: {invalid}"
+        );
+
+        let lever = CompanyConfig::new(
+            "acme",
+            "Acme Corporation",
+            "ACME",
+            None,
+            None,
+            None,
+            None,
+            None,
+            Some(invalid.to_owned()),
+        );
+        assert!(
+            lever.is_err(),
+            "unsafe Lever identifier must be rejected: {invalid}"
+        );
+    }
+
+    assert!(CompanyConfig::new(
+        "acme",
+        "Acme Corporation",
+        "ACME",
+        None,
+        None,
+        None,
+        None,
+        Some("acme-board_1".to_owned()),
+        Some("acme_site-1".to_owned()),
+    )
+    .is_ok());
 }
 
 fn source_test_company() -> CompanyConfig {
@@ -324,6 +380,146 @@ fn absent_optional_sources_are_unavailable_without_guessed_urls() {
             .source_uri()
             .starts_with("source://weekly-radar/"));
     }
+}
+
+#[test]
+fn serialized_gdelt_cannot_be_promoted_to_official_authority() {
+    let company = source_test_company();
+    let client = FixtureHttpClient::with_response(
+        gdelt_fixture_url(),
+        HttpResponse::ok(
+            r#"{"articles":[{"url":"https://news.example.test/acme","title":"Acme context","seendate":"20260817T120000Z"}]}"#,
+        ),
+    );
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+    let article = collect_configured_sources(&company, &client, observed_at)
+        .into_iter()
+        .find(|observation| observation.kind() == SourceKind::Gdelt)
+        .expect("GDELT fixture should produce an observation");
+
+    let mut payload = serde_json::to_value(&article).expect("observation should serialize");
+    payload["tier"] = serde_json::Value::String("OFFICIAL_PRIMARY".to_owned());
+    let decoded = serde_json::from_value::<SourceObservation>(payload);
+
+    assert!(
+        decoded.is_err(),
+        "a discovery observation with an official tier must be rejected"
+    );
+}
+
+#[test]
+fn oversized_official_and_hiring_bodies_become_unavailable() {
+    const MAX_SOURCE_BODY_BYTES: usize = 1_048_576;
+
+    let company = source_test_company();
+    let client = FixtureHttpClient::new();
+    let oversized_text = "x".repeat(MAX_SOURCE_BODY_BYTES + 1);
+    client.insert(
+        company.official_ir_url().unwrap(),
+        HttpResponse::ok(format!("<p>{oversized_text}</p>")),
+    );
+    client.insert(
+        "https://boards-api.greenhouse.io/v1/boards/acme/jobs?content=true",
+        HttpResponse::ok(format!(r#"{{"jobs":"{oversized_text}"}}"#)),
+    );
+    client.insert(
+        "https://api.lever.co/v0/postings/acme?mode=json",
+        HttpResponse::ok(oversized_text),
+    );
+    client.insert(gdelt_fixture_url(), HttpResponse::ok(r#"{"articles":[]}"#));
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+
+    let observations = collect_configured_sources(&company, &client, observed_at);
+    for kind in [
+        SourceKind::OfficialIr,
+        SourceKind::Greenhouse,
+        SourceKind::Lever,
+    ] {
+        let observation = observations
+            .iter()
+            .find(|observation| observation.kind() == kind)
+            .expect("oversized source should still have an observation");
+        assert_eq!(observation.status(), SourceStatus::Unavailable);
+        assert_eq!(observation.text(), "");
+    }
+}
+
+#[test]
+fn greenhouse_and_lever_records_are_capped_at_one_hundred_in_source_order() {
+    const MAX_HIRING_RECORDS: usize = 100;
+
+    let company = source_test_company();
+    let client = FixtureHttpClient::new();
+    let greenhouse_jobs = (0..MAX_HIRING_RECORDS + 5)
+        .map(|id| {
+            format!(
+                r#"{{"id":{id},"title":"Greenhouse Role {id}","absolute_url":"https://jobs.example.test/greenhouse/{id}","content":"Build systems."}}"#
+            )
+        })
+        .collect::<Vec<_>>()
+        .join(",");
+    client.insert(
+        "https://boards-api.greenhouse.io/v1/boards/acme/jobs?content=true",
+        HttpResponse::ok(format!(r#"{{"jobs":[{greenhouse_jobs}]}}"#)),
+    );
+
+    let lever_postings = (0..MAX_HIRING_RECORDS + 5)
+        .map(|id| {
+            format!(
+                r#"{{"id":"posting-{id}","text":"Lever Role {id}","hostedUrl":"https://jobs.example.test/lever/{id}","descriptionPlain":"Build systems."}}"#
+            )
+        })
+        .collect::<Vec<_>>()
+        .join(",");
+    client.insert(
+        "https://api.lever.co/v0/postings/acme?mode=json",
+        HttpResponse::ok(format!(r#"[{lever_postings}]"#)),
+    );
+    client.insert(gdelt_fixture_url(), HttpResponse::ok(r#"{"articles":[]}"#));
+    let observed_at: DateTime<Utc> = "2026-08-17T00:00:00Z".parse().unwrap();
+
+    let observations = collect_configured_sources(&company, &client, observed_at);
+    assert_eq!(
+        observations
+            .iter()
+            .filter(|observation| {
+                observation.kind() == SourceKind::Greenhouse
+                    && observation.status() == SourceStatus::Known
+            })
+            .count(),
+        MAX_HIRING_RECORDS
+    );
+    assert_eq!(
+        observations
+            .iter()
+            .filter(|observation| {
+                observation.kind() == SourceKind::Lever
+                    && observation.status() == SourceStatus::Known
+            })
+            .count(),
+        MAX_HIRING_RECORDS
+    );
+    assert_eq!(
+        observations
+            .iter()
+            .find(|observation| {
+                observation.kind() == SourceKind::Greenhouse
+                    && observation.status() == SourceStatus::Known
+            })
+            .and_then(|observation| observation.title()),
+        Some("Greenhouse Role 0")
+    );
+    assert_eq!(
+        observations
+            .iter()
+            .filter(|observation| {
+                observation.kind() == SourceKind::Greenhouse
+                    && observation.status() == SourceStatus::Known
+            })
+            .last()
+            .and_then(|observation| observation.title()),
+        Some("Greenhouse Role 99")
+    );
 }
 
 fn sec_test_company() -> CompanyConfig {

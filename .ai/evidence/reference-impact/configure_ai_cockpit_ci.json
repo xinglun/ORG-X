@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "target": {
+    "type": "workflow_job",
+    "name": "org_x_governance_ci",
+    "path": ".github/workflows/ai-cockpit.yml",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The workflow is repository-local and does not load runtime references dynamically."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "No external consumer is declared; the workflow is an additive repository CI entrypoint."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "No monitoring integration or existing workflow job is replaced by this file."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/configure_ai_cockpit.contract.json",
+      "The change adds CI jobs and does not delete, rename, or migrate an existing workflow."
+    ]
+  }
+}

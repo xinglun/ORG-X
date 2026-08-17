@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "configure_ai_cockpit",
+  "receiptPath": ".ai/work-items/starts/configure_ai_cockpit.json",
+  "baseCommit": "ff2e76ba8af9aafeee50a2c10b9094c404f08c98",
+  "baseBranch": "codex/configure-ai-cockpit",
+  "startTimestamp": "2026-08-17T02:06:49.290186+00:00",
+  "initialScopeDigest": "c9aa1a44b1a360851d0e433957c2a620b53fed0d8aaef8b70004fd5c28c760bc",
+  "contractSkeletonDigest": "c67844da94e4a8bd9aa84262ba7f00ee6de94d87385b5ccded099894097eb45f"
+}

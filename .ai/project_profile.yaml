@@ -1,0 +1,81 @@
+version: 1
+repositoryRole: adopted
+
+calibrationProfile:
+  level: lite
+  selectedBy: human
+  selectedAt: "2026-08-17T11:07:37+09:00"
+  reasons:
+    - "Initial ORG-X adopter calibration uses explicit Rust source and test roots."
+  requiredControls:
+    - source_paths
+    - test_paths
+    - generated_paths
+    - protected_paths
+    - quality_command
+    - default_branch
+    - project_owner
+    - reviewer
+    - major_unknowns
+  deferredControls:
+    - file_ownership
+    - scenario_coverage
+    - destructive_change_policy
+    - dependency_policy
+    - ci_policy
+    - public_api_policy
+    - lifecycle_policy
+    - delegated_evidence
+    - reviewer_owner_separation
+    - external_identity_evidence
+    - release_evidence
+    - sbom
+    - provenance
+    - signed_tag_policy
+    - branch_protection_evidence
+    - audit_retention
+    - incident_exception_policy
+
+detectedFacts:
+  languages:
+    - python
+    - rust
+  frameworks: []
+  buildSystems:
+    - cargo
+  infrastructure: []
+
+suggestedBoundaries:
+  productionRoots:
+    - src/**
+  featureRoots:
+    - src/**
+  testRoots:
+    - tests/**
+  generatedPaths: []
+  criticalPaths: []
+
+approvedBoundaries:
+  productionRoots:
+    - src/**
+  featureRoots:
+    - src/**
+  testRoots:
+    - tests/**
+  generatedPaths: []
+  criticalPaths: []
+
+reviewRequirements:
+  - quality
+
+unknowns: []
+
+evidence:
+  - Cargo.toml
+  - rust-toolchain.toml
+  - target/ai_project_doctor_report.json
+
+approval:
+  reviewed: true
+  reviewedBy: user-authorized
+  reason: "The user authorized execution and the approved boundaries match the observed Rust repository layout."

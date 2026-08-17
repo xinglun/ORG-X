@@ -4,7 +4,7 @@
 version: 1
 reportOnly: false
 # Set true only after reviewing every path below against the adopted project.
-adoptionReviewed: false
+adoptionReviewed: true
 
 production:
   include:

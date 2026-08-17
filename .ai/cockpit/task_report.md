@@ -1,50 +1,39 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Blocked
+Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-wr-012.contract.json [evidence: .ai/work-items/archive/2026/wi-wr-012.contract.json]
-- Changed .ai/work-items/active/wi-wr-012.summary.json [evidence: .ai/work-items/archive/2026/wi-wr-012.summary.json]
+- Changed .ai/work-items/active/wi-wr-013.contract.json [evidence: .ai/work-items/archive/2026/wi-wr-013.contract.json]
+- Changed .ai/work-items/active/wi-wr-013.summary.json [evidence: .ai/work-items/archive/2026/wi-wr-013.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/work-items/starts/wi-wr-012.json [evidence: .ai/work-items/starts/wi-wr-012.json]
-- Changed .ai/evidence/reference-impact/wi-wr-012-publication-receipt.json [evidence: .ai/evidence/reference-impact/wi-wr-012-publication-receipt.json]
-- Changed .ai/evidence/reference-impact/wi-wr-012-publication-receipt-test.json [evidence: .ai/evidence/reference-impact/wi-wr-012-publication-receipt-test.json]
-- Changed src/features/weekly_radar/infrastructure/mod.rs [evidence: src/features/weekly_radar/infrastructure/mod.rs]
-- Changed src/features/weekly_radar/infrastructure/telegram_publisher.rs [evidence: src/features/weekly_radar/infrastructure/telegram_publisher.rs]
-- Changed src/features/weekly_radar/infrastructure/telegram_publisher_test.rs [evidence: src/features/weekly_radar/infrastructure/telegram_publisher_test.rs]
-- Changed src/features/weekly_radar/infrastructure/publication_receipt.rs [evidence: src/features/weekly_radar/infrastructure/publication_receipt.rs]
-- Changed src/features/weekly_radar/infrastructure/publication_receipt_test.rs [evidence: src/features/weekly_radar/infrastructure/publication_receipt_test.rs]
+- Changed .ai/work-items/starts/wi-wr-013.json [evidence: .ai/work-items/starts/wi-wr-013.json]
+- Changed src/features/weekly_radar/application/mod.rs [evidence: src/features/weekly_radar/application/mod.rs]
+- Changed src/features/weekly_radar/application/weekly_scheduler.rs [evidence: src/features/weekly_radar/application/weekly_scheduler.rs]
+- Changed src/features/weekly_radar/application/weekly_scheduler_test.rs [evidence: src/features/weekly_radar/application/weekly_scheduler_test.rs]
 - Changed tests/mod_test.rs [evidence: tests/mod_test.rs]
-- Changed tests/publication_receipt_test.rs [evidence: tests/publication_receipt_test.rs]
-- Changed tests/weekly_radar_publication_receipt.rs [evidence: tests/weekly_radar_publication_receipt.rs]
-- Changed tests/telegram_publisher_test.rs [evidence: tests/telegram_publisher_test.rs]
-- Changed tests/weekly_radar_telegram_publisher.rs [evidence: tests/weekly_radar_telegram_publisher.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-wr-012-publication-receipt-retry.md [evidence: docs/superpowers/specs/2026-08-17-wi-wr-012-publication-receipt-retry.md]
-- Changed docs/superpowers/plans/2026-08-17-wi-wr-012-publication-receipt-retry.md [evidence: docs/superpowers/plans/2026-08-17-wi-wr-012-publication-receipt-retry.md]
-- Changed .ai/work-items/active/wi-wr-012.outcome.json [evidence: .ai/work-items/archive/2026/wi-wr-012.outcome.json]
-- Changed .ai/work-items/active/wi-wr-012.outcome.md [evidence: .ai/work-items/archive/2026/wi-wr-012.outcome.md]
+- Changed tests/weekly_radar_scheduler.rs [evidence: tests/weekly_radar_scheduler.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-wr-013-weekly-scheduler.md [evidence: docs/superpowers/specs/2026-08-17-wi-wr-013-weekly-scheduler.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-wr-013-weekly-scheduler.md [evidence: docs/superpowers/plans/2026-08-17-wi-wr-013-weekly-scheduler.md]
+- Changed .ai/work-items/active/wi-wr-013.outcome.json [evidence: .ai/work-items/archive/2026/wi-wr-013.outcome.json]
+- Changed .ai/work-items/active/wi-wr-013.outcome.md [evidence: .ai/work-items/archive/2026/wi-wr-013.outcome.md]
 
 Problems found
-- Total: 2
+- Total: 1
 - Blocking: 0
-- Warning: 0
+- Warning: 1
 
 Stops triggered
-- Reason: quality failed before the retry. | Stage: verification | Resolution: Retry quality after correcting the recorded failure. [evidence: verificationHistory[0] quality failed, verification[quality] retry passed]
+- None recorded.
 
 Problems resolved
-- Problem: quality failed before the retry.
-  Solution: Re-ran quality after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[0] quality failed, verification[quality] retry passed]
+- None recorded.
 
 Risks avoided
-- If not detected, could have led to a stale completion claim. (inference)
+- None recorded.
 
 Remaining risks
-- The initial transport-fake failure helper consumed its one-shot failure on the preceding index; this was corrected within WR-012 and the retry tests now pass. [evidence: observedIssues[0] implementation]
-- No real Telegram client, provider acknowledgement, credentials, or network behavior is exercised; the injected transport boundary remains the explicit seam for later integration. [evidence: residualRisks]
-- Retry is explicit and delivery-only in this WI; scheduling, backoff, persistence, and automatic retry policy remain deferred to later planned work. [evidence: residualRisks]
+- WR-013 does not own a timer, timezone conversion, cron wiring, or persisted run history; an outer runner and WR-015 E2E verification must supply and verify those facts. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
@@ -72,9 +61,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
+- Rework avoided: None recorded.
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
+- Major risk prevented: None recorded.
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-013",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "df6c6c31505bfc4f01131adf660e2ef04447b62cdfa3bd414e4016527c043de8"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-013",
+    "contractDigest": "623bf640bf1fb9591d6de1d33b24e0e27d6f620322445ee8e1d55261de7d6310",
+    "summaryDigest": "9ddf51416ef242b88e64adfbf5dcd115fafda7bb0eff9bd12dc3d23eefd77b18",
+    "verificationDigest": "875a5d018763b3f45537298280eef8f1799a8b815b230df4a826cdb04e201c92",
+    "baseCommit": "43900964a6fdb86d2a174fbc0321fdc3e95e4100",
+    "headCommit": "43900964a6fdb86d2a174fbc0321fdc3e95e4100",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "8fc925f25b5d3ed9fc4f32c5ab6adb44ccdb325ac347bab097ab2aefcce903ba",
+      "binding": {
+        "baseCommit": "43900964a6fdb86d2a174fbc0321fdc3e95e4100",
+        "candidateHead": "43900964a6fdb86d2a174fbc0321fdc3e95e4100",
+        "candidateTreeDigest": "f1ed62413365a4e18129c105805c4bd8ce0f92ce3db526e6b4a332655074004c",
+        "candidateDiffDigest": "bf0f69a093b538d0ace6e8ed3531c0cf45cdabb47d025d91cde7573343fb6f9a"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-013 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-013 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-wr-013",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-013.contract.json",
       ".ai/work-items/archive/2026/wi-wr-013.summary.json",
@@ -24,52 +47,79 @@
       "docs/superpowers/plans/2026-08-17-wi-wr-013-weekly-scheduler.md",
       ".ai/work-items/archive/2026/wi-wr-013.outcome.json",
       ".ai/work-items/archive/2026/wi-wr-013.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "No runtime timer, cron/Actions wiring, timezone conversion, or persisted run history is included; the decision boundary expects a weekday from its caller."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "No runtime timer, cron/Actions wiring, timezone conversion, or persisted run history is included; the decision boundary expects a weekday from its caller.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "No runtime timer, cron/Actions wiring, timezone conversion, or persisted run history is included; the decision boundary expects a weekday from its caller.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "runtime integration",
+        "severity": "low",
+        "title": "runtime integration",
+        "detail": "WR-013 does not own a timer, timezone conversion, cron wiring, or persisted run history; an outer runner and WR-015 E2E verification must supply and verify those facts.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-013.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-013.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "Use the current WI for discovered issues; do not expand into new WIs without need.",
+      "Use the latest weekly Actions checkout version actions/checkout@v5 in WR-015."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-013.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-013.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [
-    "Use the current WI for discovered issues; do not expand into new WIs without need.",
-    "Use the latest weekly Actions checkout version actions/checkout@v5 in WR-015."
-  ],
-  "limitations": [
-    {
-      "sourceWarning": "No runtime timer, cron/Actions wiring, timezone conversion, or persisted run history is included; the decision boundary expects a weekday from its caller.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "WR-013 does not own a timer, timezone conversion, cron wiring, or persisted run history; an outer runner and WR-015 E2E verification must supply and verify those facts.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-013.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -721,6 +771,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

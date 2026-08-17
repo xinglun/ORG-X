@@ -1,0 +1,209 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-013",
+  "mode": "code",
+  "title": "Weekly Scheduler",
+  "baseCommit": "43900964a6fdb86d2a174fbc0321fdc3e95e4100",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "documentation", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": true,
+    "authorityReason": "The user explicitly authorized execution, verification, publication, merge, closure, and archive for all 24 planned Work Items."
+  },
+  "scope": [
+    ".ai/work-items/active/wi-wr-013.contract.json",
+    ".ai/work-items/active/wi-wr-013.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-013.outcome.json",
+    ".ai/work-items/active/wi-wr-013.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-013-*.json",
+    "src/features/weekly_radar/application/mod.rs",
+    "src/features/weekly_radar/application/weekly_scheduler.rs",
+    "src/features/weekly_radar/application/weekly_scheduler_test.rs",
+    "tests/mod_test.rs",
+    "tests/weekly_radar_scheduler.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-013-weekly-scheduler.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-013-weekly-scheduler.md"
+  ],
+  "outOfScope": [
+    "Changing Weekly Radar Domain rules, snapshot identity, evidence cutoff, ranking, rendering, publication receipts, or retry behavior",
+    "Persisting scheduler state, adding a runtime timer, cron daemon, operating-system service, polling loop, backoff, or network operation",
+    "Changing the GitHub Actions workflow or its checkout action version; the end-to-end WI WR-015 owns workflow verification and actions/checkout@v5",
+    "Telegram HTTP/API calls, provider SDKs, bot tokens, chat IDs, CI secret wiring, or external publication",
+    "Production operation, trading decisions, capital actions, or recommendations"
+  ],
+  "sources": [
+    { "path": "AGENTS.md", "reason": "Work Item lifecycle, authorization, Finish, archive, and closure rules." },
+    { "path": ".ai/glossary.md", "reason": "Canonical governance and architecture terminology." },
+    { "path": ".ai/cockpit/README.md", "reason": "Contract, Summary, checkpoint, Finish, and archive workflow." },
+    { "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WR-013 dependency, weekend cadence, configurable day_of_week, and Domain/Application boundary." },
+    { "path": "user-provided-pasted-plan", "reason": "User-provided Weekly Radar architecture and safety constraints." },
+    { "path": "src/features/weekly_radar/application/mod.rs", "reason": "Existing application boundary where the scheduler trigger belongs." },
+    { "path": "src/features/weekly_radar/domain/mod.rs", "reason": "Existing Domain boundary that must remain independent of scheduling." },
+    { "path": "src/features/weekly_radar/application/snapshot_store.rs", "reason": "Existing application snapshot boundary to keep separate from scheduling state." },
+    { "path": "tests/architecture/dependency_rules.rs", "reason": "Existing architecture checks for layer dependency isolation." },
+    { "path": "Makefile", "reason": "Canonical project and AI Cockpit verification commands." }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["schedule_semantics", "boundary_isolation", "deterministic_triggering"],
+    "reason": "The scheduler is a small application boundary, but incorrect weekday semantics or Domain coupling could trigger reports at the wrong cadence.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The roadmap specifies a default weekend run and configurable day_of_week. A pure injected weekday decision boundary is sufficient; runtime timers and persisted run history are explicitly out of scope."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item adds a cross-layer application boundary and restricted .ai governance evidence.",
+      "Strict quality and lifecycle evidence are required before publishing and merging."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user authorized the full lifecycle; WR-013 scope, sources, acceptance, and scheduler boundary are explicit."
+  },
+  "preReviewWarnings": [
+    "Confirm that the default schedule is Sunday, configured weekdays are honored exactly, and no Domain module imports scheduler code.",
+    "Confirm the scheduler makes a trigger decision only and does not calculate, persist, render, publish, or retry a report."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "The default Weekly Scheduler is due on its configured weekend day.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/application/weekly_scheduler_test.rs", "tests/weekly_radar_scheduler.rs"],
+      "expected": "A default scheduler uses Sunday and returns Due for Sunday while remaining NotDue on another weekday.",
+      "verificationPlan": "Evaluate the default scheduler against Sunday and Saturday with deterministic weekday values."
+    },
+    {
+      "scenario": "A configured day_of_week changes the trigger day without changing Domain behavior.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/application/weekly_scheduler_test.rs", "tests/weekly_radar_scheduler.rs"],
+      "expected": "A schedule configured for Monday returns Due only for Monday and exposes the configuration unchanged.",
+      "verificationPlan": "Construct a schedule for Monday and evaluate every Weekday value."
+    },
+    {
+      "scenario": "The scheduling result explains both due and not-due outcomes.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/application/weekly_scheduler.rs", "tests/weekly_radar_scheduler.rs"],
+      "expected": "The decision retains the scheduled and observed weekdays so an outer runner can audit why a run was or was not selected.",
+      "verificationPlan": "Assert the structured decision values and their stable display labels."
+    },
+    {
+      "scenario": "The Domain stays independent from Scheduler and infrastructure concerns.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/domain/mod.rs", "tests/architecture/dependency_rules.rs", "tests/weekly_radar_scheduler.rs"],
+      "expected": "Scheduler code exists in Application, the Domain has no scheduler import, and the public integration test can use the boundary without provider or secret values.",
+      "verificationPlan": "Run architecture checks and inspect the module registration and public API integration test."
+    }
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record the Contract amendment before production edits and a final checkpoint after deterministic scheduler verification."
+  },
+  "acceptance": [
+    "The application-level WeeklyScheduler API exposes a default Sunday weekend cadence and a configurable day_of_week.",
+    "The scheduler returns a deterministic, structured Due or NotDue decision for an observed Weekday and retains the relevant weekday values.",
+    "The scheduler is a trigger boundary only; it does not calculate, persist, render, publish, retry, or mutate Weekly Radar Domain data.",
+    "Module-local and public integration tests cover default cadence, all configured weekdays, stable decisions, and the non-due path without real runtime, network, or secret values.",
+    "Architecture verification proves the Weekly Radar Domain remains independent from Scheduler and infrastructure concerns.",
+    "Scheduler specification/plan, reference-impact evidence, strict Finish/Archive, and the authorized publish/merge/close lifecycle pass."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep the scheduler in the Application boundary and keep Domain free of Scheduler, Telegram, HTTP, persistence, and secret dependencies.",
+    "Keep the trigger deterministic and injectable; do not read system time or environment configuration inside the scheduling decision.",
+    "Do not add a new Work Item for issues discovered inside this scope; correct them in WR-013 when safe and relevant."
+  ],
+  "intent": {
+    "problem": "The Weekly Radar roadmap has a weekly execution sequence but no explicit, testable scheduler boundary. Without one, a future runner could scatter weekday logic into Domain or accidentally run the report on the wrong day.",
+    "constraints": [
+      "Implement only an application-level scheduling decision boundary with a configurable day_of_week and a weekend default.",
+      "Use explicit Weekday values supplied by an outer runtime so tests do not depend on the machine clock, timezone, CI environment, or external services.",
+      "Do not own persistence, deduplication history, report calculation, rendering, publication, retry, or Telegram configuration in this WI.",
+      "Preserve the existing DDD/Clean Architecture boundary: Scheduler may trigger the use case, but Domain must not know Scheduler exists.",
+      "Complete TDD, focused/module-local/integration verification, strict Finish/Archive, local commit, publish, merge, close, and branch cleanup under the recorded lifecycle."
+    ],
+    "rationale": "A small pure application boundary makes the weekly cadence explicit and auditable while leaving runtime orchestration and research decisions outside the Domain."
+  },
+  "verification": [
+    { "check": "aiWorkItem", "required": true },
+    { "check": "aiScope", "required": true },
+    { "check": "aiGuards", "required": true },
+    { "check": "aiCheckpoint", "required": true },
+    { "check": "aiAgentRisk", "required": true },
+    { "check": "aiReviewPolicy", "required": true },
+    { "check": "aiBacktrack", "required": true },
+    { "check": "aiCoverage", "required": true },
+    { "check": "aiScenarioCoverage", "required": true },
+    { "check": "aiGuidelines", "required": true },
+    { "check": "aiSummary", "required": true },
+    { "check": "aiStatus", "required": true },
+    { "check": "aiStatusCheck", "required": true },
+    { "check": "aiStatusConsistency", "required": true },
+    { "check": "aiDiffOwnership", "required": true },
+    { "check": "quality", "required": true }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore the scheduler boundary, tests, docs, and generated governance evidence.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 26
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-013.json",
+    "baseCommit": "43900964a6fdb86d2a174fbc0321fdc3e95e4100",
+    "initialScopeDigest": "67ff4c1f81fd3b762a4b25033de4d88de6cf523bae29080814617a1e0ade65f4",
+    "contractSkeletonDigest": "3b842239e7b4dfdecda5a51bcd80680b3a3c8a66a61d4414ea5f4254c55e5e02"
+  }
+}

@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-006",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "7ffa75db91b4be2f89ff839b0403d5a64799049f4c7d91fc59708b1cda2f3b8d"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-006",
+    "contractDigest": "df7c07c5ff2973934678679aaeb78819d1c4a629da8630dc9d79464973bc2a93",
+    "summaryDigest": "3383d21f02712d9aa242a00f4448024b92f15b42e19c24b0cddc0a571dd2bacd",
+    "verificationDigest": "2c414dbc881a034765ad9c2cef235c30ddc301db430920b661eb7b65cd4e7279",
+    "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "headCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "1c0288d19d3db0e65f0a178a5abe58e0d05beada3afbda2931a41d1e84b3ffbf",
+      "binding": {
+        "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateHead": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateTreeDigest": "b399be1255bfae28c374e18037d3359353edf02ab5c42dfc49f0b820e015d1ed",
+        "candidateDiffDigest": "27ec48008ed7d69325d12d99fca2cc0477d6c3b6427e34fbb23fe02e0eb76922"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-006 generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-006 generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-wr-006",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-006.contract.json",
       ".ai/work-items/archive/2026/wi-wr-006.summary.json",
@@ -25,200 +48,272 @@
       ".ai/cockpit/task_report.md",
       ".ai/work-items/archive/2026/wi-wr-006.outcome.json",
       ".ai/work-items/archive/2026/wi-wr-006.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Shared module registration is deliberately deferred because the user prohibited editing weekly_radar/domain/mod.rs and weekly_radar/mod.rs.",
+      "This WI does not prove semantic correctness of upstream Stage or StructuralEvidenceDelta labels; it only preserves and routes explicit kinds."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Shared module registration is deliberately deferred because the user prohibited editing weekly_radar/domain/mod.rs and weekly_radar/mod.rs.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "This WI does not prove semantic correctness of upstream Stage or StructuralEvidenceDelta labels; it only preserves and routes explicit kinds.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Shared module registration is deliberately deferred because the user prohibited editing weekly_radar/domain/mod.rs and weekly_radar/mod.rs.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "This WI does not prove semantic correctness of upstream Stage or StructuralEvidenceDelta labels; it only preserves and routes explicit kinds.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiScenarioCoverage failed before the retry.",
+        "policyOrGuard": "required verification: aiScenarioCoverage",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "a73fd5fc92334f66c27bf67621cb499c53b481d2e0dd36ca505211665c450ab4"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "1a28eb4263c5f38b2c2fe114e2b0c9e4e30ac24d17ec6f08716eb55766e75146"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verificationHistory[1] aiGuidelines failed",
+            "digest": "b398ab1ebf3ef1b9c92170f401c4900083b9a6108f06916af86a44c50cbad00d"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "e274d772aa3af21dc5e1c58a6deb8f1d4f1d24568cdbb49716305bf6d9a577f6"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "quality failed before the retry.",
+        "policyOrGuard": "required verification: quality",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry quality after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verificationHistory[2] quality failed",
+            "digest": "b57cbfcfb1f64bffe41eba72f1bb2767067a6ee7614e0eaefdf0f6d6599fcb97"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "2bedfee954014f6b15df3b12348f8fa0be39175bf66d201fa4830a3f98e7953b"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiScenarioCoverage failed before the retry.",
+        "action": "Re-ran aiScenarioCoverage after the correction; the latest attempt passed.",
+        "verification": "aiScenarioCoverage latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "a73fd5fc92334f66c27bf67621cb499c53b481d2e0dd36ca505211665c450ab4"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "1a28eb4263c5f38b2c2fe114e2b0c9e4e30ac24d17ec6f08716eb55766e75146"
+          }
+        ]
+      },
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verificationHistory[1] aiGuidelines failed",
+            "digest": "b398ab1ebf3ef1b9c92170f401c4900083b9a6108f06916af86a44c50cbad00d"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "e274d772aa3af21dc5e1c58a6deb8f1d4f1d24568cdbb49716305bf6d9a577f6"
+          }
+        ]
+      },
+      {
+        "problem": "quality failed before the retry.",
+        "action": "Re-ran quality after the correction; the latest attempt passed.",
+        "verification": "quality latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verificationHistory[2] quality failed",
+            "digest": "b57cbfcfb1f64bffe41eba72f1bb2767067a6ee7614e0eaefdf0f6d6599fcb97"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "2bedfee954014f6b15df3b12348f8fa0be39175bf66d201fa4830a3f98e7953b"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "composition",
+        "severity": "medium",
+        "title": "composition",
+        "detail": "The standalone source is intentionally not registered in shared mod.rs; a later composition WI must explicitly wire it without changing WR-006 semantics.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "upstream semantics",
+        "severity": "low",
+        "title": "upstream semantics",
+        "detail": "Stage and structural delta labels are opaque supplied facts; this WI does not validate transformation meaning.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-006.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+        "subject": "verificationHistory[0] aiScenarioCoverage failed",
+        "digest": "a73fd5fc92334f66c27bf67621cb499c53b481d2e0dd36ca505211665c450ab4"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+        "subject": "verification[aiScenarioCoverage] retry passed",
+        "digest": "1a28eb4263c5f38b2c2fe114e2b0c9e4e30ac24d17ec6f08716eb55766e75146"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+        "subject": "verificationHistory[1] aiGuidelines failed",
+        "digest": "b398ab1ebf3ef1b9c92170f401c4900083b9a6108f06916af86a44c50cbad00d"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "e274d772aa3af21dc5e1c58a6deb8f1d4f1d24568cdbb49716305bf6d9a577f6"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+        "subject": "verificationHistory[2] quality failed",
+        "digest": "b57cbfcfb1f64bffe41eba72f1bb2767067a6ee7614e0eaefdf0f6d6599fcb97"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
+        "subject": "verification[quality] retry passed",
+        "digest": "2bedfee954014f6b15df3b12348f8fa0be39175bf66d201fa4830a3f98e7953b"
+      }
     ]
   },
-  "issues": {
-    "detected": 5,
-    "hardStops": 3,
-    "warnings": 2,
-    "resolved": 3,
-    "unresolved": 2
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiScenarioCoverage",
-      "action": "blocked",
-      "resolution": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "a73fd5fc92334f66c27bf67621cb499c53b481d2e0dd36ca505211665c450ab4"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "1a28eb4263c5f38b2c2fe114e2b0c9e4e30ac24d17ec6f08716eb55766e75146"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verificationHistory[1] aiGuidelines failed",
-          "digest": "b398ab1ebf3ef1b9c92170f401c4900083b9a6108f06916af86a44c50cbad00d"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "e274d772aa3af21dc5e1c58a6deb8f1d4f1d24568cdbb49716305bf6d9a577f6"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: quality",
-      "action": "blocked",
-      "resolution": "Retry quality after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verificationHistory[2] quality failed",
-          "digest": "b57cbfcfb1f64bffe41eba72f1bb2767067a6ee7614e0eaefdf0f6d6599fcb97"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "2bedfee954014f6b15df3b12348f8fa0be39175bf66d201fa4830a3f98e7953b"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiScenarioCoverage failed before the retry.",
-      "policyOrGuard": "required verification: aiScenarioCoverage",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "a73fd5fc92334f66c27bf67621cb499c53b481d2e0dd36ca505211665c450ab4"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "1a28eb4263c5f38b2c2fe114e2b0c9e4e30ac24d17ec6f08716eb55766e75146"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verificationHistory[1] aiGuidelines failed",
-          "digest": "b398ab1ebf3ef1b9c92170f401c4900083b9a6108f06916af86a44c50cbad00d"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "e274d772aa3af21dc5e1c58a6deb8f1d4f1d24568cdbb49716305bf6d9a577f6"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "quality failed before the retry.",
-      "policyOrGuard": "required verification: quality",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry quality after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verificationHistory[2] quality failed",
-          "digest": "b57cbfcfb1f64bffe41eba72f1bb2767067a6ee7614e0eaefdf0f6d6599fcb97"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "2bedfee954014f6b15df3b12348f8fa0be39175bf66d201fa4830a3f98e7953b"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Shared module registration is deliberately deferred because the user prohibited editing weekly_radar/domain/mod.rs and weekly_radar/mod.rs.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "This WI does not prove semantic correctness of upstream Stage or StructuralEvidenceDelta labels; it only preserves and routes explicit kinds.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The standalone source is intentionally not registered in shared mod.rs; a later composition WI must explicitly wire it without changing WR-006 semantics.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "Stage and structural delta labels are opaque supplied facts; this WI does not validate transformation meaning.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-006.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -1067,6 +1162,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry quality after correcting the recorded failure."
+  }
 }

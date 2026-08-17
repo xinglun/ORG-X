@@ -1,0 +1,118 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-006",
+  "mode": "code",
+  "title": "Weekly Radar Rising / Dropped",
+  "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-wr-006.contract.json",
+    ".ai/work-items/active/wi-wr-006.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/wi-wr-006.json",
+    ".ai/work-items/archive/**/wi-wr-006.*",
+    ".ai/work-items/active/wi-wr-006.outcome.json",
+    ".ai/work-items/active/wi-wr-006.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-006-rising-dropped.json",
+    "src/features/weekly_radar/domain/rising_dropped.rs",
+    "tests/weekly_radar_rising_dropped.rs",
+    "tests/rising_dropped_test.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-006-rising-dropped.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-006-rising-dropped.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/domain/mod.rs, src/features/weekly_radar/mod.rs, src/features/mod.rs, tests/architecture/module_boundaries.rs, and every other Work Item file",
+    "Stage inference or transition detection from raw facts; Ranking, Top5, Threshold Distance, or score calculation",
+    "Price, rank, score, or market-change interpretation; a non-structural change must not emit Rising or Dropped",
+    "Mutation of WI-011 Reporting containers, Snapshot persistence, rendering, Markdown, Telegram, scheduling, retry, or delivery",
+    "Cross-feature imports, infrastructure/runtime dependencies, credentials, trading, price prediction, target price, portfolio allocation, or capital action"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "AI Cockpit lifecycle, scope ownership, evidence handoff, and current-WI issue policy."},
+    {"path": ".ai/glossary.md", "reason": "Repository governance and domain-layer terminology."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WR-006 responsibility, dependency order, and explicit Weekly Radar boundaries."},
+    {"path": "docs/domain/TRANSFORMATION_STAGE_MODEL.md", "reason": "Stage labels are upstream facts to preserve, not to recompute here."},
+    {"path": "docs/domain/RANKING_MODEL.md", "reason": "Ranking and score changes are explicitly outside this Work Item."},
+    {"path": "src/features/weekly_radar/domain/mod.rs", "reason": "WR-001 establishes the parent boundary; this WI must not edit or import it."},
+    {"path": "tests/rising_dropped_test.rs", "reason": "The generic AI Coverage byModule association requires a same-stem companion test; this remains within the user-authorized current WI and does not modify shared policy."},
+    {"path": "src/features/reporting/domain/mod.rs", "reason": "WI-011 is a separate read-only reporting container that must remain unchanged."},
+    {"path": "tests/architecture/module_boundaries.rs", "reason": "Architecture constraints are inspected but the shared guard is out of scope."},
+    {"path": "Cargo.toml", "reason": "Rust test target and dependency boundary; no dependency is planned."},
+    {"path": "Makefile", "reason": "Canonical local quality and AI Cockpit lifecycle commands."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-wr-006-rising-dropped.md", "reason": "This WI's approved design and output boundary."},
+    {"path": "docs/superpowers/plans/2026-08-17-wi-wr-006-rising-dropped.md", "reason": "This WI's implementation and verification plan."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["identity_conflict", "evidence_integrity", "semantic_boundary", "architecture_boundary"],
+    "reason": "The output must distinguish structural evidence changes from non-structural changes, preserve supplied facts, and reject same-period identity conflicts without touching shared Weekly Radar modules.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "WR-001 owns the shared module skeleton; WR-006 uses an isolated source file and path-based integration test until a later WI deliberately composes the module."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["Bounded Domain behavior with deterministic validation and no external side effects."],
+    "override": null
+  },
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {"status": "continue", "reason": "The user supplied the exact implementation boundary and explicitly authorized execution, verification, and recording authorization in every Contract."},
+  "preReviewWarnings": [],
+  "checkpointPolicy": {"requiredBeforeFinish": true, "requiredStages": ["before_edit", "before_finish"], "reason": "Record checkpoints before implementation and before Finish to bind the active Contract/Summary evidence."},
+  "acceptance": [
+    "ResearchState retains the same company identity and previous/current Stage values supplied by the caller; a company mismatch is rejected deterministically.",
+    "StructuralEvidenceDelta exposes Strengthened, Weakened, Invalidated, Unchanged, and non-structural Price/Rank/Score change kinds without deriving any kind from raw values.",
+    "Strengthened evidence produces one Rising event and Weakened or Invalidated evidence produces one Dropped event; Unchanged and Price/Rank/Score-only changes produce no event.",
+    "Each emitted event preserves the supplied period, event identity, company, previous/current Stage, reason, supporting evidence, counter evidence, missing proof, and next step in order.",
+    "WeeklyChangeSet preserves Rising and Dropped insertion order, rejects duplicate event identity, and rejects any same-period company identity appearing more than once, including a Rising/Dropped conflict.",
+    "The implementation does not recompute Stage, Ranking, Top5, Threshold Distance, or any score and has no dependency on WI-011 Reporting or external/runtime modules.",
+    "Focused unit and integration tests cover structural strengthening, non-Top5 Rising, stage/evidence weakening Dropped, correction/invalidated Dropped, price/rank/score-only no-event behavior, unchanged no-event behavior, order/fact retention, and same-period identity rejection.",
+    "The design spec, implementation plan, reference-impact evidence, Summary, Outcome, and AI Cockpit lifecycle records capture the authorization, current-WI issue policy, verification evidence, limitations, and next action."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep the standalone WR-006 Domain source independent of Weekly Radar shared modules and other feature implementations.",
+    "Treat previous/current states and StructuralEvidenceDelta as supplied upstream facts; do not infer or recalculate Stage, Ranking, Top5, Distance, or score.",
+    "Preserve evidence identity and insertion order; reject duplicate or overlapping evidence identities deterministically.",
+    "Reject same-period event identity and company conflicts deterministically; do not silently merge or overwrite.",
+    "Resolve problems discovered within this Work Item in the current Work Item and record the fix in Summary, checkpoints, and Outcome; do not open a new WI for an in-scope correction.",
+    "Do not introduce rendering, persistence, delivery, scheduler, retry, trading, price prediction, target price, portfolio allocation, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "Weekly Radar has a shared snapshot boundary but no isolated typed output that turns an upstream structural evidence delta into Rising or Dropped while retaining the supplied before/after state and proof context.",
+    "constraints": [
+      "Only write the declared WR-006 source, test, design/plan, reference-impact, and this Work Item's governed evidence paths; never edit the shared Weekly Radar module files or other WI files.",
+      "Use explicit upstream StructuralEvidenceDelta kinds. Structural strengthening may produce Rising even when the company is not Top5; structural weakening or invalidation may produce Dropped.",
+      "Price, rank, and score-only changes are non-structural and must emit no event. Stage, Ranking, Top5, Threshold Distance, and score semantics remain upstream or downstream concerns.",
+      "The parent agent will handle push, PR, merge, and close. This isolated owner stops after local archive, quality evidence, and commit."
+    ],
+    "rationale": "An isolated, fact-preserving event boundary lets later Weekly Radar composition consume deterministic Rising/Dropped outputs without allowing output generation to reinterpret market movement, ranking movement, or raw evidence."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {"type": "human", "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.", "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "authorityEvidence": {"type": "human_authorization", "granted": true, "scope": "Execute and verify this Work Item and record its Contract/Summary/Outcome; the parent agent is authorized to publish, merge, close, and archive all 24 planned Work Items.", "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "software_design", "test_automation"], "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]},
+  "requestedOperation": {"type": "repository_governance", "action": "modify", "target": "repository_governance", "environment": "repository", "effect": "enforce", "authorityRequired": false, "authorityReason": "Explicit human authorization is recorded above; this owner is additionally instructed not to push, open a PR, merge, or close."},
+  "scenarioCoverage": [
+    {"scenario": "Structural evidence strengthens without Top5 membership", "required": true, "status": "unverified", "evidence": ["tests/weekly_radar_rising_dropped.rs", "tests/rising_dropped_test.rs"], "expected": "A Strengthened delta produces Rising while preserving company, stages, proof, reason, and next step; no ranking input is required.", "verificationPlan": "Run the focused integration test for structural strengthening and non-Top5 context."},
+    {"scenario": "Production-system or productivity evidence weakens", "required": true, "status": "unverified", "evidence": ["tests/weekly_radar_rising_dropped.rs", "tests/rising_dropped_test.rs"], "expected": "A Weakened delta produces Dropped and retains counter/missing evidence in supplied order.", "verificationPlan": "Run the focused weakening test with explicit structural evidence IDs."},
+    {"scenario": "Counter-evidence invalidates the prior judgment", "required": true, "status": "unverified", "evidence": ["tests/weekly_radar_rising_dropped.rs", "tests/rising_dropped_test.rs"], "expected": "An Invalidated delta produces Dropped and preserves the invalidation reason and proof collections.", "verificationPlan": "Run the focused invalidation test."},
+    {"scenario": "Only price, rank, or score changes occur", "required": true, "status": "unverified", "evidence": ["tests/weekly_radar_rising_dropped.rs", "tests/rising_dropped_test.rs"], "expected": "PriceOnly, RankOnly, and ScoreOnly changes return no event.", "verificationPlan": "Run three non-structural no-event tests."},
+    {"scenario": "No structural change occurs", "required": true, "status": "unverified", "evidence": ["tests/weekly_radar_rising_dropped.rs", "tests/rising_dropped_test.rs"], "expected": "Unchanged returns no event and does not fabricate a change.", "verificationPlan": "Run the unchanged no-event test."},
+    {"scenario": "Same-period identity conflict", "required": true, "status": "unverified", "evidence": ["tests/weekly_radar_rising_dropped.rs", "tests/rising_dropped_test.rs"], "expected": "Duplicate event identity and a company appearing twice in the same period are rejected deterministically, including Rising/Dropped conflict.", "verificationPlan": "Run duplicate-event and cross-kind company conflict tests."},
+    {"scenario": "Fact order and overlap integrity", "required": true, "status": "unverified", "evidence": ["tests/weekly_radar_rising_dropped.rs", "tests/rising_dropped_test.rs"], "expected": "Supporting/counter/missing IDs retain order and repeated or overlapping proof identity is rejected.", "verificationPlan": "Run evidence order and duplicate/overlap validation tests."}
+  ],
+  "verification": [
+    {"check": "aiWorkItem", "required": true}, {"check": "aiScope", "required": true}, {"check": "aiGuards", "required": true}, {"check": "aiCheckpoint", "required": true}, {"check": "aiAgentRisk", "required": true}, {"check": "aiReviewPolicy", "required": true}, {"check": "aiBacktrack", "required": true}, {"check": "aiCoverage", "required": true}, {"check": "aiScenarioCoverage", "required": true}, {"check": "aiGuidelines", "required": true}, {"check": "aiSummary", "required": true}, {"check": "aiStatus", "required": true}, {"check": "aiStatusCheck", "required": true}, {"check": "aiStatusConsistency", "required": true}, {"check": "aiDiffOwnership", "required": true}, {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {"approved": true, "approvedBy": "user-authorized", "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."},
+  "rollbackNote": "Revert this Work Item commit and restore the isolated WR-006 source, tests, docs, and governed evidence paths.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 16}},
+  "startReceipt": {"path": ".ai/work-items/starts/wi-wr-006.json", "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c", "initialScopeDigest": "9f616791a962d3c131b85c3236090b63026166073af84545d5a8baf332394b95", "contractSkeletonDigest": "c46e8f21fdff9595e1e649b96bf34c7d6fd924cbf0a99daebc57be0d88b544b1"}
+}

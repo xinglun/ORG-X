@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-wr-007",
+  "receiptPath": ".ai/work-items/starts/wi-wr-007.json",
+  "baseCommit": "ba346c2bbd538d2f734951ca05f3ad0322979cfa",
+  "baseBranch": "codex/wi-wr-007-change-compression",
+  "startTimestamp": "2026-08-17T06:00:18.662333+00:00",
+  "initialScopeDigest": "bc0bc76aa92328db441871eb0a9ebe04096e147d2694faa374a1b8ff16ce3b5f",
+  "contractSkeletonDigest": "276e346771241951611d9f34a70836b82aeee9136e5ff9077776fde08617c4df"
+}

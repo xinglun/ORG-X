@@ -1,0 +1,29 @@
+name: AI Cockpit
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ai-cockpit-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@stable
+      - run: make ai-cockpit-quality GOVERNANCE_PROFILE=strict
+
+  check-ai-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@stable
+      - run: make check-ai-pr AI_BASE_COMMIT="${{ github.event.pull_request.base.sha }}"

@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "configure_ai_cockpit",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "ac4f940de9b8eed422fe142cd2131aeee6c4c812ca06999ff528c643dfa12ef9"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "configure_ai_cockpit",
+    "contractDigest": "a6f28125f7b8a865afd9962b8e9b9bc7daf12ab403b7ffe3d37b37e293e3bd7d",
+    "summaryDigest": "71e57b748b3eaffe6e388cfdc971eeed6288570e6a4fc6c896e6d003b70b9d97",
+    "verificationDigest": "a34c0835661801c9a26b7f41c4e3e1278e1b55fda7a626287a03cb99269ec1a0",
+    "baseCommit": "ff2e76ba8af9aafeee50a2c10b9094c404f08c98",
+    "headCommit": "ff2e76ba8af9aafeee50a2c10b9094c404f08c98",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "c8e1ca82f38edb5c5823f2475c33eb07ae013560d36d895b86ca818a8b2f0beb",
+      "binding": {
+        "baseCommit": "ff2e76ba8af9aafeee50a2c10b9094c404f08c98",
+        "candidateHead": "ff2e76ba8af9aafeee50a2c10b9094c404f08c98",
+        "candidateTreeDigest": "b54e470291f92cc5d7918c2098e4cf3a70c27d696db6917c6f6c0921090facca",
+        "candidateDiffDigest": "aa2167a35e476d4bfe9d6441e2421db7f7bfa5e8712acf17006af135b0d00359"
+      }
+    }
   },
-  "task": {
-    "summary": "Task configure_ai_cockpit generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task configure_ai_cockpit generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: configure_ai_cockpit",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/configure_ai_cockpit.contract.json",
       ".ai/work-items/archive/2026/configure_ai_cockpit.summary.json",
@@ -28,49 +51,76 @@
       ".ai/cockpit/task_report.md",
       ".ai/work-items/archive/index.json",
       ".ai/work-items/archive/2026/configure_ai_cockpit.archive-manifest.json"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Hosted GitHub check results are unavailable until the PR is pushed and evaluated."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Hosted GitHub check results are unavailable until the PR is pushed and evaluated.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Hosted GitHub check results are unavailable until the PR is pushed and evaluated.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "scope",
+        "severity": "medium",
+        "title": "scope",
+        "detail": "The installation runtime verification remains a historical adoption record with projectQualityState not_configured; readiness must be proven by current Profile, Guard, quality, and hosted CI evidence.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/configure_ai_cockpit.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/configure_ai_cockpit.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/configure_ai_cockpit.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/configure_ai_cockpit.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Hosted GitHub check results are unavailable until the PR is pushed and evaluated.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The installation runtime verification remains a historical adoption record with projectQualityState not_configured; readiness must be proven by current Profile, Guard, quality, and hosted CI evidence.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/configure_ai_cockpit.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -797,6 +847,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

@@ -25,6 +25,18 @@
       "summarySha256": "b374625c1e96678b84729d6dc5174eb732bc2158e43fe5b852ddd17e6d8df40e",
       "manifestPath": ".ai/work-items/archive/2026/wi-001.archive-manifest.json",
       "manifestSha256": "9076ba7d0ae0809fc0ccc15baca945a1fc73ef5771abbf32467dbc2fe1c7a8a1"
+    },
+    {
+      "workItemId": "configure_ai_cockpit",
+      "archiveSequence": 3,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/configure_ai_cockpit.contract.json",
+      "contractSha256": "a6f28125f7b8a865afd9962b8e9b9bc7daf12ab403b7ffe3d37b37e293e3bd7d",
+      "archivedAt": "2026-08-17T11:29:27.351655+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/configure_ai_cockpit.summary.json",
+      "summarySha256": "1e5ea77154a5769901893f39c95b97cebac40118e4b3b47385112db1f1f5f4af",
+      "manifestPath": ".ai/work-items/archive/2026/configure_ai_cockpit.archive-manifest.json",
+      "manifestSha256": "d79905a94f630000d45875e77afc0ce026452955a9448bffab20f3df52571b0d"
     }
   ]
 }

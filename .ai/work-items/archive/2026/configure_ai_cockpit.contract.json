@@ -1,0 +1,289 @@
+{
+  "contractVersion": 2,
+  "workItemId": "configure_ai_cockpit",
+  "mode": "code",
+  "title": "Configure AI Cockpit for ORG-X",
+  "baseCommit": "ff2e76ba8af9aafeee50a2c10b9094c404f08c98",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/configure_ai_cockpit.contract.json",
+    ".ai/work-items/active/configure_ai_cockpit.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/configure_ai_cockpit.outcome.json",
+    ".ai/work-items/active/configure_ai_cockpit.outcome.md",
+    ".ai/project_profile.yaml",
+    ".ai/guards/coverage_policy.yaml",
+    "Makefile.ai.stack",
+    ".github/workflows/ai-cockpit.yml",
+    ".github/CODEOWNERS",
+    "SECURITY.md",
+    "docs/superpowers/plans/2026-08-17-configure-ai-cockpit.md",
+    ".ai/evidence/reference-impact/configure_ai_cockpit_ci.json"
+  ],
+  "outOfScope": [
+    "src/**",
+    "tests/**",
+    "docs/product/**",
+    "docs/architecture/**",
+    "docs/domain/**",
+    "docs/data/**",
+    "docs/scoring/**",
+    "docs/validation/**",
+    "docs/adr/**",
+    "docs/superpowers/specs/**",
+    "Cargo.toml",
+    "Cargo.lock",
+    "Makefile",
+    ".ai/cockpit/adoption-runtime-verification.json",
+    ".ai/project_profile.proposed.yaml",
+    "business behavior or trading decision logic",
+    "secrets, tokens, or machine-specific credentials"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository AI Cockpit workflow and restricted-path rules."
+    },
+    {
+      "path": ".ai/cockpit/adoption.md",
+      "reason": "Adopter calibration sequence and readiness requirements."
+    },
+    {
+      "path": ".ai/calibration/profiles.yaml",
+      "reason": "Available calibration levels and required controls."
+    },
+    {
+      "path": ".ai/guards/coverage_policy.yaml",
+      "reason": "Current production/test coverage paths to review and confirm."
+    },
+    {
+      "path": "Makefile.ai.stack",
+      "reason": "Current project quality command configuration."
+    },
+    {
+      "path": ".ai/cockpit/checks.yaml",
+      "reason": "Configured AI Cockpit check catalog."
+    },
+    {
+      "path": ".ai/guards/reference_impact_policy.yaml",
+      "reason": "Reference Impact Guard requires a target-bound record for the new workflow."
+    },
+    {
+      "path": "Cargo.toml",
+      "reason": "Rust project build and test identity."
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "reason": "Required Rust formatter and linter components."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-001.summary.json",
+      "reason": "Previous Work Item evidence records the configuration limitation."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-phase-0-foundation.md",
+      "reason": "Existing project plan records the completed foundation sequence before adopter calibration."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-configure-ai-cockpit.md",
+      "reason": "Implementation plan for the bounded configuration sequence."
+    }
+  ],
+  "rawUserRequest": "Continue ORG-X after WI-001 and proceed to WI-002 Universe Domain under the user's authorization; complete the adopter-specific AI Cockpit configuration required before ordinary governed development.",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "user continuation instruction: target is not finished; continue ORG-X execution",
+    "capturedAt": "2026-08-17T11:07:37+09:00",
+    "digest": "03aa20ffa7ec77f7fba4207c1293fa0e56ca8769525f88e4710295ce6e5dc380"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance"
+    ]
+  },
+  "requestedOperation": {
+    "target": "repository_governance",
+    "action": "modify",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false
+  },
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "governance_configuration",
+      "ci_configuration"
+    ],
+    "reason": "This Work Item changes governance boundaries and CI entrypoints, but the selected paths and commands are explicit and project-local.",
+    "unknownsReviewComplete": true
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Governance and CI paths require strict review while no release or production behavior is changed."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "User authorized the agent to complete the required adopter configuration before WI-002."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "A confirmed adopted-project Profile validates with the lite calibration level, explicit src/** and tests/** boundaries, and no blocking unknowns.",
+    "Coverage Guard production/test paths match the confirmed Profile boundaries: src/** and tests/**.",
+    "Makefile.ai.stack contains non-placeholder formatter, test, and lint commands that match the Rust project checks.",
+    "GitHub Actions runs make ai-cockpit-quality on repository changes and make check-ai-pr with the pull request base SHA.",
+    "CODEOWNERS and SECURITY.md provide non-placeholder adopter ownership and private vulnerability reporting guidance.",
+    "make check-ai-adoption-ready, check-ai-project-profile, check-ai-guard-calibration, and ai-cockpit-quality pass on the configured repository.",
+    "The configuration diff changes no Rust production behavior, product documentation, business domain, or trading decision logic."
+  ],
+  "guidelines": [
+    "Profile facts, suggested boundaries, approved boundaries, unknowns, and approval evidence must remain separate.",
+    "Project quality commands must be executable repository commands, not placeholders or no-ops.",
+    "CI must use full Git history and bind check-ai-pr to the pull request base commit."
+  ],
+  "intent": {
+    "problem": "The installed AI Cockpit correctly blocks ordinary Work Items because ORG-X has not completed adopter-specific calibration: no confirmed Project Profile, Coverage review, or hosted quality/check-pr workflow exists.",
+    "constraints": [
+      "Keep AI Cockpit separate from ORG-X business Domain behavior.",
+      "Do not change src, tests, Cargo manifests, product documentation, or trading decision boundaries.",
+      "Do not infer approvals from detector output; only confirmed Profile fields may satisfy readiness.",
+      "Do not add secrets, credentials, or machine-specific paths."
+    ],
+    "rationale": "Completing the explicit adopter configuration gate is required by the installed runtime before WI-002 can start in MODE=code. The smallest safe configuration uses observed Rust facts, confirmed src/tests boundaries, existing Make targets, and a transparent CI workflow."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Confirmed Project Profile and existing Coverage Guard represent the same Rust production and test roots.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "check-ai-project-profile and check-ai-guard-calibration pass with no mismatch.",
+      "verificationPlan": "Run make check-ai-project-profile and make check-ai-guard-calibration after committing the Profile and Coverage review."
+    },
+    {
+      "scenario": "The configured project quality commands execute against the Rust foundation.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "make ai-cockpit-quality completes with the strict route and all configured Rust checks pass.",
+      "verificationPlan": "Run make ai-cockpit-quality GOVERNANCE_PROFILE=strict locally and record the result in the Summary."
+    },
+    {
+      "scenario": "A pull request exposes both the project quality job and the base-bound check-ai-pr job.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "GitHub Actions completes the declared jobs successfully for the exact PR head.",
+      "verificationPlan": "After pushing this branch, inspect the hosted required checks before merging; record any unavailable hosted result as a residual risk rather than inferring success."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized the agent to confirm and execute required governance configuration."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 3
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/configure_ai_cockpit.json",
+    "baseCommit": "ff2e76ba8af9aafeee50a2c10b9094c404f08c98",
+    "initialScopeDigest": "c9aa1a44b1a360851d0e433957c2a620b53fed0d8aaef8b70004fd5c28c760bc",
+    "contractSkeletonDigest": "c67844da94e4a8bd9aa84262ba7f00ee6de94d87385b5ccded099894097eb45f"
+  }
+}

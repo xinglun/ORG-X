@@ -1,0 +1,13 @@
+[package]
+name = "org-x"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "ORG-X production-system transformation research foundation"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "org-x"
+path = "src/main.rs"

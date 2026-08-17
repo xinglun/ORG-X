@@ -4,26 +4,26 @@ Task Result
 Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-008.contract.json [evidence: .ai/work-items/archive/2026/wi-008.contract.json]
-- Changed .ai/work-items/active/wi-008.summary.json [evidence: .ai/work-items/archive/2026/wi-008.summary.json]
-- Changed .ai/work-items/active/wi-008.outcome.json [evidence: .ai/work-items/archive/2026/wi-008.outcome.json]
-- Changed .ai/work-items/active/wi-008.outcome.md [evidence: .ai/work-items/archive/2026/wi-008.outcome.md]
+- Changed .ai/work-items/active/wi-009.contract.json [evidence: .ai/work-items/archive/2026/wi-009.contract.json]
+- Changed .ai/work-items/active/wi-009.summary.json [evidence: .ai/work-items/archive/2026/wi-009.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/starts/wi-008.json [evidence: .ai/work-items/starts/wi-008.json]
-- Changed src/features/transformation/domain/mod.rs [evidence: src/features/transformation/domain/mod.rs]
-- Changed src/features/transformation/domain/mod_test.rs [evidence: src/features/transformation/domain/mod_test.rs]
-- Changed tests/transformation_domain.rs [evidence: tests/transformation_domain.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-008-transformation-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-008-transformation-design.md]
-- Changed docs/superpowers/plans/2026-08-17-wi-008-transformation.md [evidence: docs/superpowers/plans/2026-08-17-wi-008-transformation.md]
+- Changed .ai/work-items/active/wi-009.outcome.json [evidence: .ai/work-items/archive/2026/wi-009.outcome.json]
+- Changed .ai/work-items/active/wi-009.outcome.md [evidence: .ai/work-items/archive/2026/wi-009.outcome.md]
+- Changed .ai/work-items/starts/wi-009.json [evidence: .ai/work-items/starts/wi-009.json]
+- Changed src/features/diffusion/domain/mod.rs [evidence: src/features/diffusion/domain/mod.rs]
+- Changed src/features/diffusion/domain/mod_test.rs [evidence: src/features/diffusion/domain/mod_test.rs]
+- Changed tests/diffusion_domain.rs [evidence: tests/diffusion_domain.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-009-diffusion-design.md [evidence: docs/superpowers/specs/2026-08-17-wi-009-diffusion-design.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-009-diffusion.md [evidence: docs/superpowers/plans/2026-08-17-wi-009-diffusion.md]
 - Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
-- Changed .ai/work-items/archive/2026/wi-008.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-008.archive-manifest.json]
+- Changed .ai/work-items/archive/2026/wi-009.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-009.archive-manifest.json]
 
 Problems found
-- Total: 2
+- Total: 1
 - Blocking: 0
-- Warning: 2
+- Warning: 1
 
 Stops triggered
 - None recorded.
@@ -35,14 +35,14 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- The Domain permits explicit transitions and retains proof but does not decide whether evidence is sufficient for a stage update. [evidence: residualRisks]
-- Persistence window and observation count are opaque facts; sufficiency calculation belongs to a later gate boundary. [evidence: residualRisks]
+- The Domain retains diffusion facts but does not establish that an industry has adopted a pattern. [evidence: residualRisks]
+- Cross-company identity resolution remains an upstream responsibility. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- If an issue is discovered during the corresponding work, resolve it within the current WI whenever it remains in scope; do not casually open a new WI to prevent scope diffusion. (inference)
+- None recorded.
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]

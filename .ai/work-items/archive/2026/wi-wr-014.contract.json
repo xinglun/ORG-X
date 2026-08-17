@@ -1,0 +1,217 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-014",
+  "mode": "code",
+  "title": "System Health Integration",
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "baseCommit": "ba346c2bbd538d2f734951ca05f3ad0322979cfa",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-wr-014.contract.json",
+    ".ai/work-items/active/wi-wr-014.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-014.outcome.json",
+    ".ai/work-items/active/wi-wr-014.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-014-system-health.json",
+    "src/features/weekly_radar/domain/mod.rs",
+    "src/features/weekly_radar/domain/system_health.rs",
+    "src/features/weekly_radar/domain/system_health_test.rs",
+    "tests/weekly_radar_system_health.rs",
+    "tests/system_health_test.rs",
+    "tests/mod_test.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-014-system-health.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-014-system-health.md"
+  ],
+  "outOfScope": [
+    "Telegram, HTTP, Secret, network, database, Scheduler, persistence, rendering, delivery, retry, receipt, and external provider adapters",
+    "Source acquisition, extraction execution, freshness calculation, evidence collection, or any external runtime integration",
+    "Deriving HealthStatus from coverage counts, source coverage, extraction failures, or freshness",
+    "Deriving or changing Stage, Ranking, Top5, Threshold Distance, Rising, Dropped, or trading/capital-action behavior",
+    "Changes to shared architecture tests, global coverage policy, project-wide Make targets, other bounded contexts, or other Work Items",
+    "Changes to Telegram/HTTP/Secret interfaces; this Work Item only exposes typed health facts to the existing Weekly Radar publication boundary"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository lifecycle, scope, restricted-write, issue-resolution, and no-push/PR/merge/close requirements."},
+    {"path": ".ai/glossary.md", "reason": "Canonical governance and architecture terminology."},
+    {"path": ".ai/cockpit/README.md", "reason": "V2 Contract, Preflight, checkpoint, Finish, Summary, and archive workflow rules."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WI-WR-014 deliverables, dependencies, output priority, and provider boundary."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-wr-001-weekly-radar-contract.md", "reason": "Completed WR-001 publication and provider-agnostic Weekly Radar boundary."},
+    {"path": ".ai/work-items/archive/2026/wi-wr-001.contract.json", "reason": "Completed WR-001 Contract and explicit exclusion of typed System Health from the initial boundary."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-004-evidence-domain-design.md", "reason": "Evidence provenance, quality, freshness, and explicit missingness semantics."},
+    {"path": ".ai/work-items/archive/2026/wi-004.contract.json", "reason": "Completed WI-004 EvidenceRecord facts and provider-independent data boundary."},
+    {"path": "src/features/weekly_radar/domain/mod.rs", "reason": "Existing publication boundary; it must register the new module and expose the typed health section."},
+    {"path": "src/features/evidence/domain/mod.rs", "reason": "Existing evidence freshness and provenance vocabulary; WI-WR-014 mirrors the needed fact boundary without importing the Evidence feature."},
+    {"path": "tests/weekly_radar_contract.rs", "reason": "Existing public Weekly Radar integration-test style."},
+    {"path": "Cargo.toml", "reason": "Rust module and test conventions; no dependency change is planned."},
+    {"path": "Makefile", "reason": "Project quality commands used by AI Cockpit Finish."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["explicit_fact_integrity", "publication_boundary", "architecture_isolation"],
+    "reason": "The change adds a typed health section to a provider-agnostic publication boundary. The primary risks are accidentally deriving health or leaking provider concerns into Domain.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "Rendering and delivery are deferred to later Weekly Radar Work Items. HealthStatus, coverage, degraded companies, extraction failures, and freshness are supplied facts only."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["Medium-risk code Work Item with typed Domain and publication-boundary changes."],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly confirmed the typed provider-agnostic System Health design and authorized execution/governance evidence for all 24 roadmap Work Items."
+  },
+  "preReviewWarnings": [
+    "Telegram, HTTP, Secret, Scheduler, persistence, and rendering remain intentionally outside this Work Item.",
+    "The existing weekly_radar/domain/mod.rs is changed only to register the new bounded Domain module and expose System Health through the publication boundary."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record Contract readiness before editing and revalidate the exact scope and evidence before Finish."
+  },
+  "acceptance": [
+    "src/features/weekly_radar/domain/system_health.rs exposes public provider-agnostic SystemHealth, HealthStatus, EvidenceCoverage, DegradedCompany, SourceCoverage, ExtractionFailure, and Freshness facts; constructors reject blank text and invalid percentage values deterministically without deriving health status.",
+    "EvidenceCoverage and SourceCoverage retain supplied available, expected, and percentage values exactly; source coverage is ordered and duplicate source identities are rejected without mutating the collection.",
+    "DegradedCompany and ExtractionFailure retain supplied company/source, identity, reason, and failure facts in insertion order; duplicate company or failure identities are rejected deterministically.",
+    "SystemHealth retains the explicitly supplied HealthStatus and Freshness, exposes all five health sections, and does not recompute status from counts, failures, freshness, Stage, Ranking, or any other feature output.",
+    "WeeklyRadarPublication can carry at most one typed SystemHealth section while retaining the existing snapshot identity and publication facts; the application Publisher API remains unchanged and provider-agnostic.",
+    "The Domain implementation imports no Telegram, HTTP, Secret, network, database, Scheduler, or other feature module; no shared architecture test or global coverage policy is changed.",
+    "Focused, module-local, companion, and public integration tests cover explicit fact retention, duplicate rejection, invalid input, no health recomputation, publication binding, and provider-agnostic compilation.",
+    "The WI spec, implementation plan, reference-impact evidence, active Summary, strict AI Cockpit Finish evidence, archive bundle, and local commit record the delivered boundary, verification, remaining scope, and user authorization."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep Weekly Radar Domain independent of Telegram, HTTP, Secret, network, database, Scheduler, persistence, rendering, and external providers.",
+    "Consume only explicitly supplied facts; never derive HealthStatus, Stage, Ranking, Top5, or a trading/capital action.",
+    "Preserve supplied collection order and reject duplicate identities without replacing earlier facts.",
+    "Do not add dependencies or modify shared architecture tests, global coverage policy, or unrelated Work Items.",
+    "Resolve issues within this Work Item when they remain inside its Contract scope; do not broaden the boundary silently."
+  ],
+  "intent": {
+    "problem": "Weekly Radar has a typed snapshot/publication boundary but no structured, provider-agnostic place to publish evidence coverage, degraded companies, source coverage, extraction failures, freshness, and an explicit system health status. Without that boundary, later renderers could either lose these facts or re-derive them from unrelated Stage/Ranking outputs.",
+    "constraints": [
+      "Health facts enter WeeklyRadarPublication through a Domain boundary whose provider integration surface is excluded.",
+      "HealthStatus remains an upstream explicit fact; counts, source coverage, extraction failures, freshness, Stage, and Ranking are retained as independent inputs.",
+      "The declared change set is limited to Weekly Radar Domain, tests, docs, reference-impact evidence, and generated Work Item evidence; shared architecture tests and global coverage policy remain unchanged.",
+      "The current WI lifecycle ends with strict Finish, Archive, and a local commit; external repository publication actions are outside this execution."
+    ],
+    "rationale": "A typed SystemHealth section keeps health data auditable and reusable by future Markdown/Telegram renderers while preserving the existing publication contract and a clean Domain/Application/Infrastructure separation."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "execute, verify, publish, merge, close, archive all 24 planned WIs.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "Explicit human authorization and current-WI restrictions are recorded above."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Explicit health facts are retained without recomputation.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/domain/system_health_test.rs", "tests/system_health_test.rs"],
+      "expected": "A supplied Degraded or Healthy status, coverage percentage, extraction failure, and freshness value are returned exactly even when other supplied values would suggest a different status.",
+      "verificationPlan": "Run the module-local and same-stem companion tests for explicit fact retention and non-inference."
+    },
+    {
+      "scenario": "Evidence and source coverage preserve values/order and reject duplicates.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/domain/system_health_test.rs", "tests/weekly_radar_system_health.rs"],
+      "expected": "Available, expected, and percentage values remain unchanged; source coverage remains in supplied order and a duplicate source identity fails without mutation.",
+      "verificationPlan": "Run focused collection tests and the public integration test."
+    },
+    {
+      "scenario": "Degraded companies and extraction failures retain their supplied identities and order.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/domain/system_health_test.rs", "tests/weekly_radar_system_health.rs"],
+      "expected": "Company and failure facts are retained in insertion order; duplicate company/failure identities are rejected deterministically.",
+      "verificationPlan": "Run focused duplicate and order tests."
+    },
+    {
+      "scenario": "WeeklyRadarPublication carries one typed SystemHealth section.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/domain/mod.rs", "tests/weekly_radar_system_health.rs"],
+      "expected": "A publication exposes the exact health object supplied for its existing snapshot and rejects a second health object without replacing the first.",
+      "verificationPlan": "Run the public publication integration test and existing Weekly Radar contract tests."
+    },
+    {
+      "scenario": "Provider boundary remains isolated.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/domain/system_health.rs", "tests/weekly_radar_system_health.rs", "Cargo.toml"],
+      "expected": "The implementation uses standard-library/domain types only, has no Telegram/HTTP/Secret/provider imports, adds no dependencies, and compiles through the existing publication boundary.",
+      "verificationPlan": "Run focused tests, cargo fmt check, clippy, cargo test --all, and AI Cockpit scope/guard/quality checks."
+    }
+  ],
+  "verification": [
+    {"check": "aiWorkItem", "required": true},
+    {"check": "aiScope", "required": true},
+    {"check": "aiGuards", "required": true},
+    {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true},
+    {"check": "aiReviewPolicy", "required": true},
+    {"check": "aiBacktrack", "required": true},
+    {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true},
+    {"check": "aiGuidelines", "required": true},
+    {"check": "aiSummary", "required": true},
+    {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true},
+    {"check": "aiStatusConsistency", "required": true},
+    {"check": "aiDiffOwnership", "required": true},
+    {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore the isolated System Health source, tests, docs, and governed evidence paths.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 16}},
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-014.json",
+    "baseCommit": "ba346c2bbd538d2f734951ca05f3ad0322979cfa",
+    "initialScopeDigest": "b0202a5962a5cc4db8255d12d86768abcc623a2e56cba8f44805eb5412c5b086",
+    "contractSkeletonDigest": "7f4f05ece3e0fdfaeb94e59dde727f9fc184567398b42ea163bf44df0db8b101"
+  }
+}

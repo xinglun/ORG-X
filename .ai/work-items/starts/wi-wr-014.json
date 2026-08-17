@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-wr-014",
+  "receiptPath": ".ai/work-items/starts/wi-wr-014.json",
+  "baseCommit": "ba346c2bbd538d2f734951ca05f3ad0322979cfa",
+  "baseBranch": "codex/wi-wr-014-system-health",
+  "startTimestamp": "2026-08-17T06:00:17.876331+00:00",
+  "initialScopeDigest": "b0202a5962a5cc4db8255d12d86768abcc623a2e56cba8f44805eb5412c5b086",
+  "contractSkeletonDigest": "7f4f05ece3e0fdfaeb94e59dde727f9fc184567398b42ea163bf44df0db8b101"
+}

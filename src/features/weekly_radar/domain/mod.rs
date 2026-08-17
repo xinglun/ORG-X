@@ -2,8 +2,12 @@
 
 use std::fmt;
 
+use self::system_health::SystemHealth;
+
 #[cfg(test)]
 mod mod_test;
+
+pub mod system_health;
 
 fn non_empty(
     field: &'static str,
@@ -190,6 +194,7 @@ impl PublicationFact {
 pub struct WeeklyRadarPublication {
     snapshot: WeeklyRadarSnapshot,
     facts: Vec<PublicationFact>,
+    system_health: Option<SystemHealth>,
 }
 
 impl WeeklyRadarPublication {
@@ -198,6 +203,7 @@ impl WeeklyRadarPublication {
         Self {
             snapshot,
             facts: Vec::new(),
+            system_health: None,
         }
     }
 
@@ -226,5 +232,25 @@ impl WeeklyRadarPublication {
     /// Returns facts in supplied order.
     pub fn facts(&self) -> &[PublicationFact] {
         &self.facts
+    }
+
+    /// Attaches one supplied System Health section without replacing an existing one.
+    pub fn set_system_health(
+        &mut self,
+        system_health: SystemHealth,
+    ) -> Result<(), WeeklyRadarDomainError> {
+        if self.system_health.is_some() {
+            return Err(WeeklyRadarDomainError::DuplicateIdentity {
+                entity: "system health",
+                id: self.snapshot.id().as_str().to_owned(),
+            });
+        }
+        self.system_health = Some(system_health);
+        Ok(())
+    }
+
+    /// Returns the optional System Health section supplied for this publication.
+    pub fn system_health(&self) -> Option<&SystemHealth> {
+        self.system_health.as_ref()
     }
 }

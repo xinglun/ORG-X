@@ -23,3 +23,10 @@ fn weekly_radar_interface_registers_the_renderer_module() {
         org_x::features::weekly_radar::interface::semantic_message_splitter::SemanticMessageSplitter,
     >();
 }
+
+#[test]
+fn weekly_radar_infrastructure_registers_the_telegram_publisher_module() {
+    let _ = std::any::TypeId::of::<
+        org_x::features::weekly_radar::infrastructure::telegram_publisher::TelegramPublisherError,
+    >();
+}

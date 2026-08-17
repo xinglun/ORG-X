@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-010",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "df77b5d6f98b34ba60f32d245be0b3f97d668cb2663a2cced438daff5f1eac9d"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-010",
+    "contractDigest": "c4c6e094f604b408f2dce0990c985b35dc1cb150a5b13c5f4da0c83de4d4a48b",
+    "summaryDigest": "653d47f8ff04055d8ff58f8a11c7b5f00491013c16652f590c052eaee3888065",
+    "verificationDigest": "ae67f912551415644fee339118cb2665bdb9a1f57823917889ad15c67f0b94f4",
+    "baseCommit": "7c2c0a625c1dc928d4c64ac87f0b9dee722ed767",
+    "headCommit": "7c2c0a625c1dc928d4c64ac87f0b9dee722ed767",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "19f969b6ef6a8d775478904920b21c7164f1362abf2eca7f4c64eaee23e7d00a",
+      "binding": {
+        "baseCommit": "7c2c0a625c1dc928d4c64ac87f0b9dee722ed767",
+        "candidateHead": "7c2c0a625c1dc928d4c64ac87f0b9dee722ed767",
+        "candidateTreeDigest": "95c405b49056271635af47ab42ed0d76828c62cb3553c9a864c5752fa3189b78",
+        "candidateDiffDigest": "23b40371dc31bac85cf74791d860ddf257e7e989eef20e932cec68247a8dab24"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-010 generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-010 generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-wr-010",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-010.contract.json",
       ".ai/work-items/archive/2026/wi-wr-010.summary.json",
@@ -29,80 +52,110 @@
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md",
       ".ai/work-items/archive/**"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiSummary failed before the retry.",
+        "policyOrGuard": "required verification: aiSummary",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiSummary after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
+            "subject": "verificationHistory[0] aiSummary failed",
+            "digest": "71514c1f2ea72cb24a08fb81fed6c501d97a55f844837c133b06a79ba7931ecb"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "3ea6976e0d4e832ade5af8cb75d69b88c563016b5088108841d3de7ff93fac8d"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiSummary failed before the retry.",
+        "action": "Re-ran aiSummary after the correction; the latest attempt passed.",
+        "verification": "aiSummary latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
+            "subject": "verificationHistory[0] aiSummary failed",
+            "digest": "71514c1f2ea72cb24a08fb81fed6c501d97a55f844837c133b06a79ba7931ecb"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "3ea6976e0d4e832ade5af8cb75d69b88c563016b5088108841d3de7ff93fac8d"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "provider integration",
+        "severity": "low",
+        "title": "provider integration",
+        "detail": "No real Telegram client is exercised in WR-010; provider configuration and network behavior remain explicitly deferred.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "Use the current WI for discovered issues; do not expand into new WIs without need.",
+      "Use the latest weekly Actions checkout version actions/checkout@v5 in WR-015."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-010.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
+        "subject": "verificationHistory[0] aiSummary failed",
+        "digest": "71514c1f2ea72cb24a08fb81fed6c501d97a55f844837c133b06a79ba7931ecb"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
+        "subject": "verification[aiSummary] retry passed",
+        "digest": "3ea6976e0d4e832ade5af8cb75d69b88c563016b5088108841d3de7ff93fac8d"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiSummary",
-      "action": "blocked",
-      "resolution": "Retry aiSummary after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
-          "subject": "verificationHistory[0] aiSummary failed",
-          "digest": "71514c1f2ea72cb24a08fb81fed6c501d97a55f844837c133b06a79ba7931ecb"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "3ea6976e0d4e832ade5af8cb75d69b88c563016b5088108841d3de7ff93fac8d"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiSummary failed before the retry.",
-      "policyOrGuard": "required verification: aiSummary",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiSummary after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
-          "subject": "verificationHistory[0] aiSummary failed",
-          "digest": "71514c1f2ea72cb24a08fb81fed6c501d97a55f844837c133b06a79ba7931ecb"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "3ea6976e0d4e832ade5af8cb75d69b88c563016b5088108841d3de7ff93fac8d"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "Use the current WI for discovered issues; do not expand into new WIs without need.",
-    "Use the latest weekly Actions checkout version actions/checkout@v5 in WR-015."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "No real Telegram client is exercised in WR-010; provider configuration and network behavior remain explicitly deferred.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-010.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -865,6 +918,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry aiSummary after correcting the recorded failure."
+  }
 }

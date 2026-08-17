@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-wr-010",
+  "receiptPath": ".ai/work-items/starts/wi-wr-010.json",
+  "baseCommit": "7c2c0a625c1dc928d4c64ac87f0b9dee722ed767",
+  "baseBranch": "codex/wi-wr-010-telegram-publisher-adapter",
+  "startTimestamp": "2026-08-17T07:58:59.782610+00:00",
+  "initialScopeDigest": "838e875ae13f20dd7a82f36d05b513f32f107512f8a45e57ff65e25260ed551b",
+  "contractSkeletonDigest": "e796f12ee7a2f4a0c1a05fdeb57987a5abd788081701275ddd827b4a9f4ec113"
+}

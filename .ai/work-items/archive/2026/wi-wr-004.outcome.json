@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-004",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "7ad4f513a2387035fb1538b4980a584f3c3ec72b22a3c7c4e69eba505d51e402"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-004",
+    "contractDigest": "fb761a2d7b222fdbc5bd7f30e0e31aeb904c1374044eb7e29056efcf497e5ac0",
+    "summaryDigest": "13d411e100c04d4b70bea9ccda4573b05cd22f6c33501fa8df1e279c94b4afe4",
+    "verificationDigest": "550df3acc3bec505c074a7d3e76777d21035aaae3374886f45e761d88ded3aee",
+    "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "headCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "4e4a3539f2fe526bc56cab96f7de64ffc5bff34a18fa80a977995292bcfec80c",
+      "binding": {
+        "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateHead": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+        "candidateTreeDigest": "14365ddced626f4f8094044e3d2fd9de9183965de05fbfb88df25b51bf4c48df",
+        "candidateDiffDigest": "e05f64cb7f9d93d310e2b8eda8d67ba8ee38d945040074cb6a41ddddb8106ea1"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-004 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-004 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-wr-004",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-004.contract.json",
       ".ai/work-items/archive/2026/wi-wr-004.summary.json",
@@ -25,62 +48,174 @@
       "docs/superpowers/plans/2026-08-17-wi-wr-004-stage-transition-output.md",
       ".ai/work-items/archive/2026/wi-wr-004.outcome.json",
       ".ai/work-items/archive/2026/wi-wr-004.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Shared module registration and the eventual WR-001 ACL conversion remain owned by other Work Items and are intentionally not modified here.",
+      "This WI does not prove upstream Stage detection correctness; it only validates the output boundary for supplied facts."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Shared module registration and the eventual WR-001 ACL conversion remain owned by other Work Items and are intentionally not modified here.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "This WI does not prove upstream Stage detection correctness; it only validates the output boundary for supplied facts.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Shared module registration and the eventual WR-001 ACL conversion remain owned by other Work Items and are intentionally not modified here.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "This WI does not prove upstream Stage detection correctness; it only validates the output boundary for supplied facts.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [
+      {
+        "problem": "observed issue",
+        "action": "Renamed the accessor to prior_stage without suppressing the lint; focused tests were updated in the same WI.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/domain/stage_transition_output.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "tests/weekly_radar_stage_transition.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "make check",
+            "subject": "observedIssues[0] observed issue"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/domain/stage_transition_output.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "tests/weekly_radar_stage_transition.rs",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": "make check",
+            "subject": "observedIssues[0] observed issue"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "observed issue",
+        "action": "Added the stem-matched module-local stage_transition_output_test.rs and loaded it from the production source with #[cfg(test)] #[path]; the shared coverage policy remains unchanged.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/guards/coverage_policy.yaml",
+            "subject": "observedIssues[1] observed issue"
+          },
+          {
+            "source": "src/features/weekly_radar/domain/stage_transition_output.rs",
+            "subject": "observedIssues[1] observed issue"
+          },
+          {
+            "source": "src/features/weekly_radar/domain/stage_transition_output_test.rs",
+            "subject": "observedIssues[1] observed issue"
+          },
+          {
+            "source": "make check-ai-coverage-guard",
+            "subject": "observedIssues[1] observed issue"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/guards/coverage_policy.yaml",
+            "subject": "observedIssues[1] observed issue"
+          },
+          {
+            "source": "src/features/weekly_radar/domain/stage_transition_output.rs",
+            "subject": "observedIssues[1] observed issue"
+          },
+          {
+            "source": "src/features/weekly_radar/domain/stage_transition_output_test.rs",
+            "subject": "observedIssues[1] observed issue"
+          },
+          {
+            "source": "make check-ai-coverage-guard",
+            "subject": "observedIssues[1] observed issue"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "scope",
+        "severity": "medium",
+        "title": "scope",
+        "detail": "Upstream Stage detection correctness and later shared-module/ACL integration remain outside this WI; the standalone output boundary is validated only for supplied facts.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-004.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-004.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-004.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-004.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 0,
-    "warnings": 2,
-    "resolved": 0,
-    "unresolved": 2
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Shared module registration and the eventual WR-001 ACL conversion remain owned by other Work Items and are intentionally not modified here.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "This WI does not prove upstream Stage detection correctness; it only validates the output boundary for supplied facts.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Upstream Stage detection correctness and later shared-module/ACL integration remain outside this WI; the standalone output boundary is validated only for supplied facts.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-004.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -843,6 +978,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

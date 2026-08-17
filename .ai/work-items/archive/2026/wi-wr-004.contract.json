@@ -1,0 +1,274 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-004",
+  "mode": "code",
+  "title": "Stage Transition Detection Output",
+  "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-wr-004.contract.json",
+    ".ai/work-items/active/wi-wr-004.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-004.outcome.json",
+    ".ai/work-items/active/wi-wr-004.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-004-stage-transition-output.json",
+    "src/features/weekly_radar/domain/stage_transition_output.rs",
+    "src/features/weekly_radar/domain/stage_transition_output_test.rs",
+    "tests/weekly_radar_stage_transition.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-004-stage-transition-output.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-004-stage-transition-output.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/domain/mod.rs",
+    "src/features/weekly_radar/mod.rs",
+    "src/features/mod.rs",
+    "tests/architecture/module_boundaries.rs",
+    "Other Work Item Contract, Summary, Outcome, start, archive, source, test, or documentation files",
+    "Inferring or modifying Stage from raw Evidence, comparing historical Snapshots, ranking, scoring, persistence, rendering, Telegram delivery, scheduling, retry, or external adapters",
+    "Cross-feature imports, shared module registration, new dependencies, trading, price prediction, target price, portfolio allocation, or capital-action behavior"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository Work Item lifecycle, path ownership, evidence handoff, and current-WI issue policy."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Canonical domain and governance terminology."
+    },
+    {
+      "path": "docs/architecture/ARCHITECTURE.md",
+      "reason": "DDD layer direction and domain isolation rules."
+    },
+    {
+      "path": "docs/architecture/BOUNDED_CONTEXTS.md",
+      "reason": "Bounded Context exchange through explicit boundaries."
+    },
+    {
+      "path": "docs/architecture/DEPENDENCY_RULES.md",
+      "reason": "Executable architecture and dependency constraints."
+    },
+    {
+      "path": "docs/domain/TRANSFORMATION_STAGE_MODEL.md",
+      "reason": "Six Stage labels and explicit transition-record semantics."
+    },
+    {
+      "path": "docs/scoring/STAGE_GATE_SPEC.md",
+      "reason": "Transition evidence fields and Productivity Breakout boundary."
+    },
+    {
+      "path": "docs/domain/EVIDENCE_MODEL.md",
+      "reason": "Evidence, supporting, counter, missing proof, and confidence terminology."
+    },
+    {
+      "path": "docs/product/PRD.md",
+      "reason": "Evidence-first research pipeline and no-narrative-forcing boundary."
+    },
+    {
+      "path": "docs/product/SCOPE.md",
+      "reason": "No-trading and external-text safety constraints."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "WI-WR-004 deliverable, dependencies, and priority sequence."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-008.contract.json",
+      "reason": "Upstream Transformation Stage and transition ownership."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-wr-001.contract.json",
+      "reason": "Weekly Radar boundary and explicit exclusion of typed Stage Transition calculations from WR-001."
+    },
+    {
+      "path": "src/features/transformation/domain/mod.rs",
+      "reason": "Existing Stage and StageTransition shape; inspected for semantic alignment without importing it."
+    },
+    {
+      "path": "src/features/evidence/domain/mod.rs",
+      "reason": "Existing confidence and evidence identity conventions; inspected for semantic alignment without importing it."
+    },
+    {
+      "path": "Cargo.toml",
+      "reason": "Dependency and test configuration; no dependency addition is planned."
+    },
+    {
+      "path": ".ai/guards/coverage_policy.yaml",
+      "reason": "Read-only Coverage Guard association rules; the existing byModule stem rule requires a matching stage_transition_output_test.rs path and remains unchanged."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "boundary_integrity",
+      "stage_semantics",
+      "parallel_scope_conflict"
+    ],
+    "reason": "The output must preserve upstream Transition facts while exposing a deterministic Productivity Breakout priority marker without importing shared modules or inferring from raw Evidence.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "No coding unknowns remain. The eventual shared module registration and ACL conversion are intentionally deferred to dependent Work Items and do not affect this standalone #[path]-loaded boundary."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The explicit user authorization covers execution and Contract recording for all 24 roadmap Work Items; this WI has a bounded implementation surface and no unresolved coding unknowns."
+  },
+  "preReviewWarnings": [
+    "Productivity Breakout priority is derived only from explicit supplied Stage labels, never from raw Evidence or a score.",
+    "The standalone source file is intentionally not registered in shared module files because those paths are owned by parallel Work Items."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "StageTransitionOutput retains event identity, company, from_stage, to_stage, date, status, supporting, counter, missing, and confidence exactly as supplied through public accessors.",
+    "TransitionStatus accepts only explicit Confirmed or Candidate values and exposes stable labels; Candidate is never promoted to Confirmed.",
+    "Supporting, counter, and missing references preserve insertion order and reject blank values, duplicate identities, and cross-collection identity overlap deterministically.",
+    "Priority identifies PRODUCTION_SYSTEM to PRODUCTIVITY_BREAKOUT as ProductivityBreakoutHigh while all other explicit stage pairs remain Normal; this mapping does not inspect Evidence.",
+    "The output accepts corrective downgrades and same-stage inputs as supplied output facts without changing either Stage or comparing historical Snapshots.",
+    "The module-local stage_transition_output_test.rs and integration tests cover confirmed/candidate status, field retention, ordering, duplicate/blank rejection, corrective downgrade, Productivity Breakout priority, and no-inference/no-shared-module behavior.",
+    "The spec path contains the boundary and exclusions, the plan path contains exact verification commands, and the reference-impact JSON lists shared paths as unchanged."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep this standalone Weekly Radar output boundary independent of other feature implementations and external systems.",
+    "Treat Stage Transition and Candidate status as supplied upstream facts; do not infer from raw Evidence or recalculate historical state.",
+    "Keep persistence, rendering, Telegram, Scheduler, retry, and receipt behavior outside this Contract.",
+    "Do not add dependencies for this Contract.",
+    "If a problem is discovered in the corresponding WI and remains in scope, resolve it in this WI; do not casually open a new WI to prevent scope diffusion.",
+    "Do not introduce trading, price prediction, target price, portfolio allocation, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "Weekly Radar needs a typed, read-only Stage Transition output that can carry confirmed and explicit Candidate events into later compression and rendering work without re-running upstream Stage judgment.",
+    "constraints": [
+      "Write only the declared exclusive paths; do not edit shared Weekly Radar module registration or architecture guard files.",
+      "Preserve supplied event identity, company, Stage labels, date, status, evidence references, and confidence in stable order.",
+      "Mark the explicit PRODUCTION_SYSTEM to PRODUCTIVITY_BREAKOUT pair as a high-priority fact without reading raw Evidence, comparing Snapshots, or calculating a score.",
+      "The domain boundary must remain standard-library-only and contain no delivery, persistence, rendering, scheduling, retry, or trading behavior."
+    ],
+    "rationale": "A standalone output projection gives later Weekly Radar Work Items a deterministic event contract while keeping Stage detection upstream and avoiding cross-Work-Item edits during parallel development."
+  },
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "software_design", "test_automation"], "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]},
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {"type": "human", "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.", "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "authorityEvidence": {"type": "human_authorization", "granted": true, "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.", "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "requestedOperation": {"type": "repository_governance", "action": "modify", "target": "repository_governance", "environment": "repository", "effect": "enforce", "authorityRequired": false, "authorityReason": "Explicit human authorization is recorded above."},
+  "scenarioCoverage": [
+    {"scenario": "Confirmed and Candidate transitions retain all supplied fields without status promotion.", "required": true, "status": "unverified", "evidence": [], "expected": "Both explicit statuses are preserved, including event/company/stages/date/evidence/confidence, and Candidate remains Candidate.", "verificationPlan": "Run focused unit and integration tests for status and accessor retention."},
+    {"scenario": "Productivity Breakout priority is deterministic and evidence-independent.", "required": true, "status": "unverified", "evidence": [], "expected": "Only explicit PRODUCTION_SYSTEM to PRODUCTIVITY_BREAKOUT receives ProductivityBreakoutHigh; other pairs receive Normal and no raw Evidence is inspected.", "verificationPlan": "Run the priority mapping tests and inspect the standalone source for forbidden inference/imports."},
+    {"scenario": "Evidence collections and corrective transitions preserve safe boundaries.", "required": true, "status": "unverified", "evidence": [], "expected": "Ordered supporting/counter/missing references reject blank, duplicate, and overlapping identities; corrective downgrades remain valid; no Snapshot/history API exists.", "verificationPlan": "Run boundary, ordering, duplicate, downgrade, and architecture-safe standalone integration tests."}
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items; the reference-impact record is limited to this WI's declared boundary."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 16
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-004.json",
+    "baseCommit": "c90349ff42b8a87ba6146bbd62bc9e357951786c",
+    "initialScopeDigest": "1bb8c95a3ae81fc18779d0d71f0507714b4c4b3183783c358dee5e3fe1a17ea9",
+    "contractSkeletonDigest": "650dcd5ee8e0a6486263a52c04b985d89ffcb6ea73c8ee7d6014f21f64781672"
+  }
+}

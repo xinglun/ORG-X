@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "requestedText": "Add a provider-agnostic Weekly Radar Telegram publisher adapter that forwards complete semantic chunks through an injected transport.",
+  "target": {
+    "type": "file",
+    "name": "wi_wr_010_injected_telegram_delivery_boundary",
+    "path": "src/features/weekly_radar/infrastructure/telegram_publisher.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [],
+    "testReferences": [],
+    "documentationReferences": [],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The adapter receives an injected transport and immutable in-memory chunks; it does not load files, invoke network clients, or resolve runtime providers."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "No external consumer exists in this repository beyond the module-local and public integration tests; provider-side publication is explicitly out of scope."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The adapter has no telemetry, monitoring, receipt, retry, scheduler, polling, or webhook behavior."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-010.contract.json",
+      "The Contract authorizes the full repository lifecycle while restricting this implementation to the injected infrastructure adapter and tests."
+    ]
+  },
+  "approval": null
+}

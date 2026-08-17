@@ -1,0 +1,204 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-010",
+  "mode": "code",
+  "title": "Telegram Publisher Adapter",
+  "baseCommit": "7c2c0a625c1dc928d4c64ac87f0b9dee722ed767",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": true,
+    "authorityReason": "The user explicitly authorized execution, verification, publication, merge, closure, and archive for all 24 planned Work Items."
+  },
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "scope": [
+    ".ai/work-items/active/wi-wr-010.contract.json",
+    ".ai/work-items/active/wi-wr-010.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-010.outcome.json",
+    ".ai/work-items/active/wi-wr-010.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-010-telegram-publisher.json",
+    "src/features/weekly_radar/infrastructure/mod.rs",
+    "src/features/weekly_radar/infrastructure/telegram_publisher.rs",
+    "src/features/weekly_radar/infrastructure/telegram_publisher_test.rs",
+    "tests/mod_test.rs",
+    "tests/telegram_publisher_test.rs",
+    "tests/weekly_radar_telegram_publisher.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-010-telegram-publisher-adapter.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-010-telegram-publisher-adapter.md"
+  ],
+  "outOfScope": [
+    "Real Telegram HTTP/API clients, network calls, BotFather tokens, chat credentials, secrets, environment or CI secret wiring, and external publication",
+    "Publication receipts, Telegram message IDs, retry/backoff, failure replay, scheduling, persistence, polling, webhook handling, and provider-specific SDKs",
+    "Rendering or re-rendering Weekly Radar Markdown, parsing domain facts, recalculating Stage, Ranking, Threshold Distance, Top5, Rising, Dropped, System Health, or No Change",
+    "Changing WR-009 TelegramRenderer or WR-011 SemanticMessageSplitter behavior, shared architecture tests, global policies, unrelated Work Items, or unrelated bounded contexts",
+    "Changing unrelated Work Items, GitHub settings, Telegram-side configuration, or provider-side publication"
+  ],
+  "sources": [
+    { "path": "AGENTS.md", "reason": "Repository Work Item lifecycle, authorization, scope, Finish, archive, and local-only handoff rules." },
+    { "path": ".ai/glossary.md", "reason": "Canonical governance and architecture terminology." },
+    { "path": ".ai/cockpit/README.md", "reason": "V2 Contract, preflight, checkpoint, Summary, Finish, and archive workflow." },
+    { "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WR-010 dependency and Telegram Publisher Adapter roadmap boundary." },
+    { "path": "docs/superpowers/specs/2026-08-17-wi-wr-009-telegram-renderer.md", "reason": "Upstream complete rendered Telegram Markdown contract and provider-agnostic boundary." },
+    { "path": "docs/superpowers/specs/2026-08-17-wi-wr-011-semantic-message-splitter.md", "reason": "Upstream complete semantic chunk contract and no-truncation guarantee." },
+    { "path": "src/features/weekly_radar/interface/telegram_renderer.rs", "reason": "Existing rendered Markdown output type and source-preserving message access." },
+    { "path": "src/features/weekly_radar/interface/semantic_message_splitter.rs", "reason": "Existing typed complete chunks consumed by this adapter." },
+    { "path": "src/features/weekly_radar/infrastructure/mod.rs", "reason": "Infrastructure module registration point." },
+    { "path": "src/features/weekly_radar/application/mod.rs", "reason": "Existing WeeklyRadarPublisher application port implemented by the infrastructure adapter." },
+    { "path": "Cargo.toml", "reason": "Rust module and integration-test conventions; no dependency additions are planned." },
+    { "path": "Makefile", "reason": "Project quality command entrypoint used by Finish." }
+  ],
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "problemStatement": "WR-009 and WR-011 provide complete rendered Telegram Markdown and semantic chunks, but no delivery adapter boundary exists for a later Telegram transport. A direct provider implementation here would mix transport concerns, secrets, and publication lifecycle behavior into the interface. User-facing product motivation was not separately provided.",
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["chunk_integrity", "transport_boundary", "scope"],
+    "reason": "The adapter must forward complete source chunks in order, propagate transport failures without inventing receipts or retries, and remain free of network, secret, and domain dependencies.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "WR-011 exposes complete chunks and boundary labels. The transport is injected as a local trait so tests can prove ordering and error propagation without external I/O."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["Medium-risk interface adapter with explicit local verification and no external publication."],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "Scope, sources, acceptance, scenario coverage, verification, and non-goals are explicit; the user authorized the complete repository lifecycle and governance evidence writes for all 24 planned Work Items."
+  },
+  "preReviewWarnings": [
+    "Review that every complete chunk is forwarded byte-for-byte and in source order.",
+    "Review that transport errors identify the chunk without creating receipt or retry semantics.",
+    "Review that production code contains no HTTP, secret, scheduler, receipt, retry, or domain-recalculation dependency."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Complete semantic chunks are forwarded in source order.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/infrastructure/telegram_publisher_test.rs", "tests/weekly_radar_telegram_publisher.rs"],
+      "expected": "Each WR-011 chunk reaches the injected transport exactly once, with the original Markdown and semantic boundary order preserved.",
+      "verificationPlan": "Run module-local, same-stem, and integration tests using a recording transport and compare all forwarded payloads to the splitter output."
+    },
+    {
+      "scenario": "Transport failures are typed and stop later sends.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/infrastructure/telegram_publisher_test.rs", "tests/telegram_publisher_test.rs"],
+      "expected": "The adapter returns the failing chunk index/boundary and does not call the transport for later chunks; no retry or receipt is produced.",
+      "verificationPlan": "Run an injected transport that fails on a selected call and assert the typed error, call count, and absence of later calls."
+    },
+    {
+      "scenario": "Empty destination and empty split are rejected locally.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/infrastructure/telegram_publisher.rs", "tests/weekly_radar_telegram_publisher.rs"],
+      "expected": "Blank chat destination and an empty chunk collection return deterministic adapter errors before transport invocation.",
+      "verificationPlan": "Run constructor validation and a controlled empty-split test without external I/O."
+    },
+    {
+      "scenario": "Provider and lifecycle isolation remains explicit.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/infrastructure/telegram_publisher.rs", ".ai/evidence/reference-impact/wi-wr-010-telegram-publisher.json"],
+      "expected": "The adapter uses only the injected transport and WR-011 chunk types; no secrets, HTTP client, scheduler, receipt, retry, persistence, or domain-calculation dependency is present.",
+      "verificationPlan": "Run source-boundary/reference-impact checks, fmt, Clippy, full tests, and all Contract AI Cockpit gates."
+    }
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record checkpoints so the adapter boundary, acceptance, and verification remain visible during implementation and archive."
+  },
+  "acceptance": [
+    "A public provider-agnostic TelegramTransport trait accepts a destination and complete Markdown payload without prescribing an HTTP client, credentials, or provider SDK; its rustdoc explains the boundary.",
+    "TelegramPublisherAdapter consumes WR-011 SemanticMessageSplit chunks, forwards each complete chunk once in source order, and never truncates, re-renders, merges, or recalculates content.",
+    "Transport failures return a typed adapter error containing the failing chunk index and semantic boundary, stop subsequent sends, and do not implement retry, receipt, or message-ID behavior.",
+    "Blank destination and empty split are rejected locally before transport invocation; no real network or external side effect is performed by tests or production code.",
+    "Module-local, same-stem companion, and public integration tests cover forwarding, exact content/order, failure propagation, empty input, and provider/lifecycle isolation.",
+    "The WR-010 spec and plan name the adapter files and tests; the reference-impact record covers the infrastructure registration and new adapter; the Summary records `make check`, focused tests, AI Cockpit gates, strict Finish/Archive, the local commit, and the authorized publish/merge/close handoff."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep the adapter provider-agnostic and do not add secrets or machine-specific paths."
+  ],
+  "intent": {
+    "problem": "WR-009 and WR-011 produce complete, already-rendered Telegram Markdown chunks, but there is no narrow adapter boundary for handing those chunks to a future Telegram transport.",
+    "constraints": [
+      "Consume only WR-011 complete SemanticMessageChunk values; preserve each payload exactly and forward in source order.",
+      "Inject the transport as a local trait; do not implement network calls, credentials, secrets, SDKs, scheduler, receipt, retry, persistence, polling, or webhook behavior.",
+      "Do not render, split, parse, calculate, normalize, sort, or rewrite Weekly Radar content in this WI.",
+      "Complete Contract, spec/plan, TDD, focused/module-local/integration verification, strict AI Finish, archive, commit, publish, merge, close, and remote branch cleanup according to the recorded repository lifecycle."
+    ],
+    "rationale": "A small injected transport boundary lets later infrastructure choose the Telegram client while keeping rendering, semantic splitting, domain judgment, and publication lifecycle concerns in their existing or future Work Items."
+  },
+  "verification": [
+    { "check": "aiWorkItem", "required": true },
+    { "check": "aiScope", "required": true },
+    { "check": "aiGuards", "required": true },
+    { "check": "aiCheckpoint", "required": true },
+    { "check": "aiAgentRisk", "required": true },
+    { "check": "aiReviewPolicy", "required": true },
+    { "check": "aiBacktrack", "required": true },
+    { "check": "aiCoverage", "required": true },
+    { "check": "aiScenarioCoverage", "required": true },
+    { "check": "aiGuidelines", "required": true },
+    { "check": "aiSummary", "required": true },
+    { "check": "aiStatus", "required": true },
+    { "check": "aiStatusCheck", "required": true },
+    { "check": "aiStatusConsistency", "required": true },
+    { "check": "aiDiffOwnership", "required": true },
+    { "check": "quality", "required": true }
+  ],
+  "destructiveChangePolicy": { "allowed": false, "requiresHumanApproval": true, "allowPatterns": [] },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "rollbackNote": "Revert the WR-010 diff and restore the adapter tests and governance evidence; no external state is changed.",
+  "budgetImpact": { "expectedMetrics": { "archiveGrowth": 26 } },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-010.json",
+    "baseCommit": "7c2c0a625c1dc928d4c64ac87f0b9dee722ed767",
+    "initialScopeDigest": "838e875ae13f20dd7a82f36d05b513f32f107512f8a45e57ff65e25260ed551b",
+    "contractSkeletonDigest": "e796f12ee7a2f4a0c1a05fdeb57987a5abd788081701275ddd827b4a9f4ec113"
+  }
+}

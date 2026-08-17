@@ -229,7 +229,7 @@ It must end by stating that ORG-X discovers changes in how companies produce, no
 
 - [ ] **Step 5: Review document consistency and commit**
 
-Run: `rg -n "TBD|TODO|FIXME" NORTH_STAR.md ENGINEERING_PRINCIPLES.md README.md docs || true`
+Run: `rg -n "TBD|TODO|FIXME" NORTH_STAR.md ENGINEERING_PRINCIPLES.md README.md docs/product docs/architecture docs/domain || true`
 
 Expected: no placeholder matches.
 
@@ -438,7 +438,7 @@ Run: `git diff --check`
 
 Expected: PASS.
 
-Run: `rg -n "TBD|TODO|FIXME" NORTH_STAR.md ENGINEERING_PRINCIPLES.md README.md docs src tests || true`
+Run: `rg -n "TBD|TODO|FIXME" NORTH_STAR.md ENGINEERING_PRINCIPLES.md README.md docs/product docs/architecture docs/domain docs/data docs/scoring docs/validation docs/adr src tests || true`
 
 Expected: no placeholder matches.
 
@@ -452,4 +452,3 @@ Expected: every required Context layer, document, ADR, and Architecture Test is 
 git add Makefile README.md docs/architecture/DEPENDENCY_RULES.md
 git commit -m "chore: add ORG-X foundation verification commands"
 ```
-

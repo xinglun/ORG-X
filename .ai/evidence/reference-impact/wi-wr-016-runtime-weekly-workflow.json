@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "requestedText": "Schedule the approved Weekly Radar run on Monday 09:00 JST and publish only a bounded rolling archive to the dedicated data branch.",
+  "target": {
+    "type": "workflow_job",
+    "name": "wi_wr_016_weekly_radar_data_job",
+    "path": ".github/workflows/weekly-radar.yml",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The workflow invokes the repository CLI and public sources declared by the Contract; it does not dynamically load an unbounded workflow or provider reference."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The workflow is a new repository-local scheduled entrypoint; its only external effects are the Contract-authorized Telegram delivery and data-branch update."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "No existing monitoring, deployment, or workflow job is replaced; concurrency and failure guards are local safety controls for the new job."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-016-runtime.contract.json",
+      "The Contract explicitly authorizes the Monday schedule, contents:write, Telegram delivery, and data-branch rolling cleanup while prohibiting main-branch history rewrites."
+    ]
+  },
+  "approval": null
+}

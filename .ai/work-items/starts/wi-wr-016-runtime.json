@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-wr-016-runtime",
+  "receiptPath": ".ai/work-items/starts/wi-wr-016-runtime.json",
+  "baseCommit": "7551095fb84f961bdc49c6b0faae760409e5ddbd",
+  "baseBranch": "codex/wi-wr-016-runtime",
+  "startTimestamp": "2026-08-17T11:36:55.048712+00:00",
+  "initialScopeDigest": "6b19b96518645124c247ad0904f41bdd00edcf59bf59644d7e925957c31b65da",
+  "contractSkeletonDigest": "10d371a089ab9f9373c5d76f58d3493dc8c5074d72414b45245f23f9b53d2792"
+}

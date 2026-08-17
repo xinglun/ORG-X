@@ -1,0 +1,291 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-016-runtime",
+  "mode": "code",
+  "title": "Weekly Radar runtime, free evidence sources, Telegram publication, and data branch retention",
+  "baseCommit": "7551095fb84f961bdc49c6b0faae760409e5ddbd",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Implement, verify, publish, merge, close, and archive WI-WR-016, including GitHub Actions contents:write and data-branch rolling cleanup.",
+    "reference": "user message: 同意，完成实装。走完完整的WI流程为止。需要我授权的，授权给你并写入contract。",
+    "capturedAt": "2026-08-17"
+  },
+  "rawUserRequest": "Implement the approved Weekly Radar runtime using official primary data, free public APIs, limited web acquisition, rule-only extraction with UNKNOWN on ambiguity, Telegram delivery on Monday 09:00 JST, and a data branch that retains one year while cleaning old data each run. Complete the full WI lifecycle.",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User-authorized continuation of the Weekly Radar runtime design and full WI lifecycle.",
+    "digest": "7263d6f2ff26ccae256ba62edd9c8a985a5376fbcd1044398f5e6d37e0597f4e",
+    "capturedAt": "2026-08-17"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "documentation", "test_automation"],
+    "prohibitedCapabilities": ["paid_data_api_dependency", "llm_fact_extraction", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized implementation and the full WI lifecycle, including the data branch write and one-year rolling cleanup.",
+    "authorizedExternalEffects": [
+      "GitHub Actions may read configured public sources and write report artifacts to the data branch.",
+      "GitHub Actions may send the generated report to Telegram using configured Secrets.",
+      "GitHub Actions may compact only the data branch history to enforce the one-year retention window."
+    ]
+  },
+  "scope": [
+    ".ai/work-items/active/wi-wr-016-runtime.contract.json",
+    ".ai/work-items/active/wi-wr-016-runtime.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-016-runtime.outcome.json",
+    ".ai/work-items/active/wi-wr-016-runtime.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-016-runtime-*.json",
+    ".ai/guards/coverage_policy.yaml",
+    ".github/workflows/weekly-radar.yml",
+    "Cargo.toml",
+    "Cargo.lock",
+    "src/main.rs",
+    "src/features/weekly_radar/mod.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/features/weekly_radar/runtime/**",
+    "tests/weekly_radar_runtime.rs",
+    "config/weekly_radar/companies.json",
+    "docs/data/DATA_SOURCE_POLICY.md",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-016-runtime.md"
+  ],
+  "outOfScope": [
+    "Paid data APIs or provider-specific paid credentials.",
+    "LLM or probabilistic extraction; ambiguous rule results remain UNKNOWN.",
+    "Trading, price prediction, portfolio decisions, or capital actions.",
+    "Changing existing Domain semantics, stage rules, ranking rules, or evidence authority.",
+    "Rewriting main or any non-data branch history.",
+    "Treating GDELT or discovery material as authoritative without official corroboration.",
+    "Opening a separate WI for defects inside this scope; resolve them here unless materially outside the Contract."
+  ],
+  "sources": [
+    { "path": "AGENTS.md", "reason": "Repository execution and governance instructions." },
+    { "path": ".ai/cockpit/README.md", "reason": "WI Contract, preflight, checkpoint, Finish, archive, PR, merge, closure, and cleanup lifecycle." },
+    { "path": ".ai/glossary.md", "reason": "Canonical governance and architecture terminology." },
+    { "path": "docs/product/PRD.md", "reason": "Evidence-first product sequence, stages, and calibration universe." },
+    { "path": "docs/product/SCOPE.md", "reason": "ORG-X inclusion, exclusion, and safety boundaries." },
+    { "path": "docs/data/DATA_SOURCE_POLICY.md", "reason": "Existing source authority policy to be updated for the approved free-data stack." },
+    { "path": "docs/data/DATA_QUALITY_POLICY.md", "reason": "UNKNOWN, provenance, and quality requirements." },
+    { "path": "src/features/ingestion/application/mod.rs", "reason": "Provider-neutral collection port." },
+    { "path": "src/features/ingestion/domain/mod.rs", "reason": "Opaque observations and source-tier provenance." },
+    { "path": "src/features/evidence/domain/mod.rs", "reason": "Evidence provenance, confidence, and missing-evidence model." },
+    { "path": "src/features/weekly_radar/application/weekly_scheduler.rs", "reason": "Existing weekly trigger boundary." },
+    { "path": "src/features/weekly_radar/infrastructure/telegram_publisher.rs", "reason": "Existing provider-neutral Telegram boundary and reserved environment names." },
+    { "path": "src/features/weekly_radar/infrastructure/publication_receipt.rs", "reason": "Existing immutable receipt and retry boundary." },
+    { "path": "src/features/weekly_radar/infrastructure/archive_store.rs", "reason": "Existing archive boundary." },
+    { "path": ".github/workflows/ai-cockpit.yml", "reason": "Current checkout@v5 and quality workflow conventions." },
+    { "path": "user-provided Weekly Radar free-data design", "reason": "Approved P0/P1/P2 stack, no-paid-API rule, rule-only extraction, and evidence pyramid." },
+    { "path": "https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github", "reason": "GitHub repository size guidance for retention design." },
+    { "path": "https://docs.github.com/en/billing/reference/product-usage-included", "reason": "GitHub Free Actions storage guidance for artifact retention." },
+    { "path": ".ai/guards/coverage_policy.yaml", "reason": "Existing coverage association policy; the current WI adds one bounded association for the runtime integration test." }
+  ],
+  "problemStatement": "Weekly Radar boundaries are locally testable but have no runtime that collects the approved free evidence stack, assembles a report, publishes it to Telegram, or retains bounded longitudinal history.",
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": ["external_network", "source_schema_drift", "secret_safety", "cross_boundary_sequence", "data_branch_history_rewrite", "ci_workflow_permissions"],
+    "reason": "The Work Item adds live source acquisition, Telegram delivery, GitHub Actions write permissions, and authorized data-branch history compaction.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The user selected official primary sources plus free interfaces, prohibited paid APIs and LLM extraction, approved data-branch retention, and authorized the full lifecycle."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item changes CI, adds live external delivery, restricted workflow permissions, and data-branch compaction.",
+      "Strict source, secret, scenario, quality, PR, archive, and closure evidence is required."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "Scope, authority, source policy, data-branch behavior, acceptance, scenarios, and verification are explicit."
+  },
+  "preReviewWarnings": [
+    "Verify every normalized fact retains source URI, passage or structured field, effective date, retrieval time, and status/confidence.",
+    "Verify ambiguous rule extraction returns UNKNOWN rather than guessing.",
+    "Verify GDELT cannot become authoritative evidence without official corroboration.",
+    "Verify cleanup cannot touch main, non-data branches, or files newer than 365 days.",
+    "Verify secrets are not printed and fixture/dry-run tests never call Telegram."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Monday 09:00 JST scheduled execution and manual dispatch.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [".github/workflows/weekly-radar.yml", "tests/weekly_radar_runtime.rs"],
+      "expected": "cron 0 0 * * 1, workflow_dispatch, checkout@v5, and no checkout@v4.",
+      "verificationPlan": "Validate workflow text and run workflow/AI Cockpit checks."
+    },
+    {
+      "scenario": "SEC Company Facts and submissions with configured User-Agent and no API key.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/sec.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "ORGX_SEC_USER_AGENT is required, fixture facts and 10-K metadata parse, and no paid key is required.",
+      "verificationPlan": "Use fixture JSON and injected HTTP transport; assert headers, concepts, provenance, and failures."
+    },
+    {
+      "scenario": "Rule-only employee extraction preserves provenance and returns UNKNOWN for ambiguity.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/rules.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "Unambiguous employee passages create dated candidates; multiple, unclear, or missing candidates become UNKNOWN.",
+      "verificationPlan": "Test positive, approximate, conflicting, missing-date, and unrelated-number fixtures."
+    },
+    {
+      "scenario": "Official pages, Greenhouse/Lever, and GDELT are acquired behind provider-neutral boundaries.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/sources.rs", "config/weekly_radar/companies.json", "tests/weekly_radar_runtime.rs"],
+      "expected": "Configured endpoints are bounded and provenance-bearing; missing optional endpoints are UNAVAILABLE; GDELT is discovery-only.",
+      "verificationPlan": "Use fixture responses and injected transport; assert source tier and discovery status."
+    },
+    {
+      "scenario": "A valid run renders deterministic Markdown, Telegram chunks, and a matching immutable Receipt.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/report.rs", "src/features/weekly_radar/runtime/telegram.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "Repeated input is byte-identical, chunks stay within limits, and receipt identity matches the snapshot.",
+      "verificationPlan": "Run fixture-only E2E with a recording transport and compare ordered payloads."
+    },
+    {
+      "scenario": "The data branch retains one year and cleans old files on each run.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/retention.rs", ".github/workflows/weekly-radar.yml", "tests/weekly_radar_runtime.rs"],
+      "expected": "Files older than 365 days are removed from data only; recent files remain; only data may be compacted.",
+      "verificationPlan": "Use temporary branch fixtures with old/recent files and assert dry-run/apply boundaries."
+    },
+    {
+      "scenario": "Configuration, source, report, and Telegram failures fail closed without fabricated claims or secret leakage.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/mod.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "Required configuration errors prevent publication; gaps are UNKNOWN/UNAVAILABLE; tokens never appear in errors.",
+      "verificationPlan": "Test each failure class and assert no transport call when the report gate fails."
+    },
+    {
+      "scenario": "Full AI Cockpit lifecycle completes without out-of-scope changes.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["Makefile", ".ai/cockpit/README.md", "docs/superpowers/plans/2026-08-17-wi-wr-016-runtime.md"],
+      "expected": "Quality, strict Finish, archive, PR, CI, merge, close, and cleanup pass.",
+      "verificationPlan": "Run canonical Make targets and inspect merged branch, archive, closure, and clean worktrees."
+    }
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record the authorized boundary before edits and final source/CI/data-branch verification before Finish."
+  },
+  "acceptance": [
+    "org-x weekly-radar reads a versioned CompanySourceRegistry and produces deterministic Markdown, Telegram chunks, snapshots, source coverage, and a publication Receipt.",
+    "P0/P1/P2 adapters cover SEC EDGAR/XBRL, configured company official pages, Greenhouse, Lever, and GDELT discovery without paid APIs or LLM extraction.",
+    "Every normalized fact retains provenance; ambiguous rule extraction returns UNKNOWN.",
+    "Telegram reads ORGX_TELEGRAM_BOT_TOKEN and ORGX_TELEGRAM_CHAT_ID only from runtime environment/Secrets, redacts them, and preserves ordered chunk/retry semantics.",
+    "The workflow uses cron 0 0 * * 1, workflow_dispatch, actions/checkout@v5, ORGX_SEC_USER_AGENT, Telegram Secrets, concurrency protection, and contents:write only for data.",
+    "Each run removes files older than 365 days on data and compacts only data history; main and other branches are untouched.",
+    "Fixture-driven unit, integration, architecture, workflow, dry-run, and failure tests pass without external HTTP or Telegram delivery.",
+    "The complete AI Cockpit lifecycle finishes: Contract, preflight, implementation, Summary, strict Finish, archive, push, PR, CI, merge, close, and cleanup."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep provider-specific acquisition and parsing outside Domain.",
+    "Use deterministic fixtures and injected transports; no secrets or external network calls in tests.",
+    "Treat missing data as UNKNOWN or UNAVAILABLE and never infer from absence.",
+    "Keep defects inside this runtime scope in WI-WR-016 unless materially outside the Contract.",
+    "Use actions/checkout@v5 and do not reintroduce checkout@v4."
+  ],
+  "intent": {
+    "problem": "The Weekly Radar feature boundaries are provider-neutral contracts without a runtime for the approved free evidence stack, report generation, Telegram publication, or bounded history.",
+    "constraints": [
+      "Official primary evidence first, free public interfaces second, GDELT/web only for discovery or configured official material.",
+      "No paid API dependency and no LLM extraction; ambiguous rules produce UNKNOWN.",
+      "Preserve provenance and keep providers outside Domain.",
+      "Run Monday 09:00 JST via Actions with manual dispatch and checkout@v5.",
+      "Persist on dedicated data, retain one year, and restrict compaction to data.",
+      "Complete the full AI Cockpit lifecycle under human-approved execution."
+    ],
+    "rationale": "A free evidence-first runtime matches ORG-X's long research horizon and builds auditable Evidence History without buying a universal API or allowing inference to outrun source quality."
+  },
+  "verification": [
+    { "check": "aiWorkItem", "required": true },
+    { "check": "aiScope", "required": true },
+    { "check": "aiGuards", "required": true },
+    { "check": "aiCheckpoint", "required": true },
+    { "check": "aiAgentRisk", "required": true },
+    { "check": "aiReviewPolicy", "required": true },
+    { "check": "aiBacktrack", "required": true },
+    { "check": "aiCoverage", "required": true },
+    { "check": "aiScenarioCoverage", "required": true },
+    { "check": "aiGuidelines", "required": true },
+    { "check": "aiSummary", "required": true },
+    { "check": "aiStatus", "required": true },
+    { "check": "aiStatusCheck", "required": true },
+    { "check": "aiStatusConsistency", "required": true },
+    { "check": "aiDiffOwnership", "required": true },
+    { "check": "quality", "required": true }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": true,
+    "requiresHumanApproval": true,
+    "allowPatterns": ["data branch rolling snapshot/history compaction only"],
+    "approvalEvidence": {
+      "approved": true,
+      "approvedBy": "user-authorized",
+      "reason": "The user explicitly authorized data-branch rolling cleanup and the complete WI lifecycle.",
+      "identityEvidence": {
+        "schemaVersion": 1,
+        "approvalType": "destructive_change",
+        "identityLevel": "direct_user_authorized",
+        "actor": "user",
+        "provider": null,
+        "evidence": {
+          "directUserInstructionRef": "user message: 同意，完成实装。走完完整的WI流程为止。需要我授权的，授权给你并写入contract。",
+          "directUserInstructionDigest": "sha256:7263d6f2ff26ccae256ba62edd9c8a985a5376fbcd1044398f5e6d37e0597f4e",
+          "authorizedAt": "2026-08-17T00:00:00+09:00"
+        },
+        "scope": ["data branch rolling snapshot/history compaction only"]
+      }
+    }
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized implementation and the complete WI lifecycle, including GitHub Actions data-branch writes and one-year cleanup."
+  },
+  "rollbackNote": "Disable the workflow, restore previous main code, and reset only data if rejected; never rewrite main history.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 40
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-016-runtime.json",
+    "baseCommit": "7551095fb84f961bdc49c6b0faae760409e5ddbd",
+    "initialScopeDigest": "6b19b96518645124c247ad0904f41bdd00edcf59bf59644d7e925957c31b65da",
+    "contractSkeletonDigest": "10d371a089ab9f9373c5d76f58d3493dc8c5074d72414b45245f23f9b53d2792"
+  }
+}

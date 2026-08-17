@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "requestedText": "Add the bounded official-source company registry for the approved Weekly Radar universe and preserve provider-neutral source configuration.",
+  "target": {
+    "type": "file",
+    "name": "wi_wr_016_runtime_company_registry",
+    "path": "config/weekly_radar/companies.json",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The registry is static JSON consumed by the CLI configuration loader; it does not resolve dynamic code, credentials, or external references."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The registry is a new repository-local input for Weekly Radar and has no external consumer migration surface."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The registry contains source configuration only and introduces no monitoring, polling, webhook, or alerting reference."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-016-runtime.contract.json",
+      "The Contract explicitly scopes config/weekly_radar/companies.json, requires bounded public sources and no paid credentials, and includes registry validation in acceptance."
+    ]
+  },
+  "approval": null
+}

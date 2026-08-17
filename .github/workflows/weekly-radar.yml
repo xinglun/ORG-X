@@ -1,0 +1,110 @@
+name: Weekly Radar
+
+on:
+  schedule:
+    # 09:00 JST is 00:00 UTC.
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-radar-data
+  cancel-in-progress: false
+
+jobs:
+  weekly-radar:
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Reconstruct the data tree
+        shell: bash
+        env:
+          TARGET_REF: refs/heads/data
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF:-}" == "refs/heads/data" ]]; then
+            echo "Refusing to run from the data branch." >&2
+            exit 1
+          fi
+          if [[ "$TARGET_REF" == "refs/heads/main" ]]; then
+            echo "Refusing to use main as the archive target." >&2
+            exit 1
+          fi
+
+          git fetch --no-tags origin main
+          if git ls-remote --exit-code --heads origin data >/dev/null 2>&1; then
+            git fetch --no-tags origin data
+            git archive origin/data -- weekly-radar | tar -x -f -
+          else
+            echo "No data branch exists yet; starting an empty archive tree."
+          fi
+
+      - name: Acquire, publish, and prepare the data commit
+        shell: bash
+        env:
+          ORGX_SEC_USER_AGENT: ${{ secrets.ORGX_SEC_USER_AGENT }}
+          ORGX_TELEGRAM_BOT_TOKEN: ${{ secrets.ORGX_TELEGRAM_BOT_TOKEN }}
+          ORGX_TELEGRAM_CHAT_ID: ${{ secrets.ORGX_TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          run_output="$(mktemp)"
+          trap 'rm -f "$run_output"' EXIT
+
+          cargo run --release -- weekly-radar \
+            --as-of "$(date -u +%F)" \
+            --archive-dir "$GITHUB_WORKSPACE" \
+            --registry "$GITHUB_WORKSPACE/config/weekly_radar/companies.json" \
+            | tee "$run_output"
+
+          if [[ ! -s "$run_output" ]]; then
+            echo "Weekly Radar produced empty output; refusing to update data." >&2
+            exit 1
+          fi
+          if ! grep -Fq 'PUBLISHED:' "$run_output"; then
+            echo "Weekly Radar did not report a published run; refusing to update data." >&2
+            exit 1
+          fi
+          if [[ ! -d weekly-radar/reports ]] || ! find weekly-radar/reports -maxdepth 1 -type f -print -quit | grep -q .; then
+            echo "Weekly Radar report output is missing; refusing to update data." >&2
+            exit 1
+          fi
+          # The runtime applies the approved 365-day rolling retention before
+          # it writes this report, snapshot, and receipt set.
+          if [[ ! -d weekly-radar/reports/ ]]; then
+            echo "weekly-radar/reports/ is missing after publication." >&2
+            exit 1
+          fi
+
+          target_ref="refs/heads/data"
+          if [[ "$target_ref" == "refs/heads/main" ]]; then
+            echo "Protected target guard rejected main." >&2
+            exit 1
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan data
+          git rm -rf . >/dev/null 2>&1
+          git add -- weekly-radar
+          if git diff --cached --quiet; then
+            echo "No data files are staged; refusing to create an empty update." >&2
+            exit 1
+          fi
+          git commit -m "data: weekly radar $(date -u +%F)"
+
+          data_tip="$(git ls-remote --heads origin data | awk '{print $1}')"
+          if ! git push --force-with-lease=refs/heads/data:${data_tip} origin HEAD:refs/heads/data; then
+            echo "Data branch push failed; concurrent or protected-branch update detected." >&2
+            exit 1
+          fi

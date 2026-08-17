@@ -1,56 +1,51 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Partial
+Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-wr-001.contract.json [evidence: .ai/work-items/archive/2026/wi-wr-001.contract.json]
-- Changed .ai/work-items/active/wi-wr-001.summary.json [evidence: .ai/work-items/archive/2026/wi-wr-001.summary.json]
+- Changed .ai/work-items/active/wi-wr-002.contract.json [evidence: .ai/work-items/archive/2026/wi-wr-002.contract.json]
+- Changed .ai/work-items/active/wi-wr-002.summary.json [evidence: .ai/work-items/archive/2026/wi-wr-002.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/active/wi-wr-001.outcome.json [evidence: .ai/work-items/archive/2026/wi-wr-001.outcome.json]
-- Changed .ai/work-items/active/wi-wr-001.outcome.md [evidence: .ai/work-items/archive/2026/wi-wr-001.outcome.md]
-- Changed .ai/evidence/reference-impact/wi-wr-001-weekly-radar-interface.json [evidence: .ai/evidence/reference-impact/wi-wr-001-weekly-radar-interface.json]
-- Changed .ai/work-items/starts/wi-wr-001.json [evidence: .ai/work-items/starts/wi-wr-001.json]
-- Changed src/features/weekly_radar/mod.rs [evidence: src/features/weekly_radar/mod.rs]
-- Changed src/features/weekly_radar/domain/mod.rs [evidence: src/features/weekly_radar/domain/mod.rs]
-- Changed src/features/weekly_radar/domain/mod_test.rs [evidence: src/features/weekly_radar/domain/mod_test.rs]
+- Changed .ai/work-items/active/wi-wr-002.outcome.json [evidence: .ai/work-items/archive/2026/wi-wr-002.outcome.json]
+- Changed .ai/work-items/active/wi-wr-002.outcome.md [evidence: .ai/work-items/archive/2026/wi-wr-002.outcome.md]
+- Changed .ai/work-items/starts/wi-wr-002.json [evidence: .ai/work-items/starts/wi-wr-002.json]
 - Changed src/features/weekly_radar/application/mod.rs [evidence: src/features/weekly_radar/application/mod.rs]
-- Changed src/features/weekly_radar/infrastructure/mod.rs [evidence: src/features/weekly_radar/infrastructure/mod.rs]
-- Changed src/features/weekly_radar/interface/mod.rs [evidence: src/features/weekly_radar/interface/mod.rs]
-- Changed src/features/weekly_radar/acl/mod.rs [evidence: src/features/weekly_radar/acl/mod.rs]
-- Changed src/features/mod.rs [evidence: src/features/mod.rs]
-- Changed tests/architecture/module_boundaries.rs [evidence: tests/architecture/module_boundaries.rs]
-- Changed tests/weekly_radar_contract.rs [evidence: tests/weekly_radar_contract.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-wr-001-weekly-radar-contract.md [evidence: docs/superpowers/specs/2026-08-17-wi-wr-001-weekly-radar-contract.md]
-- Changed docs/superpowers/plans/2026-08-17-wi-wr-001-weekly-radar-contract.md [evidence: docs/superpowers/plans/2026-08-17-wi-wr-001-weekly-radar-contract.md]
-- Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
-- Changed .ai/work-items/archive/2026/wi-wr-001.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-wr-001.archive-manifest.json]
+- Changed src/features/weekly_radar/application/mod_test.rs [evidence: src/features/weekly_radar/application/mod_test.rs]
+- Changed src/features/weekly_radar/application/snapshot_store.rs [evidence: src/features/weekly_radar/application/snapshot_store.rs]
+- Changed src/features/weekly_radar/application/snapshot_store_test.rs [evidence: src/features/weekly_radar/application/snapshot_store_test.rs]
+- Changed tests/weekly_radar_snapshot.rs [evidence: tests/weekly_radar_snapshot.rs]
+- Changed docs/superpowers/specs/2026-08-17-wi-wr-002-weekly-radar-snapshot.md [evidence: docs/superpowers/specs/2026-08-17-wi-wr-002-weekly-radar-snapshot.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-wr-002-weekly-radar-snapshot.md [evidence: docs/superpowers/plans/2026-08-17-wi-wr-002-weekly-radar-snapshot.md]
 
 Problems found
-- Total: 2
+- Total: 3
 - Blocking: 0
 - Warning: 2
 
 Stops triggered
-- None recorded.
+- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
 
 Problems resolved
-- None recorded.
+- Problem: aiGuidelines failed before the retry.
+  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- WR-002 and later WIs must extend the snapshot boundary without allowing rendering or delivery to recalculate facts. [evidence: residualRisks]
-- Future publisher receipt/retry behavior must remain outside this initial port contract or be amended explicitly in its own WI. [evidence: residualRisks]
+- The current implementation is in-memory; process restart durability is intentionally owned by a later persistence WI. [evidence: residualRisks]
+- Future changes to snapshot metadata must preserve immutable identity and explicit compatibility rules. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- None recorded.
+- If a problem is discovered while working inside the current WI, resolve it within that WI when it remains in scope; do not casually create a new WI. (inference)
+- The user authorized execution, verification, publishing, merging, closing, and archiving for all 24 roadmap WIs, and the authorization must be recorded in every Contract. (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]
@@ -71,9 +66,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

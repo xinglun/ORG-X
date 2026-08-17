@@ -1,5 +1,10 @@
 //! Application ports for publishing a precomputed Weekly Radar publication.
 
+pub mod snapshot_store;
+
+#[cfg(test)]
+mod mod_test;
+
 use super::domain::WeeklyRadarPublication;
 
 /// Boundary failures returned by a publication adapter.

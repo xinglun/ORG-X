@@ -1,0 +1,633 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "wi-005",
+  "contractPath": ".ai/work-items/archive/2026/wi-005.contract.json",
+  "changedFiles": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-005.contract.json",
+      "reason": "Final Contract records the authorized Production System boundary and current-WI issue-resolution rule."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-005.summary.json",
+      "reason": "Summary records the implementation, verification, risks, and user correction solidification."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-005.outcome.json",
+      "reason": "Mandatory Task Outcome evidence generated during Finish."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-005.outcome.md",
+      "reason": "Localized Task Outcome report for direct human review before archive."
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "Generated Cockpit projection for the active Work Item."
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "reason": "Generated machine-readable human benefit report."
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "reason": "Generated human-readable task report."
+    },
+    {
+      "path": ".ai/work-items/starts/wi-005.json",
+      "reason": "Immutable Work Item start receipt bound to the base commit."
+    },
+    {
+      "path": "src/features/production_system/domain/mod.rs",
+      "reason": "Adds validated Production System identities, roles, units, workflows, explicit control structures, and deterministic collection operations."
+    },
+    {
+      "path": "src/features/production_system/domain/mod_test.rs",
+      "reason": "Unit tests cover validation, duplicate rejection, ordered workflow structure, role references, supervision, and control structures."
+    },
+    {
+      "path": "tests/production_system_domain.rs",
+      "reason": "Integration tests cover the public role and supervision API and duplicate role rejection."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md",
+      "reason": "Documents the Production System boundary, decisions, no-goals, authorization, issue policy, and verification commands."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-wi-005-production-system.md",
+      "reason": "Records the implementation sequence and current-WI issue policy."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Generated archive discovery index."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-005.archive-manifest.json",
+      "reason": "Immutable archive evidence root."
+    }
+  ],
+  "sourcesUsed": [
+    ".ai/work-items/archive/2026/wi-005.contract.json",
+    "AGENTS.md",
+    ".ai/glossary.md",
+    "docs/architecture/ARCHITECTURE.md",
+    "docs/architecture/BOUNDED_CONTEXTS.md",
+    "docs/architecture/DEPENDENCY_RULES.md",
+    "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+    "docs/domain/EVIDENCE_MODEL.md",
+    "docs/product/PRD.md",
+    "docs/product/SCOPE.md",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+    "docs/superpowers/plans/2026-08-17-wi-004-evidence-domain.md",
+    "docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md",
+    "docs/superpowers/plans/2026-08-17-wi-005-production-system.md",
+    "tests/architecture/dependency_rules.rs",
+    "Cargo.toml"
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "command": "make check-ai-contract CONTRACT=.ai/work-items/active/wi-005.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:13.976611+00:00",
+      "exitCode": 0,
+      "durationMs": 58,
+      "outputDigest": "0a40efc1f64fd4a63c047c1132eabb38d75e92946af1ed1af1c45ce280bba62e",
+      "commandHash": "2e2c0480a1c67ff61a019e8d870998418ebc6dec858ad946114136dd07b07cc2",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "4bff59bbef9b57828b17501dd07625edda5f10fe9b139de01668e889ab70d1d5",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-005.contract.json work item contract check passed: .ai/work-items/active/wi-005.contract.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-005.contract.json work item contract check passed: .ai/work-items/active/wi-005.contract.json",
+      "outputBytes": 244
+    },
+    {
+      "check": "aiScope",
+      "command": "make check-ai-scope CONTRACT=.ai/work-items/active/wi-005.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:14.201614+00:00",
+      "exitCode": 0,
+      "durationMs": 138,
+      "outputDigest": "9197a97bd93cfc11ac90fe4077bd78662f2b5d63801a8ef62ce32bbfdbeacd0c",
+      "commandHash": "5cc85b1b4edb20f2d7d93f05c7035de49c0e2a1419d7a142aac74a5a732cdc07",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "56b04a66cbdf086d45511525eec68f0620485a90aa6ecc12cca38b46a737f576",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-005.contract.json scope guard passed: 13 changed path(s) covered",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-005.contract.json scope guard passed: 13 changed path(s) covered",
+      "outputBytes": 211
+    },
+    {
+      "check": "aiGuards",
+      "command": "make check-ai-guards",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:14.435635+00:00",
+      "exitCode": 0,
+      "durationMs": 149,
+      "outputDigest": "e0459d1999477c60f4146d4b06bb85662aa9421b6457c54d094d6c943f1a9038",
+      "commandHash": "769f935b899dad1a2abcf23ef3cd08c6904b7f7d03a988b5ce6aa573d18b1e83",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "7a1eca604673048f4a0486cc3ece5a7ffd26cabfeb41218145b7cba904807d94",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-005.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-005.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
+      "outputBytes": 248
+    },
+    {
+      "check": "aiCheckpoint",
+      "command": "make ai-checkpoint CONTRACT=.ai/work-items/active/wi-005.contract.json SUMMARY=.ai/work-items/active/wi-005.summary.json STAGE=before_finish",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:14.868978+00:00",
+      "exitCode": 0,
+      "durationMs": 349,
+      "outputDigest": "d3987f8347b1aa2182a0f48243644caf7fe2bc8b1440eed66e02f3a644a7ef5e",
+      "commandHash": "6a168d0f89c7b6346ac759c8a392bfd9ee4386c7cc2c44105ae6806b7c930919",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "a9a594019c59c76372d5a11e16ea7be94cd83a4e594804bd07dbaf516b3a8c46",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-005` - Contract Hash: `f8d0fd0ef279b1b3` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `7` - Unknown Count: `0` - Required Checks: `16` - Required Checks Passed: `7` ## Intent Context - problem:",
+      "outputTail": "d - `aiCoverage`: passed - `aiScenarioCoverage`: failed - `aiGuidelines`: not_recorded - `aiSummary`: not_recorded - `aiStatus`: not_recorded - `aiStatusCheck`: not_recorded - `aiStatusConsistency`: not_recorded - `aiDiffOwnership`: not_recorded - `quality`: not_recorded ## Review Focus - Validated production-system and role identity behavior - Ordered workflow steps and explicit control, verification, decision, and exception structures - Provider-agnostic Domain boundary and explicit authorization/current-WI issue policy ## Diff Ownership Preview - active_owned: `13`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/cockpit/task_report.md` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/work-items/active/wi-005.contract.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-005.outcome.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-005.outcome.md` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-005.summary.json` — covered by Contract scope - [active_owned] `.ai/work-items/starts/wi-005.json` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-17-wi-005-production-system.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md` — covered by Contract scope - [active_owned] `src/features/production_system/domain/mod.rs` — covered by Contract scope - [active_owned] `src/features/production_system/domain/mod_test.rs` — covered by Contract scope - [active_owned] `tests/production_system_domain.rs` — covered by Contract scope ## Next Action - Run or record required verification: aiAgentRisk",
+      "outputBytes": 5293
+    },
+    {
+      "check": "aiReviewPolicy",
+      "command": "make check-ai-review-policy SUMMARY=.ai/work-items/active/wi-005.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:15.088931+00:00",
+      "exitCode": 0,
+      "durationMs": 132,
+      "outputDigest": "16b6cc5252e6676c90c4c24748a94afa41c6203578765ff00236b3d763b919a0",
+      "commandHash": "ec35c2195771bb0525d31ac715c52009d55eab436a6a3f731e6356fef00e4d1b",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "edbe267ec0b0987691c16677d8429b52b22fd0883d061fa8e54f17434386d17a",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-005.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-005.contract.json [review] .ai/work-items/active/wi-005.outcome.json [review] .ai/work-items/active/wi-005.outcome.md [review] .ai/work-items/starts/wi-005.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md review focus recorded: 3 item(s) re",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-005.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-005.contract.json [review] .ai/work-items/active/wi-005.outcome.json [review] .ai/work-items/active/wi-005.outcome.md [review] .ai/work-items/starts/wi-005.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md review focus recorded: 3 item(s) report: target/ai_review_policy_report.json",
+      "outputBytes": 598
+    },
+    {
+      "check": "aiBacktrack",
+      "command": "make check-ai-backtrack",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:15.304221+00:00",
+      "exitCode": 0,
+      "durationMs": 132,
+      "outputDigest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+      "commandHash": "3ae95e96677b5ecabc3d873ff9cda8d7d3c807724cd86bda76ebb00cef4e4f88",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "49784189867be8d08453f1ff080cdd668284468ed8cdb0280d3431d0fe6f4665",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputBytes": 192
+    },
+    {
+      "check": "aiCoverage",
+      "command": "make check-ai-coverage-guard",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:15.518817+00:00",
+      "exitCode": 0,
+      "durationMs": 129,
+      "outputDigest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+      "commandHash": "296a9883f8b9ad27f3d57afdee3ebdea5c75869c899a00e55d80563bc889328a",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "5f59811e2b1d8644ccb0d29c523472aa8b181921553f1b8f56ca96133b128e63",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputBytes": 201
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "command": "make check-ai-scenario-coverage CONTRACT=.ai/work-items/active/wi-005.contract.json SUMMARY=.ai/work-items/active/wi-005.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:15.656845+00:00",
+      "exitCode": 0,
+      "durationMs": 54,
+      "outputDigest": "4c1586c0513e73b9c90c463ec42c549f31cb8f999a56e90523969a53f978bda8",
+      "commandHash": "9f993e5bbf3af9f51ac55dac8955c4f657683a9a7161f80e482e4a20215de70d",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "6dec2e787aa1b8f82650a462298d5a46c359c2a7fc3166462336e76c5c231708",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputBytes": 287
+    },
+    {
+      "check": "aiGuidelines",
+      "command": "make check-ai-guidelines CONTRACT=.ai/work-items/active/wi-005.contract.json SUMMARY=.ai/work-items/active/wi-005.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:15.795253+00:00",
+      "exitCode": 0,
+      "durationMs": 55,
+      "outputDigest": "5d8d3cbd8fd635af3a7c6d1ba81c08f5d979c13dd3dd5d6ca313b4248227fc88",
+      "commandHash": "d5e6f95052116d80710099e71f06bd1cf3fcd74d56032b45089d1ae3c67a6366",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "33383ceceb9a7bcdb2cc967613f65551484de78ea9a6476f84c4ab9dec17ef01",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json guidelines compliance check passed: 7 guideline(s) verified",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json guidelines compliance check passed: 7 guideline(s) verified",
+      "outputBytes": 292
+    },
+    {
+      "check": "aiDiffOwnership",
+      "command": "make check-ai-diff-ownership CONTRACT=.ai/work-items/active/wi-005.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:16.224620+00:00",
+      "exitCode": 0,
+      "durationMs": 344,
+      "outputDigest": "74ad4bd4c04163857fb1bbb3c5538d01fcc904af06a425ad166418ba7d75b787",
+      "commandHash": "3b10495a82da2f6ac804c2b485c32429a5a6273dc0a1732ab91d2cf827f3c71b",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "6dc77e91f19756e6f528bb587950ae389afd83be3d6e777570b12a41fbadc38e",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-005.contract.json ## Diff Ownership Preview - active_owned: `13`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/co",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-005.contract.json ## Diff Ownership Preview - active_owned: `13`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/cockpit/task_report.md` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/work-items/active/wi-005.contract.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-005.outcome.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-005.outcome.md` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-005.summary.json` — covered by Contract scope - [active_owned] `.ai/work-items/starts/wi-005.json` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-17-wi-005-production-system.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md` — covered by Contract scope - [active_owned] `src/features/production_system/domain/mod.rs` — covered by Contract scope - [active_owned] `src/features/production_system/domain/mod_test.rs` — covered by Contract scope - [active_owned] `tests/production_system_domain.rs` — covered by Contract scope",
+      "outputBytes": 1618
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:17.821948+00:00",
+      "exitCode": 0,
+      "durationMs": 1419,
+      "outputDigest": "6cd2200c14387d61946aacc8d4a0f3053a4b4709c51164e89d34519ee484bda6",
+      "commandHash": "e9589e6d07367af0027719354a354539e4f4ff284dd5a2d2bd35631b228fcf51",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "d076301b119dfeb486e5dfb8705c387d7039a8dd2abb025346ff79d030dcb275",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\"], \"level\": \"strict\", \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"96b1fa50aee19d1b5129e649a97f7f4570430114\", \"changedPaths\": [ \".ai/cockpit/current_status.md\", \".ai/cockpit/task_report.json\", \".ai/cockpit/task_report.md\", \".ai/work-items/active/wi-005.contract.json\", \".ai/work-items/active/wi-005.outcome.json\", \"",
+      "outputTail": "unded_contexts_have_five_layers ... ok test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/production_system_domain.rs (target/debug/deps/production_system_domain-70eec9a79eb1f104) running 2 tests test public_domain_api_preserves_roles_and_supervision ... ok test public_domain_api_rejects_duplicate_role_identity ... ok test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/universe_domain.rs (target/debug/deps/universe_domain-f4407294920d17ec) running 6 tests test policy_evaluates_only_the_facts_it_receives ... ok test rejects_empty_identity_and_display_values ... ok test rejects_snapshot_references_to_missing_entities ... ok test admits_active_common_equity_with_supported_index_membership ... ok test deduplicates_index_membership_and_returns_stable_security_order ... ok test rejects_inactive_unsupported_non_common_and_unindexed_listings ... ok test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Doc-tests org_x running 0 tests test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-reference-impact \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-test-weakening PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_test_weakening.py --root . --mode full --policy .ai/guards/test_weakening_policy.yaml {\"baseRef\": \"96b1fa50aee19d1b5129e649a97f7f4570430114\", \"decision\": \"continue\", \"limitations\": [\"Static signals do not prove semantic equivalence or complete test coverage.\"], \"mode\": \"full\", \"recoveryCondition\": \"No recovery action is required for the analyzed diff.\", \"requiredExplanation\": false, \"signals\": [], \"version\": 1} Strict project-specific checks: not configured; AI lifecycle gates remain independently enforced.",
+      "outputBytes": 10531
+    },
+    {
+      "check": "aiStatus",
+      "command": "make generate-cockpit-status CONTRACT=.ai/work-items/active/wi-005.contract.json SUMMARY=.ai/work-items/active/wi-005.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:18.607848+00:00",
+      "exitCode": 0,
+      "durationMs": 372,
+      "outputDigest": "ddf17226b190722075be9ebf0367eb765216b8f344c1759cea3d9098f016c10d",
+      "commandHash": "79eb2d68de320bdfc3daf98308606cb5847a624f0b04be96ec581024ad165d11",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "77dd6885e7fcb3d68f863edcca93aa3c7c5de60b3808d35acabba1ddbf25441e",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputBytes": 336
+    },
+    {
+      "check": "aiStatusCheck",
+      "command": "make check-ai-status CONTRACT=.ai/work-items/active/wi-005.contract.json SUMMARY=.ai/work-items/active/wi-005.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:19.487545+00:00",
+      "exitCode": 0,
+      "durationMs": 362,
+      "outputDigest": "c6ac456966c409f32aa8b44de3c22d297efda36375db24bd8d74fcfdb145781f",
+      "commandHash": "fb9fa7cf40e5a4ac39da991e78e8a59f44157b74ea0a9c33357b897f23648db6",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "e7f057af0baceb44ca830a4f5e88527f6ae77d60acb0356d53b10eeab3fd68f5",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputBytes": 317
+    },
+    {
+      "check": "aiStatusConsistency",
+      "command": "make check-ai-status-consistency",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:19.983264+00:00",
+      "exitCode": 0,
+      "durationMs": 54,
+      "outputDigest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+      "commandHash": "ddd5a0e5fa9b289b1ab3ba23cf37c1a7f01d48f31e2ad99e85762ba20f93c2a6",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "f64ba2566cfa83356b7f90ccb35525d77633ce16be36d1739ad6db19ec3bf993",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputBytes": 169
+    },
+    {
+      "check": "aiAgentRisk",
+      "command": "make check-ai-agent-risk CONTRACT=.ai/work-items/active/wi-005.contract.json SUMMARY=.ai/work-items/active/wi-005.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:20.130358+00:00",
+      "exitCode": 0,
+      "durationMs": 56,
+      "outputDigest": "70a893edeb672fcbd6c7acd04390c186213303d48454ae2527ce1cf78e11b0bb",
+      "commandHash": "e9386e00fe53927f393864668ef713a9fedc5a011ce0f451a5977ff56d04e5c0",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "3764db9152a53c9f2359bd418d6c69fce18bdae77933020e0ff0b3ddd5aa1574",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputBytes": 297
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/wi-005.summary.json CONTRACT=.ai/work-items/active/wi-005.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:04:21.610123+00:00",
+      "exitCode": 0,
+      "durationMs": 266,
+      "outputDigest": "5c0c1add0605cd4abc32f33deec8c88f72a71818df1965e71764fae032d06569",
+      "commandHash": "43730119ec5472e656123926e7ae6ec7ad5a4c15815180e2cded89924456c1bd",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "36ffa9d94fa8119e0dfb4e08e6dd50ccba005675a0486d36c51d4fa6f4d64781",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-005.summary.json --contract .ai/work-items/active/wi-005.contract.json ai summary check passed: .ai/work-items/active/wi-005.summary.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-005.summary.json --contract .ai/work-items/active/wi-005.contract.json ai summary check passed: .ai/work-items/active/wi-005.summary.json",
+      "outputBytes": 287,
+      "outcomeInputDigest": "612eab782a892b0b4b9e477e54bfcbc5d9f616f51a227ff183cf2419732c9aa2"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "New public APIs must be documented.",
+      "compliant": true,
+      "evidence": "All public Production System types and methods have Rust documentation in src/features/production_system/domain/mod.rs."
+    },
+    {
+      "guideline": "Keep Production System Domain independent of external systems and other feature modules.",
+      "compliant": true,
+      "evidence": "Domain uses only std::fmt; architecture dependency tests pass."
+    },
+    {
+      "guideline": "Model production structure and responsibility as facts; do not execute agents or infer transformation scores.",
+      "compliant": true,
+      "evidence": "The model stores descriptions, role references, and supervision mode only; no execution or scoring API was added."
+    },
+    {
+      "guideline": "Preserve human control, verification, decision, and exception points explicitly.",
+      "compliant": true,
+      "evidence": "Workflow exposes ControlPoint, VerificationPoint, DecisionPoint, and ExceptionPath collections with role references."
+    },
+    {
+      "guideline": "Do not add dependencies for this contract.",
+      "compliant": true,
+      "evidence": "Cargo.toml was not changed and the domain imports no external crate."
+    },
+    {
+      "guideline": "Resolve issues within the current Work Item when they remain inside its Contract scope; open a successor only for a distinct or materially expanded boundary.",
+      "compliant": true,
+      "evidence": "Contract, design spec, and implementation record this policy; no successor WI was opened for in-scope validation or modeling issues."
+    },
+    {
+      "guideline": "Do not introduce trading, price prediction, or capital-action behavior.",
+      "compliant": true,
+      "evidence": "No trading, price, or capital behavior appears in the implementation or tests."
+    }
+  ],
+  "unknownsRemaining": [],
+  "risk": {
+    "level": "medium",
+    "detail": "Production System is a shared model for later contexts; this WI keeps the boundary descriptive and deterministic while deferring cross-context evidence linkage and runtime concerns."
+  },
+  "generatedFiles": [],
+  "destructiveChanges": [],
+  "observedIssues": [
+    {
+      "issue": "Initial Contract Preflight rejected the exact production-operation phrase in a constraint.",
+      "resolution": "Reworded the in-scope constraint and out-of-scope entry to describe live deployment actions; Preflight then passed."
+    }
+  ],
+  "residualRisks": [
+    {
+      "level": "medium",
+      "area": "cross_context_semantics",
+      "detail": "Role references are preserved as opaque identities; validating that referenced roles exist in a larger aggregate is deferred to a future composition boundary.",
+      "reviewRecommended": true,
+      "followUpCandidate": false
+    },
+    {
+      "level": "low",
+      "area": "runtime_behavior",
+      "detail": "The Domain does not execute workflows, agents, scheduling, or persistence by design.",
+      "reviewRecommended": false,
+      "followUpCandidate": false
+    }
+  ],
+  "reviewReadiness": {
+    "status": "ready_with_risks",
+    "reason": "All required verification passed; residual risk remains documented.",
+    "expectedReviewFocus": [
+      "Validated production-system and role identity behavior",
+      "Ordered workflow steps and explicit control, verification, decision, and exception structures",
+      "Provider-agnostic Domain boundary and explicit authorization/current-WI issue policy"
+    ]
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "not_applicable",
+    "userVisibleOutput": "not_applicable",
+    "persistence": "not_applicable",
+    "localization": "not_applicable",
+    "generatedArtifacts": "not_applicable",
+    "makeEntrypoints": "verified"
+  },
+  "userCorrectionsCaptured": [
+    "If an issue is discovered during the corresponding work, resolve it within the current WI whenever it remains in scope; do not casually open a new WI to prevent scope diffusion."
+  ],
+  "userCorrectionSolidification": [
+    {
+      "correction": "Keep in-scope fixes in the current WI and avoid WI proliferation.",
+      "solidifiedIn": [
+        ".ai/work-items/archive/2026/wi-005.contract.json",
+        "docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md",
+        "docs/superpowers/plans/2026-08-17-wi-005-production-system.md"
+      ],
+      "verification": "Contract and plan explicitly reserve successor WIs for distinct or materially expanded boundaries; observed Preflight wording issue was fixed here."
+    }
+  ],
+  "checkpointEvidence": [
+    {
+      "stage": "before_edit",
+      "recorded": true,
+      "contractHash": "f8d0fd0ef279b1b3",
+      "acceptanceCount": 7,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0
+    },
+    {
+      "stage": "before_finish",
+      "recorded": true,
+      "contractHash": "f8d0fd0ef279b1b3",
+      "acceptanceCount": 7,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 7
+    }
+  ],
+  "knownGaps": [
+    "Evidence linkage, persistence, scheduling, runtime execution, and stage/scoring semantics remain outside WI-005 by Contract design.",
+    "The Domain preserves role-reference identity but does not resolve references across separate aggregates."
+  ],
+  "overclaimPrevention": "Do not report completion for checks or behavior that were not verified.",
+  "scenarioCoverage": [
+    {
+      "scenario": "A ProductionSystem retains validated identities, descriptive fields, units, workflows, and roles.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/production_system/domain/mod_test.rs",
+        "tests/production_system_domain.rs",
+        "cargo test --all"
+      ],
+      "result": "Constructors and getters preserve the supplied facts; root collections preserve insertion order."
+    },
+    {
+      "scenario": "Blank required fields and duplicate root identities are rejected deterministically.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/production_system/domain/mod_test.rs",
+        "tests/production_system_domain.rs",
+        "cargo test --test production_system_domain"
+      ],
+      "result": "Blank values return EmptyValue and repeated unit, workflow, human-role, agent-role, and workflow-step identities return DuplicateIdentity."
+    },
+    {
+      "scenario": "A Workflow preserves ordered steps and explicit control, verification, decision, and exception structures with role references.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/production_system/domain/mod_test.rs",
+        "tests/production_system_domain.rs",
+        "tests/architecture/dependency_rules.rs",
+        "make check"
+      ],
+      "result": "All four structures and role references are retained in insertion order; agent supervision mode is preserved and architecture tests pass."
+    }
+  ],
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "aligned",
+    "checkedAt": "2026-08-17T13:02:14+09:00",
+    "checks": [
+      {
+        "area": "plan",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/plans/2026-08-17-wi-005-production-system.md"
+        ],
+        "reason": "Plan steps and current-WI issue policy match the Contract and implementation."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/wi-005.contract.json",
+          ".ai/work-items/archive/2026/wi-005.summary.json"
+        ],
+        "reason": "Summary scope, sources, risks, and scenarios are derived from the Contract."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md",
+          "docs/superpowers/plans/2026-08-17-wi-005-production-system.md",
+          ".ai/work-items/archive/2026/wi-005.outcome.md",
+          ".ai/cockpit/task_report.md"
+        ],
+        "reason": "Design and plan record the executable verification commands and the pure Domain capability boundary."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md",
+          ".ai/work-items/archive/2026/wi-005.contract.json"
+        ],
+        "reason": "English model names and the Chinese authorization text retain the same execution and scope meaning."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/wi-005.summary.json",
+          "docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md"
+        ],
+        "reason": "Deferred evidence linkage, persistence, runtime, and scoring concerns are documented as known gaps and no-goals."
+      }
+    ]
+  },
+  "taskOutcome": {
+    "status": "needs_human_confirmation",
+    "jsonPath": ".ai/work-items/active/wi-005.outcome.json",
+    "markdownPath": ".ai/work-items/active/wi-005.outcome.md",
+    "rawEvidencePath": "derived:pre_merge",
+    "evidenceCount": 4,
+    "humanStatusColor": "yellow"
+  },
+  "verificationHistory": [
+    {
+      "check": "aiScenarioCoverage",
+      "command": "make check-ai-scenario-coverage CONTRACT=.ai/work-items/active/wi-005.contract.json SUMMARY=.ai/work-items/active/wi-005.summary.json",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-17T04:03:54.733508+00:00",
+      "exitCode": 2,
+      "durationMs": 63,
+      "outputDigest": "405b2265d8ccaab1611b8bff24b851c23a8d27dedaabf848f666cf35fbeffa29",
+      "commandHash": "9f993e5bbf3af9f51ac55dac8955c4f657683a9a7161f80e482e4a20215de70d",
+      "contractHash": "f8d0fd0ef279b1b3fd19b020923985c8cbd81376e74c6a95f359c14a7327eab4",
+      "commitSha": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+      "executionContractPath": ".ai/work-items/active/wi-005.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-005.summary.json",
+      "worktreeDigest": "93f2c765adb9abe710c453f70e5a703a0f31f2e41796fab3c08363ce4fc00ab0",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json [ERROR] invalid_scenario_coverage: - scenarioCoverage[0].required must be boolean [ERROR] invalid_scenario_coverage: - scenarioCoverage[1].required must be boolean [ERROR] invalid_scenario_coverage: - scenarioCoverage[2].required must be boolean report: target/ai_scenario_coverage_report.json make: *** [check-ai-sce",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-005.contract.json --summary .ai/work-items/active/wi-005.summary.json [ERROR] invalid_scenario_coverage: - scenarioCoverage[0].required must be boolean [ERROR] invalid_scenario_coverage: - scenarioCoverage[1].required must be boolean [ERROR] invalid_scenario_coverage: - scenarioCoverage[2].required must be boolean report: target/ai_scenario_coverage_report.json make: *** [check-ai-scenario-coverage] Error 1",
+      "outputBytes": 583
+    }
+  ],
+  "archiveSequence": 8
+}

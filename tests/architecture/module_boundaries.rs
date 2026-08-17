@@ -12,6 +12,7 @@ const CONTEXTS: &[&str] = &[
     "reporting",
     "transformation",
     "universe",
+    "weekly_radar",
 ];
 
 const LAYERS: &[&str] = &[

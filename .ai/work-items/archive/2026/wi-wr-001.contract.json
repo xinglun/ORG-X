@@ -1,0 +1,234 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-001",
+  "mode": "code",
+  "title": "Weekly Radar Domain Contract",
+  "baseCommit": "70fdcd0288e3bf0746bbd46ba64065786103997d",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-wr-001.contract.json",
+    ".ai/work-items/active/wi-wr-001.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-001.outcome.json",
+    ".ai/work-items/active/wi-wr-001.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-001-weekly-radar-interface.json",
+    "src/features/weekly_radar/**",
+    "src/features/mod.rs",
+    "tests/architecture/module_boundaries.rs",
+    "tests/weekly_radar_contract.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-001-weekly-radar-contract.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-001-weekly-radar-contract.md"
+  ],
+  "outOfScope": [
+    "Snapshot persistence, historical storage, scheduling, rendering, Telegram delivery, retry, receipt, and external adapters",
+    "Typed Top5, Stage Transition, Threshold Distance, Rising, Dropped, System Health, or Weekly Change calculations",
+    "Cross-feature imports, infrastructure/runtime dependencies, credential transport, trading, price prediction, or capital-action behavior"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository Work Item lifecycle, evidence, and current-WI issue policy."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Canonical Work Item and governance terminology."
+    },
+    {
+      "path": "docs/architecture/ARCHITECTURE.md",
+      "reason": "DDD layer direction and Domain isolation rules."
+    },
+    {
+      "path": "docs/architecture/BOUNDED_CONTEXTS.md",
+      "reason": "Bounded Context exchange through explicit ports and snapshots."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "WR-001 deliverables, dependencies, and Weekly Radar execution order."
+    },
+    {
+      "path": "src/features/reporting/domain/mod.rs",
+      "reason": "Existing read-only Reporting boundary to remain provider-agnostic and independently consumed."
+    },
+    {
+      "path": "src/features/ingestion/application/mod.rs",
+      "reason": "Existing application port style for external adapters."
+    },
+    {
+      "path": "tests/architecture/module_boundaries.rs",
+      "reason": "Executable five-layer bounded-context architecture guard."
+    },
+    {
+      "path": "Cargo.toml",
+      "reason": "Dependency and test configuration; no new dependency is planned."
+    },
+    {
+      "path": ".ai/evidence/reference-impact/wi-wr-001-weekly-radar-interface.json",
+      "reason": "Reference-impact evidence for the new interface layer boundary."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+      "riskTypes": ["snapshot_identity", "channel_isolation", "architecture_boundary"],
+      "reason": "The first Weekly Radar boundary must bind publication data to one historical snapshot without leaking Telegram or calculation logic into Domain."
+    ,"unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "WR-002 owns persistence and immutable historical storage; WR-003 through WR-014 own typed calculations, renderers, delivery, retry, scheduling, and health integration."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The explicit user authorization covers execution and Contract recording for all 24 roadmap Work Items."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "Weekly Radar Domain exposes validated snapshot identity, as_of, universe snapshot identity, evidence cutoff, model version, and scoring version values without recalculating upstream facts.",
+    "WeeklyRadarSnapshot is an immutable metadata envelope, and WeeklyRadarPublication binds exactly one snapshot identity to ordered precomputed publication facts while rejecting duplicate fact identities.",
+    "The Weekly Radar Application layer defines a provider-agnostic WeeklyRadarPublisher port that consumes WeeklyRadarPublication and returns a typed boundary error without knowing Telegram, HTTP, persistence, credential values, or scheduling.",
+    "The new weekly_radar context has domain, application, infrastructure, interface, and acl layers; Domain and Application use only standard-library types and do not import other feature implementations.",
+    "Focused unit and integration tests cover blank-value rejection, snapshot metadata retention, publication-to-snapshot identity binding, ordered fact retention, duplicate rejection, and publisher-port compilation behavior.",
+    "The design spec and execution plan record the Weekly Radar boundary, future-WI exclusions, authorization, current-WI issue rule, and verification commands."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep Weekly Radar Domain and Application independent of external systems and other feature implementations.",
+    "A publication must remain bound to one immutable snapshot identity; delivery must not trigger recalculation.",
+    "Keep persistence, rendering, Telegram, Scheduler, retry, and receipt behavior outside this Contract.",
+    "Do not add dependencies for this Contract.",
+    "Resolve issues within the current Work Item when they remain inside its Contract scope; open a successor only for a distinct or materially expanded boundary.",
+    "Do not introduce trading, price prediction, target price, portfolio allocation, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "The repository has no typed Weekly Radar boundary that binds a publication to a historical snapshot while keeping calculation and delivery concerns outside the Domain.",
+    "constraints": [
+      "Retain as_of, universe snapshot identity, evidence cutoff, model version, and scoring version as supplied snapshot metadata.",
+      "Publication facts are precomputed inputs; preserve their order and identity without calculating Top5, Stage Transition, Threshold Distance, Rising, Dropped, or System Health.",
+      "The Publisher port is provider-agnostic and must not import Telegram, persistence, scheduler, external access material, or runtime implementations."
+    ],
+    "rationale": "A stable Weekly Radar Domain Contract lets later Snapshot, read-model, renderer, publisher, retry, and scheduler WIs compose around one historical publication boundary without allowing channel code to redefine research conclusions."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {"type": "human", "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.", "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "authorityEvidence": {"type": "human_authorization", "granted": true, "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.", "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。", "capturedAt": "2026-08-17T13:45:00+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "software_design", "test_automation"], "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]},
+  "requestedOperation": {"type": "repository_governance", "action": "modify", "target": "repository_governance", "environment": "repository", "effect": "enforce", "authorityRequired": false, "authorityReason": "Explicit human authorization is recorded above."},
+  "scenarioCoverage": [
+    {"scenario": "Snapshot metadata is retained and publication identity is bound to the snapshot.", "required": true, "status": "verified", "evidence": ["src/features/weekly_radar/domain/mod_test.rs", "tests/weekly_radar_contract.rs"], "expected": "All six metadata values are returned unchanged, and a publication exposes the same snapshot identity it was created with.", "verificationPlan": "Run focused snapshot and publication binding tests."},
+    {"scenario": "Publication facts remain ordered and duplicate fact identities are rejected.", "required": true, "status": "verified", "evidence": ["src/features/weekly_radar/domain/mod_test.rs", "tests/weekly_radar_contract.rs"], "expected": "Facts are returned in insertion order and a repeated fact identity returns a deterministic domain error.", "verificationPlan": "Run ordered-fact and duplicate-rejection unit tests."},
+    {"scenario": "Publisher port is isolated from Telegram and external runtime details.", "required": true, "status": "verified", "evidence": ["src/features/weekly_radar/application/mod.rs", "tests/weekly_radar_contract.rs", "tests/architecture/module_boundaries.rs"], "expected": "The port accepts WeeklyRadarPublication without external imports and architecture/module-boundary checks pass.", "verificationPlan": "Run integration, architecture, and make check tests."}
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 15
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-001.json",
+    "baseCommit": "70fdcd0288e3bf0746bbd46ba64065786103997d",
+    "initialScopeDigest": "665a1b8211821b849509bc707773705a399d6fbb0588f6a43ac08ca3a5cb1f0e",
+    "contractSkeletonDigest": "eeb1668b56f750a75cf6c09211f3cadb1782e571afc19a62f85ea1e178c960a0"
+  }
+}

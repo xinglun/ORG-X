@@ -8,3 +8,4 @@ pub mod ranking;
 pub mod reporting;
 pub mod transformation;
 pub mod universe;
+pub mod weekly_radar;

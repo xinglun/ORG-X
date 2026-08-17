@@ -1,5 +1,7 @@
+use std::fs;
 use std::io::{Read, Write};
 use std::net::TcpListener;
+use std::process::Command;
 use std::thread;
 use std::time::Duration;
 
@@ -1593,4 +1595,136 @@ fn task4_archive_rejects_a_receipt_for_a_different_report() {
         .expect_err("archive must reject a receipt for another report");
     assert!(matches!(error, ArchiveError::ReportIdMismatch { .. }));
     assert!(!root.exists(), "mismatch must fail before archive mutation");
+}
+
+fn task5_cli_fixture_root(label: &str) -> std::path::PathBuf {
+    std::env::temp_dir().join(format!(
+        "org-x-task5-{label}-{}-{}",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system clock should be after epoch")
+            .as_nanos()
+    ))
+}
+
+fn task5_write_registry(root: &std::path::Path) -> std::path::PathBuf {
+    fs::create_dir_all(root).expect("task 5 fixture root should be writable");
+    let path = root.join("registry.json");
+    fs::write(
+        &path,
+        r#"{
+          "version": 1,
+          "companies": [
+            {"id": "fixture", "name": "Fixture Systems", "ticker": "FIX"}
+          ]
+        }"#,
+    )
+    .expect("task 5 registry fixture should be writable");
+    path
+}
+
+fn task5_cli(args: &[&str]) -> std::process::Output {
+    Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args(args)
+        .env("ORGX_SEC_USER_AGENT", "ORG-X test contact@example.test")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("org-x binary should be executable")
+}
+
+#[test]
+fn task5_cli_accepts_weekly_radar_dry_run_without_archive_mutation() {
+    let root = task5_cli_fixture_root("dry-run");
+    let registry = task5_write_registry(&root);
+    let archive = root.join("archive");
+    let output = task5_cli(&[
+        "weekly-radar",
+        "--as-of",
+        "2026-08-17",
+        "--archive-dir",
+        archive.to_str().unwrap(),
+        "--registry",
+        registry.to_str().unwrap(),
+        "--dry-run",
+    ]);
+
+    assert!(
+        output.status.success(),
+        "dry-run should succeed: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(
+        String::from_utf8_lossy(&output.stdout).contains("DRY-RUN"),
+        "dry-run should identify its non-mutating mode"
+    );
+    assert!(
+        !archive.exists(),
+        "dry-run must not create or mutate archive output"
+    );
+    fs::remove_dir_all(root).expect("task 5 dry-run fixture should be removable");
+}
+
+#[test]
+fn task5_cli_rejects_invalid_usage() {
+    let output = task5_cli(&["not-weekly-radar"]);
+
+    assert!(!output.status.success(), "unknown command must fail");
+    assert!(String::from_utf8_lossy(&output.stderr).contains("weekly-radar"));
+}
+
+#[test]
+fn task5_cli_requires_sec_user_agent_before_acquisition() {
+    let root = task5_cli_fixture_root("missing-user-agent");
+    let registry = task5_write_registry(&root);
+    let archive = root.join("archive");
+    let output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--as-of",
+            "2026-08-17",
+            "--archive-dir",
+            archive.to_str().unwrap(),
+            "--registry",
+            registry.to_str().unwrap(),
+            "--dry-run",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("org-x binary should be executable");
+
+    assert!(!output.status.success(), "missing SEC User-Agent must fail");
+    assert!(String::from_utf8_lossy(&output.stderr).contains("ORGX_SEC_USER_AGENT"));
+    assert!(
+        !archive.exists(),
+        "configuration failure must not mutate archive"
+    );
+    fs::remove_dir_all(root).expect("task 5 user-agent fixture should be removable");
+}
+
+#[test]
+fn task5_cli_blocks_publication_without_primary_evidence() {
+    let root = task5_cli_fixture_root("no-primary");
+    let registry = task5_write_registry(&root);
+    let archive = root.join("archive");
+    let output = task5_cli(&[
+        "weekly-radar",
+        "--as-of",
+        "2026-08-17",
+        "--archive-dir",
+        archive.to_str().unwrap(),
+        "--registry",
+        registry.to_str().unwrap(),
+    ]);
+
+    assert!(!output.status.success(), "no-primary publication must fail");
+    assert!(String::from_utf8_lossy(&output.stderr).contains("primary evidence"));
+    assert!(
+        !archive.exists(),
+        "publication gate must fail before archive mutation"
+    );
+    fs::remove_dir_all(root).expect("task 5 primary-evidence fixture should be removable");
 }

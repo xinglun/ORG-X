@@ -1,0 +1,259 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-005",
+  "mode": "code",
+  "title": "Production System Domain",
+  "baseCommit": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-005.contract.json",
+    ".ai/work-items/active/wi-005.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-005.outcome.json",
+    ".ai/work-items/active/wi-005.outcome.md",
+    "src/features/production_system/domain/**",
+    "tests/production_system_domain.rs",
+    "docs/superpowers/specs/2026-08-17-wi-005-production-system-design.md",
+    "docs/superpowers/plans/2026-08-17-wi-005-production-system.md"
+  ],
+  "outOfScope": [
+    "Evidence extraction, organization adaptation, productivity metrics, transformation stages, ranking, reporting, and Telegram delivery",
+    "Database persistence, network access, scheduler integration, runtime agent execution, and live deployment actions",
+    "Cross-feature imports and new Cargo dependencies"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository operating rules and validation requirements."},
+    {"path": ".ai/glossary.md", "reason": "Canonical Work Item and governance terminology."},
+    {"path": "docs/architecture/ARCHITECTURE.md", "reason": "Layer direction and Domain isolation rules."},
+    {"path": "docs/architecture/BOUNDED_CONTEXTS.md", "reason": "Production System concepts and context boundary."},
+    {"path": "docs/architecture/DEPENDENCY_RULES.md", "reason": "Domain dependency guardrails."},
+    {"path": "docs/domain/PRODUCTION_SYSTEM_MODEL.md", "reason": "Production system concepts and evidence-of-rewrite rule."},
+    {"path": "docs/domain/EVIDENCE_MODEL.md", "reason": "Evidence-first boundary that keeps facts separate from system modeling."},
+    {"path": "docs/product/PRD.md", "reason": "Research pipeline and no-score-before-domain-engine constraint."},
+    {"path": "docs/product/SCOPE.md", "reason": "No-trading, no-capital-action, and no-production-operation constraints."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WI-005 deliverables and dependency position."},
+    {"path": "docs/superpowers/plans/2026-08-17-wi-004-evidence-domain.md", "reason": "Predecessor evidence boundary and current-WI execution convention."},
+    {"path": "src/features/production_system/domain/mod.rs", "reason": "Existing Production System Domain boundary marker."},
+    {"path": "tests/architecture/dependency_rules.rs", "reason": "Executable Domain dependency guard."},
+    {"path": "Cargo.toml", "reason": "Existing dependency and test configuration."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "domain_model",
+      "responsibility_model",
+      "architecture_boundary"
+    ],
+    "reason": "Production System is a shared model for later organization, productivity, and transformation contexts. The Domain must express production structure and responsibility without executing agents or making operational decisions.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "Evidence linkage, persistence, runtime execution, and stage/scoring semantics are intentionally deferred to dependent Work Items."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Production System code and tests require the standard governed review route."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The explicit user authorization covers execution and Contract recording for all 24 roadmap Work Items."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "src/features/production_system/domain exposes ProductionSystem, ProductionUnit, Workflow, HumanRole, and AgentRole with validated identities and descriptive fields.",
+    "ProductionSystem rejects blank identity/name/purpose fields and duplicate unit, workflow, human-role, or agent-role identities deterministically.",
+    "Workflow preserves ordered steps and explicit ControlPoint, VerificationPoint, DecisionPoint, and ExceptionPath structures with role references.",
+    "HumanRole and AgentRole preserve responsibility/capability descriptions and AgentRole records an explicit supervision mode.",
+    "The Domain remains independent of infrastructure, interface, network, database, LLM, external source, and other feature modules.",
+    "Focused unit and integration tests cover validation, duplicate rejection, ordered workflow structure, role references, supervision mode, and control-point preservation.",
+    "The design spec and execution plan record the production-system boundary, no-goals, authorization, current-WI issue rule, and verification commands."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep Production System Domain independent of external systems and other feature modules.",
+    "Model production structure and responsibility as facts; do not execute agents or infer transformation scores.",
+    "Preserve human control, verification, decision, and exception points explicitly.",
+    "Do not add dependencies for this contract.",
+    "Resolve issues within the current Work Item when they remain inside its Contract scope; open a successor only for a distinct or materially expanded boundary.",
+    "Do not introduce trading, price prediction, or capital-action behavior."
+  ],
+  "intent": {
+    "problem": "The repository lacks a typed model for how a company creates core value through production units, workflows, human roles, and agent roles.",
+    "constraints": [
+      "The Domain must model facts and responsibility without runtime execution or live deployment actions.",
+      "Workflow control, verification, decision, and exception nodes must remain explicit.",
+      "The implementation must remain provider-agnostic and use existing Rust conventions."
+    ],
+    "rationale": "A pure Production System model gives later Organization, Productivity, and Transformation WIs a stable structure for evaluating AI-native production rewrite evidence."
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in each Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:00:00+09:00"
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:00:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "software_design",
+      "test_automation"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "trading_decision",
+      "capital_action"
+    ]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "Explicit human authorization is recorded above."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "A ProductionSystem retains validated identities, descriptive fields, units, workflows, and roles.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "Construction succeeds and getters return supplied system, unit, workflow, human-role, and agent-role facts.",
+      "verificationPlan": "Run focused Production System unit/integration tests and cargo test --all."
+    },
+    {
+      "scenario": "Blank required fields and duplicate root identities are rejected deterministically.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "Each blank field and repeated entity identity returns a stable domain error.",
+      "verificationPlan": "Run focused validation and duplicate tests."
+    },
+    {
+      "scenario": "A Workflow preserves ordered steps and explicit control, verification, decision, and exception structures with role references.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "Workflow getters retain insertion order, role references, supervision mode, and all four control structures.",
+      "verificationPlan": "Run workflow structure tests and architecture dependency checks."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 8
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-005.json",
+    "baseCommit": "96b1fa50aee19d1b5129e649a97f7f4570430114",
+    "initialScopeDigest": "4161878ef4352196f78adcfe8914addad10b15e4a4e9d039096051aa91c695c3",
+    "contractSkeletonDigest": "a67eefd0950ab853170b256fac9d73e09efd6db026fb5cc8e62ebe10d5e49fb2"
+  }
+}

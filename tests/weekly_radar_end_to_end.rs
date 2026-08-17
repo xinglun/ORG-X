@@ -1,0 +1,359 @@
+use std::sync::{Arc, Mutex};
+
+use org_x::features::reporting::domain::{ReportSection, ResearchPacket, Top5 as ResearchTop5};
+use org_x::features::weekly_radar::application::snapshot_store::{
+    InMemoryWeeklyRadarSnapshotStore, WeeklyRadarSnapshotStore,
+};
+use org_x::features::weekly_radar::application::weekly_scheduler::{Weekday, WeeklyScheduler};
+use org_x::features::weekly_radar::domain::change_compression::{
+    PeriodId, WeeklyChangeCompression, WeeklyChangeInput,
+};
+use org_x::features::weekly_radar::domain::system_health::{
+    EvidenceCoverage, Freshness, HealthStatus, SystemHealth,
+};
+use org_x::features::weekly_radar::domain::{
+    AsOf, EvidenceCutoff, FactId, FactValue, ModelVersion, ScoringVersion, SnapshotId,
+    UniverseSnapshotId, WeeklyRadarPublication, WeeklyRadarSnapshot,
+};
+use org_x::features::weekly_radar::infrastructure::archive_store::{
+    InMemoryWeeklyRadarArchive, WeeklyRadarArchive,
+};
+use org_x::features::weekly_radar::infrastructure::publication_receipt::{
+    PublicationChannel, PublicationClock, PublicationDeliveryError, PublicationReceiptService,
+    PublicationStatus,
+};
+use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
+    TelegramMessageId, TelegramPublisherAdapter, TelegramTransport, TelegramTransportError,
+};
+use org_x::features::weekly_radar::interface::markdown_renderer::{
+    MarkdownRenderer, MarkdownReportInput,
+};
+use org_x::features::weekly_radar::interface::semantic_message_splitter::{
+    SemanticMessageSplitter, SemanticSplitLimits,
+};
+use org_x::features::weekly_radar::interface::telegram_renderer::{
+    ItemId, NoChangeSummary, PeriodId as TelegramPeriodId, SummaryItem, SystemHealthSummary,
+    TelegramRenderLimits, TelegramRenderer, TelegramSummaryInput,
+};
+
+#[derive(Default)]
+struct TransportState {
+    calls: Vec<String>,
+    fail_once_at: Option<usize>,
+}
+
+#[derive(Clone, Default)]
+struct RecordingTransport(Arc<Mutex<TransportState>>);
+
+impl RecordingTransport {
+    fn failing_once_at(index: usize) -> Self {
+        Self(Arc::new(Mutex::new(TransportState {
+            calls: Vec::new(),
+            fail_once_at: Some(index),
+        })))
+    }
+
+    fn calls(&self) -> Vec<String> {
+        self.0
+            .lock()
+            .expect("transport lock should not fail")
+            .calls
+            .clone()
+    }
+}
+
+impl TelegramTransport for RecordingTransport {
+    fn send_message(
+        &self,
+        _destination: &str,
+        markdown: &str,
+    ) -> Result<TelegramMessageId, TelegramTransportError> {
+        let mut state = self.0.lock().expect("transport lock should not fail");
+        let index = state.calls.len();
+        state.calls.push(markdown.to_owned());
+        let should_fail = state.fail_once_at == Some(index);
+        if should_fail {
+            state.fail_once_at = None;
+        }
+        drop(state);
+
+        if should_fail {
+            return Err(TelegramTransportError::Failed {
+                reason: "synthetic E2E delivery failure".to_owned(),
+            });
+        }
+
+        TelegramMessageId::new(format!("e2e-message-{index}")).map_err(|error| {
+            TelegramTransportError::Failed {
+                reason: error.to_string(),
+            }
+        })
+    }
+}
+
+struct FixedClock;
+
+impl PublicationClock for FixedClock {
+    fn now(&self) -> &str {
+        "2026-08-17T16:00:00Z"
+    }
+}
+
+fn snapshot() -> WeeklyRadarSnapshot {
+    WeeklyRadarSnapshot::new(
+        SnapshotId::new("snapshot-e2e-2026-w33").expect("snapshot ID should be valid"),
+        AsOf::new("2026-08-16").expect("as-of should be valid"),
+        UniverseSnapshotId::new("universe-e2e-2026-w33").expect("universe should be valid"),
+        EvidenceCutoff::new("2026-08-15T23:59:59Z").expect("cutoff should be valid"),
+        ModelVersion::new("model-e2e-v1").expect("model should be valid"),
+        ScoringVersion::new("scoring-e2e-v1").expect("scoring should be valid"),
+    )
+    .expect("snapshot should be valid")
+}
+
+fn markdown_report(snapshot: &WeeklyRadarSnapshot) -> String {
+    let period = PeriodId::new("2026-W33").expect("period should be valid");
+    let compression = WeeklyChangeCompression::from_input(
+        WeeklyChangeInput::new(
+            period,
+            Vec::new(),
+            Vec::new(),
+            Vec::new(),
+            Vec::new(),
+            Vec::new(),
+        )
+        .expect("empty weekly input should be valid"),
+    )
+    .expect("compression should be valid");
+    let top5 = org_x::features::weekly_radar::domain::top5_weekly_read_model::Top5WeeklyReadModel::from_entries(
+        Vec::new(),
+    )
+    .expect("empty Top5 should be valid");
+    let research = ResearchPacket::new(
+        "No meaningful structural change this week.",
+        ResearchTop5::new(),
+        ReportSection::new(),
+        ReportSection::new(),
+        ReportSection::new(),
+    )
+    .expect("research packet should be valid");
+    let health = SystemHealth::new(
+        HealthStatus::Healthy,
+        EvidenceCoverage::new(1, 1, 100).expect("coverage should be valid"),
+        Freshness::Current,
+    );
+
+    MarkdownRenderer::render(&MarkdownReportInput::new(
+        snapshot,
+        &top5,
+        &research,
+        &compression,
+        &[],
+        &[],
+        Some(&health),
+    ))
+    .as_str()
+    .to_owned()
+}
+
+fn no_change_telegram() -> String {
+    let period = TelegramPeriodId::new("2026-W33").expect("Telegram period should be valid");
+    let no_change =
+        NoChangeSummary::new(period.clone(), "No meaningful structural change this week.")
+            .expect("no-change fact should be valid");
+    let input = TelegramSummaryInput::new(
+        period,
+        Vec::new(),
+        Vec::new(),
+        Vec::new(),
+        Vec::new(),
+        Vec::new(),
+        Vec::new(),
+        None,
+        Some(no_change),
+    )
+    .expect("no-change Telegram input should be valid");
+
+    TelegramRenderer::render(
+        &input,
+        TelegramRenderLimits::new(4_096, 40, 20, 20).expect("limits should be valid"),
+    )
+    .expect("no-change Telegram view should render")
+    .as_str()
+    .to_owned()
+}
+
+fn changed_telegram_chunks() -> Vec<String> {
+    let period = TelegramPeriodId::new("2026-W33").expect("Telegram period should be valid");
+    let input = TelegramSummaryInput::new(
+        period,
+        vec![SummaryItem::new(
+            ItemId::new("important-e2e").expect("item ID should be valid"),
+            "Structural evidence strengthened",
+        )
+        .expect("item should be valid")],
+        Vec::new(),
+        Vec::new(),
+        Vec::new(),
+        Vec::new(),
+        Vec::new(),
+        Some(
+            SystemHealthSummary::new("HEALTHY", "coverage 1/1; freshness current")
+                .expect("health summary should be valid"),
+        ),
+        None,
+    )
+    .expect("changed Telegram input should be valid");
+    let message = TelegramRenderer::render(
+        &input,
+        TelegramRenderLimits::new(4_096, 40, 20, 20).expect("limits should be valid"),
+    )
+    .expect("changed Telegram view should render");
+    let split = SemanticMessageSplitter::split(
+        message.as_str(),
+        SemanticSplitLimits::new(200, 20).expect("split limits should be valid"),
+    )
+    .expect("semantic split should be valid");
+    assert_eq!(
+        split.chunks().len(),
+        3,
+        "E2E retry needs three semantic chunks"
+    );
+    split
+        .chunks()
+        .iter()
+        .map(|chunk| chunk.markdown().to_owned())
+        .collect()
+}
+
+fn publication(chunks: &[String]) -> WeeklyRadarPublication {
+    let mut publication = WeeklyRadarPublication::new(snapshot());
+    for (index, chunk) in chunks.iter().enumerate() {
+        publication
+            .add_fact(
+                FactId::new(format!("telegram-chunk-{index}")).expect("fact ID should be valid"),
+                FactValue::new(chunk.clone()).expect("fact value should be valid"),
+            )
+            .expect("publication fact should be added");
+    }
+    publication
+}
+
+#[test]
+fn e2e_success_proves_compute_persist_render_publish_archive_order() {
+    let scheduler = WeeklyScheduler::default();
+    assert!(scheduler.should_run(Weekday::Sunday));
+
+    let mut events = Vec::new();
+    let snapshot = snapshot();
+    let markdown = markdown_report(&snapshot);
+    events.push("Compute");
+    assert!(markdown.contains("2026-08-15T23:59:59Z"));
+    assert_eq!(markdown, markdown_report(&snapshot));
+
+    let mut store = InMemoryWeeklyRadarSnapshotStore::new();
+    store
+        .save(snapshot.clone())
+        .expect("snapshot should persist once");
+    events.push("Persist Snapshot");
+    assert_eq!(store.get(snapshot.id()), Some(&snapshot));
+
+    let no_change = no_change_telegram();
+    events.push("Render");
+    assert!(no_change.contains("NO_CHANGE"));
+    assert!(no_change.contains("No meaningful structural change this week."));
+    assert!(!no_change.contains("## Top5"));
+
+    let chunks = vec![no_change];
+    let publisher = TelegramPublisherAdapter::new("chat-e2e", RecordingTransport::default())
+        .expect("destination should be valid");
+    let service = PublicationReceiptService::new(publication(&chunks), publisher, FixedClock);
+    let receipt = service.publish().expect("publication should succeed");
+    events.push("Publish");
+    assert_eq!(receipt.channel(), PublicationChannel::Telegram);
+    assert_eq!(receipt.snapshot_id(), snapshot.id());
+    assert_eq!(receipt.status(), &PublicationStatus::Published);
+
+    let mut archive = InMemoryWeeklyRadarArchive::new();
+    archive
+        .archive(store.get(snapshot.id()).unwrap().clone(), receipt.clone())
+        .expect("published receipt should archive");
+    events.push("Archive");
+    assert_eq!(
+        events,
+        [
+            "Compute",
+            "Persist Snapshot",
+            "Render",
+            "Publish",
+            "Archive"
+        ]
+    );
+    assert_eq!(archive.entries().len(), 1);
+    assert_eq!(
+        archive.get(snapshot.id()).unwrap().receipt().snapshot_id(),
+        snapshot.id()
+    );
+    assert_eq!(archive.get(snapshot.id()).unwrap().snapshot(), &snapshot);
+}
+
+#[test]
+fn e2e_failure_retries_same_snapshot_and_exact_ordered_payloads() {
+    let chunks = changed_telegram_chunks();
+    let snapshot = snapshot();
+    let mut store = InMemoryWeeklyRadarSnapshotStore::new();
+    store
+        .save(snapshot.clone())
+        .expect("snapshot should persist");
+    let transport = RecordingTransport::failing_once_at(1);
+    let publisher = TelegramPublisherAdapter::new("chat-e2e", transport.clone())
+        .expect("destination should be valid");
+    let service = PublicationReceiptService::new(publication(&chunks), publisher, FixedClock);
+
+    let failure = service.publish().expect_err("second chunk should fail");
+    assert_eq!(failure.receipt().snapshot_id(), snapshot.id());
+    assert_eq!(
+        failure.receipt().status(),
+        &PublicationStatus::Partial {
+            failed_message_index: 1,
+        }
+    );
+    assert!(matches!(
+        failure.error(),
+        PublicationDeliveryError::Transport {
+            message_index: 1,
+            ..
+        }
+    ));
+
+    let retry = service
+        .retry(failure.receipt())
+        .expect("retry should succeed");
+    assert_eq!(retry.snapshot_id(), snapshot.id());
+    assert_eq!(retry.attempt(), 2);
+    assert_eq!(retry.status(), &PublicationStatus::Published);
+    assert_eq!(
+        transport.calls(),
+        [
+            chunks[0].clone(),
+            chunks[1].clone(),
+            chunks[0].clone(),
+            chunks[1].clone(),
+            chunks[2].clone(),
+        ]
+    );
+    assert_eq!(store.get(snapshot.id()), Some(&snapshot));
+}
+
+#[test]
+fn workflow_pins_both_checkouts_to_v5() {
+    let workflow = include_str!("../.github/workflows/ai-cockpit.yml");
+    let versions: Vec<_> = workflow
+        .lines()
+        .filter_map(|line| line.trim().strip_prefix("- uses: actions/checkout@"))
+        .collect();
+
+    assert_eq!(versions, ["v5", "v5"]);
+    assert!(!workflow.contains("actions/checkout@v4"));
+    assert_eq!(workflow.matches("fetch-depth: 0").count(), 2);
+}

@@ -1,0 +1,231 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-015",
+  "mode": "code",
+  "title": "End-to-End Weekly Report Verification",
+  "baseCommit": "4fcea6c6603d8346098179a70904811210576d4e",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "documentation", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": true,
+    "authorityReason": "The user explicitly authorized execution, verification, publication, merge, closure, and archive for all 24 planned Work Items."
+  },
+  "scope": [
+    ".ai/work-items/active/wi-wr-015.contract.json",
+    ".ai/work-items/active/wi-wr-015.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-015.outcome.json",
+    ".ai/work-items/active/wi-wr-015.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-015-*.json",
+    ".github/workflows/ai-cockpit.yml",
+    "src/features/weekly_radar/infrastructure/mod.rs",
+    "src/features/weekly_radar/infrastructure/archive_store.rs",
+    "src/features/weekly_radar/infrastructure/archive_store_test.rs",
+    "tests/mod_test.rs",
+    "tests/weekly_radar_end_to_end.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-015-end-to-end.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-015-end-to-end.md"
+  ],
+  "outOfScope": [
+    "Changing Weekly Radar Domain, Application, Renderer, Publisher, Receipt, Retry, or Scheduler production behavior beyond the provider-agnostic in-memory Archive boundary",
+    "Real Telegram HTTP/API calls, bot tokens, chat IDs, provider SDKs, network access, CI secret values, or external publication",
+    "A production timer, cron daemon, timezone conversion, persisted scheduler state, external database, automatic retry loop, or backoff policy",
+    "Changing research facts, ranking rules, stage decisions, evidence semantics, report content, or trading/capital behavior",
+    "Opening a new Work Item for a defect that is safely within this E2E/workflow scope; correct it in WR-015"
+  ],
+  "sources": [
+    { "path": "AGENTS.md", "reason": "Work Item lifecycle, authorization, Finish, archive, and closure rules." },
+    { "path": ".ai/glossary.md", "reason": "Canonical governance and architecture terminology." },
+    { "path": ".ai/cockpit/README.md", "reason": "Contract, Summary, checkpoint, Finish, and archive workflow." },
+    { "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WR-015 E2E acceptance, ordered Compute/Persist/Render/Publish/Archive sequence, no-change and failure semantics, and secret safety." },
+    { "path": "user-provided-pasted-plan", "reason": "User-provided Weekly Radar product and delivery plan." },
+    { "path": ".github/workflows/ai-cockpit.yml", "reason": "Current weekly/PR quality workflow requiring actions/checkout@v5 in both checkout steps." },
+    { "path": "src/features/weekly_radar/application/weekly_scheduler.rs", "reason": "WR-013 deterministic weekday trigger boundary." },
+    { "path": "src/features/weekly_radar/application/snapshot_store.rs", "reason": "Append-only snapshot persistence boundary used by E2E verification." },
+    { "path": "src/features/weekly_radar/domain/mod.rs", "reason": "Immutable snapshot and publication facts consumed by the E2E flow." },
+    { "path": "src/features/weekly_radar/interface/markdown_renderer.rs", "reason": "Deterministic full Markdown report rendering boundary." },
+    { "path": "src/features/weekly_radar/interface/telegram_renderer.rs", "reason": "Short Telegram summary rendering and no-change boundary." },
+    { "path": "src/features/weekly_radar/interface/semantic_message_splitter.rs", "reason": "Semantic, source-preserving Telegram message chunking boundary." },
+    { "path": "src/features/weekly_radar/infrastructure/telegram_publisher.rs", "reason": "Injected transport adapter used without network or secrets." },
+    { "path": "src/features/weekly_radar/infrastructure/publication_receipt.rs", "reason": "Immutable receipt and explicit same-snapshot delivery retry boundary." },
+    { "path": "src/features/weekly_radar/infrastructure/mod.rs", "reason": "Infrastructure module registration for the archive boundary." },
+    { "path": "src/features/weekly_radar/infrastructure/archive_store.rs", "reason": "Append-only in-memory archive of a persisted snapshot and Published receipt." },
+    { "path": "tests/mod_test.rs", "reason": "Public module-registration coverage for the new Archive infrastructure boundary." },
+    { "path": "tests/weekly_radar_snapshot.rs", "reason": "Existing public snapshot persistence coverage and identity semantics." },
+    { "path": "tests/weekly_radar_publication_receipt.rs", "reason": "Existing receipt service integration and injected transport pattern." },
+    { "path": "tests/weekly_radar_telegram_renderer.rs", "reason": "Existing Telegram no-change and section rendering fixtures." },
+    { "path": "Makefile", "reason": "Canonical project, PR, and AI Cockpit verification commands." }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["cross_boundary_sequence", "failure_recovery", "ci_workflow_drift", "secret_safety"],
+    "reason": "The Work Item verifies several existing boundaries together and changes CI workflow action references; false-positive E2E tests or stale checkout versions could hide integration regressions.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "All report and delivery boundaries already exist. WR-015 composes them with an in-memory archive store/transport, fixed timestamps, and deterministic facts; no external provider or sensitive configuration value is required."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item changes a CI workflow and verifies a cross-boundary publication lifecycle.",
+      "The Work Item writes restricted .ai lifecycle evidence and requires strict quality, PR, archive, and closure checks."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user authorized the full lifecycle; WR-015 scope, sources, scenarios, workflow correction, and E2E boundary are explicit."
+  },
+  "preReviewWarnings": [
+    "Confirm the E2E test proves Compute → Persist Snapshot → Render → Publish → Archive ordering rather than only asserting isolated outputs.",
+    "Confirm partial Telegram delivery retains the original snapshot and retry sends byte-identical chunks without recalculation.",
+    "Confirm both workflow checkout steps use actions/checkout@v5 and no actions/checkout@v4 reference remains."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "A scheduled Sunday run computes a fixed-cutoff snapshot, persists it, renders both report views, publishes, and archives one receipt.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_end_to_end.rs"],
+      "expected": "The deterministic test records Compute, Persist, Render, Publish, Archive in order; the archived snapshot ID and receipt snapshot ID match, and Markdown rendering is byte-stable.",
+      "verificationPlan": "Use the WR-013 scheduler, in-memory snapshot store, existing Markdown/Telegram renderers, injected publisher transport, receipt service, and the provider-agnostic append-only in-memory archive store."
+    },
+    {
+      "scenario": "Telegram delivery fails after one message and explicit retry reuses the same publication.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_end_to_end.rs"],
+      "expected": "The first receipt is Partial/Failed with the original snapshot ID; retry succeeds at attempt two and the transport receives the exact same chunks in the same order.",
+      "verificationPlan": "Inject a one-shot failure at a later chunk, inspect the typed failure, retry the retained service, and compare all recorded payloads."
+    },
+    {
+      "scenario": "No structural change produces an explicit no-change Markdown/Telegram output without fabricated sections.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_end_to_end.rs"],
+      "expected": "The full Markdown and short Telegram view contain the explicit No Change statement, and the Telegram output has no Top5/Rising/Dropped sections.",
+      "verificationPlan": "Build empty WeeklyChangeCompression and NoChangeSummary inputs and assert stable output across two renders."
+    },
+    {
+      "scenario": "The CI workflow uses the latest requested checkout action.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [".github/workflows/ai-cockpit.yml", "tests/weekly_radar_end_to_end.rs"],
+      "expected": "The workflow has exactly two actions/checkout@v5 references, one per job, and zero actions/checkout@v4 references.",
+      "verificationPlan": "Read the repository workflow as a test fixture and assert exact version counts and absence of the stale version."
+    },
+    {
+      "scenario": "External delivery and secret safety remain isolated from E2E verification.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_end_to_end.rs", ".github/workflows/ai-cockpit.yml"],
+      "expected": "The test uses fixed values and an in-memory transport; no Telegram token, chat ID, HTTP client, or external network call appears in the E2E path.",
+      "verificationPlan": "Use source inspection and deterministic fakes, then run the architecture and secret-safety checks."
+    }
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record the full E2E/workflow scope before edits and the final cross-boundary verification before Finish."
+  },
+  "acceptance": [
+    "The repository workflow has two actions/checkout@v5 references and no actions/checkout@v4 reference; both jobs retain checkout depth 0.",
+    "A public E2E test composes the Scheduler, supplied-cutoff WeeklyRadarSnapshot, append-only SnapshotStore, Markdown renderer, Telegram renderer, semantic splitter, injected Telegram publisher, PublicationReceipt, and the append-only in-memory WeeklyRadarArchive.",
+    "The success path proves Compute → Persist Snapshot → Render → Publish → Archive order, stable Markdown output, matching snapshot/receipt identity, and an archived Published receipt.",
+    "The failure path proves a typed partial delivery result, unchanged snapshot identity, explicit retry at attempt two, and byte-identical ordered Telegram payload reuse.",
+    "No-change and external-isolation scenarios pass without real network access, credentials, secrets, provider SDKs, production timers, or persisted scheduler state.",
+    "Focused E2E tests, full repository quality, strict Finish/Archive, PR checks, merge, close, and branch cleanup pass with the authorization recorded in the Contract."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep E2E orchestration in tests; the Archive boundary may retain only supplied snapshot/receipt values and must not add external persistence merely to make the test pass.",
+    "Use fixed timestamps, cutoff values, facts, and in-memory transports; never use Telegram credentials or real network calls in tests.",
+    "Treat the existing WI as the repair boundary for defects discovered here; do not create a new WI unless the change is outside this E2E/workflow scope.",
+    "Keep actions/checkout@v5 in both workflow checkout steps and do not reintroduce @v4."
+  ],
+  "intent": {
+    "problem": "The Weekly Radar components now exist as separately verified boundaries, but no single deterministic test proves the ordered weekly flow from Scheduler through Snapshot, Markdown/Telegram rendering, Receipt-aware publication, retry, and Archive. The CI workflow also still uses actions/checkout@v4 despite the required latest checkout@v5 correction.",
+    "constraints": [
+      "Compose existing production boundaries in a public integration test; keep Archive storage append-only, in-memory, provider-agnostic, and free of external database behavior.",
+      "Use a supplied evidence cutoff and snapshot identity, explicit no-change facts, injected clocks/transports, and no real network or provider configuration values.",
+      "Prove Compute → Persist Snapshot → Render → Publish → Archive ordering and prove retry resends the same immutable publication rather than recalculating.",
+      "Change only the two workflow checkout references from @v4 to @v5; keep fetch-depth and quality commands intact.",
+      "Complete TDD, focused/module-local/integration verification, strict Finish/Archive, local commit, publish, merge, close, and branch cleanup under the recorded lifecycle."
+    ],
+    "rationale": "One deterministic end-to-end seam turns the already-built local boundaries into an auditable weekly execution contract and prevents CI action drift while preserving sensitive provider configuration and provider isolation."
+  },
+  "verification": [
+    { "check": "aiWorkItem", "required": true },
+    { "check": "aiScope", "required": true },
+    { "check": "aiGuards", "required": true },
+    { "check": "aiCheckpoint", "required": true },
+    { "check": "aiAgentRisk", "required": true },
+    { "check": "aiReviewPolicy", "required": true },
+    { "check": "aiBacktrack", "required": true },
+    { "check": "aiCoverage", "required": true },
+    { "check": "aiScenarioCoverage", "required": true },
+    { "check": "aiGuidelines", "required": true },
+    { "check": "aiSummary", "required": true },
+    { "check": "aiStatus", "required": true },
+    { "check": "aiStatusCheck", "required": true },
+    { "check": "aiStatusConsistency", "required": true },
+    { "check": "aiDiffOwnership", "required": true },
+    { "check": "quality", "required": true }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore the workflow version, E2E tests, docs, and generated governance evidence.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 30
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-015.json",
+    "baseCommit": "4fcea6c6603d8346098179a70904811210576d4e",
+    "initialScopeDigest": "8271bdee9fd75def1a6e40481c9c8f2b67b66426167b723c40579240f8bcbaa2",
+    "contractSkeletonDigest": "e62a972a02daf985eb3503380d71f41c4d5a89b533bb5ce8c7330ac524295d89"
+  }
+}

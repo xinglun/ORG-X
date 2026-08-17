@@ -39,6 +39,18 @@ fn weekly_radar_infrastructure_registers_the_publication_receipt_module() {
 }
 
 #[test]
+fn weekly_radar_infrastructure_registers_the_archive_module() {
+    let archive =
+        org_x::features::weekly_radar::infrastructure::archive_store::InMemoryWeeklyRadarArchive::new();
+    assert!(
+        org_x::features::weekly_radar::infrastructure::archive_store::WeeklyRadarArchive::entries(
+            &archive
+        )
+        .is_empty()
+    );
+}
+
+#[test]
 fn weekly_radar_application_registers_the_weekly_scheduler_module() {
     let _ = std::any::TypeId::of::<
         org_x::features::weekly_radar::application::weekly_scheduler::WeeklyScheduler,

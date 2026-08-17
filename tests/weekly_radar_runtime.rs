@@ -191,7 +191,7 @@ fn deserializing_malformed_normalized_fact_fails_cleanly() {
           "company_id": "",
           "kind": "revenue",
           "value": "123",
-          "status": "CONFIRMED",
+          "status": "KNOWN",
           "confidence": "HIGH",
           "provenance": {
             "source_uri": "https://example.test/filing/2026",
@@ -203,7 +203,10 @@ fn deserializing_malformed_normalized_fact_fails_cleanly() {
         "#,
     );
 
-    assert!(result.is_err(), "blank fact identity must be rejected");
+    assert!(
+        matches!(result, Err(ref error) if error.to_string().contains("company ID")),
+        "blank fact identity must be rejected by normalized-fact validation: {result:?}"
+    );
 }
 
 #[test]

@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "requestedText": "Register the provider-agnostic Telegram renderer in the Weekly Radar interface boundary.",
+  "target": {
+    "type": "file",
+    "name": "wi_wr_009_interface_registration_boundary",
+    "path": "src/features/weekly_radar/interface/mod.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [],
+    "testReferences": [],
+    "documentationReferences": [],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The interface registration is a compile-time Rust module export with no runtime loading or dynamic reference mechanism."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The registration exposes only the repository-local renderer boundary; no publisher or external adapter is added."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The registration adds no telemetry, monitoring, delivery, HTTP, or provider integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-009.contract.json",
+      "The Contract declares the additive interface registration and excludes provider integration, architecture-test, and global-policy changes."
+    ]
+  }
+}

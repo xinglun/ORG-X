@@ -1,0 +1,322 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-009",
+  "mode": "code",
+  "title": "Telegram Renderer",
+  "baseCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "execute, verify, publish, merge, close, archive all 24 planned WIs.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user authorization is recorded for all 24 Work Items; this local WI explicitly stops after archive and commit without push, PR, merge, or close."
+  },
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "scope": [
+    ".ai/work-items/active/wi-wr-009.contract.json",
+    ".ai/work-items/active/wi-wr-009.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-009.outcome.json",
+    ".ai/work-items/active/wi-wr-009.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-009-telegram-renderer.json",
+    ".ai/evidence/reference-impact/wi-wr-009-interface-registration.json",
+    ".ai/evidence/reference-impact/wi-wr-009-module-tests.json",
+    "src/features/weekly_radar/interface/mod.rs",
+    "src/features/weekly_radar/interface/telegram_renderer.rs",
+    "src/features/weekly_radar/interface/telegram_renderer_test.rs",
+    "tests/weekly_radar_telegram_renderer.rs",
+    "tests/telegram_renderer_test.rs",
+    "tests/mod_test.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-009-telegram-renderer.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-009-telegram-renderer.md"
+  ],
+  "outOfScope": [
+    "Publisher adapters, HTTP clients, Telegram API calls, secrets, environment/CI credential handling, retry, receipt, scheduling, persistence, and message splitting",
+    "Markdown full-report rendering, raw evidence acquisition, Stage detection, Ranking, Threshold Distance calculation, Rising/Dropped derivation, System Health calculation, or No Change inference",
+    "Recomputing or normalizing Stage, Ranking, Threshold Distance, Important Structural Change, Stage Transition, Top5, Rising, Dropped, or System Health facts",
+    "Changes to shared architecture tests, global coverage policy, other bounded contexts, unrelated Work Items, or project-wide architecture",
+    "Push, PR creation, merge, Work Item close, remote branch deletion, or provider-side publication in this local execution"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository Work Item lifecycle, explicit authorization, scope, Finish, archive, and local-only handoff rules."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Canonical governance and architecture terminology."
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "V2 Contract, Preflight, checkpoint, Summary, Finish, and archive workflow."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "WI-WR-009 short-summary scope, priority order, no-change behavior, atomic card constraint, and renderer/provider boundary."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-007-weekly-change-compression.md",
+      "reason": "WR-007 fixed explicit change sections and No Change semantics consumed by this renderer boundary."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-wr-007.contract.json",
+      "reason": "Closed WR-007 Contract and its fact-preserving, non-rendering boundary."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-wr-007.archive-manifest.json",
+      "reason": "Evidence that WR-007 was archived as the predecessor."
+    },
+    {
+      "path": "src/features/weekly_radar/domain/change_compression.rs",
+      "reason": "Existing explicit change sections and No Change input facts; renderer must not recalculate them."
+    },
+    {
+      "path": "src/features/weekly_radar/domain/system_health.rs",
+      "reason": "Existing explicit System Health facts available to later views without deriving health."
+    },
+    {
+      "path": "src/features/reporting/domain/mod.rs",
+      "reason": "Existing read-only reporting/card boundary and fact-retention conventions."
+    },
+    {
+      "path": "docs/architecture/ARCHITECTURE.md",
+      "reason": "Allowed layer direction and renderer/provider isolation."
+    },
+    {
+      "path": "Cargo.toml",
+      "reason": "Rust module/test conventions and dependency baseline."
+    },
+    {
+      "path": "Makefile",
+      "reason": "Project quality command entrypoint used by Finish."
+    }
+  ],
+  "unknowns": [],
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "output_integrity",
+      "length_boundary",
+      "architecture_isolation"
+    ],
+    "reason": "The renderer formats explicit upstream facts into an atomic Markdown message. The primary risks are accidental recomputation, Markdown/card truncation, and leakage into Publisher/provider concerns.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "Numeric limits are caller-supplied through TelegramRenderLimits because the request does not provide product-specific line or character values. The renderer rejects over-limit atomic output rather than truncating it."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "Scope, acceptance, verification, explicit input boundary, and remaining non-goals are concrete; the user explicitly authorized execution and governance evidence writes for all 24 planned Work Items."
+  },
+  "preReviewWarnings": [
+    "Review that all rendered blocks preserve caller-supplied Markdown and company-card content byte-for-byte as substrings.",
+    "Review that limit violations return typed errors and never produce a partial or truncated message.",
+    "Review that renderer code has no Stage, Ranking, Distance, Publisher, HTTP, or Secret dependency."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "src/features/weekly_radar/interface/telegram_renderer.rs exposes a provider-agnostic Telegram Markdown summary boundary that consumes only explicit period, section item, company-card, System Health, and No Change facts and returns one immutable rendered message.",
+    "The rendered summary includes explicit Important Structural Change, Stage Transition, Top5, Threshold Distance, Rising, Dropped, System Health, and explicit No Change sections in deterministic priority order without computing or changing any supplied Stage, Ranking, Distance, or health value.",
+    "TelegramRenderLimits enforces caller-supplied character, line, section-item, and company-card limits before output; over-limit output returns a typed error and does not truncate Markdown, split a Markdown fragment, or truncate a company card.",
+    "Input validation rejects blank identities, companies, Markdown fragments, and contradictory explicit No Change plus change sections; repeated identities are rejected without mutating the input model.",
+    "Module-local, same-stem companion, and public integration tests cover every requested section, deterministic order, exact Markdown/card retention, No Change, limit failures, input validation, and provider isolation; no architecture test or global coverage policy is modified.",
+    "The WI spec, implementation plan, reference-impact evidence, active Summary, strict AI Cockpit Finish evidence, archive bundle, and local commit record the delivered boundary, verification, authorization, remaining non-goals, and local-only next action."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "All requested sections are rendered in deterministic priority order.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/interface/telegram_renderer_test.rs",
+        "tests/weekly_radar_telegram_renderer.rs"
+      ],
+      "expected": "Important Structural Change, Stage Transition, Top5, Threshold Distance, Rising, Dropped, System Health, and explicit No Change facts appear in the documented order.",
+      "verificationPlan": "Run module-local and public integration tests with one explicit item in each section and assert section marker order."
+    },
+    {
+      "scenario": "Full Markdown fragments and company cards remain atomic.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/interface/telegram_renderer_test.rs",
+        "tests/telegram_renderer_test.rs"
+      ],
+      "expected": "The returned Markdown contains every caller-supplied fragment and complete company-card body; an over-limit atomic block returns an error and no partial output.",
+      "verificationPlan": "Run exact-content assertions and character/line-limit failure tests using small caller-supplied limits."
+    },
+    {
+      "scenario": "Explicit inputs are formatted without domain recomputation.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/interface/telegram_renderer.rs",
+        "tests/weekly_radar_telegram_renderer.rs",
+        ".ai/evidence/reference-impact/wi-wr-009-telegram-renderer.json"
+      ],
+      "expected": "The renderer accepts supplied labels and Markdown values as-is and contains no Stage, Ranking, Distance, health, provider, or Publisher calculation/import.",
+      "verificationPlan": "Run source-boundary assertions, focused tests, formatter, Clippy, all tests, architecture checks, and AI Cockpit guards."
+    },
+    {
+      "scenario": "Invalid input and explicit No Change state are handled deterministically.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/interface/telegram_renderer_test.rs",
+        "tests/weekly_radar_telegram_renderer.rs"
+      ],
+      "expected": "Blank values, duplicate identities, contradictory No Change plus change input, and over-limit counts return typed errors; an explicit No Change input renders without inventing additional events.",
+      "verificationPlan": "Run constructor/error tests and the explicit No Change integration scenario."
+    }
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features."
+  ],
+  "intent": {
+    "problem": "The Weekly Radar has explicit upstream change and health facts, but it has no short, provider-agnostic Markdown view boundary for Telegram. Without an atomic renderer, a later publisher could silently truncate Markdown or company cards, or re-derive Stage, Ranking, Distance, or No Change while compressing the report.",
+    "constraints": [
+      "Consume only explicit inputs; formatting may label and order supplied facts but must not calculate Stage, Ranking, Threshold Distance, Important Structural Change, Stage Transition, Top5, Rising, Dropped, System Health, or No Change.",
+      "Preserve full caller-supplied Markdown fragments and company cards. Enforce caller-supplied length and item limits by returning typed errors before producing output; do not truncate or split content.",
+      "Keep the renderer provider-agnostic and local to the Weekly Radar interface boundary. Do not implement delivery adapters, network clients, sensitive runtime configuration, retry, scheduling, persistence, or message splitting.",
+      "Complete Contract, spec/plan, TDD, focused/module-local/integration verification, strict AI Cockpit Finish, archive, and local commit. Do not push, open a PR, merge, close, or delete the remote branch."
+    ],
+    "rationale": "An explicit-input renderer boundary makes Telegram formatting deterministic and auditable while keeping message delivery and all domain calculations outside this WI. Atomic validation is the smallest safe way to honor message limits without damaging Markdown or company-card context."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 23
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-009.json",
+    "baseCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+    "initialScopeDigest": "c45175ee1d5493b9458963ae0733fc52247418ae5d965361fea79644d3358af6",
+    "contractSkeletonDigest": "b5734ac5a1091df3c576a281cf85cad867d9d4ea426cd116232c1992627b26e7"
+  }
+}

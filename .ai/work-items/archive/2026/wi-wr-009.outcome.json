@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-009",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "6a5938c87bb7a2bd0ebabd06ba8dbc43ed4b3890d4147eb665760eba8d3a144c"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-009",
+    "contractDigest": "c625342c499a67dc299f1ffe03d72b0bef2cc0ff7bd88caabfe925e893eab8d8",
+    "summaryDigest": "3ac2a367a0e95f0d2b4ec8e7d335a3afdd90a1cbd656cf44a81d2b8d5c747bd7",
+    "verificationDigest": "ed9ef3deee9b6e786a92e7d738d1df2e5381a1899b15ba141ca1ec7432f40c13",
+    "baseCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+    "headCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "51e31c52994a4fd02dc6fd0466467fd8e6baa4189921791e06dd8102b37b6b4b",
+      "binding": {
+        "baseCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+        "candidateHead": "cb75571f0329ac153539607b6c771103cd0e2eec",
+        "candidateTreeDigest": "1dfa8db441fed11a5ae8ebedafbfbe2a31cd9b4f06e1d47d0f574b99d71b5195",
+        "candidateDiffDigest": "5cb502c6e629d12ae4c9458ff749cd1055b2d9cef956b9b35efc263c17e80ff8"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-009 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-009 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-wr-009",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-009.contract.json",
       ".ai/work-items/archive/2026/wi-wr-009.summary.json",
@@ -36,59 +59,96 @@
       ".ai/work-items/archive/2026/wi-wr-009.outcome.md",
       ".ai/work-items/archive/2026/wi-wr-009.outcome.json",
       ".ai/work-items/archive/2026/wi-wr-009.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Product-specific numeric Telegram limits were not provided; the renderer intentionally requires caller-supplied limits instead of inventing defaults."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Product-specific numeric Telegram limits were not provided; the renderer intentionally requires caller-supplied limits instead of inventing defaults.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Product-specific numeric Telegram limits were not provided; the renderer intentionally requires caller-supplied limits instead of inventing defaults.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "future delivery boundaries",
+        "severity": "medium",
+        "title": "future delivery boundaries",
+        "detail": "Publisher, HTTP, sensitive runtime configuration, retries, splitting, and persistence remain outside this WI; later adapters must consume the complete TelegramMessage without re-deriving facts or truncating cards.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-009.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-009.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "numeric limits",
+        "severity": "low",
+        "title": "numeric limits",
+        "detail": "No product-specific line or character values were provided; callers must select TelegramRenderLimits explicitly until a later Contract supplies a product policy.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-009.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-009.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-009.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-009.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Product-specific numeric Telegram limits were not provided; the renderer intentionally requires caller-supplied limits instead of inventing defaults.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Publisher, HTTP, sensitive runtime configuration, retries, splitting, and persistence remain outside this WI; later adapters must consume the complete TelegramMessage without re-deriving facts or truncating cards.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-009.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "No product-specific line or character values were provided; callers must select TelegramRenderLimits explicitly until a later Contract supplies a product policy.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-009.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -979,6 +1039,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

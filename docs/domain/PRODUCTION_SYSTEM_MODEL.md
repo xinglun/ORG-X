@@ -1,10 +1,10 @@
 # Production System Model
 
-## Question
+## 要观察的问题
 
-公司真正创造价值的方式有没有因为 AI 改变？关注的是商品、软件、广告、研究成果、金融服务或物流服务如何被生产，而不是员工是否打开了 AI 工具。
+公司创造核心价值的方式是否因为 AI 改变？关注商品、软件、广告、研究成果、金融服务或物流服务如何被生产，而不是员工是否打开了 AI 工具。
 
-## Model concepts
+## 核心概念
 
 - `ProductionSystem`：创造核心价值的整体生产方式。
 - `ProductionUnit`：承担可识别产出的生产单元。
@@ -15,10 +15,10 @@
 - `DecisionPoint`：目标、取舍、批准和责任发生的节点。
 - `ExceptionPath`：正常自动化路径无法处理时的人工介入路径。
 
-## Evidence of rewrite
+## 什么才算重写
 
-传统流程“需求 -> PM -> 设计 -> 开发 -> 测试 -> 发布”只有在能够证明 AI 执行、Human supervision、责任和验证结构一起改变时，才可能被判断为 AI-native production system。单独部署 Agent、宣传数字 workforce 或裁员不够。
+传统流程“需求 → PM → 设计 → 开发 → 测试 → 发布”，只有在能够证明 AI 执行、Human supervision、责任和验证结构一起改变时，才可能被判断为 AI-native production system。单独部署 Agent、宣传 digital workforce 或裁员都不够。
 
-## Core rule
+## 组织证据的关系
 
 Organization Rewrite 是 Production System Rewrite 的证据，而不是 North Star 本身。每个组织变化都必须解释它如何服务核心生产方式的变化。

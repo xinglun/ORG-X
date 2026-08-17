@@ -278,6 +278,10 @@ check-ai-agent-risk:
 ai-checkpoint:
 	$(AI_PYTHON) scripts/ai_checkpoint.py --contract $(CONTRACT) $(if $(SUMMARY),--summary $(SUMMARY)) --stage "$(or $(STAGE),manual)"
 
+ai-revalidate-contract-amendment:
+	@test -n "$(CONTRACT)" -a -n "$(SUMMARY)" -a -n "$(PREVIOUS_CONTRACT_HASH)" -a -n "$(REASON)" || (echo 'CONTRACT, SUMMARY, PREVIOUS_CONTRACT_HASH, and REASON are required' >&2; exit 2)
+	$(AI_PYTHON) scripts/ai_checkpoint.py --contract "$(CONTRACT)" --summary "$(SUMMARY)" --stage contract_amendment_revalidation --previous-contract-hash "$(PREVIOUS_CONTRACT_HASH)" --reason "$(REASON)"
+
 check-ai-backtrack:
 	$(AI_PYTHON) scripts/ai_check_backtrack.py
 

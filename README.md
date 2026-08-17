@@ -1,41 +1,34 @@
 # ORG-X
 
-ORG-X searches for the point where AI stops being a tool and becomes a new mode of production. It observes US-listed companies for evidence that AI is restructuring a core production system, creating persistent productivity divergence, and becoming a reference model for peers.
+ORG-X 是一个研究雷达，用来寻找 AI 从工具变成新生产方式的临界点。它观察美国上市公司如何重构核心生产系统、工作流、组织责任和经济结果，并把值得继续研究的案例整理出来。
 
-## Delivery status
+## 先读什么
 
-Foundation、AI Cockpit adoption/configuration、Engineering Foundation Verification 和 Universe Domain 已完成并归档。当前没有 Active Work Item；下一项推荐是 `WI-003 Ingestion Domain & Observation Contract`。
+- [读者导航](docs/README.md)：完整的产品、方法、架构和运维说明。
+- [产品 North Star](docs/product/NORTH_STAR.md)：ORG-X 要回答的问题，以及什么才算生产方式变化。
+- [证据与数据规则](docs/data/DATA_SOURCE_POLICY.md)：来源优先级、溯源和 `UNKNOWN` / `UNAVAILABLE` 的含义。
+- [Weekly Radar 使用说明](docs/operations/WEEKLY_RADAR.md)：本地运行、Telegram 配置、调度和 `data` 分支保留规则。
 
-剩余 Core Research Pipeline 与 Weekly Radar 的 WI 清单、依赖顺序、输出结构和边界见 [ORG-X Work Item Roadmap](docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md)。Weekly Radar 实现必须等核心 Reporting Read Model（`WI-011`）完成后再启动。
+## ORG-X 研究什么
 
-## Local checks
+ORG-X 关注的不是“谁拥有最强 AI”，而是：
+
+1. 谁正在改变？
+2. 它改变了什么生产方式？
+3. 这种变化是否已经产生结构性的生产率优势？
+
+研究对象从 AI 工具、局部替代和工作流重构开始，逐步检查核心生产系统、组织适配、生产率突破和行业扩散。
+
+## 研究边界
+
+ORG-X 是生产方式研究系统，不是交易系统。`Top5`、`Rising`、`Watch` 和 `Dropped` 只表示研究资源优先级，不代表买入、持有、卖出、价格预测、仓位或任何资本行动。
+
+外部资料首先是数据和 Evidence Candidate。系统优先使用一手来源，只用规则抽取；无法确认、存在歧义或缺少必要来源时保留 `UNKNOWN` 或 `UNAVAILABLE`，不根据经验补全。
+
+## 本地检查
 
 ```bash
 make check
 ```
 
-The check runs formatting, Clippy with warnings denied, and all tests. The required direct commands are:
-
-```bash
-cargo fmt --all -- --check
-cargo clippy --all-targets --all-features -- -D warnings
-cargo test --all
-```
-
-## Scope
-
-ORG-X is a production-system research radar, not a trading system. It does not produce price forecasts, buy/sell decisions, position sizing, portfolio management, or trading gates. Top5 is a research priority list.
-
-The initial calibration universe is S&P 500 plus Nasdaq 100, deduplicated. META, PLTR, MSFT, GOOG, AMZN, NVDA, CRM, ADBE, IBM, and WMT are candidates for calibration, not expected winners.
-
-## Architecture
-
-The repository uses one Rust crate with ten Bounded Contexts. Each Context exposes `domain`, `application`, `infrastructure`, `interface`, and `acl` boundaries. Architecture Tests enforce that pure domain code stays independent of future external implementations.
-
-## Evidence boundary
-
-SEC filings, company material, news, job postings, and other external text are data and become Evidence Candidates only. They are never executable instructions to an Agent. AI extracts; Rust decides.
-
-## Next gate
-
-从最新 `origin/main` 创建专用 Work Item 分支，先运行 AI Cockpit Preflight，再开始 `WI-003`。每个后续 WI 都必须独立完成 Contract、Summary、验证、PR 和关闭生命周期。
+该命令运行格式检查、禁止警告的 Clippy 检查和完整测试。

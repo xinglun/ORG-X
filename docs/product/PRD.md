@@ -1,28 +1,40 @@
-# ORG-X Product Requirements
+# ORG-X Product Model
 
 ## Purpose
 
 ORG-X 建立一个 evidence-first radar，持续重建企业核心价值创造过程，判断 AI 是否从局部工具变成新的生产系统，并用后续企业事实验证早期判断。
 
-## Required sequence
+## Judgment chain
 
-`External World -> LLM Extraction -> EvidenceCandidate -> Rust Validation -> EvidenceRecord -> Domain Engine -> Stage -> Score -> Ranking`
+```text
+External World
+  -> Rule Extraction
+  -> Evidence Candidate
+  -> Rust Validation
+  -> EvidenceRecord
+  -> Domain Engine
+  -> Stage
+  -> Score
+  -> Ranking
+```
 
-LLM 不拥有最终判断权。没有证据不评分；Stage 不由总分替代。
+规则抽取只产生候选事实；Rust 负责验证、保留溯源、判断状态和生成排序。没有证据不评分，Stage 不能被总分替代。
 
 ## Six stages
 
-1. `TOOL`：AI 是工具，没有特殊生产方式意义。
-2. `SUBSTITUTION`：AI 替代局部人工任务，但旧组织和工作流仍主导。
-3. `WORKFLOW`：完整工作流围绕 AI 重构，人从执行者变为监督者，但核心生产系统尚未根本改变。
-4. `PRODUCTION_SYSTEM`：核心价值创造过程围绕 AI 重新设计，并出现 workflow、decision、human/agent responsibility 和 organizational adaptation 的多类证据。
-5. `PRODUCTIVITY_BREAKOUT`：Stage 3 之外，生产率相对同行持续分化并被经济结果捕获。
-6. `REFERENCE_MODEL`：优势持续、竞争者模仿、行业扩散，企业成为新的生产范式示范。
+| Stage | 读者含义 |
+| --- | --- |
+| `TOOL` | AI 是工具，尚未显示特殊生产方式意义。 |
+| `SUBSTITUTION` | AI 替代局部人工任务，但旧组织和 Workflow 仍主导。 |
+| `WORKFLOW` | 完整 Workflow 围绕 AI 重构，人从执行者转为监督者，但核心生产系统尚未根本改变。 |
+| `PRODUCTION_SYSTEM` | 核心价值创造过程围绕 AI 重设计，并出现 Workflow、Decision、Human/Agent Responsibility 和 Organization Adaptation 的多类证据。 |
+| `PRODUCTIVITY_BREAKOUT` | 新生产方式产生持续的同行相对生产率差异，并被经济结果捕获。 |
+| `REFERENCE_MODEL` | 优势持续、竞争者模仿、行业扩散，企业成为新的生产范式示范。 |
 
-## Funnel
+## Research funnel
 
-先用结构化数据和确定性过滤压缩 US-listed universe，再逐层提高财务、行业、劳动力、filing、transcript、job data、交叉来源和反证要求。MVP 从去重后的 S&P 500 + Nasdaq 100 开始。
+系统从去重后的 S&P 500 + Nasdaq 100 观察宇宙开始，先做确定性过滤，再逐层提高财务、行业、劳动力、filing、招聘、交叉来源、持续性和反证要求。
 
-## Calibration
+## Calibration universe
 
-META、PLTR、MSFT、GOOG、AMZN、NVDA、CRM、ADBE、IBM、WMT 只作为不同状态的人工已知候选。系统不得内置任何公司必须进入 Top5 的结论。
+META、PLTR、MSFT、GOOG、AMZN、NVDA、CRM、ADBE、IBM、WMT 只作为人工已知候选，用于校准不同状态。系统不内置任何公司必须进入 Top5 的结论。

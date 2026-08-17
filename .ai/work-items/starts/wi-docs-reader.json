@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-docs-reader",
+  "receiptPath": ".ai/work-items/starts/wi-docs-reader.json",
+  "baseCommit": "65531d9ffa874dc386d366473ad07dbe893bcdd5",
+  "baseBranch": "codex/wi-docs-reader",
+  "startTimestamp": "2026-08-17T23:24:47.432743+00:00",
+  "initialScopeDigest": "dbc23355d671a9e3b09a459b3c7b4442053594658bffea5b2f9a77ce8d5a79d2",
+  "contractSkeletonDigest": "f4dff19d479575ed8286e03ba380f4c95b7ddf900a2f523403881ad9113d67ab"
+}

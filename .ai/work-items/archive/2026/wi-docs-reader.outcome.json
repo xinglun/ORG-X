@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-docs-reader",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "4d545249023a93a7c2dff847d5482b753ff203ccc9996d1a155d2aa4150d2185"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-docs-reader",
+    "contractDigest": "9d6bde58bcbe7910791231d8f02333190fc1cb1f0d422a8637d20014515c20dc",
+    "summaryDigest": "8819084de91b31d9ef3e63b5e0276b17c02b1bbe0de1ccc4965b6843cab56fd1",
+    "verificationDigest": "651c0b663d6e35321a8066cb510129c820b5ea1bf9eea1d8ccf1ae4808674dc6",
+    "baseCommit": "65531d9ffa874dc386d366473ad07dbe893bcdd5",
+    "headCommit": "e8c1a5d9bbc476c7aefbea6da37fefa4eb2ab8f7",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "74f53f758f7c49f54a90cc4513ef11c4b49ad38cb73d18214293814b136a4693",
+      "binding": {
+        "baseCommit": "65531d9ffa874dc386d366473ad07dbe893bcdd5",
+        "candidateHead": "e8c1a5d9bbc476c7aefbea6da37fefa4eb2ab8f7",
+        "candidateTreeDigest": "fb76fe7d0c82ad00ec9a56c11b7305350d9270ec89ffdb815e716086d7d33859",
+        "candidateDiffDigest": "7d111f217748affce2983d2762b466912486c41f06fd555f96ed2007210b4f1a"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-docs-reader generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-docs-reader generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-docs-reader",
     "deliveredChanges": [
       "README.md",
       "NORTH_STAR.md",
@@ -39,90 +62,130 @@
       ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
       ".ai/work-items/archive/2026/wi-docs-reader.outcome.json",
       ".ai/work-items/archive/2026/wi-docs-reader.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "quality failed before the retry.",
+        "policyOrGuard": "required verification: quality",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry quality after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+            "subject": "verificationHistory[0] quality failed",
+            "digest": "ffe55cf61d65ba9fe1a55aae61b176e37adafedce945d8d2d6036ce83d3a19e8"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "ed5bebc7332d827a56a37304a1cfb87e3cee24a9ea16c671feac75999c104e11"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "quality failed before the retry.",
+        "action": "Re-ran quality after the correction; the latest attempt passed.",
+        "verification": "quality latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+            "subject": "verificationHistory[0] quality failed",
+            "digest": "ffe55cf61d65ba9fe1a55aae61b176e37adafedce945d8d2d6036ce83d3a19e8"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "ed5bebc7332d827a56a37304a1cfb87e3cee24a9ea16c671feac75999c104e11"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "documentation_drift",
+        "severity": "medium",
+        "title": "documentation_drift",
+        "detail": "Runtime or workflow changes can make operational prose stale; the metadata checker covers the current schedule, checkout version, secrets, and retention facts but not every semantic claim.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "internal_records",
+        "severity": "low",
+        "title": "internal_records",
+        "detail": "ADR and superpowers records retain implementation context by design and are not part of the reader navigation.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "User confirmed that docs/superpowers should remain as internal engineering records.",
+      "User authorized the complete WI lifecycle without intermediate confirmation."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-docs-reader.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+        "subject": "verificationHistory[0] quality failed",
+        "digest": "ffe55cf61d65ba9fe1a55aae61b176e37adafedce945d8d2d6036ce83d3a19e8"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
+        "subject": "verification[quality] retry passed",
+        "digest": "ed5bebc7332d827a56a37304a1cfb87e3cee24a9ea16c671feac75999c104e11"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: quality",
-      "action": "blocked",
-      "resolution": "Retry quality after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
-          "subject": "verificationHistory[0] quality failed",
-          "digest": "ffe55cf61d65ba9fe1a55aae61b176e37adafedce945d8d2d6036ce83d3a19e8"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "ed5bebc7332d827a56a37304a1cfb87e3cee24a9ea16c671feac75999c104e11"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "quality failed before the retry.",
-      "policyOrGuard": "required verification: quality",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry quality after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
-          "subject": "verificationHistory[0] quality failed",
-          "digest": "ffe55cf61d65ba9fe1a55aae61b176e37adafedce945d8d2d6036ce83d3a19e8"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "ed5bebc7332d827a56a37304a1cfb87e3cee24a9ea16c671feac75999c104e11"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "User confirmed that docs/superpowers should remain as internal engineering records.",
-    "User authorized the complete WI lifecycle without intermediate confirmation."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Runtime or workflow changes can make operational prose stale; the metadata checker covers the current schedule, checkout version, secrets, and retention facts but not every semantic claim.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "ADR and superpowers records retain implementation context by design and are not part of the reader navigation.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-docs-reader.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -1124,6 +1187,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry quality after correcting the recorded failure."
+  }
 }

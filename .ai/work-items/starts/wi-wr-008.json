@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-wr-008",
+  "receiptPath": ".ai/work-items/starts/wi-wr-008.json",
+  "baseCommit": "cb75571f0329ac153539607b6c771103cd0e2eec",
+  "baseBranch": "codex/wi-wr-008-markdown-renderer",
+  "startTimestamp": "2026-08-17T06:38:50.767340+00:00",
+  "initialScopeDigest": "7df989dc47a154f9b738bafd795ea6d3c08e9903fc8a987c837b3b6d713bafa3",
+  "contractSkeletonDigest": "38ff5971f544b10736c7f911bf2d9b9788c289ae0bb87d9c65d045ec40602675"
+}

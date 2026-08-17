@@ -7,7 +7,9 @@ use self::system_health::SystemHealth;
 #[cfg(test)]
 mod mod_test;
 
+pub mod change_compression;
 pub mod system_health;
+pub mod top5_weekly_read_model;
 
 fn non_empty(
     field: &'static str,

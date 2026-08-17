@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "requestedText": "Add the same-module interface registration test for the Weekly Radar Markdown Renderer.",
+  "target": {
+    "type": "file",
+    "name": "weekly_radar_markdown_renderer_interface_registration_test",
+    "path": "src/features/weekly_radar/interface/mod_test.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {"status": "proven_absent", "evidence": ["The registration test uses only repository-local Rust module visibility and no runtime loading."]},
+    "externalConsumers": {"status": "proven_absent", "evidence": ["The registration test adds no publisher, scheduler, persistence adapter, or external consumer."]},
+    "monitoringReferences": {"status": "proven_absent", "evidence": ["The registration test adds no monitoring, telemetry, delivery, or runtime integration."]}
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [".ai/work-items/active/wi-wr-008.contract.json", "The Contract permits same-module coverage tests for the registration boundary and excludes shared policy changes."]
+  },
+  "approval": null
+}

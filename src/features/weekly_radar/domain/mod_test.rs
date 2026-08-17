@@ -84,3 +84,12 @@ fn publication_rejects_duplicate_fact_identity() {
         })
     );
 }
+
+#[test]
+fn registered_weekly_radar_read_models_are_visible_at_the_domain_boundary() {
+    fn assert_registered<T>() {}
+
+    assert_registered::<super::change_compression::WeeklyChangeCompression>();
+    assert_registered::<super::system_health::SystemHealth>();
+    assert_registered::<super::top5_weekly_read_model::Top5WeeklyReadModel>();
+}

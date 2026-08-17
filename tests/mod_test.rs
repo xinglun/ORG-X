@@ -30,3 +30,10 @@ fn weekly_radar_infrastructure_registers_the_telegram_publisher_module() {
         org_x::features::weekly_radar::infrastructure::telegram_publisher::TelegramPublisherError,
     >();
 }
+
+#[test]
+fn weekly_radar_infrastructure_registers_the_publication_receipt_module() {
+    let _ = std::any::TypeId::of::<
+        org_x::features::weekly_radar::infrastructure::publication_receipt::PublicationReceipt,
+    >();
+}

@@ -1,0 +1,267 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-wr-012",
+  "mode": "code",
+  "title": "Publication Receipt and Retry",
+  "baseCommit": "a9620a65914957a7b61c3e791713232404e9a13f",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish, merge, close, and archive all 24 planned Work Items in the ORG-X roadmap, with this authorization recorded in every Contract.",
+    "reference": "user message: 完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "rawUserRequest": "完成24 个WI，需要我授权的，授权给你并请写入Contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to execute all 24 roadmap Work Items and record authorization in every Contract.",
+    "digest": "60a26c7924bd202c35c624aed2363deca887efc4243cf6de366020bb1d9c643b",
+    "capturedAt": "2026-08-17T13:45:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "documentation", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": true,
+    "authorityReason": "The user explicitly authorized execution, verification, publication, merge, closure, and archive for all 24 planned Work Items."
+  },
+  "scope": [
+    ".ai/work-items/active/wi-wr-012.contract.json",
+    ".ai/work-items/active/wi-wr-012.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-wr-012.outcome.json",
+    ".ai/work-items/active/wi-wr-012.outcome.md",
+    ".ai/evidence/reference-impact/wi-wr-012-publication-receipt.json",
+    ".ai/evidence/reference-impact/wi-wr-012-publication-receipt-test.json",
+    "src/features/weekly_radar/infrastructure/mod.rs",
+    "src/features/weekly_radar/infrastructure/telegram_publisher.rs",
+    "src/features/weekly_radar/infrastructure/telegram_publisher_test.rs",
+    "src/features/weekly_radar/infrastructure/publication_receipt.rs",
+    "src/features/weekly_radar/infrastructure/publication_receipt_test.rs",
+    "tests/mod_test.rs",
+    "tests/publication_receipt_test.rs",
+    "tests/weekly_radar_publication_receipt.rs",
+    "tests/telegram_publisher_test.rs",
+    "tests/weekly_radar_telegram_publisher.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-012-publication-receipt-retry.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-012-publication-receipt-retry.md"
+  ],
+  "outOfScope": [
+    "Recomputing Weekly Radar facts, changing snapshot identity, changing Domain/Application calculation rules, or adding persistence beyond an immutable in-memory receipt value",
+    "Weekly scheduling, E2E orchestration, System Health calculation, renderer/splitter behavior changes, or unrelated bounded contexts",
+    "Real Telegram HTTP/API calls, provider SDKs, bot tokens, chat IDs, CI secret wiring, polling, webhooks, or external publication",
+    "Automatic retry loops, backoff, retrying a different snapshot, or modifying the saved publication during retry"
+  ],
+  "sources": [
+    { "path": "AGENTS.md", "reason": "Work Item lifecycle, authorization, Finish, archive, and closure rules." },
+    { "path": ".ai/glossary.md", "reason": "Canonical governance and architecture terminology." },
+    { "path": ".ai/cockpit/README.md", "reason": "Contract, Summary, checkpoint, Finish, and archive workflow." },
+    { "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "WR-012 dependency and receipt/retry boundary." },
+    { "path": "user-provided-pasted-plan", "reason": "User-provided product specification for immutable snapshots, PublicationReceipt, message IDs, and delivery-only retry." },
+    { "path": "src/features/weekly_radar/domain/mod.rs", "reason": "Immutable WeeklyRadarPublication and snapshot identity used by receipt/retry." },
+    { "path": "src/features/weekly_radar/application/snapshot_store.rs", "reason": "Existing append-only snapshot boundary and identity semantics." },
+    { "path": "src/features/weekly_radar/application/mod.rs", "reason": "Existing WeeklyRadarPublisher application port." },
+    { "path": "src/features/weekly_radar/infrastructure/telegram_publisher.rs", "reason": "WR-010 publisher boundary extended with message IDs and receipt-aware publication access." },
+    { "path": "Makefile", "reason": "Project check and AI Cockpit quality commands." }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "receipt_integrity",
+      "snapshot_identity",
+      "delivery_failure"
+    ],
+    "reason": "Medium-risk delivery lifecycle boundary with immutable snapshot binding, typed receipts, and deterministic failure tests.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The existing WR-010 transport can be extended locally to return validated IDs; no provider runtime or secret source is required for the receipt/retry tests."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "Medium-risk delivery lifecycle boundary with immutable snapshot binding, typed receipts, and deterministic failure tests.",
+      "The Work Item writes restricted .ai governance evidence and must use the strict quality route."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user authorized the full lifecycle; WR-012 scope, sources, acceptance, and non-goals are explicit."
+  },
+  "preReviewWarnings": [
+    "Confirm failed delivery preserves the original snapshot and retry does not recalculate or mutate publication content."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Successful publication returns an immutable Telegram receipt.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/infrastructure/publication_receipt_test.rs", "tests/publication_receipt_test.rs"],
+      "expected": "The receipt records Telegram channel, original snapshot ID, published timestamp, ordered message IDs, attempt number, and Published status.",
+      "verificationPlan": "Use an injected fake transport that returns deterministic IDs and assert every receipt field and payload order."
+    },
+    {
+      "scenario": "A partial delivery returns a failure receipt without invalidating the snapshot.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/infrastructure/publication_receipt_test.rs", "tests/weekly_radar_publication_receipt.rs"],
+      "expected": "Successful IDs are retained, failed index/reason are typed, and the original publication snapshot ID remains unchanged.",
+      "verificationPlan": "Fail the injected transport at a selected message and inspect the receipt-bearing error without mutating the publication."
+    },
+    {
+      "scenario": "Retry reuses the same immutable publication snapshot and exact message payloads.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/infrastructure/publication_receipt_test.rs", "tests/weekly_radar_publication_receipt.rs"],
+      "expected": "Retry sends the same precomputed fact strings with the same snapshot ID, produces a new attempt receipt, and never recalculates or edits the publication.",
+      "verificationPlan": "Record all fake transport payloads across a failed first attempt and retry, then compare both attempts byte-for-byte."
+    },
+    {
+      "scenario": "Retry rejects a receipt for a different snapshot and no network is used.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/infrastructure/publication_receipt_test.rs", "tests/publication_receipt_test.rs"],
+      "expected": "A mismatched snapshot receipt returns a deterministic identity error before transport invocation.",
+      "verificationPlan": "Construct a receipt with a different SnapshotId and assert the fake transport call count remains zero."
+    }
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record Contract amendment and before_finish checkpoints for receipt/retry and snapshot identity integrity."
+  },
+  "acceptance": [
+    "PublicationReceipt records Telegram channel, immutable snapshot identity, published timestamp, message IDs, attempt number, and delivery status.",
+    "A receipt-aware publisher forwards precomputed publication messages and returns all successful message IDs in source order without recomputing content.",
+    "A failed delivery returns a typed receipt-bearing failure; the original publication remains available and retry accepts only the same snapshot identity/content.",
+    "Retry performs delivery only, does not create a new snapshot or recalculate/render facts, and tests prove exact payload reuse and snapshot mismatch rejection.",
+    "Module-local, same-stem, public integration, and architecture registration tests pass without real network or secret values.",
+    "WR-012 spec/plan and reference-impact evidence document the boundary; strict Finish/Archive and the authorized publish/merge/close lifecycle pass."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Retry must reuse the immutable publication snapshot and must not recompute or mutate domain facts.",
+    "Keep Telegram configuration and provider network behavior outside this WI."
+  ],
+  "intent": {
+    "problem": "WR-010 can deliver complete Telegram messages but does not expose message IDs, a typed PublicationReceipt, or a delivery-only retry boundary. Without these, a failed send cannot be retried against the same immutable Weekly Radar publication while distinguishing analysis success, snapshot persistence, and Telegram delivery failure.",
+    "constraints": [
+      "Use the existing WeeklyRadarPublication snapshot identity and opaque precomputed fact values; never recalculate, re-render, mutate, or replace the publication during retry.",
+      "Extend the WR-010 provider-agnostic transport boundary only as needed to return validated TelegramMessageId values; keep HTTP, credentials, SDKs, and secrets out of the repository.",
+      "Represent success and partial/failed delivery as typed receipts; a failed receipt must retain the same snapshot identity and successful message IDs.",
+      "Retry is explicit and deterministic: it reuses the same saved publication content, rejects a different snapshot, and performs no scheduler, backoff, persistence, or domain operation.",
+      "Complete TDD, focused/module-local/integration verification, strict Finish/Archive, local commit, publish, merge, close, and branch cleanup under the recorded lifecycle."
+    ],
+    "rationale": "An immutable receipt and explicit delivery retry boundary lets downstream scheduling and E2E verification distinguish publication failure from analysis failure while guaranteeing that retries resend the exact saved Snapshot rather than recalculating a new report."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and governance evidence writes for all 24 roadmap Work Items."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 27
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-wr-012.json",
+    "baseCommit": "a9620a65914957a7b61c3e791713232404e9a13f",
+    "initialScopeDigest": "c9a16c700a220621e9a4928aaa851bb361b78081b0f81c131d0600f284044387",
+    "contractSkeletonDigest": "9d7f9b1ff83805b4727fbd75ac9d11887c793b1033ccf82f6e907e3a3baa7de8"
+  }
+}

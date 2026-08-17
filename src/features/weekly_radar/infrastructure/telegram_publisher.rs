@@ -21,6 +21,26 @@ pub const TELEGRAM_BOT_TOKEN_ENV: &str = "ORGX_TELEGRAM_BOT_TOKEN";
 /// Reserved environment variable name for a later Telegram chat destination.
 pub const TELEGRAM_CHAT_ID_ENV: &str = "ORGX_TELEGRAM_CHAT_ID";
 
+/// Provider-issued identifier for one successfully accepted Telegram message.
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+pub struct TelegramMessageId(String);
+
+impl TelegramMessageId {
+    /// Creates an ID and rejects blank provider output.
+    pub fn new(value: impl Into<String>) -> Result<Self, TelegramPublisherError> {
+        let value = value.into();
+        if value.trim().is_empty() {
+            return Err(TelegramPublisherError::BlankMessageId);
+        }
+        Ok(Self(value))
+    }
+
+    /// Returns the exact provider-issued identifier.
+    pub fn as_str(&self) -> &str {
+        &self.0
+    }
+}
+
 /// Failure reported by an injected delivery transport.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TelegramTransportError {
@@ -50,9 +70,12 @@ impl std::error::Error for TelegramTransportError {}
 /// adapter passes the destination and exact Markdown only; this trait does not
 /// prescribe HTTP, a Telegram SDK, secret storage, or retry behavior.
 pub trait TelegramTransport {
-    /// Sends one complete message and reports a transport boundary failure.
-    fn send_message(&self, destination: &str, markdown: &str)
-        -> Result<(), TelegramTransportError>;
+    /// Sends one complete message, returns its provider ID, and reports a transport failure.
+    fn send_message(
+        &self,
+        destination: &str,
+        markdown: &str,
+    ) -> Result<TelegramMessageId, TelegramTransportError>;
 }
 
 /// Typed failures raised before or during ordered chunk delivery.
@@ -62,12 +85,16 @@ pub enum TelegramPublisherError {
     BlankDestination,
     /// The caller supplied no complete chunks to deliver.
     EmptySplit,
+    /// The provider returned a blank message ID.
+    BlankMessageId,
     /// A transport failed for one specific source-ordered chunk.
     Transport {
         /// Zero-based source chunk index.
         chunk_index: usize,
         /// Semantic boundary of the failed chunk.
         boundary: SemanticBoundary,
+        /// IDs accepted before the failing message.
+        successful_message_ids: Vec<TelegramMessageId>,
         /// Provider-neutral transport explanation.
         reason: String,
     },
@@ -78,10 +105,12 @@ impl fmt::Display for TelegramPublisherError {
         match self {
             Self::BlankDestination => formatter.write_str("Telegram destination cannot be blank"),
             Self::EmptySplit => formatter.write_str("Telegram message split cannot be empty"),
+            Self::BlankMessageId => formatter.write_str("Telegram message ID cannot be blank"),
             Self::Transport {
                 chunk_index,
                 boundary,
                 reason,
+                ..
             } => write!(
                 formatter,
                 "Telegram transport failed for chunk {chunk_index} ({}): {reason}",
@@ -130,7 +159,15 @@ impl<T: TelegramTransport> TelegramWeeklyRadarPublisher<T> {
         &self,
         message_split: &SemanticMessageSplit,
     ) -> Result<(), TelegramPublisherError> {
-        self.publish_chunks(message_split.chunks())
+        self.publish_split_with_ids(message_split).map(|_| ())
+    }
+
+    /// Forwards complete WR-011 chunks and returns provider IDs in source order.
+    pub fn publish_split_with_ids(
+        &self,
+        message_split: &SemanticMessageSplit,
+    ) -> Result<Vec<TelegramMessageId>, TelegramPublisherError> {
+        self.publish_chunks_with_ids(message_split.chunks())
     }
 
     /// Forwards a caller-supplied ordered chunk collection.
@@ -138,23 +175,65 @@ impl<T: TelegramTransport> TelegramWeeklyRadarPublisher<T> {
         &self,
         chunks: &[SemanticMessageChunk],
     ) -> Result<(), TelegramPublisherError> {
+        self.publish_chunks_with_ids(chunks).map(|_| ())
+    }
+
+    /// Forwards chunks and returns all successful provider IDs in source order.
+    pub fn publish_chunks_with_ids(
+        &self,
+        chunks: &[SemanticMessageChunk],
+    ) -> Result<Vec<TelegramMessageId>, TelegramPublisherError> {
         if chunks.is_empty() {
             return Err(TelegramPublisherError::EmptySplit);
         }
 
+        let mut message_ids = Vec::with_capacity(chunks.len());
         for (chunk_index, chunk) in chunks.iter().enumerate() {
-            if let Err(error) = self
+            match self
                 .transport
                 .send_message(&self.destination, chunk.markdown())
             {
-                return Err(TelegramPublisherError::Transport {
-                    chunk_index,
-                    boundary: chunk.boundary(),
-                    reason: error.to_string(),
-                });
+                Ok(message_id) => message_ids.push(message_id),
+                Err(error) => {
+                    return Err(TelegramPublisherError::Transport {
+                        chunk_index,
+                        boundary: chunk.boundary(),
+                        successful_message_ids: message_ids,
+                        reason: error.to_string(),
+                    });
+                }
             }
         }
-        Ok(())
+        Ok(message_ids)
+    }
+
+    /// Delivers opaque precomputed publication facts and returns provider IDs.
+    pub fn publish_publication_with_ids(
+        &self,
+        publication: &WeeklyRadarPublication,
+    ) -> Result<Vec<TelegramMessageId>, TelegramPublisherError> {
+        if publication.facts().is_empty() {
+            return Err(TelegramPublisherError::EmptySplit);
+        }
+
+        let mut message_ids = Vec::with_capacity(publication.facts().len());
+        for (message_index, fact) in publication.facts().iter().enumerate() {
+            match self
+                .transport
+                .send_message(&self.destination, fact.value().as_str())
+            {
+                Ok(message_id) => message_ids.push(message_id),
+                Err(error) => {
+                    return Err(TelegramPublisherError::Transport {
+                        chunk_index: message_index,
+                        boundary: SemanticBoundary::ExecutiveSummary,
+                        successful_message_ids: message_ids,
+                        reason: error.to_string(),
+                    });
+                }
+            }
+        }
+        Ok(message_ids)
     }
 }
 
@@ -165,32 +244,24 @@ impl<T: TelegramTransport> WeeklyRadarPublisher for TelegramWeeklyRadarPublisher
     /// treated as already-rendered message payloads here; callers that have a
     /// semantic split should use [`Self::publish_split`] directly.
     fn publish(&self, publication: &WeeklyRadarPublication) -> Result<(), WeeklyRadarPublishError> {
-        if publication.facts().is_empty() {
-            return Err(WeeklyRadarPublishError::Rejected {
-                reason: "publication contains no precomputed messages".to_owned(),
-            });
-        }
-
-        for (index, fact) in publication.facts().iter().enumerate() {
-            if let Err(error) = self
-                .transport
-                .send_message(&self.destination, fact.value().as_str())
-            {
-                let reason = format!("publication message {index}: {error}");
-                return Err(match error {
-                    TelegramTransportError::Unavailable { .. } => {
-                        WeeklyRadarPublishError::Unavailable
-                    }
-                    TelegramTransportError::Rejected { .. } => {
-                        WeeklyRadarPublishError::Rejected { reason }
-                    }
-                    TelegramTransportError::Failed { .. } => {
+        match self.publish_publication_with_ids(publication) {
+            Ok(_) => Ok(()),
+            Err(error) => {
+                let reason = error.to_string();
+                Err(match error {
+                    TelegramPublisherError::EmptySplit => WeeklyRadarPublishError::Rejected {
+                        reason: "publication contains no precomputed messages".to_owned(),
+                    },
+                    TelegramPublisherError::Transport { .. } => {
                         WeeklyRadarPublishError::Failed { reason }
                     }
-                });
+                    TelegramPublisherError::BlankDestination
+                    | TelegramPublisherError::BlankMessageId => {
+                        WeeklyRadarPublishError::Rejected { reason }
+                    }
+                })
             }
         }
-        Ok(())
     }
 }
 

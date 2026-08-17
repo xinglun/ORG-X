@@ -5,7 +5,8 @@ use crate::features::weekly_radar::interface::semantic_message_splitter::{
 };
 
 use super::{
-    TelegramPublisherAdapter, TelegramPublisherError, TelegramTransport, TelegramTransportError,
+    TelegramMessageId, TelegramPublisherAdapter, TelegramPublisherError, TelegramTransport,
+    TelegramTransportError,
 };
 
 #[derive(Clone, Default)]
@@ -35,7 +36,7 @@ impl TelegramTransport for RecordingTransport {
         &self,
         destination: &str,
         markdown: &str,
-    ) -> Result<(), TelegramTransportError> {
+    ) -> Result<TelegramMessageId, TelegramTransportError> {
         let mut calls = self.calls.lock().expect("recording lock should not fail");
         let index = calls.len();
         calls.push((destination.to_owned(), markdown.to_owned()));
@@ -44,7 +45,11 @@ impl TelegramTransport for RecordingTransport {
                 reason: "synthetic transport failure".to_owned(),
             });
         }
-        Ok(())
+        TelegramMessageId::new(format!("message-{index}")).map_err(|error| {
+            TelegramTransportError::Failed {
+                reason: error.to_string(),
+            }
+        })
     }
 }
 
@@ -113,6 +118,7 @@ fn stops_after_first_transport_failure_and_reports_chunk_context() {
         TelegramPublisherError::Transport {
             chunk_index: 1,
             boundary: SemanticBoundary::SystemHealth,
+            successful_message_ids: vec![TelegramMessageId::new("message-0").unwrap()],
             reason: "synthetic transport failure".to_owned(),
         }
     );

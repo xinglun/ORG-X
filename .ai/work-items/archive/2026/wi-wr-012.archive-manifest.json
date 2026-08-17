@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-wr-012",
+  "archiveSequence": 27,
+  "contractPath": ".ai/work-items/archive/2026/wi-wr-012.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+  "contractSha256": "9ee504038f9e2b4d2c5c8d3a7c1e645111020000f3ded2d31f68590f8c76c962",
+  "summarySha256": "4e492366f059368b78982feaa256adf749b1d8c3847dd07da841a57c40c95c97",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-wr-012.outcome.json",
+      "sha256": "be4078fd369601e93954e3af060ef1437566b2aabec718912e66c296ad909cb7"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-wr-012.outcome.md",
+      "sha256": "c83b657bd2c6a464e7aea347b88acf2cd1aeaa91da1aac11f26747bbb6c41427"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "df9d17c439400b1a5378d9318f053b9670ef10ca44199d0fa518b92acb1dacc8",
+    "binding": {
+      "baseCommit": "a9620a65914957a7b61c3e791713232404e9a13f",
+      "candidateHead": "a9620a65914957a7b61c3e791713232404e9a13f",
+      "candidateTreeDigest": "57c896071caf597aa83b5f66ce61873966a4197b1ae16307a89abaa0df0e7a6d",
+      "candidateDiffDigest": "f5295f3d8968b2c7977acbc92a950ad00f20e69fcad9af53df60a5c2cb87f370"
+    }
+  }
+}

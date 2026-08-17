@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-wr-012",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "c9d58939263bd59e5bbee29d60df7b5dfde23bdce40315c1770aca319dbe9882"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-wr-012",
+    "contractDigest": "9ee504038f9e2b4d2c5c8d3a7c1e645111020000f3ded2d31f68590f8c76c962",
+    "summaryDigest": "fea679e668a4597ec40fac858d817b1d370f24537c3bda2b22519711f3422c86",
+    "verificationDigest": "5d9caeecf66ad81f0d4ebb28cbab4102e72904176fbfc920d6e6add93486c240",
+    "baseCommit": "a9620a65914957a7b61c3e791713232404e9a13f",
+    "headCommit": "a9620a65914957a7b61c3e791713232404e9a13f",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "df9d17c439400b1a5378d9318f053b9670ef10ca44199d0fa518b92acb1dacc8",
+      "binding": {
+        "baseCommit": "a9620a65914957a7b61c3e791713232404e9a13f",
+        "candidateHead": "a9620a65914957a7b61c3e791713232404e9a13f",
+        "candidateTreeDigest": "57c896071caf597aa83b5f66ce61873966a4197b1ae16307a89abaa0df0e7a6d",
+        "candidateDiffDigest": "f5295f3d8968b2c7977acbc92a950ad00f20e69fcad9af53df60a5c2cb87f370"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-wr-012 generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-wr-012 generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-wr-012",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-wr-012.contract.json",
       ".ai/work-items/archive/2026/wi-wr-012.summary.json",
@@ -31,90 +54,130 @@
       "docs/superpowers/plans/2026-08-17-wi-wr-012-publication-receipt-retry.md",
       ".ai/work-items/archive/2026/wi-wr-012.outcome.json",
       ".ai/work-items/archive/2026/wi-wr-012.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "quality failed before the retry.",
+        "policyOrGuard": "required verification: quality",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry quality after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+            "subject": "verificationHistory[0] quality failed",
+            "digest": "07fa6fa9f87cca8d13b7757469d81d6e2b0b66acc7f5292bac9f567991ca2e81"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "0bac21f925d753196f3f39c823c66777faf327a1c97fa10a5e8c7659bbef3864"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "quality failed before the retry.",
+        "action": "Re-ran quality after the correction; the latest attempt passed.",
+        "verification": "quality latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+            "subject": "verificationHistory[0] quality failed",
+            "digest": "07fa6fa9f87cca8d13b7757469d81d6e2b0b66acc7f5292bac9f567991ca2e81"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "0bac21f925d753196f3f39c823c66777faf327a1c97fa10a5e8c7659bbef3864"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "provider integration",
+        "severity": "low",
+        "title": "provider integration",
+        "detail": "No real Telegram client, provider acknowledgement, credentials, or network behavior is exercised; the injected transport boundary remains the explicit seam for later integration.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "retry policy",
+        "severity": "low",
+        "title": "retry policy",
+        "detail": "Retry is explicit and delivery-only in this WI; scheduling, backoff, persistence, and automatic retry policy remain deferred to later planned work.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "Use the current WI for discovered issues; do not expand into new WIs without need.",
+      "Use the latest weekly Actions checkout version actions/checkout@v5 in WR-015."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-012.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+        "subject": "verificationHistory[0] quality failed",
+        "digest": "07fa6fa9f87cca8d13b7757469d81d6e2b0b66acc7f5292bac9f567991ca2e81"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
+        "subject": "verification[quality] retry passed",
+        "digest": "0bac21f925d753196f3f39c823c66777faf327a1c97fa10a5e8c7659bbef3864"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: quality",
-      "action": "blocked",
-      "resolution": "Retry quality after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
-          "subject": "verificationHistory[0] quality failed",
-          "digest": "07fa6fa9f87cca8d13b7757469d81d6e2b0b66acc7f5292bac9f567991ca2e81"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "0bac21f925d753196f3f39c823c66777faf327a1c97fa10a5e8c7659bbef3864"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "quality failed before the retry.",
-      "policyOrGuard": "required verification: quality",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry quality after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
-          "subject": "verificationHistory[0] quality failed",
-          "digest": "07fa6fa9f87cca8d13b7757469d81d6e2b0b66acc7f5292bac9f567991ca2e81"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "0bac21f925d753196f3f39c823c66777faf327a1c97fa10a5e8c7659bbef3864"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "Use the current WI for discovered issues; do not expand into new WIs without need.",
-    "Use the latest weekly Actions checkout version actions/checkout@v5 in WR-015."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "No real Telegram client, provider acknowledgement, credentials, or network behavior is exercised; the injected transport boundary remains the explicit seam for later integration.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "Retry is explicit and delivery-only in this WI; scheduling, backoff, persistence, and automatic retry policy remain deferred to later planned work.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-wr-012.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -957,6 +1020,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry quality after correcting the recorded failure."
+  }
 }

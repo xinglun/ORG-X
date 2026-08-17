@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "requestedText": "Record the module-local coverage boundary for the WR-012 immutable publication receipt and same-snapshot retry behavior.",
+  "target": {
+    "type": "file",
+    "name": "wi_wr_012_publication_receipt_module_tests",
+    "path": "src/features/weekly_radar/infrastructure/publication_receipt_test.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [],
+    "testReferences": [],
+    "documentationReferences": [],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The module-local test uses only an injected in-memory transport and fixed clock; it does not load runtime files, call a provider, or schedule delivery."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The test is compiled as module-local coverage and has no external runtime consumer or provider dependency."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The test does not add telemetry, monitoring, polling, webhook, persistence, or automatic retry behavior."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-012.contract.json",
+      "The Contract authorizes the test evidence and restricts the test to deterministic local coverage of the receipt/retry boundary."
+    ]
+  },
+  "approval": null
+}

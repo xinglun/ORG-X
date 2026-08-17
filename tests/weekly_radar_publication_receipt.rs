@@ -1,9 +1,11 @@
 use std::sync::{Arc, Mutex};
 
-use org_x::features::weekly_radar::application::WeeklyRadarPublisher;
 use org_x::features::weekly_radar::domain::{
     AsOf, EvidenceCutoff, FactId, FactValue, ModelVersion, ScoringVersion, SnapshotId,
     UniverseSnapshotId, WeeklyRadarPublication, WeeklyRadarSnapshot,
+};
+use org_x::features::weekly_radar::infrastructure::publication_receipt::{
+    PublicationClock, PublicationReceiptService,
 };
 use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
     TelegramMessageId, TelegramPublisherAdapter, TelegramTransport, TelegramTransportError,
@@ -18,11 +20,8 @@ impl TelegramTransport for RecordingTransport {
         _destination: &str,
         markdown: &str,
     ) -> Result<TelegramMessageId, TelegramTransportError> {
-        self.0
-            .lock()
-            .expect("recording lock should not fail")
-            .push(markdown.to_owned());
-        TelegramMessageId::new(format!("message-{}", self.0.lock().expect("lock").len())).map_err(
+        self.0.lock().unwrap().push(markdown.to_owned());
+        TelegramMessageId::new(format!("message-{}", self.0.lock().unwrap().len())).map_err(
             |error| TelegramTransportError::Failed {
                 reason: error.to_string(),
             },
@@ -30,12 +29,20 @@ impl TelegramTransport for RecordingTransport {
     }
 }
 
-#[test]
-fn application_port_forwards_precomputed_fact_without_recalculation() {
+#[derive(Clone)]
+struct FixedClock;
+
+impl PublicationClock for FixedClock {
+    fn now(&self) -> &str {
+        "2026-08-17T15:00:00Z"
+    }
+}
+
+fn publication() -> WeeklyRadarPublication {
     let snapshot = WeeklyRadarSnapshot::new(
-        SnapshotId::new("snapshot-1").unwrap(),
+        SnapshotId::new("snapshot-public").unwrap(),
         AsOf::new("2026-08-16").unwrap(),
-        UniverseSnapshotId::new("universe-1").unwrap(),
+        UniverseSnapshotId::new("universe-public").unwrap(),
         EvidenceCutoff::new("2026-08-15T23:59:59Z").unwrap(),
         ModelVersion::new("model-v1").unwrap(),
         ScoringVersion::new("score-v1").unwrap(),
@@ -45,18 +52,23 @@ fn application_port_forwards_precomputed_fact_without_recalculation() {
     publication
         .add_fact(
             FactId::new("summary").unwrap(),
-            FactValue::new("already-rendered Markdown").unwrap(),
+            FactValue::new("precomputed Telegram message").unwrap(),
         )
         .unwrap();
+    publication
+}
 
+#[test]
+fn public_receipt_service_keeps_application_publisher_port_separate() {
     let transport = RecordingTransport::default();
-    let adapter = TelegramPublisherAdapter::new("chat-123", transport.clone()).unwrap();
-    adapter
-        .publish(&publication)
-        .expect("precomputed publication should be delivered");
+    let publisher = TelegramPublisherAdapter::new("chat-public", transport.clone()).unwrap();
+    let service = PublicationReceiptService::new(publication(), publisher, FixedClock);
 
+    let receipt = service.publish().unwrap();
+    assert_eq!(receipt.snapshot_id().as_str(), "snapshot-public");
+    assert_eq!(receipt.message_ids().len(), 1);
     assert_eq!(
         transport.0.lock().unwrap().as_slice(),
-        ["already-rendered Markdown"]
+        ["precomputed Telegram message"]
     );
 }

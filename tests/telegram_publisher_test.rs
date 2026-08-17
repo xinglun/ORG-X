@@ -1,7 +1,7 @@
 use std::sync::{Arc, Mutex};
 
 use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
-    TelegramPublisherAdapter, TelegramTransport, TelegramTransportError,
+    TelegramMessageId, TelegramPublisherAdapter, TelegramTransport, TelegramTransportError,
 };
 use org_x::features::weekly_radar::interface::semantic_message_splitter::{
     SemanticMessageSplitter, SemanticSplitLimits,
@@ -15,12 +15,16 @@ impl TelegramTransport for RecordingTransport {
         &self,
         _destination: &str,
         markdown: &str,
-    ) -> Result<(), TelegramTransportError> {
+    ) -> Result<TelegramMessageId, TelegramTransportError> {
         self.0
             .lock()
             .expect("recording lock should not fail")
             .push(markdown.to_owned());
-        Ok(())
+        TelegramMessageId::new(format!("message-{}", self.0.lock().expect("lock").len())).map_err(
+            |error| TelegramTransportError::Failed {
+                reason: error.to_string(),
+            },
+        )
     }
 }
 

@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "requestedText": "Add an immutable Telegram publication receipt and explicit same-snapshot delivery retry for precomputed Weekly Radar facts.",
+  "target": {
+    "type": "file",
+    "name": "wi_wr_012_publication_receipt_retry_boundary",
+    "path": "src/features/weekly_radar/infrastructure/publication_receipt.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [
+      "src/features/weekly_radar/infrastructure/telegram_publisher.rs",
+      "src/features/weekly_radar/domain/mod.rs",
+      "src/features/weekly_radar/application/mod.rs",
+      "tests/mod_test.rs"
+    ],
+    "testReferences": [
+      "src/features/weekly_radar/infrastructure/publication_receipt_test.rs",
+      "tests/publication_receipt_test.rs",
+      "tests/weekly_radar_publication_receipt.rs",
+      "src/features/weekly_radar/infrastructure/telegram_publisher_test.rs",
+      "tests/telegram_publisher_test.rs",
+      "tests/weekly_radar_telegram_publisher.rs"
+    ],
+    "documentationReferences": [
+      "docs/superpowers/specs/2026-08-17-wi-wr-012-publication-receipt-retry.md",
+      "docs/superpowers/plans/2026-08-17-wi-wr-012-publication-receipt-retry.md"
+    ],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The receipt service retains an in-memory WeeklyRadarPublication and calls only an injected publisher and clock; it does not load files, resolve providers, or invoke a scheduler."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "No runtime Telegram consumer or provider SDK exists in this repository; public coverage uses an in-memory transport and real network behavior is explicitly out of scope."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "WR-012 adds typed receipt data only and does not add telemetry, monitoring, polling, webhook, persistence, backoff, or automatic retry behavior."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-012.contract.json",
+      "The Contract authorizes the repository lifecycle while restricting this WI to immutable receipt evidence, provider-neutral IDs, explicit delivery retry, tests, and documentation."
+    ]
+  },
+  "approval": null
+}

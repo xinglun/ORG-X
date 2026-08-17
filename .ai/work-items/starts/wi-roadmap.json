@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-roadmap",
+  "receiptPath": ".ai/work-items/starts/wi-roadmap.json",
+  "baseCommit": "8d1b2e04bb65f1b7f96b3dc011ffd53c4ce53e43",
+  "baseBranch": "codex/wi-roadmap",
+  "startTimestamp": "2026-08-17T02:57:59.262348+00:00",
+  "initialScopeDigest": "ae71b6266f7f8f2f16e4db8efcafc8390e49fb03bb7e828730e2a9d2a2fab792",
+  "contractSkeletonDigest": "84ace020d699be6c9b64dc37baef0297b6b3d06a2a2fd8213ffc2e754e89d1dc"
+}

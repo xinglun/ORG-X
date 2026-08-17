@@ -37,3 +37,10 @@ fn weekly_radar_infrastructure_registers_the_publication_receipt_module() {
         org_x::features::weekly_radar::infrastructure::publication_receipt::PublicationReceipt,
     >();
 }
+
+#[test]
+fn weekly_radar_application_registers_the_weekly_scheduler_module() {
+    let _ = std::any::TypeId::of::<
+        org_x::features::weekly_radar::application::weekly_scheduler::WeeklyScheduler,
+    >();
+}

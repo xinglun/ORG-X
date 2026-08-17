@@ -1,6 +1,7 @@
 //! Application ports for publishing a precomputed Weekly Radar publication.
 
 pub mod snapshot_store;
+pub mod weekly_scheduler;
 
 #[cfg(test)]
 mod mod_test;

@@ -6,15 +6,16 @@
 
 use chrono::{DateTime, NaiveDate, Utc};
 use regex::Regex;
-use serde::de::{DeserializeOwned, Error as DeError};
+use serde::de::{DeserializeOwned, Error as DeError, IgnoredAny, SeqAccess, Visitor};
 use serde::Deserialize;
+use std::marker::PhantomData;
 
 use super::config::{is_safe_source_identifier, CompanyConfig};
-use super::http::{HttpClient, HttpResponse};
+use super::http::{HttpClient, HttpResponse, MAX_HTTP_RESPONSE_BODY_BYTES};
 use super::model::Provenance;
 
 /// Maximum response body size accepted by source adapters.
-pub const MAX_SOURCE_BODY_BYTES: usize = 1_048_576;
+pub const MAX_SOURCE_BODY_BYTES: usize = MAX_HTTP_RESPONSE_BODY_BYTES;
 /// Maximum number of Greenhouse or Lever records retained from one response.
 pub const MAX_HIRING_RECORDS: usize = 100;
 const MAX_GDELT_ARTICLES: usize = 10;
@@ -109,6 +110,15 @@ impl SourceTier {
 }
 
 /// Provider-neutral source material with explicit status and provenance.
+///
+/// This is an output-only observation. It intentionally implements `Serialize`
+/// but not `Deserialize`, so serialized snapshots cannot be supplied back to
+/// the public runtime boundary as forged source observations.
+///
+/// ```compile_fail
+/// use org_x::features::weekly_radar::runtime::sources::SourceObservation;
+/// let _: SourceObservation = serde_json::from_str("{}").unwrap();
+/// ```
 #[derive(Clone, Debug, Eq, PartialEq, serde::Serialize)]
 pub struct SourceObservation {
     company_id: String,
@@ -119,47 +129,6 @@ pub struct SourceObservation {
     title: Option<String>,
     text: String,
     provenance: Provenance,
-}
-
-impl<'de> Deserialize<'de> for SourceObservation {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        #[derive(Deserialize)]
-        struct SourceObservationWire {
-            company_id: String,
-            kind: SourceKind,
-            status: SourceStatus,
-            tier: SourceTier,
-            url: Option<String>,
-            title: Option<String>,
-            text: String,
-            provenance: Provenance,
-        }
-
-        let wire = SourceObservationWire::deserialize(deserializer)?;
-        if wire.company_id.trim().is_empty() {
-            return Err(D::Error::custom(
-                "source observation company ID cannot be blank",
-            ));
-        }
-        validate_status_and_tier(wire.kind, wire.status, wire.tier).map_err(D::Error::custom)?;
-        wire.provenance
-            .validate()
-            .map_err(|error| D::Error::custom(error.to_string()))?;
-
-        Ok(Self {
-            company_id: wire.company_id,
-            kind: wire.kind,
-            status: wire.status,
-            tier: wire.tier,
-            url: wire.url,
-            title: wire.title,
-            text: wire.text,
-            provenance: wire.provenance,
-        })
-    }
 }
 
 impl SourceObservation {
@@ -437,7 +406,7 @@ fn collect_greenhouse(
     };
 
     let mut retained = 0;
-    for job in response.jobs.into_iter().take(MAX_HIRING_RECORDS) {
+    for job in response.jobs.into_records() {
         let title = normalize_plain_text(&job.title);
         if title.is_empty() {
             continue;
@@ -508,7 +477,7 @@ fn collect_lever(
     }
 
     let endpoint = format!("https://api.lever.co/v0/postings/{site}?mode=json");
-    let postings = match get_json::<Vec<LeverPosting>>(http, &endpoint) {
+    let postings = match get_json::<LimitedSequence<LeverPosting>>(http, &endpoint) {
         Ok(postings) => postings,
         Err(FetchFailure::Unavailable) => {
             observations.push(unavailable_observation(
@@ -535,7 +504,7 @@ fn collect_lever(
     };
 
     let mut retained = 0;
-    for posting in postings.into_iter().take(MAX_HIRING_RECORDS) {
+    for posting in postings.into_records() {
         let title = normalize_plain_text(&posting.text);
         if title.is_empty() {
             continue;
@@ -715,44 +684,6 @@ enum FetchFailure {
     InvalidPayload,
 }
 
-fn validate_status_and_tier(
-    kind: SourceKind,
-    status: SourceStatus,
-    tier: SourceTier,
-) -> Result<(), String> {
-    let valid = match kind {
-        SourceKind::OfficialIr | SourceKind::Careers | SourceKind::EngineeringAiBlog => {
-            matches!(tier, SourceTier::OfficialPrimary)
-                && matches!(
-                    status,
-                    SourceStatus::Known | SourceStatus::Unknown | SourceStatus::Unavailable
-                )
-        }
-        SourceKind::Greenhouse | SourceKind::Lever => {
-            matches!(tier, SourceTier::StructuredHiring)
-                && matches!(
-                    status,
-                    SourceStatus::Known | SourceStatus::Unknown | SourceStatus::Unavailable
-                )
-        }
-        SourceKind::Gdelt => {
-            matches!(tier, SourceTier::DiscoveryOnly)
-                && matches!(
-                    status,
-                    SourceStatus::DiscoveryOnly | SourceStatus::Unknown | SourceStatus::Unavailable
-                )
-        }
-    };
-    if valid {
-        Ok(())
-    } else {
-        Err(format!(
-            "invalid source status/tier combination for {}",
-            kind.as_str()
-        ))
-    }
-}
-
 fn bounded_body(response: &HttpResponse) -> Result<&str, FetchFailure> {
     if response.body().len() > MAX_SOURCE_BODY_BYTES {
         return Err(FetchFailure::Unavailable);
@@ -848,8 +779,65 @@ fn parse_gdelt_date(value: &str) -> Option<NaiveDate> {
 
 #[derive(Debug, Deserialize)]
 struct GreenhouseResponse {
-    #[serde(default)]
-    jobs: Vec<GreenhouseJob>,
+    jobs: LimitedSequence<GreenhouseJob>,
+}
+
+#[derive(Debug)]
+struct LimitedSequence<T> {
+    records: Vec<T>,
+}
+
+impl<'de, T> Deserialize<'de> for LimitedSequence<T>
+where
+    T: Deserialize<'de>,
+{
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        struct LimitedSequenceVisitor<T>(PhantomData<T>);
+
+        impl<'de, T> Visitor<'de> for LimitedSequenceVisitor<T>
+        where
+            T: Deserialize<'de>,
+        {
+            type Value = LimitedSequence<T>;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("a JSON array within the configured record limit")
+            }
+
+            fn visit_seq<A>(self, mut sequence: A) -> Result<Self::Value, A::Error>
+            where
+                A: SeqAccess<'de>,
+            {
+                let mut records = Vec::with_capacity(MAX_HIRING_RECORDS);
+                loop {
+                    if records.len() == MAX_HIRING_RECORDS {
+                        let extra = sequence.next_element::<IgnoredAny>()?;
+                        if extra.is_some() {
+                            return Err(A::Error::custom("source record limit exceeded"));
+                        }
+                        break;
+                    }
+
+                    match sequence.next_element::<T>()? {
+                        Some(record) => records.push(record),
+                        None => break,
+                    }
+                }
+                Ok(LimitedSequence { records })
+            }
+        }
+
+        deserializer.deserialize_seq(LimitedSequenceVisitor(PhantomData))
+    }
+}
+
+impl<T> LimitedSequence<T> {
+    fn into_records(self) -> Vec<T> {
+        self.records
+    }
 }
 
 #[derive(Debug, Deserialize)]

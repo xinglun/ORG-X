@@ -20,6 +20,8 @@ pub enum RuntimeError {
     HttpRequest,
     /// An HTTP response body could not be read.
     HttpResponse,
+    /// An HTTP response exceeded the finite runtime body limit.
+    HttpResponseTooLarge,
     /// A fixture transport has no response for the requested URL.
     FixtureMissing,
     /// A shared fixture transport could not be accessed.
@@ -53,6 +55,9 @@ impl fmt::Display for RuntimeError {
             }
             Self::HttpRequest => formatter.write_str("HTTP request failed"),
             Self::HttpResponse => formatter.write_str("HTTP response body could not be read"),
+            Self::HttpResponseTooLarge => {
+                formatter.write_str("HTTP response body exceeded configured limit")
+            }
             Self::FixtureMissing => formatter.write_str("fixture response is missing"),
             Self::FixtureState => formatter.write_str("fixture transport state is unavailable"),
         }

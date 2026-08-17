@@ -1,10 +1,14 @@
 //! Injected synchronous HTTP boundary for Weekly Radar adapters.
 
 use std::collections::BTreeMap;
+use std::io::Read;
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
 use super::error::RuntimeError;
+
+/// Maximum HTTP response body size retained by the runtime transport.
+pub const MAX_HTTP_RESPONSE_BODY_BYTES: usize = 1_048_576;
 
 /// A complete response returned by an injected HTTP client.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -129,11 +133,15 @@ impl HttpClient for FixtureHttpClient {
             url: url.to_owned(),
             headers: headers.to_vec(),
         });
-        state
+        let response = state
             .responses
             .get(url)
             .cloned()
-            .ok_or(RuntimeError::FixtureMissing)
+            .ok_or(RuntimeError::FixtureMissing)?;
+        if response.body().len() > MAX_HTTP_RESPONSE_BODY_BYTES {
+            return Err(RuntimeError::HttpResponseTooLarge);
+        }
+        Ok(response)
     }
 }
 
@@ -254,9 +262,16 @@ impl HttpClient for UreqHttpClient {
             .into_iter()
             .filter_map(|name| response.header(&name).map(|value| (name, value.to_owned())))
             .collect();
-        let body = response
-            .into_string()
+        let mut body_bytes = Vec::with_capacity(MAX_HTTP_RESPONSE_BODY_BYTES + 1);
+        response
+            .into_reader()
+            .take((MAX_HTTP_RESPONSE_BODY_BYTES + 1) as u64)
+            .read_to_end(&mut body_bytes)
             .map_err(|_| RuntimeError::HttpResponse)?;
+        if body_bytes.len() > MAX_HTTP_RESPONSE_BODY_BYTES {
+            return Err(RuntimeError::HttpResponseTooLarge);
+        }
+        let body = String::from_utf8(body_bytes).map_err(|_| RuntimeError::HttpResponse)?;
 
         Ok(HttpResponse {
             status,

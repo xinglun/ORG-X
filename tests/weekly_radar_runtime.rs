@@ -15,7 +15,7 @@ use org_x::features::weekly_radar::runtime::model::{
 use org_x::features::weekly_radar::runtime::rules::extract_employee_count;
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{
-    collect_configured_sources, SourceKind, SourceObservation, SourceStatus, SourceTier,
+    collect_configured_sources, SourceKind, SourceStatus, SourceTier,
 };
 
 #[test]
@@ -383,7 +383,7 @@ fn absent_optional_sources_are_unavailable_without_guessed_urls() {
 }
 
 #[test]
-fn serialized_gdelt_cannot_be_promoted_to_official_authority() {
+fn source_observations_serialize_without_a_public_deserialization_path() {
     let company = source_test_company();
     let client = FixtureHttpClient::with_response(
         gdelt_fixture_url(),
@@ -397,14 +397,11 @@ fn serialized_gdelt_cannot_be_promoted_to_official_authority() {
         .find(|observation| observation.kind() == SourceKind::Gdelt)
         .expect("GDELT fixture should produce an observation");
 
-    let mut payload = serde_json::to_value(&article).expect("observation should serialize");
-    payload["tier"] = serde_json::Value::String("OFFICIAL_PRIMARY".to_owned());
-    let decoded = serde_json::from_value::<SourceObservation>(payload);
-
-    assert!(
-        decoded.is_err(),
-        "a discovery observation with an official tier must be rejected"
-    );
+    let payload = serde_json::to_value(&article).expect("observation should serialize");
+    assert_eq!(payload["kind"], "gdelt");
+    assert_eq!(payload["status"], "DISCOVERY_ONLY");
+    assert_eq!(payload["tier"], "DISCOVERY_ONLY");
+    assert!(!article.is_authoritative());
 }
 
 #[test]
@@ -445,7 +442,7 @@ fn oversized_official_and_hiring_bodies_become_unavailable() {
 }
 
 #[test]
-fn greenhouse_and_lever_records_are_capped_at_one_hundred_in_source_order() {
+fn over_limit_greenhouse_and_lever_payloads_fail_closed_as_unknown() {
     const MAX_HIRING_RECORDS: usize = 100;
 
     let company = source_test_company();
@@ -482,43 +479,16 @@ fn greenhouse_and_lever_records_are_capped_at_one_hundred_in_source_order() {
     assert_eq!(
         observations
             .iter()
-            .filter(|observation| {
-                observation.kind() == SourceKind::Greenhouse
-                    && observation.status() == SourceStatus::Known
-            })
-            .count(),
-        MAX_HIRING_RECORDS
+            .find(|observation| observation.kind() == SourceKind::Greenhouse)
+            .map(|observation| observation.status()),
+        Some(SourceStatus::Unknown)
     );
     assert_eq!(
         observations
             .iter()
-            .filter(|observation| {
-                observation.kind() == SourceKind::Lever
-                    && observation.status() == SourceStatus::Known
-            })
-            .count(),
-        MAX_HIRING_RECORDS
-    );
-    assert_eq!(
-        observations
-            .iter()
-            .find(|observation| {
-                observation.kind() == SourceKind::Greenhouse
-                    && observation.status() == SourceStatus::Known
-            })
-            .and_then(|observation| observation.title()),
-        Some("Greenhouse Role 0")
-    );
-    assert_eq!(
-        observations
-            .iter()
-            .filter(|observation| {
-                observation.kind() == SourceKind::Greenhouse
-                    && observation.status() == SourceStatus::Known
-            })
-            .last()
-            .and_then(|observation| observation.title()),
-        Some("Greenhouse Role 99")
+            .find(|observation| observation.kind() == SourceKind::Lever)
+            .map(|observation| observation.status()),
+        Some(SourceStatus::Unknown)
     );
 }
 
@@ -1143,5 +1113,48 @@ fn fixture_and_ureq_return_non_success_statuses_as_http_responses() {
     assert_eq!(ureq_response.status(), 503);
     assert_eq!(ureq_response.body(), body);
 
+    server.join().expect("local server should finish");
+}
+
+#[test]
+fn fixture_and_ureq_reject_response_bodies_over_one_mib() {
+    const MAX_HTTP_RESPONSE_BODY_BYTES: usize = 1_048_576;
+    let oversized = "x".repeat(MAX_HTTP_RESPONSE_BODY_BYTES + 1);
+    let fixture_url = "https://example.test/oversized";
+    let fixture_error =
+        FixtureHttpClient::with_response(fixture_url, HttpResponse::ok(oversized.clone()))
+            .get(fixture_url, &[])
+            .expect_err("fixture transport should reject oversized bodies");
+    assert_eq!(
+        fixture_error.to_string(),
+        "HTTP response body exceeded configured limit"
+    );
+
+    let listener = TcpListener::bind("127.0.0.1:0").expect("local listener should bind");
+    let address = listener
+        .local_addr()
+        .expect("local listener should expose an address");
+    let server = thread::spawn(move || {
+        let (mut stream, _) = listener.accept().expect("local client should connect");
+        let mut request = [0_u8; 1024];
+        let _ = stream.read(&mut request);
+        write!(
+            stream,
+            "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+            oversized.len()
+        )
+        .expect("local response headers should be written");
+        stream
+            .write_all(oversized.as_bytes())
+            .expect("local response body should be written");
+    });
+    let url = format!("http://{address}/oversized");
+    let ureq_error = UreqHttpClient::new()
+        .get(&url, &[])
+        .expect_err("ureq transport should reject oversized bodies");
+    assert_eq!(
+        ureq_error.to_string(),
+        "HTTP response body exceeded configured limit"
+    );
     server.join().expect("local server should finish");
 }

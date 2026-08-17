@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "target": {
+    "type": "file",
+    "name": "weekly_radar_interface_layer",
+    "path": "src/features/weekly_radar/interface/mod.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The interface layer is a repository-local empty boundary and does not load runtime references dynamically."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "No external consumer is declared; this Work Item only creates the bounded-context layer directory."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "No monitoring integration or existing interface is replaced by this boundary scaffold."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-wr-001.contract.json",
+      "The change adds a new empty layer and does not delete, rename, or migrate an existing interface."
+    ]
+  }
+}

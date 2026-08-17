@@ -343,10 +343,12 @@ impl SourceCoverage {
 
     /// Returns an integer percentage, using zero for an empty expectation.
     pub const fn percentage(&self) -> u8 {
-        if self.expected == 0 {
-            0
-        } else {
-            ((self.available * 100) / self.expected) as u8
+        match self.available.checked_mul(100) {
+            Some(value) => match value.checked_div(self.expected) {
+                Some(value) => value as u8,
+                None => 0,
+            },
+            None => 0,
         }
     }
 }

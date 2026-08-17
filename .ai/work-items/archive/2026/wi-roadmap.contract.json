@@ -1,0 +1,285 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-roadmap",
+  "mode": "author_todo",
+  "title": "Integrate Weekly Radar WI roadmap",
+  "baseCommit": "8d1b2e04bb65f1b7f96b3dc011ffd53c4ce53e43",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-roadmap.contract.json",
+    ".ai/work-items/active/wi-roadmap.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-roadmap.outcome.json",
+    ".ai/work-items/active/wi-roadmap.outcome.md",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+    "README.md"
+  ],
+  "outOfScope": [
+    "Creating or implementing any future Core Research Pipeline or Weekly Radar Work Item.",
+    "Changing Rust production code, Cargo manifests, dependencies, or CI behavior.",
+    "Adding Telegram credentials, chat IDs, provider clients, scheduler jobs, or deployment configuration.",
+    "Editing archived Contract, Summary, Outcome, or closure evidence for completed Work Items.",
+    "Changing product requirements, scoring rules, stage semantics, or trading boundaries beyond documenting the supplied plan."
+  ],
+  "sources": [
+    {
+      "path": "user-provided Weekly Radar development plan pasted in the conversation",
+      "reason": "Defines the Weekly Radar purpose, output order, snapshot/publish lifecycle, failure semantics, and WI-WR-001 through WI-WR-015 list."
+    },
+    {
+      "path": "AGENTS.md",
+      "reason": "Defines the governed Work Item lifecycle, evidence boundaries, and no-trading rules."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Defines repository terminology and AI Cockpit governance terms."
+    },
+    {
+      "path": "README.md",
+      "reason": "Provides the current project status, scope, and architecture entrypoint to update."
+    },
+    {
+      "path": "docs/product/PRD.md",
+      "reason": "Defines the Evidence First research radar, six stages, MVP universe, and product boundary."
+    },
+    {
+      "path": "docs/product/SCOPE.md",
+      "reason": "Defines the no-trading boundary and the initial deduplicated S&P 500 plus Nasdaq 100 universe."
+    },
+    {
+      "path": "docs/architecture/BOUNDED_CONTEXTS.md",
+      "reason": "Defines the ten bounded contexts and their representative future concepts."
+    },
+    {
+      "path": "docs/architecture/ARCHITECTURE.md",
+      "reason": "Defines DDD/Clean Architecture dependency direction and future port boundaries."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-phase-0-foundation.md",
+      "reason": "Records the completed foundation scope and the separation between foundation and business Work Items."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-configure-ai-cockpit.md",
+      "reason": "Records the completed adopter configuration prerequisite."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-wi-002-universe-domain.md",
+      "reason": "Records the completed Universe Domain implementation boundary and deferred ingestion semantics."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Authoritative discovery index for completed Work Items."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "low",
+    "riskTypes": [
+      "scope_unclear",
+      "documentation_alignment"
+    ],
+    "reason": "The task is documentation-only; the main risk is keeping completed evidence distinct from future unstarted WI candidates and preserving the supplied Weekly Radar boundaries.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "user-authorized documentation integration",
+    "reviewNotes": "No unresolved question blocks this roadmap. Future implementation details remain explicitly planned/gated rather than decided by this documentation Work Item."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Documentation-only Work Item with no production code or dependency changes."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user supplied the Weekly Radar plan and explicitly requested integration into a WI overview; scope, sources, acceptance, and verification are concrete."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record the reviewed documentation boundary before editing and the final evidence state before Finish."
+  },
+  "acceptance": [
+    "The roadmap documents the four archived Work Items as completed and does not represent any future WI as active, shipped, or merged.",
+    "The roadmap lists the nine remaining Core Research Pipeline candidates WI-003 through WI-011 with responsibilities, dependencies, and planned status.",
+    "The roadmap preserves all fifteen user-supplied Weekly Radar candidates WI-WR-001 through WI-WR-015 with responsibilities and dependency order.",
+    "The roadmap records the Weekly Radar purpose, weekly cadence, output priority, no-meaningful-change mode, immutable snapshot sequence, publication layering, failure/retry semantics, system health, secret safety, and no-trading boundary.",
+    "The roadmap separates Domain, Application, Reporting/Renderer, Infrastructure/Telegram, Scheduler, and Verification responsibilities; Telegram remains an adapter and does not enter Domain.",
+    "README.md reflects the current completed baseline, links the roadmap, and identifies WI-003 as the recommended next governed Work Item without creating it.",
+    "The final PR changed-path diff contains only README.md, the roadmap document, and AI Cockpit generated/archive evidence paths; no Cargo, src, tests, CI, credential, or secret-bearing files change."
+  ],
+  "guidelines": [
+    "Use Completed, Planned, and Gated labels so evidence-backed status is never confused with a proposed backlog.",
+    "Preserve the user-supplied Weekly Radar order and semantics; add only explicit dependency and boundary organization grounded in repository architecture.",
+    "Keep the Weekly Radar output as a research radar and never introduce BUY, SELL, price target, position sizing, or capital-action semantics.",
+    "Keep Telegram, scheduler, persistence, and secret handling outside Domain; represent them as later Application/Infrastructure/Reporting Work Items.",
+    "Do not place credentials, chat IDs, or machine-specific paths in committed documentation or governance evidence."
+  ],
+  "intent": {
+    "problem": "The repository has completed Foundation, AI Cockpit adoption/configuration, and the first Universe Domain Work Item, while the user-provided Weekly Radar plan is not yet represented as an ordered, evidence-aware Work Item roadmap.",
+    "constraints": [
+      "Integrate the supplied Weekly Radar structure without implementing the future pipeline in this Work Item.",
+      "Keep DDD/Clean Architecture boundaries and the explicit no-trading decision boundary.",
+      "Distinguish archived completed Work Items from planned and dependency-gated candidates.",
+      "Keep Telegram as a delivery adapter and preserve immutable snapshot/retry semantics."
+    ],
+    "rationale": "A single roadmap gives future agents and reviewers one ordered view of the remaining research pipeline and Weekly Radar delivery work while preserving AI Cockpit's one-Work-Item-per-change lifecycle."
+  },
+  "rawUserRequest": "加上上面的式样。\n整合，整理成WI清单一览。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "user request to integrate the pasted Weekly Radar plan into a WI overview",
+    "capturedAt": "2026-08-17T12:00:00+09:00",
+    "digest": "77e98c3e3d2f5dc600a15f453f53bcccf236ccaaf2eaa577f650df5f45aa4146"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "documentation",
+      "software_design"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "trading_decision",
+      "capital_action",
+      "secret_management"
+    ],
+    "requestedOutcome": "Create an evidence-aware integrated ORG-X Work Item roadmap that includes the supplied Weekly Radar WI list.",
+    "decisionBoundary": "This Work Item organizes documented future work only; it does not implement research, scoring, ranking, Telegram, scheduling, or trading behavior."
+  },
+  "requestedOperation": {
+    "target": "repository_governance",
+    "action": "modify",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Completed versus planned status integrity",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "The overview counts four archived Work Items as completed, nine Core Research Pipeline candidates as planned, and fifteen Weekly Radar candidates as planned/gated without implying active implementation.",
+      "verificationPlan": "Compare the overview tables with .ai/work-items/archive/index.json and the ten-context architecture document; run the Summary and scope gates."
+    },
+    {
+      "scenario": "Weekly Radar dependency and boundary integrity",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "The roadmap places Weekly Radar after the core research pipeline and separates Domain/read models from Telegram, scheduler, persistence, and publication adapters.",
+      "verificationPlan": "Review the dependency table and lifecycle diagram against PRD, SCOPE, ARCHITECTURE, and the user-pasted Weekly Radar plan."
+    },
+    {
+      "scenario": "No-change, failure-retry, secret-safety, and no-trading semantics",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "The roadmap preserves the no-meaningful-change report, immutable snapshot before publish, retry of the same snapshot after Telegram failure, environment-only secrets, and the no-trading boundary.",
+      "verificationPlan": "Search the finished roadmap and README for the required semantics and forbidden trading/secret claims, then run documentation and AI Cockpit gates."
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "No restricted governance policy or guard file is being changed."
+  },
+  "rollbackNote": "Revert only the roadmap and README changes while retaining all archived Work Item evidence and completed product implementation.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 5
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-roadmap.json",
+    "baseCommit": "8d1b2e04bb65f1b7f96b3dc011ffd53c4ce53e43",
+    "initialScopeDigest": "ae71b6266f7f8f2f16e4db8efcafc8390e49fb03bb7e828730e2a9d2a2fab792",
+    "contractSkeletonDigest": "84ace020d699be6c9b64dc37baef0297b6b3d06a2a2fd8213ffc2e754e89d1dc"
+  }
+}

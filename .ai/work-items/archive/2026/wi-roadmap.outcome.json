@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-roadmap",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "5f27e38bed8cb05eea3c639cfcfcc2f950c4aac4866e9511987b4158b44bbbd5"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-roadmap",
+    "contractDigest": "61bc4314c01841f7bcc222ac94d094c9bf251075b4cbbe6f1b1d8d06e20c34b0",
+    "summaryDigest": "11a418e3757e6ef755b6588927560aa728b78b257f0452b70ebdf18e370cb7ac",
+    "verificationDigest": "15014f5f311c61aafca663ca98560d596ecfe0de503fb65b628a9006d2361167",
+    "baseCommit": "8d1b2e04bb65f1b7f96b3dc011ffd53c4ce53e43",
+    "headCommit": "8d1b2e04bb65f1b7f96b3dc011ffd53c4ce53e43",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "afbadbd7ab585042c4b8dd52228350289687fa5657348356b5e1e60623e3c778",
+      "binding": {
+        "baseCommit": "8d1b2e04bb65f1b7f96b3dc011ffd53c4ce53e43",
+        "candidateHead": "8d1b2e04bb65f1b7f96b3dc011ffd53c4ce53e43",
+        "candidateTreeDigest": "a32235f5764d50e6fcfe467d80e1d85c90902e56fde90758f3689249325bf658",
+        "candidateDiffDigest": "a5da2a95dd5d792f0fd020b77b1940549e53731b394a732c2cfa9cac3b39aa06"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-roadmap generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-roadmap generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-roadmap",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-roadmap.contract.json",
       ".ai/work-items/archive/2026/wi-roadmap.summary.json",
@@ -19,62 +42,95 @@
       "README.md",
       ".ai/work-items/archive/2026/wi-roadmap.outcome.json",
       ".ai/work-items/archive/2026/wi-roadmap.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "The nine Core Research Pipeline and fifteen Weekly Radar candidates are a roadmap backlog, not active Contracts.",
+      "The user-provided Weekly Radar plan is integrated as documentation evidence; no Telegram or scheduler implementation is included in this Work Item."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "The nine Core Research Pipeline and fifteen Weekly Radar candidates are a roadmap backlog, not active Contracts.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "The user-provided Weekly Radar plan is integrated as documentation evidence; no Telegram or scheduler implementation is included in this Work Item.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "The nine Core Research Pipeline and fifteen Weekly Radar candidates are a roadmap backlog, not active Contracts.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "The user-provided Weekly Radar plan is integrated as documentation evidence; no Telegram or scheduler implementation is included in this Work Item.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "scope",
+        "severity": "low",
+        "title": "scope",
+        "detail": "The roadmap names future candidate Work Items but does not create their Contracts; each candidate must be revalidated against the latest base and repository evidence when started.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 0,
-    "warnings": 2,
-    "resolved": 0,
-    "unresolved": 2
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "The nine Core Research Pipeline and fifteen Weekly Radar candidates are a roadmap backlog, not active Contracts.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "The user-provided Weekly Radar plan is integrated as documentation evidence; no Telegram or scheduler implementation is included in this Work Item.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "The roadmap names future candidate Work Items but does not create their Contracts; each candidate must be revalidated against the latest base and repository evidence when started.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-roadmap.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -643,6 +699,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

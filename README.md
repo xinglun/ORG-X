@@ -2,9 +2,11 @@
 
 ORG-X searches for the point where AI stops being a tool and becomes a new mode of production. It observes US-listed companies for evidence that AI is restructuring a core production system, creating persistent productivity divergence, and becoming a reference model for peers.
 
-## Phase 0 status
+## Delivery status
 
-当前仓库是 Foundation 阶段：Rust crate、DDD Bounded Context、Clean Architecture 目录、North Star / PRD / Architecture / Domain / Data / Scoring / Validation 文档、ADR-001 至 ADR-010 和 Architecture Tests 已建立。正式业务功能尚未开始。
+Foundation、AI Cockpit adoption/configuration、Engineering Foundation Verification 和 Universe Domain 已完成并归档。当前没有 Active Work Item；下一项推荐是 `WI-003 Ingestion Domain & Observation Contract`。
+
+剩余 Core Research Pipeline 与 Weekly Radar 的 WI 清单、依赖顺序、输出结构和边界见 [ORG-X Work Item Roadmap](docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md)。Weekly Radar 实现必须等核心 Reporting Read Model（`WI-011`）完成后再启动。
 
 ## Local checks
 
@@ -36,4 +38,4 @@ SEC filings, company material, news, job postings, and other external text are d
 
 ## Next gate
 
-After Phase 0 checks pass, the next step is installation and acceptance of AI Cockpit. Its first Work Item is WI-001 Engineering Foundation Verification; no business Work Item may start before that verification is archived.
+从最新 `origin/main` 创建专用 Work Item 分支，先运行 AI Cockpit Preflight，再开始 `WI-003`。每个后续 WI 都必须独立完成 Contract、Summary、验证、PR 和关闭生命周期。

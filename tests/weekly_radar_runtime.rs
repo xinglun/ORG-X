@@ -1222,13 +1222,6 @@ fn task4_report_input() -> RuntimeReportInput {
             FactStatus::Known,
             Confidence::Medium,
         ),
-        (
-            "zeta",
-            "employees",
-            Some("1200"),
-            FactStatus::Known,
-            Confidence::Approximate,
-        ),
     ];
 
     for (company, kind, value, status, confidence) in facts {
@@ -1276,6 +1269,8 @@ fn task4_report_is_deterministic_and_uses_the_mobile_first_contract() {
 
     assert_eq!(first.markdown(), second.markdown());
     assert_eq!(first.snapshot_json(), second.snapshot_json());
+    assert_eq!(first.report_id(), second.report_id());
+    assert!(first.report_id().starts_with("wr-"));
 
     let headings: Vec<&str> = first
         .markdown()
@@ -1305,6 +1300,40 @@ fn task4_report_is_deterministic_and_uses_the_mobile_first_contract() {
     assert!(!first.markdown().contains("invest"));
     assert!(!first.markdown().contains("token=must-not-appear"));
     assert!(!first.snapshot_json().contains("token=must-not-appear"));
+}
+
+#[test]
+fn task4_report_omits_top5_without_an_explicit_selection_for_more_than_five_companies() {
+    let mut input = task4_report_input();
+    input
+        .add_fact(
+            NormalizedFact::new(
+                "omega",
+                "revenue",
+                "99000000",
+                FactStatus::Known,
+                Confidence::Medium,
+                task4_provenance("facts.revenue"),
+            )
+            .expect("extra company fact should be valid"),
+        )
+        .expect("extra company fact should be unique");
+
+    let report = render_report(&input);
+    assert!(!report.markdown().contains("## Top5"));
+    assert!(report
+        .markdown()
+        .contains("Top5: UNKNOWN — no explicit Top5 selection was supplied"));
+}
+
+#[test]
+fn task4_empty_report_states_that_no_evidence_was_supplied() {
+    let input = RuntimeReportInput::new("2026-08-17").expect("empty report date should be valid");
+    let report = render_report(&input);
+
+    assert!(report
+        .markdown()
+        .contains("Evidence basis: UNKNOWN — no evidence supplied"));
 }
 
 #[test]
@@ -1394,6 +1423,9 @@ fn task4_telegram_delivery_preserves_chunk_order_and_redacts_errors() {
 
     assert_eq!(receipt.message_ids().len(), sent.len());
     assert_eq!(receipt.message_ids()[0].as_str(), "task4-message-1");
+    assert_eq!(receipt.report_id(), report.report_id());
+    assert!(sent[0].contains("Evidence basis:"));
+    assert!(sent[0].contains("https://example.test/evidence/2026"));
     assert_eq!(sent[0], report.markdown()[..sent[0].len()]);
     for pair in sent.windows(2) {
         assert_ne!(pair[0], pair[1]);
@@ -1509,6 +1541,7 @@ fn task4_archive_retains_365_days_and_guards_the_data_branch() {
     let archived_receipt: serde_json::Value =
         serde_json::from_str(&archived_receipt).expect("archived receipt should be JSON");
     assert_eq!(archived_receipt["status"], "PUBLISHED");
+    assert_eq!(archived_receipt["report_id"], report.report_id());
     let expected_message_ids = receipt
         .message_ids()
         .iter()
@@ -1526,4 +1559,38 @@ fn task4_archive_retains_365_days_and_guards_the_data_branch() {
     assert!(weekly_radar.join("manifest.json").exists());
 
     std::fs::remove_dir_all(root).expect("task 4 temporary archive should be removable");
+}
+
+#[test]
+fn task4_archive_rejects_a_receipt_for_a_different_report() {
+    let root = task4_temp_root("report-id-mismatch");
+    let report = task4_report();
+    let mut other_input = task4_report_input();
+    other_input
+        .add_fact(
+            NormalizedFact::new(
+                "omega",
+                "revenue",
+                "99000000",
+                FactStatus::Known,
+                Confidence::Medium,
+                task4_provenance("facts.revenue"),
+            )
+            .expect("different report fact should be valid"),
+        )
+        .expect("different report fact should be unique");
+    let other_report = render_report(&other_input);
+    assert_ne!(report.report_id(), other_report.report_id());
+    let receipt = send_rendered_report_with_transport(
+        &other_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("different report should have a successful receipt");
+
+    let error = write_run(&root, "data", &report, &receipt)
+        .expect_err("archive must reject a receipt for another report");
+    assert!(matches!(error, ArchiveError::ReportIdMismatch { .. }));
+    assert!(!root.exists(), "mismatch must fail before archive mutation");
 }

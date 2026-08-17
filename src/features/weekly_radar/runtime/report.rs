@@ -5,6 +5,7 @@
 //! ranking, scores, or investment conclusions.
 
 use std::collections::BTreeMap;
+use std::collections::BTreeSet;
 
 use chrono::NaiveDate;
 use serde::Serialize;
@@ -48,6 +49,7 @@ pub struct SourceHealthFacts {
     unavailable: usize,
     unconfirmed: usize,
     discovery_only: usize,
+    top5_selection_missing: bool,
     review_items: Vec<String>,
 }
 
@@ -77,6 +79,11 @@ impl SourceHealthFacts {
         self.discovery_only
     }
 
+    /// Returns whether more than five companies lacked an explicit Top5 selection.
+    pub const fn top5_selection_missing(&self) -> bool {
+        self.top5_selection_missing
+    }
+
     /// Returns deterministic review item labels.
     pub fn review_items(&self) -> &[String] {
         &self.review_items
@@ -88,6 +95,7 @@ impl SourceHealthFacts {
 pub struct RenderedReport {
     markdown: String,
     snapshot_json: String,
+    report_id: String,
     metadata: SnapshotMetadata,
     health: SourceHealthFacts,
 }
@@ -101,6 +109,12 @@ impl RenderedReport {
     /// Returns the deterministic JSON snapshot text.
     pub fn snapshot_json(&self) -> &str {
         &self.snapshot_json
+    }
+
+    /// Returns the deterministic identity derived from sanitized Markdown and
+    /// snapshot bytes.
+    pub fn report_id(&self) -> &str {
+        &self.report_id
     }
 
     /// Returns stable snapshot metadata.
@@ -263,6 +277,7 @@ fn build_health(input: &RuntimeReportInput, facts: &[&NormalizedFact]) -> Source
         unavailable: 0,
         unconfirmed: 0,
         discovery_only: 0,
+        top5_selection_missing: false,
         review_items: Vec::new(),
     };
     for fact in facts {
@@ -286,12 +301,19 @@ fn build_health(input: &RuntimeReportInput, facts: &[&NormalizedFact]) -> Source
         .iter()
         .filter(|coverage| source_is_discovery_only(coverage.source()))
         .count();
+    let company_count = facts
+        .iter()
+        .map(|fact| fact.company_id())
+        .collect::<BTreeSet<_>>()
+        .len();
+    health.top5_selection_missing = company_count > MAX_COMPANY_CARDS;
     health.review_items.sort();
     health
 }
 
 fn render_executive_summary(
     input: &RuntimeReportInput,
+    facts: &[&NormalizedFact],
     health: &SourceHealthFacts,
     structural_count: usize,
     company_count: usize,
@@ -312,6 +334,11 @@ fn render_executive_summary(
         "\n- Data status: {} fact(s) need review; source coverage and discovery-only material are shown in System Health.",
         review_count
     ));
+    let evidence_basis = facts
+        .first()
+        .map(|fact| evidence_line(fact))
+        .unwrap_or_else(|| "UNKNOWN — no evidence supplied".to_owned());
+    section.push_str(&format!("\nEvidence basis: {evidence_basis}"));
     section
 }
 
@@ -350,7 +377,7 @@ fn render_top5(facts: &[&NormalizedFact]) -> Option<String> {
     for fact in facts {
         companies.entry(fact.company_id()).or_default().push(fact);
     }
-    if companies.is_empty() {
+    if companies.is_empty() || companies.len() > MAX_COMPANY_CARDS {
         return None;
     }
 
@@ -406,6 +433,11 @@ fn render_health(input: &RuntimeReportInput, health: &SourceHealthFacts) -> Stri
             health.discovery_only
         ));
     }
+    if health.top5_selection_missing {
+        section.push_str(
+            "\n- Top5: UNKNOWN — no explicit Top5 selection was supplied for more than five companies.",
+        );
+    }
     section.push_str(&format!("\n- Data age: as of {}.", input.as_of()));
     if health.review_items.is_empty() {
         section.push_str("\n- Items needing review: none recorded.");
@@ -432,6 +464,19 @@ fn snapshot_fact(fact: &NormalizedFact) -> SnapshotFact {
     }
 }
 
+fn report_digest(markdown: &str, snapshot_json: &str) -> String {
+    let mut digest = 14_695_981_039_346_656_037_u64;
+    for byte in markdown
+        .bytes()
+        .chain(std::iter::once(0xff))
+        .chain(snapshot_json.bytes())
+    {
+        digest ^= u64::from(byte);
+        digest = digest.wrapping_mul(1_099_511_628_211);
+    }
+    format!("wr-{digest:016x}")
+}
+
 /// Renders one deterministic, human-first report from already normalized input.
 pub fn render_report(input: &RuntimeReportInput) -> RenderedReport {
     let mut facts = input.facts().iter().collect::<Vec<_>>();
@@ -454,6 +499,7 @@ pub fn render_report(input: &RuntimeReportInput) -> RenderedReport {
         .count();
     let mut sections = vec![render_executive_summary(
         input,
+        &facts,
         &health,
         structural_count,
         company_ids.len(),
@@ -496,10 +542,12 @@ pub fn render_report(input: &RuntimeReportInput) -> RenderedReport {
     })
     .expect("report snapshot contains only serializable values")
         + "\n";
+    let report_id = report_digest(&markdown, &snapshot_json);
 
     RenderedReport {
         markdown,
         snapshot_json,
+        report_id,
         metadata,
         health,
     }

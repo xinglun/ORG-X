@@ -27,6 +27,8 @@ pub enum ArchiveError {
     NonDataBranch { branch: String },
     /// A report date could not produce a valid archive name.
     InvalidDate,
+    /// A successful Telegram receipt belongs to another rendered report.
+    ReportIdMismatch { expected: String, actual: String },
     /// A report cannot be archived without at least one successful message ID
     /// and one corresponding delivery attempt.
     InvalidDeliveryReceipt,
@@ -44,6 +46,10 @@ impl fmt::Display for ArchiveError {
                 )
             }
             Self::InvalidDate => formatter.write_str("archive report date is invalid"),
+            Self::ReportIdMismatch { expected, actual } => write!(
+                formatter,
+                "archive report identity mismatch: expected {expected}, received {actual}"
+            ),
             Self::InvalidDeliveryReceipt => {
                 formatter.write_str("archive requires a successful Telegram delivery receipt")
             }
@@ -172,6 +178,12 @@ pub fn write_run(
             branch: branch.to_owned(),
         });
     }
+    if delivery_receipt.report_id() != rendered_report.report_id() {
+        return Err(ArchiveError::ReportIdMismatch {
+            expected: rendered_report.report_id().to_owned(),
+            actual: delivery_receipt.report_id().to_owned(),
+        });
+    }
     if delivery_receipt.message_ids().is_empty()
         || delivery_receipt.message_ids().len() != delivery_receipt.attempts().len()
     {
@@ -205,12 +217,14 @@ pub fn write_run(
     #[derive(Serialize)]
     struct ArchiveReceipt {
         as_of: NaiveDate,
+        report_id: String,
         status: &'static str,
         message_ids: Vec<String>,
         attempts: Vec<u32>,
     }
     let receipt = serde_json::to_string_pretty(&ArchiveReceipt {
         as_of: date,
+        report_id: rendered_report.report_id().to_owned(),
         status: "PUBLISHED",
         message_ids: delivery_receipt
             .message_ids()

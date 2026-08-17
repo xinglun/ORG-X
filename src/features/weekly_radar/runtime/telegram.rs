@@ -135,11 +135,17 @@ impl Default for TelegramRetryPolicy {
 /// Ordered provider IDs returned for one rendered report delivery.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct TelegramDeliveryReceipt {
+    report_id: String,
     message_ids: Vec<TelegramMessageId>,
     attempts: Vec<u32>,
 }
 
 impl TelegramDeliveryReceipt {
+    /// Returns the rendered report identity bound to this delivery.
+    pub fn report_id(&self) -> &str {
+        &self.report_id
+    }
+
     /// Returns message IDs in exact rendered chunk order.
     pub fn message_ids(&self) -> &[TelegramMessageId] {
         &self.message_ids
@@ -417,6 +423,7 @@ pub fn send_rendered_report_with_transport<T: TelegramTransport + ?Sized>(
     }
 
     Ok(TelegramDeliveryReceipt {
+        report_id: report.report_id().to_owned(),
         message_ids,
         attempts: attempts_used,
     })

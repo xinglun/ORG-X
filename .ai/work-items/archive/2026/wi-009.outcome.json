@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-009",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "ca996c13beaa84f746f69f59cc35d6d849334a04aa3e020d446f91e12eeef4a2"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-009",
+    "contractDigest": "d7bb2406f478fc0bae4a30c5e04a5a2157d5afc74b60c91770952e238f91e3c6",
+    "summaryDigest": "f854e7d090dd44430128462530254feee09e0df6abc68317dbe81f164f4e3bb0",
+    "verificationDigest": "ab2459f61920cc1f03ba932141a49354a2af8d6e42754f9d2280270ca5b8e78b",
+    "baseCommit": "58fe50088ad6f16c48075ba55efa566afc5fb242",
+    "headCommit": "58fe50088ad6f16c48075ba55efa566afc5fb242",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "5bd0c49285c663ddc71a072210e7a26afcf49c1b85111c550dbd67e6bf9393e3",
+      "binding": {
+        "baseCommit": "58fe50088ad6f16c48075ba55efa566afc5fb242",
+        "candidateHead": "58fe50088ad6f16c48075ba55efa566afc5fb242",
+        "candidateTreeDigest": "5985a4040e3181604a86f4bd61d4146638af1320823890ddc471d405ab50c429",
+        "candidateDiffDigest": "2edd5184372cf2a6c8ba5f9c0b139091541a7d01a378e307d4e9cac375296ec0"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-009 generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-009 generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-009",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-009.contract.json",
       ".ai/work-items/archive/2026/wi-009.summary.json",
@@ -26,59 +49,96 @@
       "docs/superpowers/plans/2026-08-17-wi-009-diffusion.md",
       ".ai/work-items/archive/index.json",
       ".ai/work-items/archive/2026/wi-009.archive-manifest.json"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Diffusion facts require later source validation and cross-company identity resolution before they can support a stage or report conclusion."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Diffusion facts require later source validation and cross-company identity resolution before they can support a stage or report conclusion.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Diffusion facts require later source validation and cross-company identity resolution before they can support a stage or report conclusion.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "diffusion_semantics",
+        "severity": "medium",
+        "title": "diffusion_semantics",
+        "detail": "The Domain retains diffusion facts but does not establish that an industry has adopted a pattern.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-009.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-009.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "identity",
+        "severity": "medium",
+        "title": "identity",
+        "detail": "Cross-company identity resolution remains an upstream responsibility.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-009.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-009.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-009.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-009.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "Diffusion facts require later source validation and cross-company identity resolution before they can support a stage or report conclusion.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The Domain retains diffusion facts but does not establish that an industry has adopted a pattern.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-009.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "Cross-company identity resolution remains an upstream responsibility.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-009.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -785,6 +845,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

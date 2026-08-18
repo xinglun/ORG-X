@@ -7,9 +7,11 @@ use chrono::{NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::CompanySourceRegistry;
 use org_x::features::weekly_radar::runtime::http::{HttpClient, UreqHttpClient};
 use org_x::features::weekly_radar::runtime::model::{
-    FactStatus, RuntimeReportInput, SourceCoverage,
+    CompanyIdentity, FactStatus, RuntimeReportInput, SourceCoverage, SourceFailure,
 };
-use org_x::features::weekly_radar::runtime::report::{render_report, RenderedReport};
+use org_x::features::weekly_radar::runtime::report::{
+    render_report_in_language, RenderedReport, ReportLanguage,
+};
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources, SourceStatus};
 use org_x::features::weekly_radar::runtime::{
@@ -25,6 +27,7 @@ struct CliOptions {
     archive_dir: PathBuf,
     registry: PathBuf,
     dry_run: bool,
+    language: ReportLanguage,
 }
 
 enum CliAction {
@@ -48,7 +51,7 @@ impl fmt::Display for CliError {
 }
 
 fn usage() -> &'static str {
-    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--dry-run]"
+    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--language zh-CN|ja|en] [--dry-run]"
 }
 
 fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
@@ -68,6 +71,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
     let mut archive_dir = PathBuf::from(DEFAULT_ARCHIVE_DIR);
     let mut registry = PathBuf::from(DEFAULT_REGISTRY);
     let mut dry_run = false;
+    let mut language = ReportLanguage::default();
     let mut index = 1;
     while index < args.len() {
         match args[index].as_str() {
@@ -93,6 +97,10 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
                 let value = option_value(args, &mut index, "--registry")?;
                 registry = PathBuf::from(value);
             }
+            "--language" => {
+                let value = option_value(args, &mut index, "--language")?;
+                language = value.parse::<ReportLanguage>().map_err(CliError::Usage)?;
+            }
             unknown => {
                 return Err(CliError::Usage(format!(
                     "unknown weekly-radar option {unknown}"
@@ -106,6 +114,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
         archive_dir,
         registry,
         dry_run,
+        language,
     }))
 }
 
@@ -125,6 +134,7 @@ fn option_value(args: &[String], index: &mut usize, option: &str) -> Result<Stri
 struct CoverageCounts {
     expected: BTreeSet<String>,
     available: BTreeSet<String>,
+    not_configured: BTreeSet<String>,
 }
 
 struct AcquiredRuntimeInput {
@@ -144,16 +154,32 @@ fn acquire_runtime_input(
     let observed_at = Utc::now();
 
     for company in registry.companies() {
+        input
+            .add_company(
+                CompanyIdentity::new(company.id(), company.name(), company.ticker())
+                    .map_err(|error| CliError::Failure(error.to_string()))?,
+            )
+            .map_err(|error| CliError::Failure(error.to_string()))?;
         let sec_coverage = coverage.entry("sec".to_owned()).or_default();
         sec_coverage.expected.insert(company.id().to_owned());
-        if let Ok(evidence) = SecClient::collect(company, http, sec_user_agent) {
-            sec_coverage.available.insert(company.id().to_owned());
-            for fact in evidence.facts() {
-                if fact.status() == &FactStatus::Known {
-                    has_primary_evidence = true;
+        match SecClient::collect(company, http, sec_user_agent) {
+            Ok(evidence) => {
+                sec_coverage.available.insert(company.id().to_owned());
+                for fact in evidence.facts() {
+                    if fact.status() == &FactStatus::Known {
+                        has_primary_evidence = true;
+                    }
+                    input
+                        .add_fact(fact.clone())
+                        .map_err(|error| CliError::Failure(error.to_string()))?;
                 }
+            }
+            Err(error) => {
                 input
-                    .add_fact(fact.clone())
+                    .add_source_failure(
+                        SourceFailure::new("sec", company.id(), error.to_string())
+                            .map_err(|error| CliError::Failure(error.to_string()))?,
+                    )
                     .map_err(|error| CliError::Failure(error.to_string()))?;
             }
         }
@@ -165,8 +191,16 @@ fn acquire_runtime_input(
             let kind = observation.kind().as_str().to_owned();
             let source_coverage = coverage.entry(kind).or_default();
             source_coverage.expected.insert(company.id().to_owned());
-            if observation.status() != SourceStatus::Unavailable {
+            if !matches!(
+                observation.status(),
+                SourceStatus::Unavailable | SourceStatus::NotConfigured
+            ) {
                 available_kinds.insert(observation.kind().as_str());
+            }
+            if observation.status() == SourceStatus::NotConfigured {
+                source_coverage
+                    .not_configured
+                    .insert(company.id().to_owned());
             }
             if observation.is_authoritative() && observation.status() == SourceStatus::Known {
                 has_primary_evidence = true;
@@ -193,8 +227,13 @@ fn acquire_runtime_input(
     for (source, counts) in coverage {
         input
             .add_source_coverage(
-                SourceCoverage::new(source, counts.expected.len(), counts.available.len())
-                    .map_err(|error| CliError::Failure(error.to_string()))?,
+                SourceCoverage::new_with_not_configured(
+                    source,
+                    counts.expected.len(),
+                    counts.available.len(),
+                    counts.not_configured.len(),
+                )
+                .map_err(|error| CliError::Failure(error.to_string()))?,
             )
             .map_err(|error| CliError::Failure(error.to_string()))?;
     }
@@ -213,8 +252,12 @@ fn validate_rendered_report(report: &RenderedReport) -> Result<(), CliError> {
     }
     serde_json::from_str::<serde_json::Value>(report.snapshot_json())
         .map_err(|_| CliError::Failure("rendered report snapshot is not valid JSON".to_owned()))?;
-    if !report.markdown().contains("## Executive Summary")
-        || !report.markdown().contains("## System Health")
+    if !(report.markdown().contains("## 本周摘要")
+        || report.markdown().contains("## 週次サマリー")
+        || report.markdown().contains("## Executive Summary"))
+        || !(report.markdown().contains("## 系统状态")
+            || report.markdown().contains("## システム状態")
+            || report.markdown().contains("## System Health"))
     {
         return Err(CliError::Failure(
             "rendered report is missing required headings".to_owned(),
@@ -257,7 +300,7 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
     let http: &dyn HttpClient = &production;
 
     let acquired = acquire_runtime_input(&registry, http, &user_agent, options.as_of)?;
-    let report = render_report(&acquired.input);
+    let report = render_report_in_language(&acquired.input, options.language);
     validate_rendered_report(&report)?;
 
     if options.dry_run {

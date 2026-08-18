@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-report",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "11babc25a9ea6a2fb132f883bc33156392e65fc5c859cd9e2b9a2fdc558f6f92"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-report",
+    "contractDigest": "cf449d8bad999a5a558125efb4d6a666b4ee53cd2544a4665c00892d3ea04cde",
+    "summaryDigest": "f34a4a11b55d0729e36926d38f4667652e3143c62913ee4d60e064bcfd8eb7ff",
+    "verificationDigest": "b67934d1a5d83680ec79454c6cd0bbd4bbf810de9d05308c5217dfd48296c09c",
+    "baseCommit": "402150c9c39cdc051c4321985316cd1ed3af64ce",
+    "headCommit": "402150c9c39cdc051c4321985316cd1ed3af64ce",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "d3c0681406fbb68ee241b8a23d4bcd3afaf3b0aeea142bd39504903715e06c57",
+      "binding": {
+        "baseCommit": "402150c9c39cdc051c4321985316cd1ed3af64ce",
+        "candidateHead": "402150c9c39cdc051c4321985316cd1ed3af64ce",
+        "candidateTreeDigest": "358086daa40612c9d72d09778f414c1a8f4247bb2d35b6a587ac0c620be44e38",
+        "candidateDiffDigest": "4951468e4d6e2276523ea0fafe8548d8f50fcd06b17b9110a0c8dcf0aedb9bfc"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-report generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-report generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-report",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-report.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
@@ -33,122 +56,328 @@
       "docs/superpowers/plans/2026-08-18-weekly-radar-report.md",
       ".ai/work-items/archive/2026/wi-weekly-radar-report.outcome.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-report.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "7b51a848cd823f9e700a9a348195fa6429d99fa2885c0abc3acedea04bb6cefd"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "f5877deeacbf28331961ce7cf2757b26631e7901f75f087ee671a66ca0affa1b"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "aiSummary failed before the retry.",
+        "policyOrGuard": "required verification: aiSummary",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiSummary after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "0e2f58df446450ed88a875b8ca2ad0d39bc247054c48867598916a9d3723da3b"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "ee26622e018813f5d3adb36cee79119d94916a54f5a4286ca413a769a4008e8b"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "An unavailable first observation could be cited as the report evidence basis.",
+        "action": "Select only confirmed facts from authoritative primary sources and render an explicit no-primary-evidence message otherwise.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "observedIssues[0] evidence basis"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[0] evidence basis"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "observedIssues[0] evidence basis"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[0] evidence basis"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "Telegram output exposed internal English headings, source_* identifiers, raw statuses, coverage fractions, and long ungrouped review lists.",
+        "action": "Use a concise human-first report with Chinese default text and deterministic Japanese/English alternatives; retain detail only in the snapshot.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "observedIssues[1] reader-facing report"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[1] reader-facing report"
+          },
+          {
+            "source": "docs/operations/WEEKLY_RADAR.md",
+            "subject": "observedIssues[1] reader-facing report"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "observedIssues[1] reader-facing report"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[1] reader-facing report"
+          },
+          {
+            "source": "docs/operations/WEEKLY_RADAR.md",
+            "subject": "observedIssues[1] reader-facing report"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "Optional sources that were never configured looked like ordinary unavailable failures.",
+        "action": "Add NOT_CONFIGURED semantics and render readable source-level configuration gaps.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "observedIssues[2] source configuration visibility"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/sources.rs",
+            "subject": "observedIssues[2] source configuration visibility"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[2] source configuration visibility"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "observedIssues[2] source configuration visibility"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/sources.rs",
+            "subject": "observedIssues[2] source configuration visibility"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[2] source configuration visibility"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "SEC coverage could fall to zero without a source-scoped actionable explanation.",
+        "action": "Retain safe company/source failure categories and aggregate them in System Health without exposing response bodies or credentials.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/main.rs",
+            "subject": "observedIssues[3] SEC failure visibility"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "observedIssues[3] SEC failure visibility"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[3] SEC failure visibility"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "observedIssues[3] SEC failure visibility"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "observedIssues[3] SEC failure visibility"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[3] SEC failure visibility"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "Manual workflow execution had no side-effect-free acquisition and report validation mode.",
+        "action": "Add language, explicit as-of, and dry-run inputs; dry-run exits before Telegram or data-branch writes.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": ".github/workflows/weekly-radar.yml",
+            "subject": "observedIssues[4] manual verification"
+          },
+          {
+            "source": "src/main.rs",
+            "subject": "observedIssues[4] manual verification"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[4] manual verification"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".github/workflows/weekly-radar.yml",
+            "subject": "observedIssues[4] manual verification"
+          },
+          {
+            "source": "src/main.rs",
+            "subject": "observedIssues[4] manual verification"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[4] manual verification"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "7b51a848cd823f9e700a9a348195fa6429d99fa2885c0abc3acedea04bb6cefd"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "f5877deeacbf28331961ce7cf2757b26631e7901f75f087ee671a66ca0affa1b"
+          }
+        ]
+      },
+      {
+        "problem": "aiSummary failed before the retry.",
+        "action": "Re-ran aiSummary after the correction; the latest attempt passed.",
+        "verification": "aiSummary latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "0e2f58df446450ed88a875b8ca2ad0d39bc247054c48867598916a9d3723da3b"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "ee26622e018813f5d3adb36cee79119d94916a54f5a4286ca413a769a4008e8b"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "public source availability",
+        "severity": "medium",
+        "title": "public source availability",
+        "detail": "A later run may still have unavailable or unconfigured sources; the report will show the gap and preserve it in the snapshot rather than inventing a fact.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "报告必须面向人，默认中文，并支持英文、日语；不要输出 source_*、原始状态、覆盖率分数或没有意义的程序诊断。",
+      "对应中发现的问题尽量在当前 WI 内解决，不要轻易开新的 WI。"
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "7b51a848cd823f9e700a9a348195fa6429d99fa2885c0abc3acedea04bb6cefd"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "f5877deeacbf28331961ce7cf2757b26631e7901f75f087ee671a66ca0affa1b"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+        "subject": "verificationHistory[1] aiSummary failed",
+        "digest": "0e2f58df446450ed88a875b8ca2ad0d39bc247054c48867598916a9d3723da3b"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
+        "subject": "verification[aiSummary] retry passed",
+        "digest": "ee26622e018813f5d3adb36cee79119d94916a54f5a4286ca413a769a4008e8b"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "7b51a848cd823f9e700a9a348195fa6429d99fa2885c0abc3acedea04bb6cefd"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "f5877deeacbf28331961ce7cf2757b26631e7901f75f087ee671a66ca0affa1b"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiSummary",
-      "action": "blocked",
-      "resolution": "Retry aiSummary after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "0e2f58df446450ed88a875b8ca2ad0d39bc247054c48867598916a9d3723da3b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "ee26622e018813f5d3adb36cee79119d94916a54f5a4286ca413a769a4008e8b"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "7b51a848cd823f9e700a9a348195fa6429d99fa2885c0abc3acedea04bb6cefd"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "f5877deeacbf28331961ce7cf2757b26631e7901f75f087ee671a66ca0affa1b"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "aiSummary failed before the retry.",
-      "policyOrGuard": "required verification: aiSummary",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiSummary after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "0e2f58df446450ed88a875b8ca2ad0d39bc247054c48867598916a9d3723da3b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "ee26622e018813f5d3adb36cee79119d94916a54f5a4286ca413a769a4008e8b"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "报告必须面向人，默认中文，并支持英文、日语；不要输出 source_*、原始状态、覆盖率分数或没有意义的程序诊断。",
-    "对应中发现的问题尽量在当前 WI 内解决，不要轻易开新的 WI。"
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "A later run may still have unavailable or unconfigured sources; the report will show the gap and preserve it in the snapshot rather than inventing a fact.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-report.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -1196,6 +1425,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry aiSummary after correcting the recorded failure."
+  }
 }

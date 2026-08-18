@@ -5,6 +5,25 @@ on:
     # 09:00 JST is 00:00 UTC.
     - cron: '0 0 * * 1'
   workflow_dispatch:
+    inputs:
+      language:
+        description: Report language (default is Simplified Chinese)
+        required: false
+        type: choice
+        options:
+          - zh-CN
+          - ja
+          - en
+        default: zh-CN
+      as_of:
+        description: Optional report date in YYYY-MM-DD
+        required: false
+        type: string
+      dry_run:
+        description: Validate acquisition and report without Telegram or data-branch writes
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -56,20 +75,38 @@ jobs:
           ORGX_SEC_USER_AGENT: ${{ secrets.ORGX_SEC_USER_AGENT }}
           ORGX_TELEGRAM_BOT_TOKEN: ${{ secrets.ORGX_TELEGRAM_BOT_TOKEN }}
           ORGX_TELEGRAM_CHAT_ID: ${{ secrets.ORGX_TELEGRAM_CHAT_ID }}
+          REPORT_LANGUAGE: ${{ inputs.language || 'zh-CN' }}
+          REPORT_AS_OF: ${{ inputs.as_of || '' }}
+          REPORT_DRY_RUN: ${{ inputs.dry_run || false }}
         run: |
           set -euo pipefail
           run_output="$(mktemp)"
           trap 'rm -f "$run_output"' EXIT
+          as_of="${REPORT_AS_OF:-$(date -u +%F)}"
+          cli_args=(
+            --as-of "$as_of"
+            --archive-dir "$GITHUB_WORKSPACE"
+            --registry "$GITHUB_WORKSPACE/config/weekly_radar/companies.json"
+            --language "$REPORT_LANGUAGE"
+          )
+          if [[ "$REPORT_DRY_RUN" == "true" ]]; then
+            cli_args+=(--dry-run)
+          fi
 
-          cargo run --release -- weekly-radar \
-            --as-of "$(date -u +%F)" \
-            --archive-dir "$GITHUB_WORKSPACE" \
-            --registry "$GITHUB_WORKSPACE/config/weekly_radar/companies.json" \
+          cargo run --release -- weekly-radar "${cli_args[@]}" \
             | tee "$run_output"
 
           if [[ ! -s "$run_output" ]]; then
             echo "Weekly Radar produced empty output; refusing to update data." >&2
             exit 1
+          fi
+          if [[ "$REPORT_DRY_RUN" == "true" ]]; then
+            if ! grep -Fq 'DRY-RUN:' "$run_output"; then
+              echo "Weekly Radar dry-run did not report validation; refusing to continue." >&2
+              exit 1
+            fi
+            echo "Weekly Radar dry-run completed; Telegram and data branch were not contacted."
+            exit 0
           fi
           if ! grep -Fq 'PUBLISHED:' "$run_output"; then
             echo "Weekly Radar did not report a published run; refusing to update data." >&2

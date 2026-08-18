@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-report",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-report.json",
+  "baseCommit": "402150c9c39cdc051c4321985316cd1ed3af64ce",
+  "baseBranch": "codex/wi-weekly-radar-report",
+  "startTimestamp": "2026-08-18T01:24:29.387303+00:00",
+  "initialScopeDigest": "79438a750d1a28bd86c4bdcd33c5f85f0fbb0a03f7e5c32d16a4ff962bad3c5a",
+  "contractSkeletonDigest": "6de2743b06ee540d3c3d1454c989fdd250066d904c9da899ce45d7a15f904649"
+}

@@ -1,0 +1,297 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-report",
+  "mode": "code",
+  "title": "Improve Weekly Radar report quality and testability",
+  "baseCommit": "402150c9c39cdc051c4321985316cd1ed3af64ce",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-report.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-report.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/evidence/reference-impact/**",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-weekly-radar-report.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-report.outcome.md",
+    "src/main.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+    "src/features/weekly_radar/interface/semantic_message_splitter_test.rs",
+    "tests/weekly_radar_semantic_message_splitter.rs",
+    "tests/weekly_radar_runtime.rs",
+    ".github/workflows/weekly-radar.yml",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/specs/2026-08-18-weekly-radar-report.md",
+    "docs/superpowers/plans/2026-08-18-weekly-radar-report.md"
+  ],
+  "outOfScope": [
+    "Changing domain stage, ranking, Top5 selection, structural-change rules, or source authority policy.",
+    "Adding paid data APIs, LLM extraction, new secrets, or changing secret values.",
+    "Writing generated report files to the main branch or changing data-branch retention policy.",
+    "Sending real Telegram messages from local tests or adding external network calls to tests.",
+    "Changing unrelated Work Items, shared architecture tests, or project-wide governance policy."
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository Work Item lifecycle, scope, testing, finish, merge, and closure requirements."},
+    {"path": ".ai/glossary.md", "reason": "Canonical repository terminology and architecture boundaries."},
+    {"path": ".ai/cockpit/README.md", "reason": "AI Cockpit v2 Contract, Preflight, checkpoint, Finish, archive, and closure evidence."},
+    {"path": "src/main.rs", "reason": "Current SEC acquisition boundary and CLI dry-run behavior to improve without changing source policy."},
+    {"path": "src/features/weekly_radar/runtime/model.rs", "reason": "Current provider-neutral report input and source coverage model."},
+    {"path": "src/features/weekly_radar/runtime/report.rs", "reason": "Current human-facing Markdown, snapshot, evidence-basis, and System Health rendering."},
+    {"path": "tests/weekly_radar_runtime.rs", "reason": "Existing fixture-driven runtime, report, CLI, and workflow contract tests."},
+    {"path": ".github/workflows/weekly-radar.yml", "reason": "Monday schedule, manual dispatch, data-branch publication, and checkout@v5 behavior."},
+    {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "Reader-facing runtime operations and local dry-run documentation."},
+    {"path": "user-provided Weekly Radar test observations", "reason": "The successful real run showed misleading evidence basis, silent SEC 0/10 coverage, noisy review output, and the need for safe manual testing."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["report_truthfulness", "external_acquisition_observability", "workflow_side_effects"],
+    "reason": "The change affects human-facing report interpretation and manual workflow execution. The main risks are accidentally presenting unavailable evidence as authoritative, hiding source failures, or making a manual test mutate Telegram/data unexpectedly.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The existing runtime already has bounded HTTP and dry-run seams. This Work Item adds reporting and workflow safety within those seams; it does not alter source authority, rule-only extraction, or retention policy."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly authorized continuing the current Weekly Radar corrections and testing without intermediate confirmation; scope, acceptance, unknowns, and verification are now bounded."
+  },
+  "preReviewWarnings": [
+    "Only confirmed primary evidence may appear as the Executive Summary evidence basis; otherwise render explicit UNKNOWN.",
+    "SEC acquisition diagnostics must remain safe and must not include User-Agent, Telegram token, chat ID, request headers, or response bodies.",
+    "A manual dry-run must not send Telegram or mutate the data branch; scheduled production behavior remains unchanged."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "The Executive Summary evidence basis selects only a confirmed fact from an authoritative source; when no such fact exists it renders an explicit localized UNKNOWN message and never cites an unavailable or unconfirmed observation.",
+    "SEC collection failures are retained as safe, company/source-scoped System Health diagnostics so SEC 0/10 coverage has an actionable explanation without exposing credentials, headers, or response bodies.",
+    "Source coverage distinguishes an optional source that is NOT_CONFIGURED from a configured source that is UNAVAILABLE; this distinction is visible in the report and preserved in the snapshot.",
+    "Telegram output is a human-first localized weekly report: default Chinese, with selectable Japanese and English; it does not expose source_* identifiers, raw status labels, coverage fractions, or long ungrouped diagnostic lists.",
+    "Source and fact gaps are summarized by readable source/company impact and only actionable exceptions are shown; the snapshot retains the complete deterministic fact/review detail.",
+    "workflow_dispatch exposes a safe dry-run input, an optional explicit as-of date, and a language choice; dry-run runs acquisition/report validation without Telegram delivery or data-branch mutation, while the scheduled production path still publishes and retains data.",
+    "Rule-only extraction, UNKNOWN semantics, primary-source authority, data-branch retention, checkout@v5, and existing Monday 09:00 JST schedule remain unchanged.",
+    "Focused regression tests, full project quality, AI Cockpit Finish, archive, PR checks, merge, close, and branch cleanup pass with no out-of-scope changes.",
+    "Reader-facing operations documentation describes the localized human-first report, health semantics, and manual dry-run inputs without recording project progress history."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Preserve UNKNOWN/UNAVAILABLE rather than inferring missing data.",
+    "Keep provider-specific acquisition details at the runtime boundary and keep diagnostics secret-safe.",
+    "Resolve defects discovered in this report and test scope in this Work Item; do not create a successor for an in-scope correction.",
+    "Use actions/checkout@v5 and preserve the existing data-branch-only publication boundary."
+  ],
+  "intent": {
+    "problem": "The first successful live Weekly Radar report exposed five reader-facing/runtime gaps: an unavailable Adobe Careers observation was shown as the evidence basis, SEC coverage was 0/10 without an actionable failure explanation, unconfigured Greenhouse/Lever sources looked like ordinary unavailable failures, Telegram review output expanded to 78 individual items, and the whole report was written as internal English diagnostics that a reader could not understand. Manual workflow dispatch also had no side-effect-free test mode.",
+    "constraints": [
+      "Use only deterministic rules and preserve UNKNOWN/UNAVAILABLE; do not add LLM extraction or paid APIs.",
+      "Do not change the evidence authority pyramid, source adapters, data-branch retention policy, Telegram environment variable names, or Monday 09:00 JST production schedule.",
+      "Keep full detail in the data snapshot while making the Telegram Markdown concise and human-readable.",
+      "The report language is zh-CN by default, with ja and en available through an explicit runtime option; localized text remains deterministic.",
+      "Manual dry-run must be side-effect free for Telegram and data publication; local and fixture tests must not use real credentials or network calls.",
+      "Complete the full AI Cockpit Work Item lifecycle under the user-approved execution already provided."
+    ],
+    "rationale": "These changes directly address evidence-boundary and operability defects observed in the first real report while preserving the approved free-data and evidence-first design."
+  },
+  "rawUserRequest": "继续对应，然后再测试；有改善建议么？",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User requested continuing the identified Weekly Radar corrections and testing, and authorized no-intermediate-confirmation execution earlier in the task.",
+    "digest": "sha256:1a78fe3511632946cdced7b290d8fe38bcdd388a100949b837a8bc9663a04821",
+    "capturedAt": "2026-08-18"
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Continue in-scope Weekly Radar corrections, verify them, complete the Work Item lifecycle, and trigger a new test run.",
+    "reference": "User authorization: 走完完整的WI。中途不需要再跟我确认; current request: 继续对应，然后再测试。",
+    "capturedAt": "2026-08-18"
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized continuation and full Work Item execution."
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "documentation", "ai_governance"],
+    "prohibitedCapabilities": ["paid_data_api_dependency", "llm_fact_extraction", "trading_decision", "capital_action"]
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Evidence basis ignores unavailable and unconfirmed facts.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/report.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "A report whose first fact is UNAVAILABLE or UNCONFIRMED renders UNKNOWN unless a confirmed authoritative fact exists; a confirmed official/SEC fact is selected when present.",
+      "verificationPlan": "Run focused renderer tests with ordered known, unavailable, and unconfirmed fixtures and inspect the exact Markdown."
+    },
+    {
+      "scenario": "SEC acquisition failure is visible and secret-safe.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/error.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "A failed SEC request produces a bounded source-health diagnostic with company and source family, but no User-Agent, token, chat ID, headers, or body.",
+      "verificationPlan": "Use fixture HTTP failures, render the resulting report, and assert the safe diagnostic plus absence of secret markers."
+    },
+    {
+      "scenario": "Optional source configuration status is distinct from request failure.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/model.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "Unconfigured Greenhouse/Lever coverage is labeled NOT_CONFIGURED; a configured but failed endpoint remains UNAVAILABLE.",
+      "verificationPlan": "Use the existing registry/source fixtures and assert both coverage labels in Markdown and snapshot JSON."
+    },
+    {
+      "scenario": "Telegram review output is bounded while snapshot detail is complete.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/report.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "The Markdown contains grouped review counts and at most a bounded number of examples; the snapshot still contains all normalized facts and the full review item list.",
+      "verificationPlan": "Render a fixture with more than the display limit and assert bounded Markdown plus complete serialized health review items."
+    },
+    {
+      "scenario": "Localized human-first report is readable by default and selectable by language.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/report.rs", "tests/weekly_radar_runtime.rs", "docs/operations/WEEKLY_RADAR.md"],
+      "expected": "The default report is Chinese; ja and en are deterministic alternatives. Human-facing Markdown uses readable labels and omits source_* identifiers, raw status labels, coverage fractions, and unbounded diagnostics.",
+      "verificationPlan": "Run CLI/report tests for zh-CN, ja, and en, assert the localized headings and absence of internal diagnostic markers, then inspect the rendered fixture."
+    },
+    {
+      "scenario": "Manual workflow dry-run is side-effect safe and scheduled production remains intact.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [".github/workflows/weekly-radar.yml", "tests/weekly_radar_runtime.rs", "docs/operations/WEEKLY_RADAR.md"],
+      "expected": "workflow_dispatch declares dry_run and as_of inputs; dry-run passes --dry-run and skips data publication checks/push while schedule still uses 0 0 * * 1 and production publishes PUBLISHED output.",
+      "verificationPlan": "Run workflow text regression tests, local CLI dry-run tests, cargo quality, and inspect the final workflow diff."
+    },
+    {
+      "scenario": "Full governed lifecycle completes.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["Makefile.ai", ".ai/cockpit/README.md", "AGENTS.md"],
+      "expected": "Preflight, checkpoints, Finish, archive, PR checks, hosted checks, merge, close, and branch/worktree cleanup succeed.",
+      "verificationPlan": "Run the canonical Make targets and inspect local/remote branch and Work Item archive state before reporting completion."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution and requested the current Work Item continue without intermediate confirmation; the workflow change remains limited to the declared Weekly Radar inputs and safeguards."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 32
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-report.json",
+    "baseCommit": "402150c9c39cdc051c4321985316cd1ed3af64ce",
+    "initialScopeDigest": "79438a750d1a28bd86c4bdcd33c5f85f0fbb0a03f7e5c32d16a4ff962bad3c5a",
+    "contractSkeletonDigest": "6de2743b06ee540d3c3d1454c989fdd250066d904c9da899ce45d7a15f904649"
+  }
+}

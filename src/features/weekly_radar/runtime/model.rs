@@ -287,12 +287,122 @@ impl NormalizedFact {
     }
 }
 
+/// Human-readable company identity retained alongside runtime facts.
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+pub struct CompanyIdentity {
+    id: String,
+    name: String,
+    ticker: String,
+}
+
+impl CompanyIdentity {
+    /// Creates a company identity for report presentation.
+    pub fn new(
+        id: impl Into<String>,
+        name: impl Into<String>,
+        ticker: impl Into<String>,
+    ) -> Result<Self, RuntimeError> {
+        let identity = Self {
+            id: id.into(),
+            name: name.into(),
+            ticker: ticker.into(),
+        };
+        identity.validate()?;
+        Ok(identity)
+    }
+
+    /// Validates the fields required to render a company label.
+    pub fn validate(&self) -> Result<(), RuntimeError> {
+        for (field, value) in [("company ID", &self.id), ("company name", &self.name)] {
+            if value.trim().is_empty() {
+                return Err(RuntimeError::invalid_model(format!(
+                    "{field} cannot be blank"
+                )));
+            }
+        }
+        Ok(())
+    }
+
+    /// Returns the stable company ID.
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+
+    /// Returns the display name.
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    /// Returns the ticker symbol.
+    pub fn ticker(&self) -> &str {
+        &self.ticker
+    }
+}
+
+/// A safe, company-scoped failure from one source family.
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+pub struct SourceFailure {
+    source: String,
+    company_id: String,
+    reason: String,
+}
+
+impl SourceFailure {
+    /// Creates a failure using already sanitized operation context.
+    pub fn new(
+        source: impl Into<String>,
+        company_id: impl Into<String>,
+        reason: impl Into<String>,
+    ) -> Result<Self, RuntimeError> {
+        let failure = Self {
+            source: source.into(),
+            company_id: company_id.into(),
+            reason: reason.into(),
+        };
+        failure.validate()?;
+        Ok(failure)
+    }
+
+    /// Validates the stable identifiers and non-empty failure category.
+    pub fn validate(&self) -> Result<(), RuntimeError> {
+        for (field, value) in [
+            ("failure source", &self.source),
+            ("failure company ID", &self.company_id),
+            ("failure reason", &self.reason),
+        ] {
+            if value.trim().is_empty() {
+                return Err(RuntimeError::invalid_model(format!(
+                    "{field} cannot be blank"
+                )));
+            }
+        }
+        Ok(())
+    }
+
+    /// Returns the source family.
+    pub fn source(&self) -> &str {
+        &self.source
+    }
+
+    /// Returns the stable company ID.
+    pub fn company_id(&self) -> &str {
+        &self.company_id
+    }
+
+    /// Returns the sanitized failure category.
+    pub fn reason(&self) -> &str {
+        &self.reason
+    }
+}
+
 /// Coverage counters for one configured source family.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub struct SourceCoverage {
     source: String,
     expected: usize,
     available: usize,
+    #[serde(default)]
+    not_configured: usize,
 }
 
 impl SourceCoverage {
@@ -302,10 +412,21 @@ impl SourceCoverage {
         expected: usize,
         available: usize,
     ) -> Result<Self, RuntimeError> {
+        Self::new_with_not_configured(source, expected, available, 0)
+    }
+
+    /// Creates coverage counters including optional-source configuration gaps.
+    pub fn new_with_not_configured(
+        source: impl Into<String>,
+        expected: usize,
+        available: usize,
+        not_configured: usize,
+    ) -> Result<Self, RuntimeError> {
         let coverage = Self {
             source: source.into(),
             expected,
             available,
+            not_configured,
         };
         coverage.validate()?;
         Ok(coverage)
@@ -321,6 +442,11 @@ impl SourceCoverage {
         if self.available > self.expected {
             return Err(RuntimeError::invalid_model(
                 "available coverage cannot exceed expected coverage",
+            ));
+        }
+        if self.not_configured > self.expected.saturating_sub(self.available) {
+            return Err(RuntimeError::invalid_model(
+                "not-configured coverage cannot exceed unavailable coverage",
             ));
         }
         Ok(())
@@ -341,6 +467,18 @@ impl SourceCoverage {
         self.available
     }
 
+    /// Returns the number of companies without an optional source configured.
+    pub const fn not_configured(&self) -> usize {
+        self.not_configured
+    }
+
+    /// Returns the number of configured companies whose source was unavailable.
+    pub const fn unavailable(&self) -> usize {
+        self.expected
+            .saturating_sub(self.available)
+            .saturating_sub(self.not_configured)
+    }
+
     /// Returns an integer percentage, using zero for an empty expectation.
     pub const fn percentage(&self) -> u8 {
         match self.available.checked_mul(100) {
@@ -357,8 +495,12 @@ impl SourceCoverage {
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub struct RuntimeReportInput {
     as_of: NaiveDate,
+    #[serde(default)]
+    companies: Vec<CompanyIdentity>,
     facts: Vec<NormalizedFact>,
     source_coverage: Vec<SourceCoverage>,
+    #[serde(default)]
+    source_failures: Vec<SourceFailure>,
 }
 
 impl RuntimeReportInput {
@@ -368,8 +510,10 @@ impl RuntimeReportInput {
             .map_err(|_| RuntimeError::invalid_model("as_of must be YYYY-MM-DD"))?;
         Ok(Self {
             as_of,
+            companies: Vec::new(),
             facts: Vec::new(),
             source_coverage: Vec::new(),
+            source_failures: Vec::new(),
         })
     }
 
@@ -377,9 +521,27 @@ impl RuntimeReportInput {
     pub const fn from_date(as_of: NaiveDate) -> Self {
         Self {
             as_of,
+            companies: Vec::new(),
             facts: Vec::new(),
             source_coverage: Vec::new(),
+            source_failures: Vec::new(),
         }
+    }
+
+    /// Adds one display identity without replacing an existing company.
+    pub fn add_company(&mut self, company: CompanyIdentity) -> Result<(), RuntimeError> {
+        if self
+            .companies
+            .iter()
+            .any(|existing| existing.id() == company.id())
+        {
+            return Err(RuntimeError::invalid_model(format!(
+                "duplicate company identity {}",
+                company.id()
+            )));
+        }
+        self.companies.push(company);
+        Ok(())
     }
 
     /// Adds a fact while rejecting a duplicate company/kind pair.
@@ -413,6 +575,21 @@ impl RuntimeReportInput {
         Ok(())
     }
 
+    /// Adds one safe source acquisition failure without replacing another.
+    pub fn add_source_failure(&mut self, failure: SourceFailure) -> Result<(), RuntimeError> {
+        if self.source_failures.iter().any(|existing| {
+            existing.source() == failure.source() && existing.company_id() == failure.company_id()
+        }) {
+            return Err(RuntimeError::invalid_model(format!(
+                "duplicate source failure {} for {}",
+                failure.source(),
+                failure.company_id()
+            )));
+        }
+        self.source_failures.push(failure);
+        Ok(())
+    }
+
     /// Returns the report as-of date.
     pub const fn as_of(&self) -> NaiveDate {
         self.as_of
@@ -423,8 +600,23 @@ impl RuntimeReportInput {
         &self.facts
     }
 
+    /// Returns company identities in configured order.
+    pub fn companies(&self) -> &[CompanyIdentity] {
+        &self.companies
+    }
+
+    /// Looks up a human-readable company identity.
+    pub fn company(&self, id: &str) -> Option<&CompanyIdentity> {
+        self.companies.iter().find(|company| company.id() == id)
+    }
+
     /// Returns source coverage in insertion order.
     pub fn source_coverage(&self) -> &[SourceCoverage] {
         &self.source_coverage
+    }
+
+    /// Returns safe acquisition failures in insertion order.
+    pub fn source_failures(&self) -> &[SourceFailure] {
+        &self.source_failures
     }
 }

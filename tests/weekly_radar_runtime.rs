@@ -16,10 +16,13 @@ use org_x::features::weekly_radar::runtime::http::{
     FixtureHttpClient, HttpClient, HttpResponse, UreqHttpClient,
 };
 use org_x::features::weekly_radar::runtime::model::{
-    Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput, SourceCoverage,
+    CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput,
+    SourceCoverage, SourceFailure,
 };
 use org_x::features::weekly_radar::runtime::normalize_source_observation;
-use org_x::features::weekly_radar::runtime::report::{render_report, RenderedReport};
+use org_x::features::weekly_radar::runtime::report::{
+    render_report, render_report_in_language, RenderedReport, ReportLanguage,
+};
 use org_x::features::weekly_radar::runtime::rules::extract_employee_count;
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{
@@ -465,7 +468,7 @@ fn source_observations_normalize_to_facts_with_status_and_passage_provenance() {
 }
 
 #[test]
-fn absent_optional_sources_are_unavailable_without_guessed_urls() {
+fn absent_optional_sources_are_not_configured_without_guessed_urls() {
     let company = CompanyConfig::new(
         "beta",
         "Beta Systems",
@@ -496,7 +499,7 @@ fn absent_optional_sources_are_unavailable_without_guessed_urls() {
             .iter()
             .find(|observation| observation.kind() == kind)
             .expect("each optional source slot should be represented");
-        assert_eq!(observation.status(), SourceStatus::Unavailable);
+        assert_eq!(observation.status(), SourceStatus::NotConfigured);
         assert_eq!(observation.url(), None);
         assert!(observation
             .provenance()
@@ -1392,23 +1395,17 @@ fn task4_report_is_deterministic_and_uses_the_mobile_first_contract() {
         .lines()
         .filter_map(|line| line.strip_prefix("## "))
         .collect();
-    assert_eq!(headings.first(), Some(&"Executive Summary"));
-    assert_eq!(headings.last(), Some(&"System Health"));
+    assert_eq!(headings.first(), Some(&"本周摘要"));
+    assert_eq!(headings.last(), Some(&"系统状态"));
     assert!(headings.iter().all(|heading| {
         matches!(
             *heading,
-            "Executive Summary"
-                | "Important Structural Change"
-                | "Top5"
-                | "Rising"
-                | "Dropped"
-                | "System Health"
+            "本周摘要" | "重要组织变化" | "重点公司" | "Rising" | "Dropped" | "系统状态"
         )
     }));
-    assert!(first.markdown().matches("### Change ").count() <= 3);
     assert!(first.markdown().matches("### ").count() <= 8);
-    assert!(first.markdown().contains("## Important Structural Change"));
-    assert!(first.markdown().contains("## Top5"));
+    assert!(first.markdown().contains("## 重要组织变化"));
+    assert!(first.markdown().contains("## 重点公司"));
     assert!(!first.markdown().contains("Stage"));
     assert!(!first.markdown().contains("rank"));
     assert!(!first.markdown().contains("score"));
@@ -1436,9 +1433,7 @@ fn task4_report_omits_top5_without_an_explicit_selection_for_more_than_five_comp
 
     let report = render_report(&input);
     assert!(!report.markdown().contains("## Top5"));
-    assert!(report
-        .markdown()
-        .contains("Top5: UNKNOWN — no explicit Top5 selection was supplied"));
+    assert!(report.markdown().contains("不生成排名"));
 }
 
 #[test]
@@ -1448,7 +1443,7 @@ fn task4_empty_report_states_that_no_evidence_was_supplied() {
 
     assert!(report
         .markdown()
-        .contains("Evidence basis: UNKNOWN — no evidence supplied"));
+        .contains("主证据：本周没有可作为主证据的确认信息"));
 }
 
 #[test]
@@ -1456,14 +1451,98 @@ fn task4_report_exposes_explicit_statuses_and_discovery_health_review_items() {
     let report = task4_report();
     let markdown = report.markdown();
 
-    assert!(markdown.contains("CONFIRMED"));
-    assert!(markdown.contains("UNKNOWN"));
-    assert!(markdown.contains("UNAVAILABLE"));
-    assert!(markdown.contains("UNCONFIRMED"));
-    assert!(markdown.contains("DISCOVERY ONLY"));
-    assert!(markdown.contains("needing review"));
-    assert!(markdown.contains("official: 5/5"));
-    assert!(markdown.contains("sec: 4/5"));
+    assert!(report.snapshot_json().contains("CONFIRMED"));
+    assert!(report.snapshot_json().contains("UNKNOWN"));
+    assert!(report.snapshot_json().contains("UNAVAILABLE"));
+    assert!(report.snapshot_json().contains("UNCONFIRMED"));
+    assert!(markdown.contains("待核实线索"));
+    assert!(markdown.contains("来源情况"));
+    assert!(markdown.contains("新闻和其他发现材料"));
+    assert!(!markdown.contains("source_"));
+}
+
+#[test]
+fn task7_default_report_is_chinese_and_hides_runtime_diagnostics_from_readers() {
+    let report = render_report(&task4_report_input());
+    let markdown = report.markdown();
+
+    assert!(markdown.contains("## 本周摘要"));
+    assert!(markdown.contains("## 系统状态"));
+    assert!(!markdown.contains("source_"));
+    assert!(!markdown.contains("UNAVAILABLE"));
+    assert!(!markdown.contains("UNCONFIRMED"));
+    assert!(!markdown.contains("official: 5/5"));
+    assert!(report.snapshot_json().contains("UNAVAILABLE"));
+    assert!(report.snapshot_json().contains("source_"));
+}
+
+#[test]
+fn task7_report_supports_japanese_and_english_without_changing_snapshot_facts() {
+    let input = task4_report_input();
+    let japanese = render_report_in_language(&input, ReportLanguage::Japanese);
+    let english = render_report_in_language(&input, ReportLanguage::English);
+
+    assert!(japanese.markdown().contains("## 週次サマリー"));
+    assert!(japanese.markdown().contains("## システム状態"));
+    assert!(english.markdown().contains("## Executive Summary"));
+    assert!(english.markdown().contains("## System Health"));
+    assert_eq!(japanese.metadata(), english.metadata());
+    assert!(japanese.snapshot_json().contains("UNAVAILABLE"));
+    assert!(english.snapshot_json().contains("UNCONFIRMED"));
+}
+
+#[test]
+fn task7_unavailable_first_fact_never_becomes_evidence_basis() {
+    let mut input = RuntimeReportInput::new("2026-08-17").expect("date should be valid");
+    input
+        .add_fact(
+            NormalizedFact::without_value(
+                "acme",
+                "source_careers_001",
+                FactStatus::Unavailable,
+                Confidence::Unknown,
+                task4_provenance("official page request unavailable"),
+            )
+            .expect("unavailable fact should be valid"),
+        )
+        .expect("fact should be unique");
+
+    let report = render_report(&input);
+    assert!(report.markdown().contains("本周没有可作为主证据的确认信息"));
+    assert!(!report
+        .markdown()
+        .contains("official page request unavailable"));
+}
+
+#[test]
+fn task7_report_groups_source_failures_and_configuration_gaps_for_readers() {
+    let mut input = RuntimeReportInput::new("2026-08-17").expect("date should be valid");
+    input
+        .add_company(CompanyIdentity::new("acme", "Acme Corporation", "ACME").unwrap())
+        .unwrap();
+    input
+        .add_source_coverage(
+            SourceCoverage::new_with_not_configured("greenhouse", 1, 0, 1)
+                .expect("coverage should be valid"),
+        )
+        .unwrap();
+    input
+        .add_source_failure(
+            SourceFailure::new("sec", "acme", "HTTP response was unavailable").unwrap(),
+        )
+        .unwrap();
+
+    let report = render_report(&input);
+    let markdown = report.markdown();
+    assert!(markdown.contains("SEC 财务与申报资料"));
+    assert!(markdown.contains("返回资料不可用"));
+    assert!(markdown.contains("Greenhouse 招聘接口：尚未配置"));
+    assert!(!markdown.contains("source_sec"));
+    assert!(!markdown.contains("HTTP response was unavailable"));
+    assert!(report
+        .snapshot_json()
+        .contains("HTTP response was unavailable"));
+    assert!(report.snapshot_json().contains("not_configured"));
 }
 
 #[derive(Clone, Default)]
@@ -1539,8 +1618,10 @@ fn task4_telegram_delivery_preserves_chunk_order_and_redacts_errors() {
     assert_eq!(receipt.message_ids().len(), sent.len());
     assert_eq!(receipt.message_ids()[0].as_str(), "task4-message-1");
     assert_eq!(receipt.report_id(), report.report_id());
-    assert!(sent[0].contains("Evidence basis:"));
-    assert!(sent[0].contains("https://example.test/evidence/2026"));
+    assert!(sent[0].contains("主证据："));
+    assert!(sent
+        .join("\n")
+        .contains("https://example.test/evidence/2026"));
     assert_eq!(sent[0], report.markdown()[..sent[0].len()]);
     for pair in sent.windows(2) {
         assert_ne!(pair[0], pair[1]);
@@ -1772,8 +1853,8 @@ fn task5_cli_accepts_weekly_radar_dry_run_without_archive_mutation() {
         String::from_utf8_lossy(&output.stdout).contains("DRY-RUN"),
         "dry-run should identify its non-mutating mode"
     );
-    assert!(String::from_utf8_lossy(&output.stdout).contains("## System Health"));
-    assert!(String::from_utf8_lossy(&output.stdout).contains("official_ir: 0/1"));
+    assert!(String::from_utf8_lossy(&output.stdout).contains("## 系统状态"));
+    assert!(String::from_utf8_lossy(&output.stdout).contains("投资者关系资料"));
     assert!(
         !archive.exists(),
         "dry-run must not create or mutate archive output"
@@ -1854,6 +1935,10 @@ fn task6_workflow_declares_schedule_dispatch_checkout_permissions_and_secrets() 
 
     assert!(workflow.contains("cron: '0 0 * * 1'"));
     assert!(workflow.contains("workflow_dispatch:"));
+    assert!(workflow.contains("dry_run:"));
+    assert!(workflow.contains("as_of:"));
+    assert!(workflow.contains("language:"));
+    assert!(workflow.contains("default: zh-CN"));
     assert!(workflow.contains("uses: actions/checkout@v5"));
     assert!(!workflow.contains("actions/checkout@v4"));
     assert!(workflow.contains("permissions:\n  contents: write"));

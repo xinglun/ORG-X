@@ -82,3 +82,19 @@ fn module_local_test_rejects_invalid_rendered_input() {
         Err(SemanticSplitError::UnclosedCodeFence)
     ));
 }
+
+#[test]
+fn module_local_test_accepts_localized_report_headings() {
+    let source = "## 本周摘要\n- 本周无变化\n\n## システム状態\n- データ正常\n";
+    let result = SemanticMessageSplitter::split(source, limits(1_000, 20)).unwrap();
+
+    assert_eq!(result.chunks().len(), 2);
+    assert_eq!(
+        result.chunks()[0].boundary(),
+        SemanticBoundary::ExecutiveSummary
+    );
+    assert_eq!(
+        result.chunks()[1].boundary(),
+        SemanticBoundary::SystemHealth
+    );
+}

@@ -4,62 +4,74 @@ Task Result
 Status: Blocked
 
 What was completed
-- Changed README.md [evidence: README.md]
-- Changed NORTH_STAR.md [evidence: NORTH_STAR.md]
-- Changed ENGINEERING_PRINCIPLES.md [evidence: ENGINEERING_PRINCIPLES.md]
-- Changed docs/README.md [evidence: docs/README.md]
-- Changed docs/product/NORTH_STAR.md [evidence: docs/product/NORTH_STAR.md]
-- Changed docs/product/PRD.md [evidence: docs/product/PRD.md]
-- Changed docs/product/SCOPE.md [evidence: docs/product/SCOPE.md]
-- Changed docs/architecture/ARCHITECTURE.md [evidence: docs/architecture/ARCHITECTURE.md]
-- Changed docs/architecture/BOUNDED_CONTEXTS.md [evidence: docs/architecture/BOUNDED_CONTEXTS.md]
-- Changed docs/architecture/DEPENDENCY_RULES.md [evidence: docs/architecture/DEPENDENCY_RULES.md]
-- Changed docs/data/DATA_QUALITY_POLICY.md [evidence: docs/data/DATA_QUALITY_POLICY.md]
-- Changed docs/data/DATA_SOURCE_POLICY.md [evidence: docs/data/DATA_SOURCE_POLICY.md]
-- Changed docs/domain/EVIDENCE_MODEL.md [evidence: docs/domain/EVIDENCE_MODEL.md]
-- Changed docs/domain/PRODUCTION_SYSTEM_MODEL.md [evidence: docs/domain/PRODUCTION_SYSTEM_MODEL.md]
-- Changed docs/domain/RANKING_MODEL.md [evidence: docs/domain/RANKING_MODEL.md]
-- Changed docs/domain/TRANSFORMATION_STAGE_MODEL.md [evidence: docs/domain/TRANSFORMATION_STAGE_MODEL.md]
-- Changed docs/scoring/SCORING_SPEC.md [evidence: docs/scoring/SCORING_SPEC.md]
-- Changed docs/scoring/STAGE_GATE_SPEC.md [evidence: docs/scoring/STAGE_GATE_SPEC.md]
-- Changed docs/validation/VALIDATION_STRATEGY.md [evidence: docs/validation/VALIDATION_STRATEGY.md]
+- Changed .ai/work-items/active/wi-weekly-radar-report.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-report.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-report.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-report.summary.json]
+- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
+- Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
+- Changed .ai/evidence/reference-impact/** [evidence: .ai/evidence/reference-impact/**]
+- Changed .ai/work-items/starts/wi-weekly-radar-report.json [evidence: .ai/work-items/starts/wi-weekly-radar-report.json]
+- Changed src/main.rs [evidence: src/main.rs]
+- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
+- Changed src/features/weekly_radar/runtime/model.rs [evidence: src/features/weekly_radar/runtime/model.rs]
+- Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
+- Changed src/features/weekly_radar/runtime/sources.rs [evidence: src/features/weekly_radar/runtime/sources.rs]
+- Changed src/features/weekly_radar/interface/semantic_message_splitter.rs [evidence: src/features/weekly_radar/interface/semantic_message_splitter.rs]
+- Changed src/features/weekly_radar/interface/semantic_message_splitter_test.rs [evidence: src/features/weekly_radar/interface/semantic_message_splitter_test.rs]
+- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
+- Changed tests/weekly_radar_semantic_message_splitter.rs [evidence: tests/weekly_radar_semantic_message_splitter.rs]
+- Changed .github/workflows/weekly-radar.yml [evidence: .github/workflows/weekly-radar.yml]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed scripts/check_docs_metadata.py [evidence: scripts/check_docs_metadata.py]
-- Changed Makefile.ai [evidence: Makefile.ai]
-- Changed docs/superpowers/specs/2026-08-18-docs-reader-design.md [evidence: docs/superpowers/specs/2026-08-18-docs-reader-design.md]
-- Changed docs/superpowers/plans/2026-08-18-docs-reader.md [evidence: docs/superpowers/plans/2026-08-18-docs-reader.md]
-- Changed .ai/work-items/active/wi-docs-reader.contract.json [evidence: .ai/work-items/archive/2026/wi-docs-reader.contract.json]
-- Changed .ai/work-items/active/wi-docs-reader.summary.json [evidence: .ai/work-items/archive/2026/wi-docs-reader.summary.json]
-- Changed .ai/work-items/active/wi-docs-reader.outcome.json [evidence: .ai/work-items/archive/2026/wi-docs-reader.outcome.json]
-- Changed .ai/work-items/active/wi-docs-reader.outcome.md [evidence: .ai/work-items/archive/2026/wi-docs-reader.outcome.md]
+- Changed docs/superpowers/specs/2026-08-18-weekly-radar-report.md [evidence: docs/superpowers/specs/2026-08-18-weekly-radar-report.md]
+- Changed docs/superpowers/plans/2026-08-18-weekly-radar-report.md [evidence: docs/superpowers/plans/2026-08-18-weekly-radar-report.md]
+- Changed .ai/work-items/active/wi-weekly-radar-report.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-report.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-report.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-report.outcome.md]
 
 Problems found
-- Total: 2
+- Total: 7
 - Blocking: 0
 - Warning: 0
 
 Stops triggered
-- Reason: quality failed before the retry. | Stage: verification | Resolution: Retry quality after correcting the recorded failure. [evidence: verificationHistory[0] quality failed, verification[quality] retry passed]
+- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Reason: aiSummary failed before the retry. | Stage: verification | Resolution: Retry aiSummary after correcting the recorded failure. [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 
 Problems resolved
-- Problem: quality failed before the retry.
-  Solution: Re-ran quality after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[0] quality failed, verification[quality] retry passed]
+- Problem: An unavailable first observation could be cited as the report evidence basis.
+  Solution: Select only confirmed facts from authoritative primary sources and render an explicit no-primary-evidence message otherwise.
+  Evidence: [evidence: observedIssues[0] evidence basis, observedIssues[0] evidence basis]
+- Problem: Telegram output exposed internal English headings, source_* identifiers, raw statuses, coverage fractions, and long ungrouped review lists.
+  Solution: Use a concise human-first report with Chinese default text and deterministic Japanese/English alternatives; retain detail only in the snapshot.
+  Evidence: [evidence: observedIssues[1] reader-facing report, observedIssues[1] reader-facing report, observedIssues[1] reader-facing report]
+- Problem: Optional sources that were never configured looked like ordinary unavailable failures.
+  Solution: Add NOT_CONFIGURED semantics and render readable source-level configuration gaps.
+  Evidence: [evidence: observedIssues[2] source configuration visibility, observedIssues[2] source configuration visibility, observedIssues[2] source configuration visibility]
+- Problem: SEC coverage could fall to zero without a source-scoped actionable explanation.
+  Solution: Retain safe company/source failure categories and aggregate them in System Health without exposing response bodies or credentials.
+  Evidence: [evidence: observedIssues[3] SEC failure visibility, observedIssues[3] SEC failure visibility, observedIssues[3] SEC failure visibility]
+- Problem: Manual workflow execution had no side-effect-free acquisition and report validation mode.
+  Solution: Add language, explicit as-of, and dry-run inputs; dry-run exits before Telegram or data-branch writes.
+  Evidence: [evidence: observedIssues[4] manual verification, observedIssues[4] manual verification, observedIssues[4] manual verification]
+- Problem: aiGuidelines failed before the retry.
+  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Problem: aiSummary failed before the retry.
+  Solution: Re-ran aiSummary after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 
 Risks avoided
 - If not detected, could have led to a stale completion claim. (inference)
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- observed issue Status resolved has no evidence references; resolution is not reported as verified. (inference)
-- Runtime or workflow changes can make operational prose stale; the metadata checker covers the current schedule, checkout version, secrets, and retention facts but not every semantic claim. [evidence: residualRisks]
-- ADR and superpowers records retain implementation context by design and are not part of the reader navigation. [evidence: residualRisks]
+- A later run may still have unavailable or unconfigured sources; the report will show the gap and preserve it in the snapshot rather than inventing a fact. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- User confirmed that docs/superpowers should remain as internal engineering records. (inference)
-- User authorized the complete WI lifecycle without intermediate confirmation. (inference)
+- 报告必须面向人，默认中文，并支持英文、日语；不要输出 source_*、原始状态、覆盖率分数或没有意义的程序诊断。 (inference)
+- 对应中发现的问题尽量在当前 WI 内解决，不要轻易开新的 WI。 (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]
@@ -72,7 +84,6 @@ Verification
 - aiScenarioCoverage [evidence: aiScenarioCoverage]
 - aiGuidelines [evidence: aiGuidelines]
 - aiDiffOwnership [evidence: aiDiffOwnership]
-- docsMetadata [evidence: docsMetadata]
 - quality [evidence: quality]
 - aiStatus [evidence: aiStatus]
 - aiStatusCheck [evidence: aiStatusCheck]

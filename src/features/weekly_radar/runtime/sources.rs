@@ -64,6 +64,8 @@ pub enum SourceStatus {
     Unknown,
     /// The source was absent or could not be reached.
     Unavailable,
+    /// The optional source was not configured for this company.
+    NotConfigured,
     /// The record is intentionally limited to discovery and corroboration.
     DiscoveryOnly,
 }
@@ -75,6 +77,7 @@ impl SourceStatus {
             Self::Known => "KNOWN",
             Self::Unknown => "UNKNOWN",
             Self::Unavailable => "UNAVAILABLE",
+            Self::NotConfigured => "NOT_CONFIGURED",
             Self::DiscoveryOnly => "DISCOVERY_ONLY",
         }
     }
@@ -296,7 +299,7 @@ fn collect_official(
     observations: &mut Vec<SourceObservation>,
 ) {
     let Some(url) = configured_url else {
-        observations.push(unavailable_observation(
+        observations.push(not_configured_observation(
             company,
             kind,
             SourceTier::OfficialPrimary,
@@ -369,7 +372,7 @@ fn collect_greenhouse(
     observations: &mut Vec<SourceObservation>,
 ) {
     let Some(board) = company.greenhouse_board() else {
-        observations.push(unavailable_observation(
+        observations.push(not_configured_observation(
             company,
             SourceKind::Greenhouse,
             SourceTier::StructuredHiring,
@@ -467,7 +470,7 @@ fn collect_lever(
     observations: &mut Vec<SourceObservation>,
 ) {
     let Some(site) = company.lever_site() else {
-        observations.push(unavailable_observation(
+        observations.push(not_configured_observation(
             company,
             SourceKind::Lever,
             SourceTier::StructuredHiring,
@@ -648,13 +651,52 @@ fn unavailable_observation(
     observed_at: DateTime<Utc>,
     field: &str,
 ) -> SourceObservation {
+    observation_with_status(
+        company,
+        kind,
+        tier,
+        url,
+        observed_at,
+        field,
+        SourceStatus::Unavailable,
+    )
+}
+
+fn not_configured_observation(
+    company: &CompanyConfig,
+    kind: SourceKind,
+    tier: SourceTier,
+    url: Option<&str>,
+    observed_at: DateTime<Utc>,
+    field: &str,
+) -> SourceObservation {
+    observation_with_status(
+        company,
+        kind,
+        tier,
+        url,
+        observed_at,
+        field,
+        SourceStatus::NotConfigured,
+    )
+}
+
+fn observation_with_status(
+    company: &CompanyConfig,
+    kind: SourceKind,
+    tier: SourceTier,
+    url: Option<&str>,
+    observed_at: DateTime<Utc>,
+    field: &str,
+    status: SourceStatus,
+) -> SourceObservation {
     let source_uri = url
         .map(str::to_owned)
         .unwrap_or_else(|| format!("source://weekly-radar/{}/{}", company.id(), kind.as_str()));
     SourceObservation::new(SourceObservationInput {
         company_id: company.id().to_owned(),
         kind,
-        status: SourceStatus::Unavailable,
+        status,
         tier,
         url: url.map(str::to_owned),
         title: None,

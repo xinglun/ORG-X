@@ -195,13 +195,21 @@ fn top_level_heading(line: &str) -> Option<&str> {
 
 fn boundary_for_heading(heading: &str) -> Result<SemanticBoundary, SemanticSplitError> {
     match heading {
-        "Important Structural Change" | "Stage Transition" => {
-            Ok(SemanticBoundary::ImportantTransition)
+        "Important Structural Change"
+        | "Important Organizational Changes"
+        | "重要组织变化"
+        | "重要な組織変化"
+        | "Stage Transition" => Ok(SemanticBoundary::ImportantTransition),
+        "Top5" | "Companies to Watch" | "重点公司" | "注目企業" | "Threshold Distance" => {
+            Ok(SemanticBoundary::Top5)
         }
-        "Top5" | "Threshold Distance" => Ok(SemanticBoundary::Top5),
         "Rising" | "Dropped" => Ok(SemanticBoundary::RisingDropped),
-        "System Health" => Ok(SemanticBoundary::SystemHealth),
-        "Executive Summary" | "No Change" => Ok(SemanticBoundary::ExecutiveSummary),
+        "System Health" | "系统状态" | "システム状態" => {
+            Ok(SemanticBoundary::SystemHealth)
+        }
+        "Executive Summary" | "本周摘要" | "週次サマリー" | "No Change" => {
+            Ok(SemanticBoundary::ExecutiveSummary)
+        }
         value if value.starts_with("No Change (") => Ok(SemanticBoundary::ExecutiveSummary),
         value => Err(SemanticSplitError::UnknownSection {
             heading: value.to_owned(),

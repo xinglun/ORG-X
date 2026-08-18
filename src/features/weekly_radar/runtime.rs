@@ -23,9 +23,13 @@ pub use http::{
     MAX_HTTP_RESPONSE_BODY_BYTES,
 };
 pub use model::{
-    Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput, SourceCoverage,
+    CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput,
+    SourceCoverage, SourceFailure,
 };
-pub use report::{render_report, RenderedReport, SnapshotMetadata, SourceHealthFacts};
+pub use report::{
+    render_report, render_report_in_language, RenderedReport, ReportLanguage, SnapshotMetadata,
+    SourceHealthFacts,
+};
 pub use rules::extract_employee_count;
 pub use sec::{CompanyEvidence, SecClient};
 pub use sources::{
@@ -61,7 +65,7 @@ pub fn normalize_source_observation(
         }
         SourceStatus::Known | SourceStatus::DiscoveryOnly => FactStatus::Unconfirmed,
         SourceStatus::Unknown => FactStatus::Unknown,
-        SourceStatus::Unavailable => FactStatus::Unavailable,
+        SourceStatus::Unavailable | SourceStatus::NotConfigured => FactStatus::Unavailable,
     };
     let confidence = match status {
         FactStatus::Known => Confidence::High,

@@ -40,6 +40,20 @@ fn splitter_preserves_nested_markdown_and_code_fences() {
 }
 
 #[test]
+fn splitter_accepts_localized_weekly_radar_headings() {
+    let rendered = "## 本周摘要\n- 本周无变化\n\n## 系统状态\n- 数据正常\n";
+    let split =
+        SemanticMessageSplitter::split(rendered, SemanticSplitLimits::new(1_000, 20).unwrap())
+            .unwrap();
+    assert_eq!(split.chunks().len(), 2);
+    assert_eq!(
+        split.chunks()[0].boundary(),
+        SemanticBoundary::ExecutiveSummary
+    );
+    assert_eq!(split.chunks()[1].boundary(), SemanticBoundary::SystemHealth);
+}
+
+#[test]
 fn splitter_rejects_zero_limits_unknown_sections_and_unclosed_fences() {
     assert_eq!(
         SemanticSplitLimits::new(0, 10),

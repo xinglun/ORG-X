@@ -1,0 +1,307 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-user-facing-capability-guide",
+  "mode": "code",
+  "title": "User-facing capability guide",
+  "rawUserRequest": "继续，另外文档内容，应该是面向用户的，不是解释技术和项目进度。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Current conversation request; user authorized continuation of the user-facing documentation rewrite.",
+    "capturedAt": "2026-08-20T17:30:00+09:00",
+    "digest": "sha256:97742c57e1893b306e8fdf0d9e33bb8a9a2ae9b280df16f73a1c536667b82671"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["documentation"],
+    "prohibitedCapabilities": ["runtime_behavior_change", "secret_mutation", "unsupported_product_claims"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user authorized the user-facing documentation rewrite and continuation through the full Work Item lifecycle.",
+    "authorizedExternalEffects": [
+      "Create and update the Work Item PR for this documentation change.",
+      "Run hosted checks, merge the PR, and close this Work Item after merge."
+    ]
+  },
+  "baseCommit": "b526c7e6571416ffac7c9681ef26c9561fe58373",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-user-facing-capability-guide.contract.json",
+    ".ai/work-items/active/wi-user-facing-capability-guide.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-user-facing-capability-guide.outcome.json",
+    ".ai/work-items/active/wi-user-facing-capability-guide.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    "README.md",
+    "docs/README.md",
+    "docs/CAPABILITIES.md"
+  ],
+  "outOfScope": [
+    "Changing runtime behavior, source code, tests, dependencies, CI workflows, secrets, or production data.",
+    "Rewriting deep technical documents under docs/architecture, docs/superpowers, docs/adr, or implementation-specific records.",
+    "Showing source paths, test paths, Work Item progress, branch names, PR status, or implementation chronology in user entry documents.",
+    "Inventing provider, production, investment, or longitudinal validation results.",
+    "Adding a dynamic documentation service or changing the existing documentation checker beyond what is necessary for this reader rewrite."
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository governance, scope, evidence, and lifecycle requirements."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Canonical project and governance terminology."
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "Work Item and evidence lifecycle rules."
+    },
+    {
+      "path": "README.md",
+      "reason": "User entry copy and navigation to revise."
+    },
+    {
+      "path": "docs/README.md",
+      "reason": "Documentation entry navigation to revise for user goals."
+    },
+    {
+      "path": "docs/CAPABILITIES.md",
+      "reason": "Existing implementation-oriented capability overview to rewrite."
+    },
+    {
+      "path": "docs/product/**",
+      "reason": "Product purpose, user-facing scope, and non-goals."
+    },
+    {
+      "path": "docs/domain/**",
+      "reason": "Research and judgment meaning to summarize accurately."
+    },
+    {
+      "path": "docs/data/**",
+      "reason": "Source quality, uncertainty, and evidence limits."
+    },
+    {
+      "path": "docs/scoring/**",
+      "reason": "Ranking and stage boundary meaning."
+    },
+    {
+      "path": "docs/validation/**",
+      "reason": "Longitudinal validation scope and limits."
+    },
+    {
+      "path": "docs/operations/**",
+      "reason": "Weekly Radar usage and provider boundary."
+    },
+    {
+      "path": "scripts/check_docs_metadata.py",
+      "reason": "Existing reader-document heading, link, marker, and runtime alignment checker."
+    },
+    {
+      "path": "user request and continuation authorization in conversation",
+      "reason": "User explicitly requested a user-facing rewrite and continuation through the full lifecycle."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "audience_mismatch",
+      "claim_drift",
+      "link_integrity"
+    ],
+    "reason": "The rewrite must simplify language without changing the meaning of research outputs or external-validation limits.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The user-facing entry rewrite is bounded to existing source documents and will be checked for link integrity, claim drift, and technical/process leakage."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+      "canImplement": true,
+      "canVerify": true,
+      "needsHumanDecision": false,
+      "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user-facing rewrite scope, acceptance, evidence, and verification are explicit and bounded to reader entry documents."
+  },
+  "preReviewWarnings": [
+    "Review the first screen for user language and remove technical implementation or project-progress framing.",
+    "Check every user-facing claim against the detailed product, data, validation, and operations documents."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "docs/CAPABILITIES.md opens with what a user can do with ORG-X, the result they receive, the available reading paths, and concise usage limits; its primary content contains no source paths, test paths, Work Item progress, branch/PR status, or implementation chronology.",
+    "The capability matrix uses user-facing statuses (已提供、有边界、需外部确认、不提供) and describes outcomes in plain Chinese rather than DDD, layer, fixture, receipt, or governance terminology.",
+    "Every primary detail link in the user-facing capability page points to an existing product, domain, data, scoring, validation, or operations document; no source, test, .ai, docs/architecture, or docs/superpowers path appears in the primary matrix.",
+    "The user-facing page explicitly explains what ORG-X does not provide, including trading advice, unsupported inference, and unverified production/provider results, without making new product claims.",
+    "README.md and docs/README.md expose user-goal navigation (understand the product, research a company, check evidence, read the weekly report, understand limits) and do not make contributor, reviewer, or project-progress material the primary route.",
+    "Documentation metadata, strict AI Cockpit checks, archive, PR hosted checks, merge, and ai-close-work-item pass; final main is synchronized and has no Work Item branch or worktree residue."
+  ],
+  "guidelines": [
+    "Write the user entry documents from user goals, actions, and outcomes rather than implementation structure.",
+    "Keep technical evidence, Work Item progress, branch/PR status, and implementation chronology out of the user-facing primary content.",
+    "Use plain Chinese; explain stable terms such as Top5, Rising, Watch, Dropped, UNKNOWN, and UNAVAILABLE when they are necessary.",
+    "Link to existing authoritative product, domain, data, scoring, validation, and operations documents instead of duplicating technical specifications.",
+    "State boundaries and non-goals explicitly; do not convert local fixtures or source evidence into production/provider claims."
+  ],
+  "intent": {
+    "problem": "The current capability overview is useful for engineering audit but is not a user guide: its first screen emphasizes source files, tests, bounded contexts, Work Item governance, and implementation boundaries. A user needs to understand what ORG-X helps them investigate, what outputs mean, where to continue reading, and what the product does not claim.",
+    "constraints": [
+      "Keep the rewrite static and repository-local.",
+      "Use Chinese as the primary language and write from user goals and outcomes.",
+      "Preserve the meaning of existing research, evidence, ranking, validation, and operations documents.",
+      "Do not change runtime behavior or rewrite deep technical specifications.",
+      "Do not claim real provider, production, investment, or completed longitudinal validation results."
+    ],
+    "rationale": "A user-facing first screen reduces the gap between the product's value and its internal architecture. Technical evidence remains available in the repository's governed records and detailed documents, while the entry path becomes understandable without reading implementation history."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "用户在首屏能理解 ORG-X 能做什么以及会得到什么结果。",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "能力一览先说明用户任务、输出结果和使用限制，不要求先理解技术结构。",
+      "verificationPlan": "阅读 docs/CAPABILITIES.md、README.md 和 docs/README.md 的首屏内容，并以文档审查结果确认。"
+    },
+    {
+      "scenario": "用户能按研究目标从能力一览进入现有详情文档。",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "主要入口链接都指向现有产品、领域、数据、评分、验证或运营说明，且目标文件存在。",
+      "verificationPlan": "运行文档元数据检查并逐项核对能力一览、根 README、文档目录的用户目标链接。"
+    },
+    {
+      "scenario": "用户能分辨已提供、有边界、需外部确认和不提供。",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "状态词使用用户能理解的中文，并明确资料、外部服务和生产环境验证的边界。",
+      "verificationPlan": "对照 docs/CAPABILITIES.md 与数据、验证、运营说明，检查状态定义和限制是否一致。"
+    },
+    {
+      "scenario": "用户入口不把技术实现或项目进度当作产品内容。",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "三份入口文档不出现源码/测试路径、Work Item、分支/PR、提交或实现进度等主线表达。",
+      "verificationPlan": "运行文档检查，并对三份入口文档执行技术与项目进度标记检索，再进行独立文档审查。"
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "docsMetadata",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 49
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-user-facing-capability-guide.json",
+    "baseCommit": "b526c7e6571416ffac7c9681ef26c9561fe58373",
+    "initialScopeDigest": "a18e8289325be6c89dbaebb95c0ee1486f9fbb9f00c270be1a153faa8ff489a2",
+    "contractSkeletonDigest": "1ecd495a17197ca0349af9d6f74fab13883b4718ef9556c48bf931c2e0b9932d"
+  }
+}

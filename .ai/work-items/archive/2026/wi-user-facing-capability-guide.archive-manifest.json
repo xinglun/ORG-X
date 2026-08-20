@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-user-facing-capability-guide",
+  "archiveSequence": 49,
+  "contractPath": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json",
+  "contractSha256": "312bb70884da0a7908f226ce1c29697582b7c85895a37af0082b0df08939dce1",
+  "summarySha256": "61ee46d918790c7fe7fdafdfd3d9dface031a86e46719def7714944944e004cc",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.json",
+      "sha256": "b171ae1b1f61ee5af2a11ae2617017a3f31273d0d6a86ff557bf28ecbcd07f5c"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.md",
+      "sha256": "4c804b8944010c75b48dc1bee8c582b762b9a36525207c0d319246f63477c3f5"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "f28cac855163082f3e82936b6b8043c296a2f93179283a385e0289be52a2558c",
+    "binding": {
+      "baseCommit": "b526c7e6571416ffac7c9681ef26c9561fe58373",
+      "candidateHead": "b526c7e6571416ffac7c9681ef26c9561fe58373",
+      "candidateTreeDigest": "f2ad90b161960288e1845e47288d79a83211528cfc2b51cb9d68e478dc9865a9",
+      "candidateDiffDigest": "8b78a02aa30eafb0293dca543b4d02b215b0555ad58bc0cdb030426d17125241"
+    }
+  }
+}

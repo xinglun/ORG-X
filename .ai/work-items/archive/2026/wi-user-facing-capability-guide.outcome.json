@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-user-facing-capability-guide",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "f53f1574c11a268ef5d9c768bcc87e4637943ff889cf2b29faaa34a93b3b4aae"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-user-facing-capability-guide",
+    "contractDigest": "312bb70884da0a7908f226ce1c29697582b7c85895a37af0082b0df08939dce1",
+    "summaryDigest": "5c7257fcaaf13a20c0a1f42af656de4268e7b0f49ea05f1e317031c684193162",
+    "verificationDigest": "7017b97b1f8b079324fcffaf576280efcaeff18f16d7e8ce1abfbdd5d4b7bd74",
+    "baseCommit": "b526c7e6571416ffac7c9681ef26c9561fe58373",
+    "headCommit": "b526c7e6571416ffac7c9681ef26c9561fe58373",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "f28cac855163082f3e82936b6b8043c296a2f93179283a385e0289be52a2558c",
+      "binding": {
+        "baseCommit": "b526c7e6571416ffac7c9681ef26c9561fe58373",
+        "candidateHead": "b526c7e6571416ffac7c9681ef26c9561fe58373",
+        "candidateTreeDigest": "f2ad90b161960288e1845e47288d79a83211528cfc2b51cb9d68e478dc9865a9",
+        "candidateDiffDigest": "8b78a02aa30eafb0293dca543b4d02b215b0555ad58bc0cdb030426d17125241"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-user-facing-capability-guide generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-user-facing-capability-guide generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-user-facing-capability-guide",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-user-facing-capability-guide.contract.json",
       ".ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json",
@@ -28,49 +51,139 @@
       ".ai/work-items/archive/2026/wi-user-facing-capability-guide.archive-manifest.json",
       ".ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.json",
       ".ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "No real provider, production environment, investment outcome, or completed longitudinal validation is claimed by this documentation change."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "No real provider, production environment, investment outcome, or completed longitudinal validation is claimed by this documentation change.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "No real provider, production environment, investment outcome, or completed longitudinal validation is claimed by this documentation change.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [
+      {
+        "problem": "The previous capability page led with implementation evidence and project roles instead of user outcomes.",
+        "action": "Replaced the matrix with user goals, results, limits, plain-language status labels, and detail links.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "README.md",
+            "subject": "observedIssues[0] audience"
+          },
+          {
+            "source": "docs/README.md",
+            "subject": "observedIssues[0] audience"
+          },
+          {
+            "source": "docs/CAPABILITIES.md",
+            "subject": "observedIssues[0] audience"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "README.md",
+            "subject": "observedIssues[0] audience"
+          },
+          {
+            "source": "docs/README.md",
+            "subject": "observedIssues[0] audience"
+          },
+          {
+            "source": "docs/CAPABILITIES.md",
+            "subject": "observedIssues[0] audience"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "The previous navigation mixed research readers with contributors, reviewers, architecture, and operations roles.",
+        "action": "Reorganized root and documentation entry points around product understanding, company research, evidence, weekly results, and limits.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "README.md",
+            "subject": "observedIssues[1] navigation"
+          },
+          {
+            "source": "docs/README.md",
+            "subject": "observedIssues[1] navigation"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "README.md",
+            "subject": "observedIssues[1] navigation"
+          },
+          {
+            "source": "docs/README.md",
+            "subject": "observedIssues[1] navigation"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "static_status_drift",
+        "severity": "medium",
+        "title": "static_status_drift",
+        "detail": "The capability labels and links are static and need maintenance when detailed product or operations documents change; the existing checker verifies links and markers, not semantic freshness.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "No real provider, production environment, investment outcome, or completed longitudinal validation is claimed by this documentation change.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The capability labels and links are static and need maintenance when detailed product or operations documents change; the existing checker verifies links and markers, not semantic freshness.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -873,6 +986,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

@@ -1,14 +1,17 @@
 # ORG-X
 
-ORG-X 是一个研究雷达，用来寻找 AI 从工具变成新生产方式的临界点。它观察美国上市公司如何重构核心生产系统、工作流、组织责任和经济结果，并把值得继续研究的案例整理出来。
+ORG-X 是一个研究雷达，帮助你发现哪些企业正在把 AI 用进关键业务，并说明发生了什么变化、还缺哪些资料。这里的“生产系统”，指企业持续创造核心价值的整体生产方式。
 
-## 先读什么
+## 从你的目标开始
 
-- [能力一览](docs/CAPABILITIES.md)：按能力域查看当前边界、状态和详细证据链接。
-- [读者导航](docs/README.md)：完整的产品、方法、架构和运维说明。
-- [产品 North Star](docs/product/NORTH_STAR.md)：ORG-X 要回答的问题，以及什么才算生产方式变化。
-- [证据与数据规则](docs/data/DATA_SOURCE_POLICY.md)：来源优先级、溯源和 `UNKNOWN` / `UNAVAILABLE` 的含义。
-- [Weekly Radar 使用说明](docs/operations/WEEKLY_RADAR.md)：本地运行、Telegram 配置、调度和 `data` 分支保留规则。
+- 想知道 ORG-X 能做什么：看[能力一览](docs/CAPABILITIES.md)，按用户目标进入详情。
+- 想理解 ORG-X 研究的问题：看[研究目的（North Star）](docs/product/NORTH_STAR.md)和[产品要求](docs/product/PRD.md)。
+- 想研究一家企业改变了什么：看[生产系统模型](docs/domain/PRODUCTION_SYSTEM_MODEL.md)和[转型阶段模型](docs/domain/TRANSFORMATION_STAGE_MODEL.md)。
+- 想核对资料和不确定性：看[证据模型](docs/domain/EVIDENCE_MODEL.md)、[数据来源规则](docs/data/DATA_SOURCE_POLICY.md)和[数据质量规则](docs/data/DATA_QUALITY_POLICY.md)。
+- 想了解每周报告如何生成和阅读：看[Weekly Radar 使用说明](docs/operations/WEEKLY_RADAR.md)。
+- 想了解研究边界：看[范围与边界](docs/product/SCOPE.md)。
+
+完整的用户阅读路径见[文档导航](docs/README.md)。
 
 ## ORG-X 研究什么
 
@@ -18,20 +21,17 @@ ORG-X 关注的不是“谁拥有最强 AI”，而是：
 2. 它改变了什么生产方式？
 3. 这种变化是否已经产生结构性的生产率优势？
 
-研究对象从 AI 工具、局部替代和工作流重构开始，逐步检查核心生产系统、组织适配、生产率突破和行业扩散。
+研究先看 AI 是否改变了某个工作环节，再看这种变化是否进入核心业务、影响职责分工，并在实际结果中持续出现。
 
 ## 研究边界
 
-ORG-X 是生产方式研究系统，不是交易系统。`Top5`（研究优先级前五项）、`Rising`（结构证据增强）、`Watch`（待继续研究）和 `Dropped`（结构证据减弱或失效）只表示研究资源优先级，不代表买入、持有、卖出、价格预测、仓位或任何资本行动。定义详见 [Ranking Model](docs/domain/RANKING_MODEL.md)。
+ORG-X 是生产系统研究工具，不是交易系统。研究结果中的标签含义是：
 
-外部资料首先是数据和 Evidence Candidate。系统优先使用一手来源，只用规则抽取；无法确认、存在歧义或缺少必要来源时保留 `UNKNOWN` 或 `UNAVAILABLE`，不根据经验补全。
+- `Top5`：当前最多五个最值得优先阅读的研究对象。
+- `Rising`：支持结构性变化的证据正在增强。
+- `Watch`：已有研究价值，但还需要继续观察。
+- `Dropped`：原有结构性证据减弱、失效，或不再满足当前比较条件。
 
-## 本地检查
+这些标签只表示研究资源优先级，不代表买入、持有、卖出、价格预测、仓位或任何资本行动。定义详见[排名模型](docs/domain/RANKING_MODEL.md)。
 
-环境要求见仓库的 [Rust toolchain 配置](rust-toolchain.toml)。安装工具链后，可先运行以下命令验证本地环境；Weekly Radar 的参数、环境变量和运行限制见 [使用说明](docs/operations/WEEKLY_RADAR.md)。
-
-```bash
-make check
-```
-
-该命令运行格式检查、禁止警告的 Clippy 检查和完整测试。
+外部资料首先是研究线索。系统优先寻找一手来源；无法确认、存在歧义或缺少必要来源时，会保留“未知”或“不可用”，不会根据经验补全。完整边界见[能力一览](docs/CAPABILITIES.md)和[范围与边界](docs/product/SCOPE.md)。

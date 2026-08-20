@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-schedule-plan-residue-reconciliation",
+  "archiveSequence": 42,
+  "contractPath": ".ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.summary.json",
+  "contractSha256": "2fcf0b03cbb869e9eb90b40c5912de5dd1499ae2f81dc5a9acbf10df6a4b91f6",
+  "summarySha256": "4979f2376f8160eae0843392694eb8ca219e9c87ea78ae48d290a641f9ee705d",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.outcome.json",
+      "sha256": "5e098307500ffece1c07528aebeca11dc0739042a3f4cba6e0ebd307ad32725d"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.outcome.md",
+      "sha256": "757080a8db434055473b7ae6d641bb95a33f259f8fc07a625698dc1f7f5548fe"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "4aa8f9f9f1002bbbae8adad0460b472a1b5c158da30eb152b097bacb7ea1432e",
+    "binding": {
+      "baseCommit": "0eaa2c4a15b807821c540a1b9ba1218c3ffafbf0",
+      "candidateHead": "0eaa2c4a15b807821c540a1b9ba1218c3ffafbf0",
+      "candidateTreeDigest": "1b57f31175e8b7f2d4ebcd00eec7b8808a789433d805c06113073639369f9917",
+      "candidateDiffDigest": "8e82610462894e0713b840712c8e0fefa445d1e7353f9ad7b59b32694adb4cc0"
+    }
+  }
+}

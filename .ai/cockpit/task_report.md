@@ -4,12 +4,13 @@ Task Result
 Status: Success
 
 What was completed
-- Changed .ai/work-items/active/wi-roadmap-post-schedule-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.contract.json]
-- Changed .ai/work-items/active/wi-roadmap-post-schedule-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.summary.json]
-- Changed docs/superpowers/plans/2026-08-20-roadmap-post-schedule-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-roadmap-post-schedule-reconciliation.md]
+- Changed .ai/work-items/active/wi-schedule-plan-residue-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.contract.json]
+- Changed .ai/work-items/active/wi-schedule-plan-residue-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.summary.json]
+- Changed docs/superpowers/plans/2026-08-20-schedule-plan-residue-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-schedule-plan-residue-reconciliation.md]
+- Changed docs/superpowers/plans/2026-08-17-wi-wr-013-weekly-scheduler.md [evidence: docs/superpowers/plans/2026-08-17-wi-wr-013-weekly-scheduler.md]
 - Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
-- Changed .ai/work-items/active/wi-roadmap-post-schedule-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.outcome.json]
-- Changed .ai/work-items/active/wi-roadmap-post-schedule-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.outcome.md]
+- Changed .ai/work-items/active/wi-schedule-plan-residue-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.outcome.json]
+- Changed .ai/work-items/active/wi-schedule-plan-residue-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 
@@ -28,7 +29,7 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- The displayed roadmap count is a timestamped pre/post-archive snapshot and can become stale after future Work Items; archive/index.json remains authoritative. [evidence: residualRisks]
+- The roadmap count is a timestamped pre/post-archive snapshot and must be refreshed after future Work Items. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

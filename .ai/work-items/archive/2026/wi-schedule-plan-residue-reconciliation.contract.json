@@ -1,0 +1,248 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-schedule-plan-residue-reconciliation",
+  "mode": "code",
+  "title": "wi-schedule-plan-residue-reconciliation",
+  "baseCommit": "0eaa2c4a15b807821c540a1b9ba1218c3ffafbf0",
+  "baselineDirtyPaths": [],
+  "rawUserRequest": "继续对应",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Current user continuation objective to continue corresponding acceptance work.",
+    "digest": "0915418c3714887036d18130240d92c8f646e9d734eadb925470ac833b67ca04",
+    "capturedAt": "2026-08-20T14:00:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation", "documentation"],
+    "prohibitedCapabilities": ["production_operation", "llm_fact_extraction", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly requested continuing all corresponding acceptance work and authorized required Work Item lifecycle actions in Contract evidence.",
+    "authorizedExternalEffects": ["Create and update the Work Item PR for this documentation reconciliation.", "Run hosted checks, merge the PR, and close this Work Item after merge."]
+  },
+  "scope": [
+    ".ai/work-items/active/wi-schedule-plan-residue-reconciliation.contract.json",
+    ".ai/work-items/active/wi-schedule-plan-residue-reconciliation.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-schedule-plan-residue-reconciliation.outcome.json",
+    ".ai/work-items/active/wi-schedule-plan-residue-reconciliation.outcome.md",
+    "docs/superpowers/plans/2026-08-20-schedule-plan-residue-reconciliation.md",
+    "docs/superpowers/plans/2026-08-17-wi-wr-013-weekly-scheduler.md",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md"
+  ],
+  "outOfScope": [
+    "existing archived Work Item records and historical data-branch files",
+    "Rust source, tests, workflows, configuration, and dependency files",
+    "changing product scope, dependency semantics, or the production schedule workflow",
+    "creating or modifying any external provider artifact"
+  ],
+  "sources": [
+    {
+      "path": "docs/superpowers/plans/2026-08-17-wi-wr-013-weekly-scheduler.md",
+      "reason": "The historical scheduler implementation plan still states that the default decision is Sunday, contradicting the current Monday production contract."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-013-weekly-scheduler.md",
+      "reason": "The current scheduler specification establishes Monday as the default and is the wording authority for the historical plan correction."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "The archive index is the lifecycle authority and currently contains 41 contiguous archived Work Items."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.outcome.md",
+      "reason": "The archived schedule correction provides evidence that the Monday default is implemented and verified."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "The roadmap snapshot must be advanced from 40/41 to 41/42 when this new governance Work Item is archived."
+    },
+    {
+      "path": "Makefile",
+      "reason": "The repository Make targets define the supported finish and lifecycle verification commands."
+    },
+    {
+      "path": "Makefile.ai",
+      "reason": "The AI Cockpit Make targets define the governed status, quality, and lifecycle checks used for this Work Item."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["governance_consistency"],
+    "reason": "This is a documentation-only residue cleanup and roadmap snapshot update. The main risk is leaving conflicting schedule wording or publishing a count that diverges from archive authority; no runtime behavior changes are in scope.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit full-lifecycle remediation authorization"
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The stale sentence and archive/roadmap mismatch are deterministic documentation corrections supported by current repository evidence; no product decision is required."
+  },
+  "preReviewWarnings": [],
+  "acceptance": [
+    "The historical scheduler plan no longer presents Sunday as the default and states Monday at 09:00 JST / 00:00 UTC, consistent with the current scheduler specification and production workflow.",
+    "The roadmap status table reports 15 completed governance/product/maintenance items before this reconciliation and 16 after its archive, 9 core research items, 17 Weekly Radar items, and 41 archived items before this Work Item / 42 after it archives.",
+    "The roadmap Completed Work Items table adds wi-schedule-plan-residue-reconciliation without changing product scope, dependency semantics, or historical completed rows.",
+    "The diff is limited to the declared documentation and governed lifecycle artifacts; AI status, scope, summary, and quality checks pass.",
+    "The Work Item completes the required before-finish checkpoint, finish, archive, hosted PR checks, merge, ai-close-work-item, and final clean-state verification."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "No governed schedule documentation retains Sunday as the default.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["docs/superpowers/plans/2026-08-17-wi-wr-013-weekly-scheduler.md", "docs/superpowers/specs/2026-08-17-wi-wr-013-weekly-scheduler.md"],
+      "expected": "The historical plan and current specification both state Monday at 09:00 JST / 00:00 UTC as the default.",
+      "verificationPlan": "Search the declared schedule documentation for Sunday-default wording and review the final diff."
+    },
+    {
+      "scenario": "The roadmap snapshot matches archive sequence 41 before this Work Item archives.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [".ai/work-items/archive/index.json", "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md"],
+      "expected": "Archive length is 41 and the roadmap states 41 before / 42 after this Work Item, with this Work Item listed in the completed table.",
+      "verificationPlan": "Inspect archive/index.json and the edited roadmap before finish and after root synchronization."
+    },
+    {
+      "scenario": "The governed Work Item archives as explicit sequence 42.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["AGENTS.md", "Makefile", "Makefile.ai", ".ai/cockpit/README.md"],
+      "expected": "Finish, archive, PR checks, merge, ai-close-work-item, and final archive sequence validation pass.",
+      "verificationPlan": "Run the canonical lifecycle and final clean-state audit."
+    }
+  ],
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features."
+  ],
+  "intent": {
+    "problem": "The final root audit found one stale historical scheduler-plan sentence that still says the default decision is Sunday, even though the current implementation, specification, tests, operations docs, and production workflow use Monday.",
+    "constraints": [
+      "Use the current scheduler specification and production workflow as the schedule wording authority.",
+      "Change only the stale historical plan sentence and the roadmap snapshot needed for this new governed Work Item; do not change runtime behavior or product semantics.",
+      "Keep archive/index.json authoritative and preserve the explicit pre/post count wording."
+    ],
+    "rationale": "A focused documentation cleanup removes the last misleading schedule statement while keeping the roadmap and immutable lifecycle records synchronized."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 42
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-schedule-plan-residue-reconciliation.json",
+    "baseCommit": "0eaa2c4a15b807821c540a1b9ba1218c3ffafbf0",
+    "initialScopeDigest": "ce73e00d62558d6134ba31e202aca1acf18f176aa1b861f33fc9a777cc97ec92",
+    "contractSkeletonDigest": "573c1f7fa4b15e59621513b71048953133cdaa1f4788e0f1c824ba14378c31cc"
+  }
+}

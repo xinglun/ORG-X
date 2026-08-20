@@ -1,7 +1,7 @@
 # WR-013 Weekly Scheduler Implementation Plan
 
 - [x] Amend the Work Item Contract with scope, authority evidence, risks,
-  scenarios, and the default Sunday decision.
+  scenarios, and the default Monday decision.
 - [x] Record the required `before_edit` checkpoint.
 - [x] Add failing module-local and public integration tests for default,
   configured, structured, and boundary behavior.
@@ -10,4 +10,4 @@
   repository quality suite.
 - [x] Record the `before_finish` checkpoint, run strict Finish, and archive the
   lifecycle evidence.
-- [ ] Commit, publish, merge, close, and clean the WR-013 branch and worktree.
+- [x] Commit, publish, merge, close, and clean the WR-013 branch and worktree.

@@ -493,6 +493,18 @@
       "summarySha256": "ec8f4b641a44d56fd59c69e0287bdc540de789fcffc4069e4f8a6b076f06bfce",
       "manifestPath": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.archive-manifest.json",
       "manifestSha256": "6d07ff4ab01f64a445492f157d49db531757704f7f49212fc71a0b7c56c3c28a"
+    },
+    {
+      "workItemId": "wi-schedule-plan-residue-reconciliation",
+      "archiveSequence": 42,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.contract.json",
+      "contractSha256": "2fcf0b03cbb869e9eb90b40c5912de5dd1499ae2f81dc5a9acbf10df6a4b91f6",
+      "archivedAt": "2026-08-20T14:23:40.118783+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.summary.json",
+      "summarySha256": "4979f2376f8160eae0843392694eb8ca219e9c87ea78ae48d290a641f9ee705d",
+      "manifestPath": ".ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.archive-manifest.json",
+      "manifestSha256": "55545f6f4bf83e99361f3890602c2acaf48226a0e606b309ea01b56bab6f8319"
     }
   ]
 }

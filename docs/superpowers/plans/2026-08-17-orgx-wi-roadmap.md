@@ -32,14 +32,14 @@
 
 | 类别 | 数量 | 当前状态 |
 | --- | ---: | --- |
-| 已完成治理、产品与维护 WI | 9 | Completed / archived |
+| 已完成治理、产品与维护 WI | 12 | Completed / archived |
 | 核心研究 Pipeline WI | 9 | Completed / archived |
 | Weekly Radar WI | 16 | Completed / archived |
-| 已归档 Work Item 合计 | 34（本 WI 归档后为 35） | 以 `archive/index.json` 为准 |
+| 已归档 Work Item 合计 | 36（本 WI 归档后为 37） | 以 `archive/index.json` 为准 |
 | 尚未创建 Active Contract 的本路线图候选 | 0 | 当前表内无未处理候选 |
-| 当前 Active Work Item | 0（本 WI 归档后） | `no_active_work_item` |
+| 当前 Active Work Item | 0 | `no_active_work_item` |
 
-上表的 34 项由 `.ai/work-items/archive/index.json` 的 Contract/Summary/Outcome/manifest 记录确认；本次 WI 完成归档后，索引将包含 35 项。`Completed / archived` 表示治理生命周期已闭合，不等于外部 Provider 行为已在本地测试中验证；各 Work Item 的 Outcome 保留其 warning、needs_human_confirmation 和 residual risk。
+上表的 36 项由 `.ai/work-items/archive/index.json` 的 Contract/Summary/Outcome/manifest 记录确认；本次 WI 完成归档后，索引将包含 37 项。`Completed / archived` 表示治理生命周期已闭合，不等于外部 Provider 行为已在本地测试中验证；各 Work Item 的 Outcome 保留其 warning、needs_human_confirmation 和 residual risk。
 
 ## 2. Product North Star and Weekly Radar purpose
 
@@ -71,6 +71,9 @@ No meaningful structural change this week.
 | `wi-weekly-radar-report` | Weekly Radar report contract and implementation | Completed | `.ai/work-items/archive/2026/wi-weekly-radar-report.*` |
 | `wi-reference-impact-cleanup` | Reference-impact evidence and local residue cleanup | Completed | `.ai/work-items/archive/2026/wi-reference-impact-cleanup.*` |
 | `wi-weekly-radar-snapshot-lifecycle` | Durable input snapshot, delivery retry, archive immutability | Completed | `.ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.*` |
+| `wi-roadmap-status-reconciliation` | Reconcile roadmap status with archived Work Item evidence | Completed | `.ai/work-items/archive/2026/wi-roadmap-status-reconciliation.*` |
+| `wi-cockpit-status-cleanup` | Remove stale live Cockpit status snapshot and index | Completed | `.ai/work-items/archive/2026/wi-cockpit-status-cleanup.*` |
+| `wi-roadmap-final-reconciliation` | Reconcile roadmap after the final lifecycle audit | Completed | `.ai/work-items/archive/2026/wi-roadmap-final-reconciliation.*` |
 
 `WI-002` 的 Domain 只处理已提供事实和确定性过滤；Provider 映射、时间语义、持久化与后续研究 Pipeline 均明确延期。后续延期项已分别通过 `wi-003`–`wi-011` 与 `wi-wr-001`–`wi-wr-016-runtime` 完成独立 Contract 生命周期。
 
@@ -237,7 +240,7 @@ Weekly Radar 全部完成时，必须同时满足：
 
 ## 9. Execution handoff
 
-当前路线图列出的 34 个 Work Item 均已有归档生命周期证据；本次状态修订完成并归档后，`wi-roadmap-status-reconciliation` 也会加入索引，Active Work Item 回到 0。后续新增工作必须从最新 `origin/main` 建立专用分支、创建独立 Contract，并通过 AI Cockpit Preflight；不能仅通过修改本路线图把新任务标记为完成。
+当前路线图列出的 36 个 Work Item 均已有归档生命周期证据；本次状态修订完成并归档后，`wi-roadmap-final-reconciliation` 也会加入索引，Active Work Item 回到 0。后续新增工作必须从最新 `origin/main` 建立专用分支、创建独立 Contract，并通过 AI Cockpit Preflight；不能仅通过修改本路线图把新任务标记为完成。
 
 ### Task checklist for this roadmap document
 

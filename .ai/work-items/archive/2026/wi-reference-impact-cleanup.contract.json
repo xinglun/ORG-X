@@ -1,0 +1,287 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-reference-impact-cleanup",
+  "mode": "code",
+  "title": "Repair stale AI Cockpit reference-impact evidence and cleanup residue",
+  "baseCommit": "423c826f60d5e10769579a583b7ca84e40b2aeb8",
+  "baselineDirtyPaths": [],
+  "rawUserRequest": "查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User-authorized continuation of the full remediation and Work Item lifecycle.",
+    "digest": "sha256:cf250b033a996a6d515ba131c0d7fe7974e4536e03b4f17ac8a205f181e5cb9f",
+    "capturedAt": "2026-08-20"
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized completing every corresponding Work Item, self-checking, correcting failures, and recording any required authorization in the Contract.",
+    "authorizedExternalEffects": []
+  },
+  "problemStatement": "The repository's Rust checks pass, but make quality and strict AI Cockpit quality stop at check-ai-reference-impact because generated reports still observe exact stale detached worktrees and prior target/reference-impact artifacts as live configuration references. The current local checkout also retains three clean detached worktrees from completed work. This corrective Work Item restores a trustworthy local governance baseline without changing product behavior.",
+  "scope": [
+    ".ai/work-items/active/wi-reference-impact-cleanup.contract.json",
+    ".ai/work-items/active/wi-reference-impact-cleanup.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-reference-impact-cleanup.outcome.json",
+    ".ai/work-items/active/wi-reference-impact-cleanup.outcome.md",
+    ".ai/evidence/reference-impact/**",
+    "target/reference-impact/**",
+    ".worktrees/docs-reader/**",
+    ".worktrees/weekly-radar-report/**",
+    ".worktrees/weekly-radar-runtime/**"
+  ],
+  "outOfScope": [
+    "src/**",
+    "tests/**",
+    "Cargo.toml",
+    "Cargo.lock",
+    ".github/**",
+    "docs/product/**",
+    "docs/domain/**",
+    "docs/data/**",
+    "docs/operations/**",
+    "Canonical archived Work Item records under .ai/work-items/archive/**",
+    "Changing the reference-impact checker, weakening a quality gate, or adding an exception for stale paths"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository governance requires quality gates to pass and forbids hand-editing generated current status or weakening evidence checks."
+    },
+    {
+      "path": ".ai/guards/reference_impact_policy.yaml",
+      "reason": "Defines the fail-closed decision policy and recovery condition for live references."
+    },
+    {
+      "path": "scripts/ai_check_reference_impact.py",
+      "reason": "Authoritative implementation of the reference-impact evaluator and coverage gate."
+    },
+    {
+      "path": "Makefile.ai",
+      "reason": "Defines check-ai-reference-impact and the composite quality gate."
+    },
+    {
+      "path": "target/reference-impact/configure_ai_cockpit_ci.decision.json",
+      "reason": "Observed blocking evidence names the stale worktree and target paths causing the gate failure."
+    },
+    {
+      "path": "git worktree list --porcelain",
+      "reason": "Observed local state identifies the three clean detached worktrees in scope for cleanup."
+    }
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Only the three known clean detached worktrees and generated reference-impact output are removed.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["git worktree list --porcelain", "git status --short --branch"],
+      "expected": "No source, test, documentation, canonical evidence, or archived Work Item file is deleted or modified.",
+      "verificationPlan": "Record the exact before/after paths and inspect git diff plus worktree status."
+    },
+    {
+      "scenario": "Reference-impact records are evaluated without stale local path references.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [".ai/evidence/reference-impact/**", "scripts/ai_check_reference_impact.py"],
+      "expected": "make check-ai-reference-impact exits successfully with no block decision.",
+      "verificationPlan": "Run the canonical Make target and inspect generated decisions."
+    },
+    {
+      "scenario": "The full repository quality gate is restored.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["Makefile.ai", "make quality"],
+      "expected": "make quality exits successfully without changing the gate implementation.",
+      "verificationPlan": "Run make quality after focused cleanup and record the exact exit status/output."
+    },
+    {
+      "scenario": "The Work Item completes the governed lifecycle.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [".ai/cockpit/README.md", "AGENTS.md"],
+      "expected": "Preflight, checkpoints, finish, archive, PR, merge, close, and local/remote cleanup are evidenced.",
+      "verificationPlan": "Run the canonical lifecycle targets and inspect branch, worktree, archive, and remote state."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": ["destructive_cleanup", "governance_evidence", "lifecycle"],
+    "reason": "The Work Item removes exact local directories and generated reports to eliminate false live references. A path mistake could remove user-owned work, so the scope is explicit and must be verified before and after cleanup.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The three detached worktrees were observed clean and are exact known residue. Product source and canonical governance evidence remain out of scope."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "High-risk governance cleanup and full quality-gate restoration require strict evidence."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly authorized the complete governed remediation loop. Scope, evidence, destructive cleanup approval, acceptance, scenarios, and verification are explicit."
+  },
+  "preReviewWarnings": [
+    "Review exact worktree paths before removal; do not generalize cleanup to other directories."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record the pre-cleanup and pre-finish state so destructive cleanup and gate recovery remain auditable."
+  },
+  "acceptance": [
+    "The three observed clean detached worktrees are removed by exact path, and generated target/reference-impact output is cleared without deleting canonical .ai/evidence/reference-impact records.",
+    "No source, test, product documentation, archived Work Item record, or reference-impact checker implementation is changed.",
+    "make check-ai-reference-impact exits successfully and generated decisions contain no block caused by stale worktree or target references.",
+    "make quality exits successfully without weakening or bypassing any configured gate.",
+    "The Summary records before/after cleanup evidence, verification results, residual risks, and the complete governed lifecycle state."
+  ],
+  "intent": {
+    "problem": "AI Cockpit's reference-impact gate is blocked by stale local generated artifacts and detached worktree residue, so later Work Items cannot produce valid quality evidence.",
+    "constraints": [
+      "Only remove the three explicitly identified clean detached worktrees and generated target/reference-impact artifacts.",
+      "Do not delete or rewrite canonical .ai/evidence/reference-impact records, archived Work Item evidence, source code, tests, or product documentation.",
+      "Use repository-provided Make gates and preserve the exact clean main baseline before starting later Work Items."
+    ],
+    "rationale": "The checker reports concrete repository-local references rather than an abstract warning. Cleaning only those known generated/residual paths lets the existing evidence be evaluated truthfully and avoids weakening the governance gate."
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "documentation", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action"]
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {"check": "quality", "required": true}
+  ],
+  "guidelines": [
+    "Do not weaken the reference-impact checker or quality policy.",
+    "Do not hand-edit generated current_status.md; regenerate it through Make targets.",
+    "Use exact validated paths for destructive cleanup.",
+    "Do not change product source, tests, or canonical archived evidence in this corrective Work Item."
+  ],
+  "destructiveChangePolicy": {
+    "allowed": true,
+    "requiresHumanApproval": true,
+    "allowPatterns": [
+      "exact clean detached worktrees: .worktrees/docs-reader, .worktrees/weekly-radar-report, .worktrees/weekly-radar-runtime",
+      "generated target/reference-impact/** only"
+    ],
+    "approvalEvidence": {
+      "approved": true,
+      "approvedBy": "user-authorized",
+      "reason": "The current user request explicitly authorizes all corresponding remediation, self-check, correction, and full Work Item lifecycle actions.",
+      "identityEvidence": {
+        "schemaVersion": 1,
+        "approvalType": "destructive_change",
+        "identityLevel": "direct_user_authorized",
+        "actor": "user",
+        "provider": null,
+        "evidence": {
+          "directUserInstructionRef": "current user request: 查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+          "directUserInstructionDigest": "sha256:cf250b033a996a6d515ba131c0d7fe7974e4536e03b4f17ac8a205f181e5cb9f",
+          "authorizedAt": "2026-08-20T00:00:00+09:00"
+        },
+        "scope": [
+          "exact clean detached worktrees: .worktrees/docs-reader, .worktrees/weekly-radar-report, .worktrees/weekly-radar-runtime",
+          "generated target/reference-impact/** only"
+        ]
+      }
+    }
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized the complete governed remediation loop and asked required authorization to be written into each Contract."
+  },
+  "rollbackNote": "Restore the exact removed generated target/reference-impact output only by rerunning the canonical checker. Restore a removed clean worktree only by recreating it from its recorded commit if later evidence proves it was needed. No tracked product or canonical evidence file is modified by this Work Item.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 33
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-reference-impact-cleanup.json",
+    "baseCommit": "423c826f60d5e10769579a583b7ca84e40b2aeb8",
+    "initialScopeDigest": "d8609c06569e9bcf3297a55480e91efa636a7294d2592c25e0bf58842d9061a3",
+    "contractSkeletonDigest": "d84ae656d1268d956fcca46129e8e35c0c1fa3de8edd23cb8f23b5096f7a07ba"
+  }
+}

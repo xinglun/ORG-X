@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-reference-impact-cleanup",
+  "receiptPath": ".ai/work-items/starts/wi-reference-impact-cleanup.json",
+  "baseCommit": "423c826f60d5e10769579a583b7ca84e40b2aeb8",
+  "baseBranch": "codex/wi-reference-impact-cleanup",
+  "startTimestamp": "2026-08-20T01:40:01.117674+00:00",
+  "initialScopeDigest": "d8609c06569e9bcf3297a55480e91efa636a7294d2592c25e0bf58842d9061a3",
+  "contractSkeletonDigest": "d84ae656d1268d956fcca46129e8e35c0c1fa3de8edd23cb8f23b5096f7a07ba"
+}

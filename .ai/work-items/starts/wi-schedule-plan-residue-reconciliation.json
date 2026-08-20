@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-schedule-plan-residue-reconciliation",
+  "receiptPath": ".ai/work-items/starts/wi-schedule-plan-residue-reconciliation.json",
+  "baseCommit": "0eaa2c4a15b807821c540a1b9ba1218c3ffafbf0",
+  "baseBranch": "codex/wi-schedule-plan-residue-reconciliation",
+  "startTimestamp": "2026-08-20T05:16:20.791370+00:00",
+  "initialScopeDigest": "ce73e00d62558d6134ba31e202aca1acf18f176aa1b861f33fc9a777cc97ec92",
+  "contractSkeletonDigest": "573c1f7fa4b15e59621513b71048953133cdaa1f4788e0f1c824ba14378c31cc"
+}

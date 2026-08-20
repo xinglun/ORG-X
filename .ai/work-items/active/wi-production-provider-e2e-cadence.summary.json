@@ -229,38 +229,38 @@
   "overclaimPrevention": "Do not report completion for checks or behavior that were not verified.",
   "documentationAlignment": {
     "schemaVersion": 1,
-    "status": "not_checked",
-    "checkedAt": null,
+    "status": "aligned",
+    "checkedAt": "2026-08-20T22:51:10+09:00",
     "checks": [
       {
         "area": "plan",
-        "status": "not_checked",
-        "evidence": [],
-        "reason": "Complete this alignment check before finishing the Work Item."
+        "status": "aligned",
+        "evidence": ["docs/superpowers/plans/2026-08-20-production-validation-followups.md"],
+        "reason": "The plan assigns the distinct later period to this successor and keeps it separate from the first publication."
       },
       {
         "area": "contractSummaryEvidence",
-        "status": "not_checked",
-        "evidence": [],
-        "reason": "Complete this alignment check before finishing the Work Item."
+        "status": "aligned",
+        "evidence": [".ai/work-items/active/wi-production-provider-e2e-cadence.contract.json", ".ai/work-items/active/wi-production-provider-e2e-cadence.summary.json"],
+        "reason": "Contract and Summary use the same later-period acceptance, time-dependent gap, no-secret boundary, and independent-reference semantics."
       },
       {
         "area": "documentationCommandsCapability",
-        "status": "not_checked",
-        "evidence": [],
-        "reason": "Complete this alignment check before finishing the Work Item."
+        "status": "aligned",
+        "evidence": ["docs/operations/WEEKLY_RADAR.md", ".ai/policies/requested-operation.yaml", ".ai/project/capabilities.json"],
+        "reason": "User-facing operations documentation and the allowlisted production capability describe the same bounded behavior."
       },
       {
         "area": "multilingualSemantics",
-        "status": "not_checked",
-        "evidence": [],
-        "reason": "Complete this alignment check before finishing the Work Item."
+        "status": "aligned",
+        "evidence": ["docs/operations/WEEKLY_RADAR.md", ".github/workflows/weekly-radar.yml"],
+        "reason": "The later run keeps the configured report language while the system-reference/human-reference separation is language-independent."
       },
       {
         "area": "limitationsUnknownsHistory",
-        "status": "not_checked",
-        "evidence": [],
-        "reason": "Complete this alignment check before finishing the Work Item."
+        "status": "aligned",
+        "evidence": [".ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.json", "AGENTS.md"],
+        "reason": "The first-period evidence, failed-date non-retry rule, and later-period limitation are preserved without overclaim."
       }
     ]
   }

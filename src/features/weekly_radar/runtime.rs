@@ -15,7 +15,11 @@ pub mod sec;
 pub mod sources;
 pub mod telegram;
 
-pub use archive::{retain_recent, write_run, ArchiveError, ArchiveManifest};
+pub use archive::{
+    ensure_run_available, load_input_snapshot, persist_input_snapshot, retain_recent, write_run,
+    write_run_with_input_snapshot, ArchiveError, ArchiveManifest, InputSnapshot,
+    INPUT_SNAPSHOT_SCHEMA_VERSION,
+};
 pub use config::{CompanyConfig, CompanySourceRegistry};
 pub use error::RuntimeError;
 pub use http::{

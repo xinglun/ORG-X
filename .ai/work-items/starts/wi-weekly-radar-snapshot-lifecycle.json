@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-snapshot-lifecycle",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json",
+  "baseCommit": "f13383979839ecb4a40fe38503a43ce3e043b591",
+  "baseBranch": "codex/wi-weekly-radar-snapshot-lifecycle",
+  "startTimestamp": "2026-08-20T02:06:31.918087+00:00",
+  "initialScopeDigest": "84526669a0b1b1e007eb254db3f397c7dffe8b7aad365ca9864e6ff82485b6b6",
+  "contractSkeletonDigest": "3f0c34ccbf2ca020e8e7a44c6a3fbb4c0938cae6c6fcc922690b18de707a248f"
+}

@@ -1,0 +1,231 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-snapshot-lifecycle",
+  "mode": "code",
+  "title": "Persist immutable Weekly Radar snapshots before delivery and archive safely",
+  "baseCommit": "f13383979839ecb4a40fe38503a43ce3e043b591",
+  "baselineDirtyPaths": [],
+  "rawUserRequest": "查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User-authorized continuation of the full remediation and Work Item lifecycle.",
+    "digest": "sha256:cf250b033a996a6d515ba131c0d7fe7974e4536e03b4f17ac8a205f181e5cb9f",
+    "capturedAt": "2026-08-20"
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized completing every corresponding Work Item, self-checking, correcting failures, and recording any required authorization in the Contract.",
+    "authorizedExternalEffects": []
+  },
+  "problemStatement": "Weekly Radar currently acquires and renders the report, publishes to Telegram, and only then writes the durable archive. A process or network failure during delivery can therefore leave no durable pre-render input for an exact retry, while write_run can overwrite a same-date archive and performs retention before the final write succeeds. The runtime needs a durable immutable input snapshot before rendering, an explicit delivery-only retry path, atomic archive writes, same-date conflict protection, and retention only after a successful archive commit.",
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.md",
+    "src/main.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/weekly_radar_end_to_end.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md",
+    "docs/superpowers/plans/2026-08-20-weekly-radar-snapshot-lifecycle.md"
+  ],
+  "outOfScope": [
+    "src/features/evidence/**",
+    "src/features/transformation/**",
+    "src/features/ranking/**",
+    "src/features/reporting/**",
+    "src/features/weekly_radar/application/**",
+    "src/features/weekly_radar/domain/**",
+    "src/features/weekly_radar/infrastructure/**",
+    "src/features/weekly_radar/interface/**",
+    "config/weekly_radar/companies.json",
+    ".github/workflows/**",
+    "Cargo.toml",
+    "Cargo.lock",
+    "Adding Stage, Score, Rank, Top5, investment conclusions, LLM extraction, or trading decisions",
+    "Changing source authority semantics or the strict Candidate boundary",
+    "Real external Telegram, SEC, GitHub, or production data-branch operations in tests",
+    "Changing main branch history or unrelated Work Items"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Defines the mandatory Contract, checkpoint, finish, archive, PR, merge, and close lifecycle and scope guardrails."},
+    {"path": ".ai/cockpit/README.md", "reason": "Defines AI Cockpit evidence, preflight, summary, and governed Work Item lifecycle expectations."},
+    {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "Documents the intended operational sequence, data-branch archive, retention, and no-inference runtime boundary."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "Requires Compute → Persist Snapshot → Render → Publish → Archive and no same-date overwrite."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md", "reason": "Defines the existing deterministic runtime and its rule-only, evidence-first boundary."},
+    {"path": "src/main.rs", "reason": "Current CLI performs acquisition, render, publish, and archive in the unsafe order and has no retry option."},
+    {"path": "src/features/weekly_radar/runtime/archive.rs", "reason": "Current archive writer overwrites same-date files, uses non-atomic writes, and runs retention before commit."},
+    {"path": "src/features/weekly_radar/runtime/report.rs", "reason": "Current renderer is the deterministic report boundary and supplies the report identity used by receipts and archive."},
+    {"path": "tests/weekly_radar_runtime.rs", "reason": "Existing runtime and CLI tests establish report, receipt, archive, and command-line behavior."},
+    {"path": "tests/weekly_radar_end_to_end.rs", "reason": "Existing E2E sequence and retry tests establish the intended lifecycle ordering and retry semantics."}
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "A normal non-dry run persists the exact serialized runtime input before rendering or publishing.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/archive.rs"],
+      "expected": "The input snapshot exists before the renderer and delivery call; it contains as_of, language, primary-evidence state, and the complete RuntimeReportInput.",
+      "verificationPlan": "Use focused runtime tests with a recording sequence and inspect the persisted JSON before simulated publish failure."
+    },
+    {
+      "scenario": "A delivery-only retry loads the persisted input and does not reacquire external sources.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "--retry-as-of renders and publishes from the saved input with the saved language and date, without requiring SEC user-agent acquisition or source HTTP calls.",
+      "verificationPlan": "Persist a fixture input, invoke the CLI retry path with acquisition credentials absent, and assert the same report identity or use an injected source-free retry test."
+    },
+    {
+      "scenario": "A same-date archive cannot be overwritten and a failed archive leaves prior files unchanged.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "write_run returns an explicit existing-run error before mutation; atomic writes do not replace existing report, snapshot, receipt, or manifest files.",
+      "verificationPlan": "Write a fixture run, attempt a different same-date run, and compare all existing bytes before and after."
+    },
+    {
+      "scenario": "Retention runs only after a successful complete archive commit.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "Invalid receipts, conflicts, and write failures do not delete old files; successful commits retain only the configured recent window.",
+      "verificationPlan": "Seed an old file, exercise a pre-commit failure, then exercise a successful commit and inspect retention results."
+    },
+    {
+      "scenario": "The governed Work Item completes independently from code verification through archive, PR, merge, and close.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["AGENTS.md", ".ai/cockpit/README.md"],
+      "expected": "Preflight, checkpoints, quality, finish, archive, hosted checks, merge, and close evidence are present and the local/remote state is clean.",
+      "verificationPlan": "Run the canonical Make targets and inspect the final branch, worktree, archive, PR, and remote state."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": ["persistence", "delivery_reliability", "data_integrity", "lifecycle"],
+    "reason": "This changes the ordering and failure behavior of a report publisher and writes durable data on the protected data branch. An incorrect ordering or non-atomic write could publish a report that cannot be retried or corrupt an existing archive.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The target ordering, retry input boundary, conflict policy, and test seams are identified from the current runtime and roadmap/spec evidence. External provider behavior remains outside local test scope."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": ["High-risk persistence and delivery lifecycle changes require strict evidence and full Work Item closure."],
+    "override": null
+  },
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly authorized the full remediation loop and Contract-recorded approvals. Scope, acceptance, scenarios, verification, and out-of-scope boundaries are concrete and the remaining unknowns are cleared."
+  },
+  "preReviewWarnings": [
+    "Preserve the rule-only evidence boundary; do not introduce acquisition, scoring, or investment behavior while changing lifecycle mechanics.",
+    "Keep retry deterministic by using the persisted input and language rather than recomputing from live sources.",
+    "Keep same-date conflict detection before any retention or file mutation."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record the reviewed Contract and pre-finish verification state for the high-risk persistence lifecycle change."
+  },
+  "acceptance": [
+    "The runtime implements Compute → Persist Snapshot → Render → Publish → Archive for normal non-dry runs.",
+    "The persisted input snapshot is a complete, versioned, deterministic JSON envelope and is idempotent for identical bytes but rejects same-date conflicting input.",
+    "The CLI supports --retry-as-of to render and publish from a persisted input snapshot without external acquisition, and rejects incompatible option combinations.",
+    "Archive final files are written atomically, same-date final runs are rejected without mutation, and retention occurs only after all final files and the manifest commit successfully.",
+    "Focused unit, integration, CLI, and E2E tests cover ordering, exact retry input, conflict protection, atomic behavior, retention timing, and existing boundaries.",
+    "Operational documentation describes the persisted input, retry command, same-date immutability, and failure recovery behavior without exposing secrets.",
+    "The AI Change Summary records changed files, verification evidence, guideline compliance, residual risks, unknowns, and complete lifecycle evidence."
+  ],
+  "intent": {
+    "problem": "The current Weekly Radar path does not make the computed report input durable before delivery and can overwrite an existing date archive. This weakens recovery after partial delivery and makes historical data mutable.",
+    "constraints": [
+      "Keep the runtime deterministic, rule-only, evidence-first, and free of Stage/Score/Rank/Top5 or investment decisions.",
+      "Use the existing RuntimeReportInput serialization boundary and current report/receipt identity rather than introducing a new domain model or dependency.",
+      "Protect the literal data-branch archive boundary, avoid external live calls in tests, and preserve existing dry-run behavior.",
+      "The user authorizes repository changes, local validation, governed evidence writes, PR creation, hosted checks, merge, and Work Item close; no provider-side effect or provider-owned value is authorized."
+    ],
+    "rationale": "Persisting the already-computed runtime input before rendering gives delivery a stable recovery point without changing fact semantics. Atomic writes and pre-mutation same-date checks make the archive append-only by date and keep retention from deleting evidence when a commit fails."
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation", "documentation"],
+    "prohibitedCapabilities": ["llm_fact_extraction", "production_operation", "trading_decision", "capital_action"]
+  },
+  "verification": [
+    {"check": "aiWorkItem", "required": true},
+    {"check": "aiScope", "required": true},
+    {"check": "aiGuards", "required": true},
+    {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true},
+    {"check": "aiReviewPolicy", "required": true},
+    {"check": "aiBacktrack", "required": true},
+    {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true},
+    {"check": "aiGuidelines", "required": true},
+    {"check": "aiSummary", "required": true},
+    {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true},
+    {"check": "aiStatusConsistency", "required": true},
+    {"check": "aiDiffOwnership", "required": true},
+    {"check": "quality", "required": true}
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep persistence and archive errors explicit and do not expose secret-bearing filesystem details.",
+    "Do not hand-edit generated current_status.md; regenerate it through Make targets.",
+    "Do not weaken the data-branch guard or replace deterministic tests with live external calls."
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": [],
+    "approvalEvidence": {
+      "approved": true,
+      "approvedBy": "user-authorized",
+      "reason": "The user explicitly authorized all corresponding remediation, self-check, correction, and full Work Item lifecycle actions. This WI does not intentionally delete user data; retention remains bounded by the existing date-prefixed archive policy.",
+      "identityEvidence": {
+        "schemaVersion": 1,
+        "approvalType": "destructive_change",
+        "identityLevel": "direct_user_authorized",
+        "actor": "user",
+        "provider": null,
+        "evidence": {
+          "directUserInstructionRef": "current user request: 查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+          "directUserInstructionDigest": "sha256:cf250b033a996a6d515ba131c0d7fe7974e4536e03b4f17ac8a205f181e5cb9f",
+          "authorizedAt": "2026-08-20T00:00:00+09:00"
+        },
+        "scope": []
+      }
+    }
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized repository implementation, governance evidence writes, PR creation, hosted checks, merge, and Work Item closure; external production operations and secrets remain prohibited."
+  },
+  "rollbackNote": "Revert this Work Item diff to restore the prior runtime ordering and archive implementation. Do not delete existing data-branch archive evidence; restore code and tests through a reviewed revert or follow-up Work Item.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 34, "inputSnapshotFilesPerRun": 1}},
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json",
+    "baseCommit": "f13383979839ecb4a40fe38503a43ce3e043b591",
+    "initialScopeDigest": "84526669a0b1b1e007eb254db3f397c7dffe8b7aad365ca9864e6ff82485b6b6",
+    "contractSkeletonDigest": "3f0c34ccbf2ca020e8e7a44c6a3fbb4c0938cae6c6fcc922690b18de707a248f"
+  }
+}

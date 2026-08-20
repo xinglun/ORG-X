@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-snapshot-lifecycle",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "0a28b8004b8a6afb45e62fc574fe8613bfbd0b0d126103ae791acee2bdb68526"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-snapshot-lifecycle",
+    "contractDigest": "01701e2e6a121d21c7e522fc47352bc6969833c8ba54db1f1e461d56747d1c21",
+    "summaryDigest": "9df07339e080cc4cb75181d3aeaa78001ff9332cab88498292b2bc4525850b7f",
+    "verificationDigest": "4d75f6b9d7bcbc7fac43d8443c93f5fd00966cf346a76b07fab30ae6a2e2d358",
+    "baseCommit": "f13383979839ecb4a40fe38503a43ce3e043b591",
+    "headCommit": "f13383979839ecb4a40fe38503a43ce3e043b591",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "8a6f040918c981b8e940b25315bfcde54597588937a5d854c3bf05e4aed8a9c6",
+      "binding": {
+        "baseCommit": "f13383979839ecb4a40fe38503a43ce3e043b591",
+        "candidateHead": "f13383979839ecb4a40fe38503a43ce3e043b591",
+        "candidateTreeDigest": "c7ed7f910ec95b0a79f1ece3a43a2b951f6a7d1cb60fbc75d8f6ed3c1ed8eb09",
+        "candidateDiffDigest": "2a91cca7fd26f32ec6ec8a61b6494eae7f2d7fb11c30b0bfef30c0143c85f89e"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-snapshot-lifecycle generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-snapshot-lifecycle generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-snapshot-lifecycle",
     "deliveredChanges": [
       ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
       ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
@@ -23,119 +46,173 @@
       "docs/superpowers/plans/2026-08-20-weekly-radar-snapshot-lifecycle.md",
       ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json",
       ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "Local tests do not invoke real Telegram, SEC, GitHub Actions, or a live data branch; those provider operations remain outside the Contract.",
+      "The archive uses per-file atomic renames rather than a multi-file filesystem transaction; recovery relies on same-date conflict detection and the persisted input snapshot."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "Local tests do not invoke real Telegram, SEC, GitHub Actions, or a live data branch; those provider operations remain outside the Contract.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "The archive uses per-file atomic renames rather than a multi-file filesystem transaction; recovery relies on same-date conflict detection and the persisted input snapshot.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "Local tests do not invoke real Telegram, SEC, GitHub Actions, or a live data branch; those provider operations remain outside the Contract.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "The archive uses per-file atomic renames rather than a multi-file filesystem transaction; recovery relies on same-date conflict detection and the persisted input snapshot.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "3a30f243b85f985c78cc9f55f7e2661cff62ed0b665c765533a94d70f277dfd5"
+          },
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "727c90d430c521b8b7af44f7180d1ccd4b8b557d1257eaa939afd843ca470638"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "3a30f243b85f985c78cc9f55f7e2661cff62ed0b665c765533a94d70f277dfd5"
+          },
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "727c90d430c521b8b7af44f7180d1ccd4b8b557d1257eaa939afd843ca470638"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "external delivery",
+        "severity": "low",
+        "title": "external delivery",
+        "detail": "Real Telegram provider behavior, credentials, and provider-side duplicate suppression are not exercised by local tests; the retry path is verified through injected transports and CLI configuration guards.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "filesystem transaction",
+        "severity": "low",
+        "title": "filesystem transaction",
+        "detail": "Final files are committed atomically one file at a time with the manifest last; a process crash between individual renames remains a recoverable partial archive state, while same-date guards prevent silent overwrite.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "The first ai-finish attempt stopped at documentationAlignment; the Summary now binds plan, specification, operations, command, localization, and limitation evidence before retrying the same Contract scope.",
+      "The second ai-finish attempt stopped at aiGuidelines and scenario coverage because the Summary still contained skeleton compliance and coverage fields; those fields were completed with implementation and test evidence for the same Work Item."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "3a30f243b85f985c78cc9f55f7e2661cff62ed0b665c765533a94d70f277dfd5"
+      },
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "727c90d430c521b8b7af44f7180d1ccd4b8b557d1257eaa939afd843ca470638"
+      }
     ]
   },
-  "issues": {
-    "detected": 3,
-    "hardStops": 1,
-    "warnings": 2,
-    "resolved": 1,
-    "unresolved": 2
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "3a30f243b85f985c78cc9f55f7e2661cff62ed0b665c765533a94d70f277dfd5"
-        },
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "727c90d430c521b8b7af44f7180d1ccd4b8b557d1257eaa939afd843ca470638"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "3a30f243b85f985c78cc9f55f7e2661cff62ed0b665c765533a94d70f277dfd5"
-        },
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "727c90d430c521b8b7af44f7180d1ccd4b8b557d1257eaa939afd843ca470638"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "The first ai-finish attempt stopped at documentationAlignment; the Summary now binds plan, specification, operations, command, localization, and limitation evidence before retrying the same Contract scope.",
-    "The second ai-finish attempt stopped at aiGuidelines and scenario coverage because the Summary still contained skeleton compliance and coverage fields; those fields were completed with implementation and test evidence for the same Work Item."
-  ],
-  "limitations": [
-    {
-      "sourceWarning": "Local tests do not invoke real Telegram, SEC, GitHub Actions, or a live data branch; those provider operations remain outside the Contract.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "The archive uses per-file atomic renames rather than a multi-file filesystem transaction; recovery relies on same-date conflict detection and the persisted input snapshot.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "Real Telegram provider behavior, credentials, and provider-side duplicate suppression are not exercised by local tests; the retry path is verified through injected transports and CLI configuration guards.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "Final files are committed atomically one file at a time with the manifest last; a process crash between individual renames remains a recoverable partial archive state, while same-date guards prevent silent overwrite.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -861,6 +938,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry aiGuidelines after correcting the recorded failure."
+  }
 }

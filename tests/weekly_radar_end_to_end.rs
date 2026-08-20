@@ -1,4 +1,6 @@
+use std::fs;
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
 
 use org_x::features::reporting::domain::{ReportSection, ResearchPacket, Top5 as ResearchTop5};
 use org_x::features::weekly_radar::application::snapshot_store::{
@@ -34,6 +36,16 @@ use org_x::features::weekly_radar::interface::semantic_message_splitter::{
 use org_x::features::weekly_radar::interface::telegram_renderer::{
     ItemId, NoChangeSummary, PeriodId as TelegramPeriodId, SummaryItem, SystemHealthSummary,
     TelegramRenderLimits, TelegramRenderer, TelegramSummaryInput,
+};
+use org_x::features::weekly_radar::runtime::archive::{
+    load_input_snapshot, persist_input_snapshot, write_run_with_input_snapshot,
+};
+use org_x::features::weekly_radar::runtime::model::{
+    Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput, SourceCoverage,
+};
+use org_x::features::weekly_radar::runtime::report::{render_report_in_language, ReportLanguage};
+use org_x::features::weekly_radar::runtime::telegram::{
+    send_rendered_report_with_transport, TelegramRetryPolicy,
 };
 
 #[derive(Default)]
@@ -343,6 +355,86 @@ fn e2e_failure_retries_same_snapshot_and_exact_ordered_payloads() {
         ]
     );
     assert_eq!(store.get(snapshot.id()), Some(&snapshot));
+}
+
+fn durable_input() -> RuntimeReportInput {
+    let mut input = RuntimeReportInput::new("2026-08-17").expect("durable input date is valid");
+    input
+        .add_fact(
+            NormalizedFact::new(
+                "e2e-company",
+                "revenue",
+                "123000000",
+                FactStatus::Known,
+                Confidence::High,
+                Provenance::from_rfc3339(
+                    "https://example.test/e2e-source",
+                    "facts.revenue",
+                    "2026-08-17T00:00:00Z",
+                    Some("2026-08-15"),
+                )
+                .expect("durable provenance is valid"),
+            )
+            .expect("durable fact is valid"),
+        )
+        .expect("durable fact is unique");
+    input
+        .add_source_coverage(SourceCoverage::new("official", 1, 1).expect("coverage is valid"))
+        .expect("coverage is unique");
+    input
+}
+
+#[test]
+fn durable_input_survives_failed_delivery_and_supports_exact_retry() {
+    let root = std::env::temp_dir().join(format!(
+        "org-x-e2e-durable-input-{}-{}",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system clock should be after epoch")
+            .as_nanos()
+    ));
+    let input = durable_input();
+    let saved = persist_input_snapshot(&root, "data", &input, ReportLanguage::English, true)
+        .expect("input should persist before delivery");
+    let report = render_report_in_language(saved.input(), saved.language());
+    let failed_transport = RecordingTransport::failing_once_at(0);
+    let failure = send_rendered_report_with_transport(
+        &report,
+        "chat-e2e",
+        &failed_transport,
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect_err("first delivery should fail in the fixture transport");
+    assert!(failure.to_string().contains("delivery failed"));
+
+    let reloaded = load_input_snapshot(&root, "data", input.as_of())
+        .expect("failed delivery must leave the input snapshot");
+    assert_eq!(reloaded.input(), &input);
+    assert_eq!(reloaded.snapshot_id(), saved.snapshot_id());
+    let retry_report = render_report_in_language(reloaded.input(), reloaded.language());
+    assert_eq!(retry_report.report_id(), report.report_id());
+    let receipt = send_rendered_report_with_transport(
+        &retry_report,
+        "chat-e2e",
+        &RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("retry delivery should succeed");
+    let manifest =
+        write_run_with_input_snapshot(&root, "data", &retry_report, &receipt, Some(&reloaded))
+            .expect("retry archive should succeed");
+
+    assert_eq!(
+        manifest.input_snapshot(),
+        Some("weekly-radar/snapshots/2026-08-17.input.json")
+    );
+    assert_eq!(manifest.snapshot_id(), Some(saved.snapshot_id()));
+    let manifest_json = fs::read_to_string(root.join("weekly-radar/manifest.json"))
+        .expect("manifest should be written");
+    assert!(manifest_json.contains("2026-08-17.input.json"));
+    assert!(manifest_json.contains(saved.snapshot_id()));
+    fs::remove_dir_all(root).expect("durable input fixture should be removable");
 }
 
 #[test]

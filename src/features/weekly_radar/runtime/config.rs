@@ -1,8 +1,14 @@
 //! Versioned Weekly Radar company/source registry.
 
-use std::{collections::HashSet, fs, path::Path};
+use std::{
+    collections::HashSet,
+    fs,
+    net::{Ipv4Addr, Ipv6Addr},
+    path::Path,
+};
 
 use serde::{Deserialize, Serialize};
+use url::{Host, Url};
 
 use super::error::RuntimeError;
 
@@ -241,12 +247,87 @@ fn validate_optional_url(field: &'static str, value: &Option<String>) -> Result<
         return Ok(());
     };
     validate_required(field, value)?;
-    if !(value.starts_with("https://") || value.starts_with("http://")) {
+    let parsed = Url::parse(value).map_err(|_| {
+        RuntimeError::invalid_configuration(format!("{field} must be a valid HTTP URL"))
+    })?;
+    if !matches!(parsed.scheme(), "http" | "https") {
         return Err(RuntimeError::invalid_configuration(format!(
             "{field} must use http:// or https://"
         )));
     }
+    if parsed.host().is_none() {
+        return Err(RuntimeError::invalid_configuration(format!(
+            "{field} must include a host"
+        )));
+    }
+    if !parsed.username().is_empty() || parsed.password().is_some() {
+        return Err(RuntimeError::invalid_configuration(format!(
+            "{field} must not include user credentials"
+        )));
+    }
+    if parsed.fragment().is_some() {
+        return Err(RuntimeError::invalid_configuration(format!(
+            "{field} must not include a fragment"
+        )));
+    }
+    if has_non_public_host(&parsed) {
+        return Err(RuntimeError::invalid_configuration(format!(
+            "{field} must not target a local or non-public host"
+        )));
+    }
     Ok(())
+}
+
+fn has_non_public_host(url: &Url) -> bool {
+    match url.host() {
+        Some(Host::Domain(domain)) => {
+            let domain = domain.trim_end_matches('.').to_ascii_lowercase();
+            domain == "localhost"
+                || domain.ends_with(".localhost")
+                || domain.ends_with(".local")
+                || domain.ends_with(".internal")
+                || domain.ends_with(".lan")
+                || domain.ends_with(".home.arpa")
+        }
+        Some(Host::Ipv4(address)) => non_public_ipv4(address),
+        Some(Host::Ipv6(address)) => non_public_ipv6(address),
+        None => true,
+    }
+}
+
+fn non_public_ipv4(address: Ipv4Addr) -> bool {
+    let [first, second, ..] = address.octets();
+    address.is_private()
+        || address.is_loopback()
+        || address.is_link_local()
+        || address.is_unspecified()
+        || address.is_multicast()
+        || address.is_broadcast()
+        || (first == 100 && (64..=127).contains(&second))
+        || (first == 192 && second == 0)
+        || (first == 198 && (18..=19).contains(&second))
+}
+
+fn non_public_ipv6(address: Ipv6Addr) -> bool {
+    let segments = address.segments();
+    let first = segments[0];
+    let ipv4_mapped = if segments[..6] == [0, 0, 0, 0, 0, 0xffff] {
+        Some(Ipv4Addr::new(
+            (segments[6] >> 8) as u8,
+            segments[6] as u8,
+            (segments[7] >> 8) as u8,
+            segments[7] as u8,
+        ))
+    } else {
+        None
+    };
+
+    address.is_loopback()
+        || address.is_unspecified()
+        || address.is_multicast()
+        || (first & 0xffc0) == 0xfe80
+        || (first & 0xfe00) == 0xfc00
+        || ipv4_mapped.is_some_and(non_public_ipv4)
 }
 
 fn validate_optional_identifier(

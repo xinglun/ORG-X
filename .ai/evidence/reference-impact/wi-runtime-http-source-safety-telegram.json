@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "requestedText": "Disable automatic redirects on the existing Telegram transport agent without changing payload, retry, receipt, or secret-loading behavior.",
+  "target": {"type": "file", "name": "wi_runtime_http_source_safety_telegram_transport", "path": "src/features/weekly_radar/runtime/telegram.rs", "operation": "change_signature"},
+  "referenceAnalysis": {
+    "dynamicReferences": {"status": "proven_absent", "evidence": ["The change is a fixed ureq AgentBuilder setting; it adds no dynamic loading, reflection, or plugin resolution."]},
+    "externalConsumers": {"status": "proven_absent", "evidence": ["EnvTelegramTransport and send_rendered_report public signatures remain unchanged; no external consumer migration is introduced."]},
+    "monitoringReferences": {"status": "proven_absent", "evidence": ["The agent setting adds no monitoring, scheduler, webhook, or publication contract beyond the existing transport."]}
+  },
+  "governanceEvidence": {"contractDeclared": true, "acceptanceDeclared": true, "destructiveChangeAllowed": true, "evidence": [".ai/work-items/active/wi-runtime-http-source-safety.contract.json", "The Contract prohibits real Telegram calls and requires existing secret-safe and retry tests to remain passing."]},
+  "approval": null
+}

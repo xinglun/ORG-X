@@ -89,6 +89,74 @@ fn registry_validation_preserves_optional_source_semantics() {
 }
 
 #[test]
+fn configured_source_urls_reject_unsafe_destinations_without_leaking_values() {
+    let invalid_urls = [
+        "https://",
+        "https://user:super-secret@example.com/source",
+        "https://example.com/source#fragment",
+        "https://localhost/source",
+        "https://service.local/source",
+        "https://service.internal/source",
+        "https://service.lan/source",
+        "https://service.home.arpa/source",
+        "https://127.0.0.1/source",
+        "https://10.0.0.1/source",
+        "https://192.168.1.1/source",
+        "https://169.254.1.1/source",
+        "https://[::1]/source",
+        "https://[fc00::1]/source",
+        "https://[fe80::1]/source",
+        "https://[::ffff:127.0.0.1]/source",
+    ];
+
+    for url in invalid_urls {
+        let result = CompanyConfig::new(
+            "acme",
+            "Acme Corporation",
+            "ACME",
+            None,
+            Some(url.to_owned()),
+            None,
+            None,
+            None,
+            None,
+        );
+        let error = result.expect_err("unsafe configured source URL must be rejected");
+        let display = error.to_string();
+        let debug = format!("{error:?}");
+        assert!(!display.contains(url), "display leaked URL: {display}");
+        assert!(!debug.contains(url), "debug leaked URL: {debug}");
+        assert!(!display.contains("super-secret"));
+        assert!(!debug.contains("super-secret"));
+    }
+
+    assert!(CompanyConfig::new(
+        "acme",
+        "Acme Corporation",
+        "ACME",
+        None,
+        Some("https://example.com/investors".to_owned()),
+        None,
+        None,
+        None,
+        None,
+    )
+    .is_ok());
+    assert!(CompanyConfig::new(
+        "fixture",
+        "Fixture Corporation",
+        "FIX",
+        None,
+        Some("https://example.test/investors".to_owned()),
+        None,
+        None,
+        None,
+        None,
+    )
+    .is_ok());
+}
+
+#[test]
 fn calibration_registry_contains_only_configured_prd_companies() {
     let registry = CompanySourceRegistry::from_path("config/weekly_radar/companies.json")
         .expect("calibration registry should satisfy runtime validation");
@@ -1258,6 +1326,32 @@ fn ureq_client_configures_finite_connect_read_write_and_overall_timeouts() {
     assert!(timeouts.read() > Duration::ZERO);
     assert!(timeouts.write() > Duration::ZERO);
     assert!(timeouts.overall() > Duration::ZERO);
+}
+
+#[test]
+fn ureq_does_not_follow_redirects() {
+    let listener = TcpListener::bind("127.0.0.1:0").expect("local listener should bind");
+    let address = listener
+        .local_addr()
+        .expect("local listener should expose an address");
+    let server = thread::spawn(move || {
+        let (mut stream, _) = listener.accept().expect("local client should connect");
+        let mut request = [0_u8; 1024];
+        let _ = stream.read(&mut request);
+        write!(
+            stream,
+            "HTTP/1.1 302 Found\r\nLocation: /final\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
+        )
+        .expect("redirect response should be written");
+    });
+
+    let url = format!("http://{address}/start");
+    let response = UreqHttpClient::new()
+        .get(&url, &[])
+        .expect("redirect should be returned as a response");
+
+    assert_eq!(response.status(), 302);
+    server.join().expect("redirect server should finish");
 }
 
 #[test]

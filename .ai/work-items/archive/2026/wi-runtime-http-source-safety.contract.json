@@ -1,0 +1,192 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-runtime-http-source-safety",
+  "mode": "code",
+  "title": "Harden runtime source URL and redirect safety",
+  "baseCommit": "1feefd5cf1b4e2cc50adba0c844277678ebce4e4",
+  "baselineDirtyPaths": [],
+  "rawUserRequest": "继续对应；查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User continuation of the full remediation and Work Item lifecycle, approving the previously presented bounded runtime URL/redirect safety design.",
+    "digest": "sha256:b8a8e04db21a2672503ea2301f5ae55911507515af23a11ecbcab4613e4a440c",
+    "capturedAt": "2026-08-20T15:20:57+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation", "documentation"],
+    "prohibitedCapabilities": ["production_operation", "llm_fact_extraction", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized continuing every corresponding Work Item, self-checking, correcting failures, and recording required authorization in each Contract.",
+    "authorizedExternalEffects": ["Create and update the Work Item PR for this implementation.", "Run hosted checks, merge the PR, and close this Work Item after the merge."]
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish, merge, close, and archive all corresponding ORG-X remediation Work Items; this WI is limited to the approved runtime URL and redirect safety design.",
+    "reference": "User message: 继续对应, following the explicit full-lifecycle authorization: 查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+    "capturedAt": "2026-08-20T15:20:57+09:00"
+  },
+  "scope": [
+    ".ai/work-items/active/wi-runtime-http-source-safety.contract.json",
+    ".ai/work-items/active/wi-runtime-http-source-safety.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-runtime-http-source-safety.outcome.json",
+    ".ai/work-items/active/wi-runtime-http-source-safety.outcome.md",
+    ".ai/evidence/reference-impact/wi-runtime-http-source-safety-config.json",
+    ".ai/evidence/reference-impact/wi-runtime-http-source-safety-cargo.json",
+    ".ai/evidence/reference-impact/wi-runtime-http-source-safety-lock.json",
+    ".ai/evidence/reference-impact/wi-runtime-http-source-safety-http.json",
+    ".ai/evidence/reference-impact/wi-runtime-http-source-safety-telegram.json",
+    "Cargo.toml",
+    "Cargo.lock",
+    "src/features/weekly_radar/runtime/config.rs",
+    "src/features/weekly_radar/runtime/http.rs",
+    "src/features/weekly_radar/runtime/telegram.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/superpowers/specs/2026-08-20-wi-runtime-http-source-safety.md",
+    "docs/superpowers/plans/2026-08-20-wi-runtime-http-source-safety.md",
+    "docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md"
+  ],
+  "outOfScope": [
+    "src/main.rs and Weekly Radar orchestration order",
+    "Source adapter parsing, source-provider host allowlists, and external provider contract tests",
+    "DNS resolution, DNS rebinding defense, proxy policy, firewall policy, and complete public-domain allowlisting",
+    "Provider retry/backoff redesign and Telegram payload or receipt semantics",
+    "Stage assignment, score calculation, ranking, investment claims, threshold policy, and validation horizon scheduling",
+    "Authoritative S&P 500 / Nasdaq 100 universe membership and snapshot acquisition",
+    "External production workflow runs, Telegram publication, production data writes, and real provider receipts",
+    "Existing archived Work Item records and historical data-branch files"
+  ],
+  "sources": [
+    {"path": "docs/superpowers/specs/2026-08-20-wi-runtime-http-source-safety.md", "reason": "Defines the approved URL validation and redirect fail-closed design and its explicit non-goals."},
+    {"path": "src/features/weekly_radar/runtime/config.rs", "reason": "Current configuration boundary accepts URLs through a prefix-only check and is the primary validation target."},
+    {"path": "src/features/weekly_radar/runtime/http.rs", "reason": "Current source HTTP agent uses ureq's default redirect budget and is the transport target."},
+    {"path": "src/features/weekly_radar/runtime/telegram.rs", "reason": "Telegram's token-bearing HTTP endpoint also uses a ureq agent and must not follow redirects."},
+    {"path": "tests/weekly_radar_runtime.rs", "reason": "Existing integration tests cover configuration, HTTP status/body limits, fixtures, and local transport behavior."},
+    {"path": "config/weekly_radar/companies.json", "reason": "Current configured public source URLs must remain accepted after the stricter validator is added."},
+    {"path": "docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md", "reason": "Existing runtime specification documents the source and transport boundary that changes."},
+    {"path": "AGENTS.md", "reason": "Defines governed scope, evidence, finish, archive, merge, close, and production-operation rules."},
+    {"path": "Makefile", "reason": "Defines project quality and Rust verification entry points."},
+    {"path": "Makefile.ai", "reason": "Defines AI Cockpit preflight, checkpoint, finish, archive, PR, and close entry points."},
+    {"path": ".ai/project/capabilities.json", "reason": "Confirms production_operation is prohibited for this repository capability boundary."}
+  ],
+  "problemStatement": "The Weekly Radar runtime accepts configured source URLs with only a scheme-prefix check, so malformed URLs, credential-bearing URLs, local/private IP literals, and local-only host names are not rejected at configuration time. The production ureq source and Telegram agents also follow redirects by default; Telegram's endpoint embeds a bot token in the URL. This WI closes the deterministic, evidence-backed baseline while explicitly leaving DNS and full allowlist policy to a later decision.",
+  "scenarioCoverage": [
+    {
+      "scenario": "Configured source URL safety",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/config.rs", "tests/weekly_radar_runtime.rs", "config/weekly_radar/companies.json"],
+      "expected": "Credentials, fragments, malformed URLs, localhost/local-only names, and obvious private/loopback/link-local IP literals are rejected without exposing the URL; existing public registry URLs remain valid.",
+      "verificationPlan": "Run focused configured-source URL tests and full registry validation tests. Assert secret-free Display and Debug diagnostics."
+    },
+    {
+      "scenario": "Source HTTP redirect safety",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/http.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "A 3xx response is returned once as a non-success response; the source client does not issue a second request to the Location target.",
+      "verificationPlan": "Run the local TCP redirect fixture test and inspect the response status/request count."
+    },
+    {
+      "scenario": "Telegram redirect safety",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/telegram.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "The token-bearing Telegram agent is configured with zero automatic redirects while existing transport/retry behavior remains unchanged.",
+      "verificationPlan": "Run focused runtime and quality checks, inspect the agent construction, and verify existing Telegram transport/secret-redaction tests. No real Telegram call is authorized."
+    },
+    {
+      "scenario": "Full governed lifecycle",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["AGENTS.md", "Makefile.ai", ".ai/work-items/archive/index.json"],
+      "expected": "Finish, archive, hosted checks, PR merge, ai-close-work-item, branch/worktree cleanup, and final main audit all succeed.",
+      "verificationPlan": "Run every Contract check, archive, check-ai-pr, hosted required jobs, merge, ai-close-work-item, and final clean-state inspections."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["security_boundary", "external_effects", "scope"],
+    "reason": "The change guards external network destinations and a token-bearing Telegram endpoint. The implementation is deterministic and narrow, but an overly strict policy could reject valid public sources and an incomplete policy could be overclaimed as full SSRF protection. The Contract explicitly preserves fixture compatibility and records DNS/allowlist limitations.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit full-lifecycle remediation authorization"
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": ["The WI changes external HTTP destination safety, a token-bearing transport agent, and a public runtime configuration boundary."],
+    "override": null
+  },
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The approved design defines deterministic URL rejection and redirect behavior without requiring a new product judgment, provider authorization, or production operation."
+  },
+  "preReviewWarnings": [
+    "This is a network-safety baseline, not a complete DNS-rebinding or public-domain allowlist solution.",
+    "No real external provider or Telegram request is authorized or claimed for this Work Item.",
+    "Review that existing public registry URLs and injected fixture paths remain compatible."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record checkpoints before implementation and before finish to prevent scope drift in an external-effects security boundary."
+  },
+  "acceptance": [
+    "CompanyConfig rejects malformed, credential-bearing, fragment-bearing, local-only, loopback, private, link-local, unspecified, multicast, and IPv4-mapped local source URL forms without exposing the full URL in diagnostics.",
+    "All currently configured public source URLs in config/weekly_radar/companies.json remain valid, and injected example.test fixture URLs remain usable.",
+    "The reusable source UreqHttpClient agent and token-bearing Telegram agent set redirects(0), so redirect responses fail closed without changing timeout, body-size, payload, or retry behavior.",
+    "Focused regression tests prove URL rejection, secret-safe errors, and no-follow redirect behavior; existing runtime, source, Telegram, archive, and retry tests remain passing.",
+    "The runtime specification, Contract, Summary, and reference-impact records state the URL/redirect baseline and the remaining DNS/allowlist/production limitations.",
+    "The full AI Cockpit lifecycle completes: preflight, checkpoints, finish, archive, commit, check-ai-pr, hosted checks, PR merge, ai-close-work-item, exact branch/worktree cleanup, and final clean-state audit."
+  ],
+  "guidelines": [
+    "New public APIs or changed public behavior must be documented.",
+    "Do not import internal modules from other features.",
+    "Fail closed at the configuration/transport boundary; do not infer provider authority or research judgments.",
+    "Do not claim external provider or production behavior was verified without a real authorized receipt.",
+    "Preserve existing fixture, timeout, body-size, payload, and retry contracts unless this Contract explicitly changes them."
+  ],
+  "intent": {
+    "problem": "The current source configuration accepts only a URL prefix and the production HTTP agents follow redirects by default. This leaves an evidence-backed unintended-destination baseline gap at the runtime network boundary.",
+    "constraints": [
+      "Reject only deterministic unsafe URL forms that can be checked without DNS or external calls.",
+      "Do not introduce a guessed provider host allowlist or alter public source authority semantics.",
+      "Disable automatic redirects for source and Telegram agents without changing their existing timeout, body-size, payload, or retry contracts.",
+      "Keep fixture transports permissive and preserve all existing public registry URLs.",
+      "Do not perform production operations or real external requests as part of this Work Item."
+    ],
+    "rationale": "A configuration validator plus zero-redirect transport policy closes the concrete local/private-destination and redirect risks visible in the current code while preserving the boundary for a later product-approved DNS/allowlist policy."
+  },
+  "verification": [
+    {"check": "aiWorkItem", "required": true}, {"check": "aiScope", "required": true}, {"check": "aiGuards", "required": true}, {"check": "aiCheckpoint", "required": true}, {"check": "aiAgentRisk", "required": true}, {"check": "aiReviewPolicy", "required": true}, {"check": "aiBacktrack", "required": true}, {"check": "aiCoverage", "required": true}, {"check": "aiScenarioCoverage", "required": true}, {"check": "aiGuidelines", "required": true}, {"check": "aiSummary", "required": true}, {"check": "aiStatus", "required": true}, {"check": "aiStatusCheck", "required": true}, {"check": "aiStatusConsistency", "required": true}, {"check": "aiDiffOwnership", "required": true}, {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized the full remediation lifecycle and requested that required authorization be recorded in each Contract; this WI adds only three scoped reference-impact evidence records and no secrets or external provider data."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore the runtime URL validation, transport configuration, tests, docs, and governed lifecycle artifacts.",
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-runtime-http-source-safety.json",
+    "baseCommit": "1feefd5cf1b4e2cc50adba0c844277678ebce4e4",
+    "initialScopeDigest": "b5a96e6827218c8a605cf2d4a92e1598e63474b27c3031af8fc1711cb403d749",
+    "contractSkeletonDigest": "5ced48d054ba23e7d000d48c4f4dab51824a1f52f2c324e5ec2c53a5e050a7f2"
+  },
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 44}}
+}

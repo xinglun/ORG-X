@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-runtime-http-source-safety",
+  "receiptPath": ".ai/work-items/starts/wi-runtime-http-source-safety.json",
+  "baseCommit": "1feefd5cf1b4e2cc50adba0c844277678ebce4e4",
+  "baseBranch": "codex/wi-runtime-http-source-safety",
+  "startTimestamp": "2026-08-20T06:18:09.412541+00:00",
+  "initialScopeDigest": "b5a96e6827218c8a605cf2d4a92e1598e63474b27c3031af8fc1711cb403d749",
+  "contractSkeletonDigest": "5ced48d054ba23e7d000d48c4f4dab51824a1f52f2c324e5ec2c53a5e050a7f2"
+}

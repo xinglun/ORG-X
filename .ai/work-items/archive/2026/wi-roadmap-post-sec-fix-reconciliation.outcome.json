@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-roadmap-post-sec-fix-reconciliation",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "94e77813e8eb9afa3b7dc0fe24100f52ff3e423195cb41a194b0bfd94113052e"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-roadmap-post-sec-fix-reconciliation",
+    "contractDigest": "f053e09564e63f9c48bc607eca850c9984cc178da2aee75c04755f1efa73ad62",
+    "summaryDigest": "22e9fe1c076c86953b6a1f6138d42c142ec97a9a6dd52afc841e579feece577b",
+    "verificationDigest": "92d8f75f8257b0b0c4e2fc7962b1adf72e61295aafef0a9645efdb5b7f4f8aca",
+    "baseCommit": "64ea52d537db47a9640cf46860465f2cd61bede6",
+    "headCommit": "64ea52d537db47a9640cf46860465f2cd61bede6",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "3f7454063b76509817ce5abf890aa303a2270b9ccd09455af547e17cf6d47921",
+      "binding": {
+        "baseCommit": "64ea52d537db47a9640cf46860465f2cd61bede6",
+        "candidateHead": "64ea52d537db47a9640cf46860465f2cd61bede6",
+        "candidateTreeDigest": "4803b6ee30e0c843206646bff46c7da7f2c5af96b1105a365f3c4e111dc4c82d",
+        "candidateDiffDigest": "a6cf462901a99fb493b276d6ebe389c36801145be52e328711040211b42c61f6"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-roadmap-post-sec-fix-reconciliation generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-roadmap-post-sec-fix-reconciliation generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-roadmap-post-sec-fix-reconciliation",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.contract.json",
       ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.summary.json",
@@ -19,49 +42,76 @@
       "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
       ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.outcome.json",
       ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "No external provider or production runtime behavior is verified by this documentation-only Work Item; the archived #38 Outcome retains that limitation."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "No external provider or production runtime behavior is verified by this documentation-only Work Item; the archived #38 Outcome retains that limitation.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "No external provider or production runtime behavior is verified by this documentation-only Work Item; the archived #38 Outcome retains that limitation.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "scope",
+        "severity": "medium",
+        "title": "scope",
+        "detail": "Future Work Items can make a roadmap snapshot stale again; the documented pre/post-archive wording and archive index authority make the next reconciliation explicit.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "No external provider or production runtime behavior is verified by this documentation-only Work Item; the archived #38 Outcome retains that limitation.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Future Work Items can make a roadmap snapshot stale again; the documented pre/post-archive wording and archive index authority make the next reconciliation explicit.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -621,6 +671,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

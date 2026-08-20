@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-roadmap-post-sec-fix-reconciliation",
+  "receiptPath": ".ai/work-items/starts/wi-roadmap-post-sec-fix-reconciliation.json",
+  "baseCommit": "64ea52d537db47a9640cf46860465f2cd61bede6",
+  "baseBranch": "codex/wi-roadmap-post-sec-fix-reconciliation",
+  "startTimestamp": "2026-08-20T04:00:34.969024+00:00",
+  "initialScopeDigest": "1e1887f03e6f09d59361fa54063f8d914f06c386d5c19052f0b152488b5904ca",
+  "contractSkeletonDigest": "cf321622f07c6b9144f2f5edffdce8f0cf7c5cea16596158a03a98cd1ba8bd69"
+}

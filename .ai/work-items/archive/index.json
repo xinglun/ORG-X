@@ -457,6 +457,18 @@
       "summarySha256": "521640ac798d0b160f9e8965a044c3554cf98614ae848e67c2c7c513e4faf7ac",
       "manifestPath": ".ai/work-items/archive/2026/wi-sec-company-facts-response-limit.archive-manifest.json",
       "manifestSha256": "239320b9647b02030c1afad5db8d61467c6a63f64fce9d582f4a36ea364fe3cf"
+    },
+    {
+      "workItemId": "wi-roadmap-post-sec-fix-reconciliation",
+      "archiveSequence": 39,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.contract.json",
+      "contractSha256": "f053e09564e63f9c48bc607eca850c9984cc178da2aee75c04755f1efa73ad62",
+      "archivedAt": "2026-08-20T13:10:18.538976+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.summary.json",
+      "summarySha256": "2617ead5146ff50699432b0452cf1003a9a2a65ae1c91375c96f86ff85e2a239",
+      "manifestPath": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.archive-manifest.json",
+      "manifestSha256": "f67a5cd08c2a8792ee1d7bde5ff46ba2786c6ca1e31860a6438476ab24186197"
     }
   ]
 }

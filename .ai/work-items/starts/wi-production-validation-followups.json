@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-production-validation-followups",
+  "receiptPath": ".ai/work-items/starts/wi-production-validation-followups.json",
+  "baseCommit": "358daf4b90fd5a951e439f2630c1fed63e655118",
+  "baseBranch": "codex/wi-production-validation-followups",
+  "startTimestamp": "2026-08-20T10:09:19.970125+00:00",
+  "initialScopeDigest": "a5b80d95e2f3ef6bfe568e8888b2fc558650240bd08b1517f9000720bc169bfc",
+  "contractSkeletonDigest": "8d300dcf15acf2ca37821aa61e12744e02bdc7a0f493eab16c51c113387c802d"
+}

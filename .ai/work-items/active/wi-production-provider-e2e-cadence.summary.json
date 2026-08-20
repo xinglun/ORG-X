@@ -145,12 +145,12 @@
       "result": "Contract and preflight confirm the exact allowlisted operation and no-secret boundary; later hosted execution remains the runtime proof."
     },
     {
-      "scenario": "A distinct later weekly period completes through the real Provider path without manual code or data repair.",
+      "scenario": "A distinct later weekly period is completed by the GitHub Actions schedule event through the real Provider path without manual code or data repair.",
       "required": true,
       "status": "unverified",
       "evidence": [],
       "verificationPlan": "Inspect the completed workflow run, inputs, redacted logs, source statuses, publication output, protected data tip, and archive identities after the distinct period executes.",
-      "reason": "The next real weekly period has not occurred as of 2026-08-20; the failed 2026-08-20 date is not retried."
+      "reason": "No event=schedule run exists as of 2026-08-20; the failed 2026-08-20 date is not retried and manual dispatch cannot satisfy this cadence gate."
     },
     {
       "scenario": "The later run binds input snapshot, final snapshot, rendered report, Telegram receipt, archive manifest, and protected data commit.",
@@ -181,7 +181,7 @@
     {
       "level": "high",
       "area": "time-dependent verification",
-      "detail": "As of 2026-08-20, only the 2026-08-19 period is bound; the failed 2026-08-20 date is intentionally not retried. The next scheduled period remains required.",
+      "detail": "As of 2026-08-20, only the 2026-08-19 period is bound and all observed runs are workflow_dispatch; the failed 2026-08-20 date is intentionally not retried. A real event=schedule period remains required.",
       "reviewRecommended": true,
       "followUpCandidate": true
     },
@@ -222,7 +222,7 @@
     }
   ],
   "knownGaps": [
-    "No distinct later weekly period has completed as of 2026-08-20; do not infer cadence from the first publication.",
+    "No distinct later weekly period has completed as of 2026-08-20, and no event=schedule run exists; do not infer automatic cadence from manual dispatch or the first publication.",
     "The later report, receipt, manifest, and data commit must still be compared for exact identity binding.",
     "Long-horizon validation, calibration, and judgment quality remain outside this Work Item."
   ],

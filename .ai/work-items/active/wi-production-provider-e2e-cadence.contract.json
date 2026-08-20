@@ -25,7 +25,7 @@
     "authorityReason": "The user explicitly authorized continuation of real production work through xinglun; execution is limited to the existing workflow and non-secret evidence.",
     "authorizedExternalEffects": [
       "Read workflow metadata, Secret names, data-branch metadata, and redacted hosted logs without reading Secret values.",
-      "Allow the next distinct later weekly period after 2026-08-19 to run from merged main c12280bead071e07749541ba4823c95a86b04a2b through the existing scheduler or an equivalent bounded workflow dispatch.",
+      "Allow the next distinct later weekly period after 2026-08-19 to run from merged main c12280bead071e07749541ba4823c95a86b04a2b through the existing GitHub Actions schedule event; a manual workflow_dispatch is diagnostic only and cannot satisfy the cadence gate.",
       "Use dry_run=false only for that later period, allowing configured Provider acquisition, one Telegram publication when not already accepted, archive write, and protected data-branch update through the existing workflow.",
       "Read only non-secret report, snapshot, input-snapshot, receipt, manifest, and data-commit identities needed for binding.",
       "Do not retry the failed 2026-08-20 report date or resend any already accepted publication; same-date recovery must use the guarded no-send verification path.",
@@ -120,8 +120,8 @@
       "status": "unverified",
       "evidence": [],
       "reason": "The next real weekly period has not occurred as of 2026-08-20; the last bound date is 2026-08-19 and the failed 2026-08-20 date is not retried.",
-      "expected": "The scheduler or equivalent bounded dispatch reaches PUBLISHED or the guarded READY-TO-PUSH recovery path, and the data branch advances from the previous bound tip without manual repair.",
-      "verificationPlan": "Inspect the completed workflow run, inputs, redacted logs, source statuses, publication output, protected data tip, and archive identities after the distinct period executes."
+      "expected": "The workflow run has event=schedule, reaches PUBLISHED or the guarded READY-TO-PUSH recovery path, and the data branch advances from the previous bound tip without manual repair.",
+      "verificationPlan": "Inspect the completed scheduled workflow run, event metadata, redacted logs, source statuses, publication output, protected data tip, and archive identities after the distinct period executes."
     },
     {
       "scenario": "The later run binds input snapshot, final snapshot, rendered report, Telegram receipt, archive manifest, and protected data commit.",
@@ -152,7 +152,7 @@
   },
   "acceptance": [
     "The exact bounded weekly_radar_validation.dispatch operation is used from merged main with xinglun authorization and no Secret value is read or stored.",
-    "A distinct later weekly period after 2026-08-19 reaches the real Provider path with dry_run=false and completes without manual code or data repair; the failed 2026-08-20 date is not retried.",
+    "A distinct later weekly period after 2026-08-19 is completed by the GitHub Actions schedule event with dry_run=false, reaches the real Provider path, and completes without manual code or data repair; a manual dispatch cannot satisfy this gate and the failed 2026-08-20 date is not retried.",
     "The later run binds input snapshot, final snapshot, rendered report, Telegram receipt, archive manifest, and protected data-branch commit through the existing workflow.",
     "The user-facing report gives a system-generated reference while preserving the human reference as an independent lane; the two are mutually referential and are not merged, voted, or presented as one cooperative answer.",
     "The evidence preserves source degradation and UNDETERMINED states and does not claim calibration, long-horizon validation, trading, investment, or capital action.",

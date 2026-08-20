@@ -492,7 +492,7 @@ impl SourceCoverage {
 }
 
 /// Provider-neutral input envelope consumed by later report assembly.
-#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 pub struct RuntimeReportInput {
     as_of: NaiveDate,
     #[serde(default)]
@@ -501,6 +501,41 @@ pub struct RuntimeReportInput {
     source_coverage: Vec<SourceCoverage>,
     #[serde(default)]
     source_failures: Vec<SourceFailure>,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    judgment: Option<super::judgment::JudgmentSnapshot>,
+}
+
+impl<'de> Deserialize<'de> for RuntimeReportInput {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        #[derive(Deserialize)]
+        struct RuntimeReportInputWire {
+            as_of: NaiveDate,
+            #[serde(default)]
+            companies: Vec<CompanyIdentity>,
+            facts: Vec<NormalizedFact>,
+            source_coverage: Vec<SourceCoverage>,
+            #[serde(default)]
+            source_failures: Vec<SourceFailure>,
+            #[serde(default)]
+            judgment: Option<super::judgment::JudgmentSnapshot>,
+        }
+
+        let wire = RuntimeReportInputWire::deserialize(deserializer)?;
+        let input = Self {
+            as_of: wire.as_of,
+            companies: wire.companies,
+            facts: wire.facts,
+            source_coverage: wire.source_coverage,
+            source_failures: wire.source_failures,
+            judgment: wire.judgment,
+        };
+        input.validate().map_err(D::Error::custom)?;
+        Ok(input)
+    }
 }
 
 impl RuntimeReportInput {
@@ -514,6 +549,7 @@ impl RuntimeReportInput {
             facts: Vec::new(),
             source_coverage: Vec::new(),
             source_failures: Vec::new(),
+            judgment: None,
         })
     }
 
@@ -525,6 +561,7 @@ impl RuntimeReportInput {
             facts: Vec::new(),
             source_coverage: Vec::new(),
             source_failures: Vec::new(),
+            judgment: None,
         }
     }
 
@@ -590,6 +627,81 @@ impl RuntimeReportInput {
         Ok(())
     }
 
+    /// Validates every nested value and the judgment cutoff before rendering,
+    /// persistence, or retry.
+    pub fn validate(&self) -> Result<(), RuntimeError> {
+        let mut company_ids = std::collections::BTreeSet::new();
+        for company in &self.companies {
+            company.validate()?;
+            if !company_ids.insert(company.id()) {
+                return Err(RuntimeError::invalid_model(format!(
+                    "duplicate company identity {}",
+                    company.id()
+                )));
+            }
+        }
+
+        let mut fact_ids = std::collections::BTreeSet::new();
+        for fact in &self.facts {
+            fact.validate()?;
+            if !fact_ids.insert((fact.company_id(), fact.kind())) {
+                return Err(RuntimeError::invalid_model(format!(
+                    "duplicate fact {} for {}",
+                    fact.kind(),
+                    fact.company_id()
+                )));
+            }
+        }
+
+        let mut coverage_sources = std::collections::BTreeSet::new();
+        for coverage in &self.source_coverage {
+            coverage.validate()?;
+            if !coverage_sources.insert(coverage.source()) {
+                return Err(RuntimeError::invalid_model(format!(
+                    "duplicate source coverage {}",
+                    coverage.source()
+                )));
+            }
+        }
+
+        let mut failure_ids = std::collections::BTreeSet::new();
+        for failure in &self.source_failures {
+            failure.validate()?;
+            if !failure_ids.insert((failure.source(), failure.company_id())) {
+                return Err(RuntimeError::invalid_model(format!(
+                    "duplicate source failure {} for {}",
+                    failure.source(),
+                    failure.company_id()
+                )));
+            }
+        }
+
+        if let Some(judgment) = &self.judgment {
+            judgment.validate()?;
+            if judgment.evidence_cutoff() != self.as_of {
+                return Err(RuntimeError::invalid_model(
+                    "judgment evidence cutoff must match report input as_of",
+                ));
+            }
+        }
+        Ok(())
+    }
+
+    /// Stores a validated machine/human judgment snapshot without recomputing it.
+    pub fn set_judgment(
+        &mut self,
+        judgment: super::judgment::JudgmentSnapshot,
+    ) -> Result<(), RuntimeError> {
+        judgment.validate()?;
+        if judgment.evidence_cutoff() != self.as_of {
+            return Err(RuntimeError::invalid_model(
+                "judgment evidence cutoff must match report input as_of",
+            ));
+        }
+        self.judgment = Some(judgment);
+        Ok(())
+    }
+
     /// Returns the report as-of date.
     pub const fn as_of(&self) -> NaiveDate {
         self.as_of
@@ -618,5 +730,10 @@ impl RuntimeReportInput {
     /// Returns safe acquisition failures in insertion order.
     pub fn source_failures(&self) -> &[SourceFailure] {
         &self.source_failures
+    }
+
+    /// Returns the validated judgment snapshot when the runtime supplied one.
+    pub fn judgment(&self) -> Option<&super::judgment::JudgmentSnapshot> {
+        self.judgment.as_ref()
     }
 }

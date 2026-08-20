@@ -11,6 +11,7 @@ use std::str::FromStr;
 use chrono::NaiveDate;
 use serde::Serialize;
 
+use super::judgment::MachineStage;
 use super::model::{
     CompanyIdentity, Confidence, FactStatus, NormalizedFact, RuntimeReportInput, SourceCoverage,
     SourceFailure,
@@ -386,6 +387,8 @@ struct SnapshotDocument {
     facts: Vec<SnapshotFact>,
     source_coverage: Vec<SnapshotCoverage>,
     health: SourceHealthFacts,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    judgment: Option<super::judgment::JudgmentSnapshot>,
 }
 
 fn compact_text(value: &str) -> String {
@@ -817,6 +820,71 @@ fn render_top5(
     Some(section)
 }
 
+fn render_judgment_reference(
+    input: &RuntimeReportInput,
+    language: ReportLanguage,
+) -> Option<String> {
+    let judgment = input.judgment()?;
+    let (heading, machine_label, human_label, ranking_label, undetermined_label) = match language {
+        ReportLanguage::Chinese => (
+            "系统参考判断",
+            "系统判断",
+            "人的独立参考",
+            "同一阶段内的系统排序参考",
+            "系统暂无法判断",
+        ),
+        ReportLanguage::Japanese => (
+            "システム参考判断",
+            "システム判断",
+            "人の独立した参考判断",
+            "同一 Stage 内のシステム順位参考",
+            "システムは現時点で判定できません",
+        ),
+        ReportLanguage::English => (
+            "System Reference Judgment",
+            "System judgment",
+            "Independent human reference",
+            "System ranking reference within the same Stage",
+            "The system cannot determine a Stage yet",
+        ),
+    };
+    let mut section = format!("## {heading}");
+    for machine in judgment.companies() {
+        let company = company_label(input, machine.company_id());
+        let stage = match machine.machine_stage() {
+            MachineStage::Assigned(value) => value.as_str(),
+            MachineStage::Undetermined { .. } => undetermined_label,
+        };
+        let separator = if language == ReportLanguage::English {
+            ":"
+        } else {
+            "："
+        };
+        section.push_str(&format!(
+            "\n### {company}\n- {machine_label}{separator}{stage}"
+        ));
+        if !machine.ranked_candidates().is_empty() {
+            section.push_str(&format!("\n- {ranking_label}{separator}"));
+            for (index, candidate) in machine.ranked_candidates().iter().enumerate() {
+                section.push_str(&format!(
+                    "\n  {}. {} [{}]",
+                    index + 1,
+                    company_label(input, candidate.company()),
+                    candidate.stage()
+                ));
+            }
+        }
+        if let Some(human) = judgment.human_reference(machine.company_id()) {
+            section.push_str(&format!(
+                "\n- {human_label}{separator}{} — {}",
+                human.stage(),
+                compact_text(human.note())
+            ));
+        }
+    }
+    Some(section)
+}
+
 fn friendly_failure_reason(reason: &str, language: ReportLanguage) -> &'static str {
     let lower = reason.to_ascii_lowercase();
     match language {
@@ -1123,6 +1191,9 @@ pub fn render_report_in_language(
     if let Some(section) = render_structural_changes(input, &facts, language) {
         sections.push(section);
     }
+    if let Some(section) = render_judgment_reference(input, language) {
+        sections.push(section);
+    }
     if let Some(section) = render_top5(input, &facts, language) {
         sections.push(section);
     }
@@ -1165,6 +1236,7 @@ pub fn render_report_in_language(
         facts: snapshot_facts,
         source_coverage,
         health: health.clone(),
+        judgment: input.judgment().cloned(),
     })
     .expect("report snapshot contains only serializable values")
         + "\n";

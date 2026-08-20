@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-runtime-judgment-chain-integration",
+  "receiptPath": ".ai/work-items/starts/wi-runtime-judgment-chain-integration.json",
+  "baseCommit": "1c7c443cd13410d186a4c3e178a3eb655388c731",
+  "baseBranch": "codex/wi-runtime-judgment-chain-integration",
+  "startTimestamp": "2026-08-20T10:42:40.762908+00:00",
+  "initialScopeDigest": "78aa780f497285adb30f543038594a17aeb7b2f4859a24291572b7c820ed0abd",
+  "contractSkeletonDigest": "65e494b2b4f3b09dc705262591ec5b921fb3fba9f35801deae8e5724ac621890"
+}

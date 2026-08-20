@@ -8,6 +8,7 @@ pub mod archive;
 pub mod config;
 pub mod error;
 pub mod http;
+pub mod judgment;
 pub mod model;
 pub mod report;
 pub mod rules;
@@ -25,6 +26,10 @@ pub use error::RuntimeError;
 pub use http::{
     FixtureHttpClient, HttpClient, HttpResponse, HttpTimeouts, UreqHttpClient,
     MAX_HTTP_RESPONSE_BODY_BYTES,
+};
+pub use judgment::{
+    derive_judgment_snapshot, derive_judgment_snapshot_for_companies, HumanReference,
+    JudgmentSnapshot, MachineStage,
 };
 pub use model::{
     CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput,

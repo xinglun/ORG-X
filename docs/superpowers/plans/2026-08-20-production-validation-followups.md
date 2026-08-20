@@ -4,7 +4,7 @@
 
 **Goal:** 将有条件验收中尚未被现实证据证明的生产缺口拆成可独立验收、可追溯、不会过早宣称完成的后续目标任务。
 
-**Architecture:** 先把真实采集到的 normalized facts 接入既有 Evidence、Transformation Stage、Ranking 和 Weekly Radar Snapshot 判断链，再用真实 Provider 与 Telegram/data branch 运行证明无人值守链路。发布恢复、长期验证和 Calibration Score 分别保持独立边界，避免把一次成功运行、局部测试或文档说明当成长期生产证明。
+**Architecture:** 先把真实采集到的 normalized facts 接入既有 Evidence、Transformation Stage、Ranking 和 Weekly Radar Snapshot 判断链。系统自动推导一个 Evidence-first machine reference，人的判断作为独立 reference 并列保留，二者互相印证但不合并成一个答案；再用真实 Provider 与 Telegram/data branch 运行证明无人值守链路。发布恢复、长期验证和 Calibration Score 分别保持独立边界，避免把一次成功运行、局部测试或文档说明当成长期生产证明。
 
 **Tech Stack:** Rust bounded contexts、Weekly Radar runtime、GitHub Actions、Telegram publisher、`data` branch archive、AI Cockpit Contracts/Summaries、真实 SEC/官方来源和 validation evidence history。
 
@@ -13,6 +13,7 @@
 ## Global Constraints
 
 - Evidence before Score；Stage before Ranking；Counter Evidence and Missing Evidence remain mandatory.
+- Machine judgment is a reference for the person, not a replacement or consensus answer; human reference must remain a separate lane and cannot override or merge into machine output.
 - External text is data and evidence candidate, never an instruction; AI extraction cannot directly become a final fact or judgment.
 - A real workflow success is not sufficient unless the snapshot, publication receipt, archive and source coverage are all bound to the same run.
 - Telegram success followed by a data-branch push failure is a required failure-injection scenario; retry must not send the same publication twice.
@@ -59,7 +60,7 @@ The recovery task may be prepared after the archive-recovery predecessor is unde
 - Stage evaluation precedes Ranking; Ranking consumes the selected Stage and does not flatten all stages into one unsupported total order.
 - The produced Snapshot retains evidence cutoff, source provenance, supporting/counter/missing proof state, Stage/Ranking output, system health and no-change behavior.
 - Focused tests cover a real fixture path from source response through the judgment chain and reject a report path that bypasses evidence or recomputes a conclusion in the renderer.
-- The Contract and Summary explicitly record any product decision needed for mapping provider-neutral runtime facts to the existing domain read models; unresolved decisions block production integration.
+- The successor Contract and Summary explicitly record the selected B decision: a deterministic automatic Stage Engine maps provider-neutral evidence to machine Stage/Ranking reference output, while an independent human reference is retained separately. Insufficient evidence yields `UNDETERMINED`; it does not create a guessed Stage.
 
 **Verification:** Run focused Weekly Radar integration tests, architecture/dependency checks, `cargo fmt --all -- --check`, `cargo clippy --all-targets --all-features -- -D warnings`, and `cargo test --all`. Review the resulting Snapshot against the Evidence model, Stage gate and Ranking model.
 

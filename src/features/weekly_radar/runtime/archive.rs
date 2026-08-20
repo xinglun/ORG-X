@@ -607,6 +607,12 @@ fn validate_input_snapshot(snapshot: &InputSnapshot) -> Result<(), ArchiveError>
             reason: "envelope and input dates differ",
         });
     }
+    snapshot
+        .input
+        .validate()
+        .map_err(|_| ArchiveError::InvalidInputSnapshot {
+            reason: "runtime input validation failed",
+        })?;
     if ReportLanguage::from_str(&snapshot.language).is_err() {
         return Err(ArchiveError::InvalidInputSnapshot {
             reason: "unsupported language",

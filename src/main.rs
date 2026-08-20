@@ -15,9 +15,9 @@ use org_x::features::weekly_radar::runtime::report::{
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources, SourceStatus};
 use org_x::features::weekly_radar::runtime::{
-    acquire_run_lock, ensure_run_available, load_input_snapshot, normalize_source_observation,
-    persist_input_snapshot, recover_pending_run, send_rendered_report,
-    write_run_with_input_snapshot,
+    acquire_run_lock, derive_judgment_snapshot_for_companies, ensure_run_available,
+    load_input_snapshot, normalize_source_observation, persist_input_snapshot, recover_pending_run,
+    send_rendered_report, write_run_with_input_snapshot,
 };
 
 const DEFAULT_REGISTRY: &str = "config/weekly_radar/companies.json";
@@ -393,7 +393,24 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
     let production = UreqHttpClient::new();
     let http: &dyn HttpClient = &production;
 
-    let acquired = acquire_runtime_input(&registry, http, &user_agent, options.as_of)?;
+    let mut acquired = acquire_runtime_input(&registry, http, &user_agent, options.as_of)?;
+    let company_ids = acquired
+        .input
+        .companies()
+        .iter()
+        .map(|company| company.id())
+        .collect::<Vec<_>>();
+    let judgment = derive_judgment_snapshot_for_companies(
+        options.as_of,
+        company_ids,
+        acquired.input.facts(),
+        Vec::new(),
+    )
+    .map_err(|error| CliError::Failure(error.to_string()))?;
+    acquired
+        .input
+        .set_judgment(judgment)
+        .map_err(|error| CliError::Failure(error.to_string()))?;
 
     if options.dry_run {
         let report = render_report_in_language(&acquired.input, options.language);

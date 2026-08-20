@@ -18,6 +18,9 @@ use org_x::features::weekly_radar::runtime::error::RuntimeError;
 use org_x::features::weekly_radar::runtime::http::{
     FixtureHttpClient, HttpClient, HttpResponse, UreqHttpClient,
 };
+use org_x::features::weekly_radar::runtime::judgment::{
+    derive_judgment_snapshot, HumanReference, MachineStage,
+};
 use org_x::features::weekly_radar::runtime::model::{
     CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput,
     SourceCoverage, SourceFailure,
@@ -2454,4 +2457,85 @@ fn task6_workflow_runs_the_cli_and_rejects_empty_or_unpublished_output() {
     assert!(workflow.contains("PUBLISHED:"));
     assert!(workflow.contains("weekly-radar/reports/"));
     assert!(workflow.contains("set -euo pipefail"));
+}
+
+#[test]
+fn task8_runtime_persists_machine_reference_separately_from_human_reference() {
+    let as_of = NaiveDate::from_ymd_opt(2026, 8, 20).unwrap();
+    let facts = vec![
+        NormalizedFact::new(
+            "acme",
+            "judgment.supporting.WORKFLOW.workflow_rewrite",
+            "workflow responsibility changed",
+            FactStatus::Known,
+            Confidence::High,
+            Provenance::new(
+                "https://source-a.example/workflow",
+                "fixture field",
+                Utc::now(),
+                Some(as_of),
+            )
+            .unwrap(),
+        )
+        .unwrap(),
+        NormalizedFact::new(
+            "acme",
+            "judgment.supporting.WORKFLOW.human_supervision",
+            "human supervision retained",
+            FactStatus::Known,
+            Confidence::High,
+            Provenance::new(
+                "https://source-b.example/operations",
+                "fixture field",
+                Utc::now(),
+                Some(as_of),
+            )
+            .unwrap(),
+        )
+        .unwrap(),
+        NormalizedFact::new(
+            "acme",
+            "judgment.counter.WORKFLOW.counter_signal",
+            "legacy workflow remains",
+            FactStatus::Known,
+            Confidence::Medium,
+            Provenance::new(
+                "https://source-c.example/risk",
+                "fixture field",
+                Utc::now(),
+                Some(as_of),
+            )
+            .unwrap(),
+        )
+        .unwrap(),
+        NormalizedFact::without_value(
+            "acme",
+            "judgment.missing.WORKFLOW.persistence",
+            FactStatus::Unknown,
+            Confidence::Unknown,
+            Provenance::new("fixture://missing", "missing proof", Utc::now(), None).unwrap(),
+        )
+        .unwrap(),
+    ];
+    let human = HumanReference::new(
+        "acme",
+        "PRODUCTION_SYSTEM",
+        "人的判断独立保留。",
+        "2026-08-20T10:00:00Z",
+    )
+    .unwrap();
+    let judgment = derive_judgment_snapshot(as_of, &facts, vec![human]).unwrap();
+
+    assert_eq!(
+        judgment.company("acme").unwrap().machine_stage(),
+        &MachineStage::assigned("WORKFLOW")
+    );
+    assert_eq!(
+        judgment.human_reference("acme").unwrap().stage(),
+        "PRODUCTION_SYSTEM"
+    );
+    assert_ne!(
+        judgment.company("acme").unwrap().machine_stage().label(),
+        judgment.human_reference("acme").unwrap().stage()
+    );
 }

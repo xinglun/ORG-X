@@ -1,0 +1,233 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-runtime-judgment-chain-integration",
+  "mode": "code",
+  "title": "接入 Weekly Radar Evidence-first 判断链",
+  "baseCommit": "1c7c443cd13410d186a4c3e178a3eb655388c731",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_request",
+    "granted": true,
+    "scope": "继续完成真实生产环境；将验收指摘纳入对应目标任务并推进仓库内 successor Work Item。",
+    "reference": "user continuation goal and acceptance follow-up request",
+    "capturedAt": "2026-08-20T19:30:00+09:00"
+  },
+  "rawUserRequest": "继续完成真实生产环境；将验收指摘纳入对应目标任务。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Current continuation goal plus prior acceptance mapping supplied in the conversation.",
+    "digest": "sha256:continuation-goal-and-acceptance-follow-up",
+    "capturedAt": "2026-08-20T19:30:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "documentation", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "trading_decision", "capital_action", "unbounded_stage_inference", "human_reference_override"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly asked to continue the production-readiness work and include the acceptance findings in the target tasks."
+  },
+  "scope": [
+    ".ai/work-items/active/wi-runtime-judgment-chain-integration.contract.json",
+    ".ai/work-items/active/wi-runtime-judgment-chain-integration.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-runtime-judgment-chain-integration.outcome.json",
+    ".ai/work-items/active/wi-runtime-judgment-chain-integration.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    "docs/superpowers/specs/2026-08-20-wi-runtime-judgment-chain-integration.md",
+    "docs/superpowers/plans/2026-08-20-wi-runtime-judgment-chain-integration.md",
+    "docs/superpowers/plans/2026-08-20-production-validation-followups.md",
+    "docs/operations/WEEKLY_RADAR.md",
+    "src/features/weekly_radar/runtime.rs",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/features/weekly_radar/runtime/error.rs",
+    "src/features/weekly_radar/runtime/judgment.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/main.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/weekly_radar_judgment_chain.rs"
+  ],
+  "outOfScope": [
+    "Real Provider HTTP calls, Telegram delivery, scheduled unattended execution, CI secrets, and external publication; those belong to wi-production-provider-e2e and later operational tasks.",
+    "Creating a deterministic machine Stage judgment from incomplete or provenance-unbound Provider facts.",
+    "Using a human reference to override, train, vote with, or merge into the machine judgment in this Work Item.",
+    "Probabilistic model training, calibration, or external research-quality claims for the automatic Stage Engine.",
+    "Changing the user-facing capability guide into a technical project-progress document.",
+    "Trading, investment, capital allocation, or any other financial action.",
+    "Rewriting archived Work Items or deleting tests, snapshots, or governance records."
+  ],
+  "sources": [
+    { "path": "AGENTS.md", "reason": "AI Cockpit Contract, Summary, Finish, archive, and closure requirements." },
+    { "path": ".ai/glossary.md", "reason": "Repository governance and architecture vocabulary." },
+    { "path": "docs/superpowers/plans/2026-08-20-production-validation-followups.md", "reason": "The accepted successor task and its Evidence → Stage → Ranking → Snapshot acceptance boundary." },
+    { "path": "docs/superpowers/plans/2026-08-17-wi-wr-016-runtime.md", "reason": "Existing runtime boundary and explicit prior limitation that it did not assign Stage or Ranking." },
+    { "path": "user-clarification-b-machine-reference-human-independent-reference", "reason": "The user's clarification selects automatic system inference as a reference and requires an independent human view rather than a shared answer." },
+    { "path": "src/main.rs", "reason": "Current production CLI acquisition and direct report-rendering path." },
+    { "path": "src/features/weekly_radar/runtime/model.rs", "reason": "Provider-neutral NormalizedFact and RuntimeReportInput boundary." },
+    { "path": "src/features/weekly_radar/runtime/report.rs", "reason": "Current report and snapshot serialization boundary that must consume precomputed judgment output." },
+    { "path": "src/features/ingestion/domain/mod.rs", "reason": "Opaque source observation and ingestion receipt concepts." },
+    { "path": "src/features/evidence/domain/mod.rs", "reason": "EvidenceRecord, supporting/counter/missing proof, provenance, and quality dimensions." },
+    { "path": "src/features/transformation/domain/mod.rs", "reason": "Six Stage values and TransformationAssessment proof boundary." },
+    { "path": "src/features/ranking/domain/mod.rs", "reason": "Explicit Stage-owned candidate and same-Stage ranking read model." },
+    { "path": "docs/domain/EVIDENCE_MODEL.md", "reason": "No EvidenceRecord means no downstream judgment output." },
+    { "path": "docs/scoring/STAGE_GATE_SPEC.md", "reason": "Stage is a gated state requiring support, counter evidence, and missing proof." },
+    { "path": "docs/domain/RANKING_MODEL.md", "reason": "Ranking order and no cross-Stage total order." },
+    { "path": "docs/domain/TRANSFORMATION_STAGE_MODEL.md", "reason": "Stage semantics and evidence requirements." },
+    { "path": "docs/adr/ADR-002-evidence-first.md", "reason": "Evidence-first architectural decision." },
+    { "path": "docs/adr/ADR-007-counter-evidence-mandatory.md", "reason": "Counter evidence is mandatory for credible judgment." },
+    { "path": "docs/operations/WEEKLY_RADAR.md", "reason": "Current user-facing operational description and known runtime limitation." },
+    { "path": "Makefile", "reason": "Canonical repository quality and AI Cockpit commands." }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": ["cross_boundary_sequence", "evidence_traceability", "production_fail_closed", "read_model_compatibility"],
+    "reason": "This Work Item changes the runtime boundary from facts-direct-to-report into an explicit evidence-bound judgment chain. A false positive could publish unsupported Stage or Ranking output, so the implementation must fail closed and retain provenance.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the current user continuation request",
+    "reviewNotes": "Stage authority is the automatic Evidence-first Stage Engine under the user's B clarification. It must return an explicit Undetermined result when evidence gates fail. A human reference is a separate, non-authoritative lane: it may be displayed beside the machine judgment but cannot override, merge with, or vote on it."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item composes ingestion, evidence, transformation, ranking, snapshot, and report boundaries.",
+      "The Work Item changes a production runtime entrypoint and must prove fail-closed behavior before later Provider E2E work."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The scope, evidence authority, acceptance scenarios, verification plan, and explicit no-inference boundary are defined."
+  },
+  "preReviewWarnings": [
+    "Confirm that every emitted machine judgment has supporting, counter, and missing proof references bound to normalized facts and source provenance.",
+    "Confirm insufficient Evidence produces an explicit Undetermined machine result rather than a guessed Stage.",
+    "Confirm the human reference remains a separate parallel view and is never merged into the machine judgment.",
+    "Confirm Stage validation occurs before Ranking and that the ranking API cannot create a cross-Stage total order.",
+    "Confirm renderer code only serializes the validated judgment read model and cannot recompute Stage or ranking dimensions.",
+    "Confirm normal runtime execution fails closed when evidence is insufficient; do not fabricate production company judgments."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "A deterministic source fixture flows through normalized facts, Evidence, the automatic Stage Engine, same-Stage Ranking, and Snapshot output, with an optional independent human reference alongside it.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_judgment_chain.rs"],
+      "expected": "The resulting snapshot retains evidence cutoff, provenance-linked support/counter/missing proof, machine Stage/Ranking output, and a separate human reference without merging the two views.",
+      "verificationPlan": "Run the focused fixture test and inspect the serialized snapshot assertions."
+    },
+    {
+      "scenario": "Candidates from different Stages cannot be ranked as one total order.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_judgment_chain.rs", "src/features/ranking/domain/mod.rs"],
+      "expected": "Only candidates in the selected explicit Stage are returned by the ranking boundary.",
+      "verificationPlan": "Use a fixture containing at least two Stages and assert the selected Stage filter and stable ordering."
+    },
+    {
+      "scenario": "Missing, mismatched, or incomplete evidence cannot produce a guessed machine Stage or Ranking output.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_judgment_chain.rs"],
+      "expected": "The runtime returns an explicit Undetermined machine result or typed failure, with no machine Ranking and no publishable false certainty.",
+      "verificationPlan": "Exercise absent evidence, missing counter proof, company/fact identity mismatch, and insufficient gate cases."
+    },
+    {
+      "scenario": "The report renderer cannot bypass the judgment boundary or recompute ranking values.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_judgment_chain.rs", "src/features/weekly_radar/runtime/report.rs"],
+      "expected": "Rendering accepts only the validated judgment view and serialized values remain byte-stable.",
+      "verificationPlan": "Render the same validated view twice and assert identity/value preservation plus rejection of invalid construction."
+    }
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record the design and acceptance boundary before code edits and final evidence before Finish."
+  },
+  "acceptance": [
+    "The automatic Evidence-first Stage Engine is the machine reference authority for this runtime boundary; insufficient evidence yields Undetermined rather than an inferred Stage.",
+    "One source fixture path composes NormalizedFact → EvidenceRecord/proof set → automatic Stage Engine → same-Stage Ranking → Weekly Radar Snapshot output.",
+    "Snapshot output retains evidence cutoff, source provenance, supporting/counter/missing proof, machine Stage/Ranking values, an independent human reference when supplied, and runtime health/no-change information.",
+    "Stage validation occurs before Ranking; candidates in different Stages cannot be emitted as one total order, and Ranking does not recompute Stage.",
+    "Absent, incomplete, mismatched, or provenance-unbound evidence fails closed before machine report publication; report rendering cannot bypass Evidence or recalculate judgments.",
+    "Machine and human views remain independent: the system does not merge, vote, or overwrite the person's reference view.",
+    "Focused tests, repository quality, AI Cockpit Finish, PR checks, merge, archive, close, and branch cleanup pass; production Provider E2E remains an explicit successor gap rather than an unverified claim."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Cross-context conversions must live behind the Weekly Radar runtime ACL/application boundary.",
+    "Keep automatic Stage derivation evidence-bound and explicit; incomplete evidence must produce Undetermined rather than a guess.",
+    "Keep the machine judgment and human reference as independent views; do not merge, vote, or override either view.",
+    "Keep renderers read-only: they serialize validated values and never recalculate evidence, Stage, Ranking, or Top5.",
+    "Use deterministic fixtures and no external network, credentials, secrets, or production publication in tests."
+  ],
+  "intent": {
+    "problem": "The current Weekly Radar runtime acquires provider-neutral facts and renders a report directly. It does not instantiate the repository's Evidence, Transformation Stage, or Ranking boundaries, so the production path can appear complete while bypassing the evidence-first judgment contract. The desired behavior is an automatic machine reference plus a separate human reference, not one negotiated answer.",
+    "constraints": [
+      "The user selected B: Stage is automatically derived from sufficient Evidence by a deterministic, auditable Stage Engine; insufficient evidence must remain Undetermined.",
+      "A person's reference view is independent and informative only; it is not an input to machine scoring, a consensus mechanism, or an automatic override.",
+      "No production judgment quality claim may be made until real Provider E2E and calibration successor work pass.",
+      "User-facing documentation must describe user capability and operating behavior, not internal project progress."
+    ],
+    "rationale": "An automatic Evidence-first Stage Engine gives the person a reproducible system reference while preserving independent human judgment. The ACL keeps the derivation auditable, fail-closed, and replaceable without forcing the two views into one answer."
+  },
+  "verification": [
+    { "check": "aiWorkItem", "required": true },
+    { "check": "aiScope", "required": true },
+    { "check": "aiGuards", "required": true },
+    { "check": "aiCheckpoint", "required": true },
+    { "check": "aiAgentRisk", "required": true },
+    { "check": "aiReviewPolicy", "required": true },
+    { "check": "aiBacktrack", "required": true },
+    { "check": "aiCoverage", "required": true },
+    { "check": "aiScenarioCoverage", "required": true },
+    { "check": "aiGuidelines", "required": true },
+    { "check": "aiSummary", "required": true },
+    { "check": "aiStatus", "required": true },
+    { "check": "aiStatusCheck", "required": true },
+    { "check": "aiStatusConsistency", "required": true },
+    { "check": "aiDiffOwnership", "required": true },
+    { "check": "quality", "required": true }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "No restricted repository path is required for this Work Item."
+  },
+  "rollbackNote": "Revert this dedicated Work Item diff; the previous facts-direct-to-report runtime remains available on the base commit, while no external production state is changed.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 52
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-runtime-judgment-chain-integration.json",
+    "baseCommit": "1c7c443cd13410d186a4c3e178a3eb655388c731",
+    "initialScopeDigest": "78aa780f497285adb30f543038594a17aeb7b2f4859a24291572b7c820ed0abd",
+    "contractSkeletonDigest": "65e494b2b4f3b09dc705262591ec5b921fb3fba9f35801deae8e5724ac621890"
+  }
+}

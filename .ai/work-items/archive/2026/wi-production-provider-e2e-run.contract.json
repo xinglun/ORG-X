@@ -1,0 +1,111 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-production-provider-e2e-run",
+  "mode": "investigate",
+  "title": "验证合并后 Weekly Radar 真实发布与产物绑定",
+  "baseCommit": "6f699c4b70a31596c47cead24bd923bc87054f9b",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "继续完成真实生产环境；使用 xinglun 账户执行受边界保护的真实 Weekly Radar Provider 运行，并记录非秘密证据。",
+    "reference": "current continuation goal, explicit xinglun account selection, and archived predecessor handoff",
+    "capturedAt": "2026-08-20T21:47:32+09:00"
+  },
+  "rawUserRequest": "继续完成真实生产环境。账户使用 xinglun。",
+  "rawRequestSource": {"type": "human", "reference": "Current continuation request and explicit account selection.", "digest": "sha256:continue-real-production-xinglun", "capturedAt": "2026-08-20T21:47:32+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "production_validation"], "prohibitedCapabilities": ["secret_readback", "trading_decision", "capital_action", "human_reference_override", "manual_data_branch_repair"]},
+  "requestedOperation": {
+    "type": "external_operation",
+    "action": "dispatch",
+    "target": "weekly_radar_validation",
+    "environment": "production",
+    "effect": "publish_weekly_radar_validation",
+    "authorityRequired": true,
+    "authorityReason": "The user explicitly authorized continuation of real production work through xinglun; execution is limited to the existing workflow and non-secret evidence.",
+    "authorizedExternalEffects": [
+      "Read workflow metadata, Secret names, data-branch metadata, and redacted hosted logs without reading Secret values.",
+      "Dispatch the current main Weekly Radar workflow with dry_run=false for the unused report date 2026-08-19.",
+      "Allow configured Provider acquisition, Telegram publication, archive write, and protected data-branch update through the existing workflow.",
+      "Read only non-secret report, snapshot, input-snapshot, receipt, manifest, and data-commit identities needed for binding.",
+      "Do not retry 2026-08-20, which already failed before publication; use the fresh 2026-08-19 date only once unless the guarded recovery path explicitly requires a retry.",
+      "Do not claim unattended cadence or judgment quality from this single run; distinct later-period evidence is assigned to successor wi-production-provider-e2e-cadence."
+    ]
+  },
+  "scope": [
+    ".ai/work-items/active/wi-production-provider-e2e-run.contract.json",
+    ".ai/work-items/active/wi-production-provider-e2e-run.summary.json",
+    ".ai/work-items/active/wi-production-provider-e2e-run.outcome.json",
+    ".ai/work-items/active/wi-production-provider-e2e-run.outcome.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**"
+  ],
+  "outOfScope": [
+    "Reading, printing, copying, or storing any Secret value.",
+    "Changing application source, workflow YAML, repository Secrets, company configuration, or the data branch by hand.",
+    "Rewriting historical data-branch artifacts or using a manual repair to make a run pass.",
+    "Retrying the failed 2026-08-20 report date or sending a second Telegram publication for the same report.",
+    "Merging, voting, or overriding the independent machine reference and human reference.",
+    "Claiming unattended cadence, calibration, 6/12/24-month validation, judgment quality, trading, investment, or capital action from one run."
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Mandatory Contract, evidence, Finish, archive, PR, merge, close, and clean-state lifecycle."},
+    {"path": ".ai/glossary.md", "reason": "Evidence over Self-Declaration and planned-scenario governance vocabulary."},
+    {"path": "docs/superpowers/plans/2026-08-20-production-validation-followups.md", "reason": "Real Provider E2E acceptance, artifact binding, and two-period limitation."},
+    {"path": ".ai/work-items/archive/2026/wi-production-provider-e2e.contract.json", "reason": "Archived predecessor boundary and explicit post-merge validation handoff."},
+    {"path": ".ai/work-items/archive/2026/wi-production-provider-e2e.outcome.json", "reason": "Observed pre-fix hosted failure and evidence that it must not be reported as publication."},
+    {"path": ".github/workflows/weekly-radar.yml", "reason": "Current main dispatch inputs, PUBLISHED guard, archive reconstruction, and protected data push."},
+    {"path": ".ai/project/capabilities.json", "reason": "Exact bounded production_validation capability and exclusion of general production operation."},
+    {"path": ".ai/policies/requested-operation.yaml", "reason": "Exact allowlisted weekly_radar_validation.dispatch operation."},
+    {"path": "scripts/ai_critical_domain_guards.py", "reason": "Critical and production guard for the authority-bearing bounded operation."},
+    {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "User-facing run behavior, report separation, retry, receipt, snapshot, manifest, and data-branch binding."},
+    {"path": "origin/main@6f699c4b70a31596c47cead24bd923bc87054f9b", "reason": "Exact merged main commit under real validation."},
+    {"path": "origin/data@b5d8c64400712b6637fb595766146f7bd119b319", "reason": "Current protected data tip and existing archive date used to choose the unused 2026-08-19 date."},
+    {"path": "gh secret list --repo xinglun/ORG-X", "reason": "Secret names and update timestamps were checked without reading values."},
+    {"path": "https://github.com/xinglun/ORG-X/actions/runs/32371157297", "reason": "Post-merge non-dry-run run completed from main 6f699c4 with PUBLISHED output."},
+    {"path": "origin/data@b70f87c84819acf7895fc82dd9fa161b66db806d", "reason": "Protected data branch commit containing the bound 2026-08-19 artifact set."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "problemStatement": "At the start of this Work Item, the merged main runtime had not yet been exercised by a real non-dry-run. This Work Item records the resulting successful publication and the non-secret binding across source status, input snapshot, final snapshot, report, Telegram receipt, archive manifest, and protected data commit.",
+  "riskAssessment": {"level": "high", "riskTypes": ["external_publication", "secret_boundary", "durable_data_write", "source_quality", "evidence_traceability"], "reason": "The authorized run can contact public Providers, send the configured Telegram report, and update the protected data branch. The run must use a fresh date, avoid duplicate delivery, preserve explicit degraded states, and bind every non-secret artifact identity.", "unknownsReviewComplete": true, "reviewedBy": "Codex under the user's explicit continuation and xinglun account authorization"},
+  "governanceProfile": {"selected": "strict", "source": "automatic", "reasons": ["The Work Item performs a bounded real external publication and durable data-branch write.", "Evidence must bind workflow, source coverage, snapshots, Telegram receipt, archive manifest, and commit identities without secret disclosure."], "override": null},
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {"status": "continue", "reason": "The post-merge run completed and supplied non-secret publication and artifact-binding evidence; the distinct later-period cadence gate remains open and must not be inferred."},
+  "preReviewWarnings": [
+    "Never read back, echo, or store Secret values; record only Secret names and non-secret timestamps.",
+    "Dispatch only from merged main 6f699c4 and use 2026-08-19 exactly once; do not retry the failed 2026-08-20 date.",
+    "Do not treat PUBLISHED as sufficient; verify report, input snapshot, final snapshot, receipt, manifest, and data commit identity binding.",
+    "Preserve explicit UNKNOWN, UNAVAILABLE, NOT_CONFIGURED, and UNDETERMINED states; do not promote degraded evidence into a Stage.",
+    "System reference and human reference are independent lanes for mutual reference, not a merged or voted answer.",
+    "One successful run cannot prove cadence, calibration, or judgment quality."
+  ],
+  "scenarioCoverage": [
+    {"scenario": "The merged main workflow can be dispatched with configured production prerequisites without exposing Secret values.", "required": true, "status": "verified", "evidence": [".github/workflows/weekly-radar.yml", "gh secret list --repo xinglun/ORG-X", "https://github.com/xinglun/ORG-X/actions/runs/32371157297"], "expected": "The run uses main 6f699c4, dry_run=false, the existing required Secret names, and unused 2026-08-19.", "verificationPlan": "Record the dispatch inputs and redacted run metadata in Summary without credential material.", "result": "Run 32371157297 used main 6f699c4, language zh-CN, as_of 2026-08-19, dry_run=false; only Secret names were inspected."},
+    {"scenario": "A post-merge non-dry-run reaches the real Provider path and reports one published Weekly Radar run.", "required": true, "status": "verified", "evidence": [".github/workflows/weekly-radar.yml", "https://github.com/xinglun/ORG-X/actions/runs/32371157297"], "expected": "The run is from merged main, uses dry_run=false, emits PUBLISHED, and exposes source degradation explicitly.", "verificationPlan": "Inspect workflow inputs, redacted logs, PUBLISHED output, source statuses, and report metadata.", "result": "Run completed success and emitted PUBLISHED for report wr-5caaf11a7b9b4490; source health remained explicit in the snapshot and report."},
+    {"scenario": "The same run binds input snapshot, final snapshot, report, Telegram receipt, archive manifest, and data branch commit.", "required": true, "status": "verified", "evidence": ["origin/data@b70f87c84819acf7895fc82dd9fa161b66db806d", "https://github.com/xinglun/ORG-X/actions/runs/32371157297"], "expected": "Non-secret report ID, snapshot IDs, receipt/message IDs, manifest binding, and data commit are mutually consistent.", "verificationPlan": "Read the protected data branch artifacts and compare stable identities with the redacted hosted run output.", "result": "Committed transaction 2026-08-19-2406-1787230691165098678-1 contains four final artifacts; manifest points to input snapshot wr-input-bd5e46fe71765d65; receipt is PUBLISHED with report wr-5caaf11a7b9b4490 and message IDs 13,14,15; data tip is b70f87c."},
+    {"scenario": "A distinct later weekly period completes without manual code or data repair.", "required": true, "status": "not_applicable", "evidence": ["docs/superpowers/plans/2026-08-20-production-validation-followups.md", ".github/workflows/weekly-radar.yml"], "expected": "A later period has the same bound artifact evidence; this cannot be inferred from the current run.", "verificationPlan": "Successor wi-production-provider-e2e-cadence owns the later-period run and must verify the same artifact binding.", "reason": "Time-dependent cadence is intentionally split from this first post-merge publication-binding Work Item."}
+  ],
+  "checkpointPolicy": {"requiredBeforeFinish": true, "requiredStages": ["before_edit", "before_finish"], "reason": "External publication needs an immutable pre-run boundary and final evidence checkpoint before archive or completion claims."},
+  "acceptance": [
+    "The exact bounded weekly_radar_validation.dispatch operation is used from merged main with xinglun authorization and no Secret value is read or stored.",
+    "One fresh non-dry-run report date reaches the real Provider path, emits PUBLISHED, and preserves source degradation and UNDETERMINED states explicitly.",
+    "The same run binds input snapshot, final snapshot, rendered report, Telegram receipt, archive manifest, and protected data-branch commit through the existing workflow without manual repair.",
+    "The report keeps the system reference and human reference as separate lanes; this evidence does not claim that the two references are one answer or prove judgment quality.",
+    "The distinct later period is explicitly assigned to successor wi-production-provider-e2e-cadence and is not inferred from this run.",
+    "The complete AI Cockpit evidence lifecycle, hosted PR checks, merge, close, and clean-state verification pass without credentials being stored."
+  ],
+  "guidelines": ["Do not read or record Secret values; credentials remain only in GitHub Secret storage.", "Do not manually mutate the data branch or rewrite historical artifacts.", "Evidence before claim: bind workflow, source coverage, snapshots, receipt, manifest, and commit identities before reporting success.", "Keep the machine reference and human reference independent; do not merge, vote, or override either view.", "Preserve fail-closed UNKNOWN, UNAVAILABLE, NOT_CONFIGURED, and UNDETERMINED states.", "User-facing documentation is about operating behavior, not project-progress narration."],
+  "intent": {"problem": "The merged fix had not yet been exercised by the real production workflow, so publication and persistence were unproven even though local and hosted pre-merge checks passed.", "constraints": ["Use only the existing Weekly Radar workflow and configured xinglun GitHub authorization.", "Never expose or store Secret values.", "Use the unused 2026-08-19 report date once and do not retry the failed 2026-08-20 date.", "Treat source degradation and UNDETERMINED machine references as explicit states, not failures to conceal.", "Do not claim unattended cadence or judgment quality from one run; successor wi-production-provider-e2e-cadence owns later-period evidence."], "rationale": "A bounded post-merge run is the smallest evidence needed to connect the merged renderer boundary to real Providers, one Telegram publication, immutable snapshots, archive receipts, and the protected data branch."},
+  "implementationSurface": {"production": [], "tests": [], "generated": [".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md"], "documentation": []},
+  "verification": [{"check": "aiWorkItem", "required": true}, {"check": "aiScope", "required": true}, {"check": "aiGuards", "required": true}, {"check": "aiCheckpoint", "required": true}, {"check": "aiAgentRisk", "required": true}, {"check": "aiReviewPolicy", "required": true}, {"check": "aiBacktrack", "required": true}, {"check": "aiCoverage", "required": true}, {"check": "aiScenarioCoverage", "required": true}, {"check": "aiGuidelines", "required": true}, {"check": "aiSummary", "required": true}, {"check": "aiStatus", "required": true}, {"check": "aiStatusCheck", "required": true}, {"check": "aiStatusConsistency", "required": true}, {"check": "aiDiffOwnership", "required": true}, {"check": "quality", "required": true}],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {"approved": false, "approvedBy": "", "reason": "This successor reads and records evidence only; it does not modify restricted governance manifests."},
+  "requiredEvidenceContext": {"destructiveLevel": "none", "availableEvidence": ["merged main commit", "workflow YAML", "Secret names only", "data branch tip", "redacted hosted logs", "data branch artifacts"], "externalSystem": "GitHub Actions, configured public Providers, configured Telegram destination, and protected data branch"},
+  "rollbackNote": "Do not roll back or rewrite a successful data-branch publication manually. Preserve redacted failure evidence and use the existing guarded retry/recovery path only when its identity rules authorize it.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 54}},
+  "startReceipt": {"path": ".ai/work-items/starts/wi-production-provider-e2e-run.json", "baseCommit": "6f699c4b70a31596c47cead24bd923bc87054f9b", "initialScopeDigest": "30e0284cbafc5043634d5bcb93c8962ccb6f1e7488932ff6997cc9d032647764", "contractSkeletonDigest": "28a814c902aa6fd37bfdc583e1c9305bea3b7ab30b8ff4fd2848d5545b956587"}
+}

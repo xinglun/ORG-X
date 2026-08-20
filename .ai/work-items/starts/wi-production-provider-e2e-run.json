@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-production-provider-e2e-run",
+  "receiptPath": ".ai/work-items/starts/wi-production-provider-e2e-run.json",
+  "baseCommit": "6f699c4b70a31596c47cead24bd923bc87054f9b",
+  "baseBranch": "codex/wi-production-provider-e2e-run",
+  "startTimestamp": "2026-08-20T12:46:10.837423+00:00",
+  "initialScopeDigest": "30e0284cbafc5043634d5bcb93c8962ccb6f1e7488932ff6997cc9d032647764",
+  "contractSkeletonDigest": "28a814c902aa6fd37bfdc583e1c9305bea3b7ab30b8ff4fd2848d5545b956587"
+}

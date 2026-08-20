@@ -107,6 +107,26 @@
       "guideline": "Keep the machine reference and human reference independent; do not merge, vote, or override either view.",
       "compliant": true,
       "evidence": "Contract acceptance and docs/operations/WEEKLY_RADAR.md preserve separate reference lanes."
+    },
+    {
+      "guideline": "Do not manually mutate the data branch or rewrite historical artifacts.",
+      "compliant": true,
+      "evidence": "Contract outOfScope and requestedOperation prohibit manual data repair."
+    },
+    {
+      "guideline": "Evidence before claim: bind workflow, source coverage, snapshots, receipt, manifest, and commit identities before reporting success.",
+      "compliant": true,
+      "evidence": "Contract acceptance requires the later-period binding before completion is reported."
+    },
+    {
+      "guideline": "Preserve fail-closed UNKNOWN, UNAVAILABLE, NOT_CONFIGURED, and UNDETERMINED states.",
+      "compliant": true,
+      "evidence": "Contract preReviewWarnings and acceptance require degraded states to remain explicit."
+    },
+    {
+      "guideline": "User-facing documentation is about operating behavior, not project-progress narration.",
+      "compliant": true,
+      "evidence": "The cited Weekly Radar operations document describes user-visible behavior and separate reference lanes."
     }
   ],
   "unknownsRemaining": [],
@@ -115,6 +135,46 @@
     "detail": "The next distinct real weekly period is time-dependent and must prove PUBLISHED/READY-TO-PUSH plus complete artifact binding without Secret disclosure or manual data repair."
   },
   "generatedFiles": [],
+  "scenarioCoverage": [
+    {
+      "scenario": "The authorized bounded workflow can run from the merged main commit without exposing Secret values.",
+      "required": true,
+      "status": "verified",
+      "evidence": [".github/workflows/weekly-radar.yml", ".ai/policies/requested-operation.yaml", "origin/main@c12280be"],
+      "verificationPlan": "Record run metadata and redacted logs; inspect only Secret names and non-secret artifact identities.",
+      "result": "Contract and preflight confirm the exact allowlisted operation and no-secret boundary; later hosted execution remains the runtime proof."
+    },
+    {
+      "scenario": "A distinct later weekly period completes through the real Provider path without manual code or data repair.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "verificationPlan": "Inspect the completed workflow run, inputs, redacted logs, source statuses, publication output, protected data tip, and archive identities after the distinct period executes.",
+      "reason": "The next real weekly period has not occurred as of 2026-08-20; the failed 2026-08-20 date is not retried."
+    },
+    {
+      "scenario": "The later run binds input snapshot, final snapshot, rendered report, Telegram receipt, archive manifest, and protected data commit.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "verificationPlan": "Read the protected data branch and compare stable identities with redacted hosted workflow evidence; do not change the data branch manually.",
+      "reason": "Binding is required from the later run and cannot be inferred from the first period."
+    },
+    {
+      "scenario": "The published report presents a system reference and leaves the human reference independent for mutual reference.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["docs/operations/WEEKLY_RADAR.md", ".ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.json"],
+      "verificationPlan": "Inspect the later report and receipt payload for separate fields/lanes and record any missing or degraded human reference explicitly.",
+      "reason": "Existing docs and predecessor evidence establish the intended boundary; the later report must still be checked."
+    }
+  ],
+  "intentAlignment": {
+    "problemResolved": false,
+    "constraintsRespected": true,
+    "nonGoalsAvoided": true,
+    "rationaleValidated": "The later-period gap is explicitly staged and not overclaimed; final resolution awaits the next real weekly run."
+  },
   "destructiveChanges": [],
   "observedIssues": [],
   "residualRisks": [
@@ -146,7 +206,9 @@
     "generatedArtifacts": "not_applicable",
     "makeEntrypoints": "not_applicable"
   },
-  "userCorrectionsCaptured": [],
+  "userCorrectionsCaptured": [
+    "用户要求系统自动推送一个给人参考；人的判断与系统参考独立保留、互相印证，不合作合并成同一个答案。"
+  ],
   "userCorrectionSolidification": [],
   "checkpointEvidence": [
     {

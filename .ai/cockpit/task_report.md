@@ -4,44 +4,45 @@ Task Result
 Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-capability-overview.contract.json [evidence: .ai/work-items/archive/2026/wi-capability-overview.contract.json]
-- Changed .ai/work-items/active/wi-capability-overview.summary.json [evidence: .ai/work-items/archive/2026/wi-capability-overview.summary.json]
+- Changed .ai/work-items/active/wi-user-facing-capability-guide.contract.json [evidence: .ai/work-items/archive/2026/wi-user-facing-capability-guide.contract.json]
+- Changed .ai/work-items/active/wi-user-facing-capability-guide.summary.json [evidence: .ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/work-items/starts/wi-capability-overview.json [evidence: .ai/work-items/starts/wi-capability-overview.json]
+- Changed .ai/work-items/starts/wi-user-facing-capability-guide.json [evidence: .ai/work-items/starts/wi-user-facing-capability-guide.json]
 - Changed README.md [evidence: README.md]
 - Changed docs/README.md [evidence: docs/README.md]
 - Changed docs/CAPABILITIES.md [evidence: docs/CAPABILITIES.md]
-- Changed scripts/check_docs_metadata.py [evidence: scripts/check_docs_metadata.py]
-- Changed .ai/work-items/active/wi-capability-overview.outcome.json [evidence: .ai/work-items/archive/2026/wi-capability-overview.outcome.json]
-- Changed .ai/work-items/active/wi-capability-overview.outcome.md [evidence: .ai/work-items/archive/2026/wi-capability-overview.outcome.md]
+- Changed .ai/work-items/archive/2026/wi-user-facing-capability-guide.contract.json [evidence: .ai/work-items/archive/2026/wi-user-facing-capability-guide.contract.json]
+- Changed .ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json [evidence: .ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json]
+- Changed .ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.json [evidence: .ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.json]
+- Changed .ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.md [evidence: .ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
+- Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
+- Changed .ai/work-items/archive/2026/wi-user-facing-capability-guide.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-user-facing-capability-guide.archive-manifest.json]
+- Changed .ai/work-items/active/wi-user-facing-capability-guide.outcome.json [evidence: .ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.json]
+- Changed .ai/work-items/active/wi-user-facing-capability-guide.outcome.md [evidence: .ai/work-items/archive/2026/wi-user-facing-capability-guide.outcome.md]
 
 Problems found
-- Total: 6
+- Total: 3
 - Blocking: 0
-- Warning: 3
+- Warning: 1
 
 Stops triggered
 - None recorded.
 
 Problems resolved
-- Problem: Independent review identified missing Ingestion, Organization, Productivity, Diffusion, and Reporting rows plus an incomplete Validation boundary.
-  Solution: Added explicit rows and the memory-store/runtime/provider limitations with links to existing evidence.
-  Evidence: [evidence: observedIssues[0] completeness, observedIssues[0] completeness]
-- Problem: Independent review identified inconsistent boundary status labels and unclear table column responsibilities.
-  Solution: Unified the boundary label to 边界已具备 and renamed columns to 规范/使用说明 and 实现/测试证据.
-  Evidence: [evidence: observedIssues[1] consistency]
-- Problem: Independent review identified unclear reader roles and untranslated data-quality terminology at the entry path.
-  Solution: Added role-based navigation and Chinese glosses while keeping stable domain terms.
-  Evidence: [evidence: observedIssues[2] clarity, observedIssues[2] clarity]
+- Problem: The previous capability page led with implementation evidence and project roles instead of user outcomes.
+  Solution: Replaced the matrix with user goals, results, limits, plain-language status labels, and detail links.
+  Evidence: [evidence: observedIssues[0] audience, observedIssues[0] audience, observedIssues[0] audience]
+- Problem: The previous navigation mixed research readers with contributors, reviewers, architecture, and operations roles.
+  Solution: Reorganized root and documentation entry points around product understanding, company research, evidence, weekly results, and limits.
+  Evidence: [evidence: observedIssues[1] navigation, observedIssues[1] navigation]
 
 Risks avoided
 - None recorded.
 
 Remaining risks
-- Capability labels and links require maintenance when source, tests, or detailed contracts change; the checker validates links and markers, not semantic freshness. [evidence: residualRisks]
-- No real Telegram, SEC, IR, recruiting, provider, production-data, or physical multi-file atomicity receipt is claimed by this Work Item. [evidence: residualRisks]
+- The capability labels and links are static and need maintenance when detailed product or operations documents change; the existing checker verifies links and markers, not semantic freshness. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

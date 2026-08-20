@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-user-facing-capability-guide",
+  "receiptPath": ".ai/work-items/starts/wi-user-facing-capability-guide.json",
+  "baseCommit": "b526c7e6571416ffac7c9681ef26c9561fe58373",
+  "baseBranch": "codex/wi-user-facing-capability-guide",
+  "startTimestamp": "2026-08-20T08:47:20.895074+00:00",
+  "initialScopeDigest": "a18e8289325be6c89dbaebb95c0ee1486f9fbb9f00c270be1a153faa8ff489a2",
+  "contractSkeletonDigest": "1ecd495a17197ca0349af9d6f74fab13883b4718ef9556c48bf931c2e0b9932d"
+}

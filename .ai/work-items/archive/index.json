@@ -577,6 +577,18 @@
       "summarySha256": "ea1835347529ee887a8cc429d33fca4635d8aebddd192636a8ee5379c3fee2a4",
       "manifestPath": ".ai/work-items/archive/2026/wi-capability-overview.archive-manifest.json",
       "manifestSha256": "0807eb16399cc40674016a291b59c9bfada81635f24de5eaa5cdbbfbc2c16d43"
+    },
+    {
+      "workItemId": "wi-user-facing-capability-guide",
+      "archiveSequence": 49,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.contract.json",
+      "contractSha256": "312bb70884da0a7908f226ce1c29697582b7c85895a37af0082b0df08939dce1",
+      "archivedAt": "2026-08-20T18:05:08.460560+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.summary.json",
+      "summarySha256": "61ee46d918790c7fe7fdafdfd3d9dface031a86e46719def7714944944e004cc",
+      "manifestPath": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.archive-manifest.json",
+      "manifestSha256": "da899ba6d5718c9e122be749873d62c03c35876e56a4b67a180faab0a6820f69"
     }
   ]
 }

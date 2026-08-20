@@ -589,6 +589,18 @@
       "summarySha256": "61ee46d918790c7fe7fdafdfd3d9dface031a86e46719def7714944944e004cc",
       "manifestPath": ".ai/work-items/archive/2026/wi-user-facing-capability-guide.archive-manifest.json",
       "manifestSha256": "da899ba6d5718c9e122be749873d62c03c35876e56a4b67a180faab0a6820f69"
+    },
+    {
+      "workItemId": "wi-roadmap-post-capability-reconciliation",
+      "archiveSequence": 50,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.contract.json",
+      "contractSha256": "f99b3fbf7c39036b5bb7cf3410a0aec560b8e88e203141a55605abde001e40ec",
+      "archivedAt": "2026-08-20T18:45:39.531686+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.summary.json",
+      "summarySha256": "56afdde37d770fd1624b262680d293a7b1e2e15ad49eddef2a010c42d852069c",
+      "manifestPath": ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.archive-manifest.json",
+      "manifestSha256": "cdfec6354d212292f7f37d053eeef613500c827f55c926bbe8afbc0f1be45b1e"
     }
   ]
 }

@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-roadmap-post-schedule-reconciliation",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "ba968d3f1de7791c3c7005603744863899b49f30e633e2e82a9c5b16e21c759c"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-roadmap-post-schedule-reconciliation",
+    "contractDigest": "5c76d46dfe4d5697b2d286995ca248ee4340d97df259bcbf1863572c9c7322b9",
+    "summaryDigest": "2e08959c735e2efee86d56b31199868df614881d2403acd37ac0078b6931544c",
+    "verificationDigest": "7bea82b980f888bd5c109673a3b21b3776d932d6c0c09b18fe989fe567770e0a",
+    "baseCommit": "c0a9c7df9fc16d05ea4f2d56f0fea3600b690c62",
+    "headCommit": "c0a9c7df9fc16d05ea4f2d56f0fea3600b690c62",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "1d58bba7a7c96da5af26c3d5a840f72f4c4dfe94f810e2fa35fdc1d758158490",
+      "binding": {
+        "baseCommit": "c0a9c7df9fc16d05ea4f2d56f0fea3600b690c62",
+        "candidateHead": "c0a9c7df9fc16d05ea4f2d56f0fea3600b690c62",
+        "candidateTreeDigest": "312e193840a9bd8e29217316c0f3dbd8052f3f35b8ce38827d5dbf454b2c003f",
+        "candidateDiffDigest": "00d47182444161323af3e106319f8a2dd746edd3e888c0a1322a7faea9d610e1"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-roadmap-post-schedule-reconciliation generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-roadmap-post-schedule-reconciliation generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-roadmap-post-schedule-reconciliation",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.contract.json",
       ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.summary.json",
@@ -19,33 +42,52 @@
       ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "governance_consistency",
+        "severity": "medium",
+        "title": "governance_consistency",
+        "detail": "The displayed roadmap count is a timestamped pre/post-archive snapshot and can become stale after future Work Items; archive/index.json remains authoritative.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The displayed roadmap count is a timestamped pre/post-archive snapshot and can become stale after future Work Items; archive/index.json remains authoritative.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -572,6 +614,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

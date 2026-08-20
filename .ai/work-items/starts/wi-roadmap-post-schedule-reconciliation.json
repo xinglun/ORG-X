@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-roadmap-post-schedule-reconciliation",
+  "receiptPath": ".ai/work-items/starts/wi-roadmap-post-schedule-reconciliation.json",
+  "baseCommit": "c0a9c7df9fc16d05ea4f2d56f0fea3600b690c62",
+  "baseBranch": "codex/wi-roadmap-post-schedule-reconciliation",
+  "startTimestamp": "2026-08-20T05:06:02.276784+00:00",
+  "initialScopeDigest": "b4fafb10613e7ba242459cf13df65e35b32ffcede747399b3f7d3a19d134a585",
+  "contractSkeletonDigest": "02d54b1aec42f15fbac1cfe8fe995950c68ba7f4184b9e4c392d10df1e60533a"
+}

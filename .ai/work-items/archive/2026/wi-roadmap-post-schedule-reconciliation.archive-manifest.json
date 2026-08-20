@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-roadmap-post-schedule-reconciliation",
+  "archiveSequence": 41,
+  "contractPath": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.summary.json",
+  "contractSha256": "5c76d46dfe4d5697b2d286995ca248ee4340d97df259bcbf1863572c9c7322b9",
+  "summarySha256": "ec8f4b641a44d56fd59c69e0287bdc540de789fcffc4069e4f8a6b076f06bfce",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.outcome.json",
+      "sha256": "55c84b21c208bf708b19b766de5f1ee1c95bedd31e1f828009fa6dcede806718"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.outcome.md",
+      "sha256": "5d8370b867846e3e1ce396e7bc8335ec94dc90cd54f3b77216a2b57b0c34a9e4"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "1d58bba7a7c96da5af26c3d5a840f72f4c4dfe94f810e2fa35fdc1d758158490",
+    "binding": {
+      "baseCommit": "c0a9c7df9fc16d05ea4f2d56f0fea3600b690c62",
+      "candidateHead": "c0a9c7df9fc16d05ea4f2d56f0fea3600b690c62",
+      "candidateTreeDigest": "312e193840a9bd8e29217316c0f3dbd8052f3f35b8ce38827d5dbf454b2c003f",
+      "candidateDiffDigest": "00d47182444161323af3e106319f8a2dd746edd3e888c0a1322a7faea9d610e1"
+    }
+  }
+}

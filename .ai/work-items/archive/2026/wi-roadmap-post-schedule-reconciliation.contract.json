@@ -1,0 +1,269 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-roadmap-post-schedule-reconciliation",
+  "mode": "code",
+  "title": "wi-roadmap-post-schedule-reconciliation",
+  "baseCommit": "c0a9c7df9fc16d05ea4f2d56f0fea3600b690c62",
+  "baselineDirtyPaths": [],
+  "rawUserRequest": "继续对应",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Current user continuation objective to continue corresponding acceptance work.",
+    "digest": "0915418c3714887036d18130240d92c8f646e9d734eadb925470ac833b67ca04",
+    "capturedAt": "2026-08-20T14:00:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "software_design",
+      "test_automation",
+      "documentation"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "llm_fact_extraction",
+      "trading_decision",
+      "capital_action"
+    ]
+  },
+  "requestedOperation": {
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly requested continuing all corresponding acceptance work and authorized required Work Item lifecycle actions in Contract evidence.",
+    "authorizedExternalEffects": [
+      "Create and update the Work Item PR for this roadmap reconciliation.",
+      "Run hosted checks, merge the PR, and close this Work Item after merge."
+    ]
+  },
+  "scope": [
+    ".ai/work-items/active/wi-roadmap-post-schedule-reconciliation.contract.json",
+    ".ai/work-items/active/wi-roadmap-post-schedule-reconciliation.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-roadmap-post-schedule-reconciliation.outcome.json",
+    ".ai/work-items/active/wi-roadmap-post-schedule-reconciliation.outcome.md",
+    "docs/superpowers/plans/2026-08-20-roadmap-post-schedule-reconciliation.md",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md"
+  ],
+  "outOfScope": [
+    "existing archived Work Item records and historical data-branch files",
+    "Rust source, tests, workflows, configuration, and dependency files",
+    "changing the roadmap's product scope, planned WI boundaries, or dependency semantics",
+    "creating or modifying any external provider artifact"
+  ],
+  "sources": [
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "The roadmap snapshot still reports 38 archived items before the latest reconciliation and omits the merged schedule source-of-truth Work Item."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "The archive index is the lifecycle authority and contains 40 contiguous archived Work Items, with wi-weekly-radar-schedule-source-of-truth as the latest entry."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.contract.json",
+      "reason": "The latest merged Work Item's scope and acceptance identify the Monday schedule alignment that must appear in the roadmap completed table."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.outcome.md",
+      "reason": "The archived outcome proves the schedule alignment completed with local and hosted verification and is eligible for Completed / archived status."
+    },
+    {
+      "path": "https://github.com/xinglun/ORG-X/pull/40",
+      "reason": "Hosted merge evidence for the latest Work Item."
+    },
+    {
+      "path": ".ai/work-items/active/wi-roadmap-post-schedule-reconciliation.contract.json",
+      "reason": "This Work Item Contract defines the bounded reconciliation scope and lifecycle acceptance."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "governance_consistency"
+    ],
+    "reason": "This is a documentation-only reconciliation. The main risk is publishing counts or status claims that diverge from the immutable archive authority; no runtime behavior changes are in scope.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit full-lifecycle remediation authorization"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The archive index and latest merged Work Item provide sufficient evidence for a deterministic roadmap-only reconciliation; no product or runtime decision is required."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "The roadmap status table reports 14 completed governance/product/maintenance items before this reconciliation and 15 after its archive, 9 core research items, 17 Weekly Radar items, and 40 archived items before this Work Item / 41 after it archives.",
+    "The roadmap Completed Work Items table adds wi-weekly-radar-schedule-source-of-truth with its merged PR/archived evidence and adds this reconciliation Work Item as Completed without changing historical rows.",
+    "The roadmap text explicitly states that archive/index.json is authoritative and that the displayed count is a timestamped pre/post-archive snapshot.",
+    "The diff is limited to the declared roadmap, plan, and governed lifecycle artifacts; JSON/schema, AI status, scope, and status-consistency checks pass.",
+    "The Work Item completes the required before-finish checkpoint, finish, archive, hosted PR checks, merge, ai-close-work-item, and final clean-state verification."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "The roadmap counts and completed table match archive evidence before this Work Item archives.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+        ".ai/work-items/archive/index.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.outcome.md"
+      ],
+      "expected": "The roadmap states 40 archived items before this reconciliation and lists the merged schedule alignment Work Item as Completed.",
+      "verificationPlan": "Inspect the edited roadmap against archive/index.json and the archived #40 evidence."
+    },
+    {
+      "scenario": "The roadmap remains unchanged in product scope and dependency semantics.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md"
+      ],
+      "expected": "Only completed maintenance rows, count snapshots, and reconciliation notes change; core and Weekly Radar boundaries remain intact.",
+      "verificationPlan": "Review the diff and run scope, guard, and status-consistency checks."
+    },
+    {
+      "scenario": "The governed Work Item archives as the explicit 41st entry.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "AGENTS.md",
+        "Makefile",
+        "Makefile.ai",
+        ".ai/cockpit/README.md"
+      ],
+      "expected": "Finish, archive, PR checks, merge, ai-close-work-item, and final archive sequence validation pass.",
+      "verificationPlan": "Run the canonical lifecycle and final clean-state audit."
+    }
+  ],
+  "intent": {
+    "problem": "The post-merge root audit shows that the roadmap still describes the pre-schedule-reconciliation snapshot: it reports 38 archived Work Items and omits wi-weekly-radar-schedule-source-of-truth, while archive/index.json already contains sequence 40.",
+    "constraints": [
+      "Use .ai/work-items/archive/index.json and archived Contract/Summary/Outcome records as the status authority.",
+      "Change only the roadmap snapshot, completed-table rows, and this Work Item's governed evidence; do not change product scope, dependency semantics, Rust behavior, or external provider state.",
+      "Keep the pre/post count wording explicit because this Work Item itself will add archive sequence 41 after the current sequence 40 baseline."
+    ],
+    "rationale": "A small, evidence-bound roadmap reconciliation keeps the human planning document synchronized with the immutable lifecycle records before the next product acceptance gap is addressed."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 41
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-roadmap-post-schedule-reconciliation.json",
+    "baseCommit": "c0a9c7df9fc16d05ea4f2d56f0fea3600b690c62",
+    "initialScopeDigest": "b4fafb10613e7ba242459cf13df65e35b32ffcede747399b3f7d3a19d134a585",
+    "contractSkeletonDigest": "02d54b1aec42f15fbac1cfe8fe995950c68ba7f4184b9e4c392d10df1e60533a"
+  }
+}

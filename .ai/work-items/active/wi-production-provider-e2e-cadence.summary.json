@@ -18,6 +18,10 @@
     {
       "path": ".ai/work-items/starts/wi-production-provider-e2e-cadence.json",
       "reason": "AI Cockpit start receipt from synchronized main c12280be."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Clarifies that the system reference is automatic, human judgment is optional and independent, and missing human input is never fabricated."
     }
   ],
   "sourcesUsed": [
@@ -140,7 +144,11 @@
       "scenario": "The authorized bounded workflow can run from the merged main commit without exposing Secret values.",
       "required": true,
       "status": "verified",
-      "evidence": [".github/workflows/weekly-radar.yml", ".ai/policies/requested-operation.yaml", "origin/main@c12280be"],
+      "evidence": [
+        ".github/workflows/weekly-radar.yml",
+        ".ai/policies/requested-operation.yaml",
+        "origin/main@c12280be"
+      ],
       "verificationPlan": "Record run metadata and redacted logs; inspect only Secret names and non-secret artifact identities.",
       "result": "Contract and preflight confirm the exact allowlisted operation and no-secret boundary; later hosted execution remains the runtime proof."
     },
@@ -164,7 +172,10 @@
       "scenario": "The published report presents a system reference and leaves the human reference independent for mutual reference.",
       "required": true,
       "status": "unverified",
-      "evidence": ["docs/operations/WEEKLY_RADAR.md", ".ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.json"],
+      "evidence": [
+        "docs/operations/WEEKLY_RADAR.md",
+        ".ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.json"
+      ],
       "verificationPlan": "Inspect the later report and receipt payload for separate fields/lanes and record any missing or degraded human reference explicitly.",
       "reason": "Existing docs and predecessor evidence establish the intended boundary; the later report must still be checked."
     }
@@ -176,7 +187,19 @@
     "rationaleValidated": "The later-period gap is explicitly staged and not overclaimed; final resolution awaits the next real weekly run."
   },
   "destructiveChanges": [],
-  "observedIssues": [],
+  "observedIssues": [
+    {
+      "area": "user-facing human-reference semantics",
+      "detail": "The operations guide previously described system and human references as always parallel even though the real 2026-08-19 report had human_references=[] and showed only the system reference.",
+      "status": "resolved",
+      "resolution": "The guide now states that human judgment is optional and independent; when it is absent, the report does not imply agreement or invent a human answer.",
+      "evidence": [
+        "docs/operations/WEEKLY_RADAR.md",
+        "origin/data:weekly-radar/snapshots/2026-08-19.json",
+        "origin/data:weekly-radar/reports/2026-08-19.md"
+      ]
+    }
+  ],
   "residualRisks": [
     {
       "level": "high",
@@ -196,20 +219,27 @@
   "reviewReadiness": {
     "status": "ready",
     "reason": "Preflight is ready; completion remains pending the next distinct real weekly period and its bound evidence.",
-    "expectedReviewFocus": ["later-period workflow evidence", "artifact identity binding", "independent system/human reference lanes", "no Secret leakage"]
+    "expectedReviewFocus": [
+      "later-period workflow evidence",
+      "artifact identity binding",
+      "independent system/human reference lanes",
+      "no Secret leakage"
+    ]
   },
   "boundaryChecks": {
-    "runtimeEntrypoints": "not_applicable",
-    "userVisibleOutput": "not_applicable",
+    "runtimeEntrypoints": "verified_existing_workflow; later_schedule_pending",
+    "userVisibleOutput": "verified_documentation_semantics; later_schedule_report_pending",
     "persistence": "not_applicable",
     "localization": "not_applicable",
     "generatedArtifacts": "not_applicable",
-    "makeEntrypoints": "not_applicable"
+    "makeEntrypoints": "governance_checks_pending_finish"
   },
   "userCorrectionsCaptured": [
     "用户要求系统自动推送一个给人参考；人的判断与系统参考独立保留、互相印证，不合作合并成同一个答案。"
   ],
-  "userCorrectionSolidification": [],
+  "userCorrectionSolidification": [
+    "User-facing documentation now says that absent human input is not fabricated and system/human references are never merged."
+  ],
   "checkpointEvidence": [
     {
       "stage": "before_edit",
@@ -219,6 +249,38 @@
       "unknownCount": 0,
       "requiredChecks": 16,
       "requiredChecksPassed": 0
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "392a527c5bac1c76",
+      "previousContractHash": "392a527c5bac1c76",
+      "contractHash": "0bc7c4cb9411cbb0",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Clarify the user-facing human-reference lane and require scheduled cadence evidence; preserve the prior before_edit boundary while amending the active Contract.",
+      "verificationStarted": false,
+      "invalidatedRequiredChecks": [],
+      "requiredChecksPassedAtAmendment": 0,
+      "recordedAt": "2026-08-20T13:54:22.455481+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "392a527c5bac1c76",
+      "previousContractHash": "0bc7c4cb9411cbb0",
+      "contractHash": "8d6f5fc6f030d42a",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Add the user-facing Weekly Radar operations guide to the active Work Item scope for the documented optional independent human-reference correction.",
+      "verificationStarted": false,
+      "invalidatedRequiredChecks": [],
+      "requiredChecksPassedAtAmendment": 0,
+      "recordedAt": "2026-08-20T13:55:40.351702+00:00"
     }
   ],
   "knownGaps": [
@@ -235,31 +297,46 @@
       {
         "area": "plan",
         "status": "aligned",
-        "evidence": ["docs/superpowers/plans/2026-08-20-production-validation-followups.md"],
+        "evidence": [
+          "docs/superpowers/plans/2026-08-20-production-validation-followups.md"
+        ],
         "reason": "The plan assigns the distinct later period to this successor and keeps it separate from the first publication."
       },
       {
         "area": "contractSummaryEvidence",
         "status": "aligned",
-        "evidence": [".ai/work-items/active/wi-production-provider-e2e-cadence.contract.json", ".ai/work-items/active/wi-production-provider-e2e-cadence.summary.json"],
+        "evidence": [
+          ".ai/work-items/active/wi-production-provider-e2e-cadence.contract.json",
+          ".ai/work-items/active/wi-production-provider-e2e-cadence.summary.json"
+        ],
         "reason": "Contract and Summary use the same later-period acceptance, time-dependent gap, no-secret boundary, and independent-reference semantics."
       },
       {
         "area": "documentationCommandsCapability",
         "status": "aligned",
-        "evidence": ["docs/operations/WEEKLY_RADAR.md", ".ai/policies/requested-operation.yaml", ".ai/project/capabilities.json"],
+        "evidence": [
+          "docs/operations/WEEKLY_RADAR.md",
+          ".ai/policies/requested-operation.yaml",
+          ".ai/project/capabilities.json"
+        ],
         "reason": "User-facing operations documentation and the allowlisted production capability describe the same bounded behavior."
       },
       {
         "area": "multilingualSemantics",
         "status": "aligned",
-        "evidence": ["docs/operations/WEEKLY_RADAR.md", ".github/workflows/weekly-radar.yml"],
+        "evidence": [
+          "docs/operations/WEEKLY_RADAR.md",
+          ".github/workflows/weekly-radar.yml"
+        ],
         "reason": "The later run keeps the configured report language while the system-reference/human-reference separation is language-independent."
       },
       {
         "area": "limitationsUnknownsHistory",
         "status": "aligned",
-        "evidence": [".ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.json", "AGENTS.md"],
+        "evidence": [
+          ".ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.json",
+          "AGENTS.md"
+        ],
         "reason": "The first-period evidence, failed-date non-retry rule, and later-period limitation are preserved without overclaim."
       }
     ]

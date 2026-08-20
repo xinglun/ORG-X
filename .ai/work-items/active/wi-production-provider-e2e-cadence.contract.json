@@ -39,6 +39,7 @@
     ".ai/cockpit/current_status.md",
     ".ai/cockpit/task_report.json",
     ".ai/cockpit/task_report.md",
+    "docs/operations/WEEKLY_RADAR.md",
     ".ai/work-items/starts/**",
     ".ai/work-items/archive/**",
     ".ai/work-items/active/wi-production-provider-e2e-cadence.outcome.json",
@@ -244,7 +245,7 @@
       "required": true
     }
   ],
-  "implementationSurface": {"production": [], "tests": [], "generated": [".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md"], "documentation": []},
+  "implementationSurface": {"production": [], "tests": [], "generated": [".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md"], "documentation": ["docs/operations/WEEKLY_RADAR.md"]},
   "destructiveChangePolicy": {
     "allowed": false,
     "requiresHumanApproval": true,

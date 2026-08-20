@@ -481,6 +481,18 @@
       "summarySha256": "1b4653b6892eaa822976af22180db4ddca919c170a15805eb64e1a4fb3ee9c45",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.archive-manifest.json",
       "manifestSha256": "6a6cc8a16d2019ff33b66cd38d073bc3f6c6ea681cd03a5e27b7d244cd191d82"
+    },
+    {
+      "workItemId": "wi-roadmap-post-schedule-reconciliation",
+      "archiveSequence": 41,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.contract.json",
+      "contractSha256": "5c76d46dfe4d5697b2d286995ca248ee4340d97df259bcbf1863572c9c7322b9",
+      "archivedAt": "2026-08-20T14:12:28.332809+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.summary.json",
+      "summarySha256": "ec8f4b641a44d56fd59c69e0287bdc540de789fcffc4069e4f8a6b076f06bfce",
+      "manifestPath": ".ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.archive-manifest.json",
+      "manifestSha256": "6d07ff4ab01f64a445492f157d49db531757704f7f49212fc71a0b7c56c3c28a"
     }
   ]
 }

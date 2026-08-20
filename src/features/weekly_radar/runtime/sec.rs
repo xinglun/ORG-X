@@ -8,13 +8,21 @@ use serde_json::Value;
 
 use super::config::CompanyConfig;
 use super::error::RuntimeError;
-use super::http::HttpClient;
+use super::http::{HttpClient, MAX_HTTP_RESPONSE_BODY_BYTES};
 use super::model::{Confidence, FactStatus, NormalizedFact, Provenance};
 use super::rules::extract_employee_candidate;
 
 const SEC_SUBMISSIONS_ROOT: &str = "https://data.sec.gov/submissions";
 const SEC_FACTS_ROOT: &str = "https://data.sec.gov/api/xbrl/companyfacts";
 const SEC_ARCHIVES_ROOT: &str = "https://www.sec.gov/Archives/edgar/data";
+
+/// Finite response limit for SEC Company Facts JSON payloads.
+///
+/// Company Facts contains the complete fact history for a registrant and is
+/// materially larger than the default limit used for ordinary public pages.
+/// The limit remains bounded so an unexpectedly large response still fails
+/// closed before it can cause an unbounded allocation.
+pub const SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES: usize = 16 * 1024 * 1024;
 
 const REVENUE_ALIASES: &[&str] = &[
     "RevenueFromContractWithCustomerExcludingAssessedTax",
@@ -144,10 +152,20 @@ impl SecClient {
         let cik_path = if cik_path.is_empty() { "0" } else { cik_path };
         let submissions_url = format!("{SEC_SUBMISSIONS_ROOT}/CIK{cik}.json");
         let facts_url = format!("{SEC_FACTS_ROOT}/CIK{cik}.json");
-        let submissions: SubmissionsDocument =
-            get_json(http, &submissions_url, user_agent, "SEC submissions")?;
-        let facts: CompanyFactsDocument =
-            get_json(http, &facts_url, user_agent, "SEC Company Facts")?;
+        let submissions: SubmissionsDocument = get_json(
+            http,
+            &submissions_url,
+            user_agent,
+            MAX_HTTP_RESPONSE_BODY_BYTES,
+            "SEC submissions",
+        )?;
+        let facts: CompanyFactsDocument = get_json(
+            http,
+            &facts_url,
+            user_agent,
+            SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES,
+            "SEC Company Facts",
+        )?;
         let latest_filing = submissions.latest_10k();
         let retrieved_at = Utc::now();
         let mut normalized = Vec::with_capacity(FACT_SPECS.len());
@@ -181,7 +199,12 @@ impl SecClient {
             if spec.kind == "employee_count" {
                 if let Some(filing) = latest_filing.as_ref() {
                     let filing_url = filing.url(cik_path);
-                    let body = get_response_body(http, &filing_url, user_agent)?;
+                    let body = get_response_body(
+                        http,
+                        &filing_url,
+                        user_agent,
+                        MAX_HTTP_RESPONSE_BODY_BYTES,
+                    )?;
                     if let Some(candidate) =
                         extract_employee_candidate(&body, filing.report_date(), &filing_url)
                     {
@@ -258,9 +281,10 @@ fn get_json<T: for<'de> Deserialize<'de>>(
     http: &dyn HttpClient,
     url: &str,
     user_agent: &str,
+    max_body_bytes: usize,
     context: &'static str,
 ) -> Result<T, RuntimeError> {
-    let body = get_response_body(http, url, user_agent)?;
+    let body = get_response_body(http, url, user_agent, max_body_bytes)?;
     serde_json::from_str(&body).map_err(|_| RuntimeError::JsonDecode {
         context: context.to_owned(),
     })
@@ -270,9 +294,10 @@ fn get_response_body(
     http: &dyn HttpClient,
     url: &str,
     user_agent: &str,
+    max_body_bytes: usize,
 ) -> Result<String, RuntimeError> {
     let headers = [("User-Agent".to_owned(), user_agent.to_owned())];
-    let response = http.get(url, &headers)?;
+    let response = http.get_with_max_body_bytes(url, &headers, max_body_bytes)?;
     if !response.is_success() {
         return Err(RuntimeError::HttpResponse);
     }

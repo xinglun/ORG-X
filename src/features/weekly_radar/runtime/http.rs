@@ -64,6 +64,20 @@ impl HttpResponse {
 pub trait HttpClient {
     /// Performs one GET request with the supplied headers.
     fn get(&self, url: &str, headers: &[(String, String)]) -> Result<HttpResponse, RuntimeError>;
+
+    /// Performs one GET request with a caller-selected finite body limit.
+    ///
+    /// Implementations may keep the default limit when a specialized limit is
+    /// not supported. Runtime adapters use this only for source-specific
+    /// payloads whose documented size envelope is larger than the default.
+    fn get_with_max_body_bytes(
+        &self,
+        url: &str,
+        headers: &[(String, String)],
+        _max_body_bytes: usize,
+    ) -> Result<HttpResponse, RuntimeError> {
+        self.get(url, headers)
+    }
 }
 
 /// One request captured by the in-memory fixture client.
@@ -128,6 +142,15 @@ impl FixtureHttpClient {
 
 impl HttpClient for FixtureHttpClient {
     fn get(&self, url: &str, headers: &[(String, String)]) -> Result<HttpResponse, RuntimeError> {
+        self.get_with_max_body_bytes(url, headers, MAX_HTTP_RESPONSE_BODY_BYTES)
+    }
+
+    fn get_with_max_body_bytes(
+        &self,
+        url: &str,
+        headers: &[(String, String)],
+        max_body_bytes: usize,
+    ) -> Result<HttpResponse, RuntimeError> {
         let mut state = self.state.lock().map_err(|_| RuntimeError::FixtureState)?;
         state.requests.push(FixtureRequest {
             url: url.to_owned(),
@@ -138,7 +161,7 @@ impl HttpClient for FixtureHttpClient {
             .get(url)
             .cloned()
             .ok_or(RuntimeError::FixtureMissing)?;
-        if response.body().len() > MAX_HTTP_RESPONSE_BODY_BYTES {
+        if response.body().len() > max_body_bytes {
             return Err(RuntimeError::HttpResponseTooLarge);
         }
         Ok(response)
@@ -242,6 +265,15 @@ impl Default for UreqHttpClient {
 
 impl HttpClient for UreqHttpClient {
     fn get(&self, url: &str, headers: &[(String, String)]) -> Result<HttpResponse, RuntimeError> {
+        self.get_with_max_body_bytes(url, headers, MAX_HTTP_RESPONSE_BODY_BYTES)
+    }
+
+    fn get_with_max_body_bytes(
+        &self,
+        url: &str,
+        headers: &[(String, String)],
+        max_body_bytes: usize,
+    ) -> Result<HttpResponse, RuntimeError> {
         let mut request = self.agent.get(url);
         for (name, value) in headers {
             request = request.set(name, value);
@@ -262,13 +294,13 @@ impl HttpClient for UreqHttpClient {
             .into_iter()
             .filter_map(|name| response.header(&name).map(|value| (name, value.to_owned())))
             .collect();
-        let mut body_bytes = Vec::with_capacity(MAX_HTTP_RESPONSE_BODY_BYTES + 1);
+        let mut body_bytes = Vec::with_capacity(max_body_bytes.saturating_add(1));
         response
             .into_reader()
-            .take((MAX_HTTP_RESPONSE_BODY_BYTES + 1) as u64)
+            .take(max_body_bytes.saturating_add(1) as u64)
             .read_to_end(&mut body_bytes)
             .map_err(|_| RuntimeError::HttpResponse)?;
-        if body_bytes.len() > MAX_HTTP_RESPONSE_BODY_BYTES {
+        if body_bytes.len() > max_body_bytes {
             return Err(RuntimeError::HttpResponseTooLarge);
         }
         let body = String::from_utf8(body_bytes).map_err(|_| RuntimeError::HttpResponse)?;

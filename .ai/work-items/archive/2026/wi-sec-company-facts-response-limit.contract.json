@@ -1,0 +1,293 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-sec-company-facts-response-limit",
+  "mode": "code",
+  "title": "wi-sec-company-facts-response-limit",
+  "baseCommit": "82d57672c2f6130620be4a73380a0a2aaf02b03f",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-sec-company-facts-response-limit.contract.json",
+    ".ai/work-items/active/wi-sec-company-facts-response-limit.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-sec-company-facts-response-limit.outcome.json",
+    ".ai/work-items/active/wi-sec-company-facts-response-limit.outcome.md",
+    "src/features/weekly_radar/runtime/http.rs",
+    "src/features/weekly_radar/runtime/sec.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/plans/2026-08-20-sec-company-facts-response-limit.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/main.rs",
+    ".github/workflows/weekly-radar.yml",
+    "config/weekly_radar/companies.json",
+    "Cargo.toml",
+    "Cargo.lock",
+    "all non-SEC source response limits",
+    "live external publication and data-branch mutation",
+    "existing archived Work Item records and historical data-branch files"
+  ],
+  "sources": [
+    {
+      "path": "origin/data:weekly-radar/reports/2026-08-18.md",
+      "reason": "The latest successful hosted Weekly Radar run reported SEC financial coverage unavailable for all ten configured companies."
+    },
+    {
+      "path": "origin/data:weekly-radar/snapshots/2026-08-18.json",
+      "reason": "The hosted snapshot records ten SEC source failures caused by the configured response-body limit."
+    },
+    {
+      "path": "https://github.com/xinglun/ORG-X/actions/runs/32091861433",
+      "reason": "Hosted workflow run evidence for the observed production behavior."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/http.rs",
+      "reason": "The current HTTP transport applies one 1 MiB body limit to every source."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/sec.rs",
+      "reason": "SEC Company Facts acquisition uses the generic HTTP path and therefore receives the 1 MiB limit."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Existing transport and SEC fixture tests define the current size-limit behavior."
+    },
+    {
+      "path": ".github/workflows/weekly-radar.yml",
+      "reason": "The production workflow runs the affected CLI against live sources."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Operational documentation for source acquisition and failure handling."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-20-sec-company-facts-response-limit.md",
+      "reason": "This Work Item implementation and verification plan."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "runtime_reliability",
+      "resource_bound",
+      "evidence_quality"
+    ],
+    "reason": "The fix changes a production transport limit. It must restore SEC evidence without creating an unbounded response or weakening limits for other providers.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit full-lifecycle remediation authorization"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "A hosted run provides direct evidence of a source-specific production failure. The bounded per-request limit fix is codable, testable, and does not require changing product selection or provider credentials."
+  },
+  "preReviewWarnings": [
+    "Confirm the generic 1 MiB guard remains unchanged for official pages, hiring sources, discovery sources, and the default transport path.",
+    "Confirm the SEC-specific limit is finite, documented, and covered by both fixture and local HTTP regression tests.",
+    "The existing data-branch run is historical evidence from before this fix; it must not be rewritten by this Work Item."
+  ],
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "software_design",
+      "test_automation",
+      "documentation"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "llm_fact_extraction",
+      "trading_decision",
+      "capital_action"
+    ]
+  },
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "The generic 1 MiB HTTP body limit remains enforced for the default transport path and non-SEC sources.",
+    "SEC Company Facts requests use a separate finite response limit sufficient for the observed production payloads, while responses above that limit still fail closed.",
+    "A regression test proves a valid SEC Company Facts payload larger than 1 MiB reaches SEC parsing and retains normalized facts without exposing secrets or changing provenance semantics.",
+    "The transport API and operational documentation explain the source-specific bound; `make quality`, all 16 required AI Cockpit finish checks, and `make check-ai-pr` pass.",
+    "The Work Item completes archive, hosted PR checks, merge, ai-close-work-item, and final clean-state verification without rewriting historical data."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features."
+  ],
+  "intent": {
+    "problem": "The latest successful hosted Weekly Radar run on origin/data produced ten SEC source failures with the reason 'HTTP response body exceeded configured limit'. The generic 1 MiB transport cap is applied to SEC Company Facts, whose payload is materially larger for the configured companies, so the production report publishes without the financial evidence needed by the runtime contract.",
+    "constraints": [
+      "Keep the existing 1 MiB default/non-SEC protection unchanged.",
+      "Use a finite SEC-specific bound and reject responses above it before unbounded allocation.",
+      "Keep provider-specific behavior inside the Weekly Radar runtime boundary and preserve safe typed errors.",
+      "Do not rewrite the historical data branch or change source selection, ranking, Telegram, or workflow behavior in this Work Item."
+    ],
+    "rationale": "A source-specific bounded read is the smallest correction supported by production evidence: it restores the SEC adapter's intended payload envelope while retaining the existing defensive limit for smaller public pages and discovery responses."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 38
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-sec-company-facts-response-limit.json",
+    "baseCommit": "82d57672c2f6130620be4a73380a0a2aaf02b03f",
+    "initialScopeDigest": "c5783eb0bbe45486d06d7aa8f8a260c533485874969a6fbac78eeb321bcf2cf1",
+    "contractSkeletonDigest": "fe2141ce22d7738d574c327e75df905bf387d402285657ddbfdcbbcd84d573d6"
+  },
+  "requestedOperation": {
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized completing every corresponding Work Item, self-checking, correcting failures, and recording any required authorization in the Contract.",
+    "authorizedExternalEffects": [
+      "Create and update the Work Item PR for this runtime fix.",
+      "Run hosted checks, merge the PR, and close this Work Item after the merge."
+    ]
+  },
+  "rawUserRequest": "查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User authorization to complete every corresponding Work Item, self-check, correct failures, and record required authorization in the Contract.",
+    "digest": "cf250b033a996a6d515ba131c0d7fe7974e4536e03b4f17ac8a205f181e5cb9f",
+    "capturedAt": "2026-08-20T12:00:00+09:00"
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "The generic transport limit remains fail-closed for non-SEC/default requests.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/http.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "A response above the default 1 MiB limit is rejected through HttpClient::get, while no other source receives the SEC-specific limit.",
+      "verificationPlan": "Run the existing oversized-body fixture and local HTTP tests plus the full quality route."
+    },
+    {
+      "scenario": "A SEC Company Facts response larger than 1 MiB is parsed under a finite source-specific limit.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["origin/data:weekly-radar/snapshots/2026-08-18.json", "src/features/weekly_radar/runtime/sec.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "The large fixture reaches SecClient::collect, retains normalized financial facts, and preserves the SEC User-Agent request header.",
+      "verificationPlan": "Run the focused large-payload SEC fixture and inspect the captured request and normalized fact assertions."
+    },
+    {
+      "scenario": "Responses above the SEC-specific bound fail closed without unbounded memory growth.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/http.rs", "src/features/weekly_radar/runtime/sec.rs"],
+      "expected": "The production and fixture transports reject payloads above the SEC bound with the existing secret-safe typed error.",
+      "verificationPlan": "Run boundary-size fixture/local HTTP coverage and inspect the bounded reader implementation."
+    },
+    {
+      "scenario": "The governed Work Item closes without altering historical data.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["AGENTS.md", "Makefile.ai", ".ai/cockpit/README.md"],
+      "expected": "Finish, archive, PR checks, merge, ai-close-work-item, and final branch/worktree audits pass; origin/data historical files remain untouched.",
+      "verificationPlan": "Run the canonical lifecycle and compare the final PR diff against out-of-scope historical data paths."
+    }
+  ]
+}

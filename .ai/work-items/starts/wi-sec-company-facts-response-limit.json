@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-sec-company-facts-response-limit",
+  "receiptPath": ".ai/work-items/starts/wi-sec-company-facts-response-limit.json",
+  "baseCommit": "82d57672c2f6130620be4a73380a0a2aaf02b03f",
+  "baseBranch": "codex/wi-sec-company-facts-response-limit",
+  "startTimestamp": "2026-08-20T03:40:06.214440+00:00",
+  "initialScopeDigest": "c5783eb0bbe45486d06d7aa8f8a260c533485874969a6fbac78eeb321bcf2cf1",
+  "contractSkeletonDigest": "fe2141ce22d7738d574c327e75df905bf387d402285657ddbfdcbbcd84d573d6"
+}

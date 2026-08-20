@@ -27,7 +27,9 @@ use org_x::features::weekly_radar::runtime::report::{
     render_report, render_report_in_language, RenderedReport, ReportLanguage,
 };
 use org_x::features::weekly_radar::runtime::rules::extract_employee_count;
-use org_x::features::weekly_radar::runtime::sec::SecClient;
+use org_x::features::weekly_radar::runtime::sec::{
+    SecClient, SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES,
+};
 use org_x::features::weekly_radar::runtime::sources::{
     collect_configured_sources, SourceKind, SourceStatus, SourceTier,
 };
@@ -733,6 +735,54 @@ fn sec_collects_annual_aliases_and_sends_user_agent() {
     );
 }
 
+#[test]
+fn sec_company_facts_accepts_a_payload_above_the_default_http_limit() {
+    let company = sec_test_company();
+    let submissions_url = "https://data.sec.gov/submissions/CIK0001234567.json";
+    let facts_url = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json";
+    let user_agent = "ORG-X weekly-radar test contact@example.test";
+    let client = FixtureHttpClient::new();
+    client.insert(
+        submissions_url,
+        HttpResponse::ok(r#"{"filings":{"recent":{}}}"#),
+    );
+    let facts = serde_json::json!({
+        "padding": "x".repeat(1_048_577),
+        "facts": {
+            "us-gaap": {
+                "RevenueFromContractWithCustomerExcludingAssessedTax": {
+                    "units": {
+                        "USD": [{
+                            "start": "2024-01-01",
+                            "end": "2024-12-31",
+                            "val": 100,
+                            "accn": "000123456725000001",
+                            "fy": 2024,
+                            "fp": "FY",
+                            "form": "10-K",
+                            "filed": "2025-02-15"
+                        }]
+                    }
+                }
+            }
+        }
+    });
+    let facts_body = serde_json::to_string(&facts).expect("large facts fixture should encode");
+    assert!(facts_body.len() > 1_048_576);
+    assert!(facts_body.len() < SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES);
+    client.insert(facts_url, HttpResponse::ok(facts_body));
+
+    let evidence = SecClient::collect(&company, &client, user_agent)
+        .expect("SEC Company Facts above the generic limit should be parsed");
+
+    assert_eq!(evidence.fact("revenue").unwrap().value(), Some("100"));
+    assert_eq!(client.requests().len(), 2);
+    assert!(client
+        .requests()
+        .iter()
+        .all(|request| request.headers() == [("User-Agent".to_owned(), user_agent.to_owned())]));
+}
+
 fn collect_revenue_alias_fixture(
     second_value: i64,
 ) -> org_x::features::weekly_radar::runtime::sec::CompanyEvidence {
@@ -1285,6 +1335,50 @@ fn fixture_and_ureq_reject_response_bodies_over_one_mib() {
         ureq_error.to_string(),
         "HTTP response body exceeded configured limit"
     );
+    server.join().expect("local server should finish");
+}
+
+#[test]
+fn fixture_rejects_sec_company_facts_above_its_finite_limit() {
+    let url = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json";
+    let oversized = "x".repeat(SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES + 1);
+    let client = FixtureHttpClient::with_response(url, HttpResponse::ok(oversized));
+
+    let error = client
+        .get_with_max_body_bytes(url, &[], SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES)
+        .expect_err("SEC Company Facts above its source limit must fail closed");
+
+    assert_eq!(error, RuntimeError::HttpResponseTooLarge);
+}
+
+#[test]
+fn ureq_accepts_a_payload_above_the_default_limit_when_given_a_finite_override() {
+    let body = "x".repeat(1_048_577);
+    let listener = TcpListener::bind("127.0.0.1:0").expect("local listener should bind");
+    let address = listener
+        .local_addr()
+        .expect("local listener should expose an address");
+    let server_body = body.clone();
+    let server = thread::spawn(move || {
+        let (mut stream, _) = listener.accept().expect("local client should connect");
+        let mut request = [0_u8; 1024];
+        let _ = stream.read(&mut request);
+        write!(
+            stream,
+            "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+            server_body.len()
+        )
+        .expect("local response headers should be written");
+        stream
+            .write_all(server_body.as_bytes())
+            .expect("local response body should be written");
+    });
+    let url = format!("http://{address}/sec-company-facts");
+    let response = UreqHttpClient::new()
+        .get_with_max_body_bytes(&url, &[], SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES)
+        .expect("finite SEC override should accept the larger local body");
+
+    assert_eq!(response.body().len(), body.len());
     server.join().expect("local server should finish");
 }
 

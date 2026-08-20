@@ -4,22 +4,17 @@ Task Result
 Status: Partial
 
 What was completed
-- Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
-- Changed docs/superpowers/plans/2026-08-20-roadmap-final-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-roadmap-final-reconciliation.md]
-- Changed .ai/work-items/active/wi-roadmap-final-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.contract.json]
-- Changed .ai/work-items/active/wi-roadmap-final-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.summary.json]
-- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/work-items/active/wi-sec-company-facts-response-limit.contract.json [evidence: .ai/work-items/archive/2026/wi-sec-company-facts-response-limit.contract.json]
+- Changed .ai/work-items/active/wi-sec-company-facts-response-limit.summary.json [evidence: .ai/work-items/archive/2026/wi-sec-company-facts-response-limit.summary.json]
+- Changed src/features/weekly_radar/runtime/http.rs [evidence: src/features/weekly_radar/runtime/http.rs]
+- Changed src/features/weekly_radar/runtime/sec.rs [evidence: src/features/weekly_radar/runtime/sec.rs]
+- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
+- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
+- Changed docs/superpowers/plans/2026-08-20-sec-company-facts-response-limit.md [evidence: docs/superpowers/plans/2026-08-20-sec-company-facts-response-limit.md]
+- Changed .ai/work-items/active/wi-sec-company-facts-response-limit.outcome.json [evidence: .ai/work-items/archive/2026/wi-sec-company-facts-response-limit.outcome.json]
+- Changed .ai/work-items/active/wi-sec-company-facts-response-limit.outcome.md [evidence: .ai/work-items/archive/2026/wi-sec-company-facts-response-limit.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/starts/wi-roadmap-final-reconciliation.json [evidence: .ai/work-items/starts/wi-roadmap-final-reconciliation.json]
-- Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
-- Changed .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.archive-manifest.json]
-- Changed .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.contract.json]
-- Changed .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.summary.json]
-- Changed .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.outcome.json]
-- Changed .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.outcome.md]
-- Changed .ai/work-items/active/wi-roadmap-final-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.outcome.json]
-- Changed .ai/work-items/active/wi-roadmap-final-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-final-reconciliation.outcome.md]
 
 Problems found
 - Total: 2
@@ -36,13 +31,14 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- Future Work Items can make the snapshot stale again unless roadmap updates remain tied to archive/index.json. [evidence: residualRisks]
+- The latest successful hosted run recorded ten SEC failures at the generic 1 MiB response limit. (inference)
+- Future registrants may exceed the 16 MiB Company Facts bound and will remain unavailable until the bound is deliberately revised with new evidence. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- The first ai-start preflight was blocked because the generated Contract lacked task-specific intent, raw request, sources, scenario coverage, and acceptance; the Contract was completed before editing. (inference)
+- None recorded.
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]

@@ -6,13 +6,17 @@
   "sourceOutcome": {
     "format": "ai-cockpit-task-outcome",
     "schemaVersion": 1,
-    "digest": "0a28b8004b8a6afb45e62fc574fe8613bfbd0b0d126103ae791acee2bdb68526"
+    "digest": "cca6b745acde51e5ea4995af1cd84c18537c5ccfe3783542073922bb66419f46"
   },
   "task": {
     "summary": "Task wi-weekly-radar-snapshot-lifecycle generated an evidence-derived outcome with status needs_human_confirmation.",
     "deliveredChanges": [
       ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
       ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+      ".ai/cockpit/current_status.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md",
+      ".ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json",
       "src/main.rs",
       "src/features/weekly_radar/runtime.rs",
       "src/features/weekly_radar/runtime/archive.rs",
@@ -171,6 +175,78 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
             "subject": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/current_status.md",
+        "title": "Changed .ai/cockpit/current_status.md",
+        "detail": "Generated AI Cockpit status from the active Contract and Summary.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": ".ai/cockpit/current_status.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": ".ai/cockpit/current_status.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/task_report.json",
+        "title": "Changed .ai/cockpit/task_report.json",
+        "detail": "Generated Human Benefit Report from the active Task Outcome.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/cockpit/task_report.md",
+        "title": "Changed .ai/cockpit/task_report.md",
+        "detail": "Generated human-readable Task Outcome handoff report.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": ".ai/cockpit/task_report.md"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": ".ai/cockpit/task_report.md"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "Changed .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json",
+        "title": "Changed .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json",
+        "detail": "AI Cockpit start receipt for the dedicated Work Item branch.",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": ".ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
+            "subject": ".ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json"
           }
         ],
         "inference": false
@@ -420,19 +496,19 @@
       {
         "claim": "aiCheckpoint",
         "title": "aiCheckpoint",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-snapshot-lifecycle` - Contract Hash: `01701e2e6a121d21` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `7` - Unknown Count: `0",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-snapshot-lifecycle` - Contract Hash: `126369fe5458f244` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `7` - Unknown Count: `0",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "5f5527ea19992aec60aeb141a93fd1017691b5fa50a4e1af100a9357265b82a5"
+            "digest": "f1af432c09178fe6f3c666b06cf8ea1193972af6550e6ea56d71cd829e0f5cd0"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "5f5527ea19992aec60aeb141a93fd1017691b5fa50a4e1af100a9357265b82a5"
+            "digest": "f1af432c09178fe6f3c666b06cf8ea1193972af6550e6ea56d71cd829e0f5cd0"
           }
         ],
         "inference": false
@@ -440,19 +516,19 @@
       {
         "claim": "aiReviewPolicy",
         "title": "aiReviewPolicy",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json [review]",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json review policy matched 7 path(s) [review] .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [review] .ai/work-items/active/wi-weekly-radar-snap",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiReviewPolicy",
-            "digest": "6a1725f2b8fce0f69d22e229fe256857843e947447815987350b59e41e8ce32e"
+            "digest": "0103208fb79626e09110c98eac444daefd92921e819fe0fe9523995282395b1c"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiReviewPolicy",
-            "digest": "6a1725f2b8fce0f69d22e229fe256857843e947447815987350b59e41e8ce32e"
+            "digest": "0103208fb79626e09110c98eac444daefd92921e819fe0fe9523995282395b1c"
           }
         ],
         "inference": false
@@ -565,14 +641,14 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "quality",
-            "digest": "f695a1272545a03bc50ec239d5c81fbd3a47985a4e8fcb31848696a69133cd9e"
+            "digest": "eb58c9012e4777161a7e5d8d68103d055088a8ac66fda7c08f406654af0dae1b"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "quality",
-            "digest": "f695a1272545a03bc50ec239d5c81fbd3a47985a4e8fcb31848696a69133cd9e"
+            "digest": "eb58c9012e4777161a7e5d8d68103d055088a8ac66fda7c08f406654af0dae1b"
           }
         ],
         "inference": false

@@ -12,6 +12,10 @@ Governed Work Item: wi-weekly-radar-snapshot-lifecycle
 ## Delivered Changes
 - .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json
 - .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json
+- .ai/cockpit/current_status.md
+- .ai/cockpit/task_report.json
+- .ai/cockpit/task_report.md
+- .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json
 - src/main.rs
 - src/features/weekly_radar/runtime.rs
 - src/features/weekly_radar/runtime/archive.rs
@@ -79,6 +83,10 @@ Locale: `zh-CN`
 ### What was completed
 - Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json: Recorded the approved scope, lifecycle, risk, acceptance, and verification boundary.
 - Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json: Records evidence-bound implementation and lifecycle handoff.
+- Changed .ai/cockpit/current_status.md: Generated AI Cockpit status from the active Contract and Summary.
+- Changed .ai/cockpit/task_report.json: Generated Human Benefit Report from the active Task Outcome.
+- Changed .ai/cockpit/task_report.md: Generated human-readable Task Outcome handoff report.
+- Changed .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json: AI Cockpit start receipt for the dedicated Work Item branch.
 - Changed src/main.rs: Persists input before rendering and adds source-free delivery retry.
 - Changed src/features/weekly_radar/runtime.rs: Exports the governed snapshot and archive runtime APIs.
 - Changed src/features/weekly_radar/runtime/archive.rs: Adds versioned input snapshots, atomic final writes, same-date conflict protection, and post-commit retention.
@@ -94,8 +102,8 @@ Locale: `zh-CN`
 - aiWorkItem: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json
 - aiScope: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json scope guard passed: 16 changed path(s) covered
 - aiGuards: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json
-- aiCheckpoint: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json --stage "before_finish" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-snapshot-lifecycle` - Contract Hash: `01701e2e6a121d21` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `7` - Unknown Count: `0
-- aiReviewPolicy: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json [review]
+- aiCheckpoint: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json --stage "before_finish" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-snapshot-lifecycle` - Contract Hash: `126369fe5458f244` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `7` - Unknown Count: `0
+- aiReviewPolicy: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json review policy matched 7 path(s) [review] .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [review] .ai/work-items/active/wi-weekly-radar-snap
 - aiBacktrack: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json
 - aiCoverage: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json
 - aiScenarioCoverage: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json [warning] required_scenario_unverified: The Work Item completes through quality, finish, archive, PR, merge, and close with clean local and remote state. - required scenario remains unverified report: target/ai_scenario_coverage_report.json

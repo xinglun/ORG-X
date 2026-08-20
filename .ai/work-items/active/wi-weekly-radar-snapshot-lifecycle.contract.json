@@ -27,6 +27,8 @@
     ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
     ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json",
     ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
     ".ai/work-items/starts/**",
     ".ai/work-items/archive/**",
     ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json",

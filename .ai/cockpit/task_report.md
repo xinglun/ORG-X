@@ -6,6 +6,10 @@ Status: Blocked
 What was completed
 - Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json]
 - Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json]
+- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
+- Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
+- Changed .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json [evidence: .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json]
 - Changed src/main.rs [evidence: src/main.rs]
 - Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
 - Changed src/features/weekly_radar/runtime/archive.rs [evidence: src/features/weekly_radar/runtime/archive.rs]

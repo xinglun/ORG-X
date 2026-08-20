@@ -3,7 +3,8 @@
 ## Purpose
 
 The Weekly Radar execution sequence needs one explicit application boundary
-that selects the weekly publication day. The default is Sunday, with
+that selects the weekly publication day. The default is Monday, matching the
+production 09:00 JST / 00:00 UTC schedule, with
 `day_of_week` configurable by the caller.
 
 ## Boundary
@@ -20,7 +21,8 @@ case only when the decision is `Due`.
 
 ## Safety invariants
 
-- The default schedule is Sunday, one weekend day.
+- The default schedule is Monday at 09:00 JST (00:00 UTC), matching the
+  production workflow.
 - A configured weekday is the only weekday that returns `Due`.
 - Repeated evaluation does not consume or mutate scheduler state.
 - Domain modules do not import or mention the Scheduler boundary.

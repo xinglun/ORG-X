@@ -254,7 +254,7 @@ fn publication(chunks: &[String]) -> WeeklyRadarPublication {
 #[test]
 fn e2e_success_proves_compute_persist_render_publish_archive_order() {
     let scheduler = WeeklyScheduler::default();
-    assert!(scheduler.should_run(Weekday::Sunday));
+    assert!(scheduler.should_run(Weekday::Monday));
 
     let mut events = Vec::new();
     let snapshot = snapshot();

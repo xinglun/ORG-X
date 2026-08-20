@@ -20,7 +20,7 @@ Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置�
 
 ## 调度与命令
 
-生产调度是每周一 09:00 JST（UTC `0 0 * * 1`），也支持 `workflow_dispatch` 手动执行。手动执行可选择语言（`zh-CN`、`ja`、`en`）、日期和 `dry_run`。Actions 使用 `actions/checkout@v5`，从 `data` 分支重建已有的 `weekly-radar/` 树，并运行与本地相同的 CLI。
+生产调度和本地 `WeeklyScheduler::default` 均为每周一 09:00 JST（UTC `0 0 * * 1`），也支持 `workflow_dispatch` 手动执行。显式配置 `day_of_week` 仍可用于测试或调用方，不改变生产默认值。手动执行可选择语言（`zh-CN`、`ja`、`en`）、日期和 `dry_run`。Actions 使用 `actions/checkout@v5`，从 `data` 分支重建已有的 `weekly-radar/` 树，并运行与本地相同的 CLI。
 
 本地发布入口：
 

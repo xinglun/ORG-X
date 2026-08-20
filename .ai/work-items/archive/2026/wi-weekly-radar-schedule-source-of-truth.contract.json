@@ -1,0 +1,295 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-schedule-source-of-truth",
+  "mode": "code",
+  "title": "wi-weekly-radar-schedule-source-of-truth",
+  "baseCommit": "48aa5396563bc80d8ec7af8c1cc2e72dcf79e2f8",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-schedule-source-of-truth.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-schedule-source-of-truth.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-weekly-radar-schedule-source-of-truth.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-schedule-source-of-truth.outcome.md",
+    "src/features/weekly_radar/application/weekly_scheduler.rs",
+    "src/features/weekly_radar/application/weekly_scheduler_test.rs",
+    "tests/weekly_radar_scheduler.rs",
+    "tests/weekly_radar_end_to_end.rs",
+    "docs/superpowers/specs/2026-08-17-wi-wr-013-weekly-scheduler.md",
+    "docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/plans/2026-08-20-weekly-radar-schedule-source-of-truth.md"
+  ],
+  "outOfScope": [
+    ".github/workflows/weekly-radar.yml",
+    "src/features/weekly_radar/domain/**",
+    "src/main.rs",
+    "config/weekly_radar/companies.json",
+    "existing archived Work Item records and historical data-branch files",
+    "external production workflow execution and Telegram/data-branch mutation"
+  ],
+  "sources": [
+    {
+      "path": "src/features/weekly_radar/application/weekly_scheduler.rs",
+      "reason": "The library scheduler currently defaults to Sunday."
+    },
+    {
+      "path": "src/features/weekly_radar/application/weekly_scheduler_test.rs",
+      "reason": "Module tests currently assert Sunday as the default."
+    },
+    {
+      "path": "tests/weekly_radar_scheduler.rs",
+      "reason": "Public scheduler tests currently assert Sunday as the default and as an end-to-end trigger."
+    },
+    {
+      "path": "tests/weekly_radar_end_to_end.rs",
+      "reason": "End-to-end scheduler coverage uses the current Sunday default."
+    },
+    {
+      "path": ".github/workflows/weekly-radar.yml",
+      "reason": "Production authority is Monday 09:00 JST, cron 0 0 * * 1; this Work Item preserves that workflow."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-013-weekly-scheduler.md",
+      "reason": "Scheduler design currently documents Sunday as the default and must be reconciled."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md",
+      "reason": "Runtime specification defines Monday 09:00 JST as the production schedule."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Operations documentation is the reader-facing schedule contract."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-20-weekly-radar-schedule-source-of-truth.md",
+      "reason": "This Work Item's implementation and verification plan."
+    },
+    {
+      "path": ".ai/work-items/active/wi-weekly-radar-schedule-source-of-truth.contract.json",
+      "reason": "This Contract defines the bounded schedule reconciliation."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "schedule_behavior",
+      "documentation_consistency"
+    ],
+    "reason": "Changing the library default affects callers that rely on WeeklyScheduler::default. The production workflow already runs Monday, so the intended correction is to align the library and its tests/docs without changing the explicit configuration API or workflow cron.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit continuation and full-lifecycle authorization"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "Existing repository specifications and production workflow provide a deterministic Monday 09:00 JST schedule contract; no new product rule is required."
+  },
+  "preReviewWarnings": [
+    "Keep the explicit WeeklySchedule::new(day_of_week) API unchanged.",
+    "Keep .github/workflows/weekly-radar.yml as the production authority and do not trigger external publication from this Work Item.",
+    "Update every Sunday-default assertion and the scheduler plan/spec wording so no stale source-of-truth remains."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "WeeklyScheduler::default and WeeklySchedule::default select Monday, matching the production workflow's Monday 09:00 JST schedule; explicit configured weekdays remain unchanged.",
+    "Module, public, and end-to-end scheduler tests assert the Monday default and continue to prove that only the configured weekday is due.",
+    "The scheduler spec, runtime spec, and operations documentation consistently state Monday 09:00 JST / UTC 0 0 * * 1, while preserving the no-clock/no-domain-dependency boundary.",
+    "No workflow, domain, CLI, provider, data-branch, or Telegram behavior is changed; `make quality`, all required AI Cockpit checks, and `make check-ai-pr` pass.",
+    "The Work Item completes the before-finish checkpoint, finish, archive, hosted PR checks, merge, ai-close-work-item, and final clean-state verification."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features."
+  ],
+  "intent": {
+    "problem": "The production Weekly Radar workflow and reader documentation define Monday 09:00 JST, but the reusable application scheduler defaults to Sunday and its tests/specs encode that different default. This makes the same schedule contract produce different answers depending on which boundary is used.",
+    "constraints": [
+      "Treat .github/workflows/weekly-radar.yml and the runtime specification as the production schedule authority.",
+      "Align only the library default, tests, and schedule documentation; preserve explicit WeeklySchedule::new(day_of_week) behavior.",
+      "Keep the scheduler pure: it must not read time, persist data, render, publish, retry, or create a Domain dependency."
+    ],
+    "rationale": "Changing the default from Sunday to Monday is the smallest evidence-backed correction that removes the source-of-truth split while preserving all explicit caller configuration and production workflow behavior."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 40
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-schedule-source-of-truth.json",
+    "baseCommit": "48aa5396563bc80d8ec7af8c1cc2e72dcf79e2f8",
+    "initialScopeDigest": "49b427039f0b42a275c87f47aa298d86c4c08e4303c9b05ebb1b29d9e1d940fd",
+    "contractSkeletonDigest": "1f8cfb5667c47b2c026272886a58565211c04d0ef000919491bf1315bb6bd4c7"
+  },
+  "requestedOperation": {
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly requested continuing all corresponding acceptance work and authorized required Work Item lifecycle actions in Contract evidence.",
+    "authorizedExternalEffects": [
+      "Create and update the Work Item PR for the schedule reconciliation.",
+      "Run hosted checks, merge the PR, and close this Work Item after merge."
+    ]
+  },
+  "rawUserRequest": "继续对应",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Current user continuation objective to continue corresponding acceptance work.",
+    "digest": "0915418c3714887036d18130240d92c8f646e9d734eadb925470ac833b67ca04",
+    "capturedAt": "2026-08-20T14:00:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "software_design",
+      "test_automation",
+      "documentation"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "llm_fact_extraction",
+      "trading_decision",
+      "capital_action"
+    ]
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "The default scheduler matches production Monday behavior.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/application/weekly_scheduler.rs", ".github/workflows/weekly-radar.yml", "tests/weekly_radar_scheduler.rs"],
+      "expected": "WeeklyScheduler::default is due on Monday and not due on Sunday or Saturday; the workflow cron remains 0 0 * * 1.",
+      "verificationPlan": "Run focused scheduler tests and inspect the workflow without modifying it."
+    },
+    {
+      "scenario": "Explicit caller-configured weekdays remain stable.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/application/weekly_scheduler_test.rs", "tests/weekly_radar_scheduler.rs"],
+      "expected": "Every Weekday remains selectable and only the selected weekday is Due.",
+      "verificationPlan": "Run module and public scheduler tests across Weekday::ALL."
+    },
+    {
+      "scenario": "End-to-end scheduler boundary remains pure and dependency-safe.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_end_to_end.rs", "tests/architecture/dependency_rules.rs"],
+      "expected": "The scheduler does not read clock state, mutate a week, publish, or introduce a Domain dependency.",
+      "verificationPlan": "Run end-to-end, architecture, and full quality checks."
+    },
+    {
+      "scenario": "All reader-facing schedule documentation agrees.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["docs/superpowers/specs/2026-08-17-wi-wr-013-weekly-scheduler.md", "docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md", "docs/operations/WEEKLY_RADAR.md"],
+      "expected": "No stale statement presents Sunday as the default; Monday 09:00 JST is stated consistently.",
+      "verificationPlan": "Search the declared schedule documents and review the final diff."
+    }
+  ]
+}

@@ -469,6 +469,18 @@
       "summarySha256": "2617ead5146ff50699432b0452cf1003a9a2a65ae1c91375c96f86ff85e2a239",
       "manifestPath": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.archive-manifest.json",
       "manifestSha256": "f67a5cd08c2a8792ee1d7bde5ff46ba2786c6ca1e31860a6438476ab24186197"
+    },
+    {
+      "workItemId": "wi-weekly-radar-schedule-source-of-truth",
+      "archiveSequence": 40,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.contract.json",
+      "contractSha256": "52ee4e11f2a19a33c8e975ed08654d9feb595d66fe4c4ff9e2fc6e40962216fa",
+      "archivedAt": "2026-08-20T13:59:36.836165+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.summary.json",
+      "summarySha256": "1b4653b6892eaa822976af22180db4ddca919c170a15805eb64e1a4fb3ee9c45",
+      "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.archive-manifest.json",
+      "manifestSha256": "6a6cc8a16d2019ff33b66cd38d073bc3f6c6ea681cd03a5e27b7d244cd191d82"
     }
   ]
 }

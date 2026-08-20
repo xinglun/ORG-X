@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-schedule-source-of-truth",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-schedule-source-of-truth.json",
+  "baseCommit": "48aa5396563bc80d8ec7af8c1cc2e72dcf79e2f8",
+  "baseBranch": "codex/wi-weekly-radar-schedule-source-of-truth",
+  "startTimestamp": "2026-08-20T04:51:04.383007+00:00",
+  "initialScopeDigest": "49b427039f0b42a275c87f47aa298d86c4c08e4303c9b05ebb1b29d9e1d940fd",
+  "contractSkeletonDigest": "1f8cfb5667c47b2c026272886a58565211c04d0ef000919491bf1315bb6bd4c7"
+}

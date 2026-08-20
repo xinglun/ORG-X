@@ -82,8 +82,8 @@ impl WeeklySchedule {
 
 impl Default for WeeklySchedule {
     fn default() -> Self {
-        // Sunday is the default weekend publication day.
-        Self::new(Weekday::Sunday)
+        // Monday is the production publication day: 09:00 JST / 00:00 UTC.
+        Self::new(Weekday::Monday)
     }
 }
 

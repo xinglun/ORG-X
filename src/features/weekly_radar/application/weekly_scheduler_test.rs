@@ -1,22 +1,22 @@
 use super::{ScheduleDecision, Weekday, WeeklySchedule, WeeklyScheduler};
 
 #[test]
-fn default_schedule_runs_on_sunday_and_not_on_saturday() {
+fn default_schedule_runs_on_monday_and_not_on_sunday() {
     let scheduler = WeeklyScheduler::default();
 
-    assert_eq!(scheduler.schedule().day_of_week(), Weekday::Sunday);
+    assert_eq!(scheduler.schedule().day_of_week(), Weekday::Monday);
     assert_eq!(
-        scheduler.evaluate(Weekday::Sunday),
+        scheduler.evaluate(Weekday::Monday),
         ScheduleDecision::Due {
-            scheduled_day: Weekday::Sunday,
-            observed_day: Weekday::Sunday,
+            scheduled_day: Weekday::Monday,
+            observed_day: Weekday::Monday,
         }
     );
     assert_eq!(
-        scheduler.evaluate(Weekday::Saturday),
+        scheduler.evaluate(Weekday::Sunday),
         ScheduleDecision::NotDue {
-            scheduled_day: Weekday::Sunday,
-            observed_day: Weekday::Saturday,
+            scheduled_day: Weekday::Monday,
+            observed_day: Weekday::Sunday,
         }
     );
 }

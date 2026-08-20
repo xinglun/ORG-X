@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-schedule-source-of-truth",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "9513c87e78c3cc82278e4af05da8d48624a8b601e377030bb632ae8404b98fb0"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-schedule-source-of-truth",
+    "contractDigest": "52ee4e11f2a19a33c8e975ed08654d9feb595d66fe4c4ff9e2fc6e40962216fa",
+    "summaryDigest": "2f241ab7a68db58ee909a7304b48daf844d2638f62141ccb4d4ead0194759a99",
+    "verificationDigest": "5d4b692d418b02524e103389977e0fd00667c58b7e117a33e851ba6508dad1d3",
+    "baseCommit": "48aa5396563bc80d8ec7af8c1cc2e72dcf79e2f8",
+    "headCommit": "48aa5396563bc80d8ec7af8c1cc2e72dcf79e2f8",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "d1352d0632c0510a5a6c7a93898fe33135f51e90040722f26b642a85391714aa",
+      "binding": {
+        "baseCommit": "48aa5396563bc80d8ec7af8c1cc2e72dcf79e2f8",
+        "candidateHead": "48aa5396563bc80d8ec7af8c1cc2e72dcf79e2f8",
+        "candidateTreeDigest": "b15521f131552f4791727a55d06ab26d50267624e4fc5586ac5d89a5bd57470d",
+        "candidateDiffDigest": "861014b4999cdb649ab2055e45876280920aebf439b415dc0ff2e688e3c21fc5"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-schedule-source-of-truth generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-schedule-source-of-truth generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-schedule-source-of-truth",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.summary.json",
@@ -25,49 +48,76 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "A real hosted production run is outside this Work Item and remains a separate human/adopter receipt."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "A real hosted production run is outside this Work Item and remains a separate human/adopter receipt.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "A real hosted production run is outside this Work Item and remains a separate human/adopter receipt.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "scope",
+        "severity": "medium",
+        "title": "scope",
+        "detail": "Callers that implicitly depended on Sunday will now follow the documented production Monday default; explicit schedules are unaffected.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "A real hosted production run is outside this Work Item and remains a separate human/adopter receipt.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Callers that implicitly depended on Sunday will now follow the documented production Monday default; explicit schedules are unaffected.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -735,6 +785,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

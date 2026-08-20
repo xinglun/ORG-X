@@ -6,14 +6,15 @@ use org_x::features::weekly_radar::application::weekly_scheduler::{
 };
 
 #[test]
-fn public_scheduler_uses_sunday_by_default() {
+fn public_scheduler_uses_monday_by_default() {
     let scheduler = WeeklyScheduler::default();
 
-    assert_eq!(scheduler.schedule().day_of_week(), Weekday::Sunday);
+    assert_eq!(scheduler.schedule().day_of_week(), Weekday::Monday);
     assert!(matches!(
-        scheduler.evaluate(Weekday::Sunday),
+        scheduler.evaluate(Weekday::Monday),
         ScheduleDecision::Due { .. }
     ));
+    assert!(!scheduler.should_run(Weekday::Sunday));
 }
 
 #[test]
@@ -29,7 +30,7 @@ fn public_scheduler_honors_configured_day_of_week() {
 fn scheduler_decision_is_a_trigger_only_and_domain_has_no_scheduler_reference() {
     let decision = WeeklyScheduler::default().evaluate(Weekday::Saturday);
 
-    assert_eq!(decision.scheduled_day(), Weekday::Sunday);
+    assert_eq!(decision.scheduled_day(), Weekday::Monday);
     assert_eq!(decision.observed_day(), Weekday::Saturday);
     assert!(!decision.is_due());
 

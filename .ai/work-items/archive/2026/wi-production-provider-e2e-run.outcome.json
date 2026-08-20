@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-production-provider-e2e-run",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "0e73e92322e724eae5b19308750abb1cde5907e40e612658eef57a6b1120cf5d"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-production-provider-e2e-run",
+    "contractDigest": "e664d0b3a4e5429d53abe1b74c91968cf53dba2142754c2066094a95de1da43a",
+    "summaryDigest": "2d261329482a2d9cc9c33ad12ada6360d60ed629ebe740b4b614bdc1993e920a",
+    "verificationDigest": "50ec6549ecbaee3dd32dc8744542e58cead11a2c09fb9db0f44e256af8fb38bb",
+    "baseCommit": "6f699c4b70a31596c47cead24bd923bc87054f9b",
+    "headCommit": "6f699c4b70a31596c47cead24bd923bc87054f9b",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "fee90c32e0ec906f2b810a5e062032aaae444dbdc9811169e6f59bbb6c9fe77d",
+      "binding": {
+        "baseCommit": "6f699c4b70a31596c47cead24bd923bc87054f9b",
+        "candidateHead": "6f699c4b70a31596c47cead24bd923bc87054f9b",
+        "candidateTreeDigest": "d49f0ff740e415fa3ac8a45500f448a13f06c06d1645ac27f9eba0f3747fb2c0",
+        "candidateDiffDigest": "d9462c8c17878c565d2441a2544cd2c777b3ced6a1476da2c03a3b3342edddf9"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-production-provider-e2e-run generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-production-provider-e2e-run generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-production-provider-e2e-run",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-production-provider-e2e-run.contract.json",
       ".ai/work-items/archive/2026/wi-production-provider-e2e-run.summary.json",
@@ -19,61 +42,143 @@
       ".ai/cockpit/task_report.md",
       ".ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.json",
       ".ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "A distinct later weekly period is not available in the current run."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "A distinct later weekly period is not available in the current run.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "A distinct later weekly period is not available in the current run.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [
+      {
+        "problem": "Run 32366854657 from main reached real Provider acquisition but rejected the judgment-reference heading before Telegram/archive; the predecessor added the localized semantic boundary.",
+        "action": "Resolution status: resolved_in_predecessor",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "https://github.com/xinglun/ORG-X/actions/runs/32366854657",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-provider-e2e.outcome.json",
+            "subject": "observedIssues[0] observed issue"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "https://github.com/xinglun/ORG-X/actions/runs/32366854657",
+            "subject": "observedIssues[0] observed issue"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-provider-e2e.outcome.json",
+            "subject": "observedIssues[0] observed issue"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "post_merge_production_binding",
+        "severity": "high",
+        "title": "post_merge_production_binding",
+        "detail": "The first post-merge non-dry-run binding is verified; a distinct later weekly period is still required before unattended cadence can be claimed.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-provider-e2e-run.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-provider-e2e-run.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "Workflow run from main 6f699c4",
+          "PUBLISHED output",
+          "Redacted source coverage",
+          "Bound report/snapshot/input snapshot/receipt/manifest/data commit identities"
+        ],
+        "decisionOwner": "xinglun / ORG-X product owner",
+        "mitigation": "Retain the verified 2026-08-19 artifact set and require the same identity binding in a later period.",
+        "acceptanceStatus": "verified"
+      },
+      {
+        "claim": "later_period_cadence",
+        "severity": "medium",
+        "title": "later_period_cadence",
+        "detail": "A distinct later weekly period is time-dependent and cannot be inferred from the first successful post-merge run.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-provider-e2e-run.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-provider-e2e-run.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "Distinct later weekly period",
+          "Same non-secret artifact binding",
+          "No manual code or data repair"
+        ],
+        "decisionOwner": "xinglun / ORG-X product owner",
+        "mitigation": "Keep cadence as an explicit open gate and do not report unattended operation from one run.",
+        "acceptanceStatus": "open"
+      }
+    ],
+    "humanDecisions": [
+      "用户要求系统给人一个独立参考；人的判断保持独立，双方互相印证，不合作合并为同一个答案。"
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-production-provider-e2e-run.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-production-provider-e2e-run.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [
-    "用户要求系统给人一个独立参考；人的判断保持独立，双方互相印证，不合作合并为同一个答案。"
-  ],
-  "limitations": [
-    {
-      "sourceWarning": "A distinct later weekly period is not available in the current run.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "high",
-      "detail": "The first post-merge non-dry-run binding is verified; a distinct later weekly period is still required before unattended cadence can be claimed.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-production-provider-e2e-run.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "A distinct later weekly period is time-dependent and cannot be inferred from the first successful post-merge run.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-production-provider-e2e-run.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -729,6 +834,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

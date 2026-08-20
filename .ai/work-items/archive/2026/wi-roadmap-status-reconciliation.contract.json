@@ -1,0 +1,158 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-roadmap-status-reconciliation",
+  "mode": "code",
+  "title": "Reconcile Work Item roadmap status with archived lifecycle evidence",
+  "baseCommit": "fad1bb6fcaa0dc0c1ca9fe999c9c9580daf19fc1",
+  "baselineDirtyPaths": [],
+  "rawUserRequest": "查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User-authorized continuation of the full remediation and Work Item lifecycle.",
+    "digest": "sha256:cf250b033a996a6d515ba131c0d7fe7974e4536e03b4f17ac8a205f181e5cb9f",
+    "capturedAt": "2026-08-20"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "documentation"],
+    "prohibitedCapabilities": ["runtime_behavior_change", "secret_mutation", "external_service_operation"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "document",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized completing every corresponding Work Item, self-checking, correcting failures, and recording any required authorization in the Contract.",
+    "authorizedExternalEffects": [
+      "Create and update the Work Item PR for this documentation-only change.",
+      "Run hosted checks, merge the PR, and close this Work Item after the merge."
+    ]
+  },
+  "problemStatement": "The roadmap currently reports four completed Work Items and twenty-four unfinished candidates, while the authoritative archive index contains the completed core and Weekly Radar Work Items through wi-wr-016-runtime. This stale status can mislead planning and makes the repository's evidence-backed lifecycle state inconsistent with its navigation document.",
+  "scope": [
+    ".ai/work-items/active/wi-roadmap-status-reconciliation.contract.json",
+    ".ai/work-items/active/wi-roadmap-status-reconciliation.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-roadmap-status-reconciliation.outcome.json",
+    ".ai/work-items/active/wi-roadmap-status-reconciliation.outcome.md",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+    "docs/superpowers/plans/2026-08-20-roadmap-status-reconciliation.md"
+  ],
+  "outOfScope": [
+    "src/**",
+    "tests/**",
+    "Cargo.toml",
+    "Cargo.lock",
+    ".github/workflows/**",
+    ".ai/work-items/archive/2026/**",
+    ".ai/evidence/**",
+    "Changing archived Contract, Summary, Outcome, or manifest contents",
+    "Changing the roadmap's product goals, architecture, or execution order beyond evidence-backed status reconciliation",
+    "Provider operations, credentials, Telegram, SEC, GitHub data, or production data-branch writes",
+    "Changing the AI Cockpit check implementations or weakening any quality gate"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository governance requires a scoped Contract, evidence-backed Summary, full lifecycle, and no changes outside scope."},
+    {"path": ".ai/glossary.md", "reason": "Defines Evidence over Self-Declaration and the Preflight Pause Rule used for this documentation correction."},
+    {"path": ".ai/work-items/archive/index.json", "reason": "Authoritative archive discovery index for completed Work Item identities, archive paths, and lifecycle evidence."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "The stale roadmap status table and candidate sections are the documentation surface being reconciled."},
+    {"path": ".ai/work-items/archive/2026/wi-wr-016-runtime.contract.json", "reason": "Latest archived Weekly Radar runtime Contract establishes the current completed boundary."},
+    {"path": "Makefile.ai", "reason": "Defines the required lifecycle and quality gates used to verify this Work Item."},
+    {"path": "git worktree list --porcelain", "reason": "Confirms the dedicated Work Item worktree and final cleanup state."}
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "The roadmap status table matches the authoritative archive index and explicitly records the current active state.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", ".ai/work-items/archive/index.json"],
+      "expected": "Completed counts and entries are derived from archived Work Item evidence; no archived Work Item remains listed as Planned.",
+      "verificationPlan": "Compare the edited status table and completed/candidate sections against archive/index.json and the archived Contract filenames."
+    },
+    {
+      "scenario": "The documentation correction does not modify implementation, tests, dependencies, workflows, or archived Work Item records.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["git diff --name-status", ".ai/work-items/archive/index.json"],
+      "expected": "The only product documentation change is the roadmap plus the scoped plan and generated governance evidence.",
+      "verificationPlan": "Run scope, diff ownership, diff check, and inspect the final PR diff against the declared out-of-scope paths."
+    },
+    {
+      "scenario": "Repository quality remains green after the roadmap correction.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["Makefile.ai", "make quality"],
+      "expected": "make quality exits successfully with reference-impact and all Rust checks passing.",
+      "verificationPlan": "Run make quality and record the exact result in the Summary and Outcome."
+    },
+    {
+      "scenario": "The Work Item completes the governed archive, PR, merge, close, and clean-state lifecycle.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["AGENTS.md", ".ai/cockpit/README.md"],
+      "expected": "Preflight, checkpoints, finish, PR checks, merge, ai-close-work-item, and final branch/worktree inspection are evidenced.",
+      "verificationPlan": "Run the canonical lifecycle commands, hosted checks, merge, close, and final local/remote state inspection."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["documentation_truth", "governance_evidence", "lifecycle"],
+    "reason": "A stale roadmap can misdirect future implementation sequencing, but the correction is narrow and is constrained to evidence-backed status text. Archived records remain immutable.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "destructiveChangeReview": "No repository files are deleted; status text is corrected from the archive index."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["The change is documentation-only; archive immutability and lifecycle evidence remain explicit Contract constraints."],
+    "override": null
+  },
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {"status": "continue", "reason": "Scope, acceptance, sources, verification, and scenario evidence are sufficient for a documentation-only correction."},
+  "preReviewWarnings": [
+    "Do not infer completion from roadmap text alone; derive completed status from archived Contract/Summary/Outcome evidence.",
+    "Do not rewrite archived Work Item records while reconciling the roadmap."
+  ],
+  "checkpointPolicy": {"requiredBeforeFinish": true, "requiredStages": ["before_edit", "before_finish"], "reason": "Record the evidence boundary before editing and before final status generation."},
+  "acceptance": [
+    "The roadmap status/count section is corrected to match the Work Items present in .ai/work-items/archive/index.json as of this Work Item.",
+    "Completed and planned/gated sections distinguish archived Work Items from genuinely uncreated candidates without changing product scope or execution order.",
+    "The roadmap records that archive/index.json is the lifecycle authority and includes the current no-active-Work-Item state.",
+    "The diff contains no implementation, test, dependency, workflow, evidence-record, or archived-Work-Item changes outside declared governance documentation.",
+    "The Summary and full AI Cockpit lifecycle provide evidence for scope, quality, PR, merge, close, and final clean-state verification."
+  ],
+  "guidelines": [
+    "Keep roadmap status evidence-backed by the authoritative archive index.",
+    "Do not hand-edit generated current_status.md; regenerate it through Make targets.",
+    "Do not modify archived Work Item records while reconciling navigation documentation."
+  ],
+  "intent": {
+    "problem": "The roadmap's status table and counts lag behind the repository's archived Work Item lifecycle, so future planning can treat completed engineering as still pending.",
+    "constraints": [
+      "Use archived Contract/Summary/Outcome/index evidence as the source of truth; do not invent completion state.",
+      "Keep the correction documentation-only except for required active/generated governance evidence.",
+      "Preserve the roadmap's domain boundaries and dependency order; update only status and evidence references.",
+      "Complete the same full Work Item lifecycle as implementation changes."
+    ],
+    "rationale": "Synchronizing the navigation document with immutable lifecycle evidence prevents planning drift without changing product behavior or archived history."
+  },
+  "verification": [
+    {"check": "aiWorkItem", "required": true}, {"check": "aiScope", "required": true}, {"check": "aiGuards", "required": true}, {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true}, {"check": "aiReviewPolicy", "required": true}, {"check": "aiBacktrack", "required": true}, {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true}, {"check": "aiGuidelines", "required": true}, {"check": "aiSummary", "required": true}, {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true}, {"check": "aiStatusConsistency", "required": true}, {"check": "aiDiffOwnership", "required": true}, {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {"approved": true, "approvedBy": "user", "reason": "User explicitly authorized all corresponding Work Items, self-check and correction loops, full lifecycle execution, and recording authorization in each Contract."},
+  "rollbackNote": "Revert the roadmap-only commit; archived Work Item records remain unchanged.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 35}},
+  "startReceipt": {"path": ".ai/work-items/starts/wi-roadmap-status-reconciliation.json", "baseCommit": "fad1bb6fcaa0dc0c1ca9fe999c9c9580daf19fc1", "initialScopeDigest": "b45c0baf8b8c5985b5890f381ee914c1b3af1b8162aec37a1c90d20ebdb3dbda", "contractSkeletonDigest": "662d7e0bc79a09ec7b78599c18a3578a5f56c2ea1b907b388d46a431573bb235"}
+}

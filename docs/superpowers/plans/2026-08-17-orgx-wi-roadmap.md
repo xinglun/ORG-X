@@ -28,17 +28,18 @@
 - **Planned**：已进入路线图，但尚未创建 Active Contract，不代表已经开始或已经实现。
 - **Gated**：存在明确前置依赖，前置 WI 完成前不得作为实现任务启动。
 
-当前总览：
+当前总览（状态快照：2026-08-20；生命周期状态以 `.ai/work-items/archive/index.json` 为准）：
 
 | 类别 | 数量 | 当前状态 |
 | --- | ---: | --- |
-| 已完成治理与产品 WI | 4 | Completed |
-| 核心研究 Pipeline 候选 | 9 | Planned |
-| Weekly Radar 候选 | 15 | Planned / Gated |
-| 未完成候选合计 | 24 | 尚未创建 Active Contract |
-| 当前 Active Work Item | 0 | `no_active_work_item` |
+| 已完成治理、产品与维护 WI | 9 | Completed / archived |
+| 核心研究 Pipeline WI | 9 | Completed / archived |
+| Weekly Radar WI | 16 | Completed / archived |
+| 已归档 Work Item 合计 | 34（本 WI 归档后为 35） | 以 `archive/index.json` 为准 |
+| 尚未创建 Active Contract 的本路线图候选 | 0 | 当前表内无未处理候选 |
+| 当前 Active Work Item | 0（本 WI 归档后） | `no_active_work_item` |
 
-已完成的 4 项由归档索引确认：`adopt_ai_cockpit`、`WI-001`、`configure_ai_cockpit`、`WI-002`。Weekly Radar 的 15 项名称和输出语义来自用户提供的开发计划；它们在创建正式 Contract 前仍属于候选清单。
+上表的 34 项由 `.ai/work-items/archive/index.json` 的 Contract/Summary/Outcome/manifest 记录确认；本次 WI 完成归档后，索引将包含 35 项。`Completed / archived` 表示治理生命周期已闭合，不等于外部 Provider 行为已在本地测试中验证；各 Work Item 的 Outcome 保留其 warning、needs_human_confirmation 和 residual risk。
 
 ## 2. Product North Star and Weekly Radar purpose
 
@@ -65,48 +66,54 @@ No meaningful structural change this week.
 | `WI-001` | Engineering Foundation Verification | Completed | `.ai/work-items/archive/2026/wi-001.*` |
 | `configure_ai_cockpit` | 项目 Profile、Guards、Quality 与 CI 配置 | Completed | `.ai/work-items/archive/2026/configure_ai_cockpit.*` |
 | `WI-002` | Universe Domain：Company、Security、Listing、Snapshot、Eligibility | Completed | `.ai/work-items/archive/2026/wi-002.*` |
+| `wi-roadmap` | Work Item roadmap and dependency plan | Completed | `.ai/work-items/archive/2026/wi-roadmap.*` |
+| `wi-docs-reader` | Reader-first documentation organization | Completed | `.ai/work-items/archive/2026/wi-docs-reader.*` |
+| `wi-weekly-radar-report` | Weekly Radar report contract and implementation | Completed | `.ai/work-items/archive/2026/wi-weekly-radar-report.*` |
+| `wi-reference-impact-cleanup` | Reference-impact evidence and local residue cleanup | Completed | `.ai/work-items/archive/2026/wi-reference-impact-cleanup.*` |
+| `wi-weekly-radar-snapshot-lifecycle` | Durable input snapshot, delivery retry, archive immutability | Completed | `.ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.*` |
 
-`WI-002` 的 Domain 只处理已提供事实和确定性过滤；Provider 映射、时间语义、持久化与后续研究 Pipeline 均明确延期。
+`WI-002` 的 Domain 只处理已提供事实和确定性过滤；Provider 映射、时间语义、持久化与后续研究 Pipeline 均明确延期。后续延期项已分别通过 `wi-003`–`wi-011` 与 `wi-wr-001`–`wi-wr-016-runtime` 完成独立 Contract 生命周期。
 
-## 4. Core Research Pipeline candidates
+## 4. Core Research Pipeline
 
 这些 9 项承接现有十个 Bounded Context，先完成核心研究链，再进入 Weekly Radar 正式输出。
 
 | WI | 名称 | 主要交付 | 依赖 | 状态 |
 | --- | --- | --- | --- | --- |
-| `WI-003` | Ingestion Domain & Observation Contract | Provider port、observation、ingestion receipt；可靠带入事实但不解释意义 | `WI-002` | Planned |
-| `WI-004` | Evidence Domain & Provenance | EvidenceRecord、source、polarity、confidence、freshness、supporting/counter/missing evidence | `WI-003` | Planned |
-| `WI-005` | Production System Domain | ProductionSystem、ProductionUnit、Workflow、HumanRole、AgentRole | `WI-004` | Planned |
-| `WI-006` | Organization Evidence Domain | ManagementCommitment、responsibility、budget、decision rights 与组织适配证据 | `WI-005` | Planned |
-| `WI-007` | Productivity Metrics Domain | Revenue/Employee、Operating Income/Employee、FCF/Employee、增长与 headcount 变化 | `WI-004`, `WI-005` | Planned |
-| `WI-008` | Transformation Stage Domain | 六阶段、transition、supporting/counter/missing proof、持久性与阶段边界 | `WI-004`–`WI-007` | Planned |
-| `WI-009` | Diffusion Domain | CompetitorImitation、job taxonomy、benchmark、industry diffusion | `WI-008` | Planned |
-| `WI-010` | Ranking Read Model | 同 Stage 内按 Evidence Confidence、Transformation Score、Counter Evidence Risk、Freshness 排序 | `WI-004`, `WI-007`, `WI-008` | Planned |
-| `WI-011` | Reporting Read Model | Top5、Rising、Watch、Dropped、research packet 的只读输出边界 | `WI-009`, `WI-010` | Planned |
+| `WI-003` | Ingestion Domain & Observation Contract | Provider port、observation、ingestion receipt；可靠带入事实但不解释意义 | `WI-002` | Completed / archived |
+| `WI-004` | Evidence Domain & Provenance | EvidenceRecord、source、polarity、confidence、freshness、supporting/counter/missing evidence | `WI-003` | Completed / archived |
+| `WI-005` | Production System Domain | ProductionSystem、ProductionUnit、Workflow、HumanRole、AgentRole | `WI-004` | Completed / archived |
+| `WI-006` | Organization Evidence Domain | ManagementCommitment、responsibility、budget、decision rights 与组织适配证据 | `WI-005` | Completed / archived |
+| `WI-007` | Productivity Metrics Domain | Revenue/Employee、Operating Income/Employee、FCF/Employee、增长与 headcount 变化 | `WI-004`, `WI-005` | Completed / archived |
+| `WI-008` | Transformation Stage Domain | 六阶段、transition、supporting/counter/missing proof、持久性与阶段边界 | `WI-004`–`WI-007` | Completed / archived |
+| `WI-009` | Diffusion Domain | CompetitorImitation、job taxonomy、benchmark、industry diffusion | `WI-008` | Completed / archived |
+| `WI-010` | Ranking Read Model | 同 Stage 内按 Evidence Confidence、Transformation Score、Counter Evidence Risk、Freshness 排序 | `WI-004`, `WI-007`, `WI-008` | Completed / archived |
+| `WI-011` | Reporting Read Model | Top5、Rising、Watch、Dropped、research packet 的只读输出边界 | `WI-009`, `WI-010` | Completed / archived |
 
 推荐执行顺序是 `WI-003 → WI-004 → WI-005 → (WI-006 || WI-007) → WI-008 → (WI-009 || WI-010) → WI-011`。括号中的任务可以在依赖满足后并行，但仍需各自独立 Work Item。
 
-## 5. Weekly Radar candidates
+## 5. Weekly Radar
 
-Weekly Radar 在 `WI-011` 建立核心 Reporting Read Model 后进入实现阶段。以下编号保留用户计划中的 `WI-WR-*` 式样。
+Weekly Radar 在 `WI-011` 建立核心 Reporting Read Model 后进入实现阶段。以下编号保留用户计划中的 `WI-WR-*` 式样；状态由归档索引确认。
 
 | WI | 名称 | 主要交付 | 依赖 | 状态 |
 | --- | --- | --- | --- | --- |
-| `WI-WR-001` | Weekly Radar Domain Contract | WeeklyRadarPublication、WeeklyRadarSnapshot、Publisher port 与边界 | `WI-011` | Planned / Gated |
-| `WI-WR-002` | Weekly Radar Snapshot | `as_of`、evidence cutoff、universe snapshot、model/scoring version、历史不可变存储 | `WI-WR-001` | Planned / Gated |
-| `WI-WR-003` | Top5 Weekly Read Model | Top5、Stage、Direction、Confidence、Key Change、Next | `WI-011`, `WI-WR-001` | Planned / Gated |
-| `WI-WR-004` | Stage Transition Detection Output | Stage Transition 作为最高优先级结构事件，尤其是 Productivity Breakout Candidate | `WI-008`, `WI-WR-001` | Planned / Gated |
-| `WI-WR-005` | Threshold Distance | Current Stage、Next Stage、Confirmed、Missing Evidence、Distance；`Far/Developing/Near/Candidate` | `WI-008`, `WI-WR-001` | Planned / Gated |
-| `WI-WR-006` | Rising / Dropped | 结构证据增强与原判断失效的显式输出 | `WI-009`, `WI-010`, `WI-WR-001` | Planned / Gated |
-| `WI-WR-007` | Weekly Change Compression | Important Structural Change、Top5 变化、Transition、Rising、Dropped、No Change 压缩规则 | `WI-WR-002`–`WI-WR-006` | Planned / Gated |
-| `WI-WR-008` | Markdown Renderer | 完整归档报告：Top5、Research Cards、Evidence、Counter Evidence、Missing Proof、Stage History、Rank Changes、System Health | `WI-WR-007` | Planned / Gated |
-| `WI-WR-009` | Telegram Renderer | 短摘要视图；最多几行/家公司；不重新计算 Stage、Ranking 或 Distance | `WI-WR-007` | Planned / Gated |
-| `WI-WR-010` | Telegram Publisher Adapter | `WeeklyRadarPublisher` 的 Telegram Infrastructure 实现 | `WI-WR-009`, `WI-WR-011` | Planned / Gated |
-| `WI-WR-011` | Semantic Message Splitter | 按 Executive Summary、Important Transition、Top5、Rising/Dropped/System Health 语义分片，不截断 Markdown 或公司卡片 | `WI-WR-009` | Planned / Gated |
-| `WI-WR-012` | Publication Receipt + Retry | `PublicationReceipt`、message IDs、status；发送失败只重发同一 Snapshot | `WI-WR-002`, `WI-WR-010` | Planned / Gated |
-| `WI-WR-013` | Weekly Scheduler | 默认周末每周一次；配置 `day_of_week`，不让 Domain 依赖 Scheduler | `WI-WR-012`, `WI-WR-014` | Planned / Gated |
-| `WI-WR-014` | System Health Integration | Evidence Coverage、Degraded Companies、source coverage、extraction failure、freshness；健康状态进入 Telegram | `WI-004`, `WI-WR-001` | Planned / Gated |
-| `WI-WR-015` | End-to-End Weekly Report Verification | 固定 cutoff、Snapshot、Markdown、Telegram、Receipt、Archive、重试、无变化与失败路径验证 | `WI-WR-002`–`WI-WR-014` | Planned / Gated |
+| `WI-WR-001` | Weekly Radar Domain Contract | WeeklyRadarPublication、WeeklyRadarSnapshot、Publisher port 与边界 | `WI-011` | Completed / archived |
+| `WI-WR-002` | Weekly Radar Snapshot | `as_of`、evidence cutoff、universe snapshot、model/scoring version、历史不可变存储 | `WI-WR-001` | Completed / archived |
+| `WI-WR-003` | Top5 Weekly Read Model | Top5、Stage、Direction、Confidence、Key Change、Next | `WI-011`, `WI-WR-001` | Completed / archived |
+| `WI-WR-004` | Stage Transition Detection Output | Stage Transition 作为最高优先级结构事件，尤其是 Productivity Breakout Candidate | `WI-008`, `WI-WR-001` | Completed / archived |
+| `WI-WR-005` | Threshold Distance | Current Stage、Next Stage、Confirmed、Missing Evidence、Distance；`Far/Developing/Near/Candidate` | `WI-008`, `WI-WR-001` | Completed / archived |
+| `WI-WR-006` | Rising / Dropped | 结构证据增强与原判断失效的显式输出 | `WI-009`, `WI-010`, `WI-WR-001` | Completed / archived |
+| `WI-WR-007` | Weekly Change Compression | Important Structural Change、Top5 变化、Transition、Rising、Dropped、No Change 压缩规则 | `WI-WR-002`–`WI-WR-006` | Completed / archived |
+| `WI-WR-008` | Markdown Renderer | 完整归档报告：Top5、Research Cards、Evidence、Counter Evidence、Missing Proof、Stage History、Rank Changes、System Health | `WI-WR-007` | Completed / archived |
+| `WI-WR-009` | Telegram Renderer | 短摘要视图；最多几行/家公司；不重新计算 Stage、Ranking 或 Distance | `WI-WR-007` | Completed / archived |
+| `WI-WR-010` | Telegram Publisher Adapter | `WeeklyRadarPublisher` 的 Telegram Infrastructure 实现 | `WI-WR-009`, `WI-WR-011` | Completed / archived |
+| `WI-WR-011` | Semantic Message Splitter | 按 Executive Summary、Important Transition、Top5、Rising/Dropped/System Health 语义分片，不截断 Markdown 或公司卡片 | `WI-WR-009` | Completed / archived |
+| `WI-WR-012` | Publication Receipt + Retry | `PublicationReceipt`、message IDs、status；发送失败只重发同一 Snapshot | `WI-WR-002`, `WI-WR-010` | Completed / archived |
+| `WI-WR-013` | Weekly Scheduler | 默认周末每周一次；配置 `day_of_week`，不让 Domain 依赖 Scheduler | `WI-WR-012`, `WI-WR-014` | Completed / archived |
+| `WI-WR-014` | System Health Integration | Evidence Coverage、Degraded Companies、source coverage、extraction failure、freshness；健康状态进入 Telegram | `WI-004`, `WI-WR-001` | Completed / archived |
+| `WI-WR-015` | End-to-End Weekly Report Verification | 固定 cutoff、Snapshot、Markdown、Telegram、Receipt、Archive、重试、无变化与失败路径验证 | `WI-WR-002`–`WI-WR-014` | Completed / archived |
+| `WI-WR-016-runtime` | Weekly Radar runtime, free evidence sources, Telegram publication, and data branch retention | Runtime delivery lifecycle, source-free retry, archive and retention boundary | `WI-WR-015` | Completed / archived |
 
 ## 6. Weekly Radar execution shape
 
@@ -230,19 +237,13 @@ Weekly Radar 全部完成时，必须同时满足：
 
 ## 9. Execution handoff
 
-当前没有 Active Work Item。下一项推荐创建：
-
-```text
-WI-003 — Ingestion Domain & Observation Contract
-```
-
-创建前必须从最新 `origin/main` 建立专用分支，并通过 AI Cockpit Preflight。Weekly Radar 的第一个实现 Work Item 是 `WI-WR-001`，但它必须等到 `WI-011 Reporting Read Model` 完成后再进入实现；当前文档不创建任何未来 WI 的 Active Contract。
+当前路线图列出的 34 个 Work Item 均已有归档生命周期证据；本次状态修订完成并归档后，`wi-roadmap-status-reconciliation` 也会加入索引，Active Work Item 回到 0。后续新增工作必须从最新 `origin/main` 建立专用分支、创建独立 Contract，并通过 AI Cockpit Preflight；不能仅通过修改本路线图把新任务标记为完成。
 
 ### Task checklist for this roadmap document
 
-- [ ] Keep completed evidence separate from planned/gated candidates.
-- [ ] Keep the nine Core Research Pipeline candidates ordered by dependency.
-- [ ] Keep all fifteen `WI-WR-*` items and their output boundaries.
-- [ ] Preserve no-change, immutable Snapshot, retry, system health, secret safety, and no-trading semantics.
-- [ ] Verify the roadmap against the repository architecture and archive index.
-- [ ] Run the AI Cockpit finish, archive, PR, merge, and close lifecycle.
+- [x] Keep completed evidence separate from planned/gated candidates.
+- [x] Keep the nine Core Research Pipeline items ordered by dependency and mark archived status.
+- [x] Keep all sixteen `WI-WR-*` items and their output boundaries, including the runtime lifecycle repair.
+- [x] Preserve no-change, immutable Snapshot, retry, system health, secret safety, and no-trading semantics.
+- [x] Verify the roadmap against the repository architecture and archive index.
+- [x] Run the AI Cockpit finish, archive, PR, merge, and close lifecycle.

@@ -4,49 +4,47 @@ Task Result
 Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.summary.json]
+- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.contract.json]
+- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json [evidence: .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json]
-- Changed src/main.rs [evidence: src/main.rs]
-- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
-- Changed src/features/weekly_radar/runtime/archive.rs [evidence: src/features/weekly_radar/runtime/archive.rs]
-- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
-- Changed tests/weekly_radar_end_to_end.rs [evidence: tests/weekly_radar_end_to_end.rs]
-- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md [evidence: docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md]
-- Changed docs/superpowers/plans/2026-08-20-weekly-radar-snapshot-lifecycle.md [evidence: docs/superpowers/plans/2026-08-20-weekly-radar-snapshot-lifecycle.md]
-- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.outcome.md]
+- Changed .ai/work-items/starts/wi-roadmap-status-reconciliation.json [evidence: .ai/work-items/starts/wi-roadmap-status-reconciliation.json]
+- Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
+- Changed docs/superpowers/plans/2026-08-20-roadmap-status-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-roadmap-status-reconciliation.md]
+- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.outcome.json]
+- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.outcome.md]
 
 Problems found
-- Total: 3
+- Total: 4
 - Blocking: 0
-- Warning: 2
+- Warning: 1
 
 Stops triggered
-- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Reason: aiSummary failed before the retry. | Stage: verification | Resolution: Retry aiSummary after correcting the recorded failure. [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
+- Reason: aiScenarioCoverage failed before the retry. | Stage: verification | Resolution: Retry aiScenarioCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
 
 Problems resolved
-- Problem: aiGuidelines failed before the retry.
-  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Problem: aiScenarioCoverage failed before the retry.
+  Solution: Re-ran aiScenarioCoverage after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
+- Problem: aiSummary failed before the retry.
+  Solution: Re-ran aiSummary after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 
 Risks avoided
 - If not detected, could have led to a stale completion claim. (inference)
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- Real Telegram provider behavior, credentials, and provider-side duplicate suppression are not exercised by local tests; the retry path is verified through injected transports and CLI configuration guards. [evidence: residualRisks]
-- Final files are committed atomically one file at a time with the manifest last; a process crash between individual renames remains a recoverable partial archive state, while same-date guards prevent silent overwrite. [evidence: residualRisks]
+- Future Work Items can make the roadmap stale again unless status updates remain tied to archive/index.json. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- The first ai-finish attempt stopped at documentationAlignment; the Summary now binds plan, specification, operations, command, localization, and limitation evidence before retrying the same Contract scope. (inference)
-- The second ai-finish attempt stopped at aiGuidelines and scenario coverage because the Summary still contained skeleton compliance and coverage fields; those fields were completed with implementation and test evidence for the same Work Item. (inference)
+- The first ai-start attempt was rejected because it ran from main; the retry ran from the dedicated Work Item worktree. (inference)
+- The first preflight contract revision was corrected to declare requested capabilities and use the allowed repository_governance.modify operation. (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]

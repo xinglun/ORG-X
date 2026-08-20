@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-production-provider-e2e-cadence",
+  "receiptPath": ".ai/work-items/starts/wi-production-provider-e2e-cadence.json",
+  "baseCommit": "c12280bead071e07749541ba4823c95a86b04a2b",
+  "baseBranch": "codex/wi-production-provider-e2e-cadence",
+  "startTimestamp": "2026-08-20T13:42:20.613977+00:00",
+  "initialScopeDigest": "0197505d4e9bb1059f04bc7ee67b153fd363a37e0f0a2ca4a272196bd741afc8",
+  "contractSkeletonDigest": "8a812dab13d746ed6ad9861be712bae3171733711ae1199e1d24dd7c47be4e1e"
+}

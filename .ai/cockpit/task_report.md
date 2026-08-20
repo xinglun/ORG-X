@@ -4,17 +4,14 @@ Task Result
 Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-sec-company-facts-response-limit.contract.json [evidence: .ai/work-items/archive/2026/wi-sec-company-facts-response-limit.contract.json]
-- Changed .ai/work-items/active/wi-sec-company-facts-response-limit.summary.json [evidence: .ai/work-items/archive/2026/wi-sec-company-facts-response-limit.summary.json]
-- Changed src/features/weekly_radar/runtime/http.rs [evidence: src/features/weekly_radar/runtime/http.rs]
-- Changed src/features/weekly_radar/runtime/sec.rs [evidence: src/features/weekly_radar/runtime/sec.rs]
-- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
-- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed docs/superpowers/plans/2026-08-20-sec-company-facts-response-limit.md [evidence: docs/superpowers/plans/2026-08-20-sec-company-facts-response-limit.md]
-- Changed .ai/work-items/active/wi-sec-company-facts-response-limit.outcome.json [evidence: .ai/work-items/archive/2026/wi-sec-company-facts-response-limit.outcome.json]
-- Changed .ai/work-items/active/wi-sec-company-facts-response-limit.outcome.md [evidence: .ai/work-items/archive/2026/wi-sec-company-facts-response-limit.outcome.md]
+- Changed .ai/work-items/active/wi-roadmap-post-sec-fix-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.contract.json]
+- Changed .ai/work-items/active/wi-roadmap-post-sec-fix-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.summary.json]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
+- Changed docs/superpowers/plans/2026-08-20-roadmap-post-sec-fix-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-roadmap-post-sec-fix-reconciliation.md]
+- Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
+- Changed .ai/work-items/active/wi-roadmap-post-sec-fix-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.outcome.json]
+- Changed .ai/work-items/active/wi-roadmap-post-sec-fix-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.outcome.md]
 
 Problems found
 - Total: 2
@@ -31,8 +28,8 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- The latest successful hosted run recorded ten SEC failures at the generic 1 MiB response limit. (inference)
-- Future registrants may exceed the 16 MiB Company Facts bound and will remain unavailable until the bound is deliberately revised with new evidence. [evidence: residualRisks]
+- The roadmap remains a timestamped snapshot; archive/index.json remains the authoritative live count after this Work Item. (inference)
+- Future Work Items can make a roadmap snapshot stale again; the documented pre/post-archive wording and archive index authority make the next reconciliation explicit. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-roadmap-post-sec-fix-reconciliation",
+  "archiveSequence": 39,
+  "contractPath": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.summary.json",
+  "contractSha256": "f053e09564e63f9c48bc607eca850c9984cc178da2aee75c04755f1efa73ad62",
+  "summarySha256": "2617ead5146ff50699432b0452cf1003a9a2a65ae1c91375c96f86ff85e2a239",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.outcome.json",
+      "sha256": "f12eb3b8b8d3eff8ca868e40e9ac161fd9a495b8e30c846b8c836dad36ede209"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-roadmap-post-sec-fix-reconciliation.outcome.md",
+      "sha256": "5fa393e55959a7a44028bb27a1ae7f6f1f53cf27cab559fcce0036a6b1bcddf6"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "3f7454063b76509817ce5abf890aa303a2270b9ccd09455af547e17cf6d47921",
+    "binding": {
+      "baseCommit": "64ea52d537db47a9640cf46860465f2cd61bede6",
+      "candidateHead": "64ea52d537db47a9640cf46860465f2cd61bede6",
+      "candidateTreeDigest": "4803b6ee30e0c843206646bff46c7da7f2c5af96b1105a365f3c4e111dc4c82d",
+      "candidateDiffDigest": "a6cf462901a99fb493b276d6ebe389c36801145be52e328711040211b42c61f6"
+    }
+  }
+}

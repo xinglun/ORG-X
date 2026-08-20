@@ -433,6 +433,18 @@
       "summarySha256": "e986460876f5e05557199c25718a9704943ca707ca7030b03ee51009d0f40bc7",
       "manifestPath": ".ai/work-items/archive/2026/wi-cockpit-status-cleanup.archive-manifest.json",
       "manifestSha256": "340e61ff65f9c8e1f36cf814d4a81ecc553b86b6e8aeac1056ae02a2e782b2bc"
+    },
+    {
+      "workItemId": "wi-roadmap-final-reconciliation",
+      "archiveSequence": 37,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-roadmap-final-reconciliation.contract.json",
+      "contractSha256": "7e512e78c91d4a6de80de3c38400d71ec56f8cbcec9e2c2e4bf8ddaf208621b6",
+      "archivedAt": "2026-08-20T12:28:14.197454+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-roadmap-final-reconciliation.summary.json",
+      "summarySha256": "5391917894e6b6bf5c47a058b27e178c9a31403a0afa639340eb33f7368367df",
+      "manifestPath": ".ai/work-items/archive/2026/wi-roadmap-final-reconciliation.archive-manifest.json",
+      "manifestSha256": "67722f9911b6ce35acf914b852380737c74716b673dced393c38305c95cac26e"
     }
   ]
 }

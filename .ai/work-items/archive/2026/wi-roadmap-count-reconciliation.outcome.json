@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-roadmap-count-reconciliation",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "317a46ca6a2f6e3fdcb4e1133bdad7f571f8e0eed432d8ae14e5b5136db129af"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-roadmap-count-reconciliation",
+    "contractDigest": "9b4638948e29f19584d7fca9708137e9edb8ee4087f8bdef5d0f3c1f3efe7f43",
+    "summaryDigest": "d4fba29302e6bc4e8419322b5cd6de245d5467eac331597f93ea542295943254",
+    "verificationDigest": "7891ed417e5d06a14906ac31f03820d88f5e4a91cc7defca0087ab749037419d",
+    "baseCommit": "96cb0bdddf99b537427776bd4601a348647af027",
+    "headCommit": "96cb0bdddf99b537427776bd4601a348647af027",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "9132597e0abc97b610ed346f255db56eb9af9ff50318bc08b1c0f1735be94f48",
+      "binding": {
+        "baseCommit": "96cb0bdddf99b537427776bd4601a348647af027",
+        "candidateHead": "96cb0bdddf99b537427776bd4601a348647af027",
+        "candidateTreeDigest": "eb1eabb5365bfd4e8993edfd1d4dad53301aeba23861bfd91b5991705077a329",
+        "candidateDiffDigest": "eb2f4814d184d1bc7dfbfe49d43f11c229ec6504d83726423f736e22b8edace3"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-roadmap-count-reconciliation generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-roadmap-count-reconciliation generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-roadmap-count-reconciliation",
     "deliveredChanges": [
       ".ai/cockpit/current_status.md",
       ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.contract.json",
@@ -19,33 +42,52 @@
       "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
       ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.outcome.json",
       ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.outcome.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "snapshot_drift",
+        "severity": "low",
+        "title": "snapshot_drift",
+        "detail": "The roadmap count is a dated pre/post-archive snapshot and can become stale after later Work Items; consumers must use archive/index.json as authority.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "The roadmap count is a dated pre/post-archive snapshot and can become stale after later Work Items; consumers must use archive/index.json as authority.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -572,6 +614,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

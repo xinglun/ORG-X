@@ -529,6 +529,18 @@
       "summarySha256": "b3a6b8b40accbad301258bdb0cecd5645fa32f036e5ca01964f0a206e96bb810",
       "manifestPath": ".ai/work-items/archive/2026/wi-runtime-http-source-safety.archive-manifest.json",
       "manifestSha256": "328b05de723f8b27c39fd763d9866e1c2770bf44d2aeb107efc014f8cc30e047"
+    },
+    {
+      "workItemId": "wi-roadmap-count-reconciliation",
+      "archiveSequence": 45,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.contract.json",
+      "contractSha256": "9b4638948e29f19584d7fca9708137e9edb8ee4087f8bdef5d0f3c1f3efe7f43",
+      "archivedAt": "2026-08-20T16:07:32.976259+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.summary.json",
+      "summarySha256": "e1629cd14aec269678b0d197c9e42c1ce78f7a550ebeab496cb98d16255fe3cb",
+      "manifestPath": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.archive-manifest.json",
+      "manifestSha256": "6fe785be9dcbe4c425b650c2651e4d73443897a7badcaa3363cde8b0c7a2fddd"
     }
   ]
 }

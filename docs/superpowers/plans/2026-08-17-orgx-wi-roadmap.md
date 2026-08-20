@@ -32,14 +32,14 @@
 
 | 类别 | 数量 | 当前状态 |
 | --- | ---: | --- |
-| 已完成治理、产品与维护 WI | 15（本 WI 归档后为 16） | Completed / archived |
-| 核心研究 Pipeline WI | 9（本 WI 归档后为 10） | Completed / archived |
+| 已完成治理、产品与维护 WI | 17（本 WI 归档后为 18） | Completed / archived |
+| 核心研究 Pipeline WI | 10 | Completed / archived |
 | Weekly Radar WI | 17 | Completed / archived |
-| 已归档 Work Item 合计 | 42（本 WI 归档后为 43） | 以 `archive/index.json` 为准 |
+| 已归档 Work Item 合计 | 44（本 WI 归档后为 45） | 以 `.ai/work-items/archive/index.json` 为准 |
 | 尚未创建 Active Contract 的本路线图候选 | 0 | 当前表内无未处理候选 |
 | 当前 Active Work Item | 0 | `no_active_work_item` |
 
-上表的 42 项由 `.ai/work-items/archive/index.json` 的 Contract/Summary/Outcome/manifest 记录确认；本次 WI 完成归档后，索引将包含 43 项。这里的数量是 2026-08-20 的归档前/后快照，归档索引始终是权威来源。`Completed / archived` 表示治理生命周期已闭合，不等于外部 Provider 行为已在本地测试中验证；各 Work Item 的 Outcome 保留其 warning、needs_human_confirmation 和 residual risk。
+上表的 44 项由 `.ai/work-items/archive/index.json` 的 Contract/Summary/Outcome/manifest 记录确认；本次 WI 完成归档后，索引将包含 45 项。这里的数量是 2026-08-20 的归档前/后快照，归档索引始终是权威来源。`Completed / archived` 表示治理生命周期已闭合，不等于外部 Provider 行为已在本地测试中验证；各 Work Item 的 Outcome 保留其 warning、needs_human_confirmation 和 residual risk。
 
 ## 2. Product North Star and Weekly Radar purpose
 
@@ -79,6 +79,7 @@ No meaningful structural change this week.
 | `wi-weekly-radar-schedule-source-of-truth` | Align reusable Weekly Radar default schedule with production Monday 09:00 JST | Completed | `.ai/work-items/archive/2026/wi-weekly-radar-schedule-source-of-truth.*`, PR #40 |
 | `wi-roadmap-post-schedule-reconciliation` | Reconcile roadmap after the schedule source-of-truth correction | Completed | `.ai/work-items/archive/2026/wi-roadmap-post-schedule-reconciliation.*` |
 | `wi-schedule-plan-residue-reconciliation` | Remove stale Sunday-default scheduler-plan wording and reconcile the roadmap | Completed | `.ai/work-items/archive/2026/wi-schedule-plan-residue-reconciliation.*` |
+| `wi-roadmap-count-reconciliation` | Reconcile the roadmap archive count and schedule default snapshot | Completed | `.ai/work-items/archive/2026/wi-roadmap-count-reconciliation.*` |
 
 `WI-002` 的 Domain 只处理已提供事实和确定性过滤；Provider 映射、时间语义、持久化与后续研究 Pipeline 均明确延期。后续延期项已分别通过 `wi-003`–`wi-011` 与 `wi-wr-001`–`wi-wr-016-runtime` 完成独立 Contract 生命周期。
 
@@ -119,10 +120,11 @@ Weekly Radar 在 `WI-011` 建立核心 Reporting Read Model 后进入实现阶�
 | `WI-WR-010` | Telegram Publisher Adapter | `WeeklyRadarPublisher` 的 Telegram Infrastructure 实现 | `WI-WR-009`, `WI-WR-011` | Completed / archived |
 | `WI-WR-011` | Semantic Message Splitter | 按 Executive Summary、Important Transition、Top5、Rising/Dropped/System Health 语义分片，不截断 Markdown 或公司卡片 | `WI-WR-009` | Completed / archived |
 | `WI-WR-012` | Publication Receipt + Retry | `PublicationReceipt`、message IDs、status；发送失败只重发同一 Snapshot | `WI-WR-002`, `WI-WR-010` | Completed / archived |
-| `WI-WR-013` | Weekly Scheduler | 默认周末每周一次；配置 `day_of_week`，不让 Domain 依赖 Scheduler | `WI-WR-012`, `WI-WR-014` | Completed / archived |
+| `WI-WR-013` | Weekly Scheduler | 默认周一每周一次；配置 `day_of_week`，不让 Domain 依赖 Scheduler | `WI-WR-012`, `WI-WR-014` | Completed / archived |
 | `WI-WR-014` | System Health Integration | Evidence Coverage、Degraded Companies、source coverage、extraction failure、freshness；健康状态进入 Telegram | `WI-004`, `WI-WR-001` | Completed / archived |
 | `WI-WR-015` | End-to-End Weekly Report Verification | 固定 cutoff、Snapshot、Markdown、Telegram、Receipt、Archive、重试、无变化与失败路径验证 | `WI-WR-002`–`WI-WR-014` | Completed / archived |
 | `WI-WR-016-runtime` | Weekly Radar runtime, free evidence sources, Telegram publication, and data branch retention | Runtime delivery lifecycle, source-free retry, archive and retention boundary | `WI-WR-015` | Completed / archived |
+| `wi-runtime-http-source-safety` | Runtime source URL and redirect safety baseline | Configured source URL validation and zero automatic redirects; DNS/allowlist policy remains outside scope | `WI-WR-016-runtime` | Completed / archived |
 
 ## 6. Weekly Radar execution shape
 

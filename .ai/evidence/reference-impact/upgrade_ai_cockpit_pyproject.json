@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "target": {
+    "type": "file",
+    "name": "upgrade_ai_cockpit_python_test_runtime_configuration_20260821",
+    "path": "pyproject.toml",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The file supplies static pytest, coverage, and lint configuration; it does not load runtime modules or resolve dynamic providers."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The configuration is repository-local test infrastructure and does not change a published package or external consumer contract."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The configuration adds no monitoring, scheduler, delivery, webhook, or operational integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "The configuration supports the installed governance regression suite and does not remove an existing runtime interface."
+    ]
+  }
+}

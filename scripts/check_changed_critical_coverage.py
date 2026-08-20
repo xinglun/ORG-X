@@ -148,6 +148,22 @@ def _candidate_paths(base: str, *, project_root: Path) -> list[str]:
     return paths
 
 
+def _baseline_paths(value: object) -> list[str]:
+    """Normalize v2 baseline records to paths for ownership comparison."""
+    if not isinstance(value, list):
+        raise TypeError("coverage Contract baselineDirtyPaths must be a list")
+    paths: list[str] = []
+    for index, item in enumerate(value):
+        if isinstance(item, str) and item:
+            paths.append(item)
+            continue
+        if isinstance(item, dict) and isinstance(item.get("path"), str) and item["path"]:
+            paths.append(item["path"])
+            continue
+        raise ValueError(f"coverage Contract baselineDirtyPaths[{index}] must declare a path")
+    return paths
+
+
 def candidate_snapshot(
     *, base: str, project_root: Path, contract_path: Path | None = None
 ) -> dict[str, object]:
@@ -175,10 +191,8 @@ def candidate_snapshot(
         baseline = contract.get("baselineDirtyPaths", [])
         if not isinstance(scope, list) or not all(isinstance(item, str) for item in scope):
             raise ValueError("coverage Contract scope must be a list of paths")
-        if not isinstance(baseline, list) or not all(isinstance(item, str) for item in baseline):
-            raise ValueError("coverage Contract baselineDirtyPaths must be a list of paths")
         scope_paths = list(scope)
-        baseline_paths = list(baseline)
+        baseline_paths = _baseline_paths(baseline)
     # Summary, Outcome, status, and report are generated after a successful
     # gate records its binding. Including them would create a self-reference:
     # persisting the evidence would necessarily invalidate the evidence. They

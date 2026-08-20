@@ -1,0 +1,52 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/publish-v0-5-69-provider-release-20260820.archive-manifest.json",
+      "sha256": "6865df04705e1a48d9e3f4540d0b2f2f400f787dba98b1ff9046a58a48c95840"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/publish-v0-5-69-provider-release-20260820.contract.json",
+      "sha256": "083762e850e1edcdae9617209bc12e9cd4f37e380c528d3abdc1a58f7f8bb8fd"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/publish-v0-5-69-provider-release-20260820.outcome.json",
+      "sha256": "96c9f66df65c079e5564dd4375ff64213dc7ee412ffae4814d37f45e85022a81"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/publish-v0-5-69-provider-release-20260820.summary.json",
+      "sha256": "fd578b9162b2cc76c25bdb73801698d6e3d9215b0b665e090bc876f03615f723"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=cda4e1a24e6492e69ee6a85878974da8a3711a76"
+    ],
+    "exitCode": 2,
+    "gate": "changedCriticalCoverage",
+    "outputDigest": "18bb50a90d5ecb0aa484c6e9838dc65989282533fbe1f4b764f8999c00ad6c14"
+  },
+  "humanAuthorization": {
+    "reference": "user-directed current Work Item recovery after Hosted PR audit",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/922",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-19T19:37:40.065940+00:00",
+  "prBaseCommit": "cda4e1a24e6492e69ee6a85878974da8a3711a76",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    "target/release-v0-5-69-provider-release/provider-release.receipt.json",
+    "target/release-v0-5-69-provider-release/rehearsal.receipt.json",
+    "target/release-v0-5-69-provider-release/rehearsal-artifact-32284965833/release-rehearsal.json",
+    "target/release-v0-5-69-provider-release/public-assets-32286215124/ci-release-evidence.json",
+    "target/release-v0-5-69-provider-release/public-assets-32286215124/provenance.json",
+    "target/release-v0-5-69-provider-release/public-assets-32286215124/release-digests.json",
+    "target/release-v0-5-69-provider-release/public-assets-32286215124/release-source.json",
+    "target/release-v0-5-69-provider-release/public-assets-32286215124/release.json",
+    "target/release-v0-5-69-provider-release/public-assets-32286215124/sbom.json",
+    "target/release-v0-5-69-provider-release/public-assets-32286215124/v0.5.69.tar.gz"
+  ],
+  "workItemId": "publish-v0-5-69-provider-release-20260820"
+}

@@ -59,6 +59,7 @@ ALLOWED_FIELDS = set(REQUIRED_FIELDS) | {
     "overclaimPrevention",
     "residualRisks",
     "reviewReadiness",
+    "rollbackEvidence",
     "scenarioCoverage",
     "sourcesUsed",
     "summaryVersion",
@@ -66,6 +67,7 @@ ALLOWED_FIELDS = set(REQUIRED_FIELDS) | {
     "unverifiedScenarios",
     "userCorrectionSolidification",
     "userCorrectionsCaptured",
+    "ownershipDecisions",
     "intentAlignment",
     "decisionEvidence",
     "taskOutcomeInput",
@@ -73,6 +75,8 @@ ALLOWED_FIELDS = set(REQUIRED_FIELDS) | {
     "hostedPerformanceEvidence",
     "documentationAlignment",
     "verificationHistory",
+    "implementationApproach",
+    "configurationApproach",
 }
 RESULTS = {"passed", "failed", "not_run"}
 RISK_LEVELS = {"low", "medium", "high"}
@@ -93,6 +97,325 @@ DOCUMENTATION_ALIGNMENT_AREAS = (
 )
 DOCUMENTATION_ALIGNMENT_ROOT_FIELDS = {"schemaVersion", "status", "checkedAt", "checks"}
 DOCUMENTATION_ALIGNMENT_CHECK_FIELDS = {"area", "status", "evidence", "reason"}
+CODE_SUFFIXES = {
+    ".c",
+    ".cc",
+    ".cpp",
+    ".cs",
+    ".go",
+    ".java",
+    ".js",
+    ".jsx",
+    ".kt",
+    ".php",
+    ".py",
+    ".rb",
+    ".rs",
+    ".sh",
+    ".swift",
+    ".ts",
+    ".tsx",
+}
+CONFIG_SUFFIXES = {".cfg", ".conf", ".ini", ".properties", ".toml", ".yaml", ".yml"}
+
+APPROACH_STATUSES = {"complete", "incomplete", "not_applicable"}
+CLAIM_STATUSES = {"verified", "unverified", "unknown"}
+APPROACH_TYPES = {"implementation", "configuration"}
+TOP_LEVEL_APPROACH_FIELDS = {
+    "approachType",
+    "status",
+    "summary",
+    "mechanism",
+    "affectedComponents",
+    "designDecisions",
+    "technicalDetails",
+    "evidence",
+}
+CLAIM_FIELDS = {"text", "status", "evidence"}
+COMPONENT_FIELDS = {"component", "detail", "status", "evidence"}
+DECISION_FIELDS = {"decision", "reason", "status", "evidence"}
+DETAIL_FIELDS = {"topic", "detail", "status", "evidence"}
+REFERENCE_FIELDS = {"source", "subject", "digest"}
+EVIDENCE_FIELDS = {"claim", "status", "source", "subject", "digest"}
+FORBIDDEN_APPROACH_KEYS = {
+    "agentNotes",
+    "chainOfThought",
+    "chain_of_thought",
+    "internalNotes",
+    "operationLog",
+    "operation_log",
+    "reasoning",
+    "thoughts",
+    "verboseLog",
+}
+FORBIDDEN_APPROACH_KEY_PATTERN = re.compile(
+    r"(?:thought|reasoning|operation.?log|agent.?notes)", re.IGNORECASE
+)
+HEX_DIGEST = re.compile(r"^[a-f0-9]{64}$")
+
+
+def _approach_reference_is_real(value: Any, contract: dict[str, Any] | None = None) -> bool:
+    """Return True only for an evidence reference bound to a repository file."""
+
+    if not isinstance(value, dict) or not non_empty_string(value.get("source")):
+        return False
+    return _valid_repository_evidence_path(value["source"], contract) is None
+
+
+def _validate_approach_reference(
+    value: Any, path: str, contract: dict[str, Any] | None = None
+) -> list[str]:
+    if not isinstance(value, dict):
+        return [f"{path} must be an evidence reference object"]
+    issues = [f"{path}.{key} is not allowed" for key in value if key not in REFERENCE_FIELDS]
+    for key in ("source", "subject"):
+        if not non_empty_string(value.get(key)):
+            issues.append(f"{path}.{key} must be a non-empty string")
+    source = value.get("source")
+    if isinstance(source, str) and source.strip():
+        path_issue = _valid_repository_evidence_path(source, contract)
+        if path_issue:
+            issues.append(f"{path}.source {source!r} {path_issue}")
+    digest = value.get("digest")
+    if digest is not None and (not isinstance(digest, str) or not HEX_DIGEST.fullmatch(digest)):
+        issues.append(f"{path}.digest must be a SHA-256 hex digest when provided")
+    return issues
+
+
+def _validate_approach_evidence(
+    value: Any, path: str, contract: dict[str, Any] | None = None
+) -> list[str]:
+    if not isinstance(value, list):
+        return [f"{path} must be a list"]
+    issues: list[str] = []
+    if len(value) > 20:
+        issues.append(f"{path} must not contain verbose operation-log entries")
+    for index, item in enumerate(value):
+        issues.extend(_validate_approach_reference(item, f"{path}[{index}]", contract))
+    return issues
+
+
+def _has_real_approach_evidence(value: Any, contract: dict[str, Any] | None = None) -> bool:
+    return isinstance(value, list) and any(
+        _approach_reference_is_real(item, contract) for item in value
+    )
+
+
+def _validate_approach_claim(
+    value: Any,
+    path: str,
+    fields: set[str],
+    contract: dict[str, Any] | None = None,
+) -> list[str]:
+    if not isinstance(value, dict):
+        return [f"{path} must be an object"]
+    issues = [f"{path}.{key} is not allowed" for key in value if key not in fields]
+    if "text" in fields and not non_empty_string(value.get("text")):
+        issues.append(f"{path}.text must be a non-empty string")
+    for key in ("component", "detail", "decision", "reason", "topic"):
+        if key in fields and key in value and not non_empty_string(value.get(key)):
+            issues.append(f"{path}.{key} must be a non-empty string")
+    status = value.get("status")
+    if status not in CLAIM_STATUSES:
+        issues.append(f"{path}.status must be one of {sorted(CLAIM_STATUSES)}")
+    evidence = value.get("evidence")
+    issues.extend(_validate_approach_evidence(evidence, f"{path}.evidence", contract))
+    if status == "verified" and not _has_real_approach_evidence(evidence, contract):
+        issues.append(
+            f"{path} verified claims require at least one existing repository evidence path"
+        )
+    for key, child in value.items():
+        if key in FORBIDDEN_APPROACH_KEYS or FORBIDDEN_APPROACH_KEY_PATTERN.search(str(key)):
+            issues.append(f"{path}.{key} is not allowed in an Implementation Approach")
+        if isinstance(child, str) and len(child) > 2000:
+            issues.append(f"{path}.{key} is too long for a concise knowledge record")
+    return issues
+
+
+def _validate_approach_global_evidence(
+    value: Any, path: str, contract: dict[str, Any] | None = None
+) -> list[str]:
+    if not isinstance(value, list):
+        return [f"{path} must be a list"]
+    issues: list[str] = []
+    if len(value) > 20:
+        issues.append(f"{path} must not contain verbose operation-log entries")
+    for index, item in enumerate(value):
+        item_path = f"{path}[{index}]"
+        if not isinstance(item, dict):
+            issues.append(f"{item_path} must be an object")
+            continue
+        issues.extend(
+            f"{item_path}.{key} is not allowed" for key in item if key not in EVIDENCE_FIELDS
+        )
+        for key in ("claim", "source", "subject"):
+            if not non_empty_string(item.get(key)):
+                issues.append(f"{item_path}.{key} must be a non-empty string")
+        status = item.get("status")
+        if status not in CLAIM_STATUSES:
+            issues.append(f"{item_path}.status must be one of {sorted(CLAIM_STATUSES)}")
+        path_issue = None
+        if non_empty_string(item.get("source")):
+            path_issue = _valid_repository_evidence_path(item["source"], contract)
+            if path_issue:
+                issues.append(f"{item_path}.source {item['source']!r} {path_issue}")
+        digest = item.get("digest")
+        if digest is not None and (not isinstance(digest, str) or not HEX_DIGEST.fullmatch(digest)):
+            issues.append(f"{item_path}.digest must be a SHA-256 hex digest when provided")
+        if status == "verified" and path_issue is not None:
+            issues.append(
+                f"{item_path} verified claims require an existing repository evidence path"
+            )
+        for key, child in item.items():
+            if key in FORBIDDEN_APPROACH_KEYS or FORBIDDEN_APPROACH_KEY_PATTERN.search(str(key)):
+                issues.append(f"{item_path}.{key} is not allowed in an Implementation Approach")
+            if isinstance(child, str) and len(child) > 2000:
+                issues.append(f"{item_path}.{key} is too long for a concise knowledge record")
+    return issues
+
+
+def validate_implementation_approach(
+    value: Any, contract: dict[str, Any] | None = None
+) -> list[str]:
+    """Validate a bounded approach and require real repository evidence for verified claims."""
+
+    if not isinstance(value, dict):
+        return ["implementationApproach must be an object"]
+    issues = [
+        f"implementationApproach.{key} is not allowed"
+        for key in value
+        if key not in TOP_LEVEL_APPROACH_FIELDS
+    ]
+    approach_type = value.get("approachType")
+    if approach_type not in APPROACH_TYPES:
+        issues.append(
+            f"implementationApproach.approachType must be one of {sorted(APPROACH_TYPES)}"
+        )
+    status = value.get("status")
+    if status not in APPROACH_STATUSES:
+        issues.append(f"implementationApproach.status must be one of {sorted(APPROACH_STATUSES)}")
+    issues.extend(
+        _validate_approach_claim(
+            value.get("summary"), "implementationApproach.summary", CLAIM_FIELDS, contract
+        )
+    )
+    issues.extend(
+        _validate_approach_claim(
+            value.get("mechanism"), "implementationApproach.mechanism", CLAIM_FIELDS, contract
+        )
+    )
+    for index, item in enumerate(value.get("affectedComponents", [])):
+        issues.extend(
+            _validate_approach_claim(
+                item,
+                f"implementationApproach.affectedComponents[{index}]",
+                COMPONENT_FIELDS,
+                contract,
+            )
+        )
+    if not isinstance(value.get("affectedComponents"), list):
+        issues.append("implementationApproach.affectedComponents must be a list")
+    for index, item in enumerate(value.get("designDecisions", [])):
+        issues.extend(
+            _validate_approach_claim(
+                item, f"implementationApproach.designDecisions[{index}]", DECISION_FIELDS, contract
+            )
+        )
+    if not isinstance(value.get("designDecisions"), list):
+        issues.append("implementationApproach.designDecisions must be a list")
+    for index, item in enumerate(value.get("technicalDetails", [])):
+        issues.extend(
+            _validate_approach_claim(
+                item, f"implementationApproach.technicalDetails[{index}]", DETAIL_FIELDS, contract
+            )
+        )
+    if not isinstance(value.get("technicalDetails"), list):
+        issues.append("implementationApproach.technicalDetails must be a list")
+    issues.extend(
+        _validate_approach_global_evidence(
+            value.get("evidence"), "implementationApproach.evidence", contract
+        )
+    )
+    for key, child in value.items():
+        if key in FORBIDDEN_APPROACH_KEYS or FORBIDDEN_APPROACH_KEY_PATTERN.search(str(key)):
+            issues.append(
+                f"implementationApproach.{key} is not allowed in an Implementation Approach"
+            )
+        if isinstance(child, str) and len(child) > 2000:
+            issues.append(
+                f"implementationApproach.{key} is too long for a concise knowledge record"
+            )
+    return issues
+
+
+def _approach_scope_kinds(contract: dict[str, Any] | None) -> set[str]:
+    # Installer adoption records a governance bootstrap, not a product code
+    # change. Its dedicated bootstrap paths are copied runtime evidence and
+    # must not create a false Implementation Approach requirement for the
+    # first adopter finish.
+    if (
+        isinstance(contract, dict)
+        and contract.get("workItemId") == "adopt_ai_cockpit"
+        and isinstance(contract.get("adoptionBootstrapPaths"), list)
+    ):
+        return set()
+    paths = contract.get("scope", []) if isinstance(contract, dict) else []
+    kinds: set[str] = set()
+    for raw_path in paths:
+        if not isinstance(raw_path, str):
+            continue
+        path = raw_path.lower()
+        if path.startswith((".ai/work-items/", "tests/", "docs/")) or path.endswith(
+            (".md", ".rst", ".txt")
+        ):
+            continue
+        suffix = Path(path).suffix
+        if suffix in CODE_SUFFIXES or path.startswith(("scripts/", "src/", "lib/", "app/")):
+            kinds.add("implementation")
+        elif suffix in CONFIG_SUFFIXES or path.startswith(("config/", "settings/")):
+            kinds.add("configuration")
+    return kinds
+
+
+def assess_implementation_approach(
+    summary: dict[str, Any], contract: dict[str, Any] | None
+) -> dict[str, Any]:
+    """Return the completeness signal without turning a knowledge gap into a red gate."""
+
+    kinds = _approach_scope_kinds(contract)
+    if not kinds:
+        return {
+            "status": "not_applicable",
+            "humanStatusColor": "unknown",
+            "requiredField": None,
+            "warnings": [],
+            "issues": [],
+        }
+    fields = [
+        "implementationApproach" if kind == "implementation" else "configurationApproach"
+        for kind in ("implementation", "configuration")
+        if kind in kinds
+    ]
+    issues: list[str] = []
+    warnings: list[str] = []
+    for field in fields:
+        value = summary.get(field)
+        if value is None:
+            warnings.append(
+                f"{field} is incomplete for the declared {field.removesuffix('Approach')} change"
+            )
+            continue
+        issues.extend(validate_implementation_approach(value, contract))
+        if isinstance(value, dict) and value.get("status") != "complete":
+            warnings.append(f"{field} is marked {value.get('status', 'unknown')}")
+    status = "complete" if not warnings and not issues else "incomplete"
+    return {
+        "status": status,
+        "humanStatusColor": "green" if status == "complete" else "yellow",
+        "requiredField": fields[0] if len(fields) == 1 else fields,
+        "warnings": warnings,
+        "issues": issues,
+    }
 
 
 def intent_alignment_is_compat_evidence_key(key: str) -> bool:
@@ -902,6 +1225,8 @@ def validate_summary(
         )
     )
     issues.extend(_validate_summary_metadata(summary))
+    approach_assessment = assess_implementation_approach(summary, contract)
+    issues.extend(approach_assessment["issues"])
     issues.extend(validate_hosted_performance_evidence(summary))
     issues.extend(
         validate_documentation_alignment(

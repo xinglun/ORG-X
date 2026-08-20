@@ -1,0 +1,265 @@
+{
+  "reportVersion": 1,
+  "sourceVersion": {
+    "distributionVersion": 2,
+    "contractSchema": 2,
+    "releaseVersion": "0.5.70"
+  },
+  "targetVersion": {
+    "distributionVersion": 2,
+    "contractSchema": 2,
+    "releaseVersion": "0.5.70"
+  },
+  "entries": [
+    {
+      "path": ".ai/cockpit/README.md",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/cockpit/version.json",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/guards/changed_critical_coverage_policy.json",
+      "classification": "Project-owned",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/guards/coverage_policy.yaml",
+      "classification": "Project-owned",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/policies/requested-operation.yaml",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/project/capabilities.json",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/schemas/task_outcome.schema.json",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_installer_catalog.json",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_archive_work_item.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_backtrack.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_pr.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_reference_impact.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_status_consistency.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_summary.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_task_outcome.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_close_work_item.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_critical_domain_guards.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_evidence_dependencies.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_finish.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_generate_human_report.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_generate_status.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_generate_task_outcome.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_post_archive_recovery.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_render_task_outcome.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_render_task_outcome_multilingual.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_start.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_verification_policy.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/check_changed_critical_coverage.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/determine_governance_profile.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "Makefile.ai",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "Makefile.ai.stack",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    }
+  ],
+  "requiresHumanConfirmation": false,
+  "status": "ready"
+}

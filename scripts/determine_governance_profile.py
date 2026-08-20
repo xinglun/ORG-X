@@ -12,6 +12,10 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from ai_common import parse_yaml
+from ai_verification_policy import (
+    classify_immutable_workflow_pin_change,
+    strict_quality_routing,
+)
 
 PROFILE_ORDER = ("light", "standard", "strict")
 PROFILE_DEPTHS = {"light": "focused", "standard": "project", "strict": "full"}
@@ -176,6 +180,44 @@ def _classify(path: str, policy: dict[str, Any]) -> tuple[str, list[str]]:
     selected = max((profile for profile, _ in matches), key=_rank)
     patterns = sorted(pattern for profile, pattern in matches if profile == selected)
     return selected, [f"{selected} pattern {pattern}: {path}" for pattern in patterns]
+
+
+def _read_git_file(repository: Path, revision: str, path: str) -> str:
+    result = subprocess.run(  # nosec B603 B607 - fixed list-form Git evidence lookup
+        ["git", "show", f"{revision}:{path}"],
+        cwd=repository,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise ValueError(result.stderr.strip() or f"unable to read {revision}:{path}")
+    return result.stdout
+
+
+def _immutable_pin_facts(
+    paths: list[str], *, repository: Path | None, base: str, head: str
+) -> dict[str, Any] | None:
+    """Build immutable-pin facts from base and current repository content."""
+    if repository is None or len(paths) != 1 or not base:
+        return None
+    path = paths[0]
+    current_path = repository / path
+    try:
+        before = _read_git_file(repository, base, path)
+        if current_path.is_file():
+            after = current_path.read_text(encoding="utf-8")
+        else:
+            after = _read_git_file(repository, head, path)
+    except (OSError, ValueError) as exc:
+        return {
+            "path": path,
+            "kind": "immutable_workflow_pin",
+            "eligible": False,
+            "reason": f"base/current evidence unavailable: {exc}",
+            "replacementCount": 0,
+        }
+    return classify_immutable_workflow_pin_change(path, before, after)
 
 
 def _release_escalation(
@@ -347,6 +389,40 @@ def determine(
         "optionalChecks": sorted(set(optional_checks)),
         "mandatoryControls": list(config["mandatoryControls"]),
     }
+    explicit_strict = requested == "strict" or (
+        isinstance(profile_record, dict)
+        and profile_record.get("source") == "human_override"
+        and selected == "strict"
+    )
+    risk_paths = [item["path"] for item in risk_decisions]
+    routing_paths = risk_paths or normalized
+    immutable_pin_facts = (
+        _immutable_pin_facts(
+            routing_paths,
+            repository=repository,
+            base=base,
+            head=head,
+        )
+        if selected == "strict"
+        else None
+    )
+    if selected == "strict":
+        quality_routing = strict_quality_routing(
+            routing_paths,
+            release=bool(release_reasons),
+            explicit_strict=explicit_strict,
+            immutable_pin_facts=immutable_pin_facts,
+        )
+        required_groups = list(quality_routing["requiredGroups"])
+        dispatch_target = str(quality_routing["target"])
+    else:
+        quality_routing = {
+            "target": config["dispatchTarget"],
+            "requiredGroups": list(config["requiredGroups"]),
+            "reason": f"{selected} governance uses its profile dispatch target",
+        }
+        required_groups = list(config["requiredGroups"])
+        dispatch_target = config["dispatchTarget"]
     return {
         "schemaVersion": 1,
         "base": base,
@@ -357,11 +433,13 @@ def determine(
         "reasons": reasons,
         "changedPaths": normalized,
         "pathDecisions": decisions,
-        "requiredGroups": list(config["requiredGroups"]),
-        "dispatchTarget": config["dispatchTarget"],
+        "requiredGroups": required_groups,
+        "dispatchTarget": dispatch_target,
+        "qualityRouting": quality_routing,
         "operationClasses": ["release"] if release_reasons else [],
         "verificationEscalations": escalations,
         "releaseEscalationReasons": release_reasons,
+        "immutablePinChange": immutable_pin_facts,
         "profileProjection": profile_projection,
         "override": override_result,
     }

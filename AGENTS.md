@@ -16,6 +16,24 @@ Work Item completion is a lifecycle closure, not merely branch deletion. Run `ma
 
 Only `ready_on_base` means the invoking worktree can start the next Work Item. `closed_but_current_worktree_detached` means closure succeeded while another worktree owns the synchronized base; continue from the reported base worktree and do not treat the detached invoking worktree as ready.
 
+Outcome is a terminality hard boundary: `ai-finish` must print a separate complete conversation result beginning with `Outcome: 🟢`, `Outcome: 🟡`, or `Outcome: 🔴`. Only `status=completed` together with `humanStatusColor=green`, current Contract/Summary/verification bindings, and direct human-visible delivery may authorize archive, PR readiness, closure, or release progression. Missing, folded-only, stale, yellow, red, or malformed Outcome evidence fails closed.
+
+### In-Work-Item problem resolution boundary
+
+When a problem is discovered during implementation, verification, finish, or
+handoff, resolve it in the current Work Item whenever it remains within the
+current Contract's scope, authority, and base. Amend the Contract and
+revalidate it before adding paths or authority, preserve the retry evidence,
+and keep the blocked Outcome visible. Do not open another Work Item or Issue
+merely to avoid fixing the problem or to expand the work. Create a successor
+or independent Work Item only when the scope, authority, or base genuinely
+differs, the change is genuinely independent, safe in-scope resolution is
+impossible, immutable failed-delivery evidence requires re-delivery, or a
+human explicitly directs it; record that reason and linkage in the new
+Contract and Start Receipt.
+
+Independent Work Items may be active concurrently only when their dedicated branch/worktree, declared scope, evidence ownership, and shared serialized-projection constraints are compatible. The Agent/Orchestrator owns scheduling and aggregation; a blocked Work Item does not block an independent compatible Work Item, and governance gates remain fail-closed. Keep one Contract, one branch/worktree, and one PR per Work Item. When a problem is discovered, resolve it in that Work Item whenever it remains within the authorized scope; amend the current Contract and revalidate it before adding paths or authority. A current Work Item keeps its retry evidence while the problem remains in scope. Create a new Work Item only when the scope, authority, or base genuinely differs, for a genuinely independent change, when safe in-scope resolution is impossible, or when the user explicitly directs it; do not create one merely to avoid resolving a defect found in the current one.
+
 ### Required Workflow
 
 1. Create or identify a version 2 Work Item Contract in `.ai/work-items/active/`.

@@ -374,7 +374,12 @@ def coverage_decision(impact: dict[str, Any], records: list[dict[str, Any]]) -> 
     successful quality check.
     """
     if not impact_requires_reference_record(impact):
-        return {"decision": "not_applicable", "missingTargets": []}
+        return {
+            "decision": "not_applicable",
+            "missingTargets": [],
+            "recordedTargets": [],
+            "recordsEvaluated": 0,
+        }
     recorded_paths = sorted(
         {
             str(record.get("target", {}).get("path"))
@@ -395,6 +400,7 @@ def coverage_decision(impact: dict[str, Any], records: list[dict[str, Any]]) -> 
         "decision": "needs_human_confirmation" if missing else "continue",
         "missingTargets": sorted(missing),
         "recordedTargets": recorded_paths,
+        "recordsEvaluated": len(records),
         "humanDecisionRequest": (
             {
                 "reason": "Impact-bearing targets lack a covering reference-impact record.",
@@ -425,21 +431,24 @@ def main(argv: list[str] | None = None) -> int:
             if not isinstance(contract, dict):
                 raise TypeError("Contract must be a JSON object")
             records_dir = args.records_dir or (args.root / ".ai" / "evidence" / "reference-impact")
-            records = [
-                json.loads(path.read_text(encoding="utf-8"))
-                for path in sorted(records_dir.glob("*.json"))
-                if path.resolve() != args.output.resolve()
-            ]
-            result = coverage_decision(
-                derive_operation_impact(contract, changed_name_status(contract)), records
-            )
+            impact = derive_operation_impact(contract, changed_name_status(contract))
+            if impact_requires_reference_record(impact):
+                records = [
+                    json.loads(path.read_text(encoding="utf-8"))
+                    for path in sorted(records_dir.glob("*.json"))
+                    if path.resolve() != args.output.resolve()
+                ]
+                result = coverage_decision(impact, records)
+                result["recordScan"] = "evaluated"
+            else:
+                result = coverage_decision(impact, [])
+                result["recordScan"] = "skipped"
         except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
             print(f"ERROR: {exc}")
             return 2
-        if result["decision"] != "not_applicable":
-            args.output.write_text(
-                json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-            )
+        args.output.write_text(
+            json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
         return 0 if not args.enforce or result["decision"] in {"continue", "not_applicable"} else 3
     if args.record is None:
         print("ERROR: --record is required unless --coverage-contract is provided")

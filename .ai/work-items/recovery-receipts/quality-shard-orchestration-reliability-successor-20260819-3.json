@@ -1,0 +1,58 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/quality-shard-orchestration-reliability-successor-20260819.archive-manifest.json",
+      "sha256": "75680f995c765decc72dfd2c78da87be16f7ed9b44966d73bfb3452ff778dfec"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/quality-shard-orchestration-reliability-successor-20260819.contract.json",
+      "sha256": "4d6257b30b587d2a503e8f687d201422826b1c7f95a0f73848b3d5387e308326"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/quality-shard-orchestration-reliability-successor-20260819.outcome.json",
+      "sha256": "80d83c4bba854322e02709d6f8cf799afec3d79fc73dba9cd3de297f1f2fcc76"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/quality-shard-orchestration-reliability-successor-20260819.summary.json",
+      "sha256": "8a4bde4f60ce197cb3d204279bc25a086074271c996560c5ba58be8d14f508bc"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=e0220b988dd0d52f1e73b13a71dd60ab27a06c42"
+    ],
+    "exitCode": 2,
+    "gate": "changedCriticalCoverage",
+    "outputDigest": "d0114c9e5cb25aaa232d07cff54c8c6a32f33306ce717723a43a4bc32d118f04"
+  },
+  "humanAuthorization": {
+    "reference": "repository user directed same-Work-Item recovery for full existing knowledge projection rebuild after shared evidence refresh",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/622",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-19T13:05:38.108408+00:00",
+  "prBaseCommit": "e0220b988dd0d52f1e73b13a71dd60ab27a06c42",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/work-items/fix-closure-knowledge-base-20260819.json",
+    ".ai/knowledge/work-items/fix-dependency-pin-quality-routing-20260819.json",
+    ".ai/knowledge/work-items/fix-knowledge-projection-freshness-20260819.json",
+    ".ai/knowledge/work-items/fix-lock-lease-coverage-20260818.json",
+    ".ai/knowledge/work-items/fix-post-archive-generated-ownership-20260819.json",
+    ".ai/knowledge/work-items/fix-pr-audit-lineage-projections-20260819.json",
+    ".ai/knowledge/work-items/fix-process-cleanup-20260819.json",
+    ".ai/knowledge/work-items/fix-shellcheck-apt-mirror-20260819.json",
+    ".ai/knowledge/work-items/hosted-measurement-runner-compatibility-20260819.json",
+    ".ai/knowledge/work-items/implementation-knowledge-projection-20260818.json",
+    ".ai/knowledge/work-items/knowledge-query-design-alignment-20260818.json",
+    ".ai/knowledge/work-items/knowledge-query-interface-20260818.json",
+    ".ai/knowledge/work-items/publish-v0-5-68-20260818.json",
+    ".ai/knowledge/work-items/quality-shard-orchestration-reliability-successor-20260819.json",
+    ".ai/knowledge/work-items/repair-lock-lease-knowledge-projection-20260819.json",
+    ".ai/knowledge/index.json"
+  ],
+  "workItemId": "quality-shard-orchestration-reliability-successor-20260819"
+}

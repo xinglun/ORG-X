@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "workItems": [
+    {
+      "workItemId": "upgrade_ai_cockpit",
+      "title": "Upgrade AI Cockpit governance",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/upgrade_ai_cockpit.json"
+    }
+  ]
+}

@@ -11,6 +11,7 @@ import json
 import os
 import re
 import shlex
+import signal
 import subprocess
 import sys
 import time
@@ -37,14 +38,26 @@ from ai_common import (
     save_json,
     verification_key,
 )
+from ai_evidence_dependencies import (
+    EvidenceDependencyError,
+    load_capability_evidence_dependencies,
+    source_bound_evidence_is_affected,
+)
 from ai_observability import create_observability, elapsed_ms
 from ai_projection_lease import ProjectionLeaseError, requires_lease
 from ai_projection_lease import acquire as acquire_projection_lease
-from ai_verification_policy import finish_quality_route_for_contract
+from ai_verification_policy import (
+    classify_immutable_workflow_pin_change,
+    finish_quality_route_for_contract,
+)
 from ai_work_item_intelligence import record_fact_once
 
 ACTIVE_DIR = PROJECT_ROOT / ".ai" / "work-items" / "active"
 FINISH_LOCK_MAX_AGE_SECONDS = 24 * 60 * 60
+FINISH_COMMAND_TIMEOUT_ENV = "AI_FINISH_COMMAND_TIMEOUT_SECONDS"
+FINISH_COMMAND_TIMEOUT_DEFAULT_SECONDS = 60 * 60
+FINISH_COMMAND_TIMEOUT_MAX_SECONDS = 24 * 60 * 60
+FINISH_COMMAND_TERMINATION_GRACE_SECONDS = 5
 REPORT_BOUNDARY_TEXT = {
     "en": (
         "## Task Outcome Report (active; relay to the human before archive)",
@@ -64,6 +77,49 @@ REPORT_BOUNDARY_TEXT = {
 }
 
 CURRENT_REPORT_LANGUAGE = "en"
+PRE_MERGE_MERGE_IDENTITY_GAP_PREFIX = (
+    "Merged commit identity is intentionally null until a post-merge binding exists;"
+)
+PROJECT_TEST_AGGREGATE_RECEIPT = Path("target/quality/project-test-aggregate/receipt.json")
+
+
+def restore_tracked_project_test_receipt(*, root: Path = PROJECT_ROOT) -> bool:
+    """Restore the tracked aggregate receipt after quality mutates its worktree copy."""
+    receipt = PROJECT_TEST_AGGREGATE_RECEIPT.as_posix()
+    tracked = subprocess.run(  # nosec B603 B607 - fixed Git argv and bounded repository path
+        ["git", "ls-files", "--error-unmatch", "--", receipt],
+        cwd=root,
+        env=clean_git_environment(),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if tracked.returncode != 0:
+        repository = subprocess.run(  # nosec B603 B607 - fixed Git argv and bounded repository path
+            ["git", "rev-parse", "--is-inside-work-tree"],
+            cwd=root,
+            env=clean_git_environment(),
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        if repository.returncode != 0:
+            detail = repository.stderr.strip() or tracked.stderr.strip() or "unknown Git error"
+            raise RuntimeError(f"cannot inspect tracked quality receipt: {detail}")
+        return False
+
+    restored = subprocess.run(  # nosec B603 B607 - fixed Git argv and bounded repository path
+        ["git", "restore", "--source=HEAD", "--worktree", "--", receipt],
+        cwd=root,
+        env=clean_git_environment(),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if restored.returncode != 0:
+        detail = restored.stderr.strip() or "git restore failed"
+        raise RuntimeError(f"cannot restore tracked quality receipt: {detail}")
+    return True
 
 
 def checkpoint_recovery_guidance(issues: list[str], *, contract: str, summary: str) -> str:
@@ -242,6 +298,85 @@ def task_paths(task: str) -> tuple[str, str]:
     ).as_posix()
 
 
+def finish_command_timeout_seconds() -> float:
+    """Return the finite command timeout, rejecting unsafe overrides."""
+    raw = os.environ.get(FINISH_COMMAND_TIMEOUT_ENV)
+    if raw is None or not raw.strip():
+        return float(FINISH_COMMAND_TIMEOUT_DEFAULT_SECONDS)
+    try:
+        value = float(raw)
+    except ValueError as exc:
+        raise ValueError(
+            f"{FINISH_COMMAND_TIMEOUT_ENV} must be a finite number of seconds"
+        ) from exc
+    if not value.is_integer() or not 1 <= value <= FINISH_COMMAND_TIMEOUT_MAX_SECONDS:
+        raise ValueError(
+            f"{FINISH_COMMAND_TIMEOUT_ENV} must be an integer from 1 through "
+            f"{FINISH_COMMAND_TIMEOUT_MAX_SECONDS}"
+        )
+    return value
+
+
+def _owned_process_groups(root_pid: int) -> set[int]:
+    """Return process groups belonging to one command's process tree."""
+    if os.name != "posix":
+        return {root_pid}
+    try:
+        snapshot = subprocess.run(  # nosec B603 B607 - fixed local ps inspection command
+            ["/bin/ps", "-eo", "pid=,ppid=,pgid="],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return {root_pid}
+    children: dict[int, list[tuple[int, int]]] = {}
+    for line in snapshot.stdout.splitlines():
+        try:
+            pid, parent_pid, process_group = (int(value) for value in line.split())
+        except ValueError:
+            continue
+        children.setdefault(parent_pid, []).append((pid, process_group))
+    groups = {root_pid}
+    pending = [root_pid]
+    while pending:
+        parent_pid = pending.pop()
+        for child_pid, process_group in children.get(parent_pid, []):
+            groups.add(process_group)
+            pending.append(child_pid)
+    return groups
+
+
+def _signal_owned_process_group(
+    process: subprocess.Popen[str], signum: int, groups: set[int] | None = None
+) -> None:
+    """Signal only process groups in one Finish command's process tree."""
+    if os.name == "posix":
+        for process_group in sorted(groups or _owned_process_groups(process.pid)):
+            try:
+                os.killpg(process_group, signum)
+            except (ProcessLookupError, OSError):
+                pass
+    else:
+        if signum == signal.SIGKILL:
+            process.kill()
+        else:
+            process.terminate()
+
+
+def _terminate_owned_process_group(process: subprocess.Popen[str]) -> None:
+    """Terminate, escalate, and reap one Finish command and its descendants."""
+    groups = _owned_process_groups(process.pid)
+    if process.poll() is not None and groups == {process.pid}:
+        return
+    _signal_owned_process_group(process, signal.SIGTERM, groups)
+    try:
+        process.wait(timeout=FINISH_COMMAND_TERMINATION_GRACE_SECONDS)
+    except subprocess.TimeoutExpired:
+        _signal_owned_process_group(process, signal.SIGKILL, groups)
+        process.wait()
+
+
 def run(command: list[str], *, extra_env: dict[str, str] | None = None) -> tuple[int, int, str]:
     command = list(command)
     if command and command[0] == "make":
@@ -254,24 +389,68 @@ def run(command: list[str], *, extra_env: dict[str, str] | None = None) -> tuple
         output = f"ERROR: {exc}\n"
         print(output, end="", file=sys.stderr)
         return 2, 0, output
+    try:
+        timeout_seconds = finish_command_timeout_seconds()
+    except ValueError as exc:
+        output = f"ERROR: {exc}\n"
+        print(output, end="", file=sys.stderr)
+        return 2, 0, output
     print("$ " + " ".join(command))
     start = time.time()
     environment = clean_git_environment()
     if extra_env:
         environment.update(extra_env)
-    result = subprocess.run(
+    process = subprocess.Popen(  # validated argv, no shell, owned session
         command,
         cwd=PROJECT_ROOT,
         env=environment,
-        check=False,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
+        start_new_session=os.name == "posix",
     )
-    if result.stdout:
-        displayed = console_output(result.stdout)
+    cancelled_signal: int | None = None
+    timed_out = False
+    previous_handlers: dict[int, Any] = {}
+
+    def cancel(signum: int, _frame: Any) -> None:
+        nonlocal cancelled_signal
+        cancelled_signal = signum
+        _terminate_owned_process_group(process)
+
+    if os.name == "posix":
+        for signum in (signal.SIGINT, signal.SIGTERM):
+            previous_handlers[signum] = signal.getsignal(signum)
+            signal.signal(signum, cancel)
+    try:
+        try:
+            captured, _ = process.communicate(timeout=timeout_seconds)
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            _terminate_owned_process_group(process)
+            captured, _ = process.communicate()
+    finally:
+        for restored_signum, handler in previous_handlers.items():
+            signal.signal(restored_signum, handler)
+    output = captured or ""
+    if timed_out:
+        output += (
+            f"\n🔴 ai-finish command timed out after {int(timeout_seconds)} second(s); "
+            "owned process group terminated.\n"
+        )
+        code = 124
+    elif cancelled_signal is not None:
+        output += (
+            f"\n🔴 ai-finish command cancelled by signal {cancelled_signal}; "
+            "owned process group terminated.\n"
+        )
+        code = 128 + cancelled_signal
+    else:
+        code = process.returncode
+    if output:
+        displayed = console_output(output)
         print(displayed, end="" if displayed.endswith("\n") else "\n")
-    return result.returncode, elapsed_ms(start), result.stdout or ""
+    return code, elapsed_ms(start), output
 
 
 def evidence(
@@ -618,6 +797,14 @@ def prepare_pre_archive_candidate_coverage(
     outcome_ok, outcome_message = bind_pre_archive_candidate_coverage_to_outcome(task)
     if not outcome_ok:
         return 1, outcome_message
+    # Binding candidate coverage mutates the already-derived Outcome. Refresh
+    # its human report immediately so the report digest and next action remain
+    # bound to the exact persisted Outcome before either finish or archive
+    # returns control to a human.
+    summary_path = PROJECT_ROOT / task_paths(task)[1]
+    report_ok, report_message = run_human_report_pipeline(task, summary_path)
+    if not report_ok:
+        return 1, f"post-candidate Human Benefit Report refresh failed: {report_message}"
     return 0, ""
 
 
@@ -631,6 +818,8 @@ def bind_pre_archive_candidate_coverage_to_outcome(task: str) -> tuple[bool, str
     try:
         report_bytes = report_path.read_bytes()
         report = json.loads(report_bytes)
+        contract_path = PROJECT_ROOT / ".ai" / "work-items" / "active" / f"{task}.contract.json"
+        contract = load_json(contract_path) if contract_path.is_file() else None
         outcome = load_json(json_path)
         binding = report.get("binding") if isinstance(report, dict) else None
         if not isinstance(binding, dict):
@@ -646,7 +835,7 @@ def bind_pre_archive_candidate_coverage_to_outcome(task: str) -> tuple[bool, str
             "binding": {key: binding[key] for key in required},
         }
         markdown = render_task_outcome(outcome)
-        validation = validate_outcome(outcome, markdown, expected_task_id=task)
+        validation = validate_outcome(outcome, markdown, expected_task_id=task, contract=contract)
         if not validation.valid:
             return False, "; ".join(f"{item.code}: {item.message}" for item in validation.errors)
         save_json(json_path, outcome)
@@ -703,14 +892,34 @@ def console_output(output: str) -> str:
     )
 
 
+def source_bound_check_required(contract_data: dict[str, Any]) -> bool:
+    """Require source-bound evidence validation only for affected Work Items."""
+    try:
+        dependencies = load_capability_evidence_dependencies(PROJECT_ROOT)
+    except EvidenceDependencyError:
+        # A malformed dependency graph must fail through the registered gate,
+        # rather than silently bypassing it and paying for quality first.
+        return True
+    if dependencies is None:
+        return False
+    return source_bound_evidence_is_affected(changed_paths(contract_data), dependencies)
+
+
 def inject_mandatory_verification_checks(
     declared_items: list[dict[str, Any]],
+    *,
+    contract_data: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
-    """Normalize explicitly declared checks without adding release-only gates."""
+    """Normalize checks and add the bounded source gate for affected changes."""
     normalized: dict[str, dict[str, Any]] = {
         check_id: {"check": check_id, "required": True}
         for check_id in MANDATORY_VERIFICATION_CHECKS
     }
+    if contract_data is not None and source_bound_check_required(contract_data):
+        normalized["sourceBoundEvidence"] = {
+            "check": "sourceBoundEvidence",
+            "required": True,
+        }
     for item in declared_items:
         check_id = verification_key(item)
         if not check_id:
@@ -763,6 +972,231 @@ def ensure_active_evidence_changed_files(task: str, summary_path: Path) -> None:
     save_json(summary_path, summary)
 
 
+SOURCE_BOUND_MATRIX_RELATIVE = "docs/reference/capability-truth-matrix.json"
+SOURCE_BOUND_MATRIX_MARKDOWN_RELATIVE = "docs/reference/capability-truth-matrix.md"
+SOURCE_BOUND_GENERATOR_RELATIVE = "scripts/ai_capability_truth.py"
+SOURCE_BOUND_JAPANESE_GENERATOR_RELATIVE = "scripts/ai_japanese_capability.py"
+SOURCE_BOUND_JAPANESE_RELATIVES = (
+    "docs/reference/japanese-capability-assessment.json",
+    "docs/reference/japanese-capability-assessment.md",
+)
+SOURCE_BOUND_ALIGNMENT_GENERATOR_RELATIVE = "scripts/check_pre_release_documentation_alignment.py"
+SOURCE_BOUND_ALIGNMENT_RELATIVES = (
+    "docs/reference/pre-release-documentation-alignment.json",
+    "docs/reference/pre-release-documentation-alignment.md",
+)
+SOURCE_BOUND_DECLARED_GENERATED_RELATIVES = (
+    SOURCE_BOUND_MATRIX_RELATIVE,
+    SOURCE_BOUND_MATRIX_MARKDOWN_RELATIVE,
+    *SOURCE_BOUND_ALIGNMENT_RELATIVES,
+    *SOURCE_BOUND_JAPANESE_RELATIVES,
+)
+
+
+def _file_sha256(path: Path) -> str:
+    if not path.is_file():
+        return "missing"
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _record_source_bound_generation(
+    summary_path: Path,
+    *,
+    path: str,
+    before_sha256: str,
+    after_sha256: str,
+) -> None:
+    """Bind a source-bound generated document to the active Summary evidence."""
+    _record_generated_output(
+        summary_path,
+        path=path,
+        before_sha256=before_sha256,
+        after_sha256=after_sha256,
+    )
+    summary = load_json(summary_path)
+    alignment = summary.get("documentationAlignment")
+    checks = alignment.get("checks") if isinstance(alignment, dict) else None
+    if isinstance(checks, list):
+        for check in checks:
+            if (
+                not isinstance(check, dict)
+                or check.get("area") != "documentationCommandsCapability"
+            ):
+                continue
+            evidence = check.get("evidence")
+            if isinstance(evidence, list) and path not in evidence:
+                evidence.append(path)
+            break
+    save_json(summary_path, summary)
+
+
+def _record_generated_output(
+    summary_path: Path,
+    *,
+    path: str,
+    before_sha256: str,
+    after_sha256: str,
+) -> None:
+    """Register a generated output without misclassifying its evidence type."""
+    summary = load_json(summary_path)
+    changed = summary.get("changedFiles")
+    if not isinstance(changed, list):
+        changed = []
+        summary["changedFiles"] = changed
+    if not any(isinstance(item, dict) and item.get("path") == path for item in changed):
+        changed.append(
+            {
+                "path": path,
+                "reason": (
+                    "Generated source-bound evidence during ai_finish; "
+                    f"sha256 before={before_sha256}, after={after_sha256}."
+                ),
+            }
+        )
+    generated = summary.get("generatedFiles")
+    if not isinstance(generated, list):
+        generated = []
+        summary["generatedFiles"] = generated
+    if path not in generated:
+        generated.append(path)
+    save_json(summary_path, summary)
+
+
+def _record_existing_source_bound_outputs(
+    summary_path: Path,
+    paths: tuple[str, ...],
+    before_sha256: dict[str, str],
+) -> None:
+    """Register every declared output, including unchanged projections."""
+    for relative in paths:
+        path = PROJECT_ROOT / relative
+        if path.is_file():
+            after = _file_sha256(path)
+            _record_source_bound_generation(
+                summary_path,
+                path=relative,
+                before_sha256=before_sha256.get(relative, after),
+                after_sha256=after,
+            )
+
+
+def refresh_source_bound_evidence(*, summary_path: Path) -> tuple[int, int, str]:
+    """Refresh capability evidence before the source-bound gate runs.
+
+    The refresh is intentionally fail-closed when configured.  Repositories
+    without the capability truth pair retain the historical no-op behavior.
+    """
+    matrix_path = PROJECT_ROOT / SOURCE_BOUND_MATRIX_RELATIVE
+    generator_path = PROJECT_ROOT / SOURCE_BOUND_GENERATOR_RELATIVE
+    if not matrix_path.is_file() or not generator_path.is_file():
+        return (
+            0,
+            0,
+            "sourceBoundEvidence refresh skipped: capability truth configuration is absent",
+        )
+
+    details: list[str] = []
+    changed_source_bound_paths: set[str] = set()
+    total_duration = 0
+
+    def run_generator(
+        relative_generator: str,
+        outputs: tuple[str, ...],
+        label: str,
+        *,
+        required_outputs: tuple[str, ...] | None = None,
+    ) -> int:
+        nonlocal total_duration
+        before = {relative: _file_sha256(PROJECT_ROOT / relative) for relative in outputs}
+        code, duration, output = run([sys.executable, relative_generator, "--write"])
+        total_duration += duration
+        after = {relative: _file_sha256(PROJECT_ROOT / relative) for relative in outputs}
+        changed_source_bound_paths.update(
+            relative for relative in outputs if before[relative] != after[relative]
+        )
+        details.append(
+            f"{label} generated: "
+            + "; ".join(
+                f"{relative} sha256 before={before[relative]}, after={after[relative]}"
+                for relative in outputs
+            )
+        )
+        if output:
+            details.append(output)
+        _record_existing_source_bound_outputs(summary_path, outputs, before)
+        required = required_outputs if required_outputs is not None else outputs
+        missing = [relative for relative in required if after[relative] == "missing"]
+        if code == 0 and missing:
+            details.append(f"{label} refresh failed: missing output(s): {', '.join(missing)}")
+            return 1
+        return code
+
+    matrix_outputs = (
+        SOURCE_BOUND_MATRIX_RELATIVE,
+        SOURCE_BOUND_MATRIX_MARKDOWN_RELATIVE,
+    )
+    code = run_generator(
+        SOURCE_BOUND_GENERATOR_RELATIVE,
+        matrix_outputs,
+        "capability truth",
+        required_outputs=(SOURCE_BOUND_MATRIX_RELATIVE,),
+    )
+    if code != 0:
+        return code, total_duration, "\n".join(details)
+
+    japanese_generator = PROJECT_ROOT / SOURCE_BOUND_JAPANESE_GENERATOR_RELATIVE
+    if japanese_generator.is_file():
+        code = run_generator(
+            SOURCE_BOUND_JAPANESE_GENERATOR_RELATIVE,
+            SOURCE_BOUND_JAPANESE_RELATIVES,
+            "Japanese capability assessment",
+        )
+        if code != 0:
+            return code, total_duration, "\n".join(details)
+
+    alignment_generator = PROJECT_ROOT / SOURCE_BOUND_ALIGNMENT_GENERATOR_RELATIVE
+    if alignment_generator.is_file():
+        code = run_generator(
+            SOURCE_BOUND_ALIGNMENT_GENERATOR_RELATIVE,
+            SOURCE_BOUND_ALIGNMENT_RELATIVES,
+            "pre-release documentation alignment",
+        )
+        if code != 0:
+            return code, total_duration, "\n".join(details)
+
+    knowledge_root = PROJECT_ROOT / ".ai" / "knowledge"
+    knowledge_paths = []
+    if knowledge_root.is_dir():
+        index_path = knowledge_root / "index.json"
+        if index_path.is_file():
+            knowledge_paths.append(index_path)
+        knowledge_paths.extend(sorted((knowledge_root / "work-items").glob("*.json")))
+    before = {
+        path.relative_to(PROJECT_ROOT).as_posix(): _file_sha256(path) for path in knowledge_paths
+    }
+    try:
+        from ai_generate_knowledge_record import rebuild_existing_projections
+
+        refreshed = rebuild_existing_projections(
+            repo_root=PROJECT_ROOT,
+            changed_paths=sorted(changed_source_bound_paths),
+        )
+    except (OSError, TypeError, ValueError) as exc:
+        details.append(f"Implementation Knowledge refresh failed: {exc}")
+        return 1, total_duration, "\n".join(details)
+    for relative in refreshed:
+        _record_generated_output(
+            summary_path,
+            path=relative,
+            before_sha256=before.get(relative, "missing"),
+            after_sha256=_file_sha256(PROJECT_ROOT / relative),
+        )
+    if refreshed:
+        details.append("Implementation Knowledge projections refreshed: " + ", ".join(refreshed))
+
+    return 0, total_duration, "\n".join(details)
+
+
 def prepare_documentation_alignment_evidence(task: str, summary_path: Path) -> None:
     """Bind already-declared generated Markdown before Finish validates docs.
 
@@ -783,7 +1217,11 @@ def prepare_documentation_alignment_evidence(task: str, summary_path: Path) -> N
         return
     report_markdown = _human_report_paths()[1].relative_to(PROJECT_ROOT).as_posix()
     outcome_markdown = _outcome_paths(task)[1].relative_to(PROJECT_ROOT).as_posix()
-    documented_generated_paths = {report_markdown, outcome_markdown}
+    documented_generated_paths = {
+        report_markdown,
+        outcome_markdown,
+        *SOURCE_BOUND_DECLARED_GENERATED_RELATIVES,
+    }
     changed = summary.get("changedFiles", [])
     declared_paths = {item.get("path") for item in changed if isinstance(item, dict)}
     for check in checks:
@@ -808,11 +1246,13 @@ def run_human_report_pipeline(task: str, summary_path: Path) -> tuple[bool, str]
 
     from ai_generate_human_report import generate_human_report, render_human_report
 
-    outcome_path, _ = _outcome_paths(task)
+    outcome_path, _outcome_markdown_path = _outcome_paths(task)
     json_path, markdown_path = _human_report_paths()
     try:
         outcome = load_json(outcome_path)
-        report = generate_human_report(outcome, phase="review")
+        contract_path = PROJECT_ROOT / ".ai" / "work-items" / "active" / f"{task}.contract.json"
+        contract = load_json(contract_path) if contract_path.is_file() else None
+        report = generate_human_report(outcome, phase="review", contract=contract)
         save_json(json_path, report)
         markdown_path.write_text(render_human_report(report), encoding="utf-8")
         summary = load_json(summary_path)
@@ -882,7 +1322,15 @@ def refresh_archived_human_report(task: str) -> tuple[bool, str]:
         return False, f"expected exactly one archived Task Outcome for {task}, found {len(matches)}"
     json_path, markdown_path = _human_report_paths()
     try:
-        report = generate_human_report(load_json(matches[0]), phase="review")
+        contract_path = matches[0].with_name(
+            matches[0].name.replace(".outcome.json", ".contract.json")
+        )
+        contract = load_json(contract_path) if contract_path.is_file() else None
+        report = generate_human_report(
+            load_json(matches[0]),
+            phase="review",
+            contract=contract,
+        )
         save_json(json_path, report)
         markdown_path.write_text(render_human_report(report), encoding="utf-8")
     except (OSError, KeyError, TypeError, ValueError) as exc:
@@ -1051,7 +1499,10 @@ def _verification_evidence_ref(
 
 
 def _verification_retry_projection(
-    summary_path: Path, verification: Any, history: Any
+    summary_path: Path,
+    verification: Any,
+    history: Any,
+    required_checks: dict[str, bool] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[str]]:
     """Build stop/resolution events from append-only failed verification attempts."""
     current = (
@@ -1142,6 +1593,8 @@ def _verification_retry_projection(
         check = failed.get("check")
         if not isinstance(check, str) or failed.get("result") != "failed":
             continue
+        if required_checks is not None and required_checks.get(check, True) is not True:
+            continue
         refs = [_verification_evidence_ref(summary_path, f"verification[{check}] failed", failed)]
         events.append(
             {
@@ -1185,9 +1638,75 @@ def _pre_merge_outcome_input(
         for item in changed
         if isinstance(item, dict) and isinstance(item.get("path"), str)
     ]
-    warnings = [item for item in summary.get("knownGaps", []) if isinstance(item, str)]
     non_risk_explanations = [
         dict(item) for item in summary.get("nonRiskExplanations", []) if isinstance(item, dict)
+    ]
+    verification = summary.get("verification", [])
+    declared_required = {
+        item["check"]: item.get("required", True) is True
+        for item in contract.get("verification", [])
+        if isinstance(item, dict) and isinstance(item.get("check"), str)
+    }
+
+    def is_required_check(item: dict[str, Any]) -> bool:
+        check = item.get("check")
+        return declared_required.get(check, True)
+
+    optional_failed_checks = [
+        item
+        for item in verification
+        if isinstance(item, dict)
+        and item.get("result") == "failed"
+        and item.get("check")
+        and not is_required_check(item)
+    ]
+    non_risk_explanations.extend(
+        {
+            "sourceWarning": f"{item['check']} failed on the latest attempt.",
+            "reason": (
+                "The Contract explicitly declares this verification check as optional; "
+                "the failure remains visible but does not block the required acceptance boundary."
+            ),
+            "evidence": [
+                {
+                    "source": summary_path.relative_to(PROJECT_ROOT).as_posix(),
+                    "subject": f"verification[{item['check']}] failed",
+                },
+                {
+                    "source": contract_path.relative_to(PROJECT_ROOT).as_posix(),
+                    "subject": f"verification[{item['check']}].required=false",
+                },
+            ],
+        }
+        for item in optional_failed_checks
+    )
+    evidenced_non_risk_warnings = {
+        item["sourceWarning"]
+        for item in non_risk_explanations
+        if isinstance(item.get("sourceWarning"), str)
+        and isinstance(item.get("evidence"), list)
+        and item["evidence"]
+        and all(
+            isinstance(reference, dict)
+            and isinstance(reference.get("source"), str)
+            and reference["source"].strip()
+            and isinstance(reference.get("subject"), str)
+            and reference["subject"].strip()
+            for reference in item["evidence"]
+        )
+    }
+    residual_risks = summary.get("residualRisks", [])
+    merge_identity_risk_is_explicit = isinstance(residual_risks, list) and any(
+        isinstance(item, dict) and item.get("area") == "merge_identity" for item in residual_risks
+    )
+    warnings = [
+        item
+        for item in summary.get("knownGaps", [])
+        if isinstance(item, str)
+        and item not in evidenced_non_risk_warnings
+        and not (
+            merge_identity_risk_is_explicit and item.startswith(PRE_MERGE_MERGE_IDENTITY_GAP_PREFIX)
+        )
     ]
     limitations = [
         {
@@ -1212,7 +1731,6 @@ def _pre_merge_outcome_input(
         for item in summary.get("userCorrectionsCaptured", [])
         if isinstance(item, dict) and isinstance(item.get("instruction"), str)
     ]
-    verification = summary.get("verification", [])
     completed = [
         {
             "title": f"Changed {item.get('path')}",
@@ -1293,16 +1811,24 @@ def _pre_merge_outcome_input(
     failed_checks = [
         item.get("check")
         for item in verification
-        if isinstance(item, dict) and item.get("result") == "failed" and item.get("check")
+        if isinstance(item, dict)
+        and item.get("result") == "failed"
+        and item.get("check")
+        and is_required_check(item)
     ]
     retry_events, retry_resolved, retry_approach, historical_failed_checks = (
         _verification_retry_projection(
-            summary_path, verification, summary.get("verificationHistory", [])
+            summary_path,
+            verification,
+            summary.get("verificationHistory", []),
+            declared_required,
         )
     )
     failed_check_claims = []
     for item in verification if isinstance(verification, list) else []:
         if not isinstance(item, dict) or item.get("result") != "failed":
+            continue
+        if not is_required_check(item):
             continue
         check = item.get("check")
         if not isinstance(check, str) or not check:
@@ -1402,6 +1928,22 @@ def _pre_merge_outcome_input(
             user_decisions.append(item.strip())
         elif isinstance(item, dict) and isinstance(item.get("instruction"), str):
             user_decisions.append(item["instruction"])
+    approach_projection: dict[str, Any] = {}
+    has_new_approach_contract_signal = isinstance(contract.get("rawUserRequest"), str) and bool(
+        contract["rawUserRequest"].strip()
+    )
+    if (
+        not has_new_approach_contract_signal
+        and not isinstance(summary.get("implementationApproach"), dict)
+        and not isinstance(summary.get("configurationApproach"), dict)
+    ):
+        # Historic Contracts predate the applicability signal. Preserve their
+        # terminal behavior while making the projection explicit; new v2
+        # Contracts carry rawUserRequest and therefore remain fail-visible when
+        # a code/config approach is missing.
+        from ai_generate_task_outcome import _not_applicable_approach
+
+        approach_projection["implementationApproach"] = _not_applicable_approach()
     problem_count = (
         len(summary.get("observedIssues", []))
         + len(warnings)
@@ -1462,6 +2004,7 @@ def _pre_merge_outcome_input(
             if warnings
             else [],
             "humanDecisions": [*human_decisions, *user_decisions],
+            **approach_projection,
             "sources": [
                 {
                     "source": contract_path.relative_to(PROJECT_ROOT).as_posix(),
@@ -1494,7 +2037,12 @@ def _write_and_validate_pre_merge_outcome(
             evidence=payload["evidence"],
         )
         markdown = render_task_outcome(outcome)
-        report = validate_outcome(outcome, markdown, expected_task_id=task)
+        report = validate_outcome(
+            outcome,
+            markdown,
+            expected_task_id=task,
+            contract=load_json(contract_path),
+        )
         if not report.valid:
             return False, "; ".join(f"{item.code}: {item.message}" for item in report.errors)
         save_json(json_path, outcome)
@@ -1578,7 +2126,12 @@ def write_blocked_outcome(
             evidence=evidence,
         )
         markdown = render_task_outcome(outcome)
-        report = validate_outcome(outcome, markdown, expected_task_id=task)
+        report = validate_outcome(
+            outcome,
+            markdown,
+            expected_task_id=task,
+            contract=load_json(contract_path),
+        )
         if not report.valid:
             return False, "; ".join(f"{item.code}: {item.message}" for item in report.errors)
         save_json(json_path, outcome)
@@ -1731,7 +2284,17 @@ def run_task_outcome_pipeline(
                 "evidenceCount": evidence_count,
             },
         )
-        return True, message
+        # Recording taskOutcome also declares the generated Outcome files in
+        # Summary.changedFiles.  Rebind once after that bookkeeping mutation;
+        # otherwise the freshly written Outcome can never satisfy the
+        # terminal Summary digest gate.
+        rebound_ok, rebound_message = _write_and_validate_pre_merge_outcome(
+            task, contract_path, summary_path, json_path, markdown_path, language
+        )
+        if not rebound_ok:
+            _record_outcome_state(summary_path, {"status": "failed", "error": rebound_message})
+            return False, rebound_message
+        return True, rebound_message
     input_path = PROJECT_ROOT / input_value
     json_path, markdown_path = _outcome_paths(task)
     if not input_path.exists():
@@ -1742,6 +2305,9 @@ def run_task_outcome_pipeline(
         return False, message
 
     python = sys.executable
+    contract_argument = (
+        str(contract_path.relative_to(PROJECT_ROOT)) if contract_path is not None else ""
+    )
     commands = [
         [
             python,
@@ -1753,10 +2319,11 @@ def run_task_outcome_pipeline(
         [
             python,
             "-c",
-            "from pathlib import Path; import sys; sys.path.insert(0, 'scripts'); from ai_check_task_outcome import validate_outcome; import json; outcome=json.loads(Path(sys.argv[1]).read_text()); report=validate_outcome(outcome, expected_task_id=sys.argv[3]); print('valid' if report.valid else '\\n'.join(f'{e.code}: {e.message}' for e in report.errors)); raise SystemExit(0 if report.valid else 1)",
+            "from pathlib import Path; import sys; sys.path.insert(0, 'scripts'); from ai_check_task_outcome import validate_outcome; import json; outcome=json.loads(Path(sys.argv[1]).read_text()); contract=json.loads(Path(sys.argv[4]).read_text()) if sys.argv[4] else None; report=validate_outcome(outcome, expected_task_id=sys.argv[3], contract=contract); print('valid' if report.valid else '\\n'.join(f'{e.code}: {e.message}' for e in report.errors)); raise SystemExit(0 if report.valid else 1)",
             str(json_path.relative_to(PROJECT_ROOT)),
             str(markdown_path.relative_to(PROJECT_ROOT)),
             task,
+            contract_argument,
         ],
         [
             python,
@@ -1767,10 +2334,11 @@ def run_task_outcome_pipeline(
         [
             python,
             "-c",
-            "from pathlib import Path; import sys; sys.path.insert(0, 'scripts'); from ai_check_task_outcome import validate_outcome; import json; outcome=json.loads(Path(sys.argv[1]).read_text()); report=validate_outcome(outcome, Path(sys.argv[2]).read_text(), expected_task_id=sys.argv[3]); print('valid' if report.valid else '\\n'.join(f'{e.code}: {e.message}' for e in report.errors)); raise SystemExit(0 if report.valid else 1)",
+            "from pathlib import Path; import sys; sys.path.insert(0, 'scripts'); from ai_check_task_outcome import validate_outcome; import json; outcome=json.loads(Path(sys.argv[1]).read_text()); contract=json.loads(Path(sys.argv[4]).read_text()) if sys.argv[4] else None; report=validate_outcome(outcome, Path(sys.argv[2]).read_text(), expected_task_id=sys.argv[3], contract=contract); print('valid' if report.valid else '\\n'.join(f'{e.code}: {e.message}' for e in report.errors)); raise SystemExit(0 if report.valid else 1)",
             str(json_path.relative_to(PROJECT_ROOT)),
             str(markdown_path.relative_to(PROJECT_ROOT)),
             task,
+            contract_argument,
         ],
     ]
     for command in commands:
@@ -1802,14 +2370,18 @@ def refresh_final_outcome_after_stabilization(
     task: str, contract_path: Path, summary_path: Path, language: str
 ) -> tuple[bool, str]:
     """Rebuild human projections from the final verification state before archive."""
+    # The Human Benefit Report pipeline records its own generated paths in the
+    # Summary.  Establish that final Summary shape before binding the Outcome
+    # digest; generating Outcome first would make the report path mutation
+    # immediately stale the terminal binding and trip the green gate.
+    report_ok, report_message = run_human_report_pipeline(task, summary_path)
+    if not report_ok:
+        return False, f"final Human Benefit Report regeneration failed: {report_message}"
     outcome_ok, outcome_message = run_task_outcome_pipeline(
         task, summary_path, contract_path, language
     )
     if not outcome_ok:
         return False, f"final Outcome regeneration failed: {outcome_message}"
-    report_ok, report_message = run_human_report_pipeline(task, summary_path)
-    if not report_ok:
-        return False, f"final Human Benefit Report regeneration failed: {report_message}"
     contract = contract_path.relative_to(PROJECT_ROOT).as_posix()
     summary = summary_path.relative_to(PROJECT_ROOT).as_posix()
     for command in (
@@ -1851,13 +2423,49 @@ def render_direct_outcome_report(outcome: dict[str, Any], language: str) -> str:
 
     locale = normalize_locale(language)
     heading, limitation, next_action = REPORT_BOUNDARY_TEXT[locale]
-    try:
-        human_summary = render_human_report(generate_human_report(outcome))
-    except (KeyError, TypeError, ValueError):
-        # Legacy/test fixtures may contain only the localized Outcome surface;
-        # the governed finish path always supplies and validates the full report.
-        human_summary = ""
-    return f"{heading}\n{render_localized_outcome(outcome, locale)}\n{human_summary}{limitation}\n{next_action}\n"
+    status_color = outcome.get("humanStatusColor")
+    traffic_light = {
+        "green": "🟢",
+        "yellow": "🟡",
+        "red": "🔴",
+    }.get(status_color if isinstance(status_color, str) else "", "🔴")
+    # A conversation delivery is only valid when both the localized Outcome
+    # and the complete human-benefit report are renderable.  Do not silently
+    # downgrade to a status-only or localized-only surface: that would make a
+    # missing report look like a successful human handoff.
+    contract = None
+    work_item_id = outcome.get("workItemId")
+    if isinstance(work_item_id, str):
+        contract_path = (
+            PROJECT_ROOT / ".ai" / "work-items" / "active" / f"{work_item_id}.contract.json"
+        )
+        if contract_path.is_file():
+            contract = load_json(contract_path)
+    human_summary = render_human_report(generate_human_report(outcome, contract=contract))
+    return (
+        f"Outcome: {traffic_light} {outcome.get('status', 'unknown')}\n"
+        f"{heading}\n{render_localized_outcome(outcome, locale)}\n"
+        f"{human_summary}{limitation}\n{next_action}\n"
+    )
+
+
+def active_terminal_outcome_issues(
+    task: str, contract_path: Path, summary_path: Path
+) -> tuple[str, ...]:
+    """Return terminal-gate issues for the current active candidate."""
+    from ai_outcome_gate import validate_terminal_outcome
+
+    outcome_path, outcome_markdown_path = _outcome_paths(task)
+    result = validate_terminal_outcome(
+        outcome_path,
+        outcome_markdown_path,
+        expected_task_id=task,
+        contract_path=contract_path,
+        summary_path=summary_path,
+        expected_base_commit=load_json(contract_path).get("baseCommit"),
+        expected_head_commit=current_head(),
+    )
+    return result.issues
 
 
 def deliver_direct_outcome_report(task: str, language: str) -> tuple[bool, str]:
@@ -1876,6 +2484,8 @@ def finish_quality_paths(contract_data: dict[str, Any]) -> list[str]:
     task = str(contract_data.get("workItemId", ""))
     generated = {
         ".ai/cockpit/current_status.md",
+        ".ai/cockpit/task_report.json",
+        ".ai/cockpit/task_report.md",
         f".ai/work-items/starts/{task}.json",
         f".ai/work-items/active/{task}.contract.json",
         f".ai/work-items/active/{task}.summary.json",
@@ -1883,6 +2493,51 @@ def finish_quality_paths(contract_data: dict[str, Any]) -> list[str]:
         f".ai/work-items/active/{task}.outcome.md",
     }
     return [path for path in changed_paths(contract_data) if path not in generated]
+
+
+def immutable_pin_facts_for_finish(
+    contract_data: dict[str, Any], paths: list[str]
+) -> dict[str, Any] | None:
+    """Bind immutable-pin routing to the active Contract base and current file."""
+    if len(paths) != 1:
+        return None
+    base = str(contract_data.get("baseCommit", ""))
+    path = paths[0]
+    if not base:
+        return {
+            "path": path,
+            "kind": "immutable_workflow_pin",
+            "eligible": False,
+            "reason": "Contract baseCommit is unavailable",
+            "replacementCount": 0,
+        }
+    try:
+        base_result = subprocess.run(  # nosec B603 B607 - fixed list-form Git evidence lookup
+            ["git", "show", f"{base}:{path}"],
+            cwd=PROJECT_ROOT,
+            env=clean_git_environment(),
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        if base_result.returncode != 0:
+            raise ValueError(base_result.stderr.strip() or "base file is unavailable")
+        current_path = PROJECT_ROOT / path
+        if not current_path.is_file():
+            raise ValueError("current file is unavailable")
+        return classify_immutable_workflow_pin_change(
+            path,
+            base_result.stdout,
+            current_path.read_text(encoding="utf-8"),
+        )
+    except (OSError, ValueError) as exc:
+        return {
+            "path": path,
+            "kind": "immutable_workflow_pin",
+            "eligible": False,
+            "reason": f"base/current evidence unavailable: {exc}",
+            "replacementCount": 0,
+        }
 
 
 def run_declared_checks(
@@ -1927,9 +2582,13 @@ def run_declared_checks(
         try:
             if check_id == "quality":
                 governance_profile = contract_data.get("governanceProfile", {})
+                quality_paths = finish_quality_paths(contract_data)
                 route = finish_quality_route_for_contract(
-                    finish_quality_paths(contract_data),
+                    quality_paths,
                     governance_profile if isinstance(governance_profile, dict) else None,
+                    immutable_pin_facts=immutable_pin_facts_for_finish(
+                        contract_data, quality_paths
+                    ),
                 )
                 cmd_str = str(route["command"])
                 command = shlex.split(cmd_str)
@@ -1987,7 +2646,50 @@ def run_declared_checks(
                     worktree_digest=current_digest,
                 ),
             )
+        refresh_output = ""
+        refresh_duration = 0
+        if check_id == "sourceBoundEvidence":
+            refresh_code, refresh_duration, refresh_output = refresh_source_bound_evidence(
+                summary_path=summary_path
+            )
+            if refresh_code != 0:
+                current_digest = worktree_digest(changed_paths(contract_data))
+                record_result(
+                    summary_path,
+                    evidence(
+                        check_id,
+                        cmd_str,
+                        refresh_code,
+                        refresh_duration,
+                        refresh_output,
+                        contract_hash=contract_hash,
+                        commit_sha=commit_sha,
+                        execution_contract_path=contract,
+                        execution_summary_path=summary,
+                        worktree_digest=current_digest,
+                    ),
+                )
+                obs.check_failed(
+                    check_id=check_id,
+                    command=cmd_str,
+                    duration_ms=refresh_duration,
+                    detail="source-bound evidence refresh failed",
+                )
+                return refresh_code
         code, duration, output = run(command)
+        duration += refresh_duration
+        if refresh_output:
+            output = refresh_output + ("\n" + output if output else "")
+        if check_id in {"quality", "projectTest"}:
+            try:
+                if restore_tracked_project_test_receipt():
+                    output = (
+                        output.rstrip()
+                        + "\nRestored tracked project-test aggregate receipt before Summary stabilization.\n"
+                    )
+            except RuntimeError as exc:
+                output = output.rstrip() + f"\nERROR: {exc}\n"
+                code = code or 1
         if route is not None:
             output = json.dumps({"finishQualityRoute": route}, sort_keys=True) + "\n" + output
         current_digest = worktree_digest(changed_paths(contract_data))
@@ -2100,7 +2802,8 @@ def _main_with_mutex(args: argparse.Namespace) -> int:
     obs = create_observability(work_item_id=args.task)
     total_start = time.time()
     declared_items = inject_mandatory_verification_checks(
-        [item for item in declared if isinstance(item, dict)]
+        [item for item in declared if isinstance(item, dict)],
+        contract_data=contract_data,
     )
     summary_requests_outcome = True
     declared_items.sort(
@@ -2201,6 +2904,11 @@ def _main_with_mutex(args: argparse.Namespace) -> int:
         outcome_ok = _outcome_paths(args.task)[0].is_file()
         outcome_message = "existing outcome is bound by same-state verification"
         human_report_ok, human_report_message = outcome_ok, outcome_message
+        if outcome_ok:
+            gate_issues = active_terminal_outcome_issues(args.task, contract_path, summary_path)
+            if gate_issues:
+                human_report_ok = False
+                human_report_message = "; ".join(gate_issues)
     else:
         outcome_ok, outcome_message = run_task_outcome_pipeline(
             contract_data["workItemId"], summary_path, contract_path, args.language
@@ -2508,18 +3216,6 @@ def _main_with_mutex(args: argparse.Namespace) -> int:
             code=1,
         )
 
-    print("Work Item finish checks passed")
-    record_fact_once(
-        args.task,
-        "finish_passed",
-        {"contractPath": contract, "summaryPath": summary, "commitSha": commit_sha},
-    )
-    outcome_json, _outcome_markdown = _outcome_paths(args.task)
-    try:
-        print(render_direct_outcome_report(load_json(outcome_json), args.language), end="")
-    except ValueError as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        return 1
     code, coverage_message = prepare_pre_archive_candidate_coverage(
         args.task, contract_data, obs=obs
     )
@@ -2533,6 +3229,36 @@ def _main_with_mutex(args: argparse.Namespace) -> int:
             failure_message=coverage_message,
             code=code,
         )
+    gate_issues = active_terminal_outcome_issues(args.task, contract_path, summary_path)
+    if gate_issues:
+        obs.work_item_finished(result="failed", duration_ms=elapsed_ms(total_start))
+        return return_blocked_finish_failure(
+            task=args.task,
+            contract_path=contract_path,
+            summary_path=summary_path,
+            failed_check="taskOutcomeGreenGate",
+            failure_message="; ".join(gate_issues),
+            code=1,
+        )
+    record_fact_once(
+        args.task,
+        "finish_passed",
+        {"contractPath": contract, "summaryPath": summary, "commitSha": commit_sha},
+    )
+    outcome_json, _outcome_markdown = _outcome_paths(args.task)
+    try:
+        print(render_direct_outcome_report(load_json(outcome_json), args.language), end="")
+    except (OSError, TypeError, ValueError) as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return return_blocked_finish_failure(
+            task=args.task,
+            contract_path=contract_path,
+            summary_path=summary_path,
+            failed_check="taskOutcomeReport",
+            failure_message=str(exc),
+            code=1,
+        )
+    print("Work Item finish checks passed")
     if args.archive:
         archive_command = ["make", "archive-work-item", f"CONTRACT={contract}"]
         cmd_str = " ".join(archive_command)

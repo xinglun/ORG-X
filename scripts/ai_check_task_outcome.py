@@ -7,6 +7,8 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
+from ai_check_summary import validate_implementation_approach
+
 STATUSES = {
     "completed",
     "completed_with_warnings",
@@ -33,8 +35,14 @@ SECTIONS = {
     "residualRisks",
     "humanDecisions",
     "evidence",
+    "implementationApproach",
 }
-LEGACY_SECTIONS = SECTIONS - {"limitations", "nonRiskExplanations", "forbiddenClaims"}
+LEGACY_SECTIONS = SECTIONS - {"implementationApproach"}
+LEGACY_MINIMAL_SECTIONS = LEGACY_SECTIONS - {
+    "limitations",
+    "nonRiskExplanations",
+    "forbiddenClaims",
+}
 SECRET_KEY = re.compile(
     r"(password|passwd|secret|token|api[_-]?key|private[_-]?key)", re.IGNORECASE
 )
@@ -310,13 +318,18 @@ def _validate_bindings(
 
 
 def _validate_sections(sections: Any, errors: list[ValidationError]) -> None:
-    if not isinstance(sections, dict) or (
-        set(sections) != SECTIONS and set(sections) != LEGACY_SECTIONS
+    if not isinstance(sections, dict) or set(sections) not in (
+        SECTIONS,
+        LEGACY_SECTIONS,
+        LEGACY_MINIMAL_SECTIONS,
     ):
         _error(errors, "section_shape", "sections must contain the supported Outcome section set")
         return
     for key in sections:
-        if key not in {"outcomeSummary", "taskOverview"} and not isinstance(sections[key], list):
+        if key == "implementationApproach":
+            if not isinstance(sections[key], Mapping):
+                _error(errors, "section_shape", "sections.implementationApproach must be an object")
+        elif key not in {"outcomeSummary", "taskOverview"} and not isinstance(sections[key], list):
             _error(errors, "section_shape", f"sections.{key} must be an array")
     if isinstance(sections.get("warnings"), list) and any(
         not isinstance(item, str) for item in sections["warnings"]
@@ -352,7 +365,16 @@ def _validate_severities(sections: Mapping[str, Any], errors: list[ValidationErr
                 _error(errors, "severity", f"{section}[{index}].severity is invalid")
 
 
-def _validate_claims(sections: Mapping[str, Any], errors: list[ValidationError]) -> None:
+def _validate_claims(
+    sections: Mapping[str, Any],
+    errors: list[ValidationError],
+    contract: Mapping[str, Any] | None = None,
+) -> None:
+    approach = sections.get("implementationApproach")
+    if isinstance(approach, Mapping):
+        approach_contract = dict(contract) if contract else None
+        for issue in validate_implementation_approach(approach, approach_contract):
+            _error(errors, "implementation_approach_evidence", issue)
     warnings = sections.get("warnings", [])
     limitations = sections.get("limitations", [])
     non_risks = sections.get("nonRiskExplanations", [])
@@ -465,6 +487,8 @@ def _validate_markdown(
     )
     if any(f"## {title}" not in markdown for title in titles):
         _error(errors, "markdown_parity", "Markdown is missing a required section")
+    if "implementationApproach" in sections and "## Implementation Approach" not in markdown:
+        _error(errors, "markdown_parity", "Markdown is missing the Implementation Approach section")
     for key, title in (("findings", "Findings"), ("residualRisks", "Residual Risks")):
         if not sections[key] and f"## {title}\nNone" not in markdown:
             _error(errors, "markdown_parity", f"empty {title} section must say None")
@@ -507,6 +531,7 @@ def validate_outcome(
     *,
     events: Sequence[Mapping[str, Any]] = (),
     expected_task_id: str | None = None,
+    contract: Mapping[str, Any] | None = None,
 ) -> ValidationReport:
     """Validate one Outcome and return structured errors without mutating input."""
 
@@ -524,7 +549,7 @@ def validate_outcome(
     _validate_human_handoff_projection(outcome, errors)
     _validate_sections(outcome.get("sections"), errors)
     if isinstance(outcome.get("sections"), dict):
-        _validate_claims(outcome["sections"], errors)
+        _validate_claims(outcome["sections"], errors, contract)
         _validate_severities(outcome["sections"], errors)
         _validate_markdown(markdown, outcome, outcome["sections"], errors)
     _validate_events(events, errors)

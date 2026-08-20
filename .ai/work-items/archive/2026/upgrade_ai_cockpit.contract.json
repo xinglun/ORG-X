@@ -1,0 +1,229 @@
+{
+  "contractVersion": 2,
+  "workItemId": "upgrade_ai_cockpit",
+  "mode": "code",
+  "title": "Upgrade AI Cockpit governance",
+  "baseCommit": "c12280bead071e07749541ba4823c95a86b04a2b",
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "sourceReleaseTag": "v0.5.70",
+  "sourceRepository": "https://github.com/spirex-ds-dev/ai-cockpit-template",
+  "baselineDirtyPaths": [],
+  "intent": {
+    "problem": "The adopter is on AI Cockpit 0.5.63 while the template's published 0.5.70 installation surface is available; the upgrade must also be checked against the template main branch feature catalog so no installer capability is omitted.",
+    "constraints": [
+      "Use the adopter remote default branch origin/main at the recorded base commit.",
+      "Use the published v0.5.70 source identity pinned to commit 746329ced7a1d315a468d4e2c6a7a39d50bcc343; use template main only as the comparison baseline.",
+      "Preserve project-owned or diverged paths classified by the installer and retain the rollback backup until review; the only follow-up edit to a preserved guard is the narrow feature-checklist coverage association required by the repository coverage rule.",
+      "Do not change product source or perform automatic commit, push, PR, merge, or branch deletion."
+    ],
+    "rationale": "The official upgrade installer records the Work Item, ownership decisions, and rollback evidence; a catalog/runtime-surface comparison against main provides the requested item-by-item installation checklist evidence."
+  },
+  "problemStatement": "This is a mechanical governance upgrade. The current installed AI Cockpit release is 0.5.63; product-specific motivation was not provided.",
+  "scope": [
+    ".ai/**",
+    ".cursor/**",
+    "scripts/**",
+    "tests/**",
+    "docs/**",
+    "pyproject.toml",
+    "Makefile.ai",
+    "Makefile.ai.stack",
+    "AGENTS.md",
+    "GEMINI.md",
+    "CLAUDE.md",
+    ".gitignore",
+    "Makefile"
+  ],
+  "outOfScope": [
+    "Product source changes",
+    "Automatic commit, push, PR, merge, or branch deletion"
+  ],
+  "sources": [
+    {
+      "path": ".ai/cockpit/version.json",
+      "reason": "Upgrade before/after version identity."
+    },
+    {
+      "path": "https://github.com/spirex-ds-dev/ai-cockpit-template/tree/main",
+      "reason": "Default-branch feature catalog and installation-surface comparison baseline."
+    },
+    {
+      "path": "https://github.com/spirex-ds-dev/ai-cockpit-template/releases/tag/v0.5.70",
+      "reason": "Published immutable release source used for the upgrade; archive SHA-256 is recorded in the Summary."
+    },
+    {
+      "path": "scripts/ai_installer_catalog.json",
+      "reason": "Installer feature checklist: stack and script inventory."
+    },
+    {
+      "path": "installer action log",
+      "reason": "Managed file diff and rollback evidence."
+    },
+    {
+      "path": ".ai/cockpit/upgrade-conflict-report.json",
+      "reason": "Per-path ownership and preservation decisions."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": [
+      "upgrade_integrity"
+    ],
+    "reason": "Upgrade replaces managed governance files and must remain reviewable and reversible.",
+    "unknownsReviewComplete": true
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "Upgrade replaces managed governance and installer surfaces."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "User invoked the upgrade workflow."
+  },
+  "preReviewWarnings": [
+    "Review managed-file diff, source/target versions, and rollback backup before commit."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": false,
+    "requiredStages": [],
+    "reason": "Installer-generated bounded upgrade record."
+  },
+  "acceptance": [
+    "Upgrade creates an active Contract and Summary on a dedicated upgrade branch when a remote default branch is discoverable.",
+    "Contract/Summary record source and target versions, managed file changes, and rollback backup paths.",
+    "The installer feature checklist is compared item by item against template main: all catalog stacks/scripts, runtime Make targets, and on-disk entrypoints are accounted for.",
+    "Upgrade remains review-only: installer performs no commit, push, PR, merge, or branch deletion."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Published source and target version identity are recorded",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        ".ai/cockpit/version.json releaseVersion=0.5.70",
+        ".ai/install/version.json sourceCommit=746329ced7a1d315a468d4e2c6a7a39d50bcc343",
+        "v0.5.70 archive SHA-256 eee2b2ed98cb18e3639842e01ac1ef42ac28802cc50de18f7e2295a9e4487641"
+      ]
+    },
+    {
+      "scenario": "Every installer feature-list entry is present and comparable with template main",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "main/current catalog parity: 13 stacks and 115 scripts",
+        "all 115 catalog scripts exist on disk and match the v0.5.70 source",
+        "19 runtime Make targets are present in Makefile.ai"
+      ]
+    },
+    {
+      "scenario": "Project-owned divergence and rollback remain reviewable",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        ".ai/cockpit/upgrade-conflict-report.json records 31 preserved decisions",
+        ".ai/cockpit/upgrade-backups/20260820T175316.457331Z"
+      ]
+    },
+    {
+      "scenario": "Upgrade stays on the adopter main-based Work Item branch without Git publication",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "origin/HEAD points to origin/main and the Work Item branch was created from c12280bead071e07749541ba4823c95a86b04a2b",
+        "installer action log ends with install complete and contains no commit/push/PR/merge action"
+      ]
+    }
+  ],
+  "guidelines": [
+    "Upgrade must fail closed when active Work Items exist unless --upgrade-with-active is explicit.",
+    "Rollback backups must remain available until the upgrade is reviewed."
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user",
+    "reason": "User authorized the complete implementation loop."
+  },
+  "rollbackNote": "Restore the recorded upgrade-backups directory and revert the Work Item branch.",
+  "startReceipt": {
+    "path": ".ai/work-items/starts/upgrade_ai_cockpit.json",
+    "baseCommit": "c12280bead071e07749541ba4823c95a86b04a2b",
+    "initialScopeDigest": "a4c8ead97c92e835a5e5da2e5d13109a2dea56703627849530b1024ec63bde99",
+    "contractSkeletonDigest": "f717459dd869d8c3785448193d8c95e0b84b49e30135def786a8b2a88e644f4f"
+  }
+}

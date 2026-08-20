@@ -1,0 +1,66 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/verification-gate-routing-optimization-20260817.archive-manifest.json",
+      "sha256": "78b9dd03f2ceadff689d9e29df15917e65fdfa5cf134139ac047dbcc2e0abb03"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/verification-gate-routing-optimization-20260817.contract.json",
+      "sha256": "1189b740fe9eff3aca49bd96a00301a9db6fa11b18094f2baf4019f96eef5367"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/verification-gate-routing-optimization-20260817.outcome.json",
+      "sha256": "2f4422f1ffe6d7207ef1e28de2a9cc922dd902b26c36b6e3c9c24aec179474e7"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/verification-gate-routing-optimization-20260817.summary.json",
+      "sha256": "1610121a0a8a516d5759a541501f11a0f240c23dad972e0176025505ee6c54ba"
+    }
+  },
+  "failure": {
+    "gate": "hostedFunctionalFailure"
+  },
+  "humanAuthorization": {
+    "reference": "conversation: user authorized same-Work-Item corrective recovery for the hosted release failure",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/882",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-17T08:54:47.361541+00:00",
+  "prBaseCommit": "ac195a7abc01661e87bc819048414f776650c473",
+  "provider": {
+    "event": "pull_request",
+    "failedCandidateHead": "d1d2afe7d059f8d82e37fbc3999c218f236fbc32",
+    "failureMarker": "junit_artifact_failure",
+    "jobConclusion": "failure",
+    "jobId": 95316337635,
+    "jobName": "project-test-release",
+    "junitArtifact": {
+      "failedTestcases": 1,
+      "id": 9280175494,
+      "name": "project-test-shard-release-32006262983-1",
+      "sha256": "97523fdd871b999eec2ff6289e1b19b5e18ba307b13908c46ad6baa1064475ce"
+    },
+    "kind": "github_actions",
+    "logSha256": "46d818f2b48ac573486fe9c01d89da170671b6eb6bb9934d51f9dd2c21c60a50",
+    "pullRequest": 880,
+    "repository": "spirex-ds-dev/ai-cockpit-template",
+    "runAttempt": 1,
+    "runConclusion": "failure",
+    "runId": 32006262983,
+    "runStatus": "completed",
+    "runUrl": "https://github.com/spirex-ds-dev/ai-cockpit-template/actions/runs/32006262983",
+    "workflowPath": ".github/workflows/smoke.yml"
+  },
+  "receiptVersion": 3,
+  "recoveryPaths": [
+    "scripts/ai_post_archive_recovery.py",
+    "tests/test_ai_post_archive_recovery.py",
+    "docs/reference/capability-truth-matrix.json",
+    "docs/reference/japanese-capability-assessment.json",
+    "docs/reference/japanese-capability-assessment.md",
+    "docs/reference/pre-release-documentation-alignment.json",
+    "docs/reference/pre-release-documentation-alignment.md"
+  ],
+  "workItemId": "verification-gate-routing-optimization-20260817"
+}

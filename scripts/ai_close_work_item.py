@@ -10,7 +10,7 @@ import shutil
 import subprocess
 import sys
 import time
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -24,7 +24,11 @@ from ai_common import (
     load_json,
     run_git,
 )
-from ai_lifecycle_truth import superseded_summary_validation_exception
+from ai_lifecycle_truth import (
+    is_valid_superseded_transition,
+    superseded_summary_validation_exception,
+)
+from ai_outcome_gate import validate_terminal_outcome
 from ai_projection_lease import release as release_projection_lease
 from ai_projection_lease import requires_lease
 from ai_work_item_intelligence import record_fact_once
@@ -33,6 +37,68 @@ ARCHIVE_DIR = PROJECT_ROOT / ".ai" / "work-items" / "archive"
 ACTIVE_DIR = PROJECT_ROOT / ".ai" / "work-items" / "active"
 STATUS_PATH = PROJECT_ROOT / ".ai" / "cockpit" / "current_status.md"
 CLOSURE_RECEIPTS_DIR = PROJECT_ROOT / "target" / "task-closure-receipts"
+
+
+def _verify_knowledge_projection(task: str, *, project_root: Path | None = None) -> None:
+    """Prevent closure when the current archived projection is absent or stale."""
+    root = project_root or PROJECT_ROOT
+    record_path = root / ".ai" / "knowledge" / "work-items" / f"{task}.json"
+    index_path = root / ".ai" / "knowledge" / "index.json"
+    if not record_path.is_file():
+        raise RuntimeError(
+            f"archived Implementation Knowledge Record is missing: {record_path.relative_to(root)}"
+        )
+    from ai_check_knowledge_index import check_record
+
+    issues = check_record(record_path, repo_root=root)
+    if issues:
+        raise RuntimeError(
+            "archived Implementation Knowledge Record is stale or invalid: " + "; ".join(issues)
+        )
+    try:
+        index = load_json(index_path)
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"Implementation Knowledge index is unreadable: {index_path}") from exc
+    entries = index.get("workItems") if isinstance(index, dict) else None
+    if not isinstance(entries, list) or not any(
+        isinstance(item, dict) and item.get("workItemId") == task for item in entries
+    ):
+        raise RuntimeError(f"Implementation Knowledge index is missing Work Item: {task}")
+
+
+def _knowledge_projection_is_required(
+    task: str,
+    contract: Mapping[str, object],
+    summary: Mapping[str, object],
+    *,
+    project_root: Path | None = None,
+) -> bool:
+    """Require projection verification only for WIs that own the new surface.
+
+    Archived Work Items predate Implementation Knowledge and must remain closable
+    from their historical evidence.  New Contracts declare the projection scope,
+    while an archived Summary can bind the generated record/index explicitly.
+    """
+    root = project_root or PROJECT_ROOT
+    record_path = root / ".ai" / "knowledge" / "work-items" / f"{task}.json"
+    if record_path.is_file():
+        return True
+
+    scope = contract.get("scope")
+    if isinstance(scope, list) and ".ai/knowledge/**" in scope:
+        return True
+
+    changed_files = summary.get("changedFiles")
+    if not isinstance(changed_files, list):
+        return False
+    for item in changed_files:
+        path = item.get("path") if isinstance(item, dict) else None
+        if path in {
+            ".ai/knowledge/index.json",
+            f".ai/knowledge/work-items/{task}.json",
+        }:
+            return True
+    return False
 
 
 @dataclass(frozen=True)
@@ -75,8 +141,9 @@ def _default_runner(args: Sequence[str], check: bool = False) -> CommandResult:
     return _run_git(args, check)
 
 
-def _find_archived_contract(task: str) -> Path:
-    matches = sorted(ARCHIVE_DIR.glob(f"*/{task}.contract.json"))
+def _find_archived_contract(task: str, *, project_root: Path | None = None) -> Path:
+    archive_dir = project_root / ".ai" / "work-items" / "archive" if project_root else ARCHIVE_DIR
+    matches = sorted(archive_dir.glob(f"*/{task}.contract.json"))
     if len(matches) != 1:
         raise RuntimeError(
             f"expected exactly one archived Contract for {task}, found {len(matches)}"
@@ -84,18 +151,24 @@ def _find_archived_contract(task: str) -> Path:
     return matches[0]
 
 
-def _release_projection_lease_if_required(task: str, branch: str, contract_path: Path) -> None:
+def _release_projection_lease_if_required(
+    task: str,
+    branch: str,
+    contract_path: Path,
+    *,
+    project_root: Path | None = None,
+) -> None:
     """Release the exact owner only after the full closure succeeds."""
     try:
         contract = load_json(contract_path)
     except (OSError, ValueError):
         return
     if requires_lease(contract):
-        release_projection_lease(task, branch, root=PROJECT_ROOT)
+        release_projection_lease(task, branch, root=project_root or PROJECT_ROOT)
 
 
 def _recorded_start_branch(task: str) -> str | None:
-    """Return the bounded branch identity recorded at Work Item start."""
+    """Return a bounded legacy branch identity recorded at Work Item start."""
     receipt = PROJECT_ROOT / ".ai" / "work-items" / "starts" / f"{task}.json"
     if not receipt.is_file():
         return None
@@ -136,7 +209,12 @@ def generate_final_human_report(
 
     outcome_path = _archived_outcome_path(contract_path)
     outcome = load_json(outcome_path)
-    report = generate_human_report(outcome, phase="final", closure_facts=closure_facts)
+    report = generate_human_report(
+        outcome,
+        phase="final",
+        closure_facts=closure_facts,
+        contract=load_json(contract_path),
+    )
     markdown = render_human_report(report)
     issues = validate_human_report(
         report,
@@ -230,7 +308,7 @@ def generate_closure_receipt(
                 f"# Work Item Closure Receipt: {task}",
                 "",
                 "## Evidence",
-                f"- Archived Task Outcome: `{outcome_path.relative_to(PROJECT_ROOT).as_posix()}`",
+                f"- Archived Task Outcome: `{_display_path(outcome_path)}`",
                 f"- Final Human Benefit Report: `{final_markdown}`",
                 f"- Final Human Benefit JSON: `{final_json}`",
                 f"- Pull Request: {url}",
@@ -248,6 +326,14 @@ def generate_closure_receipt(
         encoding="utf-8",
     )
     return receipt_path
+
+
+def _display_path(path: Path) -> str:
+    """Render a repository path even when evidence comes from a linked worktree."""
+    try:
+        return path.relative_to(PROJECT_ROOT).as_posix()
+    except ValueError:
+        return path.as_posix()
 
 
 def validate_closure_receipt(receipt_path: Path, task: str) -> None:
@@ -289,23 +375,26 @@ def finalize_closure_receipt(task: str) -> None:
     )
 
 
-def _verify_archived_evidence(task: str) -> Path:
-    if list(ACTIVE_DIR.glob("*.contract.json")) or list(ACTIVE_DIR.glob("*.summary.json")):
+def _verify_archived_evidence(task: str, *, project_root: Path | None = None) -> Path:
+    root = project_root or PROJECT_ROOT
+    active_dir = root / ".ai" / "work-items" / "active" if project_root else ACTIVE_DIR
+    status_path = root / ".ai" / "cockpit" / "current_status.md" if project_root else STATUS_PATH
+    if list(active_dir.glob("*.contract.json")) or list(active_dir.glob("*.summary.json")):
         raise RuntimeError("active Work Item evidence remains; archive the Work Item first")
-    contract_path = _find_archived_contract(task)
+    contract_path = _find_archived_contract(task, project_root=project_root)
     summary_path = contract_path.with_name(
         contract_path.name.replace(".contract.json", ".summary.json")
     )
     if not summary_path.is_file():
-        raise RuntimeError(f"archived Summary is missing: {summary_path.relative_to(PROJECT_ROOT)}")
+        raise RuntimeError(f"archived Summary is missing: {summary_path.relative_to(root)}")
     contract = load_json(contract_path)
     summary = load_json(summary_path)
     contract_issues = validate_contract(contract)
     summary_issues = validate_summary(
         summary,
         contract,
-        contract_path=contract_path.relative_to(PROJECT_ROOT).as_posix(),
-        summary_path=summary_path.relative_to(PROJECT_ROOT).as_posix(),
+        contract_path=contract_path.relative_to(root).as_posix(),
+        summary_path=summary_path.relative_to(root).as_posix(),
         legacy_archive=False,
     )
     issues = list(contract_issues)
@@ -317,7 +406,25 @@ def _verify_archived_evidence(task: str) -> Path:
         issues.extend(summary_issues)
     if issues:
         raise RuntimeError("archived Work Item evidence is invalid: " + "; ".join(issues))
-    if "- State: `no_active_work_item`" not in STATUS_PATH.read_text(encoding="utf-8"):
+    if contract.get("contractVersion") == 2 and not is_valid_superseded_transition(
+        contract_path=contract_path,
+        work_item_id=task,
+    ):
+        outcome_path = _archived_outcome_path(contract_path)
+        outcome_markdown_path = outcome_path.with_suffix(".md")
+        gate = validate_terminal_outcome(
+            outcome_path,
+            outcome_markdown_path,
+            expected_task_id=task,
+            contract_path=contract_path,
+            summary_path=summary_path,
+            expected_base_commit=contract.get("baseCommit"),
+        )
+        if not gate.valid:
+            raise RuntimeError("archived Task Outcome gate failed: " + "; ".join(gate.issues))
+    if _knowledge_projection_is_required(task, contract, summary, project_root=project_root):
+        _verify_knowledge_projection(task, project_root=project_root)
+    if "- State: `no_active_work_item`" not in status_path.read_text(encoding="utf-8"):
         raise RuntimeError("Cockpit Status is not no_active_work_item")
     return contract_path
 
@@ -530,7 +637,6 @@ def _delete_local_branch(
 
 
 def close_work_item(task: str, runner: Runner = _run_git) -> dict[str, object]:
-    contract_path = _verify_archived_evidence(task)
     branch_result = runner(["branch", "--show-current"], False)
     if branch_result.returncode != 0 or not branch_result.stdout.strip():
         raise RuntimeError("closure must start from the Work Item branch, not a detached HEAD")
@@ -599,6 +705,13 @@ def close_work_item(task: str, runner: Runner = _run_git) -> dict[str, object]:
     if final_local != final_remote:
         raise RuntimeError("local base branch no longer matches the remote base branch")
 
+    # Archived evidence and source-bound projections describe the synchronized
+    # repository that remains after cleanup.  A merged Work Item branch may
+    # intentionally retain an older source snapshot, so validating the full
+    # evidence set before base synchronization can report a false stale digest.
+    evidence_root = Path(base_path) if base_path else PROJECT_ROOT
+    contract_path = _verify_archived_evidence(task, project_root=evidence_root)
+
     receipt_path = generate_closure_receipt(
         task,
         contract_path,
@@ -632,13 +745,22 @@ def close_work_item(task: str, runner: Runner = _run_git) -> dict[str, object]:
     )
     if (CLOSURE_RECEIPTS_DIR / f"{task}.closure.json").is_file():
         finalize_closure_receipt(task)
-    _release_projection_lease_if_required(task, work_branch, contract_path)
+    _release_projection_lease_if_required(
+        task,
+        work_branch,
+        contract_path,
+        project_root=evidence_root,
+    )
 
     linked_base = base_path is not None
     repository_state = "closed_but_current_worktree_detached" if linked_base else "ready_on_base"
     return {
         "task": task,
-        "contract": contract_path.relative_to(PROJECT_ROOT).as_posix(),
+        "contract": (
+            contract_path.relative_to(PROJECT_ROOT).as_posix()
+            if contract_path.is_relative_to(PROJECT_ROOT)
+            else contract_path.as_posix()
+        ),
         "pullRequest": str(pr.get("url", "")),
         "workBranch": work_branch,
         "baseRemote": remote,

@@ -661,6 +661,18 @@
       "summarySha256": "40e7966f985ffb8a20657d6c4eb6e103ae0bea7fdf5d68800bbedb66b42cfb0c",
       "manifestPath": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.archive-manifest.json",
       "manifestSha256": "c1322670c25d7d3bb35b4f874bd94a02650df5a267bac3f3d4624c5983fad9f4"
+    },
+    {
+      "workItemId": "upgrade_ai_cockpit",
+      "archiveSequence": 56,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json",
+      "contractSha256": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "archivedAt": "2026-08-21T05:53:14.932632+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/upgrade_ai_cockpit.summary.json",
+      "summarySha256": "b50a9dd94f0ec2f9b0f3d7517b3d4905c30a52337aa38e93be774ae30d1826fb",
+      "manifestPath": ".ai/work-items/archive/2026/upgrade_ai_cockpit.archive-manifest.json",
+      "manifestSha256": "77b39e378c44939808305e531ae2c820f1a56d11ab5cb6e57e2258fe36807ff9"
     }
   ]
 }

@@ -51,6 +51,16 @@ Cockpit does not duplicate Summary. It compresses contract, summary, and verific
 
 These fields should remain explainable and conservative. Missing evidence should not be rewritten as a positive outcome.
 
+### Implementation Approach evidence chain
+
+For code Work Items, the Summary may record an `implementationApproach`; configuration Work Items use `configurationApproach`. The Summary is the source of truth, while Task Outcome and Human Benefit Report expose the same record as a projection. Keep the meanings separate:
+
+- `Changes` states what changed.
+- `Implementation Approach` states how the change works and why the design was chosen.
+- `Evidence` states which repository-relative code, configuration, dependency, or test path supports each factual claim.
+
+Each `verified` approach claim must point to an existing repository evidence path. Missing or non-resolvable evidence remains `unverified`/`unknown` and produces a yellow incomplete warning; it is not a security-red result. Customer-facing summary text appears before technical details, and the record must not contain agent reasoning or verbose operation logs. Performance improvement claims require benchmark evidence; without it, describe only the observed path or mechanism change.
+
 V2.6 adds a generic `Scenario Coverage` signal for medium/high risk Work Items. It distinguishes `complete`, `incomplete`, `not_required`, and `unknown` without hard-coding release/auth/installer scenario libraries into Core. The policy source lives in `.ai/guards/scenario_coverage_policy.yaml`; scenario content stays in the Work Item, while Cockpit only compresses the evidence into a reviewer-facing signal.
 
 V2.6.5 adds Preflight Review. It follows the principle of **Evidence over Self-Declaration**: implementation readiness is derived from Contract evidence, not from agent confidence. `make ai-start TASK=<task> TITLE="..." MODE=code` and `make ai-preflight` surface that review before implementation begins. The template default is the enforced profile: `needs_human_confirmation`, `human_decision_recorded`, and `not_ready` stop the governance path. A repository that needs compatibility behavior may explicitly use an advisory policy with `profile: advisory`, `gateEnabled: false`, and `blockedStatuses: []`; advisory mode is not the formal Trust Layer proof.

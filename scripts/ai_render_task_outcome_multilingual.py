@@ -135,6 +135,13 @@ SECTION_ORDER = (
     "humanDecisions",
     "evidence",
 )
+STATUS_TRAFFIC_LIGHTS = {
+    "completed": "🟢",
+    "completed_with_warnings": "🟡",
+    "needs_human_confirmation": "🟡",
+    "blocked": "🔴",
+    "cancelled": "🔴",
+}
 
 
 def normalize_locale(value: Any) -> str:
@@ -210,13 +217,15 @@ def render_localized_outcome(outcome: Mapping[str, Any], locale: str) -> str:
     chrome: dict[str, Any] = CHROME[locale]
     task_id = outcome.get("workItemId", "unknown-task")
     status = outcome.get("status", "unknown")
+    status_text = str(status)
+    traffic_light = STATUS_TRAFFIC_LIGHTS.get(status_text, "🔴")
     sections = outcome.get("sections", {})
     if not isinstance(sections, Mapping):
         sections = {}
     lines = [
         f"# {chrome['title']}: {task_id}",
         "",
-        f"{chrome['status']}: `{status}`",
+        f"{chrome['status']}: {traffic_light} `{status_text}`",
         "",
         f"## {chrome['summary']}",
         str(sections.get("outcomeSummary") or chrome["none"]),

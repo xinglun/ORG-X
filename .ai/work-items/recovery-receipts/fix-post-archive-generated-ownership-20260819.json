@@ -1,0 +1,43 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/fix-post-archive-generated-ownership-20260819.archive-manifest.json",
+      "sha256": "3e9d8a057d6e9200d32a3d889ede1bf92a402d37b847ec9ad474ed75dd1668cb"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/fix-post-archive-generated-ownership-20260819.contract.json",
+      "sha256": "fc778c874f635447db26382396f159113c9ab0c6bb3b8bb881ad0d171c38ed2b"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/fix-post-archive-generated-ownership-20260819.outcome.json",
+      "sha256": "19c326207ece035ad90910c378170c7bf82c9e6cdabf63e6dd15d70e5c5df31f"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/fix-post-archive-generated-ownership-20260819.summary.json",
+      "sha256": "9c71f67d6a878ebfbb023c9fd3d5436d341c01bd754f5dd4ea58ce6fb8ea8694"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=b56d514e0c78b0ec32b855da67effd5d2e9ca728"
+    ],
+    "exitCode": 2,
+    "gate": "changedCriticalCoverage",
+    "outputDigest": "a9dc06e3bd47cb347bdb821bf6428bf53498adf9a87bfc42894d3a5b77bebb2e"
+  },
+  "humanAuthorization": {
+    "reference": "user-request-2026-08-19",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/901",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-18T15:49:29.816678+00:00",
+  "prBaseCommit": "b56d514e0c78b0ec32b855da67effd5d2e9ca728",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    "tests/test_work_item_intelligence.py"
+  ],
+  "workItemId": "fix-post-archive-generated-ownership-20260819"
+}

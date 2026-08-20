@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-production-validation-followups",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "9a8ac5d756c730e4994546bce0a2479a9b8c00c842120bc056085a295957afc2"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-production-validation-followups",
+    "contractDigest": "6b51de0381e44e533e58798cb1a81131f8936ac54db27d6df71eb430eef37e5b",
+    "summaryDigest": "f5d2a3b8e3e4bf83f091e8f1fc5930b576e112be330a8cb515bcacfb825eaf97",
+    "verificationDigest": "be2a39ce892583189fa41566d801c39caf304490e5b527f559f0c48bcb8f7606",
+    "baseCommit": "358daf4b90fd5a951e439f2630c1fed63e655118",
+    "headCommit": "358daf4b90fd5a951e439f2630c1fed63e655118",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "4998a4fc51eb2a1b41eeb05b39db09e6ae4c139a5ea4a5a8091eda00265a5147",
+      "binding": {
+        "baseCommit": "358daf4b90fd5a951e439f2630c1fed63e655118",
+        "candidateHead": "358daf4b90fd5a951e439f2630c1fed63e655118",
+        "candidateTreeDigest": "047de87a20fba2417f915f97fed9b180d0048a1aa70e19899404070a656de7b0",
+        "candidateDiffDigest": "ec94aa62aa84699c0495e8b91b83f9bd67818de325ad990766224360b0588b23"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-production-validation-followups generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-production-validation-followups generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-production-validation-followups",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-production-validation-followups.contract.json",
       ".ai/work-items/archive/2026/wi-production-validation-followups.summary.json",
@@ -19,62 +42,99 @@
       ".ai/work-items/archive/2026/wi-production-validation-followups.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "The five successor tasks remain Planned/Gated until their independent runtime, external, failure-injection, elapsed-time, or historical-calibration evidence is collected."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "The five successor tasks remain Planned/Gated until their independent runtime, external, failure-injection, elapsed-time, or historical-calibration evidence is collected.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "The five successor tasks remain Planned/Gated until their independent runtime, external, failure-injection, elapsed-time, or historical-calibration evidence is collected.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "production-validation",
+        "severity": "medium",
+        "title": "production-validation",
+        "detail": "The current Work Item maps, but does not execute, real Provider E2E, Telegram-success/Git-push-failure injection, 6/12/24-month observations, or Calibration Score measurement.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-validation-followups.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-validation-followups.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "successor-order",
+        "severity": "low",
+        "title": "successor-order",
+        "detail": "Successor tasks must be created from the latest controlled base and independently closed; the roadmap cannot itself establish their runtime or calendar evidence.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-validation-followups.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-production-validation-followups.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "The user explicitly required that the acceptance findings be incorporated into the corresponding target tasks.",
+      "The acceptance conclusion requires an ability overview with detailed links, user-facing documentation, and explicit identification of unfinished work; this mapping preserves those boundaries and routes unfinished evidence to successor tasks."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-production-validation-followups.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-production-validation-followups.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [
-    "The user explicitly required that the acceptance findings be incorporated into the corresponding target tasks.",
-    "The acceptance conclusion requires an ability overview with detailed links, user-facing documentation, and explicit identification of unfinished work; this mapping preserves those boundaries and routes unfinished evidence to successor tasks."
-  ],
-  "limitations": [
-    {
-      "sourceWarning": "The five successor tasks remain Planned/Gated until their independent runtime, external, failure-injection, elapsed-time, or historical-calibration evidence is collected.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The current Work Item maps, but does not execute, real Provider E2E, Telegram-success/Git-push-failure injection, 6/12/24-month observations, or Calibration Score measurement.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-production-validation-followups.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "Successor tasks must be created from the latest controlled base and independently closed; the roadmap cannot itself establish their runtime or calendar evidence.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-production-validation-followups.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -686,6 +746,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

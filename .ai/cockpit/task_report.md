@@ -4,12 +4,12 @@ Task Result
 Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-roadmap-post-capability-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.contract.json]
-- Changed .ai/work-items/active/wi-roadmap-post-capability-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.summary.json]
-- Changed docs/superpowers/plans/2026-08-20-roadmap-post-capability-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-roadmap-post-capability-reconciliation.md]
+- Changed .ai/work-items/active/wi-production-validation-followups.contract.json [evidence: .ai/work-items/archive/2026/wi-production-validation-followups.contract.json]
+- Changed .ai/work-items/active/wi-production-validation-followups.summary.json [evidence: .ai/work-items/archive/2026/wi-production-validation-followups.summary.json]
 - Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
-- Changed .ai/work-items/active/wi-roadmap-post-capability-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.outcome.json]
-- Changed .ai/work-items/active/wi-roadmap-post-capability-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.outcome.md]
+- Changed docs/superpowers/plans/2026-08-20-production-validation-followups.md [evidence: docs/superpowers/plans/2026-08-20-production-validation-followups.md]
+- Changed .ai/work-items/active/wi-production-validation-followups.outcome.json [evidence: .ai/work-items/archive/2026/wi-production-validation-followups.outcome.json]
+- Changed .ai/work-items/active/wi-production-validation-followups.outcome.md [evidence: .ai/work-items/archive/2026/wi-production-validation-followups.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 
@@ -28,13 +28,15 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- The dated roadmap remains a snapshot and the archive index remains authoritative; future Work Items require another reconciliation if they change the archive sequence. [evidence: residualRisks]
+- The current Work Item maps, but does not execute, real Provider E2E, Telegram-success/Git-push-failure injection, 6/12/24-month observations, or Calibration Score measurement. [evidence: residualRisks]
+- Successor tasks must be created from the latest controlled base and independently closed; the roadmap cannot itself establish their runtime or calendar evidence. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- None recorded.
+- The user explicitly required that the acceptance findings be incorporated into the corresponding target tasks. (inference)
+- The acceptance conclusion requires an ability overview with detailed links, user-facing documentation, and explicit identification of unfinished work; this mapping preserves those boundaries and routes unfinished evidence to successor tasks. (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]
@@ -47,6 +49,7 @@ Verification
 - aiScenarioCoverage [evidence: aiScenarioCoverage]
 - aiGuidelines [evidence: aiGuidelines]
 - aiDiffOwnership [evidence: aiDiffOwnership]
+- docsMetadata [evidence: docsMetadata]
 - quality [evidence: quality]
 - aiStatus [evidence: aiStatus]
 - aiStatusCheck [evidence: aiStatusCheck]

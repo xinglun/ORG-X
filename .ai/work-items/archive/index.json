@@ -601,6 +601,18 @@
       "summarySha256": "56afdde37d770fd1624b262680d293a7b1e2e15ad49eddef2a010c42d852069c",
       "manifestPath": ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.archive-manifest.json",
       "manifestSha256": "cdfec6354d212292f7f37d053eeef613500c827f55c926bbe8afbc0f1be45b1e"
+    },
+    {
+      "workItemId": "wi-production-validation-followups",
+      "archiveSequence": 51,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-production-validation-followups.contract.json",
+      "contractSha256": "6b51de0381e44e533e58798cb1a81131f8936ac54db27d6df71eb430eef37e5b",
+      "archivedAt": "2026-08-20T19:31:18.974131+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-production-validation-followups.summary.json",
+      "summarySha256": "34eaec087d362cce58f27c15b3b23fc37de4a8704783e39574d215a4d2889b32",
+      "manifestPath": ".ai/work-items/archive/2026/wi-production-validation-followups.archive-manifest.json",
+      "manifestSha256": "ddaff5f8939e2ed9ebf6e9be86864a9b607522077d50d5979e897586f30f77cb"
     }
   ]
 }

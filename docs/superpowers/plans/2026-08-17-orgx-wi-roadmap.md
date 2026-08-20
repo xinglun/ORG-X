@@ -32,14 +32,14 @@
 
 | 类别 | 数量 | 当前状态 |
 | --- | ---: | --- |
-| 已完成治理、产品与维护 WI | 22（本 WI 归档后为 23） | Completed / archived |
+| 已完成治理、产品与维护 WI | 23（本 WI 归档后为 24） | Completed / archived |
 | 核心研究 Pipeline WI | 10 | Completed / archived |
 | Weekly Radar WI | 17 | Completed / archived |
-| 已归档 Work Item 合计 | 49（本 WI 归档后为 50） | 以 `.ai/work-items/archive/index.json` 为准 |
-| 尚未创建 Active Contract 的本路线图候选 | 0 | 当前表内无未处理候选 |
-| 当前 Active Work Item | 0 | `no_active_work_item` |
+| 已归档 Work Item 合计 | 50（本 WI 归档后为 51） | 以 `.ai/work-items/archive/index.json` 为准 |
+| 尚未创建 Active Contract 的本路线图候选 | 5 | 见“验收指摘与后续目标任务” |
+| 当前 Active Work Item | 0（本 WI 归档后） | `no_active_work_item` |
 
-上表的 49 项由 `.ai/work-items/archive/index.json` 的 Contract/Summary/Outcome/manifest 记录确认；本次 WI 完成归档后，索引将包含 50 项。这里的数量是 2026-08-20 的归档前/后快照，归档索引始终是权威来源。`Completed / archived` 表示治理生命周期已闭合，不等于外部 Provider 行为已在本地测试中验证；各 Work Item 的 Outcome 保留其 warning、needs_human_confirmation 和 residual risk。
+上表的 50 项由 `.ai/work-items/archive/index.json` 的 Contract/Summary/Outcome/manifest 记录确认；本次 WI 完成归档后，索引将包含 51 项。这里的数量是本次映射 Work Item 归档前/后的快照，归档索引始终是权威来源。`Completed / archived` 表示治理生命周期已闭合，不等于外部 Provider 行为已在本地测试中验证；各 Work Item 的 Outcome 保留其 warning、needs_human_confirmation 和 residual risk。
 
 ## 2. Product North Star and Weekly Radar purpose
 
@@ -251,9 +251,23 @@ Weekly Radar 全部完成时，必须同时满足：
 - **Historical integrity:** 历史周报不因后来数据更新而改变。
 - **Boundary:** 报告不出现交易建议、价格目标、仓位建议或给 Agent 的开发指令。
 
-## 9. Execution handoff
+## 9. 验收指摘与后续目标任务
 
-当前路线图列出的 49 个 Work Item 均已有归档生命周期证据；本次状态修订完成并归档后，索引将包含 50 个 Work Item，Active Work Item 回到 0。后续新增工作必须从最新 `origin/main` 建立专用分支、创建独立 Contract，并通过 AI Cockpit Preflight；不能仅通过修改本路线图把新任务标记为完成。
+有条件验收中的生产缺口已经进入单独的后续任务计划：[Production Validation Follow-up Tasks](2026-08-20-production-validation-followups.md)。这些任务是 `Planned` 或 `Gated`，不是当前完成项；它们不会回写或重新打开已归档 Work Item。
+
+| 后续任务 | 对应验收指摘 | 前置证据 | 状态 | 完成门槛 |
+| --- | --- | --- | --- | --- |
+| `wi-runtime-judgment-chain-integration` | 真实来源 → ingestion → evidence → stage → ranking → snapshot 尚未证明为一条运行时链路 | `wi-wr-016-runtime`, `wi-010`, `wi-011`, `wi-validation-evidence-history` | Gated | 本地集成证据证明运行时消费同一条 Evidence-first 判断链；未完成前不得宣称真实 E2E 完成 |
+| `wi-production-provider-e2e` | 真实 Provider、完整发布、归档和无人值守连续运行尚未在当前链路上证明 | `wi-runtime-judgment-chain-integration`, `wi-sec-company-facts-response-limit`, `wi-archive-transaction-recovery` | Gated | 当前 `main` 的真实 workflow 绑定 source、snapshot、Telegram receipt、archive 和 `data` commit，并完成后续周期运行 |
+| `wi-telegram-git-push-failure-recovery` | Telegram 成功后 Git push 失败的现实事务边界尚未故障注入验收 | `wi-archive-transaction-recovery`, `wi-wr-012`, `wi-wr-016-runtime` | Gated | 强制 push 失败后，恢复使用原 receipt 且不重复发送，最终 data tree 一致 |
+| `wi-validation-runtime-operations` | 6/12/24 月验证已有结构，但没有运行接入、Provider 证据和真实时间证明 | `wi-validation-evidence-history`, `wi-production-provider-e2e` | Gated | T0、6、12、24 月均有来源绑定且可比较的真实观察记录 |
+| `wi-research-calibration-score` | ORG-X 尚未基于历史验证衡量自身判断质量 | `wi-validation-runtime-operations` | Planned | 明确定义分子、分母、样本门槛并由真实历史验证数据重现指标 |
+
+这些任务覆盖验收中提出的完整生产证明、故障恢复、长期验证和 Calibration Score；一次 workflow 成功、一次 dry-run、单元测试或能力文档都不能替代对应门槛。`docs/CAPABILITIES.md` 继续面向用户，并保留“需外部确认”的状态。
+
+## 10. Execution handoff
+
+当前路线图已有 50 个 Work Item 的归档生命周期证据；本次映射完成并归档后，索引将包含 51 个 Work Item，Active Work Item 回到 0。后续新增工作必须从最新 `origin/main` 建立专用分支、创建独立 Contract，并通过 AI Cockpit Preflight；不能仅通过修改本路线图把新任务标记为完成。
 
 ### Task checklist for this roadmap document
 
@@ -263,4 +277,5 @@ Weekly Radar 全部完成时，必须同时满足：
 - [x] Preserve no-change, immutable Snapshot, retry, system health, secret safety, and no-trading semantics.
 - [x] Verify the roadmap against the repository architecture and archive index.
 - [x] Reconcile the archive-recovery and user-facing capability Work Items after the dated roadmap snapshot.
+- [x] Map conditional acceptance findings to explicit planned/gated successor tasks without changing archived status.
 - [x] Run the AI Cockpit finish, archive, PR, merge, and close lifecycle.

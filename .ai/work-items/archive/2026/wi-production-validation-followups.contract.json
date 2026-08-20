@@ -1,0 +1,250 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-production-validation-followups",
+  "mode": "code",
+  "title": "纳入验收指摘的生产验证后续任务映射",
+  "rawUserRequest": "指摘内容也纳入对应目标任务里",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User requested that the acceptance findings be included in the corresponding target tasks.",
+    "digest": "sha256:pending-contract-finalization",
+    "capturedAt": "2026-08-20T19:14:13+09:00"
+  },
+  "intent": {
+    "problem": "当前路线图已经闭合了仓库内的 50 个 Work Item，但用户提供的有条件验收指出：真实 Provider 全链路、Telegram 成功后 Git push 失败的恢复、6/12/24 个月长期验证和 ORG-X 自身 Calibration Score 仍分别处于生产验证、故障注入或时间证据缺口。若这些指摘只停留在验收文字中，后续工作就无法按目标、依赖和证据继续执行。",
+    "constraints": [
+      "不得修改、重写或重新标记已经归档的 Work Item 记录。",
+      "不得把文档、单元测试或一次成功运行替代真实 Provider、真实 Telegram/data branch、故障注入或现实时间证据。",
+      "保持 docs/CAPABILITIES.md 面向用户，并继续明确外部生产验证边界。",
+      "本 Work Item 只建立 successor/gated 任务映射，不实现运行时行为、不触发生产发布、不改变 GitHub Secrets。"
+    ],
+    "rationale": "把验收指摘转成有前置、范围、验收证据和未完成条件的后续任务，才能从 Build 转向可审计的 Operate，同时避免把条件通过误报成最终生产完成。"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "documentation"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "secret_management",
+      "external_service_operation",
+      "trading_decision",
+      "capital_action"
+    ],
+    "requestedOutcome": "将用户验收中的生产验证缺口转成五个有依赖和证据门槛的后续目标任务，并写入路线图。",
+    "decisionBoundary": "本 Work Item 只维护路线图和后续任务计划；真实 Provider、Telegram、data branch、故障注入和长期验证由后续 Work Item 单独执行。"
+  },
+  "baseCommit": "358daf4b90fd5a951e439f2630c1fed63e655118",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-production-validation-followups.contract.json",
+    ".ai/work-items/active/wi-production-validation-followups.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-production-validation-followups.outcome.json",
+    ".ai/work-items/active/wi-production-validation-followups.outcome.md",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+    "docs/superpowers/plans/2026-08-20-production-validation-followups.md"
+  ],
+  "outOfScope": [
+    "Existing archived Work Item Contract, Summary, Outcome, manifest, and index records.",
+    "Rust source, tests, Cargo dependencies, runtime behavior, GitHub workflow definitions, repository secrets, and production data writes.",
+    "Triggering a real Telegram publication or changing the external production environment; those actions are successor-task execution boundaries, not this mapping Work Item.",
+    "Changing user-facing capability claims; docs/CAPABILITIES.md remains unchanged because it already states the external-validation limits.",
+    "Declaring real Provider E2E, Telegram-to-Git failure recovery, 6/12/24-month validation, or Calibration Score complete before their successor-task evidence exists."
+  ],
+  "sources": [
+    {
+      "path": "user-provided acceptance conclusion in the current conversation",
+      "reason": "Authoritative findings and conditional acceptance criteria supplied by the user."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Authoritative current archive count and predecessor identity."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "Current roadmap structure, completed Work Item boundaries, and external-validation handoff."
+    },
+    {
+      "path": "docs/validation/VALIDATION_STRATEGY.md",
+      "reason": "Current 6/12/24-month validation implementation boundary and missing runtime integration."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Production execution, receipt, archive, retry, and logical transaction boundaries."
+    },
+    {
+      "path": ".github/workflows/weekly-radar.yml",
+      "reason": "Actual scheduled/manual production workflow and data-branch publication sequence."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.md",
+      "reason": "Archived predecessor evidence for logical archive recovery and its remaining physical push boundary."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-validation-evidence-history.outcome.md",
+      "reason": "Archived predecessor evidence for validation history structure without real-time scheduling or Provider integration."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "governance_consistency",
+      "production_boundary",
+      "evidence_traceability"
+    ],
+    "reason": "The mapping must preserve the distinction between archived repository work and successor tasks that still require external production or time-based evidence. Incorrect mapping could either hide an acceptance gap or overclaim that a successor task is complete.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit request to include the acceptance findings in corresponding target tasks",
+    "reviewNotes": "The five successor/gated tasks are planning artifacts only. Runtime integration, real Provider calls, Telegram publication, failure injection, and longitudinal evidence remain outside this Work Item."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Documentation-only governance mapping with medium traceability and production-boundary risk."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user supplied the acceptance conclusion and explicitly requested that its findings be included in the corresponding target tasks. The scope is documentation-only and the external production boundaries are explicit."
+  },
+  "preReviewWarnings": [
+    "Do not reopen or rewrite archived Work Items; create successor/gated task identities in the roadmap.",
+    "Keep real Provider E2E and Telegram-to-Git failure injection as executable production evidence tasks, not documentation claims.",
+    "Keep 6/12/24-month validation and Calibration Score time-dependent; no calendar evidence exists yet.",
+    "Keep docs/CAPABILITIES.md user-facing and unchanged in this Work Item."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record checkpoints before and after the roadmap/plan edit to keep the finding-to-task mapping evidence-bound."
+  },
+  "acceptance": [
+    "docs/superpowers/plans/2026-08-20-production-validation-followups.md defines five successor/gated target tasks: runtime judgment-chain integration, real Provider E2E and unattended operation evidence, Telegram-success/Git-push-failure recovery, 6/12/24-month validation operations, and Calibration Score.",
+    "Each target task records the exact acceptance finding it addresses, its predecessor Work Item, scope, out-of-scope boundary, dependencies, required evidence, and the condition that prevents premature completion.",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md links the new follow-up plan, changes the candidate count from zero to five, preserves the current archive truth of 50 entries and this Work Item as the 51st after closure, and keeps archived status separate from external production validation.",
+    "The roadmap continues to state that the user-facing capability guide is not a production receipt, that logical archive recovery is not physical multi-file atomicity, and that 6/12/24-month validation requires real elapsed-time evidence.",
+    "The diff contains only the declared Contract, Summary, generated lifecycle artifacts, roadmap, and follow-up plan; documentation metadata, AI Cockpit gates, quality, Finish, PR, merge, close, and final clean-state checks pass."
+  ],
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly requested that the acceptance findings be included in the corresponding target tasks.",
+    "authorizedExternalEffects": [
+      "Create and update the dedicated Work Item PR.",
+      "Run hosted checks, merge the PR, and close this Work Item after the documentation mapping is verified."
+    ]
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Every conditional acceptance finding maps to exactly one successor or gated target task.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "user-provided acceptance conclusion in the current conversation",
+        "docs/superpowers/plans/2026-08-20-production-validation-followups.md"
+      ],
+      "expected": "The plan maps runtime judgment-chain integration, real Provider E2E, Telegram-to-Git failure recovery, longitudinal validation, and Calibration Score without leaving a finding unowned or claiming completion.",
+      "verificationPlan": "Compare the five target-task sections with the acceptance findings and perform a manual bidirectional traceability review."
+    },
+    {
+      "scenario": "Archived Work Items remain immutable and successor dependencies are explicit.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        ".ai/work-items/archive/index.json",
+        "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+        "docs/superpowers/plans/2026-08-20-production-validation-followups.md"
+      ],
+      "expected": "The roadmap links completed predecessors and new planned/gated successors; no archived record is edited or relabeled.",
+      "verificationPlan": "Inspect git diff paths and verify every predecessor archive path exists."
+    },
+    {
+      "scenario": "Production and time-based evidence are not substituted by documentation or local tests.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "docs/CAPABILITIES.md",
+        "docs/validation/VALIDATION_STRATEGY.md",
+        "docs/operations/WEEKLY_RADAR.md"
+      ],
+      "expected": "The follow-up tasks specify real workflow/Telegram/data-branch evidence and elapsed-time evidence as separate gates, while the current mapping remains Planned/Gated.",
+      "verificationPlan": "Search the changed documents for unsupported completion wording and compare boundaries against the capability and validation documents."
+    },
+    {
+      "scenario": "The governed documentation mapping closes without repository residue.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "AGENTS.md",
+        "Makefile",
+        ".ai/cockpit/README.md"
+      ],
+      "expected": "The active Contract/Summary, archive record, PR, hosted checks, merge, closure receipt, local branch, remote branch, and worktree are consistent and clean.",
+      "verificationPlan": "Run the canonical AI Cockpit lifecycle and audit the final GitHub and Git state."
+    }
+  ],
+  "verification": [
+    {"check": "aiWorkItem", "required": true},
+    {"check": "aiScope", "required": true},
+    {"check": "aiGuards", "required": true},
+    {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true},
+    {"check": "aiReviewPolicy", "required": true},
+    {"check": "aiBacktrack", "required": true},
+    {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true},
+    {"check": "aiGuidelines", "required": true},
+    {"check": "aiSummary", "required": true},
+    {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true},
+    {"check": "aiStatusConsistency", "required": true},
+    {"check": "aiDiffOwnership", "required": true},
+    {"check": "docsMetadata", "required": true},
+    {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "No restricted governance path is required."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore the roadmap and follow-up plan to their base versions; archived evidence is not modified.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 51
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-production-validation-followups.json",
+    "baseCommit": "358daf4b90fd5a951e439f2630c1fed63e655118",
+    "initialScopeDigest": "a5b80d95e2f3ef6bfe568e8888b2fc558650240bd08b1517f9000720bc169bfc",
+    "contractSkeletonDigest": "8d300dcf15acf2ca37821aa61e12744e02bdc7a0f493eab16c51c113387c802d"
+  }
+}

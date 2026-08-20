@@ -9,7 +9,10 @@ use chrono::{DateTime, NaiveDate, Utc};
 use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
     TelegramMessageId, TelegramTransport, TelegramTransportError,
 };
-use org_x::features::weekly_radar::runtime::archive::{retain_recent, write_run, ArchiveError};
+use org_x::features::weekly_radar::runtime::archive::{
+    ensure_run_available, load_input_snapshot, persist_input_snapshot, retain_recent, write_run,
+    write_run_with_input_snapshot, ArchiveError,
+};
 use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
 use org_x::features::weekly_radar::runtime::error::RuntimeError;
 use org_x::features::weekly_radar::runtime::http::{
@@ -1791,6 +1794,182 @@ fn task4_archive_rejects_a_receipt_for_a_different_report() {
     assert!(!root.exists(), "mismatch must fail before archive mutation");
 }
 
+#[test]
+fn task5_input_snapshot_round_trips_and_is_idempotent() {
+    let root = task4_temp_root("input-snapshot");
+    let input = task4_report_input();
+    let first = persist_input_snapshot(&root, "data", &input, ReportLanguage::Japanese, true)
+        .expect("input snapshot should persist");
+    let second = persist_input_snapshot(&root, "data", &input, ReportLanguage::Japanese, true)
+        .expect("identical input snapshot should be idempotent");
+
+    assert_eq!(first, second);
+    let loaded =
+        load_input_snapshot(&root, "data", input.as_of()).expect("input snapshot should load");
+    assert_eq!(loaded.input(), &input);
+    assert_eq!(loaded.language(), ReportLanguage::Japanese);
+    assert!(loaded.has_primary_evidence());
+    assert!(loaded.snapshot_id().starts_with("wr-input-"));
+
+    fs::remove_dir_all(root).expect("input snapshot fixture should be removable");
+}
+
+#[test]
+fn task5_input_snapshot_rejects_a_same_date_conflict_without_mutation() {
+    let root = task4_temp_root("input-snapshot-conflict");
+    let original = task4_report_input();
+    persist_input_snapshot(&root, "data", &original, ReportLanguage::Chinese, true)
+        .expect("original input snapshot should persist");
+    let path = root.join("weekly-radar/snapshots/2026-08-17.input.json");
+    let before = fs::read(&path).expect("original bytes should exist");
+
+    let mut different = original.clone();
+    different
+        .add_fact(
+            NormalizedFact::new(
+                "omega",
+                "revenue",
+                "99000000",
+                FactStatus::Known,
+                Confidence::Medium,
+                task4_provenance("facts.revenue"),
+            )
+            .expect("distinct fixture fact should be valid"),
+        )
+        .expect("distinct fixture fact should be unique");
+    let error = persist_input_snapshot(&root, "data", &different, ReportLanguage::Chinese, true)
+        .expect_err("conflicting input must be rejected");
+
+    assert!(matches!(error, ArchiveError::InputSnapshotConflict { .. }));
+    assert_eq!(
+        fs::read(&path).expect("snapshot should remain").as_slice(),
+        before
+    );
+    fs::remove_dir_all(root).expect("input conflict fixture should be removable");
+}
+
+#[test]
+fn task5_archive_rejects_same_date_overwrite_without_mutation() {
+    let root = task4_temp_root("same-date-overwrite");
+    let first_input = task4_report_input();
+    let first_snapshot =
+        persist_input_snapshot(&root, "data", &first_input, ReportLanguage::Chinese, true)
+            .expect("first input snapshot should persist");
+    let first_report = render_report_in_language(&first_input, ReportLanguage::Chinese);
+    let first_receipt = send_rendered_report_with_transport(
+        &first_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("first report should have a receipt");
+    write_run_with_input_snapshot(
+        &root,
+        "data",
+        &first_report,
+        &first_receipt,
+        Some(&first_snapshot),
+    )
+    .expect("first report should archive");
+
+    let paths = [
+        root.join("weekly-radar/reports/2026-08-17.md"),
+        root.join("weekly-radar/snapshots/2026-08-17.json"),
+        root.join("weekly-radar/receipts/2026-08-17.json"),
+        root.join("weekly-radar/manifest.json"),
+    ];
+    let before = paths
+        .iter()
+        .map(|path| fs::read(path).expect("first archive bytes should exist"))
+        .collect::<Vec<_>>();
+
+    let mut different_input = first_input.clone();
+    different_input
+        .add_fact(
+            NormalizedFact::new(
+                "omega",
+                "revenue",
+                "99000000",
+                FactStatus::Known,
+                Confidence::Medium,
+                task4_provenance("facts.revenue"),
+            )
+            .expect("second fixture fact should be valid"),
+        )
+        .expect("second fixture fact should be unique");
+    let different_report = render_report(&different_input);
+    let different_receipt = send_rendered_report_with_transport(
+        &different_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("second report should have a receipt");
+    let error = write_run(&root, "data", &different_report, &different_receipt)
+        .expect_err("same-date final run must be rejected");
+
+    assert!(matches!(error, ArchiveError::ExistingRun { .. }));
+    for (path, expected) in paths.iter().zip(before) {
+        assert_eq!(
+            fs::read(path).expect("existing archive should remain"),
+            expected
+        );
+    }
+    ensure_run_available(&root, "data", first_report.as_of())
+        .expect_err("existing date must not be available");
+    fs::remove_dir_all(root).expect("same-date fixture should be removable");
+}
+
+#[test]
+fn task5_archive_retention_waits_until_after_a_successful_commit() {
+    let root = task4_temp_root("retention-order");
+    let old_path = root.join("weekly-radar/reports/2025-01-01.md");
+    fs::create_dir_all(old_path.parent().unwrap()).expect("archive directory should exist");
+    fs::write(&old_path, "old report").expect("old report should be seeded");
+
+    let report = task4_report();
+    let mut other_input = task4_report_input();
+    other_input
+        .add_fact(
+            NormalizedFact::new(
+                "omega",
+                "revenue",
+                "99000000",
+                FactStatus::Known,
+                Confidence::Medium,
+                task4_provenance("facts.revenue"),
+            )
+            .expect("mismatched receipt fact should be valid"),
+        )
+        .expect("mismatched receipt fact should be unique");
+    let other_report = render_report(&other_input);
+    let invalid_receipt = send_rendered_report_with_transport(
+        &other_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("mismatched receipt fixture should be available");
+    let error = write_run(&root, "data", &report, &invalid_receipt)
+        .expect_err("mismatched receipt should fail before retention");
+    assert!(matches!(error, ArchiveError::ReportIdMismatch { .. }));
+    assert!(old_path.exists(), "failed commit must not run retention");
+
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("valid receipt should be available");
+    write_run(&root, "data", &report, &receipt).expect("successful run should commit");
+    assert!(
+        !old_path.exists(),
+        "retention should run after a successful commit"
+    );
+    fs::remove_dir_all(root).expect("retention fixture should be removable");
+}
+
 fn task5_cli_fixture_root(label: &str) -> std::path::PathBuf {
     std::env::temp_dir().join(format!(
         "org-x-task5-{label}-{}-{}",
@@ -1868,6 +2047,63 @@ fn task5_cli_rejects_invalid_usage() {
 
     assert!(!output.status.success(), "unknown command must fail");
     assert!(String::from_utf8_lossy(&output.stderr).contains("weekly-radar"));
+}
+
+#[test]
+fn task5_cli_rejects_retry_with_incompatible_options() {
+    for extra in [
+        vec!["--as-of", "2026-08-17"],
+        vec!["--language", "ja"],
+        vec!["--dry-run"],
+    ] {
+        let mut args = vec!["weekly-radar", "--retry-as-of", "2026-08-17"];
+        args.extend(extra);
+        let output = task5_cli(&args);
+        assert!(
+            !output.status.success(),
+            "incompatible retry options must fail"
+        );
+        assert!(String::from_utf8_lossy(&output.stderr).contains("retry-as-of"));
+    }
+}
+
+#[test]
+fn task5_cli_retry_uses_persisted_input_without_source_acquisition() {
+    let root = task5_cli_fixture_root("retry-without-acquisition");
+    let archive = root.join("archive");
+    persist_input_snapshot(
+        &archive,
+        "data",
+        &task4_report_input(),
+        ReportLanguage::English,
+        true,
+    )
+    .expect("retry input fixture should persist");
+    let output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            archive.to_str().unwrap(),
+            "--retry-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("org-x binary should be executable");
+
+    assert!(
+        !output.status.success(),
+        "retry without Telegram should fail"
+    );
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(
+        stderr.contains("ORGX_TELEGRAM_BOT_TOKEN") || stderr.contains("Telegram"),
+        "retry should reach delivery configuration: {stderr}"
+    );
+    assert!(!stderr.contains("ORGX_SEC_USER_AGENT"));
+    fs::remove_dir_all(root).expect("retry fixture should be removable");
 }
 
 #[test]

@@ -1,16 +1,16 @@
 # Weekly Radar 使用说明
 
-Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，只保留来源中实际提供的事实，生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram，并把可追溯的 report、snapshot 和 receipt 写入受保护的 `data` 分支。
+Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，只保留来源中实际提供的事实，先把完整的运行输入持久化为不可变快照，再生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram，并把可追溯的 report、snapshot、receipt 和 manifest 写入受保护的 `data` 分支。
 
 ## 运行流程
 
 ```text
-获取来源 → 规则抽取 → 保留证据 → 生成人类周报
-                                ↓
-                    Telegram → data branch archive
+获取来源 → 规则抽取 → 保留证据 → 持久化输入快照
+                                      ↓
+                         生成人类周报 → Telegram → data branch archive → retention
 ```
 
-发布只有在报告通过一手证据检查、Telegram receipt 与 report ID 绑定后才会写入 archive。
+发布只有在报告通过一手证据检查、输入快照已经持久化、Telegram receipt 与 report ID 绑定后才会写入 archive。输入快照位于 `weekly-radar/snapshots/YYYY-MM-DD.input.json`，最终渲染 snapshot 仍位于 `weekly-radar/snapshots/YYYY-MM-DD.json`。
 
 ## 准备工作
 
@@ -31,6 +31,16 @@ cargo run --release -- weekly-radar \
   --registry config/weekly_radar/companies.json \
   --language zh-CN
 ```
+
+如果发送过程中进程退出或 Telegram 返回失败，保留已经写入的输入快照，并使用它做 delivery-only retry：
+
+```sh
+cargo run --release -- weekly-radar \
+  --archive-dir . \
+  --retry-as-of 2026-08-17
+```
+
+重试从 `weekly-radar/snapshots/YYYY-MM-DD.input.json` 读取原始 `RuntimeReportInput` 和保存的语言，不读取 registry、不重新获取来源，也不需要 `ORGX_SEC_USER_AGENT`。`--retry-as-of` 不能和 `--as-of`、`--language` 或 `--dry-run` 一起使用；若该日期已经有最终 report、snapshot 或 receipt，命令会在发送 Telegram 前拒绝，避免重复归档和重复发送。
 
 Actions 只把结果提交到字面值为 `data` 的 orphan 分支，并使用 lease 保护并发更新。`main` 和其他分支不是 archive 或 retention 的目标。
 
@@ -53,7 +63,7 @@ ORGX_TELEGRAM_CHAT_ID
 
 ## 本地 dry-run
 
-`--dry-run` 执行正常的来源获取和报告验证，但不发送 Telegram，也不创建、删除或修改 archive 文件。默认输出中文；需要检查其他语言时使用 `--language ja` 或 `--language en`：
+`--dry-run` 执行正常的来源获取和报告验证，但不发送 Telegram，不持久化输入快照，也不创建、删除或修改 archive 文件。默认输出中文；需要检查其他语言时使用 `--language ja` 或 `--language en`：
 
 ```sh
 ORGX_SEC_USER_AGENT='ORG-X local dry-run contact@example.test' \
@@ -79,4 +89,4 @@ SEC EDGAR、SEC XBRL 和明确配置的官方公司页面优先；Greenhouse 和
 
 ## data 分支保留
 
-每次成功运行写入 report、sanitized snapshot、绑定的 `PUBLISHED` receipt 和 manifest。retention 只删除日期前缀文件中超过 365 天的 report、snapshot 和 receipt；最近文件保持不动。dry-run 不执行 retention。
+每次成功运行写入 report、sanitized snapshot、绑定的 `PUBLISHED` receipt 和 manifest；manifest 会记录输入快照路径及其稳定 `snapshot_id`。同一日期的最终文件是不可覆盖的；冲突或写入失败不会先执行 retention。retention 只删除日期前缀文件中超过 365 天的 input snapshot、report、snapshot 和 receipt；最近文件保持不动。dry-run 不执行 retention。

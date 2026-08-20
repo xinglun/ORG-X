@@ -15,7 +15,8 @@ use org_x::features::weekly_radar::runtime::report::{
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources, SourceStatus};
 use org_x::features::weekly_radar::runtime::{
-    normalize_source_observation, send_rendered_report, write_run,
+    ensure_run_available, load_input_snapshot, normalize_source_observation,
+    persist_input_snapshot, send_rendered_report, write_run_with_input_snapshot,
 };
 
 const DEFAULT_REGISTRY: &str = "config/weekly_radar/companies.json";
@@ -24,6 +25,7 @@ const DEFAULT_ARCHIVE_DIR: &str = ".";
 #[derive(Clone, Debug, Eq, PartialEq)]
 struct CliOptions {
     as_of: NaiveDate,
+    retry_as_of: Option<NaiveDate>,
     archive_dir: PathBuf,
     registry: PathBuf,
     dry_run: bool,
@@ -51,7 +53,7 @@ impl fmt::Display for CliError {
 }
 
 fn usage() -> &'static str {
-    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--language zh-CN|ja|en] [--dry-run]"
+    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--language zh-CN|ja|en] [--dry-run]\n       org-x weekly-radar --retry-as-of YYYY-MM-DD [--archive-dir PATH]"
 }
 
 fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
@@ -72,6 +74,9 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
     let mut registry = PathBuf::from(DEFAULT_REGISTRY);
     let mut dry_run = false;
     let mut language = ReportLanguage::default();
+    let mut retry_as_of = None;
+    let mut as_of_explicit = false;
+    let mut language_explicit = false;
     let mut index = 1;
     while index < args.len() {
         match args[index].as_str() {
@@ -88,6 +93,13 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
                 let parsed = NaiveDate::parse_from_str(&value, "%Y-%m-%d")
                     .map_err(|_| CliError::Usage("--as-of must use YYYY-MM-DD".to_owned()))?;
                 as_of = Some(parsed);
+                as_of_explicit = true;
+            }
+            "--retry-as-of" => {
+                let value = option_value(args, &mut index, "--retry-as-of")?;
+                let parsed = NaiveDate::parse_from_str(&value, "%Y-%m-%d")
+                    .map_err(|_| CliError::Usage("--retry-as-of must use YYYY-MM-DD".to_owned()))?;
+                retry_as_of = Some(parsed);
             }
             "--archive-dir" => {
                 let value = option_value(args, &mut index, "--archive-dir")?;
@@ -100,6 +112,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
             "--language" => {
                 let value = option_value(args, &mut index, "--language")?;
                 language = value.parse::<ReportLanguage>().map_err(CliError::Usage)?;
+                language_explicit = true;
             }
             unknown => {
                 return Err(CliError::Usage(format!(
@@ -109,8 +122,28 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
         }
     }
 
+    if retry_as_of.is_some() {
+        let mut incompatible = Vec::new();
+        if as_of_explicit {
+            incompatible.push("--as-of");
+        }
+        if language_explicit {
+            incompatible.push("--language");
+        }
+        if dry_run {
+            incompatible.push("--dry-run");
+        }
+        if !incompatible.is_empty() {
+            return Err(CliError::Usage(format!(
+                "--retry-as-of cannot be combined with {}",
+                incompatible.join(", ")
+            )));
+        }
+    }
+
     Ok(CliAction::Run(CliOptions {
         as_of: as_of.unwrap_or_else(|| Utc::now().date_naive()),
+        retry_as_of,
         archive_dir,
         registry,
         dry_run,
@@ -288,6 +321,35 @@ fn registry_has_configured_primary_source(registry: &CompanySourceRegistry) -> b
 }
 
 fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
+    if let Some(retry_as_of) = options.retry_as_of {
+        let input_snapshot = load_input_snapshot(&options.archive_dir, "data", retry_as_of)
+            .map_err(|error| CliError::Failure(error.to_string()))?;
+        if !input_snapshot.has_primary_evidence() {
+            return Err(CliError::Failure(
+                "cannot retry weekly radar without primary evidence".to_owned(),
+            ));
+        }
+        ensure_run_available(&options.archive_dir, "data", retry_as_of)
+            .map_err(|error| CliError::Failure(error.to_string()))?;
+        let report = render_report_in_language(input_snapshot.input(), input_snapshot.language());
+        validate_rendered_report(&report)?;
+        let receipt =
+            send_rendered_report(&report).map_err(|error| CliError::Failure(error.to_string()))?;
+        let manifest = write_run_with_input_snapshot(
+            &options.archive_dir,
+            "data",
+            &report,
+            &receipt,
+            Some(&input_snapshot),
+        )
+        .map_err(|error| CliError::Failure(error.to_string()))?;
+        return Ok(format!(
+            "RETRIED: report {} archived at {}",
+            report.report_id(),
+            manifest.report()
+        ));
+    }
+
     let registry = CompanySourceRegistry::from_path(&options.registry)
         .map_err(|error| CliError::Failure(error.to_string()))?;
     let user_agent = sec_user_agent()?;
@@ -300,10 +362,10 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
     let http: &dyn HttpClient = &production;
 
     let acquired = acquire_runtime_input(&registry, http, &user_agent, options.as_of)?;
-    let report = render_report_in_language(&acquired.input, options.language);
-    validate_rendered_report(&report)?;
 
     if options.dry_run {
+        let report = render_report_in_language(&acquired.input, options.language);
+        validate_rendered_report(&report)?;
         return Ok(format!(
             "{}\nDRY-RUN: report {} validated; Telegram and archive were not contacted.",
             report.markdown(),
@@ -316,10 +378,26 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
         ));
     }
 
+    let input_snapshot = persist_input_snapshot(
+        &options.archive_dir,
+        "data",
+        &acquired.input,
+        options.language,
+        acquired.has_primary_evidence,
+    )
+    .map_err(|error| CliError::Failure(error.to_string()))?;
+    let report = render_report_in_language(input_snapshot.input(), input_snapshot.language());
+    validate_rendered_report(&report)?;
     let receipt =
         send_rendered_report(&report).map_err(|error| CliError::Failure(error.to_string()))?;
-    let manifest = write_run(&options.archive_dir, "data", &report, &receipt)
-        .map_err(|error| CliError::Failure(error.to_string()))?;
+    let manifest = write_run_with_input_snapshot(
+        &options.archive_dir,
+        "data",
+        &report,
+        &receipt,
+        Some(&input_snapshot),
+    )
+    .map_err(|error| CliError::Failure(error.to_string()))?;
     Ok(format!(
         "PUBLISHED: report {} archived at {}",
         report.report_id(),

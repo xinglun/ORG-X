@@ -40,6 +40,7 @@
     ".ai/cockpit/task_report.json",
     ".ai/cockpit/task_report.md",
     "docs/operations/WEEKLY_RADAR.md",
+    "docs/CAPABILITIES.md",
     ".ai/work-items/starts/**",
     ".ai/work-items/archive/**",
     ".ai/work-items/active/wi-production-provider-e2e-cadence.outcome.json",
@@ -67,6 +68,7 @@
     {"path": ".ai/policies/requested-operation.yaml", "reason": "Exact allowlisted weekly_radar_validation.dispatch operation."},
     {"path": "scripts/ai_critical_domain_guards.py", "reason": "Critical and production guard for the authority-bearing bounded operation."},
     {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "User-facing behavior, report lanes, receipt, snapshot, manifest, recovery, and data binding."},
+    {"path": "docs/CAPABILITIES.md", "reason": "User-facing capability overview and deep links for the independent system-reference workflow."},
     {"path": "origin/main@c12280bead071e07749541ba4823c95a86b04a2b", "reason": "Exact merged main commit from which the next period must run."},
     {"path": "origin/data@b70f87c84819acf7895fc82dd9fa161b66db806d", "reason": "Current protected data tip and last bound report date 2026-08-19."},
     {"path": "https://github.com/xinglun/ORG-X/actions/runs/32371157297", "reason": "First post-merge non-dry-run evidence used as the predecessor baseline."}
@@ -245,7 +247,7 @@
       "required": true
     }
   ],
-  "implementationSurface": {"production": [], "tests": [], "generated": [".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md"], "documentation": ["docs/operations/WEEKLY_RADAR.md"]},
+  "implementationSurface": {"production": [], "tests": [], "generated": [".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md"], "documentation": ["docs/operations/WEEKLY_RADAR.md", "docs/CAPABILITIES.md"]},
   "destructiveChangePolicy": {
     "allowed": false,
     "requiresHumanApproval": true,

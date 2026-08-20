@@ -894,10 +894,9 @@ fn parse_signal(kind: &str) -> Option<ParsedSignal<'_>> {
         (rest, SignalPolarity::Supporting)
     } else if let Some(rest) = kind.strip_prefix(COUNTER_PREFIX) {
         (rest, SignalPolarity::Counter)
-    } else if let Some(rest) = kind.strip_prefix(MISSING_PREFIX) {
-        (rest, SignalPolarity::Missing)
     } else {
-        return None;
+        let rest = kind.strip_prefix(MISSING_PREFIX)?;
+        (rest, SignalPolarity::Missing)
     };
     let mut parts = prefix.splitn(2, '.');
     let stage = parts.next()?.trim();

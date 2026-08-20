@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "requestedText": "Replace prefix-only configured source URL validation with deterministic fail-closed URL and local-destination checks.",
+  "target": {"type": "file", "name": "wi_runtime_http_source_safety_config_boundary", "path": "src/features/weekly_radar/runtime/config.rs", "operation": "change_signature"},
+  "referenceAnalysis": {
+    "dynamicReferences": {"status": "proven_absent", "evidence": ["The validator parses supplied configuration strings and performs no runtime loading, reflection, plugin lookup, or dynamic dispatch."]},
+    "externalConsumers": {"status": "proven_absent", "evidence": ["The public CompanyConfig/CompanySourceRegistry API remains the existing repository-local runtime boundary; no external consumer migration is introduced."]},
+    "monitoringReferences": {"status": "proven_absent", "evidence": ["The change adds no telemetry, monitoring, scheduler, webhook, or alert integration."]}
+  },
+  "governanceEvidence": {"contractDeclared": true, "acceptanceDeclared": true, "destructiveChangeAllowed": true, "evidence": [".ai/work-items/active/wi-runtime-http-source-safety.contract.json", "The Contract limits the change to deterministic URL validation and preserves the existing public registry and fixture contracts."]},
+  "approval": null
+}

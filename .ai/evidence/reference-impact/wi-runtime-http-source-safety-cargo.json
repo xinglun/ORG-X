@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "requestedText": "Add the direct URL parser dependency required by the runtime source safety validator.",
+  "target": {"type": "file", "name": "wi_runtime_http_source_safety_cargo_manifest", "path": "Cargo.toml", "operation": "change_signature"},
+  "referenceAnalysis": {
+    "dynamicReferences": {"status": "proven_absent", "evidence": ["The manifest change adds a compile-time parser dependency only; it does not load runtime references dynamically."]},
+    "externalConsumers": {"status": "proven_absent", "evidence": ["No package consumer contract changes; the existing repository crate owns the direct dependency."]},
+    "monitoringReferences": {"status": "proven_absent", "evidence": ["The dependency declaration adds no monitoring, scheduler, or operational integration."]}
+  },
+  "governanceEvidence": {"contractDeclared": true, "acceptanceDeclared": true, "destructiveChangeAllowed": true, "evidence": [".ai/work-items/active/wi-runtime-http-source-safety.contract.json", "The Contract scopes Cargo.toml and Cargo.lock and requires build, test, and quality verification."]},
+  "approval": null
+}

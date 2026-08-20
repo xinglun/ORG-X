@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "requestedText": "Record the Cargo.lock resolution for the direct URL parser dependency used by runtime source safety.",
+  "target": {"type": "file", "name": "wi_runtime_http_source_safety_cargo_lock", "path": "Cargo.lock", "operation": "change_signature"},
+  "referenceAnalysis": {
+    "dynamicReferences": {"status": "proven_absent", "evidence": ["Cargo.lock records compile-time dependency resolution only and is not dynamically loaded by the runtime."]},
+    "externalConsumers": {"status": "proven_absent", "evidence": ["No external package or runtime consumer contract changes."]},
+    "monitoringReferences": {"status": "proven_absent", "evidence": ["The lockfile change adds no monitoring, scheduler, or operational integration."]}
+  },
+  "governanceEvidence": {"contractDeclared": true, "acceptanceDeclared": true, "destructiveChangeAllowed": true, "evidence": [".ai/work-items/active/wi-runtime-http-source-safety.contract.json", "The Contract scopes the lockfile as generated dependency evidence and requires full build/test verification."]},
+  "approval": null
+}

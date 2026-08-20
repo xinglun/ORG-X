@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "requestedText": "Disable automatic redirects on the reusable Weekly Radar source HTTP agent while preserving status, timeout, and body-size behavior.",
+  "target": {"type": "file", "name": "wi_runtime_http_source_safety_http_transport", "path": "src/features/weekly_radar/runtime/http.rs", "operation": "change_signature"},
+  "referenceAnalysis": {
+    "dynamicReferences": {"status": "proven_absent", "evidence": ["The transport setting changes the existing ureq agent construction only; it adds no dynamic loading or runtime code discovery."]},
+    "externalConsumers": {"status": "proven_absent", "evidence": ["HttpClient, FixtureHttpClient, and UreqHttpClient public method signatures remain unchanged; no external consumer migration is required."]},
+    "monitoringReferences": {"status": "proven_absent", "evidence": ["The transport change adds no monitoring, telemetry, scheduler, or delivery integration."]}
+  },
+  "governanceEvidence": {"contractDeclared": true, "acceptanceDeclared": true, "destructiveChangeAllowed": true, "evidence": [".ai/work-items/active/wi-runtime-http-source-safety.contract.json", "The Contract requires a local redirect regression test and preservation of timeout/body-size behavior."]},
+  "approval": null
+}

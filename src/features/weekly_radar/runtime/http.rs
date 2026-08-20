@@ -246,6 +246,7 @@ impl UreqHttpClient {
                 .timeout_read(timeouts.read())
                 .timeout_write(timeouts.write())
                 .timeout(timeouts.overall())
+                .redirects(0)
                 .build(),
             timeouts,
         }

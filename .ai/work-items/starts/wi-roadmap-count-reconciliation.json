@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-roadmap-count-reconciliation",
+  "receiptPath": ".ai/work-items/starts/wi-roadmap-count-reconciliation.json",
+  "baseCommit": "96cb0bdddf99b537427776bd4601a348647af027",
+  "baseBranch": "codex/wi-roadmap-count-reconciliation",
+  "startTimestamp": "2026-08-20T06:52:24.520521+00:00",
+  "initialScopeDigest": "27d70f01320b05f53780e04d35cdc8d69643b62effc05425f0fdfdb21ebd2ac2",
+  "contractSkeletonDigest": "e21cf5eb852e4895f5e16f992524c3ca08b1382599c41a59bdf94a8f1739030b"
+}

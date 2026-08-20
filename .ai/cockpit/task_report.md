@@ -1,36 +1,22 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Partial
+Status: Success
 
 What was completed
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/evidence/reference-impact/wi-runtime-http-source-safety-cargo.json [evidence: .ai/evidence/reference-impact/wi-runtime-http-source-safety-cargo.json]
-- Changed .ai/evidence/reference-impact/wi-runtime-http-source-safety-config.json [evidence: .ai/evidence/reference-impact/wi-runtime-http-source-safety-config.json]
-- Changed .ai/evidence/reference-impact/wi-runtime-http-source-safety-http.json [evidence: .ai/evidence/reference-impact/wi-runtime-http-source-safety-http.json]
-- Changed .ai/evidence/reference-impact/wi-runtime-http-source-safety-lock.json [evidence: .ai/evidence/reference-impact/wi-runtime-http-source-safety-lock.json]
-- Changed .ai/evidence/reference-impact/wi-runtime-http-source-safety-telegram.json [evidence: .ai/evidence/reference-impact/wi-runtime-http-source-safety-telegram.json]
-- Changed .ai/work-items/active/wi-runtime-http-source-safety.contract.json [evidence: .ai/work-items/archive/2026/wi-runtime-http-source-safety.contract.json]
-- Changed .ai/work-items/active/wi-runtime-http-source-safety.summary.json [evidence: .ai/work-items/archive/2026/wi-runtime-http-source-safety.summary.json]
-- Changed docs/superpowers/specs/2026-08-20-wi-runtime-http-source-safety.md [evidence: docs/superpowers/specs/2026-08-20-wi-runtime-http-source-safety.md]
-- Changed docs/superpowers/plans/2026-08-20-wi-runtime-http-source-safety.md [evidence: docs/superpowers/plans/2026-08-20-wi-runtime-http-source-safety.md]
-- Changed .ai/work-items/starts/wi-runtime-http-source-safety.json [evidence: .ai/work-items/starts/wi-runtime-http-source-safety.json]
-- Changed Cargo.toml [evidence: Cargo.toml]
-- Changed Cargo.lock [evidence: Cargo.lock]
-- Changed src/features/weekly_radar/runtime/config.rs [evidence: src/features/weekly_radar/runtime/config.rs]
-- Changed src/features/weekly_radar/runtime/http.rs [evidence: src/features/weekly_radar/runtime/http.rs]
-- Changed src/features/weekly_radar/runtime/telegram.rs [evidence: src/features/weekly_radar/runtime/telegram.rs]
-- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
-- Changed docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md [evidence: docs/superpowers/specs/2026-08-17-wi-wr-016-runtime.md]
-- Changed .ai/work-items/active/wi-runtime-http-source-safety.outcome.json [evidence: .ai/work-items/archive/2026/wi-runtime-http-source-safety.outcome.json]
-- Changed .ai/work-items/active/wi-runtime-http-source-safety.outcome.md [evidence: .ai/work-items/archive/2026/wi-runtime-http-source-safety.outcome.md]
-- Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
-- Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
+- Changed .ai/work-items/active/wi-roadmap-count-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-count-reconciliation.contract.json]
+- Changed .ai/work-items/active/wi-roadmap-count-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-count-reconciliation.summary.json]
+- Changed .ai/work-items/starts/wi-roadmap-count-reconciliation.json [evidence: .ai/work-items/starts/wi-roadmap-count-reconciliation.json]
+- Changed docs/superpowers/plans/2026-08-20-roadmap-count-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-roadmap-count-reconciliation.md]
+- Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
+- Changed .ai/work-items/active/wi-roadmap-count-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-count-reconciliation.outcome.json]
+- Changed .ai/work-items/active/wi-roadmap-count-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-count-reconciliation.outcome.md]
 
 Problems found
-- Total: 3
+- Total: 0
 - Blocking: 0
-- Warning: 2
+- Warning: 0
 
 Stops triggered
 - None recorded.
@@ -42,10 +28,7 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- observed issue [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue, observedIssues[0] observed issue, observedIssues[0] observed issue, observedIssues[0] observed issue]
-- The validator rejects obvious local/private IP literals but does not resolve DNS or defend against a public hostname resolving to an internal address. [evidence: residualRisks]
-- No complete provider/source-host allowlist is introduced because the repository does not provide an authoritative product policy for allowed domains. [evidence: residualRisks]
-- No real external source or Telegram request is executed or claimed; production_operation remains prohibited. [evidence: residualRisks]
+- The roadmap count is a dated pre/post-archive snapshot and can become stale after later Work Items; consumers must use archive/index.json as authority. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

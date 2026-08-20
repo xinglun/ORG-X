@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-roadmap-post-capability-reconciliation",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "16c7fe96b6c4128b8dd4eb03eb308c03e9141b0a444e83d22b12828142049f0b"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-roadmap-post-capability-reconciliation",
+    "contractDigest": "f99b3fbf7c39036b5bb7cf3410a0aec560b8e88e203141a55605abde001e40ec",
+    "summaryDigest": "e5687dec2e14407e43f97199b2875b86d8dc24b52dd60beda984aa959d2145dd",
+    "verificationDigest": "dc730bf3046d00bafea61566ac342a189bcf59f5c6f0819ea320d9e83be2fd94",
+    "baseCommit": "1d5d938be2895b9c558f4428bc26750c50023679",
+    "headCommit": "1d5d938be2895b9c558f4428bc26750c50023679",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "3b6e49d4620c9b8cab70a783b129061a70e36e7cdeb7ebe7c054cdcd19c379de",
+      "binding": {
+        "baseCommit": "1d5d938be2895b9c558f4428bc26750c50023679",
+        "candidateHead": "1d5d938be2895b9c558f4428bc26750c50023679",
+        "candidateTreeDigest": "bbef4d1247e300861eccc91709c6badc92d26a216304e75770d2e5ca17d488ff",
+        "candidateDiffDigest": "1212a4408196cde70f8d24f78680fb04bccae8968abe27ca937b29422ca3ff4c"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-roadmap-post-capability-reconciliation generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-roadmap-post-capability-reconciliation generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-roadmap-post-capability-reconciliation",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.contract.json",
       ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.summary.json",
@@ -19,49 +42,76 @@
       ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "The roadmap remains a dated inventory; it cannot prove external Provider or production behavior beyond the archived receipts already recorded by each Work Item."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "The roadmap remains a dated inventory; it cannot prove external Provider or production behavior beyond the archived receipts already recorded by each Work Item.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "The roadmap remains a dated inventory; it cannot prove external Provider or production behavior beyond the archived receipts already recorded by each Work Item.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "scope",
+        "severity": "medium",
+        "title": "scope",
+        "detail": "The dated roadmap remains a snapshot and the archive index remains authoritative; future Work Items require another reconciliation if they change the archive sequence.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 1,
-    "hardStops": 0,
-    "warnings": 1,
-    "resolved": 0,
-    "unresolved": 1
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "The roadmap remains a dated inventory; it cannot prove external Provider or production behavior beyond the archived receipts already recorded by each Work Item.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The dated roadmap remains a snapshot and the archive index remains authoritative; future Work Items require another reconciliation if they change the archive sequence.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-roadmap-post-capability-reconciliation.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -612,6 +662,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-roadmap-post-capability-reconciliation",
+  "receiptPath": ".ai/work-items/starts/wi-roadmap-post-capability-reconciliation.json",
+  "baseCommit": "1d5d938be2895b9c558f4428bc26750c50023679",
+  "baseBranch": "codex/wi-roadmap-post-capability-reconciliation",
+  "startTimestamp": "2026-08-20T09:34:28.372828+00:00",
+  "initialScopeDigest": "1853cf3330223dcc09c6b8569f61e9ed1c40f27ca84feb9aca62f5df9d922bcf",
+  "contractSkeletonDigest": "b549cc5db1129211a8078274421ef773f72c716a3c70a1728e2d8ccf8e704f2a"
+}

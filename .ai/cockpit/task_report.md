@@ -4,16 +4,23 @@ Task Result
 Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.contract.json]
-- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.summary.json]
+- Changed .ai/cockpit/work-items/index.json [evidence: .ai/cockpit/work-items/index.json]
+- Changed .ai/cockpit/work-items/wi-06-status-interface.status.json [evidence: .ai/cockpit/work-items/wi-06-status-interface.status.json]
+- Changed .ai/work-items/active/wi-cockpit-status-cleanup.contract.json [evidence: .ai/work-items/archive/2026/wi-cockpit-status-cleanup.contract.json]
+- Changed .ai/work-items/active/wi-cockpit-status-cleanup.summary.json [evidence: .ai/work-items/archive/2026/wi-cockpit-status-cleanup.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/starts/wi-roadmap-status-reconciliation.json [evidence: .ai/work-items/starts/wi-roadmap-status-reconciliation.json]
-- Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
-- Changed docs/superpowers/plans/2026-08-20-roadmap-status-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-roadmap-status-reconciliation.md]
-- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.outcome.json]
-- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.outcome.md]
+- Changed .ai/work-items/starts/wi-cockpit-status-cleanup.json [evidence: .ai/work-items/starts/wi-cockpit-status-cleanup.json]
+- Changed docs/superpowers/plans/2026-08-20-cockpit-status-cleanup.md [evidence: docs/superpowers/plans/2026-08-20-cockpit-status-cleanup.md]
+- Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
+- Changed .ai/work-items/archive/2026/wi-cockpit-status-cleanup.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-cockpit-status-cleanup.archive-manifest.json]
+- Changed .ai/work-items/archive/2026/wi-cockpit-status-cleanup.contract.json [evidence: .ai/work-items/archive/2026/wi-cockpit-status-cleanup.contract.json]
+- Changed .ai/work-items/archive/2026/wi-cockpit-status-cleanup.summary.json [evidence: .ai/work-items/archive/2026/wi-cockpit-status-cleanup.summary.json]
+- Changed .ai/work-items/archive/2026/wi-cockpit-status-cleanup.outcome.json [evidence: .ai/work-items/archive/2026/wi-cockpit-status-cleanup.outcome.json]
+- Changed .ai/work-items/archive/2026/wi-cockpit-status-cleanup.outcome.md [evidence: .ai/work-items/archive/2026/wi-cockpit-status-cleanup.outcome.md]
+- Changed .ai/work-items/active/wi-cockpit-status-cleanup.outcome.json [evidence: .ai/work-items/archive/2026/wi-cockpit-status-cleanup.outcome.json]
+- Changed .ai/work-items/active/wi-cockpit-status-cleanup.outcome.md [evidence: .ai/work-items/archive/2026/wi-cockpit-status-cleanup.outcome.md]
 
 Problems found
 - Total: 4
@@ -21,30 +28,30 @@ Problems found
 - Warning: 1
 
 Stops triggered
-- Reason: aiSummary failed before the retry. | Stage: verification | Resolution: Retry aiSummary after correcting the recorded failure. [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 - Reason: aiScenarioCoverage failed before the retry. | Stage: verification | Resolution: Retry aiScenarioCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
+- Reason: aiScenarioCoverage failed before the retry. | Stage: verification | Resolution: Retry aiScenarioCoverage after correcting the recorded failure. [evidence: verificationHistory[1] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
 
 Problems resolved
 - Problem: aiScenarioCoverage failed before the retry.
   Solution: Re-ran aiScenarioCoverage after the correction; the latest attempt passed.
   Evidence: [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
-- Problem: aiSummary failed before the retry.
-  Solution: Re-ran aiSummary after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
+- Problem: aiScenarioCoverage failed before the retry.
+  Solution: Re-ran aiScenarioCoverage after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[1] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
 
 Risks avoided
 - If not detected, could have led to a stale completion claim. (inference)
 - If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- Future Work Items can make the roadmap stale again unless status updates remain tied to archive/index.json. [evidence: residualRisks]
+- A future installer or manual copy could reintroduce an orphan live snapshot; the current cleanup does not change installer source behavior. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- The first ai-start attempt was rejected because it ran from main; the retry ran from the dedicated Work Item worktree. (inference)
-- The first preflight contract revision was corrected to declare requested capabilities and use the allowed repository_governance.modify operation. (inference)
+- The initial preflight was intentionally stopped because the generated Contract lacked intent, raw request, sources, scenario coverage, and concrete acceptance. (inference)
+- The Contract was amended to declare the restricted live snapshot deletion paths and the user's granted scope; amendment revalidation was recorded before continuing. (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]

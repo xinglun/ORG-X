@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-cockpit-status-cleanup",
+  "receiptPath": ".ai/work-items/starts/wi-cockpit-status-cleanup.json",
+  "baseCommit": "68df9de46c9944663fabb08a59509d06e489cf90",
+  "baseBranch": "codex/wi-cockpit-status-cleanup",
+  "startTimestamp": "2026-08-20T03:08:50.888533+00:00",
+  "initialScopeDigest": "09ba1bc5dba829aefb74cce6ccb85ee6ad0820cbb815ba56cf570b5caed1a63d",
+  "contractSkeletonDigest": "b2f0fc5da4dc8b957555ab032362971a8a4f90a89acbafcde7c3f57b223123f0"
+}

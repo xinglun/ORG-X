@@ -17,7 +17,7 @@ use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources
 use org_x::features::weekly_radar::runtime::{
     acquire_run_lock, derive_judgment_snapshot_for_companies, ensure_run_available,
     load_input_snapshot, normalize_source_observation, persist_input_snapshot, recover_pending_run,
-    send_rendered_report, write_run_with_input_snapshot,
+    send_rendered_report, verify_committed_run, write_run_with_input_snapshot,
 };
 
 const DEFAULT_REGISTRY: &str = "config/weekly_radar/companies.json";
@@ -27,6 +27,7 @@ const DEFAULT_ARCHIVE_DIR: &str = ".";
 struct CliOptions {
     as_of: NaiveDate,
     retry_as_of: Option<NaiveDate>,
+    recover_published_as_of: Option<NaiveDate>,
     archive_dir: PathBuf,
     registry: PathBuf,
     dry_run: bool,
@@ -54,7 +55,7 @@ impl fmt::Display for CliError {
 }
 
 fn usage() -> &'static str {
-    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--language zh-CN|ja|en] [--dry-run]\n       org-x weekly-radar --retry-as-of YYYY-MM-DD [--archive-dir PATH]"
+    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--language zh-CN|ja|en] [--dry-run]\n       org-x weekly-radar --retry-as-of YYYY-MM-DD [--archive-dir PATH]\n       org-x weekly-radar --recover-published-as-of YYYY-MM-DD [--archive-dir PATH]"
 }
 
 fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
@@ -76,6 +77,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
     let mut dry_run = false;
     let mut language = ReportLanguage::default();
     let mut retry_as_of = None;
+    let mut recover_published_as_of = None;
     let mut as_of_explicit = false;
     let mut language_explicit = false;
     let mut index = 1;
@@ -102,6 +104,13 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
                     .map_err(|_| CliError::Usage("--retry-as-of must use YYYY-MM-DD".to_owned()))?;
                 retry_as_of = Some(parsed);
             }
+            "--recover-published-as-of" => {
+                let value = option_value(args, &mut index, "--recover-published-as-of")?;
+                let parsed = NaiveDate::parse_from_str(&value, "%Y-%m-%d").map_err(|_| {
+                    CliError::Usage("--recover-published-as-of must use YYYY-MM-DD".to_owned())
+                })?;
+                recover_published_as_of = Some(parsed);
+            }
             "--archive-dir" => {
                 let value = option_value(args, &mut index, "--archive-dir")?;
                 archive_dir = PathBuf::from(value);
@@ -123,7 +132,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
         }
     }
 
-    if retry_as_of.is_some() {
+    if retry_as_of.is_some() || recover_published_as_of.is_some() {
         let mut incompatible = Vec::new();
         if as_of_explicit {
             incompatible.push("--as-of");
@@ -133,6 +142,10 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
         }
         if dry_run {
             incompatible.push("--dry-run");
+        }
+        if retry_as_of.is_some() && recover_published_as_of.is_some() {
+            incompatible.push("--retry-as-of");
+            incompatible.push("--recover-published-as-of");
         }
         if !incompatible.is_empty() {
             return Err(CliError::Usage(format!(
@@ -145,6 +158,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
     Ok(CliAction::Run(CliOptions {
         as_of: as_of.unwrap_or_else(|| Utc::now().date_naive()),
         retry_as_of,
+        recover_published_as_of,
         archive_dir,
         registry,
         dry_run,
@@ -322,6 +336,17 @@ fn registry_has_configured_primary_source(registry: &CompanySourceRegistry) -> b
 }
 
 fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
+    if let Some(recover_as_of) = options.recover_published_as_of {
+        let _run_lock = acquire_run_lock(&options.archive_dir, "data", recover_as_of)
+            .map_err(|error| CliError::Failure(error.to_string()))?;
+        let manifest = verify_committed_run(&options.archive_dir, "data", recover_as_of)
+            .map_err(|error| CliError::Failure(error.to_string()))?;
+        return Ok(format!(
+            "READY-TO-PUSH: report {} verified at {}",
+            recover_as_of,
+            manifest.report()
+        ));
+    }
     if let Some(retry_as_of) = options.retry_as_of {
         let _run_lock = acquire_run_lock(&options.archive_dir, "data", retry_as_of)
             .map_err(|error| CliError::Failure(error.to_string()))?;

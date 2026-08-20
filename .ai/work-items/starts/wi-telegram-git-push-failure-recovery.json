@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-telegram-git-push-failure-recovery",
+  "receiptPath": ".ai/work-items/starts/wi-telegram-git-push-failure-recovery.json",
+  "baseCommit": "7433a316ac46716636b0114ba0f791e5953c5804",
+  "baseBranch": "codex/wi-telegram-git-push-failure-recovery",
+  "startTimestamp": "2026-08-20T13:15:10.707172+00:00",
+  "initialScopeDigest": "5df39e2a144755dcf61e411b05fdccb2b1208539825964573884e0880bd6b193",
+  "contractSkeletonDigest": "22aad7d90df5d327f53d9c4f042b81455b46fff03624b9268bd46c3723611ade"
+}

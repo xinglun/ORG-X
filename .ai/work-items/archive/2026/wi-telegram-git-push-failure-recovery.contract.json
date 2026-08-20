@@ -1,0 +1,106 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-telegram-git-push-failure-recovery",
+  "mode": "code",
+  "title": "Telegram 成功后 data push 失败的无重复恢复",
+  "baseCommit": "7433a316ac46716636b0114ba0f791e5953c5804",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "继续完成真实生产环境；修复并验收 Weekly Radar 的 Telegram 成功后 data push 失败恢复边界，使用 xinglun 账户执行受边界保护的验证。",
+    "reference": "current continuation goal, explicit xinglun account selection, and archived production-validation handoff",
+    "capturedAt": "2026-08-20T22:15:00+09:00"
+  },
+  "rawUserRequest": "系统自动推到，给出一个给人的参考。本身人有自己的见解。系统一个人一个互相印证，参考。并不是互相合作的出同一个答案。",
+  "rawRequestSource": {"type": "human", "reference": "Current continuation request and production-validation follow-up handoff.", "digest": "sha256:telegram-git-push-failure-recovery-xinglun", "capturedAt": "2026-08-20T22:15:00+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["ai_governance", "software_design", "test_automation", "documentation"], "prohibitedCapabilities": ["secret_readback", "live_fault_injection", "duplicate_telegram_delivery", "manual_data_branch_repair", "human_reference_override"]},
+  "requestedOperation": {
+    "type": "repository_governance.modify",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "This is a governed repository change; the user's explicit continuation is recorded as the work authorization and the external fault injection remains isolated.",
+    "authorizedExternalEffects": [
+      "Read repository and GitHub workflow metadata through the xinglun account without reading Secret values.",
+      "Use isolated local bare repositories, non-live recording transports, and non-production refs for fault injection.",
+      "Change the Weekly Radar recovery code, workflow, focused tests, and user-facing operations documentation within this Work Item scope.",
+      "Do not deliberately fail a push to the live production data ref or resend a live Telegram report while testing."
+    ]
+  },
+  "scope": [
+    ".ai/work-items/active/wi-telegram-git-push-failure-recovery.contract.json",
+    ".ai/work-items/active/wi-telegram-git-push-failure-recovery.summary.json",
+    ".ai/work-items/active/wi-telegram-git-push-failure-recovery.outcome.json",
+    ".ai/work-items/active/wi-telegram-git-push-failure-recovery.outcome.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    "src/features/weekly_radar/runtime.rs",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/main.rs",
+    ".github/workflows/weekly-radar.yml",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "Reading, printing, copying, or storing any Secret value.",
+    "Deliberately failing the live production data push, corrupting the live archive, or sending a duplicate live Telegram message.",
+    "Changing the Telegram provider, message content, machine-reference rules, human-reference lane, company configuration, or data history.",
+    "Trading, investment, capital, calibration, or long-horizon validation conclusions.",
+    "Treating system reference and human reference as a merged, voted, or cooperative answer."
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Mandatory Contract, evidence, Finish, archive, PR, merge, close, and clean-state lifecycle."},
+    {"path": ".ai/glossary.md", "reason": "Evidence over Self-Declaration and planned-scenario governance vocabulary."},
+    {"path": "docs/superpowers/plans/2026-08-20-production-validation-followups.md", "reason": "Task 3 acceptance requires a production-shaped Telegram-to-Git failure injection and no duplicate delivery."},
+    {"path": ".github/workflows/weekly-radar.yml", "reason": "Current sequence publishes Telegram before reconstructing and force-with-lease pushing the data branch."},
+    {"path": "src/features/weekly_radar/runtime/archive.rs", "reason": "Current local archive transaction, committed receipt, fail-closed verification, and recovery boundary."},
+    {"path": "src/main.rs", "reason": "Current CLI retry/recovery entrypoints and pre-acquisition guards."},
+    {"path": "tests/weekly_radar_runtime.rs", "reason": "Existing archive transaction, Telegram receipt, CLI, and workflow-shape coverage."},
+    {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "User-facing publication, retry, receipt, snapshot, manifest, and data-branch behavior."},
+    {"path": "origin/main@7433a316ac46716636b0114ba0f791e5953c5804", "reason": "Exact current implementation baseline."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "problemStatement": "The current workflow sends Telegram and commits the local archive before pushing the protected data branch. If the push fails and the runner disappears, the next run reconstructs from origin/data without the delivered receipt and can reacquire and send the same report again. Existing local archive-transaction tests do not cover this external boundary.",
+  "riskAssessment": {"level": "high", "riskTypes": ["external_publication", "durable_data_write", "duplicate_delivery", "concurrency", "evidence_traceability"], "reason": "The change governs a boundary after an external Telegram side effect and before a protected data-branch update. A bad recovery path can duplicate a public report or overwrite a conflicting archive. Validation therefore uses isolated refs and a recording transport, with fail-closed identity checks.", "unknownsReviewComplete": true, "reviewedBy": "Codex under explicit continuation authorization and xinglun account selection"},
+  "governanceProfile": {"selected": "strict", "source": "automatic", "reasons": ["The Work Item changes external-publication recovery and durable data-branch behavior.", "The acceptance requires non-secret, identity-bound failure-injection evidence."], "override": null},
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {"status": "continue", "reason": "The missing boundary is concrete, scoped to the existing Weekly Radar pipeline, and has an isolated verification path that does not require a live fault injection."},
+  "preReviewWarnings": [
+    "Never read back, echo, or store Secret values; the failure-injection transport must be non-live and recording only.",
+    "Do not use the live data branch or configured Telegram destination for deliberate failure injection.",
+    "The durable pending identity must be validated before any recovery push; mismatches fail closed without overwrite or resend.",
+    "A recovery result is not a new human reference; system and human lanes remain independent and non-voting."
+  ],
+  "scenarioCoverage": [
+    {"scenario": "A production-shaped isolated run persists the report, snapshot, receipt, and manifest after one successful recording transport call.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"], "expected": "The receipt report ID, message IDs, snapshot, report, and manifest are mutually bound before the push boundary.", "verificationPlan": "Run the focused isolated harness and inspect only non-secret artifact identities and transport invocation count."},
+    {"scenario": "The data push is forced to fail after Telegram acceptance, then recovery reuses the original receipt without a second transport call.", "required": true, "status": "unverified", "evidence": [".github/workflows/weekly-radar.yml", "tests/weekly_radar_runtime.rs"], "expected": "The forced failure is retained, the pending identity is durable, recovery publishes the same artifact set, and transport count/message IDs remain unchanged.", "verificationPlan": "Use an isolated bare Git remote with a deterministic rejecting hook, a recording transport, and a recovery run against the pending ref."},
+    {"scenario": "A damaged or mismatched pending transaction fails closed and preserves conflicting bytes.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"], "expected": "Recovery reports an incomplete/conflicting state, performs no Telegram call, and does not overwrite or delete the conflicting artifact.", "verificationPlan": "Corrupt one isolated pending artifact or identity, run recovery, and compare pre/post bytes plus transport count."},
+    {"scenario": "The user-facing operations guide explains automatic push, recovery, and the independent system/human reference lanes.", "required": true, "status": "unverified", "evidence": ["docs/operations/WEEKLY_RADAR.md"], "expected": "Documentation describes observable behavior and commands, not internal project progress, and does not claim a single cooperative answer.", "verificationPlan": "Review the changed guide against the workflow and CLI behavior after tests pass."}
+  ],
+  "checkpointPolicy": {"requiredBeforeFinish": true, "requiredStages": ["before_edit", "before_finish"], "reason": "The Work Item crosses a public-delivery side effect and a durable branch update; capture the contract boundary before editing and evidence before finish."},
+  "acceptance": [
+    "The workflow has a durable, guarded pending-publication path for a report whose Telegram receipt exists but whose data push did not complete.",
+    "Recovery validates the original report, receipt, snapshot, manifest, and pending identity, publishes the same data tree, and never calls Telegram a second time.",
+    "An isolated production-shaped failure-injection harness forces the push failure after one recording Telegram acceptance and verifies final data-tree consistency and zero duplicate message IDs.",
+    "A damaged or mismatched pending transaction fails closed without overwriting conflicting bytes or sending again.",
+    "The user-facing operations guide documents automatic push/recovery and keeps system reference and human reference as independent mutual references rather than one merged answer.",
+    "The complete AI Cockpit evidence lifecycle, hosted PR checks, merge, close, and clean-state verification pass without credentials being stored."
+  ],
+  "guidelines": ["Do not read or record Secret values; credentials remain only in GitHub Secret storage.", "Do not manually mutate the protected data branch or rewrite historical artifacts.", "Evidence before claim: bind workflow, report, snapshot, receipt, manifest, pending identity, and final data commit.", "Keep machine/system reference and human reference independent; do not merge, vote, or override either view.", "Preserve fail-closed UNKNOWN, UNAVAILABLE, NOT_CONFIGURED, and UNDETERMINED states.", "User-facing documentation is about operating behavior, not project-progress narration."],
+  "intent": {"problem": "A successful Telegram side effect currently precedes the data-branch push, and runner loss after push failure can cause a later run to resend the same report.", "constraints": ["Keep live fault injection and duplicate live delivery out of scope.", "Use a durable pending identity plus strict artifact binding, and fail closed on conflict.", "Keep the system-generated reference and human reference as separate views that mutually inform a person; neither view is merged into the other."], "rationale": "A guarded pending publication path makes the external side-effect boundary explicit and gives the next run a verifiable identity to publish without reacquisition or duplicate Telegram delivery."},
+  "implementationSurface": {"production": ["src/features/weekly_radar/runtime.rs", "src/features/weekly_radar/runtime/archive.rs", "src/main.rs", ".github/workflows/weekly-radar.yml"], "tests": ["tests/weekly_radar_runtime.rs"], "generated": [".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md"], "documentation": ["docs/operations/WEEKLY_RADAR.md"]},
+  "verification": [{"check": "aiWorkItem", "required": true}, {"check": "aiScope", "required": true}, {"check": "aiGuards", "required": true}, {"check": "aiCheckpoint", "required": true}, {"check": "aiAgentRisk", "required": true}, {"check": "aiReviewPolicy", "required": true}, {"check": "aiBacktrack", "required": true}, {"check": "aiCoverage", "required": true}, {"check": "aiScenarioCoverage", "required": true}, {"check": "aiGuidelines", "required": true}, {"check": "aiSummary", "required": true}, {"check": "aiStatus", "required": true}, {"check": "aiStatusCheck", "required": true}, {"check": "aiStatusConsistency", "required": true}, {"check": "aiDiffOwnership", "required": true}, {"check": "quality", "required": true}],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {"approved": true, "approvedBy": "xinglun", "reason": "The user explicitly authorized continuation of the production objective; approval is limited to the bounded Weekly Radar workflow recovery change and does not authorize live fault injection or secret readback."},
+  "requiredEvidenceContext": {"destructiveLevel": "none", "availableEvidence": ["current main commit", "workflow YAML", "archive implementation", "focused tests", "isolated bare Git remote", "recording Telegram transport"], "externalSystem": "Isolated local Git remote and non-live recording transport; production Secret values and live Telegram are excluded."},
+  "rollbackNote": "If verification fails, preserve the redacted failure evidence, stop before merge, and revert only this Work Item branch after confirming no live data or Telegram side effect was used.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 30}},
+  "startReceipt": {"path": ".ai/work-items/starts/wi-telegram-git-push-failure-recovery.json", "baseCommit": "7433a316ac46716636b0114ba0f791e5953c5804", "initialScopeDigest": "5df39e2a144755dcf61e411b05fdccb2b1208539825964573884e0880bd6b193", "contractSkeletonDigest": "22aad7d90df5d327f53d9c4f042b81455b46fff03624b9268bd46c3723611ade"}
+}

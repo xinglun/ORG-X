@@ -44,9 +44,21 @@ cargo run --release -- weekly-radar \
 
 如果进程在 Telegram 成功后、归档提交完成前退出，归档器会把已序列化的 report、snapshot、receipt 和 manifest 保存在 `weekly-radar/.transactions/` 的 prepared transaction 中。下一次非 dry-run 或同日期 retry 会先校验并完成这个 transaction，复用已有 receipt，不再发送第二次 Telegram。若 transaction 缺失、损坏、或已有公共文件与 staged bytes 不一致，运行会以 `IncompleteRun` fail closed；它不会猜测、覆盖或删除冲突文件，需要人工检查归档残留。这里保证的是可审计的逻辑提交点，不是跨多个公共文件的物理原子事务。
 
+如果 Telegram 已经成功、但随后 `data` 分支 push 没有完成，系统会先尝试保留一个带有原始 report、snapshot、receipt 和 manifest 的 pending publication，再更新 `data`。下一次运行会先校验 pending publication 的日期和全部文件身份；校验通过后只把同一组已发布文件推到 `data`，不会重新获取来源、重新生成报告或再次调用 Telegram。若 pending 本身也无法保存、校验失败、日期顺序冲突或文件被改动，系统会停止并要求人工检查，不会猜测、覆盖或重复发送。`data` 已经成功更新但 pending 清理暂时失败时，下一次运行会先比较身份，再安全地清理冗余 pending 状态。
+
+运维人员只需关注最终可见的 `PUBLISHED:` 或恢复时的 `READY-TO-PUSH:` 状态；不应手工复制 receipt、改写历史周报或直接修复 `data` 分支。若需在一个已取回的 archive 上做无发送验证，可使用：
+
+```sh
+cargo run --release -- weekly-radar \
+  --archive-dir . \
+  --recover-published-as-of 2026-08-17
+```
+
+该命令只做身份校验，不访问来源、不读取 Telegram 配置，也不发送消息。
+
 同一日期的非 dry-run CLI 会持有从 recovery、重复日期检查、来源获取、Telegram 发送到 archive commit 的 Unix 文件锁；直接 archive API 另有 commit 锁。锁在进程异常退出时由操作系统释放，避免并发运行在发送前互相通过检查。
 
-Actions 只把结果提交到字面值为 `data` 的 orphan 分支，并使用 lease 保护并发更新。`main` 和其他分支不是 archive 或 retention 的目标。
+Actions 把最终结果提交到字面值为 `data` 的 orphan 分支；Telegram 成功到 `data` push 完成之间会短暂使用 `weekly-radar-pending` publication ref，并使用 lease 保护两个 ref 的并发更新。`main` 和其他分支不是 archive 或 retention 的目标。
 
 ## 环境变量
 
@@ -91,7 +103,7 @@ SEC Company Facts 是完整历史 JSON，使用独立的有限响应上限；普
 
 ## Telegram 报告
 
-报告按“本周摘要 → 系统参考判断 → 重要组织变化 → 重点公司（有明确选择时）→ 系统状态”组织，再在安全的语义边界拆分消息。系统参考与人的独立判断会明确分开；证据不足时不显示虚假的阶段或排名。报告正文不显示 `source_*`、内部状态枚举、覆盖率分数或逐项采集诊断；读者只看到确认过的信息、系统是否能够判断、待核实线索数量、来源是否可用及需要关注的聚合问题。完整事实、来源、状态、系统参考依据和逐项 review 明细仍在 snapshot。Publisher 有限重试、保留消息顺序和 message IDs，并在失败时记录已接受的部分 ID。
+报告按“本周摘要 → 系统参考判断 → 重要组织变化 → 重点公司（有明确选择时）→ 系统状态”组织，再在安全的语义边界拆分消息。系统参考与人的独立判断会明确分开；系统只提供一个可复核的参考，人可以独立同意、保留不同意见或继续补证，二者不会合并、投票或协作生成一个答案。证据不足时不显示虚假的阶段或排名。报告正文不显示 `source_*`、内部状态枚举、覆盖率分数或逐项采集诊断；读者只看到确认过的信息、系统是否能够判断、待核实线索数量、来源是否可用及需要关注的聚合问题。完整事实、来源、状态、系统参考依据和逐项 review 明细仍在 snapshot。Publisher 有限重试、保留消息顺序和 message IDs，并在失败时记录已接受的部分 ID。
 
 ## data 分支保留
 

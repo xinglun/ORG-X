@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-runtime-judgment-chain-integration",
+  "archiveSequence": 52,
+  "contractPath": ".ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.summary.json",
+  "contractSha256": "a2a2b847c88f09cff1e095a82a66f882beea96a889f801e6e9048223788aaa86",
+  "summarySha256": "50ce6850c866db1a9b8304ff8af306953f6b2c9f0ec41b9dbfbe4970661e58d7",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.outcome.json",
+      "sha256": "03287189e112d516f96c918e28e710727911b345a2f96f61606681d29bed19b7"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.outcome.md",
+      "sha256": "2da003e5695282b1409e80b9997467e1d8167a8e84e834db4b993ce5fb6f9e6f"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "46d275737c51349826f8371159b53bc5a625b3c34a476d59345cf39575392892",
+    "binding": {
+      "baseCommit": "1c7c443cd13410d186a4c3e178a3eb655388c731",
+      "candidateHead": "1c7c443cd13410d186a4c3e178a3eb655388c731",
+      "candidateTreeDigest": "4ce1e3bd3efb541a8abeda9421fa2af66d54150c6e22925e6f24320de0e00f4c",
+      "candidateDiffDigest": "e399fc7892dfef14f2195dae1444b79437f09075192c3befa0dbef0a15dd5b92"
+    }
+  }
+}

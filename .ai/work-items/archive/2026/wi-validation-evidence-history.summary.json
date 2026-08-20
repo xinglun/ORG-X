@@ -1,0 +1,739 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "wi-validation-evidence-history",
+  "contractPath": ".ai/work-items/archive/2026/wi-validation-evidence-history.contract.json",
+  "changedFiles": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-validation-evidence-history.contract.json",
+      "reason": "Defines the evidence-retention scope, product boundary, user authorization, acceptance, scenarios, and full lifecycle verification."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
+      "reason": "Tracks the governed implementation and verification handoff for the validation evidence history WI."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-20-wi-validation-evidence-history.md",
+      "reason": "Implementation plan for the validation bounded context, tests, documentation, and lifecycle closure."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-20-wi-validation-evidence-history.md",
+      "reason": "Defines the validation record shape, invariants, application boundary, and explicit limitations."
+    },
+    {
+      "path": "docs/validation/VALIDATION_STRATEGY.md",
+      "reason": "Describes the implemented evidence-retention boundary and its non-goals."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "Adds the validation evidence history WI to the core research pipeline and updates the pre/post archive snapshot."
+    },
+    {
+      "path": ".ai/evidence/reference-impact/wi-validation-evidence-history-interface.json",
+      "reason": "Records reference-impact evidence for the new provider-free validation interface boundary."
+    },
+    {
+      "path": ".ai/evidence/reference-impact/wi-validation-evidence-history-interface-test.json",
+      "reason": "Records reference-impact evidence for the companion interface registration test."
+    },
+    {
+      "path": "src/features/mod.rs",
+      "reason": "Exports the validation bounded context."
+    },
+    {
+      "path": "src/features/validation/mod.rs",
+      "reason": "Registers the validation context's five layers."
+    },
+    {
+      "path": "src/features/validation/domain/mod.rs",
+      "reason": "Implements opaque baseline, observation, metric, signal, evidence, horizon, and duplicate-safety domain contracts."
+    },
+    {
+      "path": "src/features/validation/application/mod.rs",
+      "reason": "Registers application evaluator and store ports."
+    },
+    {
+      "path": "src/features/validation/application/validation_evaluator.rs",
+      "reason": "Reports missing horizons and completeness without deriving research judgments."
+    },
+    {
+      "path": "src/features/validation/application/validation_store.rs",
+      "reason": "Defines the no-overwrite validation history persistence port."
+    },
+    {
+      "path": "src/features/validation/infrastructure/mod.rs",
+      "reason": "Registers the in-memory validation store adapter."
+    },
+    {
+      "path": "src/features/validation/infrastructure/in_memory_store.rs",
+      "reason": "Preserves deterministic insertion order and rejects duplicate company records."
+    },
+    {
+      "path": "src/features/validation/interface/mod.rs",
+      "reason": "Provides the intentionally empty provider-free interface boundary."
+    },
+    {
+      "path": "src/features/validation/acl/mod.rs",
+      "reason": "Provides the intentionally empty provider-mapping anti-corruption boundary."
+    },
+    {
+      "path": "tests/architecture/module_boundaries.rs",
+      "reason": "Adds validation to the five-layer bounded-context architecture check."
+    },
+    {
+      "path": "tests/validation_domain.rs",
+      "reason": "Covers retention, completeness, blank/duplicate rejection, horizon safety, and cross-boundary evidence overlap."
+    },
+    {
+      "path": "tests/validation_store.rs",
+      "reason": "Covers deterministic order, lookup, duplicate-company rejection, and no-overwrite behavior."
+    },
+    {
+      "path": "src/features/mod_test.rs",
+      "reason": "Companion coverage for the features-root validation export."
+    },
+    {
+      "path": "src/features/validation/mod_test.rs",
+      "reason": "Companion coverage for validation bounded-context layer registration."
+    },
+    {
+      "path": "src/features/validation/domain/mod_test.rs",
+      "reason": "Companion coverage for fixed follow-up horizon ordering."
+    },
+    {
+      "path": "src/features/validation/application/mod_test.rs",
+      "reason": "Companion coverage for application evaluator/store port registration."
+    },
+    {
+      "path": "src/features/validation/application/validation_evaluator_test.rs",
+      "reason": "Companion coverage for completeness-only readiness states."
+    },
+    {
+      "path": "src/features/validation/application/validation_store_test.rs",
+      "reason": "Companion coverage for typed store errors."
+    },
+    {
+      "path": "src/features/validation/infrastructure/mod_test.rs",
+      "reason": "Companion coverage for in-memory infrastructure registration."
+    },
+    {
+      "path": "src/features/validation/infrastructure/in_memory_store_test.rs",
+      "reason": "Companion coverage for empty in-memory store construction."
+    },
+    {
+      "path": "src/features/validation/interface/mod_test.rs",
+      "reason": "Companion coverage for the provider-free interface boundary."
+    },
+    {
+      "path": "src/features/validation/acl/mod_test.rs",
+      "reason": "Companion coverage for the reserved provider-mapping ACL boundary."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-validation-evidence-history.outcome.json",
+      "reason": "Mandatory Task Outcome evidence generated by ai-finish."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-validation-evidence-history.outcome.md",
+      "reason": "Mandatory Task Outcome evidence generated by ai-finish."
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "reason": "Generated machine-readable Human Benefit Review Report."
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "reason": "Generated human-readable Human Benefit Review Report."
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "Generated no-active cockpit status after archival."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Generated archive discovery index."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-validation-evidence-history.archive-manifest.json",
+      "reason": "Immutable archive evidence root."
+    }
+  ],
+  "sourcesUsed": [
+    "docs/product/PRD.md",
+    "docs/validation/VALIDATION_STRATEGY.md",
+    "src/features/evidence/domain/mod.rs",
+    "src/features/productivity/domain/mod.rs",
+    "src/features/weekly_radar/domain/stage_transition_output.rs",
+    "src/features/ranking/domain/mod.rs",
+    "src/features/mod.rs",
+    "tests/architecture/module_boundaries.rs",
+    ".ai/work-items/archive/index.json",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+    "AGENTS.md",
+    "Makefile",
+    "Makefile.ai",
+    ".ai/evidence/reference-impact/wi-validation-evidence-history-interface.json",
+    ".ai/evidence/reference-impact/wi-validation-evidence-history-interface-test.json"
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "command": "make check-ai-contract CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:06.733990+00:00",
+      "exitCode": 0,
+      "durationMs": 63,
+      "outputDigest": "8b800f0898ac5d4c39a092aac90be01957812163f71264567dd1478dfe2f0209",
+      "commandHash": "4e060bf78a7a2c32b0f0541349069bba14eb30b28ed7cbcbb6293888f74b4549",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "34e1afbaf6a8db26ac9ddfed4b5717ac739b2072042e7ecf25db2fb3e4c30e9e",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-validation-evidence-history.contract.json work item contract check passed: .ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-validation-evidence-history.contract.json work item contract check passed: .ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "outputBytes": 292
+    },
+    {
+      "check": "aiScope",
+      "command": "make check-ai-scope CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:06.976258+00:00",
+      "exitCode": 0,
+      "durationMs": 149,
+      "outputDigest": "3195ff498e386b734f1e119e205d8a48c88278890c11ced0bb21bf677dae0553",
+      "commandHash": "28a97fed4053c406e835f1131bde9a57b998594132e4784b600fbf2a71087133",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "466b03406e122e2bce30661893213f2b69cae7186c68dae6dad27bb1555ac4fd",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-validation-evidence-history.contract.json scope guard passed: 37 changed path(s) covered",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-validation-evidence-history.contract.json scope guard passed: 37 changed path(s) covered",
+      "outputBytes": 235
+    },
+    {
+      "check": "aiGuards",
+      "command": "make check-ai-guards",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:07.232492+00:00",
+      "exitCode": 0,
+      "durationMs": 164,
+      "outputDigest": "c336d54cc26e5b2b311bf52468ed806940e761a835f03ede0d6aaa0f80792ed4",
+      "commandHash": "769f935b899dad1a2abcf23ef3cd08c6904b7f7d03a988b5ce6aa573d18b1e83",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "97c02e151b8574ed5390af2c35fafa6f406907455e512a58d36c5edef3635a33",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json [warning] restricted_write: .ai/evidence/reference-impact/wi-validation-evidence-history-interface-test.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/evidence/reference-impact/wi-validation-evidence-history-interface.json (.ai/**) - AI governance configuration. guard check completed: 2 warning(s) report: target/ai_guard_rep",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json [warning] restricted_write: .ai/evidence/reference-impact/wi-validation-evidence-history-interface-test.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/evidence/reference-impact/wi-validation-evidence-history-interface.json (.ai/**) - AI governance configuration. guard check completed: 2 warning(s) report: target/ai_guard_report.json",
+      "outputBytes": 565
+    },
+    {
+      "check": "aiCheckpoint",
+      "command": "make ai-checkpoint CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json SUMMARY=.ai/work-items/active/wi-validation-evidence-history.summary.json STAGE=before_finish",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:07.709111+00:00",
+      "exitCode": 0,
+      "durationMs": 386,
+      "outputDigest": "c7078ed651c3d3191cbd2e6c4bfae8bfc0ed86e2a061cf5db9edbb03cba5b621",
+      "commandHash": "acf18adc70e91e692182d075be09505350881c69347d156ed47e0a09aa761058",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "7537602d9a7596f69ba17735ff5dd2ff993a56c93003f90dbd321836fc66945b",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-validation-evidence-history` - Contract Hash: `2f9c0b08b8bd3581` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `6` - Unknown Count: `0` - Required",
+      "outputTail": "_owned] `src/features/validation/acl/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/acl/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/validation_evaluator.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/validation_evaluator_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/validation_store.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/validation_store_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/domain/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/domain/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/infrastructure/in_memory_store.rs` — covered by Contract scope - [active_owned] `src/features/validation/infrastructure/in_memory_store_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/infrastructure/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/infrastructure/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/interface/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/interface/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/mod_test.rs` — covered by Contract scope - [active_owned] `tests/architecture/module_boundaries.rs` — covered by Contract scope - [active_owned] `tests/validation_domain.rs` — covered by Contract scope - [active_owned] `tests/validation_store.rs` — covered by Contract scope ## Next Action - Ready for final status generation and human review.",
+      "outputBytes": 9620
+    },
+    {
+      "check": "aiReviewPolicy",
+      "command": "make check-ai-review-policy SUMMARY=.ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:07.941057+00:00",
+      "exitCode": 0,
+      "durationMs": 141,
+      "outputDigest": "a8c4073210cc6b7066abdfa029f5c841f794f4adf2a6021e5285861f23dadcfd",
+      "commandHash": "a7b2ae60ccab114f547bfe8c6b48b661f978364544ab505834192d9e62c6e778",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "f9943c4a0ce7dc32241920a0d981be378c03449cbb118774fca997edb8188f50",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-validation-evidence-history.summary.json review policy matched 9 path(s) [review] .ai/evidence/reference-impact/wi-validation-evidence-history-interface-test.json [review] .ai/evidence/reference-impact/wi-validation-evidence-history-interface.json [review] .ai/work-items/active/wi-validation-evidence-history.contract.json [review] .ai/work-items/active/wi-validation-evidence-history.outcom",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-validation-evidence-history.summary.json review policy matched 9 path(s) [review] .ai/evidence/reference-impact/wi-validation-evidence-history-interface-test.json [review] .ai/evidence/reference-impact/wi-validation-evidence-history-interface.json [review] .ai/work-items/active/wi-validation-evidence-history.contract.json [review] .ai/work-items/active/wi-validation-evidence-history.outcome.json [review] .ai/work-items/active/wi-validation-evidence-history.outcome.md [review] .ai/work-items/starts/wi-validation-evidence-history.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md review focus recorded: 3 item(s) report: target/ai_review_policy_report.json",
+      "outputBytes": 893
+    },
+    {
+      "check": "aiBacktrack",
+      "command": "make check-ai-backtrack",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:08.171494+00:00",
+      "exitCode": 0,
+      "durationMs": 141,
+      "outputDigest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+      "commandHash": "3ae95e96677b5ecabc3d873ff9cda8d7d3c807724cd86bda76ebb00cef4e4f88",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "e3f5c28efdd31816a53a24c049265782ea7b09ed758726c961ea807a6f616850",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputBytes": 192
+    },
+    {
+      "check": "aiCoverage",
+      "command": "make check-ai-coverage-guard",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:08.399692+00:00",
+      "exitCode": 0,
+      "durationMs": 138,
+      "outputDigest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+      "commandHash": "296a9883f8b9ad27f3d57afdee3ebdea5c75869c899a00e55d80563bc889328a",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "e39f327ab5612c87fbebff0ada746112de7e78249d02aaefd0141a7f5da6f072",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputBytes": 201
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "command": "make check-ai-scenario-coverage CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json SUMMARY=.ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:08.545958+00:00",
+      "exitCode": 0,
+      "durationMs": 57,
+      "outputDigest": "914b84ea23b1511bb2b9824c2016f1b0d163f3d34bf4e045c7b118459cb823c1",
+      "commandHash": "8cdc7bea6b09291a981d843e371705e46a5d307926102741c78c202f9d1eb8e2",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "efe730ebd181a936794e1a3b742b0171719ee8c3eea270e4700f7c1711e70658",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json [warning] missing_scenario_coverage: - scenario coverage is missing for medium/high risk report: target/ai_scenario_coverage_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json [warning] missing_scenario_coverage: - scenario coverage is missing for medium/high risk report: target/ai_scenario_coverage_report.json",
+      "outputBytes": 425
+    },
+    {
+      "check": "aiGuidelines",
+      "command": "make check-ai-guidelines CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json SUMMARY=.ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:08.690395+00:00",
+      "exitCode": 0,
+      "durationMs": 52,
+      "outputDigest": "d5d18a7b1ad5dbe9698763c14d8e3fa2478186d977b515267890ab1d3482692d",
+      "commandHash": "a8a9e16879a31702d6e67531f68090f2cf2146a29f24a7d489cdc23b2cd104cf",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "df9babcfe5eb7f45c2092c969e0ed245fdd199e19e43da62cd1ebf60215bdefc",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json guidelines compliance check passed: 4 guideline(s) verified",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json guidelines compliance check passed: 4 guideline(s) verified",
+      "outputBytes": 340
+    },
+    {
+      "check": "aiDiffOwnership",
+      "command": "make check-ai-diff-ownership CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:09.172029+00:00",
+      "exitCode": 0,
+      "durationMs": 388,
+      "outputDigest": "f9a49bec2e95cbb7487faa0034735bdddf6a318b2cef29a13f9e2f37baeeff74",
+      "commandHash": "f32a812d093fc5409c21ecfa9de336166c08f5962d429cd17333bd115897451e",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "034650c951cc5b0b31b3b402b5ad6a46fa41a9235e270a63deddf1484dde7fc5",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json ## Diff Ownership Preview - active_owned: `37`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome ",
+      "outputTail": "ned] `src/features/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/acl/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/acl/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/validation_evaluator.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/validation_evaluator_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/validation_store.rs` — covered by Contract scope - [active_owned] `src/features/validation/application/validation_store_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/domain/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/domain/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/infrastructure/in_memory_store.rs` — covered by Contract scope - [active_owned] `src/features/validation/infrastructure/in_memory_store_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/infrastructure/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/infrastructure/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/interface/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/interface/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/validation/mod.rs` — covered by Contract scope - [active_owned] `src/features/validation/mod_test.rs` — covered by Contract scope - [active_owned] `tests/architecture/module_boundaries.rs` — covered by Contract scope - [active_owned] `tests/validation_domain.rs` — covered by Contract scope - [active_owned] `tests/validation_store.rs` — covered by Contract scope",
+      "outputBytes": 4062
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:41.374756+00:00",
+      "exitCode": 0,
+      "durationMs": 32023,
+      "outputDigest": "cc634db4a4ec547d9d8e57eb501ccc3fd2c1ac37d46adab0ef217c1f705a82b8",
+      "commandHash": "e9589e6d07367af0027719354a354539e4f4ff284dd5a2d2bd35631b228fcf51",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "e93b07b337ca9a8afbe75b44f3ce5757776fb3198bd9746706acff0ff451df81",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"strict\", \"base\": \"908071a2b74801c5d15fcc196c5f40633f011fe0\", \"changedPaths\": [ \".ai/cockpit/current_status.md\", \".ai/cockpit/task_report.json\", \".ai/cockpit/task_report.md\", \".ai/evidence/reference-impact/wi-validation-evidence-history-interface-test.json\",",
+      "outputTail": "stage_comparison ... ok test threshold_distance_retains_supplied_values_and_order ... ok test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/weekly_radar_top5.rs (target/debug/deps/weekly_radar_top5-683a3fd447a56683) running 7 tests test blank_values_are_rejected_before_an_entry_is_created ... ok test entry_retains_all_supplied_facts_without_normalizing_them ... ok test duplicate_candidate_is_rejected_before_capacity_and_does_not_mutate_model ... ok test top5_weekly_read_model::module_tests::blank_candidate_is_rejected ... ok test read_model_accepts_five_entries_and_rejects_a_sixth_without_mutation ... ok test read_model_accepts_empty_input_and_preserves_supplied_order ... ok test top5_weekly_read_model::module_tests::from_entries_keeps_input_order ... ok test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Doc-tests org_x running 1 test test src/features/weekly_radar/runtime/sources.rs - features::weekly_radar::runtime::sources::SourceObservation (line 121) - compile fail ... ok test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-reference-impact \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-test-weakening PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_test_weakening.py --root . --mode full --policy .ai/guards/test_weakening_policy.yaml {\"baseRef\": \"908071a2b74801c5d15fcc196c5f40633f011fe0\", \"decision\": \"continue\", \"limitations\": [\"Static signals do not prove semantic equivalence or complete test coverage.\"], \"mode\": \"full\", \"recoveryCondition\": \"No recovery action is required for the analyzed diff.\", \"requiredExplanation\": false, \"signals\": [], \"version\": 1} Strict project-specific checks: not configured; AI lifecycle gates remain independently enforced.",
+      "outputBytes": 49239
+    },
+    {
+      "check": "aiStatus",
+      "command": "make generate-cockpit-status CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json SUMMARY=.ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:42.225286+00:00",
+      "exitCode": 0,
+      "durationMs": 404,
+      "outputDigest": "457405ee2656c82e81a9a386c7a3b4f7d80263736726ee8f443e11257dfb3ff3",
+      "commandHash": "3a3aa3beaa1bb8f51316802d0e7dcd0ef4d8b7007a8baea2ff78b68756471ba5",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "e449ac82029c0534c909414dfbe28eaff23297f09011e531de9064c70d69e600",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputBytes": 405
+    },
+    {
+      "check": "aiStatusCheck",
+      "command": "make check-ai-status CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json SUMMARY=.ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:43.098176+00:00",
+      "exitCode": 0,
+      "durationMs": 391,
+      "outputDigest": "6f4b05763be6ff06fc6dc471798ae269e00bf6a91556e624dc35ac3b68de088c",
+      "commandHash": "10bc7c018a06ae4b66c3e0238ffe8dba32806f78e4ff8df091a8002284646fef",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "6148e23b6c776bef76d273a97b1e7c5ea1a0573b20e19523c866a8143baacdb7",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputBytes": 365
+    },
+    {
+      "check": "aiStatusConsistency",
+      "command": "make check-ai-status-consistency",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:43.643069+00:00",
+      "exitCode": 0,
+      "durationMs": 59,
+      "outputDigest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+      "commandHash": "ddd5a0e5fa9b289b1ab3ba23cf37c1a7f01d48f31e2ad99e85762ba20f93c2a6",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "069b7aa7a082888e96ecc5964c0d5da764093e1513fa16ac8a7e9230545c7829",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputBytes": 169
+    },
+    {
+      "check": "aiAgentRisk",
+      "command": "make check-ai-agent-risk CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json SUMMARY=.ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:43.791026+00:00",
+      "exitCode": 0,
+      "durationMs": 57,
+      "outputDigest": "8ddd67acd4f76664011f72948994e0873ae472363c265cddad46128e2554817b",
+      "commandHash": "6186c53adfdaf1fefc9445e2338a7bd48571220e7571de90f4f99354e64e566b",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "cf053e8dbee39c284981316c340e08cfdca1d43210bf01b8c65cd490d76ea16f",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-validation-evidence-history.contract.json --summary .ai/work-items/active/wi-validation-evidence-history.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputBytes": 345
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/wi-validation-evidence-history.summary.json CONTRACT=.ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T06:01:45.426596+00:00",
+      "exitCode": 0,
+      "durationMs": 295,
+      "outputDigest": "626f19ef829e735fe8820ae9f19120c1f1217625c8246d91ab8969ece2e8a66f",
+      "commandHash": "13ab0d2e71e0f0d6efc18876e5679e67fd81a1c8242cba6a605fb26a7c9e3c11",
+      "contractHash": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+      "commitSha": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+      "executionContractPath": ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "worktreeDigest": "f08af37929b4b6808441de9ef3c55bb7c9f9dde00366f86b3cb08529c72b7483",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-validation-evidence-history.summary.json --contract .ai/work-items/active/wi-validation-evidence-history.contract.json ai summary check passed: .ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-validation-evidence-history.summary.json --contract .ai/work-items/active/wi-validation-evidence-history.contract.json ai summary check passed: .ai/work-items/active/wi-validation-evidence-history.summary.json",
+      "outputBytes": 359,
+      "outcomeInputDigest": "ed042c28434dbe7297a1dd07ad843288f1346104b6490a0d73c8b43defe2706c"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "New public APIs must be documented.",
+      "compliant": true,
+      "evidence": "Every public type, trait, constructor, accessor, and service method in src/features/validation has Rust documentation; the implementation spec and validation strategy describe the contract."
+    },
+    {
+      "guideline": "Do not import internal modules from other features.",
+      "compliant": true,
+      "evidence": "The validation context imports only its own domain/application boundaries; architecture and full quality checks pass."
+    },
+    {
+      "guideline": "Evidence before interpretation: preserve opaque facts and references; do not derive research judgments in this boundary.",
+      "compliant": true,
+      "evidence": "The domain stores supplied strings, metrics, source quality, and evidence references; focused tests verify no Stage/score/ranking inference and reference-impact evidence covers the public interface boundary."
+    },
+    {
+      "guideline": "Do not claim external provider or production behavior was verified without a real authorized receipt.",
+      "compliant": true,
+      "evidence": "No external provider or production operation is in scope."
+    }
+  ],
+  "unknownsRemaining": [],
+  "risk": {
+    "level": "medium",
+    "detail": "The public contract must remain evidence-retention-only; runtime integration, authoritative full universe membership, production receipts, and threshold policy remain explicit residual risks."
+  },
+  "generatedFiles": [],
+  "destructiveChanges": [],
+  "observedIssues": [],
+  "residualRisks": [
+    {
+      "level": "high",
+      "area": "product_integration",
+      "detail": "The existing runtime still does not connect external facts to Stage, score, ranking, or validation observations; this WI intentionally does not resolve that product-decision-dependent integration.",
+      "reviewRecommended": true,
+      "followUpCandidate": true,
+      "decisionOwner": "ORG-X product owner",
+      "requiredEvidence": [
+        "Approved Stage/score/ranking integration contract and threshold policy",
+        "End-to-end test proving evidence-to-judgment traceability"
+      ],
+      "mitigation": "Keep the validation context completeness-only and do not connect it to runtime judgment outputs until the product contract is approved.",
+      "acceptanceStatus": "accepted_with_guards"
+    },
+    {
+      "level": "high",
+      "area": "production_evidence",
+      "detail": "A real hosted production run and Telegram/data receipt remain unverified because production_operation is outside the declared capability and prohibited scope.",
+      "reviewRecommended": true,
+      "followUpCandidate": true,
+      "decisionOwner": "ORG-X maintainer",
+      "requiredEvidence": [
+        "Human-authorized production operation decision",
+        "Successful hosted run and bound Telegram/data receipt"
+      ],
+      "mitigation": "Keep production_operation prohibited for this WI and preserve the explicit limitation until an adopter/operator supplies an authorized receipt.",
+      "acceptanceStatus": "accepted_with_guards"
+    },
+    {
+      "level": "medium",
+      "area": "universe_authority",
+      "detail": "The configured ten-company calibration set is not an authoritative S&P 500/Nasdaq 100 membership snapshot.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    }
+  ],
+  "reviewReadiness": {
+    "status": "ready_with_risks",
+    "reason": "All required verification passed; residual risk remains documented.",
+    "expectedReviewFocus": [
+      "Confirm the validation context preserves supplied evidence and metrics without calculating research judgments.",
+      "Confirm duplicate and blank-value rejection does not mutate existing records or stores.",
+      "Confirm residual production, full-universe, runtime-integration, and security-policy gaps remain explicit."
+    ]
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "not_applicable",
+    "userVisibleOutput": "not_applicable",
+    "persistence": "in_memory_only",
+    "localization": "not_applicable",
+    "generatedArtifacts": "not_applicable",
+    "makeEntrypoints": "lifecycle_commands_only"
+  },
+  "userCorrectionsCaptured": [],
+  "userCorrectionSolidification": [],
+  "checkpointEvidence": [
+    {
+      "stage": "before_edit",
+      "recorded": true,
+      "contractHash": "16b9dc81e76268ce",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "16b9dc81e76268ce",
+      "previousContractHash": "16b9dc81e76268ce",
+      "contractHash": "c1f4ca3d0ebe8934",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Declare the scoped reference-impact evidence file and record the user-authorized restricted governance write.",
+      "verificationStarted": false,
+      "invalidatedRequiredChecks": [],
+      "requiredChecksPassedAtAmendment": 0,
+      "recordedAt": "2026-08-20T05:50:01.796320+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "16b9dc81e76268ce",
+      "previousContractHash": "c1f4ca3d0ebe8934",
+      "contractHash": "2fbc039088570d82",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Add src/features/mod_test.rs to the declared scope so the repository coverage guard can verify the features-root export companion test.",
+      "verificationStarted": true,
+      "invalidatedRequiredChecks": [
+        "aiWorkItem",
+        "aiScope",
+        "aiGuards",
+        "aiCheckpoint",
+        "aiAgentRisk",
+        "aiReviewPolicy",
+        "aiBacktrack",
+        "aiCoverage",
+        "aiScenarioCoverage",
+        "aiGuidelines",
+        "aiSummary",
+        "aiStatus",
+        "aiStatusCheck",
+        "aiStatusConsistency",
+        "aiDiffOwnership",
+        "quality"
+      ],
+      "requiredChecksPassedAtAmendment": 6,
+      "recordedAt": "2026-08-20T05:55:03.076727+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "16b9dc81e76268ce",
+      "previousContractHash": "2fbc039088570d82",
+      "contractHash": "2f9c0b08b8bd3581",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Declare the companion interface-test reference-impact evidence required by the repository impact-coverage gate.",
+      "verificationStarted": true,
+      "invalidatedRequiredChecks": [
+        "aiWorkItem",
+        "aiScope",
+        "aiGuards",
+        "aiCheckpoint",
+        "aiAgentRisk",
+        "aiReviewPolicy",
+        "aiBacktrack",
+        "aiCoverage",
+        "aiScenarioCoverage",
+        "aiGuidelines",
+        "aiSummary",
+        "aiStatus",
+        "aiStatusCheck",
+        "aiStatusConsistency",
+        "aiDiffOwnership",
+        "quality"
+      ],
+      "requiredChecksPassedAtAmendment": 10,
+      "recordedAt": "2026-08-20T05:57:06.813146+00:00"
+    },
+    {
+      "stage": "before_finish",
+      "recorded": true,
+      "contractHash": "2f9c0b08b8bd3581",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 16
+    }
+  ],
+  "knownGaps": [
+    "No external validation observation data is included; this WI defines the retention/readiness contract only.",
+    "No product threshold or Stage-transition policy was provided, so no such rule is invented."
+  ],
+  "overclaimPrevention": "Do not report production validation, full-universe coverage, Stage/score/ranking integration, or investment behavior as complete unless separately evidenced.",
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "aligned",
+    "checkedAt": "2026-08-20T14:51:41+09:00",
+    "checks": [
+      {
+        "area": "plan",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/plans/2026-08-20-wi-validation-evidence-history.md"
+        ],
+        "reason": "The plan records the completed implementation/test/docs work and the remaining governed lifecycle closure steps."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "aligned",
+        "evidence": [
+          "docs/validation/VALIDATION_STRATEGY.md",
+          "docs/superpowers/specs/2026-08-20-wi-validation-evidence-history.md",
+          ".ai/work-items/archive/index.json"
+        ],
+        "reason": "The Summary evidence matches the validation strategy and the archive index remains the lifecycle authority; this WI is pre-archive."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "aligned",
+        "evidence": [
+          "Makefile",
+          "Makefile.ai",
+          ".ai/cockpit/task_report.md",
+          ".ai/work-items/archive/2026/wi-validation-evidence-history.outcome.md"
+        ],
+        "reason": "Makefile and Makefile.ai define the commands already run for preflight, checkpoint, reference-impact, quality, finish, archive, and close; the blocked Outcome is retained as failed-delivery evidence."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "aligned",
+        "evidence": [
+          "docs/validation/VALIDATION_STRATEGY.md",
+          "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md"
+        ],
+        "reason": "The Chinese validation strategy and roadmap use the same T0/6/12/24-month semantics as the English Rust API labels and the zh-CN generated handoff."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "aligned",
+        "evidence": [
+          "docs/product/PRD.md",
+          "docs/validation/VALIDATION_STRATEGY.md"
+        ],
+        "reason": "PRD, validation strategy, implementation spec, and Summary explicitly retain the production receipt, full-universe authority, runtime integration, and threshold-policy limitations."
+      }
+    ]
+  },
+  "taskOutcome": {
+    "status": "completed_with_warnings",
+    "jsonPath": ".ai/work-items/active/wi-validation-evidence-history.outcome.json",
+    "markdownPath": ".ai/work-items/active/wi-validation-evidence-history.outcome.md",
+    "rawEvidencePath": "derived:pre_merge",
+    "evidenceCount": 2,
+    "humanStatusColor": "yellow"
+  },
+  "archiveSequence": 43
+}

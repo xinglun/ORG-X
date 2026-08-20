@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "requestedText": "Add the validation interface registration companion test.",
+  "target": {
+    "type": "file",
+    "name": "validation_interface_registration_companion_test",
+    "path": "src/features/validation/interface/mod_test.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [],
+    "testReferences": [],
+    "documentationReferences": [],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The companion test is a compile-time Rust test with no runtime loading, reflection, plugin lookup, or dynamic dispatch registration."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The companion test is repository-local and adds no external consumer or transport adapter."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The companion test adds no telemetry, monitoring, delivery, HTTP, scheduler, or provider integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "The Contract authorizes this additive companion test within the validation interface boundary and excludes runtime, provider, production, and external-consumer changes."
+    ]
+  }
+}

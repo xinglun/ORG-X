@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-validation-evidence-history",
+  "receiptPath": ".ai/work-items/starts/wi-validation-evidence-history.json",
+  "baseCommit": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+  "baseBranch": "codex/wi-validation-evidence-history",
+  "startTimestamp": "2026-08-20T05:31:44.802302+00:00",
+  "initialScopeDigest": "8cef5a613c021ca0a1594a3f573f5b6fe338f2ad35d9ec8530149a72f7b56443",
+  "contractSkeletonDigest": "9daa13837fdd986cb557da5f7f48e0f0323a4de92752d0a6734f2cd1fa2a4383"
+}

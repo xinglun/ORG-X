@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-validation-evidence-history",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "fe4c21b71d2e9946229d378fb0da4574b6fee1336089cabcb566696be92941cb"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-validation-evidence-history",
+    "contractDigest": "2f9c0b08b8bd3581f54ae289d137bb8e95e38d860011a3d3af3dd6f650906c14",
+    "summaryDigest": "c827dcc6b21e37edd7c8d4e831ee238ceab22681b63b96e95ec2556d1c36fe76",
+    "verificationDigest": "19e3bb7fd9112092002d8443e715bcb278023d9c4c9ce9246c73544d71e2d285",
+    "baseCommit": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+    "headCommit": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "fec8deada4250815349b34c8f0f910796855cb848c809b08c02b408323eacb9f",
+      "binding": {
+        "baseCommit": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+        "candidateHead": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+        "candidateTreeDigest": "7b1922fae81ac47f2ebc70c258944f4f8062c7386326f7fc845c2f15cdda3e0c",
+        "candidateDiffDigest": "b9ceaf7c335be885b9bcf20491b615835b7357634e9649abad5b1f9d81b081f4"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-validation-evidence-history generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-validation-evidence-history generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-validation-evidence-history",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-validation-evidence-history.contract.json",
       ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
@@ -46,82 +69,149 @@
       ".ai/work-items/archive/2026/wi-validation-evidence-history.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "No external validation observation data is included; this WI defines the retention/readiness contract only.",
+      "No product threshold or Stage-transition policy was provided, so no such rule is invented."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "No external validation observation data is included; this WI defines the retention/readiness contract only.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "No product threshold or Stage-transition policy was provided, so no such rule is invented.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "No external validation observation data is included; this WI defines the retention/readiness contract only.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "No product threshold or Stage-transition policy was provided, so no such rule is invented.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "product_integration",
+        "severity": "high",
+        "title": "product_integration",
+        "detail": "The existing runtime still does not connect external facts to Stage, score, ranking, or validation observations; this WI intentionally does not resolve that product-decision-dependent integration.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "Approved Stage/score/ranking integration contract and threshold policy",
+          "End-to-end test proving evidence-to-judgment traceability"
+        ],
+        "decisionOwner": "ORG-X product owner",
+        "mitigation": "Keep the validation context completeness-only and do not connect it to runtime judgment outputs until the product contract is approved.",
+        "acceptanceStatus": "accepted_with_guards"
+      },
+      {
+        "claim": "production_evidence",
+        "severity": "high",
+        "title": "production_evidence",
+        "detail": "A real hosted production run and Telegram/data receipt remain unverified because production_operation is outside the declared capability and prohibited scope.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "Human-authorized production operation decision",
+          "Successful hosted run and bound Telegram/data receipt"
+        ],
+        "decisionOwner": "ORG-X maintainer",
+        "mitigation": "Keep production_operation prohibited for this WI and preserve the explicit limitation until an adopter/operator supplies an authorized receipt.",
+        "acceptanceStatus": "accepted_with_guards"
+      },
+      {
+        "claim": "universe_authority",
+        "severity": "medium",
+        "title": "universe_authority",
+        "detail": "The configured ten-company calibration set is not an authoritative S&P 500/Nasdaq 100 membership snapshot.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 2,
-    "hardStops": 0,
-    "warnings": 2,
-    "resolved": 0,
-    "unresolved": 2
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "No external validation observation data is included; this WI defines the retention/readiness contract only.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "No product threshold or Stage-transition policy was provided, so no such rule is invented.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "high",
-      "detail": "The existing runtime still does not connect external facts to Stage, score, ranking, or validation observations; this WI intentionally does not resolve that product-decision-dependent integration.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "high",
-      "detail": "A real hosted production run and Telegram/data receipt remain unverified because production_operation is outside the declared capability and prohibited scope.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "The configured ten-company calibration set is not an authoritative S&P 500/Nasdaq 100 membership snapshot.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-validation-evidence-history.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -1250,6 +1340,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

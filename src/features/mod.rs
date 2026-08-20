@@ -8,4 +8,8 @@ pub mod ranking;
 pub mod reporting;
 pub mod transformation;
 pub mod universe;
+pub mod validation;
 pub mod weekly_radar;
+
+#[cfg(test)]
+mod mod_test;

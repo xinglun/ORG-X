@@ -4,8 +4,8 @@ Task Result
 Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json]
+- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
@@ -18,8 +18,8 @@ What was completed
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
 - Changed docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md [evidence: docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md]
 - Changed docs/superpowers/plans/2026-08-20-weekly-radar-snapshot-lifecycle.md [evidence: docs/superpowers/plans/2026-08-20-weekly-radar-snapshot-lifecycle.md]
-- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.outcome.md]
 
 Problems found
 - Total: 3

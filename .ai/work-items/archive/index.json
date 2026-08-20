@@ -565,6 +565,18 @@
       "summarySha256": "f9cfc22f0d05f8048a2c3c6a2797859a2375232e45a1de5172e599a771e02d86",
       "manifestPath": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.archive-manifest.json",
       "manifestSha256": "8c3223f4c4c7b19ddc50ceb465b141b3ee6f5c8f69d4eb99185ade86b0e2f537"
+    },
+    {
+      "workItemId": "wi-capability-overview",
+      "archiveSequence": 48,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-capability-overview.contract.json",
+      "contractSha256": "3fa5c39750d86af14b70bd5bdf7a1406e976495b1671c623cefdd5e1b29952fd",
+      "archivedAt": "2026-08-20T17:37:22.435879+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-capability-overview.summary.json",
+      "summarySha256": "ea1835347529ee887a8cc429d33fca4635d8aebddd192636a8ee5379c3fee2a4",
+      "manifestPath": ".ai/work-items/archive/2026/wi-capability-overview.archive-manifest.json",
+      "manifestSha256": "0807eb16399cc40674016a291b59c9bfada81635f24de5eaa5cdbbfbc2c16d43"
     }
   ]
 }

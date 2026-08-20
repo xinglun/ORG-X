@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-capability-overview",
+  "receiptPath": ".ai/work-items/starts/wi-capability-overview.json",
+  "baseCommit": "4f300c49b9542ecd9fe76c54e6107ebe9bbda8e0",
+  "baseBranch": "codex/wi-capability-overview",
+  "startTimestamp": "2026-08-20T08:14:04.854687+00:00",
+  "initialScopeDigest": "74c0ad09b7ddbaabe0f01d1787ae076dac78783ac211c649086d38c542e5de81",
+  "contractSkeletonDigest": "6f3f6eed858ec968b25fcc6cc25e810f92a21ff290dcbaf1eb0287537e5ef12e"
+}

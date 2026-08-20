@@ -1,0 +1,208 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-capability-overview",
+  "mode": "code",
+  "title": "Capability overview and documentation navigation",
+  "rawUserRequest": "是不是需要一个能力一览。详细点击link进入？",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Current conversation request; user authorized continuation of the capability overview design.",
+    "digest": "sha256:87b077130a0e5b103935a58bd13346c51d24e8901e5b017ce0cdfca8a905b8cf",
+    "capturedAt": "2026-08-20T17:00:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "documentation", "test_automation"],
+    "prohibitedCapabilities": ["runtime_behavior_change", "secret_mutation", "external_service_operation"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user authorized continuation and requested a capability overview with links to detailed documentation plus a repository link-integrity guard.",
+    "authorizedExternalEffects": [
+      "Create and update the Work Item PR for this documentation change.",
+      "Run hosted checks, merge the PR, and close this Work Item after merge."
+    ]
+  },
+  "baseCommit": "4f300c49b9542ecd9fe76c54e6107ebe9bbda8e0",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-capability-overview.contract.json",
+    ".ai/work-items/active/wi-capability-overview.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-capability-overview.outcome.json",
+    ".ai/work-items/active/wi-capability-overview.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    "README.md",
+    "docs/README.md",
+    "docs/CAPABILITIES.md",
+    "scripts/check_docs_metadata.py"
+  ],
+  "outOfScope": [
+    "Changing runtime behavior, source code, tests, dependencies, CI workflows, secrets, or production data.",
+    "Rewriting existing product, architecture, data, domain, scoring, validation, or operations documents beyond adding navigation links.",
+    "Deleting or rewriting archived Work Item records, docs/superpowers history, or docs/adr decision records.",
+    "Inventing capabilities, future roadmap status, provider production receipts, or trading conclusions.",
+    "Adding a dynamic documentation service or external documentation hosting."
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository governance, scope, evidence, lifecycle, and handoff requirements."},
+    {"path": ".ai/glossary.md", "reason": "Canonical project and governance terminology."},
+    {"path": ".ai/cockpit/README.md", "reason": "Contract, preflight, verification, archive, PR, merge, closure, and cleanup rules."},
+    {"path": "README.md", "reason": "Root reader entry point to add the capability overview link."},
+    {"path": "docs/README.md", "reason": "Existing reader navigation to extend with a capability overview entry."},
+    {"path": "docs/product/**", "reason": "Product capabilities, purpose, scope, and non-goals."},
+    {"path": "docs/architecture/**", "reason": "Architecture and bounded-context capability boundaries."},
+    {"path": "docs/data/**", "reason": "Evidence source, quality, provenance, and uncertainty boundaries."},
+    {"path": "docs/domain/**", "reason": "Domain capabilities for production systems, stages, ranking, and evidence."},
+    {"path": "docs/scoring/**", "reason": "Scoring and stage-gate boundaries."},
+    {"path": "docs/validation/**", "reason": "Longitudinal validation capability and limits."},
+    {"path": "docs/operations/**", "reason": "Weekly Radar operational capability and external-provider boundaries."},
+    {"path": "src/features/**", "reason": "Implementation truth for the capability status labels."},
+    {"path": "tests/**", "reason": "Automated evidence supporting implemented capability claims."},
+    {"path": "scripts/check_docs_metadata.py", "reason": "Existing reader-document heading, link, marker, and runtime-alignment checker."},
+    {"path": "Makefile.ai", "reason": "Existing documentation verification entry point."},
+    {"path": "user request and continuation authorization in conversation", "reason": "Capability overview, detailed links, and complete Work Item lifecycle authorization."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["documentation_drift", "link_integrity", "reader_confusion"],
+    "reason": "The overview must summarize many existing capability boundaries without turning partial or externally unverified behavior into an unsupported completion claim.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user authorization",
+    "reviewNotes": "The requested artifact is a static reader index with evidence links; dynamic status generation and external production claims remain out of scope."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["Documentation-only reader navigation with link-integrity and truthfulness risk."],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The scope, evidence sources, status vocabulary, acceptance, and verification boundary are explicit; no open product decision is required."
+  },
+  "preReviewWarnings": [
+    "Use evidence-bound statuses and distinguish implemented behavior from external-validation limits and non-goals.",
+    "Do not include Work Item progress, branch, PR, or implementation chronology in reader-facing documentation.",
+    "Link to existing detailed documents rather than duplicating their specifications."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record evidence before editing and before finish to prevent documentation drift."
+  },
+  "acceptance": [
+    "docs/CAPABILITIES.md provides a reader-facing capability matrix grouped by product/research, evidence/data, system/runtime, and engineering-quality capabilities.",
+    "Every listed capability has a status label, a concise boundary statement, at least one detailed documentation link, and an evidence link to current code, tests, or an explicit non-goal.",
+    "The overview distinguishes source-backed, interface-or-fixture-bounded, externally-unverified, and non-goal states without claiming a production receipt that does not exist.",
+    "README.md and docs/README.md expose the capability overview from their reader entry paths, while existing detailed document paths remain stable.",
+    "scripts/check_docs_metadata.py includes the new reader document so headings, internal links, forbidden process markers, and runtime alignment are checked.",
+    "After implementation, check-docs-metadata, required AI Cockpit checks, strict Finish, archive, PR hosted checks, merge, and ai-close-work-item all return success, with clean main and no codex branch or worktree residue."
+  ],
+  "guidelines": [
+    "Use evidence-bound status labels and distinguish implemented, boundary-only, external-validation-limited, and non-goal capabilities.",
+    "Keep the capability overview reader-oriented; do not include Work Item progress, branch, PR, or implementation chronology.",
+    "Use links to existing detailed documents instead of duplicating long specifications.",
+    "Do not invent product capabilities or claim real provider or production verification without an authorized receipt.",
+    "Use Chinese as the primary prose language while retaining stable English code and domain terms."
+  ],
+  "intent": {
+    "problem": "The repository has many detailed documents and implemented modules, but no single evidence-bound capability map. A reader must open several files before understanding what exists, what is bounded by fixtures or external verification, and what is explicitly not a product goal.",
+    "constraints": [
+      "Keep the overview static, repository-local, and link-driven.",
+      "Preserve existing detailed document paths and internal engineering records.",
+      "Do not change runtime behavior or infer product policy from implementation names.",
+      "State external provider and production verification limits explicitly.",
+      "Complete the full AI Cockpit lifecycle without requiring another intermediate confirmation."
+    ],
+    "rationale": "A compact capability matrix at the reader entry point reduces discovery cost while links preserve the authoritative detail in existing documents. Evidence-bound status labels prevent a navigation artifact from becoming an unsupported product promise."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "A new reader can identify the project's capabilities from one page.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["docs/CAPABILITIES.md", "README.md", "docs/README.md"],
+      "expected": "The reader sees grouped capabilities, status labels, boundaries, and clickable detailed links without reading implementation history.",
+      "verificationPlan": "Review the rendered Markdown structure and validate every internal link with the repository checker."
+    },
+    {
+      "scenario": "Capability status does not overclaim external or production behavior.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["docs/CAPABILITIES.md", "docs/operations/WEEKLY_RADAR.md", "docs/product/SCOPE.md"],
+      "expected": "Fixture/CI evidence, external-validation limits, and non-goals are visibly distinct.",
+      "verificationPlan": "Search for forbidden progress and unsupported production claims, then perform an independent truth-boundary review."
+    },
+    {
+      "scenario": "All navigation links remain valid while detailed documents stay stable.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["scripts/check_docs_metadata.py", "docs/CAPABILITIES.md", "docs/README.md"],
+      "expected": "The new page is included in link/heading checks and no existing detailed path is deleted or moved.",
+      "verificationPlan": "Run make check-docs-metadata and inspect the diff for path deletions or unresolved links."
+    },
+    {
+      "scenario": "The governed documentation Work Item closes without repository residue.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["AGENTS.md", ".ai/cockpit/README.md", "Makefile"],
+      "expected": "Contract, Summary, archive, PR, hosted checks, merge, closure receipt, and clean branch/worktree state are all present.",
+      "verificationPlan": "Run the canonical AI Cockpit checks and inspect final GitHub and Git state."
+    }
+  ],
+  "verification": [
+    {"check": "aiWorkItem", "required": true},
+    {"check": "aiScope", "required": true},
+    {"check": "aiGuards", "required": true},
+    {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true},
+    {"check": "aiReviewPolicy", "required": true},
+    {"check": "aiBacktrack", "required": true},
+    {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true},
+    {"check": "aiGuidelines", "required": true},
+    {"check": "aiSummary", "required": true},
+    {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true},
+    {"check": "aiStatusConsistency", "required": true},
+    {"check": "aiDiffOwnership", "required": true},
+    {"check": "docsMetadata", "required": true},
+    {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "No restricted governance path is required."
+  },
+  "rollbackNote": "Revert this Work Item diff to restore the previous reader navigation and checker scope.",
+  "budgetImpact": {
+    "expectedMetrics": {"archiveGrowth": 49}
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-capability-overview.json",
+    "baseCommit": "4f300c49b9542ecd9fe76c54e6107ebe9bbda8e0",
+    "initialScopeDigest": "74c0ad09b7ddbaabe0f01d1787ae076dac78783ac211c649086d38c542e5de81",
+    "contractSkeletonDigest": "6f3f6eed858ec968b25fcc6cc25e810f92a21ff290dcbaf1eb0287537e5ef12e"
+  }
+}

@@ -2,6 +2,17 @@
 
 这组文档说明 ORG-X 研究什么、如何判断企业生产方式变化、数据如何进入证据链，以及如何运行 Weekly Radar。阅读路径按概念和使用场景组织，读者可以按需选择阅读深度。
 
+## 快速查看能力
+
+- [能力一览](CAPABILITIES.md)：按产品与研究能力、证据与数据能力、系统与运行能力、工程质量与治理能力分组，查看能力状态、边界及详细证据链接。
+
+## 按目标阅读
+
+- 研究读者：先看 [North Star](product/NORTH_STAR.md)、[产品要求](product/PRD.md) 和 [范围与边界](product/SCOPE.md)。
+- 贡献者：先看 [架构](architecture/ARCHITECTURE.md)、[Bounded Contexts](architecture/BOUNDED_CONTEXTS.md) 和 [依赖规则](architecture/DEPENDENCY_RULES.md)。
+- 运维者：直接看 [Weekly Radar 使用说明](operations/WEEKLY_RADAR.md)，再用 [能力一览](CAPABILITIES.md) 核对运行边界。
+- 审阅者：先看 [能力一览](CAPABILITIES.md)，再沿每行的实现、测试和规范链接核对证据。
+
 ## 推荐阅读路径
 
 ### 1. 先理解产品
@@ -21,8 +32,8 @@
 
 ### 3. 了解证据和数据
 
-- [Data Source Policy](data/DATA_SOURCE_POLICY.md)：来源层级、免费数据栈和权威性。
-- [Data Quality Policy](data/DATA_QUALITY_POLICY.md)：Availability、Freshness、Authority、Completeness 和 Confidence。
+- [Data Source Policy](data/DATA_SOURCE_POLICY.md)：来源优先级、免费数据栈和权威性。
+- [Data Quality Policy](data/DATA_QUALITY_POLICY.md)：可用性（Availability）、时效性（Freshness）、权威性（Authority）、完整性（Completeness）和可信度（Confidence）。
 - [Validation Strategy](validation/VALIDATION_STRATEGY.md)：如何用 6/12/24 个月事实验证早期判断。
 
 ### 4. 了解系统边界

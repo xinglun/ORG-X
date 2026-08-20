@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-capability-overview",
-  "phase": "review",
-  "result": "completed_with_warnings",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "1848e9e63929d3817f6365fb48b0fec08f4641d7e1b10f7ba720e2760bf386d7"
+  "status": "completed_with_warnings",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-capability-overview",
+    "contractDigest": "3fa5c39750d86af14b70bd5bdf7a1406e976495b1671c623cefdd5e1b29952fd",
+    "summaryDigest": "2285ad712d07d77198b5318e0becac8bc7b6f7685f13ba757f5ea81f6347aad0",
+    "verificationDigest": "ab2abbfa46f20bca95aaec4ebab18ee906cf1508d980c799a979df9cdb6d881e",
+    "baseCommit": "4f300c49b9542ecd9fe76c54e6107ebe9bbda8e0",
+    "headCommit": "4f300c49b9542ecd9fe76c54e6107ebe9bbda8e0",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "803445149597c72859176657b2cd39702037a8ad2dbd734cfcf81e25c86d267f",
+      "binding": {
+        "baseCommit": "4f300c49b9542ecd9fe76c54e6107ebe9bbda8e0",
+        "candidateHead": "4f300c49b9542ecd9fe76c54e6107ebe9bbda8e0",
+        "candidateTreeDigest": "6e430f7b97085212ca1b9dcb4c58f2ca4a7e09a1ff3c2fffd38c9fd374791d1b",
+        "candidateDiffDigest": "2dee38bbe1a62ea8c5bbe73785a01df09b8b8cddb5cce44933c807f300c126a7"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-capability-overview generated an evidence-derived outcome with status completed_with_warnings.",
+  "sections": {
+    "outcomeSummary": "Task wi-capability-overview generated an evidence-derived outcome with status completed_with_warnings.",
+    "taskOverview": "Governed Work Item: wi-capability-overview",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-capability-overview.contract.json",
       ".ai/work-items/archive/2026/wi-capability-overview.summary.json",
@@ -23,85 +46,208 @@
       ".ai/work-items/archive/2026/wi-capability-overview.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "The checker detects broken links and prohibited process markers but cannot prove semantic freshness of every status label.",
+      "The overview does not claim real provider or production verification; such evidence is outside this documentation scope.",
+      "Validation remains an in-memory application/domain boundary without Weekly Radar runtime scheduling or external Provider data."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "The overview does not claim real provider or production verification; such evidence is outside this documentation scope.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "Validation remains an in-memory application/domain boundary without Weekly Radar runtime scheduling or external Provider data.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      },
+      {
+        "sourceWarning": "The checker detects broken links and prohibited process markers but cannot prove semantic freshness of every status label.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "The overview does not claim real provider or production verification; such evidence is outside this documentation scope.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "Validation remains an in-memory application/domain boundary without Weekly Radar runtime scheduling or external Provider data.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      },
+      {
+        "sourceWarning": "The checker detects broken links and prohibited process markers but cannot prove semantic freshness of every status label.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [
+      {
+        "problem": "Independent review identified missing Ingestion, Organization, Productivity, Diffusion, and Reporting rows plus an incomplete Validation boundary.",
+        "action": "Added explicit rows and the memory-store/runtime/provider limitations with links to existing evidence.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "docs/CAPABILITIES.md",
+            "subject": "observedIssues[0] completeness"
+          },
+          {
+            "source": "docs/validation/VALIDATION_STRATEGY.md",
+            "subject": "observedIssues[0] completeness"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "docs/CAPABILITIES.md",
+            "subject": "observedIssues[0] completeness"
+          },
+          {
+            "source": "docs/validation/VALIDATION_STRATEGY.md",
+            "subject": "observedIssues[0] completeness"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "Independent review identified inconsistent boundary status labels and unclear table column responsibilities.",
+        "action": "Unified the boundary label to 边界已具备 and renamed columns to 规范/使用说明 and 实现/测试证据.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "docs/CAPABILITIES.md",
+            "subject": "observedIssues[1] consistency"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "docs/CAPABILITIES.md",
+            "subject": "observedIssues[1] consistency"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "Independent review identified unclear reader roles and untranslated data-quality terminology at the entry path.",
+        "action": "Added role-based navigation and Chinese glosses while keeping stable domain terms.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "README.md",
+            "subject": "observedIssues[2] clarity"
+          },
+          {
+            "source": "docs/README.md",
+            "subject": "observedIssues[2] clarity"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "README.md",
+            "subject": "observedIssues[2] clarity"
+          },
+          {
+            "source": "docs/README.md",
+            "subject": "observedIssues[2] clarity"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "static_status_drift",
+        "severity": "medium",
+        "title": "static_status_drift",
+        "detail": "Capability labels and links require maintenance when source, tests, or detailed contracts change; the checker validates links and markers, not semantic freshness.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-capability-overview.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-capability-overview.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "external_validation",
+        "severity": "low",
+        "title": "external_validation",
+        "detail": "No real Telegram, SEC, IR, recruiting, provider, production-data, or physical multi-file atomicity receipt is claimed by this Work Item.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-capability-overview.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-capability-overview.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-capability-overview.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-capability-overview.summary.json",
+        "subject": "Summary"
+      }
     ]
   },
-  "issues": {
-    "detected": 3,
-    "hardStops": 0,
-    "warnings": 3,
-    "resolved": 0,
-    "unresolved": 3
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [
-    {
-      "sourceWarning": "The overview does not claim real provider or production verification; such evidence is outside this documentation scope.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "Validation remains an in-memory application/domain boundary without Weekly Radar runtime scheduling or external Provider data.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    },
-    {
-      "sourceWarning": "The checker detects broken links and prohibited process markers but cannot prove semantic freshness of every status label.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Capability labels and links require maintenance when source, tests, or detailed contracts change; the checker validates links and markers, not semantic freshness.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-capability-overview.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "No real Telegram, SEC, IR, recruiting, provider, production-data, or physical multi-file atomicity receipt is claimed by this Work Item.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-capability-overview.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -892,6 +1038,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

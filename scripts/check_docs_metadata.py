@@ -14,6 +14,7 @@ READER_ROOTS = (
     ROOT / "NORTH_STAR.md",
     ROOT / "ENGINEERING_PRINCIPLES.md",
     ROOT / "docs" / "README.md",
+    ROOT / "docs" / "CAPABILITIES.md",
 )
 READER_DIRECTORIES = (
     "product",

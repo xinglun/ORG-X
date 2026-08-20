@@ -1,52 +1,47 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Blocked
+Status: Partial
 
 What was completed
-- Changed .ai/work-items/active/wi-archive-transaction-recovery.contract.json [evidence: .ai/work-items/archive/2026/wi-archive-transaction-recovery.contract.json]
-- Changed .ai/work-items/active/wi-archive-transaction-recovery.summary.json [evidence: .ai/work-items/archive/2026/wi-archive-transaction-recovery.summary.json]
-- Changed src/features/weekly_radar/runtime/archive.rs [evidence: src/features/weekly_radar/runtime/archive.rs]
-- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
-- Changed src/main.rs [evidence: src/main.rs]
-- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
-- Changed tests/weekly_radar_end_to_end.rs [evidence: tests/weekly_radar_end_to_end.rs]
-- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md [evidence: docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md]
-- Changed docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md [evidence: docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md]
-- Changed docs/superpowers/plans/2026-08-20-wi-archive-transaction-recovery.md [evidence: docs/superpowers/plans/2026-08-20-wi-archive-transaction-recovery.md]
+- Changed .ai/work-items/active/wi-capability-overview.contract.json [evidence: .ai/work-items/archive/2026/wi-capability-overview.contract.json]
+- Changed .ai/work-items/active/wi-capability-overview.summary.json [evidence: .ai/work-items/archive/2026/wi-capability-overview.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/work-items/starts/wi-capability-overview.json [evidence: .ai/work-items/starts/wi-capability-overview.json]
+- Changed README.md [evidence: README.md]
+- Changed docs/README.md [evidence: docs/README.md]
+- Changed docs/CAPABILITIES.md [evidence: docs/CAPABILITIES.md]
+- Changed scripts/check_docs_metadata.py [evidence: scripts/check_docs_metadata.py]
+- Changed .ai/work-items/active/wi-capability-overview.outcome.json [evidence: .ai/work-items/archive/2026/wi-capability-overview.outcome.json]
+- Changed .ai/work-items/active/wi-capability-overview.outcome.md [evidence: .ai/work-items/archive/2026/wi-capability-overview.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/starts/wi-archive-transaction-recovery.json [evidence: .ai/work-items/starts/wi-archive-transaction-recovery.json]
-- Changed .ai/work-items/active/wi-archive-transaction-recovery.outcome.json [evidence: .ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.json]
-- Changed .ai/work-items/active/wi-archive-transaction-recovery.outcome.md [evidence: .ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.md]
-- Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
 
 Problems found
-- Total: 4
+- Total: 6
 - Blocking: 0
-- Warning: 1
+- Warning: 3
 
 Stops triggered
-- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
-- Reason: aiSummary failed before the retry. | Stage: verification | Resolution: Retry aiSummary after correcting the recorded failure. [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
+- None recorded.
 
 Problems resolved
-- Problem: aiGuidelines failed before the retry.
-  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
-- Problem: aiSummary failed before the retry.
-  Solution: Re-ran aiSummary after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
+- Problem: Independent review identified missing Ingestion, Organization, Productivity, Diffusion, and Reporting rows plus an incomplete Validation boundary.
+  Solution: Added explicit rows and the memory-store/runtime/provider limitations with links to existing evidence.
+  Evidence: [evidence: observedIssues[0] completeness, observedIssues[0] completeness]
+- Problem: Independent review identified inconsistent boundary status labels and unclear table column responsibilities.
+  Solution: Unified the boundary label to 边界已具备 and renamed columns to 规范/使用说明 and 实现/测试证据.
+  Evidence: [evidence: observedIssues[1] consistency]
+- Problem: Independent review identified unclear reader roles and untranslated data-quality terminology at the entry path.
+  Solution: Added role-based navigation and Chinese glosses while keeping stable domain terms.
+  Evidence: [evidence: observedIssues[2] clarity, observedIssues[2] clarity]
 
 Risks avoided
-- If not detected, could have led to a stale completion claim. (inference)
-- If not detected, could have led to a stale completion claim. (inference)
+- None recorded.
 
 Remaining risks
-- Independent per-file renames leave a crash window between final artifact writes; the prior lifecycle Summary records this as an unresolved residual risk. [evidence: observedIssues[0] persistence, observedIssues[0] persistence]
-- The design remains logical rather than physical multi-file atomicity; malformed or mismatched residue intentionally blocks and requires operator inspection. [evidence: residualRisks]
+- Capability labels and links require maintenance when source, tests, or detailed contracts change; the checker validates links and markers, not semantic freshness. [evidence: residualRisks]
+- No real Telegram, SEC, IR, recruiting, provider, production-data, or physical multi-file atomicity receipt is claimed by this Work Item. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
@@ -65,6 +60,7 @@ Verification
 - aiScenarioCoverage [evidence: aiScenarioCoverage]
 - aiGuidelines [evidence: aiGuidelines]
 - aiDiffOwnership [evidence: aiDiffOwnership]
+- docsMetadata [evidence: docsMetadata]
 - quality [evidence: quality]
 - aiStatus [evidence: aiStatus]
 - aiStatusCheck [evidence: aiStatusCheck]
@@ -73,9 +69,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
+- Rework avoided: None recorded.
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
+- Major risk prevented: None recorded.
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

@@ -7,6 +7,7 @@
   "capabilities": [
     "ai_governance",
     "documentation",
+    "production_validation",
     "software_design",
     "test_automation"
   ],
@@ -16,6 +17,7 @@
     "repository_governance.modify": ["ai_governance", "software_design"],
     "documentation.modify": ["documentation"],
     "tests.modify": ["test_automation"],
-    "repository_release.publish": ["ai_governance"]
+    "repository_release.publish": ["ai_governance"],
+    "weekly_radar_validation.dispatch": ["production_validation"]
   }
 }

@@ -232,6 +232,7 @@ associations:
       - "scripts/ai_trust_guards.py"
       - "scripts/ai_critical_domain_guards.py"
     tests:
+      - "tests/ai_cockpit/production_validation_policy_test.py"
       - "tests/test_critical_domain_guards.py"
       - "tests/test_trust_guards.py"
   finishEvidence:

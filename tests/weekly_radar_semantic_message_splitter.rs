@@ -41,16 +41,40 @@ fn splitter_preserves_nested_markdown_and_code_fences() {
 
 #[test]
 fn splitter_accepts_localized_weekly_radar_headings() {
-    let rendered = "## 本周摘要\n- 本周无变化\n\n## 系统状态\n- 数据正常\n";
+    let rendered = "## 本周摘要\n- 本周无变化\n\n## 系统参考判断\n### Acme\n- 系统判断：S2\n- 人的独立参考：S1\n\n## 系统状态\n- 数据正常\n";
     let split =
         SemanticMessageSplitter::split(rendered, SemanticSplitLimits::new(1_000, 20).unwrap())
             .unwrap();
-    assert_eq!(split.chunks().len(), 2);
+    assert_eq!(split.chunks().len(), 3);
     assert_eq!(
         split.chunks()[0].boundary(),
         SemanticBoundary::ExecutiveSummary
     );
-    assert_eq!(split.chunks()[1].boundary(), SemanticBoundary::SystemHealth);
+    assert_eq!(
+        split.chunks()[1].boundary(),
+        SemanticBoundary::JudgmentReference
+    );
+    assert_eq!(split.chunks()[2].boundary(), SemanticBoundary::SystemHealth);
+}
+
+#[test]
+fn splitter_accepts_judgment_reference_heading_for_each_report_language() {
+    for heading in [
+        "系统参考判断",
+        "システム参考判断",
+        "System Reference Judgment",
+    ] {
+        let rendered = format!("## {heading}\n### Acme\n- complete reference\n");
+        let split =
+            SemanticMessageSplitter::split(&rendered, SemanticSplitLimits::new(1_000, 20).unwrap())
+                .unwrap();
+        assert_eq!(split.chunks().len(), 1);
+        assert_eq!(
+            split.chunks()[0].boundary(),
+            SemanticBoundary::JudgmentReference
+        );
+        assert_eq!(split.chunks()[0].markdown(), rendered);
+    }
 }
 
 #[test]

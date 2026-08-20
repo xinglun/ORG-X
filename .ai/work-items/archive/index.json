@@ -625,6 +625,18 @@
       "summarySha256": "50ce6850c866db1a9b8304ff8af306953f6b2c9f0ec41b9dbfbe4970661e58d7",
       "manifestPath": ".ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.archive-manifest.json",
       "manifestSha256": "d8ba6ef0fae8f27def868b8eb62cbfc7380d9cd82ed2f4d7f00ccdd350b75c86"
+    },
+    {
+      "workItemId": "wi-production-provider-e2e",
+      "archiveSequence": 53,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-production-provider-e2e.contract.json",
+      "contractSha256": "e13427b176e1c1bdd814b4fa5b041289d8bc10923e67181e77c6385800c4d5e6",
+      "archivedAt": "2026-08-20T21:42:03.133218+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-production-provider-e2e.summary.json",
+      "summarySha256": "003d6fed90720865633e8f10a11db26feb32a84fd39a83747afa6df3f783e461",
+      "manifestPath": ".ai/work-items/archive/2026/wi-production-provider-e2e.archive-manifest.json",
+      "manifestSha256": "a4beb9046a050eef06ee8f78e63ffbc43df72289c9d2f2ff9103f28bfd737f23"
     }
   ]
 }

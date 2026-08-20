@@ -4,31 +4,25 @@ Task Result
 Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-runtime-judgment-chain-integration.contract.json [evidence: .ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.contract.json]
-- Changed .ai/work-items/active/wi-runtime-judgment-chain-integration.summary.json [evidence: .ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.summary.json]
+- Changed .ai/work-items/active/wi-production-provider-e2e.contract.json [evidence: .ai/work-items/archive/2026/wi-production-provider-e2e.contract.json]
+- Changed .ai/work-items/active/wi-production-provider-e2e.summary.json [evidence: .ai/work-items/archive/2026/wi-production-provider-e2e.summary.json]
+- Changed .ai/work-items/starts/wi-production-provider-e2e.json [evidence: .ai/work-items/starts/wi-production-provider-e2e.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/work-items/starts/wi-runtime-judgment-chain-integration.json [evidence: .ai/work-items/starts/wi-runtime-judgment-chain-integration.json]
-- Changed docs/superpowers/specs/2026-08-20-wi-runtime-judgment-chain-integration.md [evidence: docs/superpowers/specs/2026-08-20-wi-runtime-judgment-chain-integration.md]
-- Changed docs/superpowers/plans/2026-08-20-wi-runtime-judgment-chain-integration.md [evidence: docs/superpowers/plans/2026-08-20-wi-runtime-judgment-chain-integration.md]
-- Changed docs/superpowers/plans/2026-08-20-production-validation-followups.md [evidence: docs/superpowers/plans/2026-08-20-production-validation-followups.md]
-- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
-- Changed src/features/weekly_radar/runtime/archive.rs [evidence: src/features/weekly_radar/runtime/archive.rs]
-- Changed src/features/weekly_radar/runtime/error.rs [evidence: src/features/weekly_radar/runtime/error.rs]
-- Changed src/features/weekly_radar/runtime/judgment.rs [evidence: src/features/weekly_radar/runtime/judgment.rs]
-- Changed src/features/weekly_radar/runtime/model.rs [evidence: src/features/weekly_radar/runtime/model.rs]
-- Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
-- Changed src/main.rs [evidence: src/main.rs]
-- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
-- Changed tests/weekly_radar_judgment_chain.rs [evidence: tests/weekly_radar_judgment_chain.rs]
-- Changed .ai/work-items/archive/** [evidence: .ai/work-items/archive/**]
-- Changed .ai/work-items/active/wi-runtime-judgment-chain-integration.outcome.json [evidence: .ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.outcome.json]
-- Changed .ai/work-items/active/wi-runtime-judgment-chain-integration.outcome.md [evidence: .ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.outcome.md]
+- Changed .ai/project/capabilities.json [evidence: .ai/project/capabilities.json]
+- Changed .ai/policies/requested-operation.yaml [evidence: .ai/policies/requested-operation.yaml]
+- Changed .ai/guards/coverage_policy.yaml [evidence: .ai/guards/coverage_policy.yaml]
+- Changed scripts/ai_critical_domain_guards.py [evidence: scripts/ai_critical_domain_guards.py]
+- Changed tests/ai_cockpit/production_validation_policy_test.py [evidence: tests/ai_cockpit/production_validation_policy_test.py]
+- Changed src/features/weekly_radar/interface/semantic_message_splitter.rs [evidence: src/features/weekly_radar/interface/semantic_message_splitter.rs]
+- Changed src/features/weekly_radar/interface/semantic_message_splitter_test.rs [evidence: src/features/weekly_radar/interface/semantic_message_splitter_test.rs]
+- Changed tests/weekly_radar_semantic_message_splitter.rs [evidence: tests/weekly_radar_semantic_message_splitter.rs]
+- Changed .ai/work-items/active/wi-production-provider-e2e.outcome.json [evidence: .ai/work-items/archive/2026/wi-production-provider-e2e.outcome.json]
+- Changed .ai/work-items/active/wi-production-provider-e2e.outcome.md [evidence: .ai/work-items/archive/2026/wi-production-provider-e2e.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 
 Problems found
-- Total: 4
+- Total: 5
 - Blocking: 0
 - Warning: 2
 
@@ -36,6 +30,12 @@ Stops triggered
 - Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
 
 Problems resolved
+- Problem: Run 32366854657 from main reached real Provider acquisition and stopped before Telegram/archive with rendered report cannot be delivered safely; the redacted failure maps to SemanticSplitError::UnknownSection for the new judgment-reference heading.
+  Solution: Added the JudgmentReference semantic boundary and Chinese/Japanese/English heading aliases, then passed focused and full Rust test suites plus a real Provider dry-run that rendered the same Chinese heading.
+  Evidence: [evidence: observedIssues[0] hosted rendered-section compatibility, observedIssues[0] hosted rendered-section compatibility, observedIssues[0] hosted rendered-section compatibility]
+- Problem: aiCoverage initially treated the real tests/ai_cockpit/production_validation_policy_test.py path as unrelated to scripts/ai_critical_domain_guards.py because the trustCriticalDomainGuards association listed only stale test paths.
+  Solution: Registered the actual bounded guard regression test path in .ai/guards/coverage_policy.yaml and reran make check-ai-coverage-guard with no issues.
+  Evidence: [evidence: observedIssues[1] coverage association, observedIssues[1] coverage association, observedIssues[1] coverage association]
 - Problem: aiGuidelines failed before the retry.
   Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
   Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
@@ -44,18 +44,14 @@ Risks avoided
 - If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- observed issue [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue, observedIssues[0] observed issue, observedIssues[0] observed issue, observedIssues[0] observed issue]
-- Real Provider E2E and calibration evidence are not created by this Work Item; wi-production-provider-e2e and wi-research-calibration-score remain gated successor work. [evidence: residualRisks]
-- The automatic Stage Engine is a system reference, not a guaranteed truth; its rule coverage and calibration require later empirical validation. [evidence: residualRisks]
-- The human reference lane is retained separately and is not reconciled automatically; product UX must make the distinction clear. [evidence: residualRisks]
+- No successful post-fix non-dry-run has yet produced the bound Telegram receipt, archive manifest, snapshot, and data-branch commit evidence. [evidence: residualRisks]
+- A later distinct weekly period remains time-dependent and is the acceptance gate of successor wi-production-provider-e2e-run; it must not be inferred from the first successful run. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- 验收指摘内容必须纳入对应目标任务，而不是停留在结论中。 (inference)
-- 文档内容面向用户，不写成技术解释或项目进度。 (inference)
-- 选B：系统自动推导给人参考；人的判断独立存在，互相印证但不合作生成同一个答案。 (inference)
+- None recorded.
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]

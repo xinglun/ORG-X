@@ -1,0 +1,282 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-roadmap-historical-count-reconciliation",
+  "mode": "cleanup",
+  "title": "Reconcile stale historical roadmap count wording",
+  "rawUserRequest": "继续对应；查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User continuation of the full remediation and Work Item lifecycle, authorizing bounded roadmap corrections discovered by final audit.",
+    "digest": "sha256:b8a8e04db21a2672503ea2301f5ae55911507515af23a11ecbcab4613e4a440c",
+    "capturedAt": "2026-08-20T16:11:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "documentation",
+      "test_automation"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "llm_fact_extraction",
+      "trading_decision",
+      "capital_action"
+    ]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized continuing all acceptance remediation and the complete Work Item lifecycle in Contract evidence.",
+    "authorizedExternalEffects": [
+      "Create and update the Work Item PR for this bounded roadmap correction.",
+      "Run hosted checks, merge the PR, and close this Work Item after merge."
+    ]
+  },
+  "baseCommit": "4a688e97887dc5abc4cda34b4ca714232be8c0ad",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-roadmap-historical-count-reconciliation.contract.json",
+    ".ai/work-items/active/wi-roadmap-historical-count-reconciliation.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-roadmap-historical-count-reconciliation.outcome.json",
+    ".ai/work-items/active/wi-roadmap-historical-count-reconciliation.outcome.md",
+    "docs/superpowers/plans/2026-08-20-roadmap-historical-count-reconciliation.md",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md"
+  ],
+  "outOfScope": [
+    "existing archived Work Item records, archive manifests, and historical data-branch files",
+    "Rust source, tests, workflows, configuration, and dependency files",
+    "changing the roadmap's product scope, planned WI boundaries, or dependency semantics",
+    "creating or modifying any external provider artifact",
+    "external provider calls, production workflows, Telegram publication, and production data writes"
+  ],
+  "sources": [
+    {
+      "path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+      "reason": "Contains the stale 41/42 execution-handoff sentence and the 44/45 snapshot to reconcile to the current archive sequence."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Authoritative archive sequence; contains 45 entries before this Work Item."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.outcome.md",
+      "reason": "Evidence for the immediately preceding roadmap count reconciliation."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.summary.json",
+      "reason": "Evidence for the previous 44/45 timestamped snapshot and its residual risk."
+    },
+    {
+      "path": "AGENTS.md",
+      "reason": "Defines the required Contract, checkpoint, finish, archive, PR, merge, close, and clean-state lifecycle."
+    },
+    {
+      "path": "Makefile",
+      "reason": "Declares canonical Work Item lifecycle and repository verification entrypoints."
+    },
+    {
+      "path": "Makefile.ai",
+      "reason": "Declares AI Cockpit governance checks and archive/close behavior."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-20-roadmap-historical-count-reconciliation.md",
+      "reason": "Defines the bounded correction, evidence boundary, and verification plan."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "governance_consistency"
+    ],
+    "reason": "This documentation-only correction must keep category counts, archive count, historical handoff wording, and completed-row evidence synchronized with the immutable archive authority.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit full-lifecycle remediation authorization"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Documentation-only repository governance correction with no runtime or external effects."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The final audit and archive index provide sufficient evidence for a deterministic roadmap-only correction; no product or runtime decision is required."
+  },
+  "preReviewWarnings": [
+    "Confirm archive index sequence 45 before this Work Item and expected sequence 46 after archive.",
+    "Confirm the roadmap changes only category/count snapshot text, the historical handoff sentence, and the current completed-row evidence."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record checkpoints before editing and finishing to detect evidence drift."
+  },
+  "acceptance": [
+    "The roadmap overview reports 18 governance/product/maintenance items before this Work Item and 19 after its archive, 10 core research items, 17 Weekly Radar items, and 45 archived Work Items before this Work Item / 46 after it archives.",
+    "The roadmap execution handoff states that 45 Work Items have archived lifecycle evidence, the current correction makes the archive index contain 46, and Active Work Item returns to 0.",
+    "The completed Work Items table contains wi-roadmap-historical-count-reconciliation with its archived evidence path, while all prior completed rows and product/dependency semantics remain unchanged.",
+    "The diff contains only the declared roadmap, plan, and lifecycle artifacts; JSON/schema, scope, guideline, status, consistency, full quality, PR, merge, close, and clean-state checks pass."
+  ],
+  "guidelines": [
+    "Roadmap counts and lifecycle status claims must be derived from .ai/work-items/archive/index.json.",
+    "Do not mutate existing archived Work Item records or historical data-branch files.",
+    "Do not change product scope, dependency semantics, runtime behavior, or source code in a documentation reconciliation.",
+    "Do not claim external provider or production behavior without an authorized receipt."
+  ],
+  "intent": {
+    "problem": "The roadmap execution-handoff paragraph still reports 41 archived Work Items before its prior revision and 42 after, while the authoritative archive index now contains 45 entries after the preceding roadmap reconciliation was merged and closed. The roadmap overview is also a dated 44/45 snapshot that must move with the current cleanup WI to remain internally consistent.",
+    "constraints": [
+      "Use .ai/work-items/archive/index.json as the lifecycle count authority.",
+      "Change only roadmap count/status wording, the completed-row evidence, and the bounded plan/lifecycle artifacts; do not change product scope, dependency semantics, or runtime behavior.",
+      "Keep all counts explicitly timestamped as a pre/post-archive snapshot and do not claim external provider or production behavior."
+    ],
+    "rationale": "A deterministic documentation-only correction removes the stale 41/42 execution-handoff contradiction and advances the dated roadmap snapshot to the current archive sequence without inventing product policy or changing code."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Roadmap counts and execution handoff match archive sequence",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+        ".ai/work-items/archive/index.json",
+        ".ai/work-items/archive/2026/wi-roadmap-count-reconciliation.outcome.md"
+      ],
+      "expected": "The roadmap reports 45 archived items before this Work Item and 46 after it archives, with 18/19 maintenance counts and Active Work Item 0.",
+      "verificationPlan": "Inspect the edited overview and execution handoff against archive/index.json before and after archive."
+    },
+    {
+      "scenario": "Historical rows and product semantics remain unchanged",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md",
+        "git diff -- docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md"
+      ],
+      "expected": "The diff adds only the current completed row and count/status wording; no prior row, dependency, product, source, or runtime semantics change.",
+      "verificationPlan": "Review the documentation diff and run scope, guidelines, status, consistency, and quality checks."
+    },
+    {
+      "scenario": "Governed Work Item archives as the explicit 46th entry",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "AGENTS.md",
+        "Makefile",
+        "Makefile.ai"
+      ],
+      "expected": "Finish, archive, hosted PR checks, merge, ai-close-work-item, and final archive sequence 46 validation pass.",
+      "verificationPlan": "Run the canonical lifecycle and final clean-state audit."
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "No restricted write is required; canonical lifecycle commands are authorized by the user's request."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore the prior roadmap snapshot and lifecycle artifacts.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 46
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-roadmap-historical-count-reconciliation.json",
+    "baseCommit": "4a688e97887dc5abc4cda34b4ca714232be8c0ad",
+    "initialScopeDigest": "f8bc28388d1e59a64a1662981ec2288119f039951434761ea872cbdde281f5d8",
+    "contractSkeletonDigest": "8dfc3f7b0f8dbb5b869f8c761c7786f8e4f9ab45c4abe71f3cce3a29a7b111d3"
+  }
+}

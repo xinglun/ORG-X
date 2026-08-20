@@ -117,7 +117,8 @@
       "minimum": 85.0,
       "tests": [
         "tests/test_negative_scenarios.py",
-        "tests/test_guards_and_status.py"
+        "tests/test_guards_and_status.py",
+        "tests/test_ai_check_backtrack.py"
       ]
     },
     "scripts/ai_check_coverage_guard.py": {

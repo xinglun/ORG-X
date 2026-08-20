@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "upgrade_ai_cockpit",
+  "receiptPath": ".ai/work-items/starts/upgrade_ai_cockpit.json",
+  "baseCommit": "c12280bead071e07749541ba4823c95a86b04a2b",
+  "baseBranch": "codex/wi-ai-cockpit-update-20260821",
+  "startTimestamp": "2026-08-20T17:53:18.334115+00:00",
+  "initialScopeDigest": "a4c8ead97c92e835a5e5da2e5d13109a2dea56703627849530b1024ec63bde99",
+  "contractSkeletonDigest": "f717459dd869d8c3785448193d8c95e0b84b49e30135def786a8b2a88e644f4f"
+}

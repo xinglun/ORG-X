@@ -1,0 +1,55 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/release-projection-v0_5_68-20260819.archive-manifest.json",
+      "sha256": "100b48d7e3c1f75086c1fe5960231949c6a7a24363717022d2922a6471ac7675"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/release-projection-v0_5_68-20260819.contract.json",
+      "sha256": "9e29227a349905ca215f67f85b70a3930221239466d37355779d897576479c64"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/release-projection-v0_5_68-20260819.outcome.json",
+      "sha256": "a66461f6ab21bb10d6bcf407e472a07f354ac48d1f0b0cf67f9077b1629e57ad"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/release-projection-v0_5_68-20260819.summary.json",
+      "sha256": "36ace4ee573b6c18c3a51a65c5bbe5ad7a0c2b53d3c685eaecdfa3fbf4b13aca"
+    }
+  },
+  "failure": {
+    "gate": "hostedGovernanceFailure"
+  },
+  "humanAuthorization": {
+    "reference": "User-directed current-WI remediation in this dialogue",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/613",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-19T16:05:49.503881+00:00",
+  "prBaseCommit": "e4aa5abe1db426983de542395113471b3e771a1b",
+  "provider": {
+    "event": "pull_request",
+    "failedCandidateHead": "957606fea0986189f5a80665964bde0b1597df11",
+    "failureMarker": "quality_gate_blocked",
+    "jobConclusion": "failure",
+    "jobId": 96134761053,
+    "jobName": "template-smoke",
+    "kind": "github_actions",
+    "logSha256": "a032cfd6a59f637ae62124aa4a5d11e981a72b7956339f5c24bd1a12002e7769",
+    "pullRequest": 921,
+    "repository": "spirex-ds-dev/ai-cockpit-template",
+    "runAttempt": 1,
+    "runConclusion": "failure",
+    "runId": 32272723883,
+    "runStatus": "completed",
+    "runUrl": "https://github.com/spirex-ds-dev/ai-cockpit-template/actions/runs/32272723883",
+    "workflowPath": ".github/workflows/smoke.yml"
+  },
+  "receiptVersion": 4,
+  "recoveryPaths": [
+    "Makefile",
+    "tests/test_makefile.py"
+  ],
+  "workItemId": "release-projection-v0_5_68-20260819"
+}

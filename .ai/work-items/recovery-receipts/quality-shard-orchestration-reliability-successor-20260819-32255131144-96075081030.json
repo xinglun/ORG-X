@@ -1,0 +1,61 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/quality-shard-orchestration-reliability-successor-20260819.archive-manifest.json",
+      "sha256": "75680f995c765decc72dfd2c78da87be16f7ed9b44966d73bfb3452ff778dfec"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/quality-shard-orchestration-reliability-successor-20260819.contract.json",
+      "sha256": "4d6257b30b587d2a503e8f687d201422826b1c7f95a0f73848b3d5387e308326"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/quality-shard-orchestration-reliability-successor-20260819.outcome.json",
+      "sha256": "80d83c4bba854322e02709d6f8cf799afec3d79fc73dba9cd3de297f1f2fcc76"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/quality-shard-orchestration-reliability-successor-20260819.summary.json",
+      "sha256": "8a4bde4f60ce197cb3d204279bc25a086074271c996560c5ba58be8d14f508bc"
+    }
+  },
+  "failure": {
+    "gate": "hostedFunctionalFailure"
+  },
+  "humanAuthorization": {
+    "reference": "repository user directed same-Work-Item recovery for Hosted lifecycle documentation-alignment failure",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/622",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-19T13:02:32.134395+00:00",
+  "prBaseCommit": "e0220b988dd0d52f1e73b13a71dd60ab27a06c42",
+  "provider": {
+    "event": "pull_request",
+    "failedCandidateHead": "92823acb14c9eb24f9c20fcacc3c3e3e18e3bdc8",
+    "failureMarker": "junit_artifact_failure",
+    "jobConclusion": "failure",
+    "jobId": 96075081030,
+    "jobName": "project-test-lifecycle",
+    "junitArtifact": {
+      "failedTestcases": 1,
+      "id": 9366053814,
+      "name": "project-test-shard-lifecycle-32255131144-1",
+      "sha256": "cd2b5c48ca13743a20b6790fa9d8b4a48c99746cdad39aa6db9f9c90399bcdc1"
+    },
+    "kind": "github_actions",
+    "logSha256": "442041e122db3ec0bd6aca14da53210f8c789ec1d279b1d83cdefc42380ace2d",
+    "pullRequest": 920,
+    "repository": "spirex-ds-dev/ai-cockpit-template",
+    "runAttempt": 1,
+    "runConclusion": "failure",
+    "runId": 32255131144,
+    "runStatus": "completed",
+    "runUrl": "https://github.com/spirex-ds-dev/ai-cockpit-template/actions/runs/32255131144",
+    "workflowPath": ".github/workflows/smoke.yml"
+  },
+  "receiptVersion": 3,
+  "recoveryPaths": [
+    "docs/reference/pre-release-documentation-alignment.json",
+    "docs/reference/pre-release-documentation-alignment.md"
+  ],
+  "workItemId": "quality-shard-orchestration-reliability-successor-20260819"
+}

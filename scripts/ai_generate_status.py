@@ -319,7 +319,12 @@ def project_active_task_outcome(
         markdown = markdown_path.read_text(encoding="utf-8")
     except OSError as exc:
         raise RuntimeError(f"failed to read active Task Outcome report: {exc}") from exc
-    report = validate_outcome(outcome, markdown, expected_task_id=task)
+    report = validate_outcome(
+        outcome,
+        markdown,
+        expected_task_id=task,
+        contract=contract,
+    )
     if not report.valid:
         detail = "; ".join(f"{item.code}: {item.message}" for item in report.errors)
         raise RuntimeError(f"active Task Outcome is invalid: {detail}")

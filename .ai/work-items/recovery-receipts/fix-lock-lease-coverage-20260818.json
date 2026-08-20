@@ -1,0 +1,44 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/fix-lock-lease-coverage-20260818.archive-manifest.json",
+      "sha256": "2ba78795036c928c00742069fd46570d72dcc3dbd1957a56f8d09d42c9e48f8a"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/fix-lock-lease-coverage-20260818.contract.json",
+      "sha256": "df2c240f2c0b2f5a12d5370507c4181dafa24f31bbae07c014b74221341d04ba"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/fix-lock-lease-coverage-20260818.outcome.json",
+      "sha256": "000afc7173fdb39bb7be8a96ac9dc1ec0dbe901e045bc292f1b0bc590dccbb4a"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/fix-lock-lease-coverage-20260818.summary.json",
+      "sha256": "7fce65147b4ccb22b56d5efb6eae4001d8f3b22d736afc6f308699f61c27a053"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=fd81251f7cecb53ac062e2ed8763c541e785be56"
+    ],
+    "exitCode": 2,
+    "gate": "changedCriticalCoverage",
+    "outputDigest": "099fc23bef16c335587bd59a5500e910b186071b0cec47576510fce8a8c33844"
+  },
+  "humanAuthorization": {
+    "reference": "user continuation authorization on 2026-08-19 for the same-Work-Item archive PR recovery",
+    "type": "human"
+  },
+  "issue": "https://github.com/spirex-ds-dev/ai-cockpit-template/issues/901",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-18T16:15:01.628175+00:00",
+  "prBaseCommit": "fd81251f7cecb53ac062e2ed8763c541e785be56",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/work-items/fix-lock-lease-coverage-20260818.json"
+  ],
+  "workItemId": "fix-lock-lease-coverage-20260818"
+}

@@ -12,6 +12,9 @@ from itertools import pairwise
 from pathlib import Path
 from typing import Any
 
+from ai_capability_truth import validate_matrix
+from ai_check_knowledge_index import check_index as check_knowledge_index
+from ai_check_knowledge_index import check_record as check_knowledge_record
 from ai_check_summary import changed_file_paths, validate_summary
 from ai_check_work_item import validate_contract
 from ai_common import (
@@ -26,13 +29,23 @@ from ai_common import (
     run_git,
     simple_yaml_lists,
 )
+from ai_evidence_dependencies import (
+    EvidenceDependencyError,
+    changed_path_dependency_issues,
+    load_capability_evidence_dependencies,
+)
 from ai_lifecycle_truth import (
     archived_outcome_projection,
     is_valid_superseded_transition,
     superseded_summary_validation_exception,
 )
-from ai_post_archive_recovery import RECEIPT_DIRECTORY, validate_recovery_receipt
-from ai_start_receipt import validate_receipt, validate_resume_history_structure
+from ai_outcome_gate import validate_terminal_outcome
+from ai_post_archive_recovery import RECEIPT_DIRECTORY, archive_files, validate_recovery_receipt
+from ai_start_receipt import (
+    validate_receipt,
+    validate_resume_history_structure,
+    validate_synchronization_history_structure,
+)
 
 SCOPE_POLICY = PROJECT_ROOT / ".ai" / "guards" / "scope_policy.yaml"
 OWNERSHIP_POLICY = PROJECT_ROOT / ".ai" / "guards" / "file_ownership.yaml"
@@ -59,6 +72,46 @@ ARCHIVE_BOUND_RELEASE_METADATA = frozenset(
         "release.json",
     }
 )
+
+
+def capability_truth_dependency_issues(paths: list[str]) -> list[str]:
+    """Reject stale or unsynchronized Capability Truth evidence at PR time."""
+    try:
+        dependencies = load_capability_evidence_dependencies(PROJECT_ROOT)
+    except EvidenceDependencyError as exc:
+        return [str(exc)]
+    if dependencies is None:
+        return []
+    changed = set(paths)
+    if not (
+        dependencies.matrix_path in changed
+        or any(path in dependencies.capability_ids_by_path for path in changed)
+    ):
+        return []
+    issues = changed_path_dependency_issues(paths, dependencies)
+    if issues:
+        return issues
+    return validate_matrix(PROJECT_ROOT / dependencies.matrix_path, root=PROJECT_ROOT)
+
+
+def knowledge_index_issues() -> list[str]:
+    """Reject a stale generated knowledge surface before a PR can merge.
+
+    Fresh adopter repositories do not have a knowledge surface yet. Once an
+    index or record exists, however, the whole projection is a repository
+    invariant: a rebase that changes bound evidence without regenerating the
+    record must fail closed before merge.
+    """
+    index_path = PROJECT_ROOT / ".ai" / "knowledge" / "index.json"
+    records_dir = PROJECT_ROOT / ".ai" / "knowledge" / "work-items"
+    has_records = records_dir.is_dir() and any(records_dir.glob("*.json"))
+    if not index_path.is_file() and not has_records:
+        return []
+    if not index_path.is_file():
+        return ["Implementation Knowledge index is missing while knowledge records exist"]
+    if not records_dir.is_dir():
+        return ["Implementation Knowledge records directory is missing"]
+    return check_knowledge_index(index_path, records_dir=records_dir, repo_root=PROJECT_ROOT)
 
 
 def _git_blob_hash(revision: str, path: str) -> str:
@@ -231,13 +284,15 @@ def archive_base_is_compatible(contract: dict[str, Any], pr_base: str) -> bool:
     receipt_base = receipt.get("baseCommit")
     if not isinstance(receipt_base, str) or not receipt_base:
         return False
-    if receipt_base != archived_base and validate_resume_history_structure(contract, receipt_base):
-        return False
-    if (
-        receipt_base == archived_base
-        and contract.get("resumeHistory") is not None
-        and validate_resume_history_structure(contract, receipt_base)
-    ):
+    if contract.get("synchronizationHistory") is not None:
+        lineage_issues = validate_synchronization_history_structure(contract, receipt_base)
+    elif contract.get("resumeHistory") is not None:
+        lineage_issues = validate_resume_history_structure(contract, receipt_base)
+    else:
+        lineage_issues = (
+            [] if receipt_base == archived_base else ["missing baseline transition history"]
+        )
+    if lineage_issues:
         return False
     if archived_base == pr_base:
         return True
@@ -472,6 +527,8 @@ def same_work_item_recovery_paths(
             continue
         if not isinstance(receipt, dict) or receipt.get("workItemId") not in known_tasks:
             continue
+        if receipt.get("prBaseCommit") != base:
+            continue
         receipt_issues = validate_recovery_receipt(PROJECT_ROOT, receipt, pr_base=base)
         if receipt_issues:
             blockers.append(
@@ -599,6 +656,7 @@ def human_benefit_report_issues(contract_path: Path) -> list[str]:
     outcome_path = contract_path.with_name(
         contract_path.name.replace(".contract.json", ".outcome.json")
     )
+    outcome_markdown_path = outcome_path.with_suffix(".md")
     report_path = PROJECT_ROOT / HUMAN_REPORT_JSON
     markdown_path = PROJECT_ROOT / HUMAN_REPORT_MARKDOWN
     missing = [
@@ -609,16 +667,36 @@ def human_benefit_report_issues(contract_path: Path) -> list[str]:
     if missing:
         return ["Human Benefit Review Report evidence is missing: " + ", ".join(missing)]
     try:
+        contract = load_json(contract_path)
         outcome = load_json(outcome_path)
         report = load_json(report_path)
         markdown = markdown_path.read_text(encoding="utf-8")
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         return [f"Human Benefit Review Report cannot be loaded: {exc}"]
     work_item_id = outcome.get("workItemId") if isinstance(outcome, dict) else None
-    if isinstance(work_item_id, str) and is_valid_superseded_transition(
+    superseded = isinstance(work_item_id, str) and is_valid_superseded_transition(
         contract_path=contract_path,
         work_item_id=work_item_id,
+    )
+    if (
+        isinstance(contract, dict)
+        and contract.get("contractVersion") == 2
+        and isinstance(work_item_id, str)
+        and not superseded
     ):
+        gate = validate_terminal_outcome(
+            outcome_path,
+            outcome_markdown_path,
+            expected_task_id=work_item_id,
+            contract_path=contract_path,
+            summary_path=contract_path.with_name(
+                contract_path.name.replace(".contract.json", ".summary.json")
+            ),
+            expected_base_commit=contract.get("baseCommit"),
+        )
+        if not gate.valid:
+            return [f"Task Outcome gate: {issue}" for issue in gate.issues]
+    if superseded and isinstance(work_item_id, str):
         outcome = archived_outcome_projection(
             outcome,
             root=PROJECT_ROOT,
@@ -626,6 +704,110 @@ def human_benefit_report_issues(contract_path: Path) -> list[str]:
             work_item_id=work_item_id,
         )
     return validate_human_report(report, outcome, phase="review", markdown=markdown)
+
+
+def _knowledge_projection_dependencies(path: str) -> set[str]:
+    """Return validated knowledge-record dependencies for a generated projection."""
+    if not path.startswith(".ai/knowledge/work-items/") or not path.endswith(".json"):
+        return set()
+    record_path = PROJECT_ROOT / path
+    try:
+        if check_knowledge_record(record_path, repo_root=PROJECT_ROOT):
+            return set()
+        record = load_json(record_path)
+    except (OSError, json.JSONDecodeError, ValueError):
+        return set()
+    evidence = record.get("evidence")
+    if not isinstance(evidence, list):
+        return set()
+    return {
+        item["path"]
+        for item in evidence
+        if isinstance(item, dict)
+        and isinstance(item.get("path"), str)
+        and item["path"].startswith(".ai/knowledge/")
+    }
+
+
+def archive_owns_knowledge_projection(
+    path: str,
+    archive_entries: list[tuple[Path, dict[str, Any], dict[str, Any], tuple[int, str, str]]],
+    all_paths: list[str],
+) -> bool:
+    """Accept archive-generated knowledge files named by a frozen Summary.
+
+    The projection is generated during archive, after the active Contract has
+    moved. A legacy Contract may predate the default knowledge scope, so the
+    archived Summary's exact generated paths are the durable ownership evidence
+    for this derived surface.
+    """
+    if path not in all_paths:
+        return False
+    direct_owned: set[str] = set()
+    for _contract_path, _contract, summary, _rank in archive_entries:
+        changed = set(changed_file_paths(summary))
+        direct_owned.update(
+            candidate
+            for candidate in changed & set(all_paths)
+            if candidate == ".ai/knowledge/index.json"
+            or candidate == ".ai/knowledge/dependencies.json"
+            or candidate.startswith(".ai/knowledge/work-items/")
+        )
+    if path in direct_owned:
+        return True
+    if path == ".ai/knowledge/dependencies.json":
+        return any(
+            candidate == ".ai/knowledge/index.json"
+            or candidate.startswith(".ai/knowledge/work-items/")
+            for candidate in direct_owned
+        )
+    if not path.startswith(".ai/knowledge/work-items/"):
+        return False
+    pending = [path]
+    visited: set[str] = set()
+    while pending:
+        current = pending.pop()
+        if current in visited:
+            continue
+        visited.add(current)
+        for dependency in _knowledge_projection_dependencies(current):
+            if dependency in direct_owned:
+                return True
+            if dependency in all_paths and dependency.startswith(".ai/knowledge/work-items/"):
+                pending.append(dependency)
+    return False
+
+
+def recovery_only_contract_paths(base: str) -> list[Path]:
+    """Discover archived owners for a receipt-bound PR with no archive diff.
+
+    A same-Work-Item recovery may be opened after the original PR has merged.
+    Its archived Contract/Summary are already on the base, so they cannot
+    appear as additions in the recovery PR.  The recovery receipt remains the
+    authority for the narrowly permitted paths.
+    """
+    directory = PROJECT_ROOT / RECEIPT_DIRECTORY
+    if not directory.is_dir():
+        return []
+    found: dict[str, Path] = {}
+    for receipt_path in sorted(directory.glob("*.json")):
+        try:
+            receipt = load_json(receipt_path)
+        except (OSError, json.JSONDecodeError, ValueError):
+            continue
+        if not isinstance(receipt, dict) or receipt.get("prBaseCommit") != base:
+            continue
+        task = receipt.get("workItemId")
+        if not isinstance(task, str) or not task:
+            continue
+        try:
+            artifacts = archive_files(PROJECT_ROOT, task)
+        except (OSError, ValueError):
+            continue
+        if validate_recovery_receipt(PROJECT_ROOT, receipt, pr_base=base):
+            continue
+        found[task] = artifacts["contract"]
+    return [found[task] for task in sorted(found)]
 
 
 def validate_pr_bundle(base: str, contract_paths: list[Path]) -> list[str]:
@@ -668,6 +850,7 @@ def validate_pr_bundle(base: str, contract_paths: list[Path]) -> list[str]:
                 f"{contract_rel}, {summary_rel}"
             )
 
+    contract_paths = contract_paths or recovery_only_contract_paths(base)
     if not contract_paths:
         return ["PR diff must contain at least one archived Work Item Contract"]
 
@@ -833,6 +1016,8 @@ def validate_pr_bundle(base: str, contract_paths: list[Path]) -> list[str]:
     all_paths = changed_paths(
         {"baseCommit": base, "baselineDirtyPaths": []}, ignore_baseline_dirty=True
     )
+    issues.extend(knowledge_index_issues())
+    issues.extend(capability_truth_dependency_issues(all_paths))
     report_required = (
         HUMAN_REPORT_JSON in all_paths
         or HUMAN_REPORT_MARKDOWN in all_paths
@@ -841,6 +1026,12 @@ def validate_pr_bundle(base: str, contract_paths: list[Path]) -> list[str]:
             HUMAN_REPORT_JSON in entry[1].get("scope", [])
             for entry in archive_entries
             if isinstance(entry[1].get("scope"), list)
+        )
+        or any(
+            entry[1].get("contractVersion") == 2
+            and isinstance(entry[2].get("archiveSequence"), int)
+            and not isinstance(entry[2].get("archiveSequence"), bool)
+            for entry in archive_entries
         )
     )
     if report_required and archive_entries:
@@ -903,6 +1094,11 @@ def validate_pr_bundle(base: str, contract_paths: list[Path]) -> list[str]:
         """Accept generated archive metadata only when archived evidence names it."""
         if path in report_paths:
             return current_archive_owns_report_pair()
+        if path in {
+            ".ai/knowledge/index.json",
+            ".ai/knowledge/dependencies.json",
+        } or path.startswith(".ai/knowledge/work-items/"):
+            return archive_owns_knowledge_projection(path, archive_entries, all_paths)
         if path in current_archive_generated_paths():
             return True
         return path == generated_archive_index and any(
@@ -935,7 +1131,16 @@ def validate_pr_bundle(base: str, contract_paths: list[Path]) -> list[str]:
         )
 
     for path in all_paths:
-        if path in audit_paths or included(path, exempt) or path in no_op_restore_paths:
+        receipt_bound_recovery = any(
+            path in permitted_paths for permitted_paths in same_item_recovery_paths.values()
+        )
+        if (
+            path in audit_paths
+            or included(path, exempt)
+            or path in no_op_restore_paths
+            or is_archived_generated_evidence(path)
+            or receipt_bound_recovery
+        ):
             continue
         owners = [
             entry

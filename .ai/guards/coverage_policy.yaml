@@ -441,6 +441,11 @@ associations:
       - "scripts/ai_check_test_weakening.py"
     tests:
       - "tests/test_test_weakening.py"
+  aiCockpitUpgradeFeatureChecklist:
+    production:
+      - "scripts/ai_*.py"
+    tests:
+      - "tests/ai_cockpit/upgrade_feature_checklist_test.py"
   byModule:
     production:
       - "**"

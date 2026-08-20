@@ -39,6 +39,7 @@ from ai_lifecycle_truth import (
     superseded_summary_validation_exception,
 )
 from ai_observability import AiEvent, AiEventLevel, AiEventType, create_observability
+from ai_outcome_gate import validate_terminal_outcome
 from ai_projection_lease import ProjectionLeaseError, requires_lease
 from ai_projection_lease import acquire as acquire_projection_lease
 from ai_work_item_intelligence import record_fact_once
@@ -46,6 +47,52 @@ from ai_work_item_intelligence import record_fact_once
 ACTIVE_DIR = PROJECT_ROOT / ".ai" / "work-items" / "active"
 ARCHIVE_BASE_DIR = PROJECT_ROOT / ".ai" / "work-items" / "archive"
 TRACEABILITY_MANIFEST = Path("docs/reference/remediation-instruction-traceability.json")
+
+
+def _generate_knowledge_projection(contract_path: Path) -> Path | None:
+    """Generate the projection only after archive paths are final."""
+    work_item_id = contract_path.name.removesuffix(".contract.json")
+    summary_path = contract_path.with_name(f"{work_item_id}.summary.json")
+    outcome_path = contract_path.with_name(f"{work_item_id}.outcome.json")
+    if not outcome_path.is_file():
+        # Historic/superseded records without a terminal Outcome remain
+        # discoverable through the authoritative archive index; no projection
+        # is fabricated for them.
+        return None
+    from ai_check_knowledge_index import check_index, check_record
+    from ai_generate_knowledge_record import (
+        _write_if_changed,
+        build_record,
+        rebuild_existing_projections,
+        rebuild_index,
+    )
+
+    record = build_record(
+        contract_path,
+        summary_path,
+        outcome_path,
+        repo_root=PROJECT_ROOT,
+    )
+    record_path = PROJECT_ROOT / ".ai" / "knowledge" / "work-items" / f"{work_item_id}.json"
+    index_path = PROJECT_ROOT / ".ai" / "knowledge" / "index.json"
+    _write_if_changed(record_path, record)
+    rebuild_index(
+        record_path.parent,
+        index_path,
+        record_updates={work_item_id: record},
+    )
+    rebuild_existing_projections(
+        repo_root=PROJECT_ROOT,
+        include_work_item_ids=[work_item_id],
+    )
+    issues = check_record(record_path, repo_root=PROJECT_ROOT)
+    issues.extend(check_index(index_path, records_dir=record_path.parent, repo_root=PROJECT_ROOT))
+    if issues:
+        raise ValueError(
+            "generated Implementation Knowledge projection is stale or invalid: "
+            + "; ".join(issues)
+        )
+    return record_path
 
 
 def owned_success_criteria_path(contract_path: Path) -> Path:
@@ -702,7 +749,12 @@ def _write_archive_index(index: dict[str, object]) -> None:
 
 
 def _validate_archive_inputs(
-    contract_path: Path, contract: dict, summary_path: Path | None, summary: dict | None
+    contract_path: Path,
+    contract: dict,
+    summary_path: Path | None,
+    summary: dict | None,
+    *,
+    require_outcome: bool = True,
 ) -> list[str]:
     issues = validate_contract(contract)
     if summary_path is None or summary is None:
@@ -717,6 +769,10 @@ def _validate_archive_inputs(
         contract_path=contract_rel,
         summary_path=summary_rel,
     )
+    superseded = is_valid_superseded_transition(
+        contract_path=contract_path,
+        work_item_id=str(contract.get("workItemId", "")),
+    )
     if not issues and superseded_archive_validation_exception(
         contract_path=contract_path,
         work_item_id=str(contract.get("workItemId", "")),
@@ -724,6 +780,26 @@ def _validate_archive_inputs(
     ):
         return []
     issues.extend(summary_issues)
+    if require_outcome and not superseded:
+        outcome_path = contract_path.with_name(
+            contract_path.name.replace(".contract.json", ".outcome.json")
+        )
+        markdown_path = outcome_path.with_suffix(".md")
+        expected_head = None
+        if (PROJECT_ROOT / ".git").exists():
+            head_result = _run_git_metadata(["rev-parse", "HEAD"])
+            if head_result.returncode == 0 and head_result.stdout.strip():
+                expected_head = head_result.stdout.strip()
+        gate = validate_terminal_outcome(
+            outcome_path,
+            markdown_path,
+            expected_task_id=str(contract.get("workItemId", "")),
+            contract_path=contract_path,
+            summary_path=summary_path,
+            expected_base_commit=contract.get("baseCommit"),
+            expected_head_commit=expected_head,
+        )
+        issues.extend(f"Task Outcome gate: {issue}" for issue in gate.issues)
     return issues
 
 
@@ -766,6 +842,7 @@ def _execute_archive_transaction(
     preserve_superseded_outcome: bool = False,
 ) -> None:
     """Execute and roll back one archive mutation as a single transaction."""
+    work_item_id = contract_path.name.removesuffix(".contract.json")
     index_path = _archive_index_path()
     index_backup = index_path.read_bytes() if index_path.exists() else None
     status_path = PROJECT_ROOT / ".ai" / "cockpit" / "current_status.md"
@@ -817,17 +894,35 @@ def _execute_archive_transaction(
                     )
                     if not preserve_superseded_outcome:
                         save_json(outcome_target, rewritten_outcome)
-                    if any(content is not None for content in report_backups.values()):
-                        if not all(path.is_file() for path in report_paths):
-                            raise ValueError(
-                                "Human Benefit Report archive refresh requires both report files"
-                            )
-                        from ai_generate_human_report import (
-                            generate_human_report,
-                            render_human_report,
-                        )
+                    from ai_generate_human_report import (
+                        generate_human_report,
+                        render_human_report,
+                    )
 
-                        report = generate_human_report(rewritten_outcome, phase="review")
+                    has_prior_report = any(
+                        content is not None for content in report_backups.values()
+                    )
+                    if has_prior_report and not all(path.is_file() for path in report_paths):
+                        raise ValueError(
+                            "Human Benefit Report archive refresh requires both report files"
+                        )
+                    try:
+                        report = generate_human_report(
+                            rewritten_outcome,
+                            phase="review",
+                            contract=load_json(target_dir / contract_path.name),
+                        )
+                    except ValueError:
+                        # A superseded predecessor may intentionally retain a
+                        # historical or fixture-only Outcome whose bytes are
+                        # bound by lifecycle evidence but cannot produce a new
+                        # Human Benefit Report. If a report already exists,
+                        # preserve the previous fail-closed behavior; when no
+                        # report exists, leave it absent and keep the archive
+                        # transaction focused on its canonical evidence.
+                        if has_prior_report:
+                            raise
+                    else:
                         save_json(report_paths[0], report)
                         report_paths[1].write_text(render_human_report(report), encoding="utf-8")
                         refreshed_report_paths = True
@@ -923,10 +1018,71 @@ def _execute_archive_transaction(
                             ),
                         }
                     )
+                if (target_dir / f"{work_item_id}.outcome.json").is_file():
+                    knowledge_paths = (
+                        (
+                            f".ai/knowledge/work-items/{work_item_id}.json",
+                            "Generated evidence-bound Implementation Knowledge Record.",
+                        ),
+                        (
+                            ".ai/knowledge/index.json",
+                            "Rebuilt deterministic Implementation Knowledge index.",
+                        ),
+                    )
+                    for knowledge_path, reason in knowledge_paths:
+                        if knowledge_path not in existing:
+                            changed.append({"path": knowledge_path, "reason": reason})
+                            existing.add(knowledge_path)
             summary_target = target_dir / summary_path.name
             assert summary_tmp is not None
             save_json(summary_tmp, summary)
             summary_tmp.replace(summary_target)
+
+            # Archive path projection changes the Summary bytes. Refresh the
+            # current Outcome's content bindings only after the final archived
+            # Summary exists, then regenerate its Markdown and Human Benefit
+            # Report from that exact persisted state. Otherwise PR/close would
+            # correctly discover a stale summaryDigest after archive.
+            if not preserve_superseded_outcome:
+                from ai_generate_human_report import generate_human_report, render_human_report
+                from ai_render_task_outcome import render_task_outcome
+
+                for path in outcome_paths:
+                    if not path.name.endswith(".outcome.json"):
+                        continue
+                    outcome_target = target_dir / path.name
+                    outcome = load_json(outcome_target)
+                    bindings = outcome.get("bindings")
+                    if not isinstance(bindings, dict):
+                        raise TypeError("archived Outcome bindings are missing")
+                    bindings["contractDigest"] = hashlib.sha256(
+                        (target_dir / contract_path.name).read_bytes()
+                    ).hexdigest()
+                    bindings["summaryDigest"] = hashlib.sha256(
+                        summary_target.read_bytes()
+                    ).hexdigest()
+                    verification = summary.get("verification", [])
+                    bindings["verificationDigest"] = hashlib.sha256(
+                        json.dumps(
+                            verification,
+                            ensure_ascii=False,
+                            sort_keys=True,
+                            separators=(",", ":"),
+                        ).encode("utf-8")
+                    ).hexdigest()
+                    save_json(outcome_target, outcome)
+                    outcome_markdown_target = outcome_target.with_suffix(".md")
+                    outcome_markdown_target.write_text(
+                        render_task_outcome(outcome), encoding="utf-8"
+                    )
+                    report = generate_human_report(
+                        outcome,
+                        phase="review",
+                        contract=load_json(target_dir / contract_path.name),
+                    )
+                    save_json(report_paths[0], report)
+                    report_paths[1].write_text(render_human_report(report), encoding="utf-8")
+                    refreshed_report_paths = True
 
             save_json(
                 manifest_target,
@@ -1066,7 +1222,11 @@ def main() -> int:
             return 1
 
     issues = _validate_archive_inputs(
-        contract_path, contract, summary_path if has_summary else None, summary
+        contract_path,
+        contract,
+        summary_path if has_summary else None,
+        summary,
+        require_outcome=not args.dry_run,
     )
     if issues:
         for issue in issues:
@@ -1201,6 +1361,12 @@ def main() -> int:
         print(f"ERROR: Failed to archive Work Item: {exc}", file=sys.stderr)
         return 1
 
+    try:
+        knowledge_record_path = _generate_knowledge_projection(target_dir / contract_path.name)
+    except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+        print(f"ERROR: archived Work Item knowledge projection failed: {exc}", file=sys.stderr)
+        return 1
+
     obs = create_observability(work_item_id=work_item_id)
     record_fact_once(
         str(work_item_id),
@@ -1216,6 +1382,8 @@ def main() -> int:
             fields={"year": target_dir.name, "files": len(files_to_move)},
         )
     )
+    if knowledge_record_path is not None:
+        print(f"Implementation Knowledge Record: {knowledge_record_path.relative_to(PROJECT_ROOT)}")
     getattr(obs, "lifecycle_phase_finished", lambda *_args, **_kwargs: None)(
         "archive", duration_ms=int((time.time() - phase_start) * 1000), cache_outcome="miss"
     )

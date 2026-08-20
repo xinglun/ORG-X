@@ -8,6 +8,8 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
+from ai_generate_task_outcome import _render_implementation_approach
+
 SECTION_TITLES = (
     ("outcomeSummary", "Outcome Summary"),
     ("taskOverview", "Task Overview"),
@@ -26,6 +28,7 @@ SECTION_TITLES = (
     ("residualRisks", "Residual Risks"),
     ("humanDecisions", "Human Decisions"),
     ("evidence", "Evidence"),
+    ("implementationApproach", "Implementation Approach"),
 )
 
 
@@ -64,6 +67,12 @@ def render_task_outcome(outcome: Mapping[str, Any]) -> str:
     for key, title in SECTION_TITLES:
         lines.append(f"## {title}")
         value = sections.get(key, []) if isinstance(sections, Mapping) else []
+        if key == "implementationApproach":
+            lines.extend(
+                _render_implementation_approach(value if isinstance(value, Mapping) else {})
+            )
+            lines.append("")
+            continue
         if key in {"outcomeSummary", "taskOverview"}:
             lines.append(value if isinstance(value, str) and value else "None")
         elif isinstance(value, list) and value:

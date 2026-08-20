@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "records": {
+    "upgrade_ai_cockpit": {
+      "recordPath": ".ai/knowledge/work-items/upgrade_ai_cockpit.json",
+      "dependencies": [
+        ".ai/cockpit/upgrade-conflict-report.json",
+        ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+        ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json",
+        ".ai/work-items/archive/2026/upgrade_ai_cockpit.outcome.json",
+        ".ai/work-items/archive/2026/upgrade_ai_cockpit.summary.json",
+        "tests/ai_cockpit/close_work_item_test.py",
+        "tests/ai_cockpit/production_validation_policy_test.py"
+      ]
+    }
+  },
+  "byPath": {
+    ".ai/cockpit/upgrade-conflict-report.json": [
+      "upgrade_ai_cockpit"
+    ],
+    ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json": [
+      "upgrade_ai_cockpit"
+    ],
+    ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json": [
+      "upgrade_ai_cockpit"
+    ],
+    ".ai/work-items/archive/2026/upgrade_ai_cockpit.outcome.json": [
+      "upgrade_ai_cockpit"
+    ],
+    ".ai/work-items/archive/2026/upgrade_ai_cockpit.summary.json": [
+      "upgrade_ai_cockpit"
+    ],
+    "tests/ai_cockpit/close_work_item_test.py": [
+      "upgrade_ai_cockpit"
+    ],
+    "tests/ai_cockpit/production_validation_policy_test.py": [
+      "upgrade_ai_cockpit"
+    ]
+  }
+}

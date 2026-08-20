@@ -1,0 +1,19 @@
+{
+  "format": "ai-cockpit-release-freeze",
+  "version": 1,
+  "state": "frozen",
+  "sourceTree": "3e1d7d2924a34bc9b6b4ec4425b96ca6b7c6b9932e64d9a5a96fefb40400aa0f",
+  "archiveSha256": "3345a59800713b3ae640eccb0c9a2031c63412eb86b70d3cddcef10ba9e21961",
+  "releaseTag": "v0.5.62",
+  "lifecycle": {
+    "state": "premerge_finalized",
+    "command": "make finalize-release-freeze-premerge TASK=wi-26-final-release-v0-5-63",
+    "defaultBranch": "main",
+    "premergeWorkItem": "wi-26-final-release-v0-5-63",
+    "baseCommit": "3e1d7d2924a34bc9b6b4ec4425b96ca6b7c6b9932e64d9a5a96fefb40400aa0f",
+    "worktreeClean": true
+  },
+  "sourceCommit": "d2d17f1f53578c692c1f554eb8813afcd1aa0edb",
+  "tagTarget": "d2d17f1f53578c692c1f554eb8813afcd1aa0edb",
+  "metadataCommit": "d2d17f1f53578c692c1f554eb8813afcd1aa0edb"
+}

@@ -37,6 +37,19 @@ class EvidenceDependencies:
     test_paths: tuple[str, ...]
 
 
+def source_bound_evidence_is_affected(paths: list[str], dependencies: EvidenceDependencies) -> bool:
+    """Return whether a change requires the bounded source-evidence gate.
+
+    The gate is intentionally conditional: unrelated Work Items must not pay
+    for a repository-wide evidence recheck, while any changed input or
+    generated projection must be validated before expensive quality checks.
+    """
+    changed = set(paths)
+    if changed.intersection(SOURCE_BOUND_GENERATED_DOCUMENTATION_PATHS):
+        return True
+    return any(path in dependencies.capability_ids_by_path for path in changed)
+
+
 def _matrix_error(detail: str) -> EvidenceDependencyError:
     return EvidenceDependencyError(f"{MATRIX_PATH}: {detail}")
 

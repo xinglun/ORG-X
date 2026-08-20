@@ -1,0 +1,46 @@
+{
+  "counts": {
+    "green": 0,
+    "red": 1,
+    "unknown": 0,
+    "yellow": 0
+  },
+  "generatedAt": "2026-08-16T03:36:16Z",
+  "indexDigest": "sha256:2e8cc66b20698ba61644d8dda0ca89960234766b3a508517bc48f2dd7658b4e6",
+  "items": [
+    {
+      "baseCommit": "e862e1a68df67c4e975b97ac84c1f950b44dd785",
+      "blockers": [
+        {
+          "code": "governance_driver",
+          "detail": "summary.intentAlignment is missing"
+        }
+      ],
+      "blocking": true,
+      "branch": "codex/wi-06-status-interface",
+      "diagnostics": [],
+      "evidenceFreshness": {
+        "reason": "verification evidence matches the current commit",
+        "state": "fresh"
+      },
+      "humanDecisionRequired": false,
+      "lastVerificationAt": "2026-08-16T03:33:17Z",
+      "phase": "review",
+      "safeActions": [
+        "stop",
+        "resolve_blockers",
+        "refresh_status"
+      ],
+      "schemaVersion": 1,
+      "sourceDigests": {
+        "contract": "sha256:ba39a50e8a68411b07f7c008fca1b6a6730c732bb0d72c8a8d2560ccf2afd8d7",
+        "summary": "sha256:39609268d5a09c6c4505777a42cee382ef2a9e52f0340f08832bd0b01818db47"
+      },
+      "state": "red",
+      "statusDigest": "sha256:7518284e349682b26d49e10a5e9c2c747b64e909f046801608d0288975a38f03",
+      "updatedAt": "2026-08-16T03:36:16Z",
+      "workItem": "wi-06-status-interface"
+    }
+  ],
+  "schemaVersion": 1
+}

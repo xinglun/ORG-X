@@ -39,6 +39,7 @@ SECTION_TITLES = {
     "residualRisks": "Residual Risks",
     "humanDecisions": "Human Decisions",
     "evidence": "Evidence",
+    "implementationApproach": "Implementation Approach",
 }
 SECRET_KEY = re.compile(
     r"(password|passwd|secret|token|api[_-]?key|private[_-]?key)", re.IGNORECASE
@@ -66,6 +67,160 @@ def _evidence_refs(value: Any, fallback: str) -> list[dict[str, str]]:
         elif isinstance(item, str) and item.strip():
             refs.append({"source": fallback, "subject": item.strip()})
     return refs
+
+
+def _load_summary_approach(evidence: Mapping[str, Any]) -> Mapping[str, Any] | None:
+    """Read the approach only from an explicitly supplied Summary evidence source."""
+
+    for item in evidence.get("sources", []) if isinstance(evidence.get("sources"), list) else []:
+        if not isinstance(item, Mapping):
+            continue
+        source = item.get("source")
+        if not isinstance(source, str) or not source.endswith(".summary.json"):
+            continue
+        try:
+            summary = json.loads(Path(source).read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        for key in ("implementationApproach", "configurationApproach"):
+            candidate = summary.get(key)
+            if isinstance(candidate, Mapping):
+                return dict(candidate)
+    return None
+
+
+def _summary_source_present(evidence: Mapping[str, Any]) -> bool:
+    sources = evidence.get("sources")
+    if not isinstance(sources, list):
+        return False
+    return any(
+        isinstance(item, Mapping)
+        and isinstance(item.get("source"), str)
+        and item["source"].endswith(".summary.json")
+        for item in sources
+    )
+
+
+def _legacy_summary_contract_has_no_approach_signal(evidence: Mapping[str, Any]) -> bool:
+    """Keep pre-approach Contracts readable without hiding new applicability gaps."""
+
+    sources = evidence.get("sources")
+    if not isinstance(sources, list):
+        return False
+    for item in sources:
+        if not isinstance(item, Mapping):
+            continue
+        source = item.get("source")
+        if not isinstance(source, str) or not source.endswith(".contract.json"):
+            continue
+        try:
+            contract = json.loads(Path(source).read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            # Some archived projection tests intentionally bind relative
+            # sources to an isolated repository root outside the process cwd.
+            # Keep those historic records readable; ai_finish resolves and
+            # validates its current Contract before projecting new records.
+            return True
+        raw_request = contract.get("rawUserRequest") if isinstance(contract, Mapping) else None
+        return not isinstance(raw_request, str) or not raw_request.strip()
+    return False
+
+
+def _incomplete_approach() -> dict[str, Any]:
+    return {
+        "approachType": "implementation",
+        "status": "incomplete",
+        "summary": {
+            "text": "Implementation Approach was not recorded; the customer-facing explanation remains incomplete.",
+            "status": "unknown",
+            "evidence": [],
+        },
+        "mechanism": {
+            "text": "The mechanism is unknown until the Summary records an evidence-bound approach.",
+            "status": "unknown",
+            "evidence": [],
+        },
+        "affectedComponents": [],
+        "designDecisions": [],
+        "technicalDetails": [],
+        "evidence": [],
+    }
+
+
+def _not_applicable_approach() -> dict[str, Any]:
+    approach = _incomplete_approach()
+    approach["status"] = "not_applicable"
+    approach["summary"]["text"] = (
+        "No Summary approach source was supplied for this standalone projection."
+    )
+    approach["mechanism"]["text"] = (
+        "Implementation Approach applicability is not determined by this standalone input."
+    )
+    return approach
+
+
+def _approach_claim_statuses(value: Any) -> list[str]:
+    statuses: list[str] = []
+    if isinstance(value, Mapping):
+        if value.get("status") in {"verified", "unverified", "unknown"}:
+            statuses.append(str(value["status"]))
+        for child in value.values():
+            statuses.extend(_approach_claim_statuses(child))
+    elif isinstance(value, list):
+        for child in value:
+            statuses.extend(_approach_claim_statuses(child))
+    return statuses
+
+
+def _render_implementation_approach(approach: Mapping[str, Any]) -> list[str]:
+    def claim_text(value: Any, fallback: str) -> str:
+        if not isinstance(value, Mapping):
+            return fallback
+        text = _safe_text(value.get("text"))
+        if text:
+            return text
+        return _safe_text(value.get("detail"), _safe_text(value.get("decision"), fallback))
+
+    def status(value: Any) -> str:
+        return (
+            _safe_text(value.get("status"), "unknown") if isinstance(value, Mapping) else "unknown"
+        )
+
+    lines = [
+        f"Status: `{_safe_text(approach.get('status'), 'incomplete')}`",
+        f"Customer summary ({status(approach.get('summary'))}): {claim_text(approach.get('summary'), 'None recorded.')}",
+        f"Mechanism ({status(approach.get('mechanism'))}): {claim_text(approach.get('mechanism'), 'None recorded.')}",
+        "",
+        "Affected components",
+    ]
+    components = approach.get("affectedComponents", [])
+    lines.extend(
+        f"- {_safe_text(item.get('component'), 'Component')}: {_safe_text(item.get('detail'), 'None recorded.')} ({status(item)})"
+        for item in components
+        if isinstance(item, Mapping)
+    ) if isinstance(components, list) and components else lines.append("- None recorded.")
+    lines.extend(["", "Design decisions"])
+    decisions = approach.get("designDecisions", [])
+    lines.extend(
+        f"- {_safe_text(item.get('decision'), 'Decision')}: {_safe_text(item.get('reason'), 'None recorded.')} ({status(item)})"
+        for item in decisions
+        if isinstance(item, Mapping)
+    ) if isinstance(decisions, list) and decisions else lines.append("- None recorded.")
+    lines.extend(["", "### Technical details"])
+    details = approach.get("technicalDetails", [])
+    lines.extend(
+        f"- {_safe_text(item.get('topic'), 'Detail')}: {_safe_text(item.get('detail'), 'None recorded.')} ({status(item)})"
+        for item in details
+        if isinstance(item, Mapping)
+    ) if isinstance(details, list) and details else lines.append("- None recorded.")
+    lines.extend(["", "### Evidence"])
+    evidence = approach.get("evidence", [])
+    lines.extend(
+        f"- {_safe_text(item.get('claim'), 'Claim')}: {_safe_text(item.get('source'), 'source')}#{_safe_text(item.get('subject'), 'subject')} ({status(item)})"
+        for item in evidence
+        if isinstance(item, Mapping)
+    ) if isinstance(evidence, list) and evidence else lines.append("- None recorded.")
+    return lines
 
 
 def _event_sort_key(event: Mapping[str, Any]) -> tuple[str, str]:
@@ -399,7 +554,11 @@ def _status(
         return "cancelled"
     if "external_handoff_timeout" in types:
         return "blocked"
-    if "stop" in types:
+    if any(
+        event.get("eventType") == "stop"
+        and _state(event) not in {"resolved", "mitigated", "accepted", "not_applicable"}
+        for event in events
+    ):
         return "needs_human_confirmation"
     return "completed_with_warnings" if warnings else "completed"
 
@@ -424,6 +583,21 @@ def generate_outcome(
     """Build one deterministic Outcome object from structured evidence/events."""
 
     evidence = evidence or {}
+    approach = evidence.get("implementationApproach")
+    if not isinstance(approach, Mapping):
+        approach = evidence.get("configurationApproach")
+    if not isinstance(approach, Mapping):
+        approach = _load_summary_approach(evidence)
+    if not isinstance(approach, Mapping):
+        approach = (
+            _not_applicable_approach()
+            if _legacy_summary_contract_has_no_approach_signal(evidence)
+            else _incomplete_approach()
+            if _summary_source_present(evidence)
+            else _not_applicable_approach()
+        )
+    else:
+        approach = dict(approach)
     ordered = sorted((dict(event) for event in events), key=_event_sort_key)
     findings: list[dict[str, Any]] = []
     finding_keys: set[str] = set()
@@ -456,10 +630,38 @@ def generate_outcome(
         for item in evidence.get("forbiddenClaims", [])
         if isinstance(item, str) and item.strip()
     ]
+    approach_statuses = _approach_claim_statuses(approach)
+    approach_warning = None
+    if approach.get("status") == "incomplete":
+        approach_warning = "Implementation Approach is incomplete; do not claim the implementation is fully explained."
+    elif approach.get("status") == "complete" and any(
+        status in {"unverified", "unknown"} for status in approach_statuses
+    ):
+        approach_warning = "Implementation Approach contains unverified or unknown claims; do not treat them as confirmed facts."
+    if approach_warning:
+        warnings.append(approach_warning)
+        limitations.append(
+            {
+                "sourceWarning": approach_warning,
+                "title": "Implementation Approach evidence is incomplete",
+                "affectedClaims": ["implementation_mechanism"],
+                "requiredEvidence": ["code, configuration, dependency, or test evidence"],
+                "forbiddenClaims": ["Do not claim the Implementation Approach is fully verified."],
+            }
+        )
+        forbidden_claims.append("Do not claim the Implementation Approach is fully verified.")
+        non_risk_explanations.append(
+            {
+                "sourceWarning": approach_warning,
+                "reason": "The approach record is retained as an explicit knowledge-completeness warning.",
+                "evidence": [],
+            }
+        )
     all_evidence: list[dict[str, str]] = _evidence_refs(
         evidence.get("evidence"), "structured-evidence"
     )
     all_evidence.extend(_evidence_refs(evidence.get("sources"), "structured-evidence"))
+    all_evidence.extend(_evidence_refs(approach.get("evidence"), "implementation-approach"))
     publication = evidence.get("publication")
     if isinstance(publication, dict):
         tag = _safe_text(publication.get("tag"), "published-release")
@@ -628,6 +830,7 @@ def generate_outcome(
         "residualRisks": residual,
         "humanDecisions": human_decisions,
         "evidence": unique_refs(all_evidence),
+        "implementationApproach": approach,
     }
     locale = _safe_text(evidence.get("locale"), _safe_text(bindings.get("locale"), "en"))
     if locale not in SUPPORTED_LOCALES:
@@ -796,6 +999,12 @@ def render_markdown(outcome: Mapping[str, Any]) -> str:
     for key, title in SECTION_TITLES.items():
         lines.extend([f"## {title}"])
         value = sections[key]
+        if key == "implementationApproach":
+            lines.extend(
+                _render_implementation_approach(value if isinstance(value, Mapping) else {})
+            )
+            lines.append("")
+            continue
         if isinstance(value, list):
             if not value:
                 lines.append("None")

@@ -1,0 +1,16 @@
+{
+  "handoffVersion": 1,
+  "state": "awaiting_external_receipt",
+  "bindings": {
+    "workItemId": "publish-v0-5-69-provider-release-20260820",
+    "branch": "codex/publish-v0-5-69-provider-release-20260820",
+    "headCommit": "cda4e1a24e6492e69ee6a85878974da8a3711a76",
+    "tree": "194908a9d75691dfefbc78af018b4d23c1eaf168",
+    "contractDigest": "97c93adef55751041bc4c9be4b10ebf2c41673d46e774a447dc1c6355d25e78e",
+    "summaryDigest": "564c9aec4f41137be83c4b12fd9a53fdd0fe7107db577516b1656a23e852668c"
+  },
+  "action": "publish-v0-5-69",
+  "fulfiller": "provider_release",
+  "receiptKind": "provider-release-receipt",
+  "deadline": "2026-08-20T19:30:00Z"
+}

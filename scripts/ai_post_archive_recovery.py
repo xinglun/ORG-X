@@ -25,10 +25,13 @@ ALLOWED_GATES = {
     "archiveEvidence",
     "hostedAggregateCoverage",
     "hostedFunctionalFailure",
+    "hostedGovernanceFailure",
 }
 RECOVERABLE_OUTCOME_STATUSES = {"completed", "completed_with_warnings"}
+HOSTED_RECOVERABLE_OUTCOME_STATUSES = RECOVERABLE_OUTCOME_STATUSES | {"needs_human_confirmation"}
 HOSTED_RECEIPT_VERSION = 2
 HOSTED_FUNCTIONAL_RECEIPT_VERSION = 3
+HOSTED_GOVERNANCE_RECEIPT_VERSION = 4
 GITHUB_REPOSITORY = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")
 COVERAGE_FAILURE = re.compile(
     r"Required test coverage of (?P<required>\d+(?:\.\d+)?)% not reached\.\s*"
@@ -36,6 +39,10 @@ COVERAGE_FAILURE = re.compile(
     re.IGNORECASE,
 )
 FUNCTIONAL_FAILURE = re.compile(r"\bBLOCKED:.*\bRecovery:", re.IGNORECASE | re.DOTALL)
+GOVERNANCE_FAILURE = re.compile(
+    r"quality-full\s+blocked.*?Failed\s+gate:\s+\S+.*?Recovery:\s+\S+",
+    re.IGNORECASE | re.DOTALL,
+)
 PYTEST_FAILURE_NODE = re.compile(r"(?m)^FAILED\s+\S+::\S+")
 PYTEST_FAILURE_SUMMARY = re.compile(r"(?mi)^[=\s]*\d+\s+failed(?:,|\s)")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
@@ -47,11 +54,18 @@ def digest(path: Path) -> str:
 
 def functional_failure_marker(text: str) -> str | None:
     """Return the supported, concrete functional-failure signal in a job log."""
+    if governance_failure_marker(text) is not None:
+        return "quality_gate_blocked"
     if FUNCTIONAL_FAILURE.search(text) is not None:
         return "blocked_recovery"
     if PYTEST_FAILURE_NODE.search(text) and PYTEST_FAILURE_SUMMARY.search(text):
         return "pytest_failure"
     return None
+
+
+def governance_failure_marker(text: str) -> str | None:
+    """Return the explicit quality-gate blocked signal from a hosted log."""
+    return "quality_gate_blocked" if GOVERNANCE_FAILURE.search(text) is not None else None
 
 
 def junit_artifact_failure(
@@ -122,12 +136,20 @@ def archive_files(root: Path, task: str) -> dict[str, Path]:
     return {name: paths[0] for name, paths in found.items()}
 
 
-def _require_recoverable_outcome(artifacts: dict[str, Path], task: str) -> None:
+def _require_recoverable_outcome(
+    artifacts: dict[str, Path], task: str, *, allow_human_confirmation: bool = False
+) -> None:
     outcome = json.loads(artifacts["outcome"].read_text(encoding="utf-8"))
-    if (
-        outcome.get("workItemId") != task
-        or outcome.get("status") not in RECOVERABLE_OUTCOME_STATUSES
-    ):
+    allowed_statuses = (
+        HOSTED_RECOVERABLE_OUTCOME_STATUSES
+        if allow_human_confirmation
+        else RECOVERABLE_OUTCOME_STATUSES
+    )
+    if outcome.get("workItemId") != task or outcome.get("status") not in allowed_statuses:
+        if allow_human_confirmation:
+            raise ValueError(
+                "same-Work-Item hosted recovery requires a completed or explicitly human-confirmed archived Outcome"
+            )
         raise ValueError("same-Work-Item recovery requires a completed archived Outcome")
 
 
@@ -312,6 +334,11 @@ def validate_recorded_provider_binding(provider: object, *, gate: str) -> list[s
                 or SHA256.fullmatch(junit["sha256"]) is None
             ):
                 return ["recorded functional JUnit artifact evidence is invalid"]
+    elif gate == "hostedGovernanceFailure":
+        if not isinstance(provider.get("jobName"), str) or not provider["jobName"].strip():
+            return ["recorded governance provider job name is invalid"]
+        if provider.get("failureMarker") != "quality_gate_blocked":
+            return ["recorded governance provider failure marker is invalid"]
     else:
         return ["recorded provider gate is unsupported"]
     # Keep explicit local variables above: each receipt fact is independently
@@ -427,7 +454,7 @@ def open_hosted_post_archive_recovery(
     if not worktree_clean():
         raise ValueError("post-archive recovery must start from a clean committed worktree")
     artifacts = archive_files(root, task)
-    _require_recoverable_outcome(artifacts, task)
+    _require_recoverable_outcome(artifacts, task, allow_human_confirmation=True)
     provider = verified_hosted_coverage_failure(
         repository=repository,
         pull_request=pull_request,
@@ -544,6 +571,30 @@ def verified_hosted_functional_failure(
     return provider
 
 
+def verified_hosted_governance_failure(
+    *,
+    repository: object,
+    pull_request: object,
+    failed_candidate_head: object,
+    run_id: object,
+    job_id: object,
+    fetch_provider: Callable[[str], bytes] | None = None,
+) -> dict:
+    """Bind an explicit hosted quality-gate block to one PR candidate."""
+    provider = verified_hosted_functional_failure(
+        repository=repository,
+        pull_request=pull_request,
+        failed_candidate_head=failed_candidate_head,
+        run_id=run_id,
+        job_id=job_id,
+        fetch_provider=fetch_provider,
+    )
+    log_marker = provider.get("failureMarker")
+    if log_marker != "quality_gate_blocked":
+        raise ValueError("GitHub workflow job log has no canonical quality-gate blocked failure")
+    return provider
+
+
 def open_hosted_functional_failure_recovery(
     *,
     root: Path,
@@ -571,7 +622,7 @@ def open_hosted_functional_failure_recovery(
     if not worktree_clean():
         raise ValueError("post-archive recovery must start from a clean committed worktree")
     artifacts = archive_files(root, task)
-    _require_recoverable_outcome(artifacts, task)
+    _require_recoverable_outcome(artifacts, task, allow_human_confirmation=True)
     provider = verified_hosted_functional_failure(
         repository=repository,
         pull_request=pull_request,
@@ -589,6 +640,64 @@ def open_hosted_functional_failure_recovery(
         "issue": issue,
         "humanAuthorization": {"type": "human", "reference": authority},
         "failure": {"gate": "hostedFunctionalFailure"},
+        "provider": provider,
+        "archive": {
+            name: {"path": path.relative_to(root).as_posix(), "sha256": digest(path)}
+            for name, path in artifacts.items()
+        },
+        "recoveryPaths": normalized_paths(recovery_paths),
+        "openedAt": datetime.now(UTC).isoformat(),
+    }
+    directory = root / RECEIPT_DIRECTORY
+    directory.mkdir(parents=True, exist_ok=True)
+    target = receipt_target(directory, task, provider)
+    target.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return receipt
+
+
+def open_hosted_governance_failure_recovery(
+    *,
+    root: Path,
+    task: str,
+    base_commit: str,
+    issue: str,
+    authority: str,
+    recovery_paths: list[str],
+    repository: str,
+    pull_request: int,
+    failed_candidate_head: str,
+    run_id: int,
+    job_id: int,
+    worktree_clean: Callable[[], bool],
+    fetch_provider: Callable[[str], bytes] | None = None,
+) -> dict:
+    """Open same-Work-Item recovery for a provider-bound quality-gate block."""
+    if len(base_commit) != 40:
+        raise ValueError("PR base commit must be a 40-character SHA")
+    if not issue.startswith(f"https://github.com/{repository}/issues/"):
+        raise ValueError("hosted recovery Issue must belong to the GitHub repository")
+    if not authority.strip():
+        raise ValueError("human authority is required")
+    if not worktree_clean():
+        raise ValueError("post-archive recovery must start from a clean committed worktree")
+    artifacts = archive_files(root, task)
+    _require_recoverable_outcome(artifacts, task, allow_human_confirmation=True)
+    provider = verified_hosted_governance_failure(
+        repository=repository,
+        pull_request=pull_request,
+        failed_candidate_head=failed_candidate_head,
+        run_id=run_id,
+        job_id=job_id,
+        fetch_provider=fetch_provider,
+    )
+    receipt = {
+        "receiptVersion": HOSTED_GOVERNANCE_RECEIPT_VERSION,
+        "kind": "same_work_item_post_archive_recovery",
+        "workItemId": task,
+        "prBaseCommit": base_commit,
+        "issue": issue,
+        "humanAuthorization": {"type": "human", "reference": authority},
+        "failure": {"gate": "hostedGovernanceFailure"},
         "provider": provider,
         "archive": {
             name: {"path": path.relative_to(root).as_posix(), "sha256": digest(path)}
@@ -670,7 +779,13 @@ def validate_recovery_receipt(
         return ["recovery receipt must be an object"]
     version = receipt.get("receiptVersion")
     if (
-        version not in {1, HOSTED_RECEIPT_VERSION, HOSTED_FUNCTIONAL_RECEIPT_VERSION}
+        version
+        not in {
+            1,
+            HOSTED_RECEIPT_VERSION,
+            HOSTED_FUNCTIONAL_RECEIPT_VERSION,
+            HOSTED_GOVERNANCE_RECEIPT_VERSION,
+        }
         or receipt.get("kind") != "same_work_item_post_archive_recovery"
     ):
         return ["recovery receipt has an unsupported schema"]
@@ -690,7 +805,11 @@ def validate_recovery_receipt(
     failure = receipt.get("failure")
     if not isinstance(failure, dict) or failure.get("gate") not in ALLOWED_GATES:
         return ["recovery receipt failure gate is not allowed"]
-    if failure.get("gate") in {"hostedAggregateCoverage", "hostedFunctionalFailure"}:
+    if failure.get("gate") in {
+        "hostedAggregateCoverage",
+        "hostedFunctionalFailure",
+        "hostedGovernanceFailure",
+    }:
         provider_issues = validate_recorded_provider_binding(
             receipt.get("provider"), gate=failure["gate"]
         )
@@ -758,7 +877,9 @@ def main() -> int:
     parser.add_argument("--hosted-job-id", type=int)
     parser.add_argument("--hosted-artifact-name")
     parser.add_argument(
-        "--hosted-failure-kind", choices=("coverage", "functional"), default="coverage"
+        "--hosted-failure-kind",
+        choices=("coverage", "functional", "governance"),
+        default="coverage",
     )
     args = parser.parse_args()
     try:
@@ -788,6 +909,22 @@ def main() -> int:
                     run_id=args.hosted_run_id,
                     job_id=args.hosted_job_id,
                     artifact_name=args.hosted_artifact_name,
+                    worktree_clean=_clean_worktree,
+                )
+            elif args.hosted_failure_kind == "governance":
+                receipt = open_hosted_governance_failure_recovery(
+                    root=PROJECT_ROOT,
+                    task=args.task,
+                    base_commit=args.base,
+                    issue=args.issue,
+                    authority=args.authority,
+                    recovery_paths=args.recovery_path,
+                    repository=args.hosted_repository,
+                    pull_request=args.hosted_pull_request,
+                    failed_candidate_head=args.hosted_candidate_head,
+                    run_id=args.hosted_run_id,
+                    job_id=args.hosted_job_id,
+                    fetch_provider=None,
                     worktree_clean=_clean_worktree,
                 )
             else:

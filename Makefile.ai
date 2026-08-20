@@ -10,6 +10,7 @@ SUMMARY_ARGS ?= $(if $(CONTRACT),--contract $(CONTRACT))
 STATUS_ARGS ?= $(if $(SUMMARY),--summary $(SUMMARY))
 ARGS ?=
 TASK ?=
+REPORT_LANGUAGE ?= en
 TITLE ?=
 MODE ?= investigate
 PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
@@ -30,14 +31,15 @@ AI_COCKPIT_STRICT_CHECK ?= printf '%s\n' 'Strict project-specific checks: not co
 AI_COCKPIT_RELEASE_CHECK ?= printf '%s\n' 'ERROR: Release verification is not configured. Set AI_COCKPIT_RELEASE_CHECK in Makefile.ai.stack.' >&2; false
 GOVERNANCE_PROFILE ?=
 GOVERNANCE_RECEIPT ?= target/quality/governance-profile.json
+QUALITY_REQUIRED_GROUPS ?= quality-fast check-ai-reference-impact project-test
 
 .PHONY: ai-help ai-doctor ai-onboard cockpit-doctor cockpit-calibrate cockpit-calibrate-session cockpit-calibration-inventory cockpit-validate-calibration check-ai-project-profile check-ai-calibration-profile check-ai-guard-calibration check-ai-adoption-ready \
-	ai-cockpit-project-format-check ai-cockpit-project-test ai-cockpit-project-lint ai-cockpit-diff-check ai-cockpit-quality quality quality-fast quality-standard quality-full quality-release \
+	ai-cockpit-project-format-check ai-cockpit-project-test ai-cockpit-project-lint ai-cockpit-diff-check ai-cockpit-quality quality quality-fast quality-standard quality-full quality-strict-targeted quality-release \
 	ai-cockpit-validate-project-quality-configuration \
 	check-capability-truth check-source-bound-evidence \
 	ai-start ai-synchronize-work-item ai-transition-conflict-successor ai-finish check-ai check-ai-contract check-ai-work-item check-ai-scope check-ai-guards \
 	check-ai-agent-risk ai-checkpoint check-ai-backtrack check-ai-coverage-guard check-ai-reference-impact check-ai-test-weakening check-ai-test-weakening-fast check-ai-scenario-coverage check-ai-guidelines check-ai-review-policy check-changed-critical-coverage \
-	check-ai-preflight-review generate-ai-preflight-review ai-preflight check-ai-change-summary generate-cockpit-status check-ai-status check-ai-status-consistency repair-ai-status archive-work-item ai-close-work-item check-ai-pr check-ai-diff-ownership ai-pre-merge template-adoption-ready check-ai-serial-order check-ai-budget-impact generate-human-benefit-report check-human-benefit-report ai-lifecycle-facts ai-work-item-status ai-work-item-intelligence-rebuild ai-cockpit-version ai-cockpit-update-check ai-cockpit-update-propose ai-cockpit-update-apply ai-cockpit-rollback-propose ai-cockpit-disable ai-cockpit-enable ai-cockpit-uninstall-facts ai-cockpit-uninstall-propose ai-cockpit-uninstall-execute
+	check-ai-preflight-review generate-ai-preflight-review ai-preflight check-ai-change-summary generate-cockpit-status check-ai-status check-ai-status-consistency check-adopter-capability-manifest ai-generate-work-item-status ai-governance-cost ai-performance-diagnosis ai-generate-knowledge-record ai-generate-knowledge ai-check-knowledge-index ai-knowledge-query check-ai-knowledge check-ai-task-outcome repair-ai-status archive-work-item ai-close-work-item check-ai-pr check-ai-diff-ownership ai-pre-merge template-adoption-ready check-ai-serial-order check-ai-budget-impact generate-human-benefit-report check-human-benefit-report ai-lifecycle-facts ai-work-item-status ai-work-item-intelligence-rebuild ai-cockpit-version ai-cockpit-update-check ai-cockpit-update-propose ai-cockpit-update-apply ai-cockpit-rollback-propose ai-cockpit-disable ai-cockpit-enable ai-cockpit-uninstall-facts ai-cockpit-uninstall-propose ai-cockpit-uninstall-execute
 	check-ai-lifecycle-truth
 
 ai-help:
@@ -65,7 +67,7 @@ ai-help:
 	@printf '%s\n' '  make check-ai-pr AI_BASE_COMMIT=<merge-base-sha>'
 	@printf '%s\n' '  make check-ai-diff-ownership [AI_BASE_COMMIT=<merge-base-sha>]'
 	@printf '%s\n' '  make ai-pre-merge AI_BASE_COMMIT=<merge-base-sha>'
-	@printf '%s\n' '  make ai-finish TASK=<task> REPORT_LANGUAGE=<conversation-locale>'
+	@printf '%s\n' '  make ai-finish TASK=<task> REPORT_LANGUAGE=<conversation-locale>  # defaults to en'
 	@printf '%s\n' '  make ai-open-post-archive-recovery TASK=<task> AI_BASE_COMMIT=<merge-base-sha> ISSUE=<issue-url> AUTHORITY=<human-authority> RECOVERY_PATHS="path ..." [HOSTED_REPOSITORY=owner/repo HOSTED_PULL_REQUEST=<n> HOSTED_CANDIDATE_HEAD=<sha> HOSTED_RUN_ID=<n> HOSTED_JOB_ID=<n>]'
 	@printf '%s\n' '  make ai-close-work-item TASK=<task>'
 	@printf '%s\n' '  make ai-cockpit-quality'
@@ -89,6 +91,45 @@ ai-lifecycle-facts:
 
 ai-work-item-status:
 	$(AI_PYTHON) scripts/ai_work_item_status.py $(ARGS)
+
+check-adopter-capability-manifest:
+	$(AI_PYTHON) scripts/ai_installer_adopter_capability_manifest.py --root . --installed $(ARGS)
+
+ai-generate-work-item-status:
+	$(AI_PYTHON) scripts/ai_generate_work_item_status.py --root . $(ARGS)
+
+ai-generate-knowledge-record:
+	@test -n "$(CONTRACT)" -a -n "$(SUMMARY)" -a -n "$(OUTCOME)" || (echo 'CONTRACT, SUMMARY, and OUTCOME are required' >&2; exit 2)
+	@test -n "$(TASK)" -o -n "$(OUTPUT)" || (echo 'TASK or OUTPUT is required' >&2; exit 2)
+	$(AI_PYTHON) scripts/ai_generate_knowledge_record.py --contract "$(CONTRACT)" --summary "$(SUMMARY)" --outcome "$(OUTCOME)" --output "$(or $(OUTPUT),.ai/knowledge/work-items/$(TASK).json)" --index "$(or $(INDEX),.ai/knowledge/index.json)" --repo-root .
+
+ai-generate-knowledge: ai-generate-knowledge-record
+
+ai-check-knowledge-index:
+	$(AI_PYTHON) scripts/ai_check_knowledge_index.py --index "$(or $(INDEX),.ai/knowledge/index.json)" --records "$(or $(RECORDS),.ai/knowledge/work-items)" --repo-root .
+
+ai-knowledge-query:
+	$(AI_PYTHON) scripts/ai_knowledge_query.py $(ARGS) \
+		$(if $(WORK_ITEM),--work-item "$(WORK_ITEM)",) \
+		$(if $(TOPIC),--topic "$(TOPIC)",) \
+		$(if $(COMPONENT),--component "$(COMPONENT)",) \
+		$(if $(COMMIT),--commit "$(COMMIT)",) \
+		$(if $(DATE),--date "$(DATE)",) \
+		$(if $(STATUS),--status "$(STATUS)",) \
+		$(if $(DATE_FROM),--date-from "$(DATE_FROM)",) \
+		$(if $(DATE_TO),--date-to "$(DATE_TO)",)
+
+check-ai-knowledge:
+	$(AI_NESTED_MAKE) ai-check-knowledge-index
+	$(AI_PYTHON) scripts/ai_knowledge_query.py --help
+
+ai-governance-cost:
+	@if test "$(ARGS)" != "--help" && { test -z "$(WORK_ITEM)" -o -z "$(JSON_OUTPUT)" -o -z "$(MARKDOWN_OUTPUT)"; }; then echo 'WORK_ITEM, JSON_OUTPUT, and MARKDOWN_OUTPUT are required'; exit 2; fi
+	$(if $(filter --help,$(ARGS)),$(AI_PYTHON) scripts/ai_governance_cost.py $(ARGS),$(AI_PYTHON) scripts/ai_governance_cost.py --work-item "$(WORK_ITEM)" --events "$(or $(EVENTS),target/ai_observability.jsonl)" --json-output "$(JSON_OUTPUT)" --markdown-output "$(MARKDOWN_OUTPUT)")
+
+ai-performance-diagnosis:
+	@if test "$(ARGS)" != "--help" && { test -z "$(WORK_ITEM)" -o -z "$(JSON_OUTPUT)" -o -z "$(MARKDOWN_OUTPUT)"; }; then echo 'WORK_ITEM, JSON_OUTPUT, and MARKDOWN_OUTPUT are required'; exit 2; fi
+	$(if $(filter --help,$(ARGS)),$(AI_PYTHON) scripts/ai_performance_diagnosis.py $(ARGS),$(AI_PYTHON) scripts/ai_performance_diagnosis.py --work-item "$(WORK_ITEM)" --events "$(or $(EVENTS),target/ai_observability.jsonl)" --json-output "$(JSON_OUTPUT)" --markdown-output "$(MARKDOWN_OUTPUT)" $(if $(BASELINE_REPORT),--baseline-report "$(BASELINE_REPORT)",))
 
 ai-work-item-intelligence-rebuild:
 	$(AI_PYTHON) scripts/ai_work_item_status.py --rebuild $(ARGS)
@@ -151,6 +192,10 @@ quality-full:
 	$(AI_NESTED_MAKE) --no-print-directory quality-standard
 	@$(AI_COCKPIT_STRICT_CHECK)
 
+quality-strict-targeted:
+	$(AI_NESTED_MAKE) --no-print-directory quality-standard
+	@$(AI_COCKPIT_STRICT_CHECK)
+
 quality-release:
 	$(AI_NESTED_MAKE) --no-print-directory quality-full
 	@$(AI_COCKPIT_RELEASE_CHECK)
@@ -163,8 +208,9 @@ ai-cockpit-quality:
 			$(if $(GOVERNANCE_PROFILE),--profile "$(GOVERNANCE_PROFILE)",) \
 			--output "$(GOVERNANCE_RECEIPT)"; \
 		target=$$($(PYTHON) -c 'import json, sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["dispatchTarget"])' "$(GOVERNANCE_RECEIPT)"); \
-		case "$$target" in quality-fast|quality-standard|quality-full|quality-release) ;; *) echo "invalid governance dispatch target: $$target" >&2; exit 2;; esac; \
-		$(AI_NESTED_MAKE) --no-print-directory "$$target"
+		required_groups=$$($(PYTHON) -c 'import json, sys; print(" ".join(json.load(open(sys.argv[1], encoding="utf-8")).get("requiredGroups", [])))' "$(GOVERNANCE_RECEIPT)"); \
+		case "$$target" in quality-fast|quality-standard|quality-full|quality-strict-targeted|quality-release) ;; *) echo "invalid governance dispatch target: $$target" >&2; exit 2;; esac; \
+		$(AI_NESTED_MAKE) --no-print-directory "$$target" QUALITY_REQUIRED_GROUPS="$$required_groups"
 
 # The portable adopter entrypoint. Makefile.ai.stack keeps the actual formatter,
 # linter, and test commands project-owned; their defaults fail closed above.
@@ -186,6 +232,15 @@ check-source-bound-evidence: check-capability-truth
 		printf '%s\n' 'Source-bound evidence: extended assessments are not configured in this adopter repository.'; \
 	fi
 
+ai-verify:
+	$(AI_PYTHON) scripts/ai_verify.py --root . --contract "$(CONTRACT)" --summary "$(SUMMARY)" --stage "$(or $(STAGE),task)" --mode "$(or $(MODE),unified)" --receipts "$(or $(REUSE_RECEIPTS),target/quality/verification-receipts.json)"
+
+ai-verify-focused:
+	$(AI_PYTHON) scripts/ai_verify.py --root . --contract "$(CONTRACT)" --summary "$(SUMMARY)" --stage "$(or $(STAGE),task)" --mode unified --scope focused --receipts "$(or $(REUSE_RECEIPTS),target/quality/verification-receipts.json)"
+
+ai-verify-full:
+	$(AI_PYTHON) scripts/ai_verify.py --root . --contract "$(CONTRACT)" --summary "$(SUMMARY)" --stage "$(or $(STAGE),release)" --mode unified --scope full --receipts "$(or $(REUSE_RECEIPTS),target/quality/verification-receipts.json)"
+
 ai-verify-policy:
 	PYTHONPATH=scripts $(AI_PYTHON) -c 'from ai_verification_policy import order_checks; print(order_checks({"scope": [], "tests": ["scope"], "trust": ["scope"]}))'
 
@@ -193,7 +248,7 @@ unsupported-claim-regression:
 	$(AI_PYTHON) scripts/unsupported_claim_gate.py
 
 ai-start:
-	$(AI_PYTHON) scripts/ai_start.py --task "$(TASK)" --title "$(TITLE)" --mode "$(MODE)"
+	$(AI_PYTHON) scripts/ai_start.py --task "$(TASK)" --title "$(TITLE)" --mode "$(MODE)" $(AI_START_FLAGS)
 
 ai-synchronize-work-item:
 	@test -n "$(CONTRACT)" -a -n "$(BASE_REMOTE)" -a -n "$(BASE_BRANCH)" || (echo "CONTRACT, BASE_REMOTE, and BASE_BRANCH are required" >&2; exit 2)
@@ -278,10 +333,6 @@ check-ai-agent-risk:
 ai-checkpoint:
 	$(AI_PYTHON) scripts/ai_checkpoint.py --contract $(CONTRACT) $(if $(SUMMARY),--summary $(SUMMARY)) --stage "$(or $(STAGE),manual)"
 
-ai-revalidate-contract-amendment:
-	@test -n "$(CONTRACT)" -a -n "$(SUMMARY)" -a -n "$(PREVIOUS_CONTRACT_HASH)" -a -n "$(REASON)" || (echo 'CONTRACT, SUMMARY, PREVIOUS_CONTRACT_HASH, and REASON are required' >&2; exit 2)
-	$(AI_PYTHON) scripts/ai_checkpoint.py --contract "$(CONTRACT)" --summary "$(SUMMARY)" --stage contract_amendment_revalidation --previous-contract-hash "$(PREVIOUS_CONTRACT_HASH)" --reason "$(REASON)"
-
 check-ai-backtrack:
 	$(AI_PYTHON) scripts/ai_check_backtrack.py
 
@@ -293,17 +344,21 @@ REFERENCE_IMPACT_OUTPUT_DIR ?= target/reference-impact
 
 check-ai-reference-impact:
 	@set -eu; \
-		dir="$(REFERENCE_IMPACT_DIR)"; output_dir="$(REFERENCE_IMPACT_OUTPUT_DIR)"; found=false; \
+		dir="$(REFERENCE_IMPACT_DIR)"; output_dir="$(REFERENCE_IMPACT_OUTPUT_DIR)"; found=false; coverage_decision=continue; \
 		mkdir -p "$$output_dir"; \
-		if test -d "$$dir"; then \
+		contract="$${CONTRACT:-$$(find .ai/work-items/active -name '*.contract.json' -type f | head -n 1)}"; \
+		if test -n "$$contract"; then \
+			$(AI_PYTHON) scripts/ai_check_reference_impact.py --root . --coverage-contract "$$contract" --records-dir "$$dir" --output "$$output_dir/coverage.decision.json" --enforce; \
+			coverage_decision=$$($(PYTHON) -c 'import json, sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("decision", "error"))' "$$output_dir/coverage.decision.json"); \
+		fi; \
+		if test "$$coverage_decision" != not_applicable && test -d "$$dir"; then \
 			for record in "$$dir"/*.json; do \
 				test -f "$$record" || continue; found=true; name=$${record##*/}; \
 				$(AI_PYTHON) scripts/ai_check_reference_impact.py --root . --record "$$record" --output "$$output_dir/$${name%.json}.decision.json" --enforce; \
 			done; \
 		fi; \
-		contract="$${CONTRACT:-$$(find .ai/work-items/active -name '*.contract.json' -type f | head -n 1)}"; \
-		if test -n "$$contract"; then $(AI_PYTHON) scripts/ai_check_reference_impact.py --root . --coverage-contract "$$contract" --records-dir "$$dir" --output "$$output_dir/coverage.decision.json" --enforce; fi; \
-		if test "$$found" = false; then printf '%s\n' 'Reference impact: no declared records; coverage decision enforced.'; fi
+		if test "$$coverage_decision" = not_applicable; then cat "$$output_dir/coverage.decision.json"; rm -f "$$output_dir/coverage.decision.json"; printf '%s\n' 'Reference impact: not applicable; repository records were not scanned.'; \
+		elif test "$$found" = false; then printf '%s\n' 'Reference impact: no declared records; coverage decision enforced.'; fi
 
 check-ai-test-weakening-fast:
 	$(AI_PYTHON) scripts/ai_check_test_weakening.py --root . $(if $(AI_BASE_COMMIT),--base-ref "$(AI_BASE_COMMIT)",) --mode fast --policy .ai/guards/test_weakening_policy.yaml
@@ -351,6 +406,10 @@ check-ai-status:
 
 check-ai-status-consistency:
 	$(AI_PYTHON) scripts/ai_check_status_consistency.py
+
+check-ai-task-outcome:
+	@test -n "$(OUTCOME)" || (echo 'OUTCOME=<outcome.json> is required'; exit 2)
+	$(AI_PYTHON) -c "import json, pathlib, sys; sys.path.insert(0, 'scripts'); from ai_check_task_outcome import validate_outcome; outcome=json.loads(pathlib.Path('$(OUTCOME)').read_text()); report=validate_outcome(outcome, pathlib.Path('$(MARKDOWN)').read_text() if '$(MARKDOWN)' else None); print('task outcome valid' if report.valid else '\\n'.join(f'{e.code}: {e.message}' for e in report.errors)); raise SystemExit(0 if report.valid else 1)"
 
 generate-human-benefit-report:
 	@test -n "$(OUTCOME)" || (echo 'OUTCOME=<outcome.json> is required'; exit 2)
@@ -428,4 +487,4 @@ ai-open-post-archive-recovery:
 ai-finish:
 	@# ARCHIVE is a one-shot lifecycle request. Do not let Make propagate it into
 	@# nested project/test invocations, where it could archive an unrelated Work Item.
-	env -u ARCHIVE -u MAKEFLAGS -u MAKEOVERRIDES REPORT_LANGUAGE= $(AI_PYTHON) scripts/ai_finish.py --task "$(TASK)" $(if $(filter true,$(ARCHIVE)),--archive) --language "$(REPORT_LANGUAGE)"
+	env -u ARCHIVE -u MAKEFLAGS -u MAKEOVERRIDES REPORT_LANGUAGE= $(AI_PYTHON) scripts/ai_finish.py --task "$(TASK)" $(if $(filter true,$(ARCHIVE)),--archive) --language "$(or $(REPORT_LANGUAGE),en)"

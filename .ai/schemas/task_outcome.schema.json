@@ -280,6 +280,76 @@
         "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidenceRef"}}
       }
     },
+    "approachClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "status", "evidence"],
+      "properties": {
+        "text": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "status": {"type": "string", "enum": ["verified", "unverified", "unknown"]},
+        "evidence": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/evidenceRef"}}
+      }
+    },
+    "approachComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["component", "detail", "status", "evidence"],
+      "properties": {
+        "component": {"type": "string", "minLength": 1, "maxLength": 512},
+        "detail": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "status": {"type": "string", "enum": ["verified", "unverified", "unknown"]},
+        "evidence": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/evidenceRef"}}
+      }
+    },
+    "approachDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "reason", "status", "evidence"],
+      "properties": {
+        "decision": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "reason": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "status": {"type": "string", "enum": ["verified", "unverified", "unknown"]},
+        "evidence": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/evidenceRef"}}
+      }
+    },
+    "approachDetail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["topic", "detail", "status", "evidence"],
+      "properties": {
+        "topic": {"type": "string", "minLength": 1, "maxLength": 512},
+        "detail": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "status": {"type": "string", "enum": ["verified", "unverified", "unknown"]},
+        "evidence": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/evidenceRef"}}
+      }
+    },
+    "approachEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim", "status", "source", "subject"],
+      "properties": {
+        "claim": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "status": {"type": "string", "enum": ["verified", "unverified", "unknown"]},
+        "source": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "subject": {"type": "string", "minLength": 1, "maxLength": 512},
+        "digest": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "implementationApproach": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approachType", "status", "summary", "mechanism", "affectedComponents", "designDecisions", "technicalDetails", "evidence"],
+      "properties": {
+        "approachType": {"type": "string", "enum": ["implementation", "configuration"]},
+        "status": {"type": "string", "enum": ["complete", "incomplete", "not_applicable"]},
+        "summary": {"$ref": "#/$defs/approachClaim"},
+        "mechanism": {"$ref": "#/$defs/approachClaim"},
+        "affectedComponents": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/approachComponent"}},
+        "designDecisions": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/approachDecision"}},
+        "technicalDetails": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/approachDetail"}},
+        "evidence": {"type": "array", "maxItems": 20, "items": {"$ref": "#/$defs/approachEvidence"}}
+      }
+    },
     "sections": {
       "type": "object",
       "additionalProperties": false,
@@ -301,7 +371,8 @@
         "avoidedImpact": {"type": "array", "items": {"type": "string", "maxLength": 2048}},
         "residualRisks": {"type": "array", "items": {"$ref": "#/$defs/risk"}},
         "humanDecisions": {"type": "array", "items": {"type": "string", "maxLength": 2048}},
-        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidenceRef"}}
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidenceRef"}},
+        "implementationApproach": {"$ref": "#/$defs/implementationApproach"}
       }
     }
   }

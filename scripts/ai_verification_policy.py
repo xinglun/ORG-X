@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import difflib
+import fnmatch
 import hashlib
 import json
+import re
 from typing import Any
 
 from ai_impact_classifier import classify_path
@@ -26,13 +29,232 @@ DOMAIN_LEVELS = {
     "release": "strict",
 }
 
+STRICT_TARGETED_PATTERNS = (
+    ".ai/quality/**",
+    "scripts/ai_*.py",
+    "templates/**",
+    "Makefile",
+    "Makefile.ai",
+    "AGENTS.md",
+    "GEMINI.md",
+    "CLAUDE.md",
+)
+STRICT_FULL_PATTERNS = (
+    ".ai/guards/**",
+    ".ai/policies/**",
+    ".ai/work-items/**",
+    ".github/workflows/**",
+    ".cursor/**",
+    "scripts/install*.py",
+    "scripts/uninstall*.py",
+    "install.sh",
+    "uninstall.sh",
+    "requirements*",
+    "pyproject.toml",
+    "poetry.lock",
+    "package.json",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "Cargo.toml",
+    "Cargo.lock",
+    "go.mod",
+    "go.sum",
+    "migrations/**",
+    "db/migrations/**",
+    "release*",
+    "dist/**",
+    "signing/**",
+)
+PROJECT_TEST_PATTERNS = (
+    "scripts/**",
+    "templates/**",
+    "Makefile",
+    "Makefile.ai",
+    "tests/**",
+    "test/**",
+    "src/**",
+    "lib/**",
+    "app/**",
+)
+PROJECT_CONSISTENCY_PATTERNS = (
+    ".ai/quality/**",
+    "scripts/**",
+    "templates/**",
+    "Makefile",
+    "Makefile.ai",
+    "AGENTS.md",
+    "GEMINI.md",
+    "CLAUDE.md",
+)
+
+_IMMUTABLE_USES_LINE = re.compile(
+    r"^(?P<prefix>\s*-\s*uses:\s+)(?P<action>[^\s@]+)@"
+    r"(?P<sha>[0-9a-fA-F]{40})(?P<suffix>\s*(?:#.*)?)$"
+)
+_RELEASE_OR_SIGNING_WORKFLOW = re.compile(
+    r"(?:^|[-_.])(release|publish|sign(?:ing)?|provenance|sbom)(?:[-_.]|$)",
+    re.IGNORECASE,
+)
+
+
+def classify_immutable_workflow_pin_change(path: str, before: str, after: str) -> dict[str, Any]:
+    """Prove whether a workflow diff changes exactly one immutable action SHA.
+
+    The classifier deliberately accepts only a one-line replacement in a
+    non-release workflow.  It returns facts suitable for an audit receipt and
+    never returns file contents.
+    """
+    normalized = path.replace("\\", "/").removeprefix("./")
+    facts: dict[str, Any] = {
+        "path": normalized,
+        "kind": "immutable_workflow_pin",
+        "eligible": False,
+        "reason": "not evaluated",
+        "replacementCount": 0,
+    }
+    workflow_name = normalized.removeprefix(".github/workflows/")
+    if not (
+        normalized.startswith(".github/workflows/")
+        and workflow_name
+        and "/" not in workflow_name
+        and workflow_name.endswith((".yml", ".yaml"))
+    ):
+        facts["reason"] = "path is not a single GitHub workflow file"
+        return facts
+    if _RELEASE_OR_SIGNING_WORKFLOW.search(workflow_name):
+        facts["reason"] = "release or signing workflow remains on full quality"
+        return facts
+
+    before_lines = before.splitlines()
+    after_lines = after.splitlines()
+    opcodes = difflib.SequenceMatcher(a=before_lines, b=after_lines, autojunk=False).get_opcodes()
+    changed = [opcode for opcode in opcodes if opcode[0] != "equal"]
+    if len(changed) != 1 or changed[0][0] != "replace":
+        facts["reason"] = "diff is not exactly one line replacement"
+        facts["replacementCount"] = len(changed)
+        return facts
+    _, before_start, before_end, after_start, after_end = changed[0]
+    if before_end - before_start != 1 or after_end - after_start != 1:
+        facts["reason"] = "replacement does not contain exactly one line on each side"
+        facts["replacementCount"] = 1
+        return facts
+
+    before_match = _IMMUTABLE_USES_LINE.fullmatch(before_lines[before_start])
+    after_match = _IMMUTABLE_USES_LINE.fullmatch(after_lines[after_start])
+    if before_match is None or after_match is None:
+        facts["reason"] = "replaced lines are not immutable uses SHA pins"
+        facts["replacementCount"] = 1
+        return facts
+    if before_match.group("sha") == after_match.group("sha"):
+        facts["reason"] = "action SHA did not change"
+        facts["replacementCount"] = 1
+        return facts
+    if any(
+        before_match.group(name) != after_match.group(name)
+        for name in ("prefix", "action", "suffix")
+    ):
+        facts["reason"] = "workflow uses prefix, action identity, or suffix changed"
+        facts["replacementCount"] = 1
+        return facts
+
+    facts.update(
+        {
+            "eligible": True,
+            "reason": "exactly one immutable action SHA replacement",
+            "replacementCount": 1,
+        }
+    )
+    return facts
+
+
+def strict_quality_routing(
+    changed_paths: list[str],
+    *,
+    release: bool = False,
+    explicit_strict: bool = False,
+    immutable_pin_facts: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Choose a strict target without lowering high-risk or explicit strict work."""
+    normalized = sorted(path.replace("\\", "/").removeprefix("./") for path in changed_paths)
+    if release:
+        return {
+            "target": "quality-full",
+            "requiredGroups": ["quality-full"],
+            "reason": "release escalation requires the complete quality graph",
+        }
+    if explicit_strict:
+        return {
+            "target": "quality-full",
+            "requiredGroups": ["quality-full"],
+            "reason": "explicit strict governance requires the complete quality graph",
+        }
+    if (
+        len(normalized) == 1
+        and isinstance(immutable_pin_facts, dict)
+        and immutable_pin_facts.get("eligible") is True
+        and immutable_pin_facts.get("path") == normalized[0]
+    ):
+        return {
+            "target": "quality-strict-targeted",
+            "requiredGroups": ["quality-fast"],
+            "reason": "evidence-bound immutable workflow pin change uses targeted strict quality",
+            "immutablePinChange": immutable_pin_facts,
+        }
+    high_risk = [
+        path
+        for path in normalized
+        if any(fnmatch.fnmatchcase(path, pattern) for pattern in STRICT_FULL_PATTERNS)
+    ]
+    if high_risk:
+        return {
+            "target": "quality-full",
+            "requiredGroups": ["quality-full"],
+            "reason": f"high-risk strict paths require full quality: {', '.join(high_risk)}",
+        }
+    unclassified = [
+        path
+        for path in normalized
+        if not any(fnmatch.fnmatchcase(path, pattern) for pattern in STRICT_TARGETED_PATTERNS)
+    ]
+    if unclassified:
+        return {
+            "target": "quality-full",
+            "requiredGroups": ["quality-full"],
+            "reason": f"strict paths without a targeted routing rule require full quality: {', '.join(unclassified)}",
+        }
+    groups = ["quality-fast", "check-ai-reference-impact"]
+    if any(
+        any(fnmatch.fnmatchcase(path, pattern) for pattern in PROJECT_TEST_PATTERNS)
+        for path in normalized
+    ):
+        groups.append("project-test")
+    if any(
+        any(fnmatch.fnmatchcase(path, pattern) for pattern in PROJECT_CONSISTENCY_PATTERNS)
+        for path in normalized
+    ):
+        groups.append("quality-project-consistency-group")
+    return {
+        "target": "quality-strict-targeted",
+        "requiredGroups": groups,
+        "reason": "automatic strict governance uses only groups matched by changed-path domains",
+    }
+
 
 def finish_quality_route(
-    changed_paths: list[str], *, requested: str | None = None
+    changed_paths: list[str],
+    *,
+    requested: str | None = None,
+    immutable_pin_facts: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Return the auditable Finish route without lowering a Contract profile."""
 
-    policy = select_policy("task", changed_paths, requested=requested)
+    policy = select_policy(
+        "task",
+        changed_paths,
+        requested=requested,
+        immutable_pin_facts=immutable_pin_facts,
+    )
     return {
         "policy": policy,
         "command": f"make ai-cockpit-quality GOVERNANCE_PROFILE={policy['level']}",
@@ -40,7 +262,10 @@ def finish_quality_route(
 
 
 def finish_quality_route_for_contract(
-    changed_paths: list[str], governance_profile: dict[str, Any] | None
+    changed_paths: list[str],
+    governance_profile: dict[str, Any] | None,
+    *,
+    immutable_pin_facts: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Route Finish from final scope without treating automatic defaults as overrides.
 
@@ -52,21 +277,33 @@ def finish_quality_route_for_contract(
     profile = governance_profile if isinstance(governance_profile, dict) else {}
     selected = profile.get("selected")
     source = profile.get("source")
-    automatic_route = finish_quality_route(changed_paths)
+    automatic_route = finish_quality_route(changed_paths, immutable_pin_facts=immutable_pin_facts)
 
     if source != "automatic":
-        return finish_quality_route(changed_paths, requested=selected)
+        return finish_quality_route(
+            changed_paths,
+            requested=selected,
+            immutable_pin_facts=immutable_pin_facts,
+        )
     if selected not in POLICY_LEVELS:
         return automatic_route
 
     automatic_level = str(automatic_route["policy"]["level"])
     if POLICY_LEVELS.index(str(selected)) > POLICY_LEVELS.index(automatic_level):
-        return finish_quality_route(changed_paths, requested=str(selected))
+        return finish_quality_route(
+            changed_paths,
+            requested=str(selected),
+            immutable_pin_facts=immutable_pin_facts,
+        )
     return automatic_route
 
 
 def select_policy(
-    stage: str, changed_paths: list[str], *, requested: str | None = None
+    stage: str,
+    changed_paths: list[str],
+    *,
+    requested: str | None = None,
+    immutable_pin_facts: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Select a policy without permitting a caller to downgrade risk."""
     if requested is not None and requested not in POLICY_LEVELS:
@@ -74,6 +311,14 @@ def select_policy(
     domains = {classify_path(path) for path in changed_paths}
     levels = [DOMAIN_LEVELS.get(domain, "standard") for domain in domains]
     level = max(levels, key=POLICY_LEVELS.index) if levels else "standard"
+    if any(
+        any(
+            fnmatch.fnmatchcase(path.replace("\\", "/"), pattern)
+            for pattern in (*STRICT_TARGETED_PATTERNS, *STRICT_FULL_PATTERNS)
+        )
+        for path in changed_paths
+    ):
+        level = "strict"
     stage_floor = "strict" if stage == "release" else "standard" if stage == "pr" else "light"
     if POLICY_LEVELS.index(stage_floor) > POLICY_LEVELS.index(level):
         level = stage_floor
@@ -82,7 +327,29 @@ def select_policy(
             raise ValueError(f"requested policy {requested} cannot lower selected policy {level}")
         level = requested
     scope = "focused" if level == "light" else "full"
-    return {"level": level, "scope": scope, "stage": stage, "domains": sorted(domains)}
+    if level == "strict":
+        quality_routing = strict_quality_routing(
+            changed_paths,
+            release=stage == "release",
+            explicit_strict=requested == "strict",
+            immutable_pin_facts=immutable_pin_facts,
+        )
+    else:
+        target = "quality-fast" if level == "light" else "quality-standard"
+        quality_routing = {
+            "target": target,
+            "requiredGroups": [target],
+            "reason": f"{level} governance uses its profile target",
+        }
+    return {
+        "level": level,
+        "scope": scope,
+        "stage": stage,
+        "domains": sorted(domains),
+        "qualityTarget": quality_routing["target"],
+        "requiredGroups": quality_routing["requiredGroups"],
+        "qualityRouting": quality_routing,
+    }
 
 
 def verification_cache_key(inputs: dict[str, Any]) -> str:

@@ -1,0 +1,2079 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "upgrade_ai_cockpit",
+  "implementationApproach": {
+    "approachType": "implementation",
+    "status": "complete",
+    "summary": {
+      "text": "Applied the published v0.5.70 AI Cockpit installer on the dedicated branch, then restored and verified adopter-specific governance behavior.",
+      "status": "verified",
+      "evidence": [
+        {
+          "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+          "subject": "comparison"
+        }
+      ]
+    },
+    "mechanism": {
+      "text": "Compared template main, published v0.5.70, and installed catalog/runtime surfaces; preserved explicit conflict decisions and validated the result with regression and governance gates.",
+      "status": "verified",
+      "evidence": [
+        {
+          "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+          "subject": "installerCatalog"
+        },
+        {
+          "source": ".ai/cockpit/upgrade-conflict-report.json",
+          "subject": "preservedConflictDecisionCount"
+        }
+      ]
+    },
+    "affectedComponents": [
+      {
+        "component": "AI Cockpit managed runtime",
+        "detail": "Updated managed .ai, scripts, Makefiles, and documentation surfaces.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+            "subject": "installerActions"
+          }
+        ]
+      },
+      {
+        "component": "Adopter governance boundary",
+        "detail": "Preserved Weekly Radar production validation and adoption branch compatibility.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/ai_cockpit/production_validation_policy_test.py",
+            "subject": "regression"
+          }
+        ]
+      }
+    ],
+    "designDecisions": [
+      {
+        "decision": "Install published v0.5.70 and compare main separately",
+        "reason": "The repository workflow requires a published immutable release for adopter upgrades while main is the requested comparison baseline.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json",
+            "subject": "sources"
+          }
+        ]
+      },
+      {
+        "decision": "Preserve adopter customizations",
+        "reason": "The upgrade must not regress existing adopter-specific behavior.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/ai_cockpit/close_work_item_test.py",
+            "subject": "regression"
+          },
+          {
+            "source": "tests/ai_cockpit/production_validation_policy_test.py",
+            "subject": "regression"
+          }
+        ]
+      }
+    ],
+    "technicalDetails": [
+      {
+        "topic": "Checklist parity",
+        "detail": "13 stacks, 115 scripts, and 19 runtime targets are compared with explicit inventories and content digests.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+            "subject": "installerCatalog"
+          }
+        ]
+      },
+      {
+        "topic": "Verification",
+        "detail": "The full Python regression suite and strict AI Cockpit quality gates passed before lifecycle execution.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/upgrade_ai_cockpit.summary.json",
+            "subject": "verification"
+          }
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "Feature checklist evidence",
+        "status": "verified",
+        "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+        "subject": "comparison"
+      },
+      {
+        "claim": "Governance verification",
+        "status": "verified",
+        "source": ".ai/work-items/archive/2026/upgrade_ai_cockpit.summary.json",
+        "subject": "verification"
+      }
+    ]
+  },
+  "contractPath": ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json",
+  "changedFiles": [
+    {
+      "path": ".ai/guards/coverage_policy.yaml",
+      "reason": "Added the narrow coverage association required to verify changed AI Cockpit scripts with the feature-checklist regression test."
+    },
+    {
+      "path": ".ai/cockpit/upgrade-conflict-report.json",
+      "reason": "Installer-generated per-path ownership and preservation decisions."
+    },
+    {
+      "path": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+      "reason": "Recorded item-by-item comparison of template main, published release, and installed feature surfaces."
+    },
+    {
+      "path": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+      "reason": "Regression test enforcing the persisted install-feature checklist evidence."
+    },
+    {
+      "path": ".ai/guards/changed_critical_coverage_policy.json",
+      "reason": "Restored the v0.5.70 critical coverage mapping required by the installed governance tests."
+    },
+    {
+      "path": ".ai/evidence/reference-impact/upgrade_ai_cockpit_pyproject.json",
+      "reason": "Reference-impact evidence for the repository-local pytest and coverage configuration."
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "Generated Cockpit status after the completed upgrade verification."
+    },
+    {
+      "path": "Makefile",
+      "reason": "Wired the adopter root Makefile to forward the installed AI Cockpit calibration-corrective start option."
+    },
+    {
+      "path": "pyproject.toml",
+      "reason": "Added the template pytest, coverage, and source-path configuration used by the governance regression suite."
+    },
+    {
+      "path": "tests/conftest.py",
+      "reason": "Added the template pytest bootstrap that imports the installed scripts and isolates CI diff baselines."
+    },
+    {
+      "path": "scripts/ai_linked_worktree_recovery.py",
+      "reason": "Installed internal lifecycle diagnostic dependency required by the template start/archive regression suite."
+    },
+    {
+      "path": "scripts/ai_resume_work_item.py",
+      "reason": "Installed internal synchronization dependency referenced by the installed Makefile.ai lifecycle targets."
+    },
+    {
+      "path": "tests/test_ai_archive_work_item.py",
+      "reason": "Template archive lifecycle regression coverage required by changed-critical policy."
+    },
+    {
+      "path": "tests/test_ai_check_backtrack.py",
+      "reason": "Template backtrack regression coverage completing the v0.5.70 critical mapping."
+    },
+    {
+      "path": "tests/test_ai_check_summary.py",
+      "reason": "Template Summary validation regression coverage required by changed-critical policy."
+    },
+    {
+      "path": "tests/test_core_gates.py",
+      "reason": "Template core governance gate regression coverage required by changed-critical policy."
+    },
+    {
+      "path": "tests/test_finish_readiness.py",
+      "reason": "Template finish-readiness regression coverage required by changed-critical policy."
+    },
+    {
+      "path": "tests/test_guards_and_status.py",
+      "reason": "Template guards and status regression coverage required by changed-critical policy."
+    },
+    {
+      "path": "tests/test_negative_scenarios.py",
+      "reason": "Template fail-closed negative-scenario regression coverage required by changed-critical policy."
+    },
+    {
+      "path": "tests/test_start_and_archive.py",
+      "reason": "Template Work Item start/archive regression coverage required by changed-critical policy."
+    },
+    {
+      "path": "tests/test_task_outcome_ai_finish_integration.py",
+      "reason": "Template ai-finish and Task Outcome integration regression coverage required by changed-critical policy."
+    },
+    {
+      "path": "tests/test_verification_evidence.py",
+      "reason": "Template verification-evidence regression coverage required by changed-critical policy."
+    },
+    {
+      "path": "docs/contract-fields.md",
+      "reason": "Template Contract field reference required by documentation alignment tests."
+    },
+    {
+      "path": "docs/reference/ai-cockpit-work-item-lifecycle.md",
+      "reason": "Template Work Item lifecycle reference required by documentation alignment tests."
+    },
+    {
+      "path": "docs/trust-layer.md",
+      "reason": "Template trust-layer reference used by documentation evidence validation."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
+      "reason": "Template historical Contract fixture required by documentation alignment regression coverage."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json",
+      "reason": "Template historical Summary fixture required by legacy intent-alignment regression coverage."
+    },
+    {
+      "path": ".ai/README.md",
+      "reason": "from .ai/README.md"
+    },
+    {
+      "path": ".ai/calibration/profiles.yaml",
+      "reason": "from .ai/calibration/profiles.yaml"
+    },
+    {
+      "path": ".ai/cockpit/README.ja.md",
+      "reason": "from .ai/cockpit/README.ja.md"
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "from .ai/cockpit/README.md"
+    },
+    {
+      "path": ".ai/cockpit/adoption.ja.md",
+      "reason": "from .ai/cockpit/adoption.ja.md"
+    },
+    {
+      "path": ".ai/cockpit/adoption.md",
+      "reason": "from .ai/cockpit/adoption.md"
+    },
+    {
+      "path": ".ai/cockpit/checks.yaml",
+      "reason": "from .ai/cockpit/checks.yaml"
+    },
+    {
+      "path": ".ai/cockpit/derived_artifacts.json",
+      "reason": "from .ai/cockpit/derived_artifacts.json"
+    },
+    {
+      "path": ".ai/cockpit/release-freeze.json",
+      "reason": "from .ai/cockpit/release-freeze.json"
+    },
+    {
+      "path": ".ai/cockpit/system_invariants.json",
+      "reason": "from .ai/cockpit/system_invariants.json"
+    },
+    {
+      "path": ".ai/cockpit/version.json",
+      "reason": "from .ai/cockpit/version.json"
+    },
+    {
+      "path": ".ai/cockpit/work-items/index.json",
+      "reason": "from .ai/cockpit/work-items/index.json"
+    },
+    {
+      "path": ".ai/cockpit/work-items/wi-06-status-interface.status.json",
+      "reason": "from .ai/cockpit/work-items/wi-06-status-interface.status.json"
+    },
+    {
+      "path": ".ai/decisions/.gitkeep",
+      "reason": "from .ai/decisions/.gitkeep"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json",
+      "reason": "from .ai/evidence/test-weakening/documentation-p0-comprehension-ci-evidence.json"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json",
+      "reason": "from .ai/evidence/test-weakening/documentation-p0-comprehension-evidence.json"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/foreign-duplicate-start-v1.json",
+      "reason": "from .ai/evidence/test-weakening/foreign-duplicate-start-v1.json"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/remove-cancelled-provider-validation.json",
+      "reason": "from .ai/evidence/test-weakening/remove-cancelled-provider-validation.json"
+    },
+    {
+      "path": ".ai/evidence/test-weakening/v057-public-projection-role-retirement.json",
+      "reason": "from .ai/evidence/test-weakening/v057-public-projection-role-retirement.json"
+    },
+    {
+      "path": ".ai/guards/agent_risk_policy.yaml",
+      "reason": "from .ai/guards/agent_risk_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/ai_review_policy.yaml",
+      "reason": "from .ai/guards/ai_review_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/backtrack_policy.yaml",
+      "reason": "from .ai/guards/backtrack_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/cockpit_status_policy.yaml",
+      "reason": "from .ai/guards/cockpit_status_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/file_boundary.yaml",
+      "reason": "from .ai/guards/file_boundary.yaml"
+    },
+    {
+      "path": ".ai/guards/file_ownership.yaml",
+      "reason": "from .ai/guards/file_ownership.yaml"
+    },
+    {
+      "path": ".ai/guards/governance_complexity_policy.yaml",
+      "reason": "from .ai/guards/governance_complexity_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/operation_impact_policy.yaml",
+      "reason": "from .ai/guards/operation_impact_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/preflight_review_policy.yaml",
+      "reason": "from .ai/guards/preflight_review_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/reference_impact_policy.yaml",
+      "reason": "from .ai/guards/reference_impact_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/scenario_coverage_policy.yaml",
+      "reason": "from .ai/guards/scenario_coverage_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/scope_policy.yaml",
+      "reason": "from .ai/guards/scope_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/summary_policy.yaml",
+      "reason": "from .ai/guards/summary_policy.yaml"
+    },
+    {
+      "path": ".ai/guards/test_weakening_policy.yaml",
+      "reason": "from .ai/guards/test_weakening_policy.yaml"
+    },
+    {
+      "path": ".ai/install/managed-regions.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/install/manifest.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/install/release-identity.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/install/rollback-baseline.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/install/version.json",
+      "reason": "write installed lifecycle fact"
+    },
+    {
+      "path": ".ai/policies/complexity_trend.yaml",
+      "reason": "from .ai/policies/complexity_trend.yaml"
+    },
+    {
+      "path": ".ai/policies/raw-request-exemptions.yaml",
+      "reason": "from .ai/policies/raw-request-exemptions.yaml"
+    },
+    {
+      "path": ".ai/policies/requested-operation.yaml",
+      "reason": "from .ai/policies/requested-operation.yaml"
+    },
+    {
+      "path": ".ai/policies/verification_impact.yaml",
+      "reason": "from .ai/policies/verification_impact.yaml"
+    },
+    {
+      "path": ".ai/project/adopter-capability-manifest.json",
+      "reason": "from .ai/project/adopter-capability-manifest.json"
+    },
+    {
+      "path": ".ai/project/capabilities.json",
+      "reason": "from .ai/project/capabilities.json"
+    },
+    {
+      "path": ".ai/project/success_criteria.json",
+      "reason": "from .ai/project/success_criteria.json"
+    },
+    {
+      "path": ".ai/quality/gates.yaml",
+      "reason": "from .ai/quality/gates.yaml"
+    },
+    {
+      "path": ".ai/quality/governance-routing.yaml",
+      "reason": "from .ai/quality/governance-routing.yaml"
+    },
+    {
+      "path": ".ai/schemas/adopter-capability-manifest.schema.json",
+      "reason": "from .ai/schemas/adopter-capability-manifest.schema.json"
+    },
+    {
+      "path": ".ai/schemas/canonical_evidence.schema.json",
+      "reason": "from .ai/schemas/canonical_evidence.schema.json"
+    },
+    {
+      "path": ".ai/schemas/cross-wi-integration-report.schema.json",
+      "reason": "from .ai/schemas/cross-wi-integration-report.schema.json"
+    },
+    {
+      "path": ".ai/schemas/evidence-binding.schema.json",
+      "reason": "from .ai/schemas/evidence-binding.schema.json"
+    },
+    {
+      "path": ".ai/schemas/external_handoff.schema.json",
+      "reason": "from .ai/schemas/external_handoff.schema.json"
+    },
+    {
+      "path": ".ai/schemas/governance-cost-report.schema.json",
+      "reason": "from .ai/schemas/governance-cost-report.schema.json"
+    },
+    {
+      "path": ".ai/schemas/implementation-knowledge-dependency-index.schema.json",
+      "reason": "from .ai/schemas/implementation-knowledge-dependency-index.schema.json"
+    },
+    {
+      "path": ".ai/schemas/implementation-knowledge-index.schema.json",
+      "reason": "from .ai/schemas/implementation-knowledge-index.schema.json"
+    },
+    {
+      "path": ".ai/schemas/implementation-knowledge-query.schema.json",
+      "reason": "from .ai/schemas/implementation-knowledge-query.schema.json"
+    },
+    {
+      "path": ".ai/schemas/implementation-knowledge-record.schema.json",
+      "reason": "from .ai/schemas/implementation-knowledge-record.schema.json"
+    },
+    {
+      "path": ".ai/schemas/operation-impact.schema.json",
+      "reason": "from .ai/schemas/operation-impact.schema.json"
+    },
+    {
+      "path": ".ai/schemas/parallel-verification-plan.schema.json",
+      "reason": "from .ai/schemas/parallel-verification-plan.schema.json"
+    },
+    {
+      "path": ".ai/schemas/performance-diagnosis-report.schema.json",
+      "reason": "from .ai/schemas/performance-diagnosis-report.schema.json"
+    },
+    {
+      "path": ".ai/schemas/reference_impact.schema.json",
+      "reason": "from .ai/schemas/reference_impact.schema.json"
+    },
+    {
+      "path": ".ai/schemas/task_outcome.schema.json",
+      "reason": "from .ai/schemas/task_outcome.schema.json"
+    },
+    {
+      "path": ".ai/schemas/test_weakening.schema.json",
+      "reason": "from .ai/schemas/test_weakening.schema.json"
+    },
+    {
+      "path": ".ai/schemas/unknown_assessment.schema.json",
+      "reason": "from .ai/schemas/unknown_assessment.schema.json"
+    },
+    {
+      "path": ".ai/schemas/work-item-intelligence-snapshot.schema.json",
+      "reason": "from .ai/schemas/work-item-intelligence-snapshot.schema.json"
+    },
+    {
+      "path": ".ai/schemas/work-item-status-interface.schema.json",
+      "reason": "from .ai/schemas/work-item-status-interface.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/approval.schema.json",
+      "reason": "from .ai/trust/schema/approval.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/baseline_evidence.schema.json",
+      "reason": "from .ai/trust/schema/baseline_evidence.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/human_decision_evidence.schema.json",
+      "reason": "from .ai/trust/schema/human_decision_evidence.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/human_decision_request.schema.json",
+      "reason": "from .ai/trust/schema/human_decision_request.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/repository_capabilities.schema.json",
+      "reason": "from .ai/trust/schema/repository_capabilities.schema.json"
+    },
+    {
+      "path": ".ai/trust/schema/success_criteria.schema.json",
+      "reason": "from .ai/trust/schema/success_criteria.schema.json"
+    },
+    {
+      "path": ".ai/work-items/_templates/work_item_contract.example.json",
+      "reason": "from .ai/work-items/_templates/work_item_contract.example.json"
+    },
+    {
+      "path": ".ai/work-items/_templates/work_item_summary.example.json",
+      "reason": "from .ai/work-items/_templates/work_item_summary.example.json"
+    },
+    {
+      "path": ".ai/work-items/active/.gitkeep",
+      "reason": "from .ai/work-items/active/.gitkeep"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json",
+      "reason": "create upgrade Contract"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/upgrade_ai_cockpit.summary.json",
+      "reason": "create upgrade Summary"
+    },
+    {
+      "path": ".ai/work-items/archive/.gitkeep",
+      "reason": "from .ai/work-items/archive/.gitkeep"
+    },
+    {
+      "path": ".ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json",
+      "reason": "from .ai/work-items/conflict-successor-receipts/wi-08-content-bound-reuse-collision-source.json"
+    },
+    {
+      "path": ".ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json",
+      "reason": "from .ai/work-items/conflict-successor-receipts/wi-10-environment-bound-collision-source.json"
+    },
+    {
+      "path": ".ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json",
+      "reason": "from .ai/work-items/conflict-successor-receipts/wi-11-governance-profile-effect-collision-source.json"
+    },
+    {
+      "path": ".ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json",
+      "reason": "from .ai/work-items/conflict-successor-receipts/wi-12-performance-diagnosis-collision-source.json"
+    },
+    {
+      "path": ".ai/work-items/external-handoffs/publish-v0-5-69-provider-release-20260820-v2.json",
+      "reason": "from .ai/work-items/external-handoffs/publish-v0-5-69-provider-release-20260820-v2.json"
+    },
+    {
+      "path": ".ai/work-items/external-handoffs/publish-v0-5-69-provider-release-20260820-v3.json",
+      "reason": "from .ai/work-items/external-handoffs/publish-v0-5-69-provider-release-20260820-v3.json"
+    },
+    {
+      "path": ".ai/work-items/external-handoffs/publish-v0-5-69-provider-release-20260820-v4.json",
+      "reason": "from .ai/work-items/external-handoffs/publish-v0-5-69-provider-release-20260820-v4.json"
+    },
+    {
+      "path": ".ai/work-items/external-handoffs/publish-v0-5-69-provider-release-20260820.json",
+      "reason": "from .ai/work-items/external-handoffs/publish-v0-5-69-provider-release-20260820.json"
+    },
+    {
+      "path": ".ai/work-items/external-handoffs/run-release-rehearsal-v0-5-69-20260820.json",
+      "reason": "from .ai/work-items/external-handoffs/run-release-rehearsal-v0-5-69-20260820.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/fix-lock-lease-coverage-20260818-2.json",
+      "reason": "from .ai/work-items/recovery-receipts/fix-lock-lease-coverage-20260818-2.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/fix-lock-lease-coverage-20260818.json",
+      "reason": "from .ai/work-items/recovery-receipts/fix-lock-lease-coverage-20260818.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/fix-post-archive-generated-ownership-20260819.json",
+      "reason": "from .ai/work-items/recovery-receipts/fix-post-archive-generated-ownership-20260819.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/implementation-knowledge-projection-20260818-2.json",
+      "reason": "from .ai/work-items/recovery-receipts/implementation-knowledge-projection-20260818-2.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/implementation-knowledge-projection-20260818.json",
+      "reason": "from .ai/work-items/recovery-receipts/implementation-knowledge-projection-20260818.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json",
+      "reason": "from .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main-31298815487-93208171431.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json",
+      "reason": "from .ai/work-items/recovery-receipts/jdk-lane-runtime-validation-620-current-main.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json",
+      "reason": "from .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main-31328153138-93281833266.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json",
+      "reason": "from .ai/work-items/recovery-receipts/post-publish-version-truth-v0549-current-main.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/publish-v0-5-69-provider-release-20260820.json",
+      "reason": "from .ai/work-items/recovery-receipts/publish-v0-5-69-provider-release-20260820.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819-2.json",
+      "reason": "from .ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819-2.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819-3.json",
+      "reason": "from .ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819-3.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819-32253090100-96070093149.json",
+      "reason": "from .ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819-32253090100-96070093149.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819-32255131144-96075081030.json",
+      "reason": "from .ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819-32255131144-96075081030.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819.json",
+      "reason": "from .ai/work-items/recovery-receipts/quality-shard-orchestration-reliability-successor-20260819.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json",
+      "reason": "from .ai/work-items/recovery-receipts/release-freeze-published-projection-repair.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819-2.json",
+      "reason": "from .ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819-2.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819-3.json",
+      "reason": "from .ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819-3.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819-32272723883-96134761053.json",
+      "reason": "from .ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819-32272723883-96134761053.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819-4.json",
+      "reason": "from .ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819-4.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819.json",
+      "reason": "from .ai/work-items/recovery-receipts/release-projection-v0_5_68-20260819.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/verification-gate-routing-optimization-20260817.json",
+      "reason": "from .ai/work-items/recovery-receipts/verification-gate-routing-optimization-20260817.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-04-hosted-installation-recovery.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-09-external-identity-recovery.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff-31951774632-95176288562.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-16-outcome-human-handoff.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-17-stale-code-doc-cleanup.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi-21-outcome-resolution-projection.json"
+    },
+    {
+      "path": ".ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json",
+      "reason": "from .ai/work-items/recovery-receipts/wi10-stacked-pr-chain-20260730.json"
+    },
+    {
+      "path": ".ai/work-items/runtime/.gitignore",
+      "reason": "from .ai/work-items/runtime/.gitignore"
+    },
+    {
+      "path": ".ai/work-items/starts/.gitkeep",
+      "reason": "from .ai/work-items/starts/.gitkeep"
+    },
+    {
+      "path": ".ai/work-items/starts/upgrade_ai_cockpit.json",
+      "reason": "create upgrade Start Receipt"
+    },
+    {
+      "path": ".cursor/rules/ai-cockpit.mdc",
+      "reason": "from .cursor/rules/ai-cockpit.mdc"
+    },
+    {
+      "path": "AGENTS.md",
+      "reason": "replace managed AI Cockpit section"
+    },
+    {
+      "path": "CLAUDE.md",
+      "reason": "replace managed AI Cockpit section"
+    },
+    {
+      "path": "GEMINI.md",
+      "reason": "replace managed AI Cockpit section"
+    },
+    {
+      "path": "Makefile.ai",
+      "reason": "from templates/make/Makefile.ai"
+    },
+    {
+      "path": "Makefile.ai.stack",
+      "reason": "from templates/stacks/rust.mk"
+    },
+    {
+      "path": "scripts/ai_acceptance_policy.py",
+      "reason": "from scripts/ai_acceptance_policy.py"
+    },
+    {
+      "path": "scripts/ai_adoption_evidence.py",
+      "reason": "from scripts/ai_adoption_evidence.py"
+    },
+    {
+      "path": "scripts/ai_archive_work_item.py",
+      "reason": "from scripts/ai_archive_work_item.py"
+    },
+    {
+      "path": "scripts/ai_baseline_evidence.py",
+      "reason": "from scripts/ai_baseline_evidence.py"
+    },
+    {
+      "path": "scripts/ai_calibrate.py",
+      "reason": "from scripts/ai_calibrate.py"
+    },
+    {
+      "path": "scripts/ai_calibration_corrective.py",
+      "reason": "from scripts/ai_calibration_corrective.py"
+    },
+    {
+      "path": "scripts/ai_calibration_inventory.py",
+      "reason": "from scripts/ai_calibration_inventory.py"
+    },
+    {
+      "path": "scripts/ai_calibration_profiles.py",
+      "reason": "from scripts/ai_calibration_profiles.py"
+    },
+    {
+      "path": "scripts/ai_capability_freshness.py",
+      "reason": "from scripts/ai_capability_freshness.py"
+    },
+    {
+      "path": "scripts/ai_capability_truth.py",
+      "reason": "from scripts/ai_capability_truth.py"
+    },
+    {
+      "path": "scripts/ai_check_adoption_ready.py",
+      "reason": "from scripts/ai_check_adoption_ready.py"
+    },
+    {
+      "path": "scripts/ai_check_agent_risk.py",
+      "reason": "from scripts/ai_check_agent_risk.py"
+    },
+    {
+      "path": "scripts/ai_check_backtrack.py",
+      "reason": "from scripts/ai_check_backtrack.py"
+    },
+    {
+      "path": "scripts/ai_check_budget_impact.py",
+      "reason": "from scripts/ai_check_budget_impact.py"
+    },
+    {
+      "path": "scripts/ai_check_coverage_guard.py",
+      "reason": "from scripts/ai_check_coverage_guard.py"
+    },
+    {
+      "path": "scripts/ai_check_diff_ownership.py",
+      "reason": "from scripts/ai_check_diff_ownership.py"
+    },
+    {
+      "path": "scripts/ai_check_guard_calibration.py",
+      "reason": "from scripts/ai_check_guard_calibration.py"
+    },
+    {
+      "path": "scripts/ai_check_guards.py",
+      "reason": "from scripts/ai_check_guards.py"
+    },
+    {
+      "path": "scripts/ai_check_guidelines.py",
+      "reason": "from scripts/ai_check_guidelines.py"
+    },
+    {
+      "path": "scripts/ai_check_knowledge_index.py",
+      "reason": "from scripts/ai_check_knowledge_index.py"
+    },
+    {
+      "path": "scripts/ai_check_pr.py",
+      "reason": "from scripts/ai_check_pr.py"
+    },
+    {
+      "path": "scripts/ai_check_reference_impact.py",
+      "reason": "from scripts/ai_check_reference_impact.py"
+    },
+    {
+      "path": "scripts/ai_check_registry.py",
+      "reason": "from scripts/ai_check_registry.py"
+    },
+    {
+      "path": "scripts/ai_check_review_policy.py",
+      "reason": "from scripts/ai_check_review_policy.py"
+    },
+    {
+      "path": "scripts/ai_check_scenario_coverage.py",
+      "reason": "from scripts/ai_check_scenario_coverage.py"
+    },
+    {
+      "path": "scripts/ai_check_scope.py",
+      "reason": "from scripts/ai_check_scope.py"
+    },
+    {
+      "path": "scripts/ai_check_serial_order.py",
+      "reason": "from scripts/ai_check_serial_order.py"
+    },
+    {
+      "path": "scripts/ai_check_status.py",
+      "reason": "from scripts/ai_check_status.py"
+    },
+    {
+      "path": "scripts/ai_check_status_consistency.py",
+      "reason": "from scripts/ai_check_status_consistency.py"
+    },
+    {
+      "path": "scripts/ai_check_summary.py",
+      "reason": "from scripts/ai_check_summary.py"
+    },
+    {
+      "path": "scripts/ai_check_task_outcome.py",
+      "reason": "from scripts/ai_check_task_outcome.py"
+    },
+    {
+      "path": "scripts/ai_check_test_weakening.py",
+      "reason": "from scripts/ai_check_test_weakening.py"
+    },
+    {
+      "path": "scripts/ai_check_work_item.py",
+      "reason": "from scripts/ai_check_work_item.py"
+    },
+    {
+      "path": "scripts/ai_checkpoint.py",
+      "reason": "from scripts/ai_checkpoint.py"
+    },
+    {
+      "path": "scripts/ai_classify_operation_impact.py",
+      "reason": "from scripts/ai_classify_operation_impact.py"
+    },
+    {
+      "path": "scripts/ai_close_work_item.py",
+      "reason": "from scripts/ai_close_work_item.py"
+    },
+    {
+      "path": "scripts/ai_common.py",
+      "reason": "from scripts/ai_common.py"
+    },
+    {
+      "path": "scripts/ai_critical_domain_guards.py",
+      "reason": "from scripts/ai_critical_domain_guards.py"
+    },
+    {
+      "path": "scripts/ai_decision_protocol.py",
+      "reason": "from scripts/ai_decision_protocol.py"
+    },
+    {
+      "path": "scripts/ai_detached_uninstaller.py",
+      "reason": "from scripts/ai_detached_uninstaller.py"
+    },
+    {
+      "path": "scripts/ai_diff_bound_reuse.py",
+      "reason": "from scripts/ai_diff_bound_reuse.py"
+    },
+    {
+      "path": "scripts/ai_disable_enable.py",
+      "reason": "from scripts/ai_disable_enable.py"
+    },
+    {
+      "path": "scripts/ai_doctor.py",
+      "reason": "from scripts/ai_doctor.py"
+    },
+    {
+      "path": "scripts/ai_environment_reuse.py",
+      "reason": "from scripts/ai_environment_reuse.py"
+    },
+    {
+      "path": "scripts/ai_evidence_binding.py",
+      "reason": "from scripts/ai_evidence_binding.py"
+    },
+    {
+      "path": "scripts/ai_evidence_dependencies.py",
+      "reason": "from scripts/ai_evidence_dependencies.py"
+    },
+    {
+      "path": "scripts/ai_external_handoff.py",
+      "reason": "from scripts/ai_external_handoff.py"
+    },
+    {
+      "path": "scripts/ai_external_identity.py",
+      "reason": "from scripts/ai_external_identity.py"
+    },
+    {
+      "path": "scripts/ai_finish.py",
+      "reason": "from scripts/ai_finish.py"
+    },
+    {
+      "path": "scripts/ai_generate_human_report.py",
+      "reason": "from scripts/ai_generate_human_report.py"
+    },
+    {
+      "path": "scripts/ai_generate_knowledge_record.py",
+      "reason": "from scripts/ai_generate_knowledge_record.py"
+    },
+    {
+      "path": "scripts/ai_generate_status.py",
+      "reason": "from scripts/ai_generate_status.py"
+    },
+    {
+      "path": "scripts/ai_generate_task_outcome.py",
+      "reason": "from scripts/ai_generate_task_outcome.py"
+    },
+    {
+      "path": "scripts/ai_generate_work_item_status.py",
+      "reason": "from scripts/ai_generate_work_item_status.py"
+    },
+    {
+      "path": "scripts/ai_governance_compression.py",
+      "reason": "from scripts/ai_governance_compression.py"
+    },
+    {
+      "path": "scripts/ai_governance_cost.py",
+      "reason": "from scripts/ai_governance_cost.py"
+    },
+    {
+      "path": "scripts/ai_impact_classifier.py",
+      "reason": "from scripts/ai_impact_classifier.py"
+    },
+    {
+      "path": "scripts/ai_input_trust.py",
+      "reason": "from scripts/ai_input_trust.py"
+    },
+    {
+      "path": "scripts/ai_install_facts.py",
+      "reason": "from scripts/ai_install_facts.py"
+    },
+    {
+      "path": "scripts/ai_install_status.py",
+      "reason": "from scripts/ai_install_status.py"
+    },
+    {
+      "path": "scripts/ai_installer_adopter_capability_manifest.py",
+      "reason": "from scripts/ai_installer_adopter_capability_manifest.py"
+    },
+    {
+      "path": "scripts/ai_installer_bootstrap.py",
+      "reason": "from scripts/ai_installer_bootstrap.py"
+    },
+    {
+      "path": "scripts/ai_installer_catalog.json",
+      "reason": "from scripts/ai_installer_catalog.json"
+    },
+    {
+      "path": "scripts/ai_installer_detection.py",
+      "reason": "from scripts/ai_installer_detection.py"
+    },
+    {
+      "path": "scripts/ai_installer_evidence.py",
+      "reason": "from scripts/ai_installer_evidence.py"
+    },
+    {
+      "path": "scripts/ai_installer_managed_regions.py",
+      "reason": "from scripts/ai_installer_managed_regions.py"
+    },
+    {
+      "path": "scripts/ai_installer_ownership.py",
+      "reason": "from scripts/ai_installer_ownership.py"
+    },
+    {
+      "path": "scripts/ai_installer_repository.py",
+      "reason": "from scripts/ai_installer_repository.py"
+    },
+    {
+      "path": "scripts/ai_installer_transaction.py",
+      "reason": "from scripts/ai_installer_transaction.py"
+    },
+    {
+      "path": "scripts/ai_installer_upgrade.py",
+      "reason": "from scripts/ai_installer_upgrade.py"
+    },
+    {
+      "path": "scripts/ai_intent_policy.py",
+      "reason": "from scripts/ai_intent_policy.py"
+    },
+    {
+      "path": "scripts/ai_knowledge_query.py",
+      "reason": "from scripts/ai_knowledge_query.py"
+    },
+    {
+      "path": "scripts/ai_lifecycle_facts.py",
+      "reason": "from scripts/ai_lifecycle_facts.py"
+    },
+    {
+      "path": "scripts/ai_lifecycle_truth.py",
+      "reason": "from scripts/ai_lifecycle_truth.py"
+    },
+    {
+      "path": "scripts/ai_observability.py",
+      "reason": "from scripts/ai_observability.py"
+    },
+    {
+      "path": "scripts/ai_onboard.py",
+      "reason": "from scripts/ai_onboard.py"
+    },
+    {
+      "path": "scripts/ai_outcome_gate.py",
+      "reason": "from scripts/ai_outcome_gate.py"
+    },
+    {
+      "path": "scripts/ai_ownership.py",
+      "reason": "from scripts/ai_ownership.py"
+    },
+    {
+      "path": "scripts/ai_performance_diagnosis.py",
+      "reason": "from scripts/ai_performance_diagnosis.py"
+    },
+    {
+      "path": "scripts/ai_post_archive_recovery.py",
+      "reason": "from scripts/ai_post_archive_recovery.py"
+    },
+    {
+      "path": "scripts/ai_preflight_review.py",
+      "reason": "from scripts/ai_preflight_review.py"
+    },
+    {
+      "path": "scripts/ai_project_doctor.py",
+      "reason": "from scripts/ai_project_doctor.py"
+    },
+    {
+      "path": "scripts/ai_project_profile.py",
+      "reason": "from scripts/ai_project_profile.py"
+    },
+    {
+      "path": "scripts/ai_projection_lease.py",
+      "reason": "from scripts/ai_projection_lease.py"
+    },
+    {
+      "path": "scripts/ai_readiness_policy.py",
+      "reason": "from scripts/ai_readiness_policy.py"
+    },
+    {
+      "path": "scripts/ai_render_task_outcome.py",
+      "reason": "from scripts/ai_render_task_outcome.py"
+    },
+    {
+      "path": "scripts/ai_render_task_outcome_multilingual.py",
+      "reason": "from scripts/ai_render_task_outcome_multilingual.py"
+    },
+    {
+      "path": "scripts/ai_render_task_outcome_pr.py",
+      "reason": "from scripts/ai_render_task_outcome_pr.py"
+    },
+    {
+      "path": "scripts/ai_required_evidence.py",
+      "reason": "from scripts/ai_required_evidence.py"
+    },
+    {
+      "path": "scripts/ai_review_readiness_policy.py",
+      "reason": "from scripts/ai_review_readiness_policy.py"
+    },
+    {
+      "path": "scripts/ai_risk_policy.py",
+      "reason": "from scripts/ai_risk_policy.py"
+    },
+    {
+      "path": "scripts/ai_rollback.py",
+      "reason": "from scripts/ai_rollback.py"
+    },
+    {
+      "path": "scripts/ai_scenario_policy.py",
+      "reason": "from scripts/ai_scenario_policy.py"
+    },
+    {
+      "path": "scripts/ai_start.py",
+      "reason": "from scripts/ai_start.py"
+    },
+    {
+      "path": "scripts/ai_start_receipt.py",
+      "reason": "from scripts/ai_start_receipt.py"
+    },
+    {
+      "path": "scripts/ai_task_event_log.py",
+      "reason": "from scripts/ai_task_event_log.py"
+    },
+    {
+      "path": "scripts/ai_trust_guards.py",
+      "reason": "from scripts/ai_trust_guards.py"
+    },
+    {
+      "path": "scripts/ai_trust_schema.py",
+      "reason": "from scripts/ai_trust_schema.py"
+    },
+    {
+      "path": "scripts/ai_uninstall_facts.py",
+      "reason": "from scripts/ai_uninstall_facts.py"
+    },
+    {
+      "path": "scripts/ai_uninstall_proposal.py",
+      "reason": "from scripts/ai_uninstall_proposal.py"
+    },
+    {
+      "path": "scripts/ai_upgrade_apply.py",
+      "reason": "from scripts/ai_upgrade_apply.py"
+    },
+    {
+      "path": "scripts/ai_upgrade_conflict_report.py",
+      "reason": "from scripts/ai_upgrade_conflict_report.py"
+    },
+    {
+      "path": "scripts/ai_upgrade_proposal.py",
+      "reason": "from scripts/ai_upgrade_proposal.py"
+    },
+    {
+      "path": "scripts/ai_validate_java_runtime.py",
+      "reason": "from scripts/ai_validate_java_runtime.py"
+    },
+    {
+      "path": "scripts/ai_verification_context.py",
+      "reason": "from scripts/ai_verification_context.py"
+    },
+    {
+      "path": "scripts/ai_verification_policy.py",
+      "reason": "from scripts/ai_verification_policy.py"
+    },
+    {
+      "path": "scripts/ai_verification_runtime.py",
+      "reason": "from scripts/ai_verification_runtime.py"
+    },
+    {
+      "path": "scripts/ai_verify.py",
+      "reason": "from scripts/ai_verify.py"
+    },
+    {
+      "path": "scripts/ai_work_item_intelligence.py",
+      "reason": "from scripts/ai_work_item_intelligence.py"
+    },
+    {
+      "path": "scripts/ai_work_item_status.py",
+      "reason": "from scripts/ai_work_item_status.py"
+    },
+    {
+      "path": "scripts/bootstrap_repository.py",
+      "reason": "from scripts/bootstrap_repository.py"
+    },
+    {
+      "path": "scripts/bootstrap_wizard.py",
+      "reason": "from scripts/bootstrap_wizard.py"
+    },
+    {
+      "path": "scripts/bootstrap_write_boundary.py",
+      "reason": "from scripts/bootstrap_write_boundary.py"
+    },
+    {
+      "path": "scripts/check_changed_critical_coverage.py",
+      "reason": "from scripts/check_changed_critical_coverage.py"
+    },
+    {
+      "path": "scripts/check_critical_coverage.py",
+      "reason": "from scripts/check_critical_coverage.py"
+    },
+    {
+      "path": "scripts/determine_governance_profile.py",
+      "reason": "from scripts/determine_governance_profile.py"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/upgrade_ai_cockpit.outcome.json",
+      "reason": "Mandatory Task Outcome evidence generated by ai-finish."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/upgrade_ai_cockpit.outcome.md",
+      "reason": "Mandatory Task Outcome evidence generated by ai-finish."
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "reason": "Generated machine-readable Human Benefit Review Report."
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "reason": "Generated human-readable Human Benefit Review Report."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Generated archive discovery index."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/upgrade_ai_cockpit.archive-manifest.json",
+      "reason": "Immutable archive evidence root."
+    },
+    {
+      "path": ".ai/knowledge/work-items/upgrade_ai_cockpit.json",
+      "reason": "Generated evidence-bound Implementation Knowledge Record."
+    },
+    {
+      "path": ".ai/knowledge/index.json",
+      "reason": "Rebuilt deterministic Implementation Knowledge index."
+    }
+  ],
+  "sourcesUsed": [
+    ".ai/cockpit/version.json",
+    ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+    "https://github.com/spirex-ds-dev/ai-cockpit-template/tree/main",
+    "https://github.com/spirex-ds-dev/ai-cockpit-template/releases/tag/v0.5.70",
+    "scripts/ai_installer_catalog.json",
+    ".ai/cockpit/upgrade-conflict-report.json",
+    "installer action log"
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "Published source and target version identity are recorded",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        ".ai/cockpit/version.json releaseVersion=0.5.70",
+        ".ai/install/version.json sourceCommit=746329ced7a1d315a468d4e2c6a7a39d50bcc343",
+        ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json"
+      ]
+    },
+    {
+      "scenario": "Every installer feature-list entry is present and comparable with template main",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+        "13/13 stacks, 115/115 scripts, 19/19 runtime targets, no missing on-disk entrypoints"
+      ]
+    },
+    {
+      "scenario": "Project-owned divergence and rollback remain reviewable",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        ".ai/cockpit/upgrade-conflict-report.json",
+        ".ai/cockpit/upgrade-backups/20260820T175316.457331Z"
+      ]
+    },
+    {
+      "scenario": "Upgrade stays on the adopter main-based Work Item branch without Git publication",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        ".ai/work-items/starts/upgrade_ai_cockpit.json",
+        "installer action log ends with install complete and contains no commit/push/PR/merge action"
+      ]
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "command": "make check-ai-contract CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:50:09.004206+00:00",
+      "exitCode": 0,
+      "durationMs": 58,
+      "outputDigest": "64bce9b870012b420c079e2464a8ffd765b11066639f24354581383ced32fd89",
+      "commandHash": "48cec60a5c4a5648d62164db6a05e2aebc744f8aac3c5673ba374c2adc900919",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "9ac9b6bb503b24bef76e061df89e6e17c3ebfbf3d76e479f83a85aa81dbaff19",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/upgrade_ai_cockpit.contract.json work item contract check passed: .ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/upgrade_ai_cockpit.contract.json work item contract check passed: .ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "outputBytes": 268
+    },
+    {
+      "check": "aiScope",
+      "command": "make check-ai-scope CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:50:09.181082+00:00",
+      "exitCode": 0,
+      "durationMs": 108,
+      "outputDigest": "e16d5cad217a5c279fde8fa69bbaabf0142428196ceff42955d64dc24f4640f8",
+      "commandHash": "5d26f6d7badb241866f53ead2357864f177b15a7bbb4dbbda8e32bd5d44e2e5f",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "5c8f040a35899ba99f3f4975e131b671a4c57da1396b3a0abd34b6988cf598b9",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/upgrade_ai_cockpit.contract.json scope guard passed: 120 changed path(s) covered",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/upgrade_ai_cockpit.contract.json scope guard passed: 120 changed path(s) covered",
+      "outputBytes": 224
+    },
+    {
+      "check": "aiGuards",
+      "command": "make check-ai-guards",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:50:09.480389+00:00",
+      "exitCode": 0,
+      "durationMs": 222,
+      "outputDigest": "29980666e7b236c26e261b07687c4a33b12ecefd911073f96d1487865f56b7dc",
+      "commandHash": "769f935b899dad1a2abcf23ef3cd08c6904b7f7d03a988b5ce6aa573d18b1e83",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "761d37da630bc51887ceff3409e3f3b1ace67c5885ddc64fd75c667bbe06313a",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json [warning] restricted_write: .ai/cockpit/release-freeze.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/cockpit/upgrade-conflict-report.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/cockpit/work-items/index.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/cockpit/work-items/wi-06-",
+      "outputTail": "ai/schemas/implementation-knowledge-dependency-index.schema.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/schemas/implementation-knowledge-index.schema.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/schemas/implementation-knowledge-query.schema.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/schemas/implementation-knowledge-record.schema.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/cockpit/README.md (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/cockpit/version.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/guards/changed_critical_coverage_policy.json (.ai/guards/**) - Guard manifests define repository policy and should change only with an explicit Contract. [warning] restricted_write: .ai/guards/coverage_policy.yaml (.ai/guards/**) - Guard manifests define repository policy and should change only with an explicit Contract. [warning] restricted_write: .ai/install/managed-regions.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/install/manifest.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/install/release-identity.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/install/rollback-baseline.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/install/version.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/schemas/task_outcome.schema.json (.ai/**) - AI governance configuration. [warning] restricted_write: AGENTS.md (AGENTS.md) - Agent operating rules. [warning] restricted_write: CLAUDE.md (CLAUDE.md) - Claude operating rules. [warning] restricted_write: GEMINI.md (GEMINI.md) - Gemini operating rules. [warning] restricted_write: Makefile (Makefile) - Shared local and CI command entrypoint. guard check completed: 26 warning(s) report: target/ai_guard_report.json",
+      "outputBytes": 3143
+    },
+    {
+      "check": "aiReviewPolicy",
+      "command": "make check-ai-review-policy SUMMARY=.ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:50:09.650681+00:00",
+      "exitCode": 0,
+      "durationMs": 94,
+      "outputDigest": "f528d54c98c20e1b0e035c42f8385ae08020520185ff514b358b801db7b4fb54",
+      "commandHash": "8611d5bfa262da44b09d8ed26906021b6861637e35d60aa9137f988bece6dcc8",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "249084d1d79a266c1270e2c0f4fb0c230857192927fc567150dec35e16b25ca0",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/upgrade_ai_cockpit.summary.json review policy matched 98 path(s) [review] .ai/cockpit/release-freeze.json [review] .ai/cockpit/upgrade-conflict-report.json [review] .ai/cockpit/work-items/index.json [review] .ai/cockpit/work-items/wi-06-status-interface.status.json [review] .ai/evidence/ai-cockpit-upgrade-feature-checklist.json [review] .ai/evidence/reference-impact/upgrade_ai_cockpit_pyproje",
+      "outputTail": "] scripts/ai_generate_knowledge_record.py [review] scripts/ai_generate_work_item_status.py [review] scripts/ai_governance_cost.py [review] scripts/ai_installer_adopter_capability_manifest.py [review] scripts/ai_knowledge_query.py [review] scripts/ai_linked_worktree_recovery.py [review] scripts/ai_outcome_gate.py [review] scripts/ai_performance_diagnosis.py [review] scripts/ai_render_task_outcome_pr.py [review] scripts/ai_resume_work_item.py [review] scripts/ai_verification_context.py [review] scripts/ai_verification_runtime.py [review] scripts/ai_verify.py [review] .ai/cockpit/README.md [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md [review] .ai/cockpit/version.json [review] .ai/guards/changed_critical_coverage_policy.json [review] .ai/guards/coverage_policy.yaml [review] .ai/install/managed-regions.json [review] .ai/install/manifest.json [review] .ai/install/release-identity.json [review] .ai/install/rollback-baseline.json [review] .ai/install/version.json [review] .ai/schemas/task_outcome.schema.json [review] AGENTS.md [review] CLAUDE.md [review] GEMINI.md [review] Makefile [review] Makefile.ai [review] scripts/ai_archive_work_item.py [review] scripts/ai_check_backtrack.py [review] scripts/ai_check_pr.py [review] scripts/ai_check_reference_impact.py [review] scripts/ai_check_status_consistency.py [review] scripts/ai_check_summary.py [review] scripts/ai_check_task_outcome.py [review] scripts/ai_close_work_item.py [review] scripts/ai_evidence_dependencies.py [review] scripts/ai_finish.py [review] scripts/ai_generate_human_report.py [review] scripts/ai_generate_status.py [review] scripts/ai_generate_task_outcome.py [review] scripts/ai_post_archive_recovery.py [review] scripts/ai_render_task_outcome.py [review] scripts/ai_render_task_outcome_multilingual.py [review] scripts/ai_start.py [review] scripts/ai_verification_policy.py review focus recorded: 3 item(s) report: target/ai_review_policy_report.json",
+      "outputBytes": 5809
+    },
+    {
+      "check": "aiBacktrack",
+      "command": "make check-ai-backtrack",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:50:09.810329+00:00",
+      "exitCode": 0,
+      "durationMs": 97,
+      "outputDigest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+      "commandHash": "3ae95e96677b5ecabc3d873ff9cda8d7d3c807724cd86bda76ebb00cef4e4f88",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "782218e338912a9469f66414719493efb4c7be3300f8286a1bf7ad9f142fc0a7",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputBytes": 192
+    },
+    {
+      "check": "aiCoverage",
+      "command": "make check-ai-coverage-guard",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:50:09.982256+00:00",
+      "exitCode": 0,
+      "durationMs": 106,
+      "outputDigest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+      "commandHash": "296a9883f8b9ad27f3d57afdee3ebdea5c75869c899a00e55d80563bc889328a",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "a0cda9971334044efed821a8e13036ba60e44b29098ec8531a19894cb29425c7",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputBytes": 201
+    },
+    {
+      "check": "aiGuidelines",
+      "command": "make check-ai-guidelines CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json SUMMARY=.ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:50:10.107650+00:00",
+      "exitCode": 0,
+      "durationMs": 58,
+      "outputDigest": "de142619e966609ddb38b747dabd4c9ff63a506c0137347af9956b565243da38",
+      "commandHash": "686c77be3f8c12f4212f91c6050627caee05dc76ed0efa8e2c8f3aa55958799f",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "a64897363f8707c1734d6f7f536c066fc9b540f6ef2becc342ff2b114e3dc814",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json --summary .ai/work-items/active/upgrade_ai_cockpit.summary.json guidelines compliance check passed: 2 guideline(s) verified",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json --summary .ai/work-items/active/upgrade_ai_cockpit.summary.json guidelines compliance check passed: 2 guideline(s) verified",
+      "outputBytes": 316
+    },
+    {
+      "check": "aiDiffOwnership",
+      "command": "make check-ai-diff-ownership CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:50:10.510004+00:00",
+      "exitCode": 0,
+      "durationMs": 320,
+      "outputDigest": "9e054e7c2eac99c37f211e31d29e0a5835a0823108a97761a045735cd849698e",
+      "commandHash": "a37805e2b4a22884a43a74947553571b500cb6aeb7b446471321f4d96277b1fb",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "2d4cacb5cf5b21f6b384c94fb4aa455efa6951f5c5c277556edb0d0465fce51d",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json ## Diff Ownership Preview - active_owned: `118`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/README.md` — covered by Contract scope - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/release-freeze.json` — covered by Contract",
+      "outputTail": "performance_diagnosis.py` — covered by Contract scope - [active_owned] `scripts/ai_post_archive_recovery.py` — covered by Contract scope - [active_owned] `scripts/ai_render_task_outcome.py` — covered by Contract scope - [active_owned] `scripts/ai_render_task_outcome_multilingual.py` — covered by Contract scope - [active_owned] `scripts/ai_render_task_outcome_pr.py` — covered by Contract scope - [active_owned] `scripts/ai_resume_work_item.py` — covered by Contract scope - [active_owned] `scripts/ai_start.py` — covered by Contract scope - [active_owned] `scripts/ai_verification_context.py` — covered by Contract scope - [active_owned] `scripts/ai_verification_policy.py` — covered by Contract scope - [active_owned] `scripts/ai_verification_runtime.py` — covered by Contract scope - [active_owned] `scripts/ai_verify.py` — covered by Contract scope - [active_owned] `scripts/check_changed_critical_coverage.py` — covered by Contract scope - [active_owned] `scripts/determine_governance_profile.py` — covered by Contract scope - [active_owned] `tests/ai_cockpit/upgrade_feature_checklist_test.py` — covered by Contract scope - [active_owned] `tests/conftest.py` — covered by Contract scope - [active_owned] `tests/test_ai_archive_work_item.py` — covered by Contract scope - [active_owned] `tests/test_ai_check_backtrack.py` — covered by Contract scope - [active_owned] `tests/test_ai_check_summary.py` — covered by Contract scope - [active_owned] `tests/test_core_gates.py` — covered by Contract scope - [active_owned] `tests/test_finish_readiness.py` — covered by Contract scope - [active_owned] `tests/test_guards_and_status.py` — covered by Contract scope - [active_owned] `tests/test_negative_scenarios.py` — covered by Contract scope - [active_owned] `tests/test_start_and_archive.py` — covered by Contract scope - [active_owned] `tests/test_task_outcome_ai_finish_integration.py` — covered by Contract scope - [active_owned] `tests/test_verification_evidence.py` — covered by Contract scope",
+      "outputBytes": 11466
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:52:21.811834+00:00",
+      "exitCode": 0,
+      "durationMs": 131164,
+      "outputDigest": "9f36b6629b612e3b3daf1f6e1e6e53cf1d6f89db79739668210b02e55a47c857",
+      "commandHash": "e9589e6d07367af0027719354a354539e4f4ff284dd5a2d2bd35631b228fcf51",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "3d488d17ef27dab581b715079fa47ad1cf31626a3ce7f78bea22e37c255e4c46",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"dependency\", \"docs\", \"installer\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .ai/guards/changed_critical_coverage_policy.json, .ai/guards/coverage_policy.yaml, .ai/work-items/active/.gitkeep, .ai/work-items/archive/.gitkeep, .ai/work-items/archive/2026/documentation-alignment-summary-schema",
+      "outputTail": "upplied_distance ... ok test threshold_distance_retains_supplied_values_and_order ... ok test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/weekly_radar_top5.rs (target/debug/deps/weekly_radar_top5-d74b0faa16cd0578) running 7 tests test blank_values_are_rejected_before_an_entry_is_created ... ok test entry_retains_all_supplied_facts_without_normalizing_them ... ok test duplicate_candidate_is_rejected_before_capacity_and_does_not_mutate_model ... ok test top5_weekly_read_model::module_tests::blank_candidate_is_rejected ... ok test read_model_accepts_empty_input_and_preserves_supplied_order ... ok test top5_weekly_read_model::module_tests::from_entries_keeps_input_order ... ok test read_model_accepts_five_entries_and_rejects_a_sixth_without_mutation ... ok test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Doc-tests org_x running 1 test test src/features/weekly_radar/runtime/sources.rs - features::weekly_radar::runtime::sources::SourceObservation (line 121) - compile fail ... ok test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-reference-impact \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-test-weakening PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_test_weakening.py --root . --mode full --policy .ai/guards/test_weakening_policy.yaml {\"baseRef\": \"c12280bead071e07749541ba4823c95a86b04a2b\", \"decision\": \"continue\", \"limitations\": [\"Static signals do not prove semantic equivalence or complete test coverage.\"], \"mode\": \"full\", \"recoveryCondition\": \"No recovery action is required for the analyzed diff.\", \"requiredExplanation\": false, \"signals\": [], \"version\": 1} Strict project-specific checks: not configured; AI lifecycle gates remain independently enforced.",
+      "outputBytes": 75788
+    },
+    {
+      "check": "aiStatus",
+      "command": "make generate-cockpit-status CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json SUMMARY=.ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:52:23.404765+00:00",
+      "exitCode": 0,
+      "durationMs": 751,
+      "outputDigest": "0bdfc08ca6afc35e12d56c782402626b1030d530e3938dd954f7d32b6f4fee25",
+      "commandHash": "885668bc73ba125cf5bae10a9ca3490f4cbd9ff18acdf047a2eb85c4b0e07c10",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "9fbfd26ad8eadc1acc849fac707719245ff9568eecd687091aec7597af3349cc",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/upgrade_ai_cockpit.contract.json --summary .ai/work-items/active/upgrade_ai_cockpit.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/upgrade_ai_cockpit.contract.json --summary .ai/work-items/active/upgrade_ai_cockpit.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputBytes": 342
+    },
+    {
+      "check": "aiStatusCheck",
+      "command": "make check-ai-status CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json SUMMARY=.ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:52:24.936736+00:00",
+      "exitCode": 0,
+      "durationMs": 773,
+      "outputDigest": "c8b62c51416ed1d9a4aed0a117d97c3a39ee432af130d8df570e582dcef45f10",
+      "commandHash": "ac33e2d4b0bd7bf70f9dd8bf4b4e61193e700ecca3cda4d19071b4ba071087db",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "b2ae3cc996c75b5f6d33c82b4549c544b2c2cb0d310e13203ecd8fdd427b8be1",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json --summary .ai/work-items/active/upgrade_ai_cockpit.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json --summary .ai/work-items/active/upgrade_ai_cockpit.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputBytes": 341
+    },
+    {
+      "check": "aiStatusConsistency",
+      "command": "make check-ai-status-consistency",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:52:25.864303+00:00",
+      "exitCode": 0,
+      "durationMs": 160,
+      "outputDigest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+      "commandHash": "ddd5a0e5fa9b289b1ab3ba23cf37c1a7f01d48f31e2ad99e85762ba20f93c2a6",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "e7eb5126f0a3e1f069d50209adb9c9b80f7abfd35c8c998523239c880d54f5b5",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputBytes": 169
+    },
+    {
+      "check": "aiAgentRisk",
+      "command": "make check-ai-agent-risk CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json SUMMARY=.ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:52:26.013990+00:00",
+      "exitCode": 0,
+      "durationMs": 61,
+      "outputDigest": "e73e23666fce95d21b3b2a8b226c4c28fb95e6e52c0d35cec8d5c4d3d13c4683",
+      "commandHash": "a1734e04e44d3819598a2fe48bdeedbbad599dea3742db061d5b84470f1b7b62",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "55ef1d28366dc7e59d813fd3eb33179af7a78f31a09a61eef9a7c29a8658ed0a",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json --summary .ai/work-items/active/upgrade_ai_cockpit.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json --summary .ai/work-items/active/upgrade_ai_cockpit.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputBytes": 321
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/upgrade_ai_cockpit.summary.json CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T20:52:28.304152+00:00",
+      "exitCode": 0,
+      "durationMs": 307,
+      "outputDigest": "8281d4b4acd204a25301f092a61cd7c5d2240ce52134f94248b0b0ecbe330559",
+      "commandHash": "ec7ef4d693d95e0ba5a39c3c12817455a07c1bda4663a50b90c02794b8441690",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "d933dd409881d1503a843b745b021cc3a44ffb5f46ffe7247ee34334249bac3e",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/upgrade_ai_cockpit.summary.json --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json ai summary check passed: .ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/upgrade_ai_cockpit.summary.json --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json ai summary check passed: .ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "outputBytes": 323,
+      "outcomeInputDigest": "82dc7225f079f0ea01a2d53c79c87f65a6917ff92a8bfc73bb9f2919aa9b8f79"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "Upgrade must fail closed when active Work Items exist unless --upgrade-with-active is explicit.",
+      "compliant": true,
+      "evidence": "Installer enforces this boundary."
+    },
+    {
+      "guideline": "Rollback backups must remain available until the upgrade is reviewed.",
+      "compliant": true,
+      "evidence": "Installer enforces this boundary."
+    }
+  ],
+  "unknownsRemaining": [],
+  "risk": {
+    "level": "high",
+    "detail": "Review the managed diff and rollback backup before commit."
+  },
+  "generatedFiles": [
+    ".ai/cockpit/current_status.md",
+    ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json"
+  ],
+  "destructiveChanges": [],
+  "observedIssues": [
+    {
+      "issue": "The checked-out v0.5.70 tag carries older release.json metadata (v0.5.69/local source), while the Git tag, version.json, source commit, and verified release archive identify v0.5.70.",
+      "resolution": "Pinned the active Contract to the published v0.5.70 tag and repository URL, retained the generated install sourceCommit fact, and recorded the archive SHA-256 in the feature checklist evidence.",
+      "evidence": [
+        ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json",
+        ".ai/install/release-identity.json",
+        ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json"
+      ]
+    },
+    {
+      "issue": "An unrelated background make ai-finish process targeted the sentinel repository during the install session.",
+      "resolution": "Terminated the out-of-scope process group; the official installer log independently ends with install complete and no sentinel process remains.",
+      "evidence": [
+        "installer action log",
+        "final process inspection"
+      ]
+    },
+    {
+      "issue": "The existing coverage policy treated each changed AI Cockpit script as requiring a matching test association, so the first finish attempt was blocked despite the new checklist test.",
+      "resolution": "Added one narrowly scoped aiCockpitUpgradeFeatureChecklist association to the preserved project coverage policy; the association points to the checklist regression test and does not alter reportOnly or existing associations.",
+      "evidence": [
+        ".ai/guards/coverage_policy.yaml",
+        "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+        "target/ai_coverage_guard_report.json"
+      ]
+    },
+    {
+      "issue": "The published v0.5.70 source carries a release-freeze projection whose releaseTag remains v0.5.62.",
+      "resolution": "Retained the projection because it is identical in the published v0.5.70 source and the template main comparison checkout; no separate release-projection repair was requested in this adopter upgrade.",
+      "evidence": [
+        ".ai/cockpit/release-freeze.json",
+        ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json"
+      ]
+    }
+  ],
+  "residualRisks": [
+    {
+      "level": "medium",
+      "area": "rollback",
+      "detail": "Backup cleanup remains a human-reviewed follow-up.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    },
+    {
+      "level": "medium",
+      "area": "source-provenance",
+      "detail": "The generated lifecycle identity is now a tagged v0.5.70 release with five source-bound artifact digests; the upstream release.json metadata mismatch remains documented above.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    },
+    {
+      "level": "medium",
+      "area": "release-projection",
+      "detail": "The published v0.5.70 release-freeze projection still names v0.5.62; it is retained unchanged because the same projection is present in both published source and template main.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    },
+    {
+      "level": "low",
+      "area": "main-candidate-delta",
+      "detail": "Template main contains candidate-only history/projection files and a restore-project-test-receipt Make target not present in published v0.5.70; the installed catalog/runtime surface is fully parity-checked, but adopting unreleased candidate deltas would require a separate explicit decision.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    }
+  ],
+  "reviewReadiness": {
+    "status": "ready_with_risks",
+    "reason": "All required verification passed; residual risk remains documented.",
+    "expectedReviewFocus": [
+      "Source/target version identity",
+      "Managed file diff",
+      "Rollback backup"
+    ]
+  },
+  "intentAlignment": {
+    "problemResolved": true,
+    "constraintsRespected": true,
+    "nonGoalsAvoided": true,
+    "rationaleValidated": "The official installer completed on a dedicated branch; catalog/runtime parity and preserved ownership decisions are recorded as evidence."
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "verified",
+    "userVisibleOutput": "verified",
+    "persistence": "verified",
+    "localization": "verified",
+    "generatedArtifacts": "verified",
+    "makeEntrypoints": "verified"
+  },
+  "userCorrectionsCaptured": [],
+  "userCorrectionSolidification": [],
+  "checkpointEvidence": [],
+  "knownGaps": [],
+  "overclaimPrevention": "Do not report upgrade completion as merged or published.",
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "aligned",
+    "checkedAt": "2026-08-20T17:54:58.703326+00:00",
+    "checks": [
+      {
+        "area": "plan",
+        "status": "not_applicable",
+        "evidence": [],
+        "reason": "The bounded installer record has no remediation-plan scope."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json"
+        ],
+        "reason": "The generated Contract is declared in the final installer write set."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "aligned",
+        "evidence": [
+          ".ai/README.md",
+          ".ai/cockpit/README.ja.md",
+          ".ai/cockpit/README.md",
+          ".ai/cockpit/adoption.ja.md",
+          ".ai/cockpit/adoption.md",
+          "AGENTS.md",
+          "CLAUDE.md",
+          "GEMINI.md",
+          "Makefile",
+          "docs/contract-fields.md",
+          "docs/reference/ai-cockpit-work-item-lifecycle.md",
+          "docs/trust-layer.md",
+          ".ai/cockpit/task_report.md",
+          ".ai/work-items/archive/2026/upgrade_ai_cockpit.outcome.md"
+        ],
+        "reason": "Every installer-written documentation and command surface is enumerated."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "aligned",
+        "evidence": [
+          ".ai/cockpit/README.ja.md",
+          ".ai/cockpit/adoption.ja.md"
+        ],
+        "reason": "Installer-written Japanese or Chinese surfaces remain explicit for review."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json"
+        ],
+        "reason": "The generated Contract retains adoption or upgrade boundaries and follow-ups."
+      }
+    ]
+  },
+  "ownershipDecisions": [
+    {
+      "path": ".ai/cockpit/README.md",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/cockpit/version.json",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/guards/changed_critical_coverage_policy.json",
+      "classification": "Project-owned",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/guards/coverage_policy.yaml",
+      "classification": "Project-owned",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/policies/requested-operation.yaml",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/project/capabilities.json",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": ".ai/schemas/task_outcome.schema.json",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_installer_catalog.json",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_archive_work_item.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_backtrack.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_pr.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_reference_impact.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_status_consistency.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_summary.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_check_task_outcome.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_close_work_item.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_critical_domain_guards.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_evidence_dependencies.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_finish.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_generate_human_report.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_generate_status.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_generate_task_outcome.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_post_archive_recovery.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_render_task_outcome.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_render_task_outcome_multilingual.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_start.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/ai_verification_policy.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/check_changed_critical_coverage.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "scripts/determine_governance_profile.py",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "Makefile.ai",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    },
+    {
+      "path": "Makefile.ai.stack",
+      "classification": "Diverged",
+      "decision": "preserved",
+      "reason": "Target differs from template baseline; review manually before adopting template changes.",
+      "summary": "Target content differs from the template-managed content.",
+      "recommendation": "Confirm the project-owned decision or keep the target file unchanged."
+    }
+  ],
+  "taskOutcome": {
+    "status": "completed",
+    "jsonPath": ".ai/work-items/active/upgrade_ai_cockpit.outcome.json",
+    "markdownPath": ".ai/work-items/active/upgrade_ai_cockpit.outcome.md",
+    "rawEvidencePath": "derived:pre_merge",
+    "evidenceCount": 12,
+    "humanStatusColor": "green",
+    "completionFact": "All declared finish checks passed.",
+    "recoveryCondition": ""
+  },
+  "verificationHistory": [
+    {
+      "check": "aiScope",
+      "command": "make check-ai-scope CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T18:08:30.223917+00:00",
+      "exitCode": 2,
+      "durationMs": 113,
+      "outputDigest": "876d52614c3b50dd3791e38eeeb933d58c832924f625a8c88a21744c0135d56a",
+      "commandHash": "5d26f6d7badb241866f53ead2357864f177b15a7bbb4dbbda8e32bd5d44e2e5f",
+      "contractHash": "be2c6e5bb350cbab61a86366234a67996cfac516ba81a5cc5e1354fe5b519f53",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "35df32e7ea8867183b0baa9bc317d3db71ef754484aa80022282c87be125377a",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/upgrade_ai_cockpit.contract.json [ERROR] dependency scope rule requires tests/** when scripts/ai_*.py changes make: *** [check-ai-scope] Error 1",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/upgrade_ai_cockpit.contract.json [ERROR] dependency scope rule requires tests/** when scripts/ai_*.py changes make: *** [check-ai-scope] Error 1",
+      "outputBytes": 288
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T18:10:29.498949+00:00",
+      "exitCode": 2,
+      "durationMs": 3472,
+      "outputDigest": "77b29ba0c2714c7a3c4be43d5c6860833fc01d2a7aa478e94c0d4738cf6fd839",
+      "commandHash": "e9589e6d07367af0027719354a354539e4f4ff284dd5a2d2bd35631b228fcf51",
+      "contractHash": "08e52b0d1b681a200827022c70ca6fd7c5bae62da411aea65a6c213c613c20b8",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "459f367e9e2729d7e46303ef2aabc3d6daba275cf4d52707f2e174b46b86c846",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"installer\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .ai/guards/coverage_policy.yaml, .ai/policies/requested-operation.yaml, .ai/work-items/active/.gitkeep, .ai/work-items/archive/.gitkeep, .ai/work-items/external-handoffs/publish-v0-5-69-provider-release-20260820-v2.json, .ai/wor",
+      "outputTail": " \"path\": \"tests/ai_cockpit/upgrade_feature_checklist_test.py\", \"profile\": \"standard\", \"reasons\": [ \"standard pattern tests/**: tests/ai_cockpit/upgrade_feature_checklist_test.py\" ] } ], \"profileProjection\": { \"mandatoryControls\": [ \"scope\", \"trust\", \"lifecycle\", \"evidence_integrity\" ], \"optionalChecks\": [ \"quality-project-consistency\" ], \"requiredEvidence\": [ \"scope\", \"trust\", \"lifecycle\", \"evidence_integrity\", \"project-test\", \"reference-impact\", \"test-weakening\", \"quality-heavy\", \"supply-chain\", \"project-consistency\" ], \"verificationDepth\": \"full\" }, \"qualityRouting\": { \"reason\": \"explicit strict governance requires the complete quality graph\", \"requiredGroups\": [ \"quality-full\" ], \"target\": \"quality-full\" }, \"reasons\": [ \"Upgrade replaces managed governance and installer surfaces.\" ], \"releaseEscalationReasons\": [], \"requiredGroups\": [ \"quality-full\" ], \"schemaVersion\": 1, \"selectedProfile\": \"strict\", \"source\": \"automatic\", \"verificationEscalations\": [] } \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory quality-standard \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory quality-fast \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory ai-cockpit-project-format-check \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory ai-cockpit-project-lint Checking org-x v0.1.0 (<PROJECT_ROOT>) Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.77s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory ai-cockpit-diff-check git diff --check AGENTS.md:94: new blank line at EOF. CLAUDE.md:94: new blank line at EOF. GEMINI.md:94: new blank line at EOF. make[4]: *** [ai-cockpit-diff-check] Error 2 make[3]: *** [quality-fast] Error 2 make[2]: *** [quality-standard] Error 2 make[1]: *** [quality-full] Error 2 make: *** [ai-cockpit-quality] Error 2",
+      "outputBytes": 32310
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/upgrade_ai_cockpit.summary.json CONTRACT=.ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T18:11:14.077271+00:00",
+      "exitCode": 2,
+      "durationMs": 181,
+      "outputDigest": "de145737964c69a66d0fc784f9aaed95bc16960c79d300dedb2e71fc17b40e9b",
+      "commandHash": "ec7ef4d693d95e0ba5a39c3c12817455a07c1bda4663a50b90c02794b8441690",
+      "contractHash": "08e52b0d1b681a200827022c70ca6fd7c5bae62da411aea65a6c213c613c20b8",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "c61f3b9f646ab1e19e19f50b147bfcbdd4a5cba9398ddd27331d82d507341bf4",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/upgrade_ai_cockpit.summary.json --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json [ERROR] changedFiles is missing actual changed path: tests/ai_cockpit/upgrade_feature_checklist_test.py make: *** [check-ai-change-summary] Error 1",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/upgrade_ai_cockpit.summary.json --contract .ai/work-items/active/upgrade_ai_cockpit.contract.json [ERROR] changedFiles is missing actual changed path: tests/ai_cockpit/upgrade_feature_checklist_test.py make: *** [check-ai-change-summary] Error 1",
+      "outputBytes": 392
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T18:30:07.585286+00:00",
+      "exitCode": 2,
+      "durationMs": 9357,
+      "outputDigest": "115c90c63044d1042392889fe6a98072daf68424b623ed101663d8051dd62c68",
+      "commandHash": "e9589e6d07367af0027719354a354539e4f4ff284dd5a2d2bd35631b228fcf51",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "26908998cceebf31520a90379b9659d2007a7c0a8378acd96a2b4522d9417953",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"dependency\", \"docs\", \"installer\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .ai/guards/changed_critical_coverage_policy.json, .ai/guards/coverage_policy.yaml, .ai/policies/requested-operation.yaml, .ai/work-items/active/.gitkeep, .ai/work-items/archive/.gitkeep, .ai/work-items/archive/2026",
+      "outputTail": "test blank_values_and_empty_evidence_collections_are_rejected ... ok test distance_labels_are_stable_and_complete ... ok test supplied_distance_is_not_inferred_from_opaque_stages_or_evidence ... ok test duplicate_evidence_within_either_collection_is_rejected ... ok test threshold_distance::tests::constructor_rejects_evidence_overlap ... ok test threshold_distance::tests::constructor_retains_the_supplied_distance ... ok test threshold_distance::threshold_distance_test::module_local_test_preserves_supplied_distance_without_stage_comparison ... ok test threshold_distance_retains_supplied_values_and_order ... ok test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/weekly_radar_top5.rs (target/debug/deps/weekly_radar_top5-d74b0faa16cd0578) running 7 tests test blank_values_are_rejected_before_an_entry_is_created ... ok test duplicate_candidate_is_rejected_before_capacity_and_does_not_mutate_model ... ok test entry_retains_all_supplied_facts_without_normalizing_them ... ok test top5_weekly_read_model::module_tests::blank_candidate_is_rejected ... ok test read_model_accepts_empty_input_and_preserves_supplied_order ... ok test top5_weekly_read_model::module_tests::from_entries_keeps_input_order ... ok test read_model_accepts_five_entries_and_rejects_a_sixth_without_mutation ... ok test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Doc-tests org_x running 1 test test src/features/weekly_radar/runtime/sources.rs - features::weekly_radar::runtime::sources::SourceObservation (line 121) - compile fail ... ok test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-reference-impact make[3]: *** [check-ai-reference-impact] Error 3 make[2]: *** [quality-standard] Error 2 make[1]: *** [quality-full] Error 2 make: *** [ai-cockpit-quality] Error 2",
+      "outputBytes": 75623
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T18:36:20.017150+00:00",
+      "exitCode": 143,
+      "durationMs": 148448,
+      "outputDigest": "beb0db9fdcec403c74818670cce56449d6b562643d2e46c6b27baeba0da7bb0b",
+      "commandHash": "e9589e6d07367af0027719354a354539e4f4ff284dd5a2d2bd35631b228fcf51",
+      "contractHash": "606e3857857965c5e076f9463e99c77a251cc35fafc07f86139b3666363cbc23",
+      "commitSha": "c12280bead071e07749541ba4823c95a86b04a2b",
+      "executionContractPath": ".ai/work-items/active/upgrade_ai_cockpit.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/upgrade_ai_cockpit.summary.json",
+      "worktreeDigest": "888a9cfd088e4c3a6055881bcdefd48bdc8be188ab8bc118e7a6320beede0bf2",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"dependency\", \"docs\", \"installer\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .ai/guards/changed_critical_coverage_policy.json, .ai/guards/coverage_policy.yaml, .ai/policies/requested-operation.yaml, .ai/work-items/active/.gitkeep, .ai/work-items/archive/.gitkeep, .ai/work-items/archive/2026",
+      "outputTail": "_complete ... ok test duplicate_evidence_within_either_collection_is_rejected ... ok test supplied_distance_is_not_inferred_from_opaque_stages_or_evidence ... ok test threshold_distance::tests::constructor_rejects_evidence_overlap ... ok test threshold_distance::tests::constructor_retains_the_supplied_distance ... ok test threshold_distance::threshold_distance_test::module_local_test_preserves_supplied_distance_without_stage_comparison ... ok test threshold_distance_retains_supplied_values_and_order ... ok test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/weekly_radar_top5.rs (target/debug/deps/weekly_radar_top5-d74b0faa16cd0578) running 7 tests test blank_values_are_rejected_before_an_entry_is_created ... ok test entry_retains_all_supplied_facts_without_normalizing_them ... ok test duplicate_candidate_is_rejected_before_capacity_and_does_not_mutate_model ... ok test read_model_accepts_empty_input_and_preserves_supplied_order ... ok test top5_weekly_read_model::module_tests::blank_candidate_is_rejected ... ok test read_model_accepts_five_entries_and_rejects_a_sixth_without_mutation ... ok test top5_weekly_read_model::module_tests::from_entries_keeps_input_order ... ok test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Doc-tests org_x running 1 test test src/features/weekly_radar/runtime/sources.rs - features::weekly_radar::runtime::sources::SourceObservation (line 121) - compile fail ... ok test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-reference-impact make: *** [ai-cockpit-quality] Terminated: 15 make[3]: *** [check-ai-reference-impact] Terminated: 15 make[2]: *** [quality-standard] Terminated: 15 make[1]: *** [quality-full] Terminated: 15 🔴 ai-finish command cancelled by signal 15; owned process group terminated.",
+      "outputBytes": 76048
+    }
+  ],
+  "archiveSequence": 56
+}

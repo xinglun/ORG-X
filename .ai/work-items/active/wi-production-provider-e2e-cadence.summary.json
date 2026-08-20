@@ -202,6 +202,18 @@
         "origin/data:weekly-radar/snapshots/2026-08-19.json",
         "origin/data:weekly-radar/reports/2026-08-19.md"
       ]
+    },
+    {
+      "area": "AI Cockpit PR lifecycle ordering",
+      "detail": "Draft PR #56 was opened before the later scheduled production evidence and before the required ai-finish/archive boundary; hosted check-ai-pr correctly rejected the diff because no archived Work Item Contract was present.",
+      "status": "corrected",
+      "resolution": "Closed PR #56 without deleting the Work Item branch, retained the failed check as audit evidence, and restored the required sequence: later schedule evidence, ai-finish, archive, check-ai-pr, then a new PR.",
+      "evidence": [
+        "https://github.com/xinglun/ORG-X/actions/runs/32393591744/job/96505177853",
+        "https://github.com/xinglun/ORG-X/pull/56",
+        "scripts/ai_finish.py",
+        "Makefile.ai"
+      ]
     }
   ],
   "residualRisks": [

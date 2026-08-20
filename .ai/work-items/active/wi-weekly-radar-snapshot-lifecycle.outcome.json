@@ -9,10 +9,10 @@
   "bindings": {
     "taskId": "wi-weekly-radar-snapshot-lifecycle",
     "contractDigest": "126369fe5458f2444dea0a62c325628223c86a8c28325514dd4b02d61e3caed9",
-    "summaryDigest": "c2e68b9323a19277153f179cfafa59fd6eb2ad485da718643a11acbb29efff71",
-    "verificationDigest": "b2be9d5be4199d2163cea4a9318f4405b81094e91c7377aab7094ae701bcc7bd",
+    "summaryDigest": "144bb58ebc500beceaf0004f0f8ef0f0823d38279fb017837d4a6e49b8344260",
+    "verificationDigest": "1559486bb8b37426f7ff29cef7f8cdf72f6cab9fb7a362009b435d6751656edf",
     "baseCommit": "f13383979839ecb4a40fe38503a43ce3e043b591",
-    "headCommit": "a25fa30b3586e367d962cb63d5178595fba16f58",
+    "headCommit": "323f035f088610473ff8470f9e4b9507ffce4b9e",
     "lifecycleStage": "pre_merge",
     "pullRequest": {
       "state": "not_created"
@@ -21,12 +21,12 @@
     "generatorVersion": "1.2",
     "locale": "zh-CN",
     "preArchiveCandidateCoverage": {
-      "reportSha256": "83735124c388d183c6cf9fc25c105e3ab0637a2a54679a7679d8defb89d381aa",
+      "reportSha256": "23e176169200ebd168c8539ec40882dd0fd1e698e7822aa352a5b74ef7d38a42",
       "binding": {
         "baseCommit": "f13383979839ecb4a40fe38503a43ce3e043b591",
-        "candidateHead": "a25fa30b3586e367d962cb63d5178595fba16f58",
-        "candidateTreeDigest": "c31f19f70a1a20c724e8837968b8d04a44aca2bb34fa3d84705d28532fe84ba4",
-        "candidateDiffDigest": "9518bfb61fc248e0ef955696e11700e2d8ba19e3e7cf0e53bec8d2bea4e090c8"
+        "candidateHead": "323f035f088610473ff8470f9e4b9507ffce4b9e",
+        "candidateTreeDigest": "19d284daae59049f90a32fa220de760d9ed9991cbe92b7be2afaa15b4cc40197",
+        "candidateDiffDigest": "13f5602229299d0df649ebc70d3fc923ac989b0b896621d6d654910da720cd4d"
       }
     }
   },
@@ -578,14 +578,14 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "f1af432c09178fe6f3c666b06cf8ea1193972af6550e6ea56d71cd829e0f5cd0"
+            "digest": "0ceecbe1b1ddf521f277c46d96cbf991ff159563c60b0869860b7544aae6d0ce"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "f1af432c09178fe6f3c666b06cf8ea1193972af6550e6ea56d71cd829e0f5cd0"
+            "digest": "0ceecbe1b1ddf521f277c46d96cbf991ff159563c60b0869860b7544aae6d0ce"
           }
         ],
         "inference": false
@@ -593,19 +593,19 @@
       {
         "claim": "aiReviewPolicy",
         "title": "aiReviewPolicy",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json review policy matched 7 path(s) [review] .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [review] .ai/work-items/active/wi-weekly-radar-snap",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.json [review] .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-snapshot-lifecycle.json [review]",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiReviewPolicy",
-            "digest": "0103208fb79626e09110c98eac444daefd92921e819fe0fe9523995282395b1c"
+            "digest": "6a1725f2b8fce0f69d22e229fe256857843e947447815987350b59e41e8ce32e"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiReviewPolicy",
-            "digest": "0103208fb79626e09110c98eac444daefd92921e819fe0fe9523995282395b1c"
+            "digest": "6a1725f2b8fce0f69d22e229fe256857843e947447815987350b59e41e8ce32e"
           }
         ],
         "inference": false
@@ -693,19 +693,19 @@
       {
         "claim": "aiDiffOwnership",
         "title": "aiDiffOwnership",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json ## Diff Ownership Preview - active_owned: `16`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outc",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json ## Diff Ownership Preview - active_owned: `16`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.md` — co",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiDiffOwnership",
-            "digest": "8eed94e9ca7ffc5b0ca0c44c644041e15f504ca792c56502425a13c29be55674"
+            "digest": "a7212c06783b31f9bfcc7ea4ff39c8159a54878fe5b573f952731f876fedcf50"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "aiDiffOwnership",
-            "digest": "8eed94e9ca7ffc5b0ca0c44c644041e15f504ca792c56502425a13c29be55674"
+            "digest": "a7212c06783b31f9bfcc7ea4ff39c8159a54878fe5b573f952731f876fedcf50"
           }
         ],
         "inference": false
@@ -718,14 +718,14 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "quality",
-            "digest": "eb58c9012e4777161a7e5d8d68103d055088a8ac66fda7c08f406654af0dae1b"
+            "digest": "601f3df94ea926b5e3ae1ee62782b25d40adea6fc1ebbae72007509f47e016c9"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-snapshot-lifecycle.contract.json",
             "subject": "quality",
-            "digest": "eb58c9012e4777161a7e5d8d68103d055088a8ac66fda7c08f406654af0dae1b"
+            "digest": "601f3df94ea926b5e3ae1ee62782b25d40adea6fc1ebbae72007509f47e016c9"
           }
         ],
         "inference": false

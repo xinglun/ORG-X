@@ -25,3 +25,14 @@ Stage 2 / Stage 3 detected at T0
 ## 次级结果
 
 股票收益可以作为 secondary outcome 记录，但不能替代生产率和扩散验证，也不能改变 ORG-X 的非交易边界。
+
+## 当前实现边界
+
+`features::validation` 现在提供一个只保存验证证据的 bounded context：
+
+- T0 基线保留公司标识、调用方提供的 Stage 文本、Evidence IDs、假设、反证、缺失证明和同行基线；
+- 后续观察固定为 6 个月、12 个月和 24 个月，并保留五个验证维度、opaque metric value/unit、source quality 和 Evidence references；
+- 空值、重复 Evidence ID、重复 metric name、重复 horizon 和重复公司记录在边界拒绝，拒绝不会修改已有记录；
+- `ValidationEvaluator` 只报告缺少哪些 horizon 以及记录是否 complete，不计算 Stage、score、ranking、threshold、经济显著性或投资结论。
+
+这个 bounded context 目前是内存 store 和纯 application/domain 边界，不接入 Weekly Radar runtime，不调度真实的 6/12/24 个月任务，也不包含外部 Provider 数据。权威的 S&P 500/Nasdaq 100 universe、生产运行 receipt、runtime judgment-chain integration 和 source-host 安全策略仍需独立证据或产品决策。

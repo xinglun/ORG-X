@@ -1,0 +1,188 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-validation-evidence-history",
+  "mode": "code",
+  "title": "Add validation evidence history and completeness assessment",
+  "baseCommit": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+  "baselineDirtyPaths": [],
+  "rawUserRequest": "查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User-authorized continuation of the full remediation and Work Item lifecycle.",
+    "digest": "sha256:0915418c3714887036d18130240d92c8f646e9d734eadb925470ac833b67ca04",
+    "capturedAt": "2026-08-20T14:00:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation", "documentation"],
+    "prohibitedCapabilities": ["production_operation", "llm_fact_extraction", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized completing every corresponding Work Item, self-checking, correcting failures, and recording required authorization in the Contract.",
+    "authorizedExternalEffects": [
+      "Create and update the Work Item PR for this implementation.",
+      "Run hosted checks, merge the PR, and close this Work Item after the merge."
+    ]
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish, merge, close, and archive all corresponding ORG-X remediation Work Items, with authorization recorded in each Contract.",
+    "reference": "user message: 查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+    "capturedAt": "2026-08-20T14:00:00+09:00"
+  },
+  "scope": [
+    ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+    ".ai/work-items/active/wi-validation-evidence-history.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-validation-evidence-history.outcome.json",
+    ".ai/work-items/active/wi-validation-evidence-history.outcome.md",
+    ".ai/evidence/reference-impact/wi-validation-evidence-history-interface.json",
+    ".ai/evidence/reference-impact/wi-validation-evidence-history-interface-test.json",
+    "src/features/validation/**",
+    "src/features/mod.rs",
+    "src/features/mod_test.rs",
+    "tests/architecture/module_boundaries.rs",
+    "tests/validation_domain.rs",
+    "tests/validation_store.rs",
+    "docs/validation/VALIDATION_STRATEGY.md",
+    "docs/superpowers/specs/2026-08-20-wi-validation-evidence-history.md",
+    "docs/superpowers/plans/2026-08-20-wi-validation-evidence-history.md",
+    "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md"
+  ],
+  "outOfScope": [
+    "src/main.rs and Weekly Radar runtime orchestration",
+    "Stage assignment, score calculation, ranking, investment claims, or threshold policy",
+    "External provider calls, production workflow runs, Telegram publication, and production data writes",
+    "Authoritative S&P 500 / Nasdaq 100 universe membership and snapshot acquisition",
+    "Validation horizon scheduling, external persistence, and economic significance thresholds",
+    "SSRF/redirect allowlist policy and provider retry policy",
+    "Existing archived Work Item records and historical data-branch files"
+  ],
+  "sources": [
+    {"path": "docs/product/PRD.md", "reason": "Defines the judgment chain and the requirement to validate production-way hypotheses over time without turning ORG-X into a trading system."},
+    {"path": "docs/validation/VALIDATION_STRATEGY.md", "reason": "Defines T0, 6-month, 12-month, and 24-month validation horizons, retained evidence, hypotheses, counter evidence, missing proof, peer baseline, and secondary outcomes."},
+    {"path": "src/features/evidence/domain/mod.rs", "reason": "Existing evidence identity and provenance vocabulary is the boundary reference; this WI retains opaque evidence references without importing its internals."},
+    {"path": "src/features/productivity/domain/mod.rs", "reason": "Existing productivity facts establish the repository convention for preserving opaque metric values and units without arithmetic at the domain boundary."},
+    {"path": "src/features/weekly_radar/domain/stage_transition_output.rs", "reason": "Shows existing stage/evidence references while documenting that runtime integration is not part of this WI."},
+    {"path": "src/features/ranking/domain/mod.rs", "reason": "Confirms ranking accepts already supplied stage/score facts and must not be extended by this evidence-retention WI."},
+    {"path": "src/features/mod.rs", "reason": "Defines bounded-context exports."},
+    {"path": "tests/architecture/module_boundaries.rs", "reason": "Defines the required five-layer bounded-context structure."},
+    {"path": ".ai/work-items/archive/index.json", "reason": "Archive sequence 42 is the lifecycle authority; this WI is expected to become sequence 43 after closure."},
+    {"path": "docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md", "reason": "Core research pipeline counts and handoff need a current snapshot including this implementation."},
+    {"path": "AGENTS.md", "reason": "Defines required Work Item lifecycle, evidence-bound handoff, scope guards, and closure rules."},
+    {"path": "Makefile", "reason": "Defines supported project and lifecycle entry points used for verification."},
+    {"path": "Makefile.ai", "reason": "Defines AI Cockpit preflight, checkpoint, finish, archive, and close commands."},
+    {"path": ".ai/evidence/reference-impact/wi-validation-evidence-history-interface.json", "reason": "Records the reference-impact evidence for the newly exported validation interface boundary."},
+    {"path": ".ai/evidence/reference-impact/wi-validation-evidence-history-interface-test.json", "reason": "Records the reference-impact evidence for the companion interface registration test."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["domain_model", "validation_contract", "scope"],
+    "reason": "The WI adds a new bounded context and public domain APIs. The main risks are accidentally inferring research judgments, allowing duplicate horizon/evidence identities, or expanding into runtime and external-data behavior. The scope, opaque-value constraint, and completeness-only evaluator keep these risks bounded.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit full-lifecycle remediation authorization"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["The WI changes Rust domain/application code and documentation but does not alter production operation, credentials, external providers, or capital-action behavior."],
+    "override": null
+  },
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The validation strategy gives deterministic horizons and retained fields. A pure typed record/store/readiness boundary is codable without inventing thresholds, Stage transitions, ranking, or external data behavior."
+  },
+  "preReviewWarnings": [
+    "Completeness of retained validation evidence is not proof that a company passed an economic or Stage threshold.",
+    "The runtime and production receipt remain outside this WI and must remain explicit residual risks."
+  ],
+  "checkpointPolicy": {"requiredBeforeFinish": true, "requiredStages": ["before_edit", "before_finish"], "reason": "Record checkpoints before implementation and before finish to prevent scope drift."},
+  "scenarioCoverage": [
+    {
+      "scenario": "A baseline and follow-up observations retain supplied evidence, hypotheses, counter evidence, missing proof, peer baseline, metrics, and source quality without inference.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/validation/domain/mod.rs", "tests/validation_domain.rs", "docs/validation/VALIDATION_STRATEGY.md"],
+      "expected": "The record exposes opaque supplied values and evidence references exactly, and no constructor or evaluator computes Stage, score, ranking, or investment output.",
+      "verificationPlan": "Run focused validation domain tests and inspect the implementation for arithmetic, inference, and cross-feature internal imports."
+    },
+    {
+      "scenario": "Duplicate evidence identities, duplicate metric names, duplicate validation horizons, blank required values, and duplicate company records are rejected without mutation.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/validation/domain/mod.rs", "src/features/validation/infrastructure/in_memory_store.rs", "tests/validation_domain.rs", "tests/validation_store.rs"],
+      "expected": "Invalid additions return typed errors and preserve the previous record/store state.",
+      "verificationPlan": "Run the domain and store tests, including duplicate and blank-value cases."
+    },
+    {
+      "scenario": "The validation context follows the repository's bounded-context layer contract.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/validation/**", "src/features/mod.rs", "tests/architecture/module_boundaries.rs"],
+      "expected": "The context exports domain/application/infrastructure/interface/acl and has no internal imports from another feature.",
+      "verificationPlan": "Run architecture, reference-impact, guideline, format, clippy, and full test checks."
+    },
+    {
+      "scenario": "The Work Item completes the full governed lifecycle.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [".ai/work-items/archive/index.json", "Makefile.ai", "AGENTS.md"],
+      "expected": "Archive sequence 43 is contiguous, the PR is hosted-checked and merged, ai-close-work-item passes, and no branch/worktree/active-contract residue remains.",
+      "verificationPlan": "Run all required ai-finish checks, archive, create the hosted PR, verify hosted checks, merge, delete the remote/local branch and worktree, run ai-close-work-item, and inspect final clean state."
+    }
+  ],
+  "acceptance": [
+    "A validation bounded context is exported and contains domain, application, infrastructure, interface, and acl layers.",
+    "The domain model retains a T0 baseline with company identity, supplied Stage text, Evidence IDs, hypotheses, counter evidence, missing proof, and peer baseline, plus observations at exactly the 6-month, 12-month, and 24-month horizons with the five validation dimensions from VALIDATION_STRATEGY.md, opaque metrics, evidence references, and source quality.",
+    "Blank required values, duplicate evidence IDs, duplicate metric names, duplicate horizons, and duplicate company records are rejected without mutating the existing record/store.",
+    "The application evaluator reports only missing validation horizons and completeness; it does not calculate Stage, score, ranking, thresholds, or investment claims.",
+    "The validation strategy, implementation specification, and roadmap include an explicit evidence-retention boundary and retain production/runtime/full-universe limitations.",
+    "The focused domain/store tests report zero failures; the architecture and project-quality commands report success; every required AI Cockpit check is recorded as passed; the hosted PR checks are successful before merge; archive, ai-close-work-item, and final clean-state inspections provide their required evidence."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Evidence before interpretation: preserve opaque facts and references; do not derive research judgments in this boundary.",
+    "Do not claim external provider or production behavior was verified without a real authorized receipt."
+  ],
+  "intent": {
+    "problem": "The PRD and validation strategy require a T0 baseline followed by 6-month, 12-month, and 24-month validation evidence, but the repository has no validation bounded context, typed retention record, duplicate-safety boundary, or completeness assessment. The existing runtime deliberately stops at opaque/precomputed facts and does not assign Stage, score companies, or rank them.",
+    "constraints": [
+      "Implement only typed evidence retention and completeness/readiness assessment; do not calculate or infer Stage, score, ranking, thresholds, investment claims, or economic significance.",
+      "Preserve supplied strings, evidence references, metrics, units, and source quality without arithmetic or normalization beyond blank/duplicate validation.",
+      "Use the four documented horizons: T0 baseline, SixMonths, TwelveMonths, and TwentyFourMonths; reject duplicate horizons and duplicate company records.",
+      "Keep the bounded context independent from other feature internals and satisfy the five-layer architecture contract.",
+      "Complete the full AI Cockpit Work Item lifecycle; external production operations remain prohibited."
+    ],
+    "rationale": "A pure retention boundary is the smallest deterministic implementation that turns the validation document from unenforced prose into a typed, testable contract while preserving the explicit product boundary against invented judgment."
+  },
+  "verification": [
+    {"check": "aiWorkItem", "required": true}, {"check": "aiScope", "required": true}, {"check": "aiGuards", "required": true}, {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true}, {"check": "aiReviewPolicy", "required": true}, {"check": "aiBacktrack", "required": true}, {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true}, {"check": "aiGuidelines", "required": true}, {"check": "aiSummary", "required": true}, {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true}, {"check": "aiStatusConsistency", "required": true}, {"check": "aiDiffOwnership", "required": true}, {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {"approved": true, "approvedBy": "user-authorized", "reason": "The user explicitly authorized the full remediation lifecycle and requested that required authorization be recorded in the Contract; this WI adds one scoped reference-impact evidence record and no secrets or external provider data."},
+  "rollbackNote": "Revert this Work Item diff and restore the validation modules, tests, docs, and governed lifecycle artifacts.",
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-validation-evidence-history.json",
+    "baseCommit": "908071a2b74801c5d15fcc196c5f40633f011fe0",
+    "initialScopeDigest": "8cef5a613c021ca0a1594a3f573f5b6fe338f2ad35d9ec8530149a72f7b56443",
+    "contractSkeletonDigest": "9daa13837fdd986cb557da5f7f48e0f0323a4de92752d0a6734f2cd1fa2a4383"
+  },
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 43}}
+}

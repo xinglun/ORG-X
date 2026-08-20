@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "requestedText": "Add the validation bounded context's provider-free interface registration boundary.",
+  "target": {
+    "type": "file",
+    "name": "validation_interface_registration_boundary",
+    "path": "src/features/validation/interface/mod.rs",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [],
+    "testReferences": [],
+    "documentationReferences": [],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The interface module contains no runtime loading, reflection, plugin lookup, or dynamic dispatch registration."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The interface module is a new repository-local Rust boundary and this WI adds no external consumer or transport adapter."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The interface module adds no telemetry, monitoring, delivery, HTTP, scheduler, or provider integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-validation-evidence-history.contract.json",
+      "The Contract authorizes this additive interface registration within the validation bounded context and excludes runtime, provider, production, and external-consumer changes."
+    ]
+  }
+}

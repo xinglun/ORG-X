@@ -33,13 +33,13 @@
 | 类别 | 数量 | 当前状态 |
 | --- | ---: | --- |
 | 已完成治理、产品与维护 WI | 15（本 WI 归档后为 16） | Completed / archived |
-| 核心研究 Pipeline WI | 9 | Completed / archived |
+| 核心研究 Pipeline WI | 9（本 WI 归档后为 10） | Completed / archived |
 | Weekly Radar WI | 17 | Completed / archived |
-| 已归档 Work Item 合计 | 41（本 WI 归档后为 42） | 以 `archive/index.json` 为准 |
+| 已归档 Work Item 合计 | 42（本 WI 归档后为 43） | 以 `archive/index.json` 为准 |
 | 尚未创建 Active Contract 的本路线图候选 | 0 | 当前表内无未处理候选 |
 | 当前 Active Work Item | 0 | `no_active_work_item` |
 
-上表的 41 项由 `.ai/work-items/archive/index.json` 的 Contract/Summary/Outcome/manifest 记录确认；本次 WI 完成归档后，索引将包含 42 项。这里的数量是 2026-08-20 的归档前/后快照，归档索引始终是权威来源。`Completed / archived` 表示治理生命周期已闭合，不等于外部 Provider 行为已在本地测试中验证；各 Work Item 的 Outcome 保留其 warning、needs_human_confirmation 和 residual risk。
+上表的 42 项由 `.ai/work-items/archive/index.json` 的 Contract/Summary/Outcome/manifest 记录确认；本次 WI 完成归档后，索引将包含 43 项。这里的数量是 2026-08-20 的归档前/后快照，归档索引始终是权威来源。`Completed / archived` 表示治理生命周期已闭合，不等于外部 Provider 行为已在本地测试中验证；各 Work Item 的 Outcome 保留其 warning、needs_human_confirmation 和 residual risk。
 
 ## 2. Product North Star and Weekly Radar purpose
 
@@ -84,7 +84,7 @@ No meaningful structural change this week.
 
 ## 4. Core Research Pipeline
 
-这些 9 项承接现有十个 Bounded Context，先完成核心研究链，再进入 Weekly Radar 正式输出。
+这些 10 项承接现有 Bounded Context，先完成核心研究链，再进入 Weekly Radar 正式输出。
 
 | WI | 名称 | 主要交付 | 依赖 | 状态 |
 | --- | --- | --- | --- | --- |
@@ -97,8 +97,9 @@ No meaningful structural change this week.
 | `WI-009` | Diffusion Domain | CompetitorImitation、job taxonomy、benchmark、industry diffusion | `WI-008` | Completed / archived |
 | `WI-010` | Ranking Read Model | 同 Stage 内按 Evidence Confidence、Transformation Score、Counter Evidence Risk、Freshness 排序 | `WI-004`, `WI-007`, `WI-008` | Completed / archived |
 | `WI-011` | Reporting Read Model | Top5、Rising、Watch、Dropped、research packet 的只读输出边界 | `WI-009`, `WI-010` | Completed / archived |
+| `wi-validation-evidence-history` | Validation Evidence History | T0 基线、6/12/24 个月验证观察、Evidence/Metric 保留与 completeness 评估；不推导 Stage/Score/Ranking | `WI-004`, `WI-007`, `WI-008`, `WI-009` | Completed / archived |
 
-推荐执行顺序是 `WI-003 → WI-004 → WI-005 → (WI-006 || WI-007) → WI-008 → (WI-009 || WI-010) → WI-011`。括号中的任务可以在依赖满足后并行，但仍需各自独立 Work Item。
+推荐执行顺序是 `WI-003 → WI-004 → WI-005 → (WI-006 || WI-007) → WI-008 → (WI-009 || WI-010) → WI-011 → wi-validation-evidence-history`。括号中的任务可以在依赖满足后并行，但仍需各自独立 Work Item。
 
 ## 5. Weekly Radar
 

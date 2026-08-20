@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-archive-transaction-recovery",
+  "receiptPath": ".ai/work-items/starts/wi-archive-transaction-recovery.json",
+  "baseCommit": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+  "baseBranch": "codex/wi-archive-transaction-recovery",
+  "startTimestamp": "2026-08-20T07:29:43.240980+00:00",
+  "initialScopeDigest": "dec6ab564a2ab66f33a5e28cb6aada398bd571dc43d0c74f73814fa7ddaff128",
+  "contractSkeletonDigest": "28fac2da21703313e8ba2b2a50d5060134949b32c379a4491aa7c7b7214a94dd"
+}

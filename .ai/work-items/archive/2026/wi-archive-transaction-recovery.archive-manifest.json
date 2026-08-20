@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-archive-transaction-recovery",
+  "archiveSequence": 47,
+  "contractPath": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.summary.json",
+  "contractSha256": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+  "summarySha256": "f9cfc22f0d05f8048a2c3c6a2797859a2375232e45a1de5172e599a771e02d86",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.json",
+      "sha256": "577092636eec62f74331338d399f27786036c2d5738a98cb4fc74c3381a48598"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.md",
+      "sha256": "227c568850d47d725ac4a8fc9299a8bc4c8596f4e5a2cc9356c0234b0caccc8f"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "dfd8b42e80ff721dad1bd270895a94bc108b5afa71acaf7e446c4f90ea235705",
+    "binding": {
+      "baseCommit": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "candidateHead": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "candidateTreeDigest": "47e6775319e9d00bd76debc6cc1c68c358447eb3caf25f96e9fecb6894b0338b",
+      "candidateDiffDigest": "8339e80335e94ff00720937a8c513b1c0c967ac977a6a2fd5813df6fefd78a46"
+    }
+  }
+}

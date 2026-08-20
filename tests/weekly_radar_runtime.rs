@@ -10,8 +10,8 @@ use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
     TelegramMessageId, TelegramTransport, TelegramTransportError,
 };
 use org_x::features::weekly_radar::runtime::archive::{
-    ensure_run_available, load_input_snapshot, persist_input_snapshot, retain_recent, write_run,
-    write_run_with_input_snapshot, ArchiveError,
+    ensure_run_available, load_input_snapshot, persist_input_snapshot, recover_pending_run,
+    retain_recent, write_run, write_run_with_input_snapshot, ArchiveError,
 };
 use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
 use org_x::features::weekly_radar::runtime::error::RuntimeError;
@@ -2106,6 +2106,40 @@ fn task5_archive_rejects_same_date_overwrite_without_mutation() {
     ensure_run_available(&root, "data", first_report.as_of())
         .expect_err("existing date must not be available");
     fs::remove_dir_all(root).expect("same-date fixture should be removable");
+}
+
+#[test]
+fn archive_transaction_fails_closed_for_partial_residue_and_keeps_legacy_runs_immutable() {
+    let root = task4_temp_root("archive-transaction-residue");
+    let archive = root.join("weekly-radar");
+    let reports = archive.join("reports");
+    let snapshots = archive.join("snapshots");
+    let receipts = archive.join("receipts");
+    fs::create_dir_all(&reports).expect("report directory should exist");
+    fs::create_dir_all(&snapshots).expect("snapshot directory should exist");
+    fs::create_dir_all(&receipts).expect("receipt directory should exist");
+    let as_of = NaiveDate::from_ymd_opt(2026, 8, 17).expect("fixture date is valid");
+    let report_path = reports.join("2026-08-17.md");
+    fs::write(&report_path, "partial report").expect("partial report should be written");
+
+    let error = ensure_run_available(&root, "data", as_of)
+        .expect_err("one final artifact must be incomplete, not a committed run");
+    assert!(matches!(error, ArchiveError::IncompleteRun { .. }));
+    assert_eq!(fs::read(&report_path).unwrap(), b"partial report");
+    assert!(matches!(
+        recover_pending_run(&root, "data", as_of),
+        Err(ArchiveError::IncompleteRun { .. })
+    ));
+
+    fs::write(snapshots.join("2026-08-17.json"), "legacy snapshot")
+        .expect("legacy snapshot should be written");
+    fs::write(receipts.join("2026-08-17.json"), "legacy receipt")
+        .expect("legacy receipt should be written");
+    let error = ensure_run_available(&root, "data", as_of)
+        .expect_err("complete legacy final files must remain protected");
+    assert!(matches!(error, ArchiveError::ExistingRun { .. }));
+    assert_eq!(fs::read(&report_path).unwrap(), b"partial report");
+    fs::remove_dir_all(root).expect("residue fixture should be removable");
 }
 
 #[test]

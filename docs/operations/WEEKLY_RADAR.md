@@ -42,6 +42,10 @@ cargo run --release -- weekly-radar \
 
 重试从 `weekly-radar/snapshots/YYYY-MM-DD.input.json` 读取原始 `RuntimeReportInput` 和保存的语言，不读取 registry、不重新获取来源，也不需要 `ORGX_SEC_USER_AGENT`。`--retry-as-of` 不能和 `--as-of`、`--language` 或 `--dry-run` 一起使用；若该日期已经有最终 report、snapshot 或 receipt，命令会在发送 Telegram 前拒绝，避免重复归档和重复发送。
 
+如果进程在 Telegram 成功后、归档提交完成前退出，归档器会把已序列化的 report、snapshot、receipt 和 manifest 保存在 `weekly-radar/.transactions/` 的 prepared transaction 中。下一次非 dry-run 或同日期 retry 会先校验并完成这个 transaction，复用已有 receipt，不再发送第二次 Telegram。若 transaction 缺失、损坏、或已有公共文件与 staged bytes 不一致，运行会以 `IncompleteRun` fail closed；它不会猜测、覆盖或删除冲突文件，需要人工检查归档残留。这里保证的是可审计的逻辑提交点，不是跨多个公共文件的物理原子事务。
+
+同一日期的非 dry-run CLI 会持有从 recovery、重复日期检查、来源获取、Telegram 发送到 archive commit 的 Unix 文件锁；直接 archive API 另有 commit 锁。锁在进程异常退出时由操作系统释放，避免并发运行在发送前互相通过检查。
+
 Actions 只把结果提交到字面值为 `data` 的 orphan 分支，并使用 lease 保护并发更新。`main` 和其他分支不是 archive 或 retention 的目标。
 
 ## 环境变量
@@ -91,4 +95,4 @@ SEC Company Facts 是完整历史 JSON，使用独立的有限响应上限；普
 
 ## data 分支保留
 
-每次成功运行写入 report、sanitized snapshot、绑定的 `PUBLISHED` receipt 和 manifest；manifest 会记录输入快照路径及其稳定 `snapshot_id`。同一日期的最终文件是不可覆盖的；冲突或写入失败不会先执行 retention。retention 只删除日期前缀文件中超过 365 天的 input snapshot、report、snapshot 和 receipt；最近文件保持不动。dry-run 不执行 retention。
+每次成功运行写入 report、sanitized snapshot、绑定的 `PUBLISHED` receipt 和 manifest；manifest 会记录输入快照路径及其稳定 `snapshot_id`。同一日期的最终文件是不可覆盖的；冲突或写入失败不会先执行 retention。transaction 只有在四个公共 artifact 完成后才变为 committed，retention 也只在该提交点之后执行。retention 只删除日期前缀文件中超过 365 天的 input snapshot、report、snapshot 和 receipt；最近文件保持不动。dry-run 不执行 recovery、归档或 retention。

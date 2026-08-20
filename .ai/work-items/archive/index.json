@@ -649,6 +649,18 @@
       "summarySha256": "236fe9d2d2b9c23647d3f33d3c644a3f0896408f96584049044541300e988d57",
       "manifestPath": ".ai/work-items/archive/2026/wi-production-provider-e2e-run.archive-manifest.json",
       "manifestSha256": "880f30a02a9e5214c428b568c97057dbec993ce698f49ac8fc206265b0e6586f"
+    },
+    {
+      "workItemId": "wi-telegram-git-push-failure-recovery",
+      "archiveSequence": 55,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.contract.json",
+      "contractSha256": "1b47848b24c1603321f52023dc964e8200df7ce4a0ffedfa59d9b9394fb6f09a",
+      "archivedAt": "2026-08-20T22:37:07.470211+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+      "summarySha256": "40e7966f985ffb8a20657d6c4eb6e103ae0bea7fdf5d68800bbedb66b42cfb0c",
+      "manifestPath": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.archive-manifest.json",
+      "manifestSha256": "c1322670c25d7d3bb35b4f874bd94a02650df5a267bac3f3d4624c5983fad9f4"
     }
   ]
 }

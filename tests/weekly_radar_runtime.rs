@@ -1,6 +1,7 @@
 use std::fs;
 use std::io::{Read, Write};
 use std::net::TcpListener;
+use std::path::Path;
 use std::process::Command;
 use std::thread;
 use std::time::Duration;
@@ -2332,6 +2333,231 @@ fn task5_cli_retry_uses_persisted_input_without_source_acquisition() {
 }
 
 #[test]
+fn task5_cli_verifies_published_run_without_provider_or_telegram_configuration() {
+    let root = task5_cli_fixture_root("recover-published");
+    let input = task4_report_input();
+    let snapshot = persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+        .expect("published recovery input should persist");
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+    let transport = Task4RecordingTransport::default();
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &transport,
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("fixture delivery should succeed once");
+    write_run_with_input_snapshot(&root, "data", &report, &receipt, Some(&snapshot))
+        .expect("fixture publication should commit");
+    let sent_before_recovery = transport.0.lock().unwrap().len();
+
+    let output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            root.to_str().unwrap(),
+            "--recover-published-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("published recovery CLI should be executable");
+
+    assert!(
+        output.status.success(),
+        "published recovery should not need provider or Telegram configuration: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(String::from_utf8_lossy(&output.stdout).contains("READY-TO-PUSH:"));
+    assert_eq!(transport.0.lock().unwrap().len(), sent_before_recovery);
+    fs::remove_dir_all(root).expect("published recovery fixture should be removable");
+}
+
+fn task5_git(root: &Path, args: &[&str]) -> std::process::Output {
+    Command::new("git")
+        .arg("-C")
+        .arg(root)
+        .args(args)
+        .output()
+        .expect("isolated git command should be executable")
+}
+
+fn task5_git_success(root: &Path, args: &[&str]) -> String {
+    let output = task5_git(root, args);
+    assert!(
+        output.status.success(),
+        "isolated git command should succeed: git -C {} {}\nstderr: {}",
+        root.display(),
+        args.join(" "),
+        String::from_utf8_lossy(&output.stderr)
+    );
+    String::from_utf8_lossy(&output.stdout).trim().to_owned()
+}
+
+#[cfg(unix)]
+#[test]
+fn task5_pending_ref_recovers_after_data_push_failure_without_second_telegram() {
+    use std::os::unix::fs::PermissionsExt;
+
+    let root = task5_cli_fixture_root("pending-push-recovery");
+    let producer = root.join("producer");
+    let remote = root.join("remote.git");
+    let damaged = root.join("damaged-runner");
+    let runner = root.join("recovery-runner");
+    fs::create_dir_all(&producer).expect("producer repository should be writable");
+    let input = task4_report_input();
+    let snapshot = persist_input_snapshot(&producer, "data", &input, ReportLanguage::Chinese, true)
+        .expect("producer input should persist");
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+    let transport = Task4RecordingTransport::default();
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "isolated-chat",
+        &transport,
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("recording Telegram should accept the report once");
+    write_run_with_input_snapshot(&producer, "data", &report, &receipt, Some(&snapshot))
+        .expect("producer archive should commit");
+    let sent_before_push = transport.0.lock().unwrap().len();
+
+    let remote_init = Command::new("git")
+        .args(["init", "--bare", remote.to_str().unwrap()])
+        .output()
+        .expect("bare remote should be creatable");
+    assert!(remote_init.status.success());
+    task5_git_success(&producer, &["init"]);
+    task5_git_success(&producer, &["config", "user.name", "isolated-test"]);
+    task5_git_success(
+        &producer,
+        &["config", "user.email", "isolated-test@example.test"],
+    );
+    task5_git_success(&producer, &["add", "weekly-radar"]);
+    task5_git_success(
+        &producer,
+        &["commit", "-m", "isolated weekly radar publication"],
+    );
+    task5_git_success(
+        &producer,
+        &["remote", "add", "origin", remote.to_str().unwrap()],
+    );
+    let pending_sha = task5_git_success(&producer, &["rev-parse", "HEAD"]);
+    let pending_push = task5_git(
+        &producer,
+        &["push", "origin", "HEAD:refs/heads/weekly-radar-pending"],
+    );
+    assert!(
+        pending_push.status.success(),
+        "pending publication ref must be durable: {}",
+        String::from_utf8_lossy(&pending_push.stderr)
+    );
+
+    let hook = remote.join("hooks/update");
+    fs::write(
+        &hook,
+        "#!/bin/sh\nif [ \"$1\" = \"refs/heads/data\" ]; then echo isolated data push rejection >&2; exit 1; fi\nexit 0\n",
+    )
+    .expect("failure-injection hook should be writable");
+    fs::set_permissions(&hook, fs::Permissions::from_mode(0o755))
+        .expect("failure-injection hook should be executable");
+    let failed_data_push = task5_git(&producer, &["push", "origin", "HEAD:refs/heads/data"]);
+    assert!(
+        !failed_data_push.status.success(),
+        "data push must be rejected once"
+    );
+    assert!(
+        String::from_utf8_lossy(&failed_data_push.stderr).contains("isolated data push rejection")
+    );
+
+    let prepare_runner = |path: &Path| {
+        fs::create_dir_all(path).expect("runner repository should be writable");
+        task5_git_success(path, &["init"]);
+        task5_git_success(path, &["remote", "add", "origin", remote.to_str().unwrap()]);
+        task5_git_success(path, &["fetch", "origin", "weekly-radar-pending"]);
+        task5_git_success(path, &["checkout", "--detach", "FETCH_HEAD"]);
+    };
+    prepare_runner(&damaged);
+    let receipt_path = damaged.join("weekly-radar/receipts/2026-08-17.json");
+    let original_receipt = fs::read(&receipt_path).expect("pending receipt should exist");
+    fs::write(&receipt_path, b"damaged pending receipt\n")
+        .expect("damaged receipt fixture should be writable");
+    let damaged_output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            damaged.to_str().unwrap(),
+            "--recover-published-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("damaged recovery CLI should be executable");
+    assert!(
+        !damaged_output.status.success(),
+        "damaged pending state must fail closed"
+    );
+    assert!(String::from_utf8_lossy(&damaged_output.stderr).contains("incomplete"));
+    assert_eq!(
+        fs::read(&receipt_path).unwrap(),
+        b"damaged pending receipt\n"
+    );
+    assert_ne!(fs::read(&receipt_path).unwrap(), original_receipt);
+
+    fs::remove_file(&hook).expect("failure-injection hook should be removable");
+    prepare_runner(&runner);
+    let recovered_output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            runner.to_str().unwrap(),
+            "--recover-published-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("recovery CLI should be executable");
+    assert!(
+        recovered_output.status.success(),
+        "recovery should verify the original receipt without Telegram: {}",
+        String::from_utf8_lossy(&recovered_output.stderr)
+    );
+    assert!(String::from_utf8_lossy(&recovered_output.stdout).contains("READY-TO-PUSH:"));
+    assert_eq!(transport.0.lock().unwrap().len(), sent_before_push);
+
+    let recovered_push = task5_git(&runner, &["push", "origin", "HEAD:refs/heads/data"]);
+    assert!(
+        recovered_push.status.success(),
+        "recovered data tree should publish: {}",
+        String::from_utf8_lossy(&recovered_push.stderr)
+    );
+    let final_data_sha = task5_git_success(&runner, &["ls-remote", "origin", "refs/heads/data"])
+        .split_whitespace()
+        .next()
+        .expect("final data ref should have a commit")
+        .to_owned();
+    assert_eq!(final_data_sha, pending_sha);
+    for relative in [
+        "weekly-radar/reports/2026-08-17.md",
+        "weekly-radar/snapshots/2026-08-17.json",
+        "weekly-radar/receipts/2026-08-17.json",
+        "weekly-radar/manifest.json",
+    ] {
+        assert_eq!(
+            fs::read(producer.join(relative)).unwrap(),
+            fs::read(runner.join(relative)).unwrap(),
+            "recovery must preserve the original {relative} bytes"
+        );
+    }
+    fs::remove_dir_all(root).expect("pending recovery fixture should be removable");
+}
+
+#[test]
 fn task5_cli_requires_sec_user_agent_before_acquisition() {
     let root = task5_cli_fixture_root("missing-user-agent");
     let registry = task5_write_registry(&root);
@@ -2428,6 +2654,11 @@ fn task6_workflow_reconstructs_data_and_creates_a_rolling_orphan_update() {
     assert!(workflow.contains("git add -- weekly-radar"));
     assert!(workflow.contains("force-with-lease=refs/heads/data:"));
     assert!(workflow.contains("HEAD:refs/heads/data"));
+    assert!(workflow.contains("weekly-radar-pending"));
+    assert!(workflow.contains("force-with-lease=refs/heads/weekly-radar-pending:"));
+    assert!(workflow.contains("--recover-published-as-of"));
+    assert!(workflow.contains("refusing to downgrade the archive"));
+    assert!(workflow.contains("Pending publication and data archives conflict"));
     assert!(!workflow.contains("HEAD:refs/heads/main"));
 }
 
@@ -2443,6 +2674,8 @@ fn task6_workflow_fails_safe_for_absent_concurrent_protected_and_empty_cases() {
     assert!(workflow.contains("if [[ ! -s \"$run_output\" ]]"));
     assert!(workflow.contains("if ! git push --force-with-lease"));
     assert!(workflow.contains("concurrent"));
+    assert!(workflow.contains("the next run will verify and reuse the original receipt"));
+    assert!(workflow.contains("refusing to send again"));
 }
 
 #[test]

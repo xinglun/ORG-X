@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-telegram-git-push-failure-recovery",
-  "phase": "review",
-  "result": "needs_human_confirmation",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "91e8857b5797da5c1106787ec350b915a47cb85f420fcc9a29bb9a13c4207402"
+  "status": "needs_human_confirmation",
+  "humanStatusColor": "yellow",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-telegram-git-push-failure-recovery",
+    "contractDigest": "1b47848b24c1603321f52023dc964e8200df7ce4a0ffedfa59d9b9394fb6f09a",
+    "summaryDigest": "c022b8e1e5494f20ecd520984699d5820b3c020d4d07deca46244d09c254216f",
+    "verificationDigest": "68b233faa67fc3915f4b801cf518c939e0d792a2fe1b34ca47daed7303190e4a",
+    "baseCommit": "7433a316ac46716636b0114ba0f791e5953c5804",
+    "headCommit": "7433a316ac46716636b0114ba0f791e5953c5804",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "cd99e19b76dc8109051d99814d6a5ccf5ed1f04a0478873d697c6b7fc742868c",
+      "binding": {
+        "baseCommit": "7433a316ac46716636b0114ba0f791e5953c5804",
+        "candidateHead": "7433a316ac46716636b0114ba0f791e5953c5804",
+        "candidateTreeDigest": "e3dea14475eff0bfd6d14c1161caecb88746bf7f5f2d444e8fdb03bf7285caca",
+        "candidateDiffDigest": "c3e0476b36bf685ccf56b117d69ab9256d568ff5237c4d75f02787728ca1c82f"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-telegram-git-push-failure-recovery generated an evidence-derived outcome with status needs_human_confirmation.",
+  "sections": {
+    "outcomeSummary": "Task wi-telegram-git-push-failure-recovery generated an evidence-derived outcome with status needs_human_confirmation.",
+    "taskOverview": "Governed Work Item: wi-telegram-git-push-failure-recovery",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.contract.json",
       ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
@@ -23,147 +46,217 @@
       ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [
+      "The cadence successor still needs a distinct later weekly period with bound production evidence after this recovery Work Item."
+    ],
+    "limitations": [
+      {
+        "sourceWarning": "The cadence successor still needs a distinct later weekly period with bound production evidence after this recovery Work Item.",
+        "title": "Unresolved evidence is explicitly limited",
+        "affectedClaims": [
+          "completion_claim"
+        ],
+        "requiredEvidence": [
+          "fresh verification evidence"
+        ],
+        "forbiddenClaims": [
+          "Do not claim this warning was verified or resolved."
+        ]
+      }
+    ],
+    "nonRiskExplanations": [
+      {
+        "sourceWarning": "The cadence successor still needs a distinct later weekly period with bound production evidence after this recovery Work Item.",
+        "reason": "The Summary records this item as an unresolved gap rather than a verified result.",
+        "evidence": []
+      }
+    ],
+    "forbiddenClaims": [
+      "Do not claim an unresolved warning was verified or resolved."
+    ],
+    "interventions": [],
+    "forcedStops": [
+      {
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "43e800138967976ce0b07f6d5727c42a5ee8bb2c0ba20dfa7cb67a8b310c145c"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "846d930867f3f76d416726dd4f07ded9e6248962b5c2e52d62578b06a10e8036"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "aiSummary failed before the retry.",
+        "policyOrGuard": "required verification: aiSummary",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiSummary after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "48b616adf3e0402d85dfb746cc8feb6ff616300daf2d16f43c1417d314e3d428"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "a9f9b147b23ce560998ca5f2fe2e7898ea700fa910e5d164f2eb86e9a7a27e1f"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "43e800138967976ce0b07f6d5727c42a5ee8bb2c0ba20dfa7cb67a8b310c145c"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "846d930867f3f76d416726dd4f07ded9e6248962b5c2e52d62578b06a10e8036"
+          }
+        ]
+      },
+      {
+        "problem": "aiSummary failed before the retry.",
+        "action": "Re-ran aiSummary after the correction; the latest attempt passed.",
+        "verification": "aiSummary latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "48b616adf3e0402d85dfb746cc8feb6ff616300daf2d16f43c1417d314e3d428"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "a9f9b147b23ce560998ca5f2fe2e7898ea700fa910e5d164f2eb86e9a7a27e1f"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "remote-availability",
+        "severity": "high",
+        "title": "remote-availability",
+        "detail": "If both the data ref and pending ref cannot be written, a later retry cannot prove the original receipt from repository state; recovery must fail closed and require human inspection of the retained run evidence.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "retained hosted run identity",
+          "pending publication ref or provider-side delivery evidence"
+        ],
+        "decisionOwner": "xinglun workflow operator",
+        "mitigation": "Keep the data push behind a force-with-lease pending ref, fail closed when neither durable ref is available, and require human inspection before any retry.",
+        "acceptanceStatus": "accepted_with_follow_up"
+      },
+      {
+        "claim": "pending-ref-cleanup",
+        "severity": "medium",
+        "title": "pending-ref-cleanup",
+        "detail": "A successful data publication followed by pending-ref deletion failure may retain redundant pending state; next recovery must compare identities before cleanup.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "matching data and pending artifact identities"
+        ],
+        "decisionOwner": "xinglun workflow operator",
+        "mitigation": "The next run compares the full weekly-radar tree before removing the redundant pending ref.",
+        "acceptanceStatus": "accepted_with_guard"
+      }
+    ],
+    "humanDecisions": [
+      "System-generated reference and human reference must remain independent mutual references, not a merged cooperative answer."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "43e800138967976ce0b07f6d5727c42a5ee8bb2c0ba20dfa7cb67a8b310c145c"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "846d930867f3f76d416726dd4f07ded9e6248962b5c2e52d62578b06a10e8036"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+        "subject": "verificationHistory[1] aiSummary failed",
+        "digest": "48b616adf3e0402d85dfb746cc8feb6ff616300daf2d16f43c1417d314e3d428"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
+        "subject": "verification[aiSummary] retry passed",
+        "digest": "a9f9b147b23ce560998ca5f2fe2e7898ea700fa910e5d164f2eb86e9a7a27e1f"
+      }
     ]
   },
-  "issues": {
-    "detected": 3,
-    "hardStops": 2,
-    "warnings": 1,
-    "resolved": 2,
-    "unresolved": 1
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "43e800138967976ce0b07f6d5727c42a5ee8bb2c0ba20dfa7cb67a8b310c145c"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "846d930867f3f76d416726dd4f07ded9e6248962b5c2e52d62578b06a10e8036"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiSummary",
-      "action": "blocked",
-      "resolution": "Retry aiSummary after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "48b616adf3e0402d85dfb746cc8feb6ff616300daf2d16f43c1417d314e3d428"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "a9f9b147b23ce560998ca5f2fe2e7898ea700fa910e5d164f2eb86e9a7a27e1f"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "43e800138967976ce0b07f6d5727c42a5ee8bb2c0ba20dfa7cb67a8b310c145c"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "846d930867f3f76d416726dd4f07ded9e6248962b5c2e52d62578b06a10e8036"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "aiSummary failed before the retry.",
-      "policyOrGuard": "required verification: aiSummary",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiSummary after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "48b616adf3e0402d85dfb746cc8feb6ff616300daf2d16f43c1417d314e3d428"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "a9f9b147b23ce560998ca5f2fe2e7898ea700fa910e5d164f2eb86e9a7a27e1f"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "System-generated reference and human reference must remain independent mutual references, not a merged cooperative answer."
-  ],
-  "limitations": [
-    {
-      "sourceWarning": "The cadence successor still needs a distinct later weekly period with bound production evidence after this recovery Work Item.",
-      "title": "Unresolved evidence is explicitly limited",
-      "affectedClaims": [
-        "completion_claim"
-      ],
-      "requiredEvidence": [
-        "fresh verification evidence"
-      ],
-      "forbiddenClaims": [
-        "Do not claim this warning was verified or resolved."
-      ]
-    }
-  ],
-  "forbiddenClaims": [
-    "Do not claim an unresolved warning was verified or resolved."
-  ],
-  "remainingRisks": [
-    {
-      "severity": "high",
-      "detail": "If both the data ref and pending ref cannot be written, a later retry cannot prove the original receipt from repository state; recovery must fail closed and require human inspection of the retained run evidence.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "A successful data publication followed by pending-ref deletion failure may retain redundant pending state; next recovery must compare identities before cleanup.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
   "humanHandoff": {
     "locale": "zh-CN",
     "completed": [
@@ -934,6 +1027,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Retry aiSummary after correcting the recorded failure."
+  }
 }

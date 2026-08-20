@@ -828,6 +828,83 @@ fn verify_committed_transaction(
     Ok(())
 }
 
+fn verify_input_snapshot_reference(
+    root: &Path,
+    manifest: &ArchiveManifest,
+) -> Result<(), ArchiveError> {
+    let Some(input_snapshot) = manifest.input_snapshot() else {
+        return Ok(());
+    };
+    if input_snapshot != input_snapshot_relative(manifest.as_of) {
+        return Err(ArchiveError::IncompleteRun {
+            as_of: manifest.as_of,
+        });
+    }
+    let snapshot = load_input_snapshot(root, "data", manifest.as_of)?;
+    if manifest.snapshot_id() != Some(snapshot.snapshot_id()) {
+        return Err(ArchiveError::IncompleteRun {
+            as_of: manifest.as_of,
+        });
+    }
+    Ok(())
+}
+
+/// Verifies a previously published report without acquiring sources or contacting Telegram.
+///
+/// This entrypoint is used by the workflow when a durable pending publication ref contains the
+/// original committed archive after a data-branch push failure. It returns the original manifest
+/// only after the report, rendered snapshot, receipt, manifest, and optional input snapshot are
+/// still mutually verifiable. Any mismatch fails closed.
+pub fn verify_committed_run(
+    root: &Path,
+    branch: &str,
+    as_of: NaiveDate,
+) -> Result<ArchiveManifest, ArchiveError> {
+    let _lock = acquire_commit_lock(root, branch, as_of)?;
+    verify_committed_run_unlocked(root, branch, as_of)
+}
+
+fn verify_committed_run_unlocked(
+    root: &Path,
+    branch: &str,
+    as_of: NaiveDate,
+) -> Result<ArchiveManifest, ArchiveError> {
+    validate_data_branch(branch)?;
+    if let Some(record) = read_transaction_record(root, as_of)? {
+        if record.state != ArchiveTransactionState::Committed {
+            return Err(ArchiveError::IncompleteRun { as_of });
+        }
+        verify_committed_transaction(root, &record)?;
+        verify_input_snapshot_reference(root, &record.manifest)?;
+        return Ok(record.manifest);
+    }
+
+    let final_paths = final_paths(root, as_of);
+    if final_paths.iter().any(|path| !path.is_file()) {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+    let manifest_path = archive_root(root).join("manifest.json");
+    let manifest_content =
+        fs::read_to_string(manifest_path).map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    let manifest = serde_json::from_str::<ArchiveManifest>(&manifest_content)
+        .map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    if manifest.as_of != as_of {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+    let receipt_content =
+        fs::read_to_string(&final_paths[2]).map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    let receipt = serde_json::from_str::<serde_json::Value>(&receipt_content)
+        .map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    let as_of_text = as_of.format("%Y-%m-%d").to_string();
+    if receipt.get("status") != Some(&serde_json::Value::String("PUBLISHED".to_owned()))
+        || receipt.get("as_of").and_then(serde_json::Value::as_str) != Some(as_of_text.as_str())
+    {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+    verify_input_snapshot_reference(root, &manifest)?;
+    Ok(manifest)
+}
+
 fn compatibility_manifest_allows_update(root: &Path, as_of: NaiveDate) -> Result<(), ArchiveError> {
     let path = archive_root(root).join("manifest.json");
     let content = match fs::read_to_string(path) {

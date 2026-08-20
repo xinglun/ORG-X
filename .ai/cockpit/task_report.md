@@ -1,44 +1,53 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Partial
+Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-production-provider-e2e-run.contract.json [evidence: .ai/work-items/archive/2026/wi-production-provider-e2e-run.contract.json]
-- Changed .ai/work-items/active/wi-production-provider-e2e-run.summary.json [evidence: .ai/work-items/archive/2026/wi-production-provider-e2e-run.summary.json]
-- Changed .ai/work-items/starts/wi-production-provider-e2e-run.json [evidence: .ai/work-items/starts/wi-production-provider-e2e-run.json]
-- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/work-items/active/wi-telegram-git-push-failure-recovery.contract.json [evidence: .ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.contract.json]
+- Changed .ai/work-items/active/wi-telegram-git-push-failure-recovery.summary.json [evidence: .ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.summary.json]
+- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
+- Changed src/features/weekly_radar/runtime/archive.rs [evidence: src/features/weekly_radar/runtime/archive.rs]
+- Changed src/main.rs [evidence: src/main.rs]
+- Changed .github/workflows/weekly-radar.yml [evidence: .github/workflows/weekly-radar.yml]
+- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
+- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
+- Changed .ai/work-items/active/wi-telegram-git-push-failure-recovery.outcome.json [evidence: .ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.outcome.json]
+- Changed .ai/work-items/active/wi-telegram-git-push-failure-recovery.outcome.md [evidence: .ai/work-items/archive/2026/wi-telegram-git-push-failure-recovery.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/active/wi-production-provider-e2e-run.outcome.json [evidence: .ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.json]
-- Changed .ai/work-items/active/wi-production-provider-e2e-run.outcome.md [evidence: .ai/work-items/archive/2026/wi-production-provider-e2e-run.outcome.md]
 
 Problems found
-- Total: 3
+- Total: 4
 - Blocking: 0
 - Warning: 1
 
 Stops triggered
-- None recorded.
+- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Reason: aiSummary failed before the retry. | Stage: verification | Resolution: Retry aiSummary after correcting the recorded failure. [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 
 Problems resolved
-- Problem: Run 32366854657 from main reached real Provider acquisition but rejected the judgment-reference heading before Telegram/archive; the predecessor added the localized semantic boundary.
-  Solution: Resolution status: resolved_in_predecessor
-  Evidence: [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue]
+- Problem: aiGuidelines failed before the retry.
+  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Problem: aiSummary failed before the retry.
+  Solution: Re-ran aiSummary after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- The successful publication preserved source health as confirmed=9, unconfirmed=20, unknown=0, unavailable=49, discovery_only=1, with 10 source failures; SEC body-limit failures were not promoted into a machine Stage. [evidence: observedIssues[1] observed issue, observedIssues[1] observed issue, observedIssues[1] observed issue]
-- The first post-merge non-dry-run binding is verified; a distinct later weekly period is still required before unattended cadence can be claimed. [evidence: residualRisks]
-- A distinct later weekly period is time-dependent and cannot be inferred from the first successful post-merge run. [evidence: residualRisks]
+- Current workflow has no durable handoff after Telegram success and before data push; a runner loss can lead to duplicate delivery. [evidence: observedIssues[0] external-boundary, observedIssues[0] external-boundary]
+- If both the data ref and pending ref cannot be written, a later retry cannot prove the original receipt from repository state; recovery must fail closed and require human inspection of the retained run evidence. [evidence: residualRisks]
+- A successful data publication followed by pending-ref deletion failure may retain redundant pending state; next recovery must compare identities before cleanup. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- 用户要求系统给人一个独立参考；人的判断保持独立，双方互相印证，不合作合并为同一个答案。 (inference)
+- System-generated reference and human reference must remain independent mutual references, not a merged cooperative answer. (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]
@@ -59,9 +68,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

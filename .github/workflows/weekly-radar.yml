@@ -50,6 +50,7 @@ jobs:
         shell: bash
         env:
           TARGET_REF: refs/heads/data
+          PENDING_REF: refs/heads/weekly-radar-pending
         run: |
           set -euo pipefail
           if [[ "${GITHUB_REF:-}" == "refs/heads/data" ]]; then
@@ -65,8 +66,38 @@ jobs:
           if git ls-remote --exit-code --heads origin data >/dev/null 2>&1; then
             git fetch --no-tags origin data
             git archive origin/data -- weekly-radar | tar -x -f -
+            data_as_of="$(git show origin/data:weekly-radar/manifest.json | jq -er '.as_of // empty')"
           else
             echo "No data branch exists yet; starting an empty archive tree."
+            data_as_of=""
+          fi
+
+          if git ls-remote --exit-code --heads origin weekly-radar-pending >/dev/null 2>&1; then
+            git fetch --no-tags origin weekly-radar-pending
+            pending_manifest="$(mktemp)"
+            trap 'rm -f "$pending_manifest"' EXIT
+            if ! git show origin/weekly-radar-pending:weekly-radar/manifest.json >"$pending_manifest"; then
+              echo "Pending publication ref has no readable manifest; refusing recovery." >&2
+              exit 1
+            fi
+            pending_as_of="$(jq -er '.as_of // empty' "$pending_manifest")"
+            if [[ ! "$pending_as_of" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+              echo "Pending publication ref has an invalid report date; refusing recovery." >&2
+              exit 1
+            fi
+            if [[ -n "$data_as_of" && "$pending_as_of" < "$data_as_of" ]]; then
+              echo "Pending publication date $pending_as_of is older than data date $data_as_of; refusing to downgrade the archive." >&2
+              exit 1
+            fi
+            if [[ -n "$data_as_of" && "$pending_as_of" == "$data_as_of" ]] \
+              && ! git diff --quiet origin/data origin/weekly-radar-pending -- weekly-radar; then
+              echo "Pending publication and data archives conflict for the same date; refusing recovery." >&2
+              exit 1
+            fi
+            git archive origin/weekly-radar-pending -- weekly-radar | tar -x -f -
+            echo "Pending publication ref reconstructed for $pending_as_of."
+          else
+            echo "No pending publication ref exists."
           fi
 
       - name: Acquire, publish, and prepare the data commit
@@ -93,8 +124,24 @@ jobs:
             cli_args+=(--dry-run)
           fi
 
-          cargo run --release -- weekly-radar "${cli_args[@]}" \
-            | tee "$run_output"
+          pending_as_of=""
+          if git show origin/weekly-radar-pending:weekly-radar/manifest.json >/dev/null 2>&1; then
+            pending_as_of="$(git show origin/weekly-radar-pending:weekly-radar/manifest.json | jq -er '.as_of // empty')"
+          fi
+          if [[ "$REPORT_DRY_RUN" != "true" && -n "$pending_as_of" && "$pending_as_of" > "$as_of" ]]; then
+            echo "Pending publication date $pending_as_of is newer than requested date $as_of; refusing to guess ordering." >&2
+            exit 1
+          fi
+
+          if [[ "$REPORT_DRY_RUN" != "true" && -n "$pending_as_of" && "$pending_as_of" == "$as_of" ]]; then
+            cargo run --release -- weekly-radar \
+              --recover-published-as-of "$pending_as_of" \
+              --archive-dir "$GITHUB_WORKSPACE" \
+              | tee "$run_output"
+          else
+            cargo run --release -- weekly-radar "${cli_args[@]}" \
+              | tee "$run_output"
+          fi
 
           if [[ ! -s "$run_output" ]]; then
             echo "Weekly Radar produced empty output; refusing to update data." >&2
@@ -108,8 +155,8 @@ jobs:
             echo "Weekly Radar dry-run completed; Telegram and data branch were not contacted."
             exit 0
           fi
-          if ! grep -Fq 'PUBLISHED:' "$run_output"; then
-            echo "Weekly Radar did not report a published run; refusing to update data." >&2
+          if ! grep -Fq 'PUBLISHED:' "$run_output" && ! grep -Fq 'READY-TO-PUSH:' "$run_output"; then
+            echo "Weekly Radar did not report a published or recoverable run; refusing to update data." >&2
             exit 1
           fi
           if [[ ! -d weekly-radar/reports ]] || ! find weekly-radar/reports -maxdepth 1 -type f -print -quit | grep -q .; then
@@ -140,8 +187,18 @@ jobs:
           fi
           git commit -m "data: weekly radar $(date -u +%F)"
 
+          pending_tip="$(git ls-remote --heads origin weekly-radar-pending | awk '{print $1}')"
+          if ! git push --force-with-lease=refs/heads/weekly-radar-pending:${pending_tip} origin HEAD:refs/heads/weekly-radar-pending; then
+            echo "Pending publication ref push failed after Telegram acceptance; refusing to send again and requiring human recovery." >&2
+            exit 1
+          fi
+
           data_tip="$(git ls-remote --heads origin data | awk '{print $1}')"
           if ! git push --force-with-lease=refs/heads/data:${data_tip} origin HEAD:refs/heads/data; then
-            echo "Data branch push failed; concurrent or protected-branch update detected." >&2
+            echo "Data branch push failed after the pending publication ref was retained; concurrent or protected-branch update detected, and the next run will verify and reuse the original receipt." >&2
             exit 1
+          fi
+
+          if ! git push origin --delete weekly-radar-pending; then
+            echo "Data branch is published, but pending publication cleanup failed; the next run will compare identities before cleanup." >&2
           fi

@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-roadmap-status-reconciliation",
+  "receiptPath": ".ai/work-items/starts/wi-roadmap-status-reconciliation.json",
+  "baseCommit": "fad1bb6fcaa0dc0c1ca9fe999c9c9580daf19fc1",
+  "baseBranch": "codex/wi-roadmap-status-reconciliation",
+  "startTimestamp": "2026-08-20T02:49:26.424813+00:00",
+  "initialScopeDigest": "b45c0baf8b8c5985b5890f381ee914c1b3af1b8162aec37a1c90d20ebdb3dbda",
+  "contractSkeletonDigest": "662d7e0bc79a09ec7b78599c18a3578a5f56c2ea1b907b388d46a431573bb235"
+}

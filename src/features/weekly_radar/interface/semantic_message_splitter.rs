@@ -16,6 +16,8 @@ pub enum SemanticBoundary {
     Top5,
     /// Rising and Dropped sections.
     RisingDropped,
+    /// The independent system and human reference section.
+    JudgmentReference,
     /// System Health section.
     SystemHealth,
 }
@@ -28,6 +30,7 @@ impl SemanticBoundary {
             Self::ImportantTransition => "Important Transition",
             Self::Top5 => "Top5",
             Self::RisingDropped => "Rising/Dropped",
+            Self::JudgmentReference => "Judgment Reference",
             Self::SystemHealth => "System Health",
         }
     }
@@ -204,6 +207,9 @@ fn boundary_for_heading(heading: &str) -> Result<SemanticBoundary, SemanticSplit
             Ok(SemanticBoundary::Top5)
         }
         "Rising" | "Dropped" => Ok(SemanticBoundary::RisingDropped),
+        "System Reference Judgment" | "系统参考判断" | "システム参考判断" => {
+            Ok(SemanticBoundary::JudgmentReference)
+        }
         "System Health" | "系统状态" | "システム状態" => {
             Ok(SemanticBoundary::SystemHealth)
         }

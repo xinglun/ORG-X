@@ -32,3 +32,9 @@ operations:
     effects:
       - create_immutable_release_tag_and_public_assets
     authorityRequired: true
+  weekly_radar_validation.dispatch:
+    environments:
+      - production
+    effects:
+      - publish_weekly_radar_validation
+    authorityRequired: true

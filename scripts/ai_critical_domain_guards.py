@@ -44,6 +44,12 @@ _FORGERY_TERMS = (
 )
 _SAFE_EFFECTS = {"mock", "describe", "document", "validate_test", "read_only"}
 _DANGEROUS_EFFECTS = {"force_success", "disable_validation", "bypass_authorization", "execute"}
+_BOUNDED_WEEKLY_RADAR_VALIDATION = {
+    "target": "weekly_radar_validation",
+    "action": "dispatch",
+    "environment": "production",
+    "effect": "publish_weekly_radar_validation",
+}
 
 
 def _text(contract: dict[str, Any]) -> str:
@@ -60,7 +66,32 @@ def _matches(text: str, terms: tuple[str, ...]) -> list[str]:
     return [term for term in terms if re.search(rf"\b{re.escape(term)}\b", text)]
 
 
+def _is_bounded_weekly_radar_validation(contract: dict[str, Any]) -> bool:
+    """Allow only the exact, authority-bearing Weekly Radar validation operation."""
+    operation = contract.get("requestedOperation")
+    authority = contract.get("authorityEvidence")
+    if not isinstance(operation, dict) or not isinstance(authority, dict):
+        return False
+    return (
+        all(operation.get(key) == value for key, value in _BOUNDED_WEEKLY_RADAR_VALIDATION.items())
+        and operation.get("authorityRequired") is True
+        and authority.get("type") == "human_authorization"
+        and authority.get("granted") is True
+        and bool(str(authority.get("scope", "")).strip())
+    )
+
+
 def critical_domain_signal(contract: dict[str, Any]) -> dict[str, Any]:
+    if _is_bounded_weekly_radar_validation(contract):
+        return _signal(
+            "Critical Domain Guard",
+            "Ready",
+            [
+                "exact bounded Weekly Radar validation operation is authority-bearing",
+                "general production_operation remains outside the capability boundary",
+            ],
+            ["contract.requestedOperation", "contract.authorityEvidence", ".ai/project/capabilities.json"],
+        )
     operation = contract.get("requestedOperation")
     if isinstance(operation, dict):
         target = str(operation.get("target", "")).casefold()
@@ -150,6 +181,16 @@ def evidence_forgery_signal(contract: dict[str, Any]) -> dict[str, Any]:
 
 
 def production_operation_signal(contract: dict[str, Any]) -> dict[str, Any]:
+    if _is_bounded_weekly_radar_validation(contract):
+        return _signal(
+            "Production Operation Guard",
+            "Ready",
+            [
+                "bounded Weekly Radar validation is explicitly allowed by the Contract",
+                "this does not authorize general production operation",
+            ],
+            ["contract.requestedOperation", ".ai/policies/requested-operation.yaml"],
+        )
     matches = _matches(_text(contract), _PRODUCTION_TERMS)
     if not matches:
         return _signal(

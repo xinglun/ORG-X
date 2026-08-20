@@ -1,0 +1,308 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "wi-production-provider-e2e",
+  "contractPath": ".ai/work-items/active/wi-production-provider-e2e.contract.json",
+  "changedFiles": [
+    {
+      "path": ".ai/work-items/active/wi-production-provider-e2e.contract.json",
+      "reason": "Declared the bounded production-validation operation and later added the observed rendered-section compatibility boundary before editing."
+    },
+    {
+      "path": ".ai/work-items/active/wi-production-provider-e2e.summary.json",
+      "reason": "Records the governed implementation, hosted failure evidence, local verification, and remaining production gates."
+    },
+    {
+      "path": ".ai/work-items/starts/wi-production-provider-e2e.json",
+      "reason": "AI Cockpit start receipt for the active Work Item."
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "Generated current AI Cockpit status for the active Work Item."
+    },
+    {
+      "path": ".ai/project/capabilities.json",
+      "reason": "Declares the bounded production_validation capability while retaining the general production_operation exclusion."
+    },
+    {
+      "path": ".ai/policies/requested-operation.yaml",
+      "reason": "Allowlists only weekly_radar_validation.dispatch in production with its explicit publication effect."
+    },
+    {
+      "path": "scripts/ai_critical_domain_guards.py",
+      "reason": "Allows the exact authority-bearing bounded operation and continues to block unbounded production operations."
+    },
+    {
+      "path": "tests/ai_cockpit/production_validation_policy_test.py",
+      "reason": "Regression tests for the exact bounded operation and the unbounded production guard."
+    },
+    {
+      "path": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "reason": "Recognizes the Chinese, Japanese, and English user-visible judgment-reference headings as a complete independent boundary."
+    },
+    {
+      "path": "src/features/weekly_radar/interface/semantic_message_splitter_test.rs",
+      "reason": "Module-local regression coverage for the judgment-reference boundary and source preservation."
+    },
+    {
+      "path": "tests/weekly_radar_semantic_message_splitter.rs",
+      "reason": "Integration coverage for localized judgment-reference headings and the actual split boundary."
+    }
+  ],
+  "sourcesUsed": [
+    "AGENTS.md",
+    ".ai/glossary.md",
+    ".github/workflows/weekly-radar.yml",
+    ".ai/project/capabilities.json",
+    ".ai/policies/requested-operation.yaml",
+    "scripts/ai_critical_domain_guards.py",
+    "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+    "src/features/weekly_radar/interface/semantic_message_splitter_test.rs",
+    "tests/weekly_radar_semantic_message_splitter.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/plans/2026-08-20-production-validation-followups.md",
+    ".ai/work-items/archive/2026/wi-runtime-judgment-chain-integration.outcome.json",
+    ".ai/work-items/active/wi-production-provider-e2e.contract.json"
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "result": "not_run"
+    },
+    {
+      "check": "aiScope",
+      "result": "not_run"
+    },
+    {
+      "check": "aiGuards",
+      "result": "not_run"
+    },
+    {
+      "check": "aiCheckpoint",
+      "result": "not_run"
+    },
+    {
+      "check": "aiAgentRisk",
+      "result": "not_run"
+    },
+    {
+      "check": "aiReviewPolicy",
+      "result": "not_run"
+    },
+    {
+      "check": "aiBacktrack",
+      "result": "not_run"
+    },
+    {
+      "check": "aiCoverage",
+      "result": "not_run"
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "result": "not_run"
+    },
+    {
+      "check": "aiGuidelines",
+      "result": "not_run"
+    },
+    {
+      "check": "aiSummary",
+      "result": "not_run"
+    },
+    {
+      "check": "aiStatus",
+      "result": "not_run"
+    },
+    {
+      "check": "aiStatusCheck",
+      "result": "not_run"
+    },
+    {
+      "check": "aiStatusConsistency",
+      "result": "not_run"
+    },
+    {
+      "check": "aiDiffOwnership",
+      "result": "not_run"
+    },
+    {
+      "check": "quality",
+      "result": "not_run"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "New public APIs must be documented.",
+      "compliant": true,
+      "evidence": "SemanticBoundary::JudgmentReference has a public doc comment and as_str remains documented in src/features/weekly_radar/interface/semantic_message_splitter.rs."
+    },
+    {
+      "guideline": "Do not import internal modules from other features.",
+      "compliant": true,
+      "evidence": "The bounded guard test imports only the project guard module and the splitter change stays inside Weekly Radar; cargo test --all-targets passed."
+    }
+  ],
+  "unknownsRemaining": [
+    "A post-merge non-dry-run must still prove the configured Provider, Telegram receipt, archive manifest, snapshot, and data-branch binding after the splitter compatibility change.",
+    "A distinct later weekly period remains unverified; one run cannot establish unattended cadence or judgment calibration."
+  ],
+  "risk": {
+    "level": "high",
+    "detail": "The first authorized hosted run reached real Provider acquisition but failed before publication because the rendered judgment-reference heading was not recognized by the semantic splitter. The compatibility boundary is locally verified; post-merge publication and durable artifact binding remain externally consequential gates."
+  },
+  "generatedFiles": [
+    ".ai/cockpit/current_status.md",
+    "target/ai_guard_report.json",
+    "target/ai_preflight_review.json"
+  ],
+  "destructiveChanges": [],
+  "observedIssues": [
+    {
+      "area": "hosted rendered-section compatibility",
+      "detail": "Run 32366854657 from main reached real Provider acquisition and stopped before Telegram/archive with rendered report cannot be delivered safely; the redacted failure maps to SemanticSplitError::UnknownSection for the new judgment-reference heading.",
+      "status": "resolved",
+      "resolution": "Added the JudgmentReference semantic boundary and Chinese/Japanese/English heading aliases, then passed focused and full Rust test suites plus a real Provider dry-run that rendered the same Chinese heading.",
+      "evidence": [
+        "https://github.com/xinglun/ORG-X/actions/runs/32366854657",
+        "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+        "tests/weekly_radar_semantic_message_splitter.rs"
+      ]
+    }
+  ],
+  "residualRisks": [
+    {
+      "level": "high",
+      "area": "post_merge_production_binding",
+      "detail": "No successful post-fix non-dry-run has yet produced the bound Telegram receipt, archive manifest, snapshot, and data-branch commit evidence.",
+      "reviewRecommended": true,
+      "followUpCandidate": false
+    },
+    {
+      "level": "medium",
+      "area": "later_period_cadence",
+      "detail": "A later distinct weekly period is required by the acceptance contract and remains time-dependent; it must not be inferred from the first successful run.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    }
+  ],
+  "reviewReadiness": {
+    "status": "not_ready",
+    "reason": "Local implementation and tests pass, but hosted PR checks and the post-merge non-dry-run artifact binding are still pending.",
+    "expectedReviewFocus": [
+      "exact bounded production-validation guard",
+      "localized judgment-reference semantic boundary",
+      "post-merge Telegram/archive/data binding",
+      "explicit remaining later-period gate"
+    ]
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "not_applicable_for_splitter_only_change",
+    "userVisibleOutput": "verified_real_provider_dry_run_heading_and_explicit_undetermined_states",
+    "persistence": "pending_post_merge_non_dry_run",
+    "localization": "verified_zh_cn_ja_en_judgment_reference_headings",
+    "generatedArtifacts": "pending_post_merge_archive_manifest_and_snapshot",
+    "makeEntrypoints": "verified_check_ai_contract_guards_preflight"
+  },
+  "userCorrectionsCaptured": [],
+  "userCorrectionSolidification": [],
+  "checkpointEvidence": [
+    {
+      "stage": "before_edit",
+      "recorded": true,
+      "contractHash": "5cd804c4ae6a5ee5",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "5cd804c4ae6a5ee5",
+      "previousContractHash": "5cd804c4ae6a5ee5",
+      "contractHash": "2f5b65a117c2c3a9",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Observed hosted non-dry-run failure: the rendered report added the user-visible judgment reference heading, but semantic Telegram splitting rejected it as UnknownSection before publication.",
+      "verificationStarted": false,
+      "invalidatedRequiredChecks": [],
+      "requiredChecksPassedAtAmendment": 0,
+      "recordedAt": "2026-08-20T12:13:52.332247+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "5cd804c4ae6a5ee5",
+      "previousContractHash": "2f5b65a117c2c3a9",
+      "contractHash": "e1b00c0784dda58d",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Bounded splitter compatibility files were added to the declared scope and implementation surface before editing, preserving the same production-failure remediation boundary.",
+      "verificationStarted": false,
+      "invalidatedRequiredChecks": [],
+      "requiredChecksPassedAtAmendment": 0,
+      "recordedAt": "2026-08-20T12:14:06.046429+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "5cd804c4ae6a5ee5",
+      "previousContractHash": "e1b00c0784dda58d",
+      "contractHash": "0d9488290deb802d",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Preflight identified the word fixed as broad; the acceptance criterion now names the observable Chinese/Japanese/English headings and source-preserving regression behavior explicitly.",
+      "verificationStarted": false,
+      "invalidatedRequiredChecks": [],
+      "requiredChecksPassedAtAmendment": 0,
+      "recordedAt": "2026-08-20T12:19:39.997993+00:00"
+    }
+  ],
+  "knownGaps": [
+    "Post-merge non-dry-run evidence is pending after the compatibility change.",
+    "Later-period cadence evidence is not available in the current period."
+  ],
+  "overclaimPrevention": "Do not report completion for checks or behavior that were not verified.",
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "not_checked",
+    "checkedAt": null,
+    "checks": [
+      {
+        "area": "plan",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete this alignment check before finishing the Work Item."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete this alignment check before finishing the Work Item."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete this alignment check before finishing the Work Item."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete this alignment check before finishing the Work Item."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete this alignment check before finishing the Work Item."
+      }
+    ]
+  }
+}

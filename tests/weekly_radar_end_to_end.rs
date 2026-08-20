@@ -38,7 +38,7 @@ use org_x::features::weekly_radar::interface::telegram_renderer::{
     TelegramRenderLimits, TelegramRenderer, TelegramSummaryInput,
 };
 use org_x::features::weekly_radar::runtime::archive::{
-    load_input_snapshot, persist_input_snapshot, write_run_with_input_snapshot,
+    load_input_snapshot, persist_input_snapshot, recover_pending_run, write_run_with_input_snapshot,
 };
 use org_x::features::weekly_radar::runtime::model::{
     Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput, SourceCoverage,
@@ -435,6 +435,127 @@ fn durable_input_survives_failed_delivery_and_supports_exact_retry() {
     assert!(manifest_json.contains("2026-08-17.input.json"));
     assert!(manifest_json.contains(saved.snapshot_id()));
     fs::remove_dir_all(root).expect("durable input fixture should be removable");
+}
+
+fn archive_transaction_digest(text: &str) -> String {
+    let mut digest = 14_695_981_039_346_656_037_u64;
+    for byte in text.as_bytes() {
+        digest ^= u64::from(*byte);
+        digest = digest.wrapping_mul(1_099_511_628_211);
+    }
+    format!("wr-input-{digest:016x}")
+}
+
+#[test]
+fn prepared_archive_recovery_reuses_receipt_without_a_second_transport_call() {
+    let root = std::env::temp_dir().join(format!(
+        "org-x-e2e-archive-recovery-{}-{}",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system clock should be after epoch")
+            .as_nanos()
+    ));
+    let input = durable_input();
+    let saved = persist_input_snapshot(&root, "data", &input, ReportLanguage::English, true)
+        .expect("input should persist before delivery");
+    let report = render_report_in_language(saved.input(), saved.language());
+    let transport = RecordingTransport::default();
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-e2e",
+        &transport,
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("the first delivery should succeed");
+    let calls_before_recovery = transport.calls();
+
+    let archive = root.join("weekly-radar");
+    let transaction_id = "2026-08-17-e2e-prepared";
+    let staging_directory = format!(".transactions/{transaction_id}");
+    let staging = archive.join(&staging_directory);
+    fs::create_dir_all(&staging).expect("transaction staging should be writable");
+    let receipt_json = serde_json::to_string_pretty(&serde_json::json!({
+        "as_of": "2026-08-17",
+        "report_id": report.report_id(),
+        "status": "PUBLISHED",
+        "message_ids": receipt
+            .message_ids()
+            .iter()
+            .map(|message_id| message_id.as_str())
+            .collect::<Vec<_>>(),
+        "attempts": receipt.attempts(),
+    }))
+    .expect("receipt fixture should serialize")
+        + "\n";
+    let manifest_value = serde_json::json!({
+        "as_of": "2026-08-17",
+        "report": "weekly-radar/reports/2026-08-17.md",
+        "snapshot": "weekly-radar/snapshots/2026-08-17.json",
+        "receipt": "weekly-radar/receipts/2026-08-17.json",
+        "input_snapshot": "weekly-radar/snapshots/2026-08-17.input.json",
+        "snapshot_id": saved.snapshot_id(),
+    });
+    let manifest_json = serde_json::to_string_pretty(&manifest_value)
+        .expect("manifest fixture should serialize")
+        + "\n";
+    let staged = [
+        ("report.md", report.markdown()),
+        ("snapshot.json", report.snapshot_json()),
+        ("receipt.json", receipt_json.as_str()),
+        ("manifest.json", manifest_json.as_str()),
+    ];
+    for (name, content) in staged {
+        fs::write(staging.join(name), content).expect("staged artifact should be writable");
+    }
+    let artifacts = staged
+        .iter()
+        .zip([
+            "reports/2026-08-17.md",
+            "snapshots/2026-08-17.json",
+            "receipts/2026-08-17.json",
+            "manifest.json",
+        ])
+        .map(|((name, content), final_path)| {
+            serde_json::json!({
+                "final_path": final_path,
+                "staged_path": format!("{staging_directory}/{name}"),
+                "digest": archive_transaction_digest(content),
+            })
+        })
+        .collect::<Vec<_>>();
+    let transaction = serde_json::json!({
+        "schema_version": 1,
+        "as_of": "2026-08-17",
+        "transaction_id": transaction_id,
+        "state": "prepared",
+        "staging_directory": staging_directory,
+        "artifacts": artifacts,
+        "manifest": manifest_value,
+    });
+    fs::create_dir_all(archive.join(".transactions"))
+        .expect("transaction record directory should be writable");
+    fs::write(
+        archive.join(".transactions/2026-08-17.json"),
+        serde_json::to_string_pretty(&transaction).expect("transaction should serialize"),
+    )
+    .expect("prepared transaction should be writable");
+
+    let recovered = recover_pending_run(
+        &root,
+        "data",
+        chrono::NaiveDate::from_ymd_opt(2026, 8, 17).expect("fixture date is valid"),
+    )
+    .expect("prepared transaction should recover")
+    .expect("recovery should complete the prepared run");
+    assert_eq!(recovered.report(), "weekly-radar/reports/2026-08-17.md");
+    assert_eq!(transport.calls(), calls_before_recovery);
+    assert_eq!(
+        fs::read_to_string(archive.join("receipts/2026-08-17.json"))
+            .expect("recovered receipt should exist"),
+        receipt_json
+    );
+    fs::remove_dir_all(root).expect("archive recovery fixture should be removable");
 }
 
 #[test]

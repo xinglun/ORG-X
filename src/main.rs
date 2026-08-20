@@ -15,8 +15,9 @@ use org_x::features::weekly_radar::runtime::report::{
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources, SourceStatus};
 use org_x::features::weekly_radar::runtime::{
-    ensure_run_available, load_input_snapshot, normalize_source_observation,
-    persist_input_snapshot, send_rendered_report, write_run_with_input_snapshot,
+    acquire_run_lock, ensure_run_available, load_input_snapshot, normalize_source_observation,
+    persist_input_snapshot, recover_pending_run, send_rendered_report,
+    write_run_with_input_snapshot,
 };
 
 const DEFAULT_REGISTRY: &str = "config/weekly_radar/companies.json";
@@ -322,6 +323,16 @@ fn registry_has_configured_primary_source(registry: &CompanySourceRegistry) -> b
 
 fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
     if let Some(retry_as_of) = options.retry_as_of {
+        let _run_lock = acquire_run_lock(&options.archive_dir, "data", retry_as_of)
+            .map_err(|error| CliError::Failure(error.to_string()))?;
+        if let Some(manifest) = recover_pending_run(&options.archive_dir, "data", retry_as_of)
+            .map_err(|error| CliError::Failure(error.to_string()))?
+        {
+            return Ok(format!(
+                "RECOVERED: report archive completed at {}",
+                manifest.report()
+            ));
+        }
         let input_snapshot = load_input_snapshot(&options.archive_dir, "data", retry_as_of)
             .map_err(|error| CliError::Failure(error.to_string()))?;
         if !input_snapshot.has_primary_evidence() {
@@ -358,6 +369,27 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
             "cannot publish weekly radar without primary evidence".to_owned(),
         ));
     }
+    let _run_lock = if !options.dry_run {
+        Some(
+            acquire_run_lock(&options.archive_dir, "data", options.as_of)
+                .map_err(|error| CliError::Failure(error.to_string()))?,
+        )
+    } else {
+        None
+    };
+    if !options.dry_run {
+        if let Some(manifest) = recover_pending_run(&options.archive_dir, "data", options.as_of)
+            .map_err(|error| CliError::Failure(error.to_string()))?
+        {
+            return Ok(format!(
+                "RECOVERED: report archive completed at {}",
+                manifest.report()
+            ));
+        }
+        ensure_run_available(&options.archive_dir, "data", options.as_of)
+            .map_err(|error| CliError::Failure(error.to_string()))?;
+    }
+
     let production = UreqHttpClient::new();
     let http: &dyn HttpClient = &production;
 

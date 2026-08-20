@@ -1,38 +1,52 @@
 # AI Cockpit Task Report
 
 Task Result
-Status: Success
+Status: Blocked
 
 What was completed
+- Changed .ai/work-items/active/wi-archive-transaction-recovery.contract.json [evidence: .ai/work-items/archive/2026/wi-archive-transaction-recovery.contract.json]
+- Changed .ai/work-items/active/wi-archive-transaction-recovery.summary.json [evidence: .ai/work-items/archive/2026/wi-archive-transaction-recovery.summary.json]
+- Changed src/features/weekly_radar/runtime/archive.rs [evidence: src/features/weekly_radar/runtime/archive.rs]
+- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
+- Changed src/main.rs [evidence: src/main.rs]
+- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
+- Changed tests/weekly_radar_end_to_end.rs [evidence: tests/weekly_radar_end_to_end.rs]
+- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
+- Changed docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md [evidence: docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md]
+- Changed docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md [evidence: docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md]
+- Changed docs/superpowers/plans/2026-08-20-wi-archive-transaction-recovery.md [evidence: docs/superpowers/plans/2026-08-20-wi-archive-transaction-recovery.md]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/active/wi-roadmap-historical-count-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-historical-count-reconciliation.contract.json]
-- Changed .ai/work-items/active/wi-roadmap-historical-count-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-historical-count-reconciliation.summary.json]
-- Changed .ai/work-items/starts/wi-roadmap-historical-count-reconciliation.json [evidence: .ai/work-items/starts/wi-roadmap-historical-count-reconciliation.json]
-- Changed docs/superpowers/plans/2026-08-20-roadmap-historical-count-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-roadmap-historical-count-reconciliation.md]
-- Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
-- Changed .ai/work-items/active/wi-roadmap-historical-count-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-historical-count-reconciliation.outcome.json]
-- Changed .ai/work-items/active/wi-roadmap-historical-count-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-historical-count-reconciliation.outcome.md]
+- Changed .ai/work-items/starts/wi-archive-transaction-recovery.json [evidence: .ai/work-items/starts/wi-archive-transaction-recovery.json]
+- Changed .ai/work-items/active/wi-archive-transaction-recovery.outcome.json [evidence: .ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.json]
+- Changed .ai/work-items/active/wi-archive-transaction-recovery.outcome.md [evidence: .ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.md]
+- Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
 
 Problems found
-- Total: 1
+- Total: 4
 - Blocking: 0
-- Warning: 0
+- Warning: 1
 
 Stops triggered
-- None recorded.
+- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Reason: aiSummary failed before the retry. | Stage: verification | Resolution: Retry aiSummary after correcting the recorded failure. [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 
 Problems resolved
-- Problem: The roadmap execution-handoff paragraph still says 41 Work Items before and 42 after, contradicting archive/index.json sequence 45.
-  Solution: Updated the roadmap overview and execution handoff to the 45/46 archive snapshot and added this Work Item's completed evidence row.
-  Evidence: [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue]
+- Problem: aiGuidelines failed before the retry.
+  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Problem: aiSummary failed before the retry.
+  Solution: Re-ran aiSummary after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- The roadmap count remains a dated pre/post-archive snapshot and can become stale after later Work Items; consumers must use archive/index.json as authority. [evidence: residualRisks]
+- Independent per-file renames leave a crash window between final artifact writes; the prior lifecycle Summary records this as an unresolved residual risk. [evidence: observedIssues[0] persistence, observedIssues[0] persistence]
+- The design remains logical rather than physical multi-file atomicity; malformed or mismatched residue intentionally blocks and requires operator inspection. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
@@ -59,9 +73,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

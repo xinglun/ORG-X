@@ -553,6 +553,18 @@
       "summarySha256": "386c97aff0a0ba0d1b29f6c32a1bc938710cbcbff27b147175096369b94483dd",
       "manifestPath": ".ai/work-items/archive/2026/wi-roadmap-historical-count-reconciliation.archive-manifest.json",
       "manifestSha256": "d0d80b25edaf775d3d9b910b62869303fd643639dd6d57e8806fdc6c140ad12a"
+    },
+    {
+      "workItemId": "wi-archive-transaction-recovery",
+      "archiveSequence": 47,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.contract.json",
+      "contractSha256": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "archivedAt": "2026-08-20T16:57:25.265643+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.summary.json",
+      "summarySha256": "f9cfc22f0d05f8048a2c3c6a2797859a2375232e45a1de5172e599a771e02d86",
+      "manifestPath": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.archive-manifest.json",
+      "manifestSha256": "8c3223f4c4c7b19ddc50ceb465b141b3ee6f5c8f69d4eb99185ade86b0e2f537"
     }
   ]
 }

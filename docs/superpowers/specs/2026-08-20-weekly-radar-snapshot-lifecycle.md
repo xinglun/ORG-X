@@ -19,7 +19,7 @@ Compute/acquire RuntimeReportInput
   → render from the persisted input
   → validate rendered report
   → publish to Telegram
-  → atomically archive report, rendered snapshot, receipt, and manifest
+  → logically commit staged report, rendered snapshot, receipt, and manifest
   → retain only the configured recent archive window
 ```
 
@@ -64,9 +64,11 @@ Retry loads the input envelope from the archive, uses its saved date and languag
 
 ## Final archive integrity
 
-The final report, rendered snapshot, receipt, and manifest are written through sibling temporary files followed by rename. Temporary names are unique to the process and are removed when a write fails. The manifest is written last. Same-date final files are checked before directory creation, retention, or final-file mutation; if any report, snapshot, or receipt for the date exists, `ExistingRun` is returned and all existing bytes remain unchanged.
+The final report, rendered snapshot, receipt, and manifest are staged in a unique hidden transaction directory. Each public file is still written through a unique sibling temporary file followed by rename, but the date-keyed transaction record is written as `prepared` before promotion and rewritten as `committed` last. Only the committed record is a new transaction's visibility point; this is logical transactional visibility, not physical multi-file filesystem atomicity.
 
-The manifest continues to be `weekly-radar/manifest.json` and additionally records the optional input-snapshot path and deterministic `snapshot_id` when the caller supplies the persisted input. The existing `write_run` API remains available for fixture callers without an input envelope; the CLI uses `write_run_with_input_snapshot`.
+If a process stops between promotions, the next non-dry run or retry first validates and completes the prepared transaction from its staged bytes and persisted delivery receipt, without another Telegram call. Existing public files are accepted only when their bytes match the staged digest. A malformed transaction, a digest mismatch, or a partial date set without a valid transaction record returns `IncompleteRun` without overwriting the conflicting bytes. Complete pre-transaction archives with all three date-specific final files remain legacy committed runs and return `ExistingRun`.
+
+The manifest continues to be `weekly-radar/manifest.json` and additionally records the optional input-snapshot path and deterministic `snapshot_id` when the caller supplies the persisted input. The existing `write_run` API remains available for fixture callers without an input envelope; the CLI uses `write_run_with_input_snapshot`. Transaction metadata stays under `weekly-radar/.transactions/` and is excluded from date-prefixed retention.
 
 Retention runs only after all final files and the manifest have been committed. Invalid branch, receipt, identity, conflict, input-snapshot, and final-write failures occur before retention and do not delete old files.
 
@@ -99,6 +101,17 @@ pub fn ensure_run_available(
     as_of: NaiveDate,
 ) -> Result<(), ArchiveError>;
 
+pub fn acquire_run_lock(
+    root: &Path,
+    branch: &str,
+    as_of: NaiveDate,
+) -> Result<ArchiveRunLock, ArchiveError>;
+pub fn recover_pending_run(
+    root: &Path,
+    branch: &str,
+    as_of: NaiveDate,
+) -> Result<Option<ArchiveManifest>, ArchiveError>;
+
 pub fn write_run_with_input_snapshot(
     root: &Path,
     branch: &str,
@@ -117,9 +130,11 @@ Tests must demonstrate:
 1. Input snapshots round-trip exactly, are idempotent for identical bytes, and reject same-date conflicts without mutation.
 2. Normal lifecycle persistence precedes rendering/publishing at the CLI boundary; dry-run remains non-mutating.
 3. Retry loads the saved language and input without acquisition credentials or source HTTP calls.
-4. Same-date final archive writes are rejected before mutation, and atomic writes use temporary siblings.
-5. Retention does not run for pre-commit failures and does run after a successful complete archive.
-6. Existing data-branch guards, receipt identity checks, localized rendering, and deterministic E2E lifecycle behavior remain intact.
+4. Same-date final archive writes are rejected before mutation, and each public file uses a temporary sibling.
+5. Failure injection after transaction preparation and each public promotion leaves no false committed state; recovery completes matching staged bytes without another provider send.
+6. Malformed, mismatched, and partial transaction residue returns `IncompleteRun` without overwriting existing bytes, while complete legacy archives remain protected by `ExistingRun`.
+7. Retention does not run for pre-commit failures and does run after a successful complete archive.
+8. Existing data-branch guards, receipt identity checks, localized rendering, and deterministic E2E lifecycle behavior remain intact.
 
 ## Non-goals
 

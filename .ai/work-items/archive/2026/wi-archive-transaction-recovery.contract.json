@@ -1,0 +1,265 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-archive-transaction-recovery",
+  "mode": "code",
+  "title": "Make Weekly Radar archive commit and recovery logically transactional",
+  "baseCommit": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "reference": "The user authorized continuing every acceptance correction, self-check loop, and complete Work Item lifecycle; any required authorization is to be recorded in the Contract.",
+    "capturedAt": "2026-08-20T16:11:00+09:00"
+  },
+  "rawUserRequest": "继续对应；查收，全部对应，完成了以后自检，有问题再对应，循环到结束。每个WI都走完全流程。需要我授权的，授权给你，并写入contract。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User continuation of the full remediation and Work Item lifecycle, authorizing bounded archive transaction/recovery correction.",
+    "digest": "sha256:b8a8e04db21a2672503ea2301f5ae55911507515af23a11ecbcab4613e4a440c",
+    "capturedAt": "2026-08-20T16:11:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation", "documentation"],
+    "prohibitedCapabilities": ["production_operation", "llm_fact_extraction", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user's continuation authorization covers this bounded reliability correction and its complete governed lifecycle.",
+    "authorizedExternalEffects": [
+      "Create and update the Work Item PR for this bounded runtime/documentation correction.",
+      "Run hosted checks, merge the PR, and close this Work Item after merge."
+    ]
+  },
+  "scope": [
+    ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+    ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+    ".ai/work-items/active/wi-archive-transaction-recovery.outcome.json",
+    ".ai/work-items/active/wi-archive-transaction-recovery.outcome.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/main.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/weekly_radar_end_to_end.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md",
+    "docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md",
+    "docs/superpowers/plans/2026-08-20-wi-archive-transaction-recovery.md"
+  ],
+  "outOfScope": [
+    "Existing archived Work Item records and historical data-branch files, except generated current-WI archive/index evidence.",
+    "Product policy or semantics for Stage, Score, Ranking, Top5, investment conclusions, or capital actions.",
+    "DNS rebinding defenses, complete host allowlists, proxy/firewall policy, real Telegram/provider execution, and production data writes.",
+    "New dependencies, unrelated runtime modules, workflow changes, and changes to the public archive path contract.",
+    "Provider acquisition, LLM extraction, source truth decisions, and external system mutation."
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Defines the mandatory Contract, checkpoint, finish, archive, PR, merge, close, and clean-state lifecycle."},
+    {"path": ".ai/glossary.md", "reason": "Defines repository architecture and Evidence over Self-Declaration terminology."},
+    {"path": "docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md", "reason": "Existing lifecycle contract explicitly records the current per-file atomicity gap and public API compatibility boundary."},
+    {"path": "src/features/weekly_radar/runtime/archive.rs", "reason": "Current archive writer, final paths, manifest, duplicate guard, retention, and input snapshot implementation."},
+    {"path": "src/features/weekly_radar/runtime.rs", "reason": "Current public runtime exports that must remain compatible."},
+    {"path": "src/main.rs", "reason": "Current normal and retry lifecycle call order and archive entrypoint behavior."},
+    {"path": "tests/weekly_radar_runtime.rs", "reason": "Existing archive, duplicate-date, retention, input snapshot, and provider-free regression coverage."},
+    {"path": "tests/weekly_radar_end_to_end.rs", "reason": "Existing delivery-failure and exact-retry evidence for the persisted input lifecycle."},
+    {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "Operational documentation that must describe recovery and residual provider boundaries."},
+    {"path": "Makefile", "reason": "Canonical repository quality and lifecycle entrypoints."},
+    {"path": "Makefile.ai", "reason": "Canonical AI Cockpit checks, finish, archive, and close entrypoints."},
+    {"path": ".ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.summary.json", "reason": "Prior WI residual risk explicitly identifies the crash window between per-file renames and the need for a transaction/recovery decision."}
+  ],
+  "problemStatement": "The Weekly Radar archive currently writes report, rendered snapshot, receipt, and the compatibility manifest as separate atomic renames. A process interruption between those renames can leave a partial final set that is neither a committed run nor safely resumable, while retry can then be blocked or may require a second provider delivery. The existing public paths and write APIs must remain compatible.",
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["persistence_consistency", "retry_delivery_duplication", "scope"],
+    "reason": "The change governs durable archive visibility and retry recovery after an interruption. The design must fail closed on unverifiable residue and never claim physical atomicity across multiple public files.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit full-lifecycle remediation authorization"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["Durable archive commit/recovery and provider-delivery retry require strict evidence and full Work Item closure."],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The prior lifecycle specification, implementation, tests, and the user's continuation authorization provide sufficient evidence for a bounded logical transaction/recovery implementation; remaining external provider behavior stays explicitly out of scope."
+  },
+  "preReviewWarnings": [
+    "Do not describe the multi-file archive as physically atomic; make committed visibility, prepared recovery, incomplete residue, and duplicate-delivery behavior explicit.",
+    "Preserve old archives without transaction markers as legacy committed runs when all three date-specific final files exist.",
+    "Recovery must reuse the persisted delivery receipt and never send Telegram again for a prepared transaction."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "A new archive run becomes visible only after all staged artifacts and public final paths are complete.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "The transaction record is prepared before public promotion, committed last, and committed visibility requires report, snapshot, receipt, and manifest content matching the transaction record.",
+      "verificationPlan": "Run focused transaction tests with failure injection after preparation and after each public artifact promotion; assert no false success and byte-stable existing archives."
+    },
+    {
+      "scenario": "An interruption after delivery can be recovered without another Telegram send.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_end_to_end.rs"],
+      "expected": "A prepared transaction reuses its staged receipt and completes archive commit; a retry does not invoke the delivery transport again.",
+      "verificationPlan": "Use a provider-free recording transport and a prepared transaction fixture, recover it, and assert the recording count remains unchanged."
+    },
+    {
+      "scenario": "Unverifiable partial residue fails closed and does not overwrite an existing file.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "A partial set without a valid prepared transaction returns an explicit incomplete-run error; all existing bytes remain unchanged.",
+      "verificationPlan": "Seed one or more date-specific final files and malformed/mismatched transaction metadata, then assert the error and byte-for-byte preservation."
+    },
+    {
+      "scenario": "Legacy and normal archive compatibility remains intact.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime.rs", "tests/weekly_radar_runtime.rs", "tests/weekly_radar_end_to_end.rs"],
+      "expected": "write_run and write_run_with_input_snapshot keep their signatures and public paths; branch guard, same-date protection, input snapshots, retention, dry-run, and existing tests remain green.",
+      "verificationPlan": "Run focused archive/end-to-end tests followed by cargo fmt --check, cargo test --all, and all required AI Cockpit checks."
+    }
+  ],
+  "acceptance": [
+    "The archive writer stages report, rendered snapshot, receipt, and manifest content in a unique transaction area, then writes a date-keyed commit record last; only a complete committed record is considered a successful new run.",
+    "A prepared transaction can be deterministically recovered from its staged bytes and persisted delivery receipt without another provider send; recovery never silently overwrites a mismatched final file.",
+    "Uncommitted or unverifiable partial residue returns an explicit fail-closed error, while complete legacy archives without a transaction record remain protected as existing runs; physical cross-file atomicity is not claimed.",
+    "Same-date duplicate protection, data-branch guard, input snapshot identity/conflict behavior, retention-after-commit, public archive paths, and existing APIs remain compatible and covered by tests.",
+    "Operational/spec documentation states the logical transaction boundary, recovery path, duplicate-delivery protection, and residual production/provider limits without changing product semantics.",
+    "The complete AI Cockpit lifecycle, repository quality checks, hosted PR checks, merge, close, and clean branch/worktree audit pass for this Work Item."
+  ],
+  "guidelines": [
+    "Document every new public API and keep the public archive paths and existing write API signatures compatible.",
+    "Do not add dependencies or import internal modules from other features.",
+    "Preserve the rule-only, evidence-first boundary; do not introduce Stage, Score, Ranking, Top5, investment, or capital-action behavior.",
+    "Do not claim provider or production behavior without an authorized external receipt.",
+    "Use failure injection and deterministic fixture tests rather than live Telegram or source calls."
+  ],
+  "intent": {
+    "problem": "The current per-file rename sequence has a crash window after Telegram delivery and before the final manifest write; a partial archive can block retry without preserving a safe archive commit point.",
+    "constraints": [
+      "Keep the existing reports/YYYY-MM-DD.md, snapshots/YYYY-MM-DD.json, receipts/YYYY-MM-DD.json, weekly-radar/manifest.json paths and write_run/write_run_with_input_snapshot signatures.",
+      "Use a logical commit record and deterministic recovery; do not claim a filesystem transaction across independent public files.",
+      "Persist and reuse the delivery receipt already held by the prepared transaction; never make recovery send Telegram again.",
+      "Preserve the literal data-branch guard, input snapshot semantics, retention ordering, dry-run behavior, and provider-neutral rule-only architecture.",
+      "No live provider, Telegram, workflow, or data-branch operation may be run; verification is local, fixture-based, or hosted CI only."
+    ],
+    "rationale": "A prepared transaction record plus staged artifact bytes creates an auditable commit point without changing the public archive contract. Recovery can safely complete only matching content, while unverifiable residue fails closed instead of being guessed or overwritten."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 47
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-archive-transaction-recovery.json",
+    "baseCommit": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+    "initialScopeDigest": "dec6ab564a2ab66f33a5e28cb6aada398bd571dc43d0c74f73814fa7ddaff128",
+    "contractSkeletonDigest": "28fac2da21703313e8ba2b2a50d5060134949b32c379a4491aa7c7b7214a94dd"
+  }
+}

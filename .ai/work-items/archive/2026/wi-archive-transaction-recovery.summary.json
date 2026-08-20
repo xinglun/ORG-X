@@ -1,0 +1,676 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "wi-archive-transaction-recovery",
+  "contractPath": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.contract.json",
+  "changedFiles": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.contract.json",
+      "reason": "Records the authorized scope, logical transaction design, acceptance, scenarios, risks, and verification boundary."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.summary.json",
+      "reason": "Records evidence-bound implementation and lifecycle handoff."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/archive.rs",
+      "reason": "Stages report, rendered snapshot, receipt, and manifest; records prepared/committed state; validates recovery digests; and fails closed on residue."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime.rs",
+      "reason": "Exports the documented recovery API while retaining existing runtime exports."
+    },
+    {
+      "path": "src/main.rs",
+      "reason": "Runs pending recovery and same-date duplicate guards before acquisition or retry delivery."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Covers failure-safe partial residue, legacy complete archives, duplicate protection, and retention compatibility."
+    },
+    {
+      "path": "tests/weekly_radar_end_to_end.rs",
+      "reason": "Proves prepared archive recovery reuses staged receipt without a second recording transport call."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Documents prepared recovery, fail-closed mismatch behavior, logical commit scope, and provider limits."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md",
+      "reason": "Updates the prior lifecycle specification from collective atomicity wording to logical transaction visibility and recovery semantics."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md",
+      "reason": "Defines logical commit, recovery, compatibility, and failure semantics."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-20-wi-archive-transaction-recovery.md",
+      "reason": "Defines the TDD implementation and governed closure sequence."
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "Generated status projection for the active Contract."
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "reason": "Generated human-benefit report projection from the active Outcome."
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "reason": "Generated human-readable handoff projection from the active Outcome."
+    },
+    {
+      "path": ".ai/work-items/starts/wi-archive-transaction-recovery.json",
+      "reason": "AI Cockpit start receipt for the dedicated branch and base commit."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.json",
+      "reason": "Generated Task Outcome evidence for the active Work Item."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.md",
+      "reason": "Generated direct human handoff report for the active Work Item."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Generated archive discovery index after Work Item archive."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-archive-transaction-recovery.archive-manifest.json",
+      "reason": "Immutable archive evidence root."
+    }
+  ],
+  "sourcesUsed": [
+    "AGENTS.md",
+    ".ai/glossary.md",
+    ".ai/work-items/archive/2026/wi-archive-transaction-recovery.contract.json",
+    "docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/main.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/weekly_radar_end_to_end.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "Makefile",
+    "Makefile.ai",
+    ".ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.summary.json"
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "A new archive run becomes visible only after all staged artifacts and public final paths are complete.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "cargo test --lib archive::tests -- --nocapture",
+        "src/features/weekly_radar/runtime/archive.rs"
+      ],
+      "result": "Failure injection after preparation and each public promotion recovered to a committed record with matching report, snapshot, receipt, and manifest bytes."
+    },
+    {
+      "scenario": "An interruption after delivery can be recovered without another Telegram send.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "cargo test --test weekly_radar_end_to_end prepared_archive_recovery -- --nocapture",
+        "tests/weekly_radar_end_to_end.rs"
+      ],
+      "result": "Prepared archive recovery completed and the recording transport call list remained unchanged."
+    },
+    {
+      "scenario": "Unverifiable partial residue fails closed and does not overwrite an existing file.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "cargo test --test weekly_radar_runtime archive_transaction -- --nocapture",
+        "tests/weekly_radar_runtime.rs"
+      ],
+      "result": "Partial and mismatched residue returned IncompleteRun and preserved the pre-existing bytes; complete legacy files returned ExistingRun."
+    },
+    {
+      "scenario": "Legacy and normal archive compatibility remains intact.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "cargo test --all",
+        "cargo fmt --check",
+        "tests/weekly_radar_runtime.rs",
+        "tests/weekly_radar_end_to_end.rs"
+      ],
+      "result": "All 81 library tests, 70 runtime integration tests, E2E, architecture, scheduler, renderer, and doc tests passed; formatting passed."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "command": "make check-ai-contract CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:12.844989+00:00",
+      "exitCode": 0,
+      "durationMs": 55,
+      "outputDigest": "4d6ee40169386b26518ec116b3082a11648a97743f160ebcd30cf449872c8e17",
+      "commandHash": "712448a1cc02758bb42fd643d22b8bc3b6dfb703cd251832492115a4edffdbc8",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "3becd3afa449aba72d33856b2fda76d5e16afb504e3e47ab3020a6e9f606f382",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-archive-transaction-recovery.contract.json work item contract check passed: .ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-archive-transaction-recovery.contract.json work item contract check passed: .ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "outputBytes": 294
+    },
+    {
+      "check": "aiScope",
+      "command": "make check-ai-scope CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:13.086128+00:00",
+      "exitCode": 0,
+      "durationMs": 153,
+      "outputDigest": "1efcaf6e34c6a502e636f70e606b4ca566478be025ee22cdb1da5e38a0cc29ef",
+      "commandHash": "e5408d299cf2e5272517c5e225716e43e73fc7a6fe6a314416d0f5e5270ab27c",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "e27ee476a399122611f065ac3e653db10e3077ed03a63edfe5221cfaf4dae67a",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-archive-transaction-recovery.contract.json scope guard passed: 17 changed path(s) covered",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-archive-transaction-recovery.contract.json scope guard passed: 17 changed path(s) covered",
+      "outputBytes": 236
+    },
+    {
+      "check": "aiGuards",
+      "command": "make check-ai-guards",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:13.326259+00:00",
+      "exitCode": 0,
+      "durationMs": 152,
+      "outputDigest": "e5f3c5b55669196099981eebfdf360fab2dfc92d1701c8646c081d65cdd1bf99",
+      "commandHash": "769f935b899dad1a2abcf23ef3cd08c6904b7f7d03a988b5ce6aa573d18b1e83",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "f6b25e8d1b69d1ceed687b567db19cf2f1fc61ba3e7cb4322946698ae7598baf",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
+      "outputBytes": 273
+    },
+    {
+      "check": "aiCheckpoint",
+      "command": "make ai-checkpoint CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json STAGE=before_finish",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:13.768830+00:00",
+      "exitCode": 0,
+      "durationMs": 353,
+      "outputDigest": "36d81f356c25741739e99799b3bd1e22ba1e916cac589b7a062bb038b857e47a",
+      "commandHash": "5ed395dd75741799c756838243254ce2c72bfac5d91f8d7e8599008c3696b9af",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "3519b0a768ce6818a145c2dece49b996124285c49fb19c190945c97f8e639743",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-archive-transaction-recovery` - Contract Hash: `426508861d32750f` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `6` - Unknown Count: `0` - Requi",
+      "outputTail": "ond provider send - fail-closed mismatch handling - legacy archive compatibility ## Diff Ownership Preview - active_owned: `17`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/cockpit/task_report.md` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/work-items/active/wi-archive-transaction-recovery.contract.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-archive-transaction-recovery.outcome.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-archive-transaction-recovery.outcome.md` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-archive-transaction-recovery.summary.json` — covered by Contract scope - [active_owned] `.ai/work-items/starts/wi-archive-transaction-recovery.json` — covered by Contract scope - [active_owned] `docs/operations/WEEKLY_RADAR.md` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-20-wi-archive-transaction-recovery.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/archive.rs` — covered by Contract scope - [active_owned] `src/main.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_end_to_end.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_runtime.rs` — covered by Contract scope ## Next Action - Run or record required verification: aiSummary",
+      "outputBytes": 7102
+    },
+    {
+      "check": "aiReviewPolicy",
+      "command": "make check-ai-review-policy SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:14.011032+00:00",
+      "exitCode": 0,
+      "durationMs": 148,
+      "outputDigest": "62b84f72ac9950086833bd84daa5d300abbf5501c07d36eb7c38526b1c8215f8",
+      "commandHash": "27102d2d7e0f2ec9b72e6b638f7af77bcd1070f08aaf4bcb7ddc22e746ca9dca",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "1b65a3cf11c256b69f3548bb96aaa6b2b58e846e8b4a6416458bd6e639b347ea",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-archive-transaction-recovery.contract.json [review] .ai/work-items/active/wi-archive-transaction-recovery.outcome.json [review] .ai/work-items/active/wi-archive-transaction-recovery.outcome.md [review] .ai/work-items/starts/wi-archive-transaction-recovery.json [review] .ai/cockpit/cu",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-archive-transaction-recovery.contract.json [review] .ai/work-items/active/wi-archive-transaction-recovery.outcome.json [review] .ai/work-items/active/wi-archive-transaction-recovery.outcome.md [review] .ai/work-items/starts/wi-archive-transaction-recovery.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md review focus recorded: 4 item(s) report: target/ai_review_policy_report.json",
+      "outputBytes": 723
+    },
+    {
+      "check": "aiBacktrack",
+      "command": "make check-ai-backtrack",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:14.226459+00:00",
+      "exitCode": 0,
+      "durationMs": 127,
+      "outputDigest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+      "commandHash": "3ae95e96677b5ecabc3d873ff9cda8d7d3c807724cd86bda76ebb00cef4e4f88",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "7606ab08eb6785c61c556daf70fe06e6f71833d4e15fc3b094c1f9f99d1337af",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputBytes": 192
+    },
+    {
+      "check": "aiCoverage",
+      "command": "make check-ai-coverage-guard",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:14.455075+00:00",
+      "exitCode": 0,
+      "durationMs": 137,
+      "outputDigest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+      "commandHash": "296a9883f8b9ad27f3d57afdee3ebdea5c75869c899a00e55d80563bc889328a",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "a24693cdbac6481b94f280038c86961356731b24d67ac9a5880dba0452a79934",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputBytes": 201
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "command": "make check-ai-scenario-coverage CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:14.603276+00:00",
+      "exitCode": 0,
+      "durationMs": 51,
+      "outputDigest": "8e199a11cc8afacb768659188b73c312f71d742949d8895149045d4171e1e357",
+      "commandHash": "5886ccef6a0dae8bcf9e673e7c4660c25ac2eb00f08b16750b51e1a7c194860b",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "b50f9dca252ea505a35d4fd298e51be4ab3f0a942b52d00a94bb7f02e64264d3",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputBytes": 337
+    },
+    {
+      "check": "aiGuidelines",
+      "command": "make check-ai-guidelines CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:14.749677+00:00",
+      "exitCode": 0,
+      "durationMs": 57,
+      "outputDigest": "c662e925e7de23866edfafe8be3d6bf2be93520201c2de182a27c3c5fe1faef7",
+      "commandHash": "69ea88135ca82063c3fd74c05de3157ad6227f43d02c1f41b76c8262056d2923",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "2da2ce45712e3dfb18e984d4bcd85f519c0540852ad5a722fbdb50b0f7b0db17",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json guidelines compliance check passed: 5 guideline(s) verified",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json guidelines compliance check passed: 5 guideline(s) verified",
+      "outputBytes": 342
+    },
+    {
+      "check": "aiDiffOwnership",
+      "command": "make check-ai-diff-ownership CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:15.227174+00:00",
+      "exitCode": 0,
+      "durationMs": 386,
+      "outputDigest": "e5860241cc283d88eb6bf57a9fa870d7fbe45d095fa8c36b189c4a0b6a18036f",
+      "commandHash": "3157d21aae2a27e146003446cb3501a00446b868cc7ea29bd194c83c7d39b385",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "48728ea817765dbf6397b0652e61ea470e58761689668b1acf0e1d34143fe7a4",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json ## Diff Ownership Preview - active_owned: `17`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome",
+      "outputTail": "NTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json ## Diff Ownership Preview - active_owned: `17`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/cockpit/task_report.md` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/work-items/active/wi-archive-transaction-recovery.contract.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-archive-transaction-recovery.outcome.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-archive-transaction-recovery.outcome.md` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-archive-transaction-recovery.summary.json` — covered by Contract scope - [active_owned] `.ai/work-items/starts/wi-archive-transaction-recovery.json` — covered by Contract scope - [active_owned] `docs/operations/WEEKLY_RADAR.md` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-20-wi-archive-transaction-recovery.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/archive.rs` — covered by Contract scope - [active_owned] `src/main.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_end_to_end.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_runtime.rs` — covered by Contract scope",
+      "outputBytes": 2100
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:54.288888+00:00",
+      "exitCode": 0,
+      "durationMs": 38878,
+      "outputDigest": "13b2be8999ad2f583d4eb22c97677ba36e751a3ca173f02621a18650b17c8b3e",
+      "commandHash": "e9589e6d07367af0027719354a354539e4f4ff284dd5a2d2bd35631b228fcf51",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "613c15da47d582e527f8b7dc76643bde8086f61dc3764a07709c224c0ed297c3",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\"], \"level\": \"strict\", \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"692a1b037274f7bd0c4b595c9c0980866dff4838\", \"changedPaths\": [ \".ai/cockpit/current_status.md\", \".ai/cockpit/task_report.json\", \".ai/cockpit/task_report.md\", \".ai/work-items/active/wi-archive-transaction-recovery.contract.json\", \".ai/work-items/activ",
+      "outputTail": "stage_comparison ... ok test threshold_distance_retains_supplied_values_and_order ... ok test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/weekly_radar_top5.rs (target/debug/deps/weekly_radar_top5-d74b0faa16cd0578) running 7 tests test blank_values_are_rejected_before_an_entry_is_created ... ok test top5_weekly_read_model::module_tests::blank_candidate_is_rejected ... ok test entry_retains_all_supplied_facts_without_normalizing_them ... ok test read_model_accepts_empty_input_and_preserves_supplied_order ... ok test top5_weekly_read_model::module_tests::from_entries_keeps_input_order ... ok test duplicate_candidate_is_rejected_before_capacity_and_does_not_mutate_model ... ok test read_model_accepts_five_entries_and_rejects_a_sixth_without_mutation ... ok test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Doc-tests org_x running 1 test test src/features/weekly_radar/runtime/sources.rs - features::weekly_radar::runtime::sources::SourceObservation (line 121) - compile fail ... ok test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.18s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-reference-impact \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-test-weakening PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_test_weakening.py --root . --mode full --policy .ai/guards/test_weakening_policy.yaml {\"baseRef\": \"692a1b037274f7bd0c4b595c9c0980866dff4838\", \"decision\": \"continue\", \"limitations\": [\"Static signals do not prove semantic equivalence or complete test coverage.\"], \"mode\": \"full\", \"recoveryCondition\": \"No recovery action is required for the analyzed diff.\", \"requiredExplanation\": false, \"signals\": [], \"version\": 1} Strict project-specific checks: not configured; AI lifecycle gates remain independently enforced.",
+      "outputBytes": 44042
+    },
+    {
+      "check": "aiStatus",
+      "command": "make generate-cockpit-status CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:55.285754+00:00",
+      "exitCode": 0,
+      "durationMs": 409,
+      "outputDigest": "39ae47cbc453ceff89f71006c06ce9d8bc0e0b530e19d677f3f5a26d05272099",
+      "commandHash": "358278d153d0c6be277665d910a3e5add90192195afe7839f1e13db6f3c44b6f",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "845a94c5bef9be065c425a1ced3edb3fbfc1af91e8de51635d33431558459c92",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputBytes": 408
+    },
+    {
+      "check": "aiStatusCheck",
+      "command": "make check-ai-status CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:56.513620+00:00",
+      "exitCode": 0,
+      "durationMs": 710,
+      "outputDigest": "9501058ff4f1e3c8426e9b098867a1e0b83d777040a7d15f5b7a2cd11a288f3f",
+      "commandHash": "a07e80edcb53ea8b3bd297ace8d7d760790622c903042e9660a45b32cc7ddfc6",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "e1ba823eb522927fe9656ce3732483c2f9f21487efbcafe3fcecb76e1dc0bbf7",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputBytes": 367
+    },
+    {
+      "check": "aiStatusConsistency",
+      "command": "make check-ai-status-consistency",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:57.083316+00:00",
+      "exitCode": 0,
+      "durationMs": 64,
+      "outputDigest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+      "commandHash": "ddd5a0e5fa9b289b1ab3ba23cf37c1a7f01d48f31e2ad99e85762ba20f93c2a6",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "adc285d1d22227b5147ed03b8bb8638f72fd2ef2b3a357fe29381432290a31e5",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputBytes": 169
+    },
+    {
+      "check": "aiAgentRisk",
+      "command": "make check-ai-agent-risk CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:57.230040+00:00",
+      "exitCode": 0,
+      "durationMs": 53,
+      "outputDigest": "533f08dc8bcd357d82c855d324131d2fffb55705ec934348653d941bbee87876",
+      "commandHash": "d6fe7c64e1d5cf9750c112f92bbb4eb2f3c491c317f56d3ed85d5474b8475670",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "ce5f5c6826e1d6b61f48b963cd6373173cb8010f402d00471e8b5db06d5e6a7a",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputBytes": 347
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:50:59.057847+00:00",
+      "exitCode": 0,
+      "durationMs": 351,
+      "outputDigest": "3bc6e7e82ab5817246139083fc1ea858a6baf9572beeaef10b785ba23c2f0742",
+      "commandHash": "fd327eee4a8662100fa0b21b2a767c33f7ca5c68f811013d33f9f49a3cd13113",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "9af6b71df6f0e51cd968895ccc71000bf047b0da2cea0e010295574cf50ad7d1",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-archive-transaction-recovery.summary.json --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json ai summary check passed: .ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-archive-transaction-recovery.summary.json --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json ai summary check passed: .ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "outputBytes": 362,
+      "outcomeInputDigest": "31472b789424de71d00b6902566f7f81cd3b37821e962b6cf8300e851517d9cd"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "Document every new public API and keep the public archive paths and existing write API signatures compatible.",
+      "compliant": true,
+      "evidence": "recover_pending_run and IncompleteRun are documented; write_run/write_run_with_input_snapshot and existing public paths remain unchanged; cargo test --all passed."
+    },
+    {
+      "guideline": "Do not add dependencies or import internal modules from other features.",
+      "compliant": true,
+      "evidence": "No Cargo.toml/Cargo.lock dependency change and no cross-feature internal import was added; cargo test --all passed."
+    },
+    {
+      "guideline": "Preserve the rule-only, evidence-first boundary; do not introduce Stage, Score, Ranking, Top5, investment, or capital-action behavior.",
+      "compliant": true,
+      "evidence": "Diff is limited to archive lifecycle, tests, operations/spec/plan, and governed artifacts; no Stage/Score/Ranking/Top5 or capital-action behavior was added."
+    },
+    {
+      "guideline": "Do not claim provider or production behavior without an authorized external receipt.",
+      "compliant": true,
+      "evidence": "Contract explicitly prohibits live provider operation and limits verification to local fixtures and hosted CI."
+    },
+    {
+      "guideline": "Use failure injection and deterministic fixture tests rather than live Telegram or source calls.",
+      "compliant": true,
+      "evidence": "Archive unit tests inject each commit-stage failure, and runtime/E2E tests use temporary files and recording transports only."
+    }
+  ],
+  "unknownsRemaining": [],
+  "risk": {
+    "level": "medium",
+    "detail": "Medium-risk persistence change; the main risks are partial public files, transaction-record mismatch, and accidental duplicate provider delivery."
+  },
+  "generatedFiles": [
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.json",
+    ".ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.md",
+    ".ai/work-items/starts/wi-archive-transaction-recovery.json",
+    ".ai/work-items/archive/index.json"
+  ],
+  "destructiveChanges": [],
+  "observedIssues": [
+    {
+      "level": "medium",
+      "area": "persistence",
+      "detail": "Independent per-file renames leave a crash window between final artifact writes; the prior lifecycle Summary records this as an unresolved residual risk.",
+      "evidence": [
+        "docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md",
+        "src/features/weekly_radar/runtime/archive.rs"
+      ]
+    }
+  ],
+  "residualRisks": [
+    {
+      "level": "medium",
+      "area": "scope",
+      "detail": "The design remains logical rather than physical multi-file atomicity; malformed or mismatched residue intentionally blocks and requires operator inspection.",
+      "reviewRecommended": true,
+      "followUpCandidate": false
+    }
+  ],
+  "reviewReadiness": {
+    "status": "ready_with_risks",
+    "reason": "All required verification passed; residual risk remains documented.",
+    "expectedReviewFocus": [
+      "transaction commit point",
+      "recovery without second provider send",
+      "fail-closed mismatch handling",
+      "legacy archive compatibility"
+    ]
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "verified",
+    "userVisibleOutput": "verified",
+    "persistence": "verified",
+    "localization": "not_applicable",
+    "generatedArtifacts": "verified",
+    "makeEntrypoints": "verified"
+  },
+  "userCorrectionsCaptured": [
+    {
+      "correction": "Continue the full remediation loop, complete every Work Item lifecycle, self-check, and continue until no evidence-backed codable gap remains.",
+      "source": "User message",
+      "appliedTo": [
+        "Contract scope",
+        "Acceptance",
+        "Verification",
+        "Lifecycle plan"
+      ]
+    }
+  ],
+  "userCorrectionSolidification": [
+    {
+      "rule": "Every discovered deterministic reliability gap is handled by its own Contract and full lifecycle.",
+      "evidence": "This WI uses a dedicated branch/worktree from merged main and records the prior lifecycle residual as its source."
+    }
+  ],
+  "checkpointEvidence": [
+    {
+      "stage": "before_edit",
+      "recorded": true,
+      "contractHash": "426508861d32750f",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0
+    },
+    {
+      "stage": "before_finish",
+      "recorded": true,
+      "contractHash": "426508861d32750f",
+      "acceptanceCount": 6,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 15
+    }
+  ],
+  "knownGaps": [
+    "No real Telegram/provider or hosted production archive receipt is available or authorized for this Work Item; local fixture and CI evidence must remain explicitly bounded."
+  ],
+  "overclaimPrevention": "Do not report completion for checks or behavior that were not verified.",
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "aligned",
+    "checkedAt": "2026-08-20T16:42:00+09:00",
+    "checks": [
+      {
+        "area": "plan",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/plans/2026-08-20-wi-archive-transaction-recovery.md"
+        ],
+        "reason": "The plan records transaction states, TDD failure stages, recovery behavior, documentation updates, and complete lifecycle checks."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/wi-archive-transaction-recovery.contract.json",
+          ".ai/work-items/archive/2026/wi-archive-transaction-recovery.summary.json",
+          "docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md"
+        ],
+        "reason": "The Contract acceptance and Summary evidence describe the same logical commit point, recovery boundary, compatibility behavior, and prohibited external effects."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "aligned",
+        "evidence": [
+          "AGENTS.md",
+          "Makefile",
+          "Makefile.ai",
+          "docs/operations/WEEKLY_RADAR.md",
+          ".ai/cockpit/task_report.md",
+          ".ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.md"
+        ],
+        "reason": "The documented local/fixture verification and governed lifecycle commands match repository rules and the declared capability boundary."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "aligned",
+        "evidence": [
+          "docs/operations/WEEKLY_RADAR.md",
+          ".ai/work-items/archive/2026/wi-archive-transaction-recovery.outcome.md"
+        ],
+        "reason": "Chinese operational and human-handoff wording preserves English API names, transaction states, and provider-boundary semantics."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/specs/2026-08-20-wi-archive-transaction-recovery.md",
+          "docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md",
+          ".ai/work-items/archive/2026/wi-weekly-radar-snapshot-lifecycle.summary.json"
+        ],
+        "reason": "The updated specification carries forward the historical residual, logical recovery resolution, physical-atomicity limit, and no-production-provider boundary."
+      }
+    ]
+  },
+  "taskOutcome": {
+    "status": "needs_human_confirmation",
+    "jsonPath": ".ai/work-items/active/wi-archive-transaction-recovery.outcome.json",
+    "markdownPath": ".ai/work-items/active/wi-archive-transaction-recovery.outcome.md",
+    "rawEvidencePath": "derived:pre_merge",
+    "evidenceCount": 6,
+    "humanStatusColor": "yellow"
+  },
+  "verificationHistory": [
+    {
+      "check": "aiGuidelines",
+      "command": "make check-ai-guidelines CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:47:51.400526+00:00",
+      "exitCode": 2,
+      "durationMs": 54,
+      "outputDigest": "3fd0a68806f39139f37f4971309874e160e2d695cdb9f3aba5c86dca02e1d3eb",
+      "commandHash": "69ea88135ca82063c3fd74c05de3157ad6227f43d02c1f41b76c8262056d2923",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "72df6d514ac118cde9bffd3c58ac84dfe73f5d5326acfdd35171a1f38476eaf0",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json [ERROR] Missing compliance details in Summary for guideline: \"Document every new public API and keep the public archive paths and existing write API signatures compatible.\" [ERROR] Missing compliance details in Summary for guideline: \"Preserve the rule-only, evidence-first ",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json --summary .ai/work-items/active/wi-archive-transaction-recovery.summary.json [ERROR] Missing compliance details in Summary for guideline: \"Document every new public API and keep the public archive paths and existing write API signatures compatible.\" [ERROR] Missing compliance details in Summary for guideline: \"Preserve the rule-only, evidence-first boundary; do not introduce Stage, Score, Ranking, Top5, investment, or capital-action behavior.\" [ERROR] Missing compliance details in Summary for guideline: \"Do not claim provider or production behavior without an authorized external receipt.\" make: *** [check-ai-guidelines] Error 1",
+      "outputBytes": 841
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/wi-archive-transaction-recovery.summary.json CONTRACT=.ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-20T07:49:45.232969+00:00",
+      "exitCode": 2,
+      "durationMs": 302,
+      "outputDigest": "b1b8f0fde3fec922a06d50f0c6f0044f8230013f50409bf219ed8b1a1a5f1113",
+      "commandHash": "fd327eee4a8662100fa0b21b2a767c33f7ca5c68f811013d33f9f49a3cd13113",
+      "contractHash": "426508861d32750ff41ae5bb1ceb81c342bbaadd5e6457ad46d4995def69e8e3",
+      "commitSha": "692a1b037274f7bd0c4b595c9c0980866dff4838",
+      "executionContractPath": ".ai/work-items/active/wi-archive-transaction-recovery.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-archive-transaction-recovery.summary.json",
+      "worktreeDigest": "6e8cd8010a61e225a7b21257a2c879e8df7c1f0be8a14d8cc09446dc1a18e11d",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-archive-transaction-recovery.summary.json --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json [ERROR] changedFiles is missing actual changed path: docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md make: *** [check-ai-change-summary] Error 1",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-archive-transaction-recovery.summary.json --contract .ai/work-items/active/wi-archive-transaction-recovery.contract.json [ERROR] changedFiles is missing actual changed path: docs/superpowers/specs/2026-08-20-weekly-radar-snapshot-lifecycle.md make: *** [check-ai-change-summary] Error 1",
+      "outputBytes": 436
+    }
+  ],
+  "archiveSequence": 47
+}

@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-roadmap-status-reconciliation",
+  "archiveSequence": 35,
+  "contractPath": ".ai/work-items/archive/2026/wi-roadmap-status-reconciliation.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-roadmap-status-reconciliation.summary.json",
+  "contractSha256": "c388b93a6b5981de480d7be3e6e627f37b828d3742f5ec0a664e91e44e0e1e79",
+  "summarySha256": "34ba8ffe383d0f9874375002f6d8492241c7067e019d993efe645821ae38f5da",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-roadmap-status-reconciliation.outcome.json",
+      "sha256": "e92a815a1b6c235d8a77bb8d66d7d3d074766b9188bdca1a68ae36fb38275194"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-roadmap-status-reconciliation.outcome.md",
+      "sha256": "67b4f432f65fc8bf292301de18c667105f9d29064b897564236b4a22f9ec6229"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "59a7449811fd5f45de4b050b2062725fe0f45cb893b1a934d364512997b4c2cf",
+    "binding": {
+      "baseCommit": "fad1bb6fcaa0dc0c1ca9fe999c9c9580daf19fc1",
+      "candidateHead": "d7922375f00a75f1ca12c7add16487b05bc4c086",
+      "candidateTreeDigest": "48eef80a98a4b86d44146de0029339681fdba58fd7ac7450e6069ad30f0a01d0",
+      "candidateDiffDigest": "45ab60215ff6365a0bf0b4a8d37289db9967ee885439e07a91b435ac41dd611e"
+    }
+  }
+}

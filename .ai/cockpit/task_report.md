@@ -4,16 +4,16 @@ Task Result
 Status: Blocked
 
 What was completed
-- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.contract.json [evidence: .ai/work-items/active/wi-roadmap-status-reconciliation.contract.json]
-- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.summary.json [evidence: .ai/work-items/active/wi-roadmap-status-reconciliation.summary.json]
+- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.contract.json [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.contract.json]
+- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.summary.json [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 - Changed .ai/work-items/starts/wi-roadmap-status-reconciliation.json [evidence: .ai/work-items/starts/wi-roadmap-status-reconciliation.json]
 - Changed docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md [evidence: docs/superpowers/plans/2026-08-17-orgx-wi-roadmap.md]
 - Changed docs/superpowers/plans/2026-08-20-roadmap-status-reconciliation.md [evidence: docs/superpowers/plans/2026-08-20-roadmap-status-reconciliation.md]
-- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.json [evidence: .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.json]
-- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.md [evidence: .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.md]
+- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.json [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.outcome.json]
+- Changed .ai/work-items/active/wi-roadmap-status-reconciliation.outcome.md [evidence: .ai/work-items/archive/2026/wi-roadmap-status-reconciliation.outcome.md]
 
 Problems found
 - Total: 4

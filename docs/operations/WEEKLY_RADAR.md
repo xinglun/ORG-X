@@ -81,6 +81,8 @@ cargo run -- weekly-radar \
 
 SEC EDGAR、SEC XBRL 和明确配置的官方公司页面优先；Greenhouse 和 Lever 是有边界的招聘来源；GDELT 只用于发现，不能直接成为权威证据。
 
+SEC Company Facts 是完整历史 JSON，使用独立的有限响应上限；普通网页、招聘接口和发现接口仍使用通用的 1 MiB 响应保护。超过各自上限的响应会失败关闭并进入来源健康状态，不会以部分或猜测数据继续发布。
+
 规则抽取保留来源、字段或原文片段和日期。缺少、歧义、冲突、日期不明、对象不相关或格式错误不会被猜测；无法取得的资料会在周报中按来源归纳，完整明细保留在 snapshot。运行时不使用付费 API、LLM 抽取、未经提供的 Stage/Rank/Score 推断或投资结论。
 
 ## Telegram 报告

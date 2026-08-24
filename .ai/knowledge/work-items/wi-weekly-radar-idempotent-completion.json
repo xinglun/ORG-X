@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-idempotent-completion",
+  "title": "修复 Weekly Radar 同日完成运行的幂等状态",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Add a read-only verified-final-run outcome and make the workflow treat a complete same-date data archive as a successful no-op while preserving pending recovery.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+    "src/main.rs",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/features/weekly_radar/runtime.rs",
+    ".github/workflows/weekly-radar.yml",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/work-items/starts/wi-weekly-radar-idempotent-completion.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Verify the complete committed archive before skipping rather than treating the existence of one report file as success.",
+      "reason": "This preserves fail-closed behavior for partial or conflicting state and prevents duplicate Telegram delivery.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "1073fbdfe8d4ef4ea70fb95b858c338d217ab07d7719cf95574e9d1c71f15a3b"
+    },
+    {
+      "type": "code",
+      "path": ".github/workflows/weekly-radar.yml",
+      "digest": "cff2352c7c9226f739eba1da4701ed81113bd81ee033fa6040077c12c6818fcd"
+    },
+    {
+      "type": "code",
+      "path": "src/main.rs",
+      "digest": "ea4642ff79a6ad5ce9c9cd72f1678a7822e4352beaaeacaade1198d6ff018d18"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/archive.rs",
+      "digest": "ce0a923ab748fb7acb4e0b16ffdef69cfd57ce5d060e088ee5fe2685e16ac8f6"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "5b48bcf926b356c11ea1798d5b2fe0521cf780676c1c668ede1a2e2d4bc0cda5"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
+    "contractDigest": "569e0254cc83970b2d923f9d94a44a9aecc046620e14249b7ba58d626bb2416d",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+    "summaryDigest": "0180dfd49af77ef6f08f43b209737f62e048cf89aa6b65e970779fb8e75b0f2a",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.json",
+    "outcomeDigest": "8cd853c472cf08ce03c9a7ea1426ebfa5c954a931764bd8c15a58f0e7e18af05"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

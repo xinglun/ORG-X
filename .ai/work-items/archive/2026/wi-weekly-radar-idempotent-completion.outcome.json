@@ -9,10 +9,10 @@
   "bindings": {
     "taskId": "wi-weekly-radar-idempotent-completion",
     "contractDigest": "569e0254cc83970b2d923f9d94a44a9aecc046620e14249b7ba58d626bb2416d",
-    "summaryDigest": "2fe2bec0059d9189facbb6126fcb2a2ec1d411f7d8fe59ff6d47608d7635105e",
-    "verificationDigest": "151b884e7f277a59b4216ef2844c1c86c56ca5adb7416d356b49f0961b85ae90",
+    "summaryDigest": "0180dfd49af77ef6f08f43b209737f62e048cf89aa6b65e970779fb8e75b0f2a",
+    "verificationDigest": "0ac136ee5b89d69a8dcd620d0c12c96eb9fbb8ebf5c92867cdca9df421077190",
     "baseCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
-    "headCommit": "e1d115014261c12058de3cbbb7bbebfaab8e0f40",
+    "headCommit": "47c1c6bf2e3a8386d32dc7e83c2eb1e0c8cc2a4f",
     "lifecycleStage": "pre_merge",
     "pullRequest": {
       "state": "not_created"
@@ -21,12 +21,12 @@
     "generatorVersion": "1.2",
     "locale": "zh-CN",
     "preArchiveCandidateCoverage": {
-      "reportSha256": "439e833c98c4a2f83ae5037e7f9f51325f4b44537175ded5b8c73e45dee35c59",
+      "reportSha256": "d9f7e48ba42a6c080ceb68df19baa4eefd42b059b1911b7df87771262ef2a4c4",
       "binding": {
         "baseCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
-        "candidateHead": "e1d115014261c12058de3cbbb7bbebfaab8e0f40",
-        "candidateTreeDigest": "127a9807c0827f6ebee2bf68db2a6c6027b819096ccb563092448ae175aeb518",
-        "candidateDiffDigest": "ee702ecb98269f7f664a35959b116f9f69f5ad054eef6fe03bacedd0c9b8c0db"
+        "candidateHead": "47c1c6bf2e3a8386d32dc7e83c2eb1e0c8cc2a4f",
+        "candidateTreeDigest": "5c38f46dd57ef91fd232d557cc6842e9a445d435c155ff45a71a5ab5e6903838",
+        "candidateDiffDigest": "869714741f778b6083fa849babd7cee01006c1bc3a65ddcda4c9b534da69bca3"
       }
     }
   },
@@ -34,8 +34,8 @@
     "outcomeSummary": "Task wi-weekly-radar-idempotent-completion generated an evidence-derived outcome with status completed.",
     "taskOverview": "Governed Work Item: wi-weekly-radar-idempotent-completion",
     "deliveredChanges": [
-      ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
-      ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
       "src/main.rs",
       "src/features/weekly_radar/runtime/archive.rs",
       "src/features/weekly_radar/runtime/report.rs",
@@ -45,8 +45,8 @@
       "docs/operations/WEEKLY_RADAR.md",
       ".ai/work-items/starts/wi-weekly-radar-idempotent-completion.json",
       ".ai/cockpit/current_status.md",
-      ".ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.json",
-      ".ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.md",
+      ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
     ],
@@ -70,12 +70,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
           }
@@ -93,14 +93,14 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verificationHistory[1] quality failed",
             "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verification[quality] retry passed",
-            "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
+            "digest": "ad76e8ae79205e7ad536e1337f19dc7b8605e2294c48397bad6c94eb699e0304"
           }
         ]
       }
@@ -210,12 +210,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
           }
@@ -228,14 +228,14 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verificationHistory[1] quality failed",
             "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verification[quality] retry passed",
-            "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
+            "digest": "ad76e8ae79205e7ad536e1337f19dc7b8605e2294c48397bad6c94eb699e0304"
           }
         ]
       }
@@ -253,13 +253,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -273,13 +273,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -289,11 +289,11 @@
     "humanDecisions": [],
     "evidence": [
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
         "subject": "Contract"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
         "subject": "Summary"
       },
       {
@@ -305,24 +305,24 @@
         "subject": "no-op branch exits before Telegram/data write"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
         "subject": "verificationHistory[0] aiGuidelines failed",
         "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
         "subject": "verification[aiGuidelines] retry passed",
         "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
         "subject": "verificationHistory[1] quality failed",
         "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
         "subject": "verification[quality] retry passed",
-        "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
+        "digest": "ad76e8ae79205e7ad536e1337f19dc7b8605e2294c48397bad6c94eb699e0304"
       }
     ],
     "implementationApproach": {
@@ -439,14 +439,14 @@
         "detail": "Defines the bounded idempotent-completion scope, acceptance, scenario coverage, and fail-closed boundaries.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json"
           }
         ],
         "inference": false
@@ -457,14 +457,14 @@
         "detail": "Records implementation, verification, user-facing impact, and residual recovery boundary.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json"
           }
         ],
         "inference": false
@@ -475,13 +475,13 @@
         "detail": "Adds a read-only verified final-run CLI outcome named ALREADY-PUBLISHED without source or Telegram access.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "src/main.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "src/main.rs"
           }
         ],
@@ -493,13 +493,13 @@
         "detail": "Strengthens the already-published evidence boundary with report/snapshot/receipt identity checks and a non-mutating verification entrypoint.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "src/features/weekly_radar/runtime/archive.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "src/features/weekly_radar/runtime/archive.rs"
           }
         ],
@@ -511,13 +511,13 @@
         "detail": "Shares the existing deterministic report identity function with archive verification instead of duplicating the digest algorithm.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "src/features/weekly_radar/runtime/report.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "src/features/weekly_radar/runtime/report.rs"
           }
         ],
@@ -529,13 +529,13 @@
         "detail": "Exports the read-only committed-run verifier through the runtime facade.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "src/features/weekly_radar/runtime.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "src/features/weekly_radar/runtime.rs"
           }
         ],
@@ -547,13 +547,13 @@
         "detail": "Recognizes a verified final data run as a successful no-op and accepts prepared transaction recovery.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".github/workflows/weekly-radar.yml"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".github/workflows/weekly-radar.yml"
           }
         ],
@@ -565,13 +565,13 @@
         "detail": "Adds CLI and workflow regressions while retaining duplicate, pending-recovery, and fail-closed coverage.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
@@ -583,13 +583,13 @@
         "detail": "Explains the user-visible meanings of PUBLISHED, ALREADY-PUBLISHED, READY-TO-PUSH, and RECOVERED.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
@@ -601,13 +601,13 @@
         "detail": "Generated Work Item start identity for the dedicated branch and base.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".ai/work-items/starts/wi-weekly-radar-idempotent-completion.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".ai/work-items/starts/wi-weekly-radar-idempotent-completion.json"
           }
         ],
@@ -619,13 +619,13 @@
         "detail": "Generated Cockpit status projection for the active Work Item.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
@@ -637,14 +637,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.json"
           }
         ],
         "inference": false
@@ -655,14 +655,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.md"
           }
         ],
         "inference": false
@@ -673,13 +673,13 @@
         "detail": "Generated machine-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
@@ -691,13 +691,13 @@
         "detail": "Generated human-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
@@ -711,14 +711,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiWorkItem",
             "digest": "90b8406e0e719cbe22936abcbb4f4d1150d99011c72d0e6a5d20c641b59f0d9f"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiWorkItem",
             "digest": "90b8406e0e719cbe22936abcbb4f4d1150d99011c72d0e6a5d20c641b59f0d9f"
           }
@@ -731,14 +731,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json scope guard passed: 15 changed path(s) covered",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiScope",
             "digest": "a58803b6048a6b8b06cac69db7db7cd4e483d740c4356d5091fc031ccfbd9129"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiScope",
             "digest": "a58803b6048a6b8b06cac69db7db7cd4e483d740c4356d5091fc031ccfbd9129"
           }
@@ -751,14 +751,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json [warning] restricted_write: .github/workflows/weekly-radar.yml (.github/workflows/**) - CI workflow configuration. guard check completed: 1 warning(s) report: target/ai_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiGuards",
             "digest": "153f22018dd865a9a3929c1bb233827189ef3aaa1b059a5adade27c4b8c33bb8"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiGuards",
             "digest": "153f22018dd865a9a3929c1bb233827189ef3aaa1b059a5adade27c4b8c33bb8"
           }
@@ -771,14 +771,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json --summary .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-idempotent-completion` - Contract Hash: `569e0254cc83970b` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `6` - Unknown",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiCheckpoint",
             "digest": "a72cd825ba90ce1ed410dda7e2364f1997962c48fbce9999ea958b7226ba2619"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiCheckpoint",
             "digest": "a72cd825ba90ce1ed410dda7e2364f1997962c48fbce9999ea958b7226ba2619"
           }
@@ -791,14 +791,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json review policy matched 8 path(s) [review] .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json [review] .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.json [review] .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-idempotent-completio",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "8d07db9705531b3bf1cb2380f6f912806b4e940c0b96348e4140dcd135d0d675"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "8d07db9705531b3bf1cb2380f6f912806b4e940c0b96348e4140dcd135d0d675"
           }
@@ -811,14 +811,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
@@ -831,14 +831,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
@@ -851,14 +851,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json --summary .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json report: target/ai_scenario_coverage_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "2b12b677d70444dea534d7e880e07658c17117d83940b8f49685de3153add063"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "2b12b677d70444dea534d7e880e07658c17117d83940b8f49685de3153add063"
           }
@@ -871,14 +871,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json --summary .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json guidelines compliance check passed: 6 guideline(s) verified",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiGuidelines",
             "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiGuidelines",
             "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
           }
@@ -891,14 +891,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json ## Diff Ownership Preview - active_owned: `15`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task O",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiDiffOwnership",
             "digest": "3b5da1007c802c024f3cd4f86359d9c8d96f07eea352c12d830910aa039bf360"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiDiffOwnership",
             "digest": "3b5da1007c802c024f3cd4f86359d9c8d96f07eea352c12d830910aa039bf360"
           }
@@ -911,16 +911,16 @@
         "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"workflow\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .github/workflows/weekly-radar.yml\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"quality-full\", \"requiredGroups\": [\"quality-full\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"strict\", \"base\": \"215",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "quality",
-            "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
+            "digest": "ad76e8ae79205e7ad536e1337f19dc7b8605e2294c48397bad6c94eb699e0304"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "quality",
-            "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
+            "digest": "ad76e8ae79205e7ad536e1337f19dc7b8605e2294c48397bad6c94eb699e0304"
           }
         ],
         "inference": false
@@ -931,14 +931,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json --summary .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiStatus",
             "digest": "3b16e9ef20f7515435995df02fa8bbad810af9530deb281a9db78ad56e828e08"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiStatus",
             "digest": "3b16e9ef20f7515435995df02fa8bbad810af9530deb281a9db78ad56e828e08"
           }
@@ -951,14 +951,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json --summary .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiStatusCheck",
             "digest": "58e6cedfeb8eec865c5e2151c92b95b3c0783565330462ccfe32e88c293573f9"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiStatusCheck",
             "digest": "58e6cedfeb8eec865c5e2151c92b95b3c0783565330462ccfe32e88c293573f9"
           }
@@ -971,14 +971,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
@@ -991,14 +991,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json --summary .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiAgentRisk",
             "digest": "0827e5abad284262cf9a06c2c4cf13be4bc5f5afb7dab712edf23893748b4d2d"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiAgentRisk",
             "digest": "0827e5abad284262cf9a06c2c4cf13be4bc5f5afb7dab712edf23893748b4d2d"
           }
@@ -1011,14 +1011,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json --contract .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiSummary",
             "digest": "c4cbd084adbeb3a2ed6603e11f968e8199bbbed2cd6a98008bfb8a44d30b7f11"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "aiSummary",
             "digest": "c4cbd084adbeb3a2ed6603e11f968e8199bbbed2cd6a98008bfb8a44d30b7f11"
           }
@@ -1036,13 +1036,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1056,13 +1056,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1074,11 +1074,11 @@
       "problemCount": 5,
       "problemCountEvidenceRefs": [
         {
-          "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
           "subject": "observedIssues"
         },
         {
-          "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
           "subject": "verification and verificationHistory"
         }
       ],
@@ -1138,12 +1138,12 @@
           "claim": "aiGuidelines failed before the retry.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
             }
@@ -1154,14 +1154,14 @@
           "claim": "quality failed before the retry.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verificationHistory[1] quality failed",
               "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verification[quality] retry passed",
-              "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
+              "digest": "ad76e8ae79205e7ad536e1337f19dc7b8605e2294c48397bad6c94eb699e0304"
             }
           ],
           "inference": false
@@ -1222,12 +1222,12 @@
           "claim": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
             }
@@ -1238,14 +1238,14 @@
           "claim": "Re-ran quality after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verificationHistory[1] quality failed",
               "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verification[quality] retry passed",
-              "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
+              "digest": "ad76e8ae79205e7ad536e1337f19dc7b8605e2294c48397bad6c94eb699e0304"
             }
           ],
           "inference": false
@@ -1268,7 +1268,7 @@
           "claim": "The existing 2026-08-24 report remains unchanged; the next real weekly schedule is still needed to prove the corrected workflow handles a fresh production date and the SEC response-limit fix together.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "residualRisks"
             }
           ],
@@ -1278,7 +1278,7 @@
           "claim": "Creating a new durable external input store before Telegram delivery remains outside this bounded correction; explicit retry still requires the existing durable input snapshot.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "residualRisks"
             }
           ],

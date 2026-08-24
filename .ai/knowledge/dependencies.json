@@ -25,6 +25,19 @@
         "src/features/weekly_radar/runtime/sec.rs",
         "tests/weekly_radar_runtime.rs"
       ]
+    },
+    "wi-weekly-radar-idempotent-completion": {
+      "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+      "dependencies": [
+        ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+        ".github/workflows/weekly-radar.yml",
+        "docs/operations/WEEKLY_RADAR.md",
+        "src/features/weekly_radar/runtime/archive.rs",
+        "src/main.rs",
+        "tests/weekly_radar_runtime.rs"
+      ]
     }
   },
   "byPath": {
@@ -55,14 +68,33 @@
     ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json": [
       "wi-sec-submissions-response-limit"
     ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json": [
+      "wi-weekly-radar-idempotent-completion"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.json": [
+      "wi-weekly-radar-idempotent-completion"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json": [
+      "wi-weekly-radar-idempotent-completion"
+    ],
+    ".github/workflows/weekly-radar.yml": [
+      "wi-weekly-radar-idempotent-completion"
+    ],
     "docs/operations/WEEKLY_RADAR.md": [
-      "wi-sec-submissions-response-limit"
+      "wi-sec-submissions-response-limit",
+      "wi-weekly-radar-idempotent-completion"
+    ],
+    "src/features/weekly_radar/runtime/archive.rs": [
+      "wi-weekly-radar-idempotent-completion"
     ],
     "src/features/weekly_radar/runtime/http.rs": [
       "wi-sec-submissions-response-limit"
     ],
     "src/features/weekly_radar/runtime/sec.rs": [
       "wi-sec-submissions-response-limit"
+    ],
+    "src/main.rs": [
+      "wi-weekly-radar-idempotent-completion"
     ],
     "tests/ai_cockpit/close_work_item_test.py": [
       "upgrade_ai_cockpit"
@@ -71,7 +103,8 @@
       "upgrade_ai_cockpit"
     ],
     "tests/weekly_radar_runtime.rs": [
-      "wi-sec-submissions-response-limit"
+      "wi-sec-submissions-response-limit",
+      "wi-weekly-radar-idempotent-completion"
     ]
   }
 }

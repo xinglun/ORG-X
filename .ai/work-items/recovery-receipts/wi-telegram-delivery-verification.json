@@ -1,0 +1,46 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.archive-manifest.json",
+      "sha256": "66615bad2720ff4b2bda5bc374d1aeab0cde2d0d86898bff6d217e91d0cca10b"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
+      "sha256": "6a9bd0ca621e167f3621237bfc9bd64d51d4ab5b02489d0ba19c04cb9b921c91"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.json",
+      "sha256": "eabfc90754c2100fede2e043bceb693efce4fd8ec0bcad1b604637e117dca136"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+      "sha256": "f3d61c51789297e47eff3ccb6b070daaf3ab75704ab55d5065309ccff26c8b85"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=735c941ebc8ce7afa7ffe802c725256f96b20baa"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "88531ee692a5888468cad65e1c08fc7ef640fa6221e51b5ac79d0cf16a7416ab"
+  },
+  "humanAuthorization": {
+    "reference": "xinglun confirmed the explicit republish design and authorized completion of this Work Item, archive recovery, PR checks, merge, and closure.",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/60",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-24T05:47:02.491975+00:00",
+  "prBaseCommit": "735c941ebc8ce7afa7ffe802c725256f96b20baa",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
+  ],
+  "workItemId": "wi-telegram-delivery-verification"
+}

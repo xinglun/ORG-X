@@ -34,6 +34,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json"
     },
     {
+      "workItemId": "wi-weekly-radar-cli-output-guard-closure",
+      "title": "修复已记录分支的 Weekly Radar WI 收口身份校验",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard-closure.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-content-quality",
       "title": "Weekly Radar用户报告内容增强",
       "topics": [],

@@ -1,0 +1,265 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-cli-output-guard-closure",
+  "mode": "code",
+  "title": "修复已记录分支的 Weekly Radar WI 收口身份校验",
+  "rawUserRequest": "用户确认继续：开 successor WI，修复已合并 Weekly Radar WI 因实际记录分支为 wi/ 而无法完成 ai-close-work-item 的问题；完成后继续收口并触发验证。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Current conversation continuation approval for the successor WI.",
+    "digest": "sha256:user-approved-successor-closure-20260824",
+    "capturedAt": "2026-08-24T20:42:58+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "test_automation"],
+    "prohibitedCapabilities": ["production_operation", "secret_readback", "manual_data_branch_repair", "archive_rewrite"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly approved the successor WI to complete the previously merged Work Item lifecycle."
+  },
+  "baseCommit": "d6b080459ee3000e1e6530b8e5d562930eafb740",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-cli-output-guard-closure.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-cli-output-guard-closure.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-cli-output-guard-closure.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-cli-output-guard-closure.outcome.md",
+    "scripts/ai_close_work_item.py",
+    "tests/ai_cockpit/close_work_item_test.py"
+  ],
+  "outOfScope": [
+    "Weekly Radar runtime and workflow behavior",
+    "data and weekly-radar-pending refs or their committed contents",
+    "Telegram transport, provider credentials, and production dispatch",
+    "archive evidence rewriting or manual branch deletion",
+    "changes to the previously merged Weekly Radar Work Item"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Defines the one-Work-Item/one-branch lifecycle and fail-closed closure requirements."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Required repository terminology and AI Cockpit evidence rules."
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "Canonical branch identity and closure workflow documentation."
+    },
+    {
+      "path": "scripts/ai_close_work_item.py",
+      "reason": "Current branch identity gate and merged PR closure implementation."
+    },
+    {
+      "path": "tests/ai_cockpit/close_work_item_test.py",
+      "reason": "Existing regression boundary for recorded start-branch identity."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json",
+      "reason": "The merged predecessor Contract records the actual non-canonical branch identity and scope boundary."
+    },
+    {
+      "path": ".ai/work-items/starts/wi-weekly-radar-cli-output-guard.json",
+      "reason": "Immutable Start Receipt records the actual branch used by the merged predecessor."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "governance_boundary",
+      "closure_identity"
+    ],
+    "reason": "The change relaxes only the recorded-branch identity compatibility path while preserving exact PR head, merge, base synchronization, and branch deletion checks."
+    ,"unknownsReviewComplete": true,
+    "reviewedBy": "Codex after the user's explicit continuation approval on 2026-08-24"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user approved continuing with a successor WI; scope, safety boundary, test strategy, and predecessor evidence are explicit."
+  },
+  "preReviewWarnings": [
+    "Verify non-canonical acceptance is limited to the exact branch recorded in the Start Receipt.",
+    "Verify merged PR head SHA and remote branch deletion gates remain unchanged."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "A canonical codex/<task> branch remains accepted without consulting the Start Receipt.",
+    "When a Start Receipt records a non-canonical branch, closure accepts only the exact recorded branch currently checked out.",
+    "Closure still verifies the merged PR head branch and exact head SHA, synchronizes the discovered default branch fast-forward-only, proves remote branch absence, and deletes the local retry identity.",
+    "Regression tests cover canonical branch acceptance, exact recorded non-canonical branch acceptance, and mismatch rejection; no Weekly Radar runtime, data, pending, Secret, or production behavior changes."
+  ],
+  "guidelines": [
+    "Keep canonical Work Item branches named codex/<task>.",
+    "Treat a recorded non-canonical branch as a narrowly scoped compatibility path, never as permission to bypass PR or remote cleanup gates."
+  ],
+  "intent": {
+    "problem": "The merged Weekly Radar Work Item used the branch wi/weekly-radar-cli-output-guard and recorded that exact identity in its immutable Start Receipt. ai-close-work-item rejects it before inspecting the already merged PR, so the Work Item cannot complete its required lifecycle even though all implementation and PR evidence is valid.",
+    "constraints": [
+      "Canonical new Work Items must continue to use codex/<task> branches.",
+      "The compatibility path may use only the exact branch recorded in the immutable Start Receipt for the same task.",
+      "Do not weaken merged PR head SHA ownership, base synchronization, remote branch absence, or local branch deletion checks.",
+      "Do not rewrite the predecessor archive, change data or pending refs, read Secrets, or trigger production from this Work Item."
+    ],
+    "rationale": "The Start Receipt is the authoritative identity for the already-created Work Item. Accepting that exact recorded branch lets the existing closure checks run to completion without treating arbitrary branch names as trusted or changing the canonical branch policy for future Work Items."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "A canonical Work Item branch is checked out and no Start Receipt compatibility is needed.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "scripts/ai_close_work_item.py",
+        "tests/ai_cockpit/close_work_item_test.py"
+      ],
+      "expected": "The canonical codex/<task> branch remains accepted through the existing branch identity gate.",
+      "verificationPlan": "Add a focused unit test for the canonical branch path and run the close lifecycle test module."
+    },
+    {
+      "scenario": "The Start Receipt records a non-canonical branch that is still the current Work Item branch.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "scripts/ai_close_work_item.py",
+        "tests/ai_cockpit/close_work_item_test.py",
+        ".ai/work-items/starts/wi-weekly-radar-cli-output-guard.json"
+      ],
+      "expected": "The exact recorded branch is accepted as a compatibility identity, while all later PR and cleanup gates remain required.",
+      "verificationPlan": "Add a focused unit test for exact recorded non-canonical branch matching and inspect the unchanged downstream closure checks."
+    },
+    {
+      "scenario": "The current branch differs from the recorded Start Receipt branch.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "scripts/ai_close_work_item.py",
+        "tests/ai_cockpit/close_work_item_test.py"
+      ],
+      "expected": "Closure remains fail-closed before any PR verification or branch cleanup.",
+      "verificationPlan": "Add a focused unit-level identity predicate test or exercise the existing mismatch guard without invoking provider mutation."
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "xinglun",
+    "reason": "The user explicitly approved continuing with the successor WI to resolve the closure identity blocker on 2026-08-24; approval is limited to scripts/ai_close_work_item.py and its regression test."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 65
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-cli-output-guard-closure.json",
+    "baseCommit": "d6b080459ee3000e1e6530b8e5d562930eafb740",
+    "initialScopeDigest": "fa7cf3f3e1248ae3e9c23d4453d11d2720634f952099512aef5798b080ce2cb8",
+    "contractSkeletonDigest": "d5fe0ee7576e771c9fd5ea783b83ba345477aed042ceedd0cf432dcca165348c"
+  }
+}

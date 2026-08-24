@@ -196,6 +196,14 @@ struct Labels {
     source_status: &'static str,
     attention: &'static str,
     no_attention: &'static str,
+    confirmed_detail: &'static str,
+    information_type: &'static str,
+    fact: &'static str,
+    date: &'static str,
+    evidence: &'static str,
+    evidence_details: &'static str,
+    evidence_insufficient: &'static str,
+    source_unavailable_reason: &'static str,
     confirmed_facts: &'static str,
     pending_leads: &'static str,
     unknown_facts: &'static str,
@@ -239,6 +247,14 @@ fn labels(language: ReportLanguage) -> Labels {
             source_status: "来源情况",
             attention: "需要关注",
             no_attention: "目前没有需要人工处理的异常。",
+            confirmed_detail: "已确认信息",
+            information_type: "信息类型",
+            fact: "事实",
+            date: "日期",
+            evidence: "证据",
+            evidence_details: "逐项证据见下方“已确认信息”。",
+            evidence_insufficient: "目前没有已确认的组织变化；仍有待核实或证据不足，不能视为没有变化。",
+            source_unavailable_reason: "没有确认到组织变化；但部分相关来源暂不可用，无法据此确认本周没有组织变化。",
             confirmed_facts: "已确认信息",
             pending_leads: "待核实线索",
             unknown_facts: "无法确定",
@@ -279,6 +295,14 @@ fn labels(language: ReportLanguage) -> Labels {
             source_status: "情報源の状況",
             attention: "要確認",
             no_attention: "現在、手動対応が必要な異常はありません。",
+            confirmed_detail: "確認済み情報",
+            information_type: "情報種別",
+            fact: "事実",
+            date: "日付",
+            evidence: "根拠",
+            evidence_details: "項目ごとの根拠は下記の「確認済み情報」に記載しています。",
+            evidence_insufficient: "確認済みの組織変化はありませんが、未確認または根拠不足の情報があり、変化がないとは判断できません。",
+            source_unavailable_reason: "組織変化は確認できませんでしたが、関連情報源の一部を取得できず、変化がないとは判断できません。",
             confirmed_facts: "確認済み情報",
             pending_leads: "未確認の手がかり",
             unknown_facts: "判定不能",
@@ -319,6 +343,14 @@ fn labels(language: ReportLanguage) -> Labels {
             source_status: "Source status",
             attention: "Needs attention",
             no_attention: "No manual action is currently required.",
+            confirmed_detail: "Confirmed Information",
+            information_type: "Information type",
+            fact: "Fact",
+            date: "Date",
+            evidence: "Evidence",
+            evidence_details: "See the item-level evidence in Confirmed Information below.",
+            evidence_insufficient: "No organizational change was confirmed; unverified or insufficient evidence means this is not proof that no change occurred.",
+            source_unavailable_reason: "No organizational change was confirmed; some relevant sources were unavailable, so this is not proof that no change occurred.",
             confirmed_facts: "Confirmed information",
             pending_leads: "Leads to verify",
             unknown_facts: "Could not determine",
@@ -541,17 +573,6 @@ fn is_structural_change(kind: &str) -> bool {
     )
 }
 
-fn is_confirmed_primary(fact: &NormalizedFact) -> bool {
-    if fact.status() != &FactStatus::Known {
-        return false;
-    }
-    let uri = fact.provenance().source_uri().to_ascii_lowercase();
-    uri.contains("sec.gov")
-        || source_kind_for_fact(fact.kind()).is_some_and(|source| {
-            matches!(source, "official_ir" | "careers" | "engineering_ai_blog")
-        })
-}
-
 fn fact_value(fact: &NormalizedFact) -> String {
     fact.value()
         .map(safe_text)
@@ -565,10 +586,6 @@ fn evidence_line(fact: &NormalizedFact, labels: Labels) -> String {
         "主な根拠" => format!("出典：{source}"),
         _ => format!("Source: {source}"),
     }
-}
-
-fn primary_evidence_uri(fact: &NormalizedFact) -> String {
-    safe_uri(fact.provenance().source_uri())
 }
 
 fn build_health(input: &RuntimeReportInput, facts: &[&NormalizedFact]) -> SourceHealthFacts {
@@ -625,7 +642,6 @@ fn build_health(input: &RuntimeReportInput, facts: &[&NormalizedFact]) -> Source
 
 fn render_executive_summary(
     input: &RuntimeReportInput,
-    facts: &[&NormalizedFact],
     health: &SourceHealthFacts,
     structural_count: usize,
     company_count: usize,
@@ -657,21 +673,33 @@ fn render_executive_summary(
     let mut section = format!("## {}\n{}", labels.summary, intro);
     let change_sentence = match language {
         ReportLanguage::Chinese => {
-            if structural_count == 0 {
+            if structural_count == 0 && health.unavailable > 0 {
+                labels.source_unavailable_reason.to_owned()
+            } else if structural_count == 0 && (health.unknown > 0 || health.unconfirmed > 0) {
+                labels.evidence_insufficient.to_owned()
+            } else if structural_count == 0 {
                 labels.no_change.to_owned()
             } else {
                 format!("发现 {} 条已确认的组织变化。", structural_count)
             }
         }
         ReportLanguage::Japanese => {
-            if structural_count == 0 {
+            if structural_count == 0 && health.unavailable > 0 {
+                labels.source_unavailable_reason.to_owned()
+            } else if structural_count == 0 && (health.unknown > 0 || health.unconfirmed > 0) {
+                labels.evidence_insufficient.to_owned()
+            } else if structural_count == 0 {
                 labels.no_change.to_owned()
             } else {
                 format!("確認済みの組織変化が {} 件あります。", structural_count)
             }
         }
         ReportLanguage::English => {
-            if structural_count == 0 {
+            if structural_count == 0 && health.unavailable > 0 {
+                labels.source_unavailable_reason.to_owned()
+            } else if structural_count == 0 && (health.unknown > 0 || health.unconfirmed > 0) {
+                labels.evidence_insufficient.to_owned()
+            } else if structural_count == 0 {
                 labels.no_change.to_owned()
             } else {
                 format!(
@@ -706,12 +734,11 @@ fn render_executive_summary(
     ));
     section.push('\n');
     section.push_str(&data_sentence);
-    let evidence_basis = facts
-        .iter()
-        .copied()
-        .find(|fact| is_confirmed_primary(fact))
-        .map(primary_evidence_uri)
-        .unwrap_or_else(|| labels.no_primary.to_owned());
+    let evidence_basis = if health.confirmed > 0 {
+        labels.evidence_details.to_owned()
+    } else {
+        labels.no_primary.to_owned()
+    };
     if language == ReportLanguage::English {
         section.push_str(&format!(
             "\n- {}: {}",
@@ -724,6 +751,54 @@ fn render_executive_summary(
         ));
     }
     section
+}
+
+fn render_confirmed_facts(
+    input: &RuntimeReportInput,
+    facts: &[&NormalizedFact],
+    language: ReportLanguage,
+) -> Option<String> {
+    let labels = labels(language);
+    let confirmed = facts
+        .iter()
+        .copied()
+        .filter(|fact| fact.status() == &FactStatus::Known)
+        .collect::<Vec<_>>();
+    if confirmed.is_empty() {
+        return None;
+    }
+
+    let separator = if language == ReportLanguage::English {
+        ":"
+    } else {
+        "："
+    };
+    let mut section = format!("## {}", labels.confirmed_detail);
+    for fact in confirmed {
+        section.push_str(&format!(
+            "\n### {}",
+            company_label(input, fact.company_id())
+        ));
+        section.push_str(&format!(
+            "\n- {}{separator}{}",
+            labels.information_type,
+            fact_label(fact.kind(), labels)
+        ));
+        section.push_str(&format!(
+            "\n- {}{separator}{}",
+            labels.fact,
+            fact_value(fact)
+        ));
+        if let Some(date) = fact.provenance().effective_date() {
+            section.push_str(&format!("\n- {}{separator}{}", labels.date, date));
+        }
+        section.push_str(&format!(
+            "\n- {}{separator}{}",
+            labels.evidence,
+            safe_uri(fact.provenance().source_uri())
+        ));
+    }
+    Some(section)
 }
 
 fn render_structural_changes(
@@ -825,26 +900,44 @@ fn render_judgment_reference(
     language: ReportLanguage,
 ) -> Option<String> {
     let judgment = input.judgment()?;
-    let (heading, machine_label, human_label, ranking_label, undetermined_label) = match language {
+    let (
+        heading,
+        machine_label,
+        human_label,
+        reason_label,
+        supporting_label,
+        counter_label,
+        missing_label,
+        undetermined_label,
+    ) = match language {
         ReportLanguage::Chinese => (
             "系统参考判断",
             "系统判断",
             "人的独立参考",
-            "同一阶段内的系统排序参考",
+            "判断依据",
+            "支持证据",
+            "反向证据",
+            "尚缺证据",
             "系统暂无法判断",
         ),
         ReportLanguage::Japanese => (
             "システム参考判断",
             "システム判断",
             "人の独立した参考判断",
-            "同一 Stage 内のシステム順位参考",
+            "判断理由",
+            "支持根拠",
+            "反証",
+            "不足している根拠",
             "システムは現時点で判定できません",
         ),
         ReportLanguage::English => (
             "System Reference Judgment",
             "System judgment",
             "Independent human reference",
-            "System ranking reference within the same Stage",
+            "Reason",
+            "Supporting evidence",
+            "Counter evidence",
+            "Missing evidence",
             "The system cannot determine a Stage yet",
         ),
     };
@@ -863,16 +956,40 @@ fn render_judgment_reference(
         section.push_str(&format!(
             "\n### {company}\n- {machine_label}{separator}{stage}"
         ));
-        if !machine.ranked_candidates().is_empty() {
-            section.push_str(&format!("\n- {ranking_label}{separator}"));
-            for (index, candidate) in machine.ranked_candidates().iter().enumerate() {
-                section.push_str(&format!(
-                    "\n  {}. {} [{}]",
-                    index + 1,
-                    company_label(input, candidate.company()),
-                    candidate.stage()
-                ));
-            }
+        section.push_str(&format!(
+            "\n- {reason_label}{separator}{}",
+            safe_text(machine.stage_reason())
+        ));
+        let append_proof =
+            |section: &mut String, label: &str, description: &str, source_uri: Option<&str>| {
+                section.push_str(&format!("\n- {label}{separator}{description}"));
+                if let Some(source_uri) = source_uri {
+                    section.push_str(&format!(" — {}", safe_uri(source_uri)));
+                }
+            };
+        for proof in machine.supporting_proof() {
+            append_proof(
+                &mut section,
+                supporting_label,
+                &safe_text(proof.description()),
+                proof.source_uri(),
+            );
+        }
+        for proof in machine.counter_proof() {
+            append_proof(
+                &mut section,
+                counter_label,
+                &safe_text(proof.description()),
+                proof.source_uri(),
+            );
+        }
+        for proof in machine.missing_proof() {
+            append_proof(
+                &mut section,
+                missing_label,
+                &safe_text(proof.description()),
+                None,
+            );
         }
         if let Some(human) = judgment.human_reference(machine.company_id()) {
             section.push_str(&format!(
@@ -1182,12 +1299,14 @@ pub fn render_report_in_language(
         .count();
     let mut sections = vec![render_executive_summary(
         input,
-        &facts,
         &health,
         structural_count,
         company_count,
         language,
     )];
+    if let Some(section) = render_confirmed_facts(input, &facts, language) {
+        sections.push(section);
+    }
     if let Some(section) = render_structural_changes(input, &facts, language) {
         sections.push(section);
     }

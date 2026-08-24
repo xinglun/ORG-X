@@ -1636,7 +1636,13 @@ fn task4_report_is_deterministic_and_uses_the_mobile_first_contract() {
     assert!(headings.iter().all(|heading| {
         matches!(
             *heading,
-            "本周摘要" | "重要组织变化" | "重点公司" | "Rising" | "Dropped" | "系统状态"
+            "本周摘要"
+                | "已确认信息"
+                | "重要组织变化"
+                | "重点公司"
+                | "Rising"
+                | "Dropped"
+                | "系统状态"
         )
     }));
     assert!(first.markdown().matches("### ").count() <= 8);
@@ -1695,6 +1701,53 @@ fn task4_report_exposes_explicit_statuses_and_discovery_health_review_items() {
     assert!(markdown.contains("来源情况"));
     assert!(markdown.contains("新闻和其他发现材料"));
     assert!(!markdown.contains("source_"));
+}
+
+#[test]
+fn task8_report_expands_each_confirmed_fact_with_date_and_direct_evidence() {
+    let report = task4_report();
+    let markdown = report.markdown();
+    let confirmed_section = markdown
+        .split("## 已确认信息")
+        .nth(1)
+        .and_then(|section| section.split("\n## ").next())
+        .expect("confirmed information section should be rendered");
+
+    assert!(confirmed_section.contains("### acme"));
+    assert!(confirmed_section.contains("- 信息类型：营收"));
+    assert!(confirmed_section.contains("- 事实：123000000"));
+    assert!(confirmed_section.contains("- 日期：2026-08-15"));
+    assert_eq!(
+        confirmed_section
+            .matches("- 证据：https://example.test/evidence/2026")
+            .count(),
+        3,
+        "every confirmed fact needs its own direct evidence link"
+    );
+}
+
+#[test]
+fn task8_report_does_not_turn_unavailable_structural_evidence_into_no_change() {
+    let mut input = RuntimeReportInput::new("2026-08-17").expect("date should be valid");
+    input
+        .add_company(CompanyIdentity::new("acme", "Acme Corporation", "ACME").unwrap())
+        .unwrap();
+    input
+        .add_fact(
+            NormalizedFact::without_value(
+                "acme",
+                "structural_change",
+                FactStatus::Unavailable,
+                Confidence::Unknown,
+                task4_provenance("official source unavailable"),
+            )
+            .unwrap(),
+        )
+        .unwrap();
+
+    let markdown = render_report(&input).markdown().to_owned();
+    assert!(markdown.contains("无法据此确认本周没有组织变化"));
+    assert!(!markdown.contains("本周没有发现已确认的组织结构变化。"));
 }
 
 #[test]

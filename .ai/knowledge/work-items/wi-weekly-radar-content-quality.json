@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-content-quality",
+  "title": "Weekly Radar用户报告内容增强",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "保留现有 evidence-first 输入，在报告边界逐条展示确认事实与证据，并在系统参考区展示支持、反向和缺失证据；Telegram 仅新增已确认信息章节识别。",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+    ".ai/work-items/starts/wi-weekly-radar-content-quality.json",
+    "tests/semantic_message_splitter_test.rs",
+    ".ai/cockpit/current_status.md",
+    "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/weekly_radar_judgment_chain.rs",
+    "tests/weekly_radar_semantic_message_splitter.rs",
+    "tests/weekly_radar_end_to_end.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/CAPABILITIES.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Keep human reference separate from machine reference and omit ranking without explicit selection.",
+      "reason": "Preserves independent human judgment and the no-capital-action boundary.",
+      "status": "verified"
+    },
+    {
+      "decision": "Replace the generic summary source entry with item-level evidence links.",
+      "reason": "Prevents one entry point from being presented as direct evidence for every company.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "digest": "7892c163c9c339aa3ac7cb7bcbb54566ff48e1b2a4fce177a21222bfc238b747"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_judgment_chain.rs",
+      "digest": "21b4c2e20b98682d5649a9e0ba3e825f9bfe72f99190c272e5406a60962c31e9"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "2c9999a48122267d0b7b427f1c7f3d1e230c333141b438e11fafeab1e3e00156"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "digest": "c47ad304478d5a58e4c8f2c8bb3f75d1de3d33ad5d47c3acbfcade2a5b70a049"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_semantic_message_splitter.rs",
+      "digest": "d6565fcea4c191bc99a908f04f4a35234a68ff08784c6bd614763a77f266cf3c"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "5166301586c7a81b50aa345ed3d39c596ed03e445eb73977756c5c6e0f1d7e83"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_end_to_end.rs",
+      "digest": "a730cdbaca34d26f2fa6b7b2cc8a920079d6ecca6a2381305653c74647369ff6"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+    "contractDigest": "57816c5fb2c430ba5d9fca29157afab2368aaf707ec16f45cd3bbcc7d19250d1",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+    "summaryDigest": "0aae4e2512701bd3f8b374c9226d3a0c93b6e267f11af90d23722bb6710540ac",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.outcome.json",
+    "outcomeDigest": "a4046aab6814c3866ad8cfd3f5abfb563b2c8c3f6929d58f97df77edc34a8bfe"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

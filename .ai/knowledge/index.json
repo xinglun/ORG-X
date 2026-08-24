@@ -26,6 +26,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json"
     },
     {
+      "workItemId": "wi-weekly-radar-content-quality",
+      "title": "Weekly Radar用户报告内容增强",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-idempotent-completion",
       "title": "修复 Weekly Radar 同日完成运行的幂等状态",
       "topics": [],

@@ -1,865 +1,732 @@
 {
-  "reportVersion": 1,
-  "workItemId": "wi-telegram-delivery-verification",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "d3a921dba50377ba1ea4b2319b8bc4a0252ccc86236ef8c20e8fe0c7f568159a"
-  },
-  "task": {
-    "summary": "Task wi-telegram-delivery-verification generated an evidence-derived outcome with status completed.",
-    "deliveredChanges": [
-      ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-      ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-      ".ai/work-items/starts/wi-telegram-delivery-verification.json",
-      ".ai/cockpit/current_status.md",
-      ".github/workflows/weekly-radar.yml",
-      "src/main.rs",
-      "tests/weekly_radar_runtime.rs",
-      "docs/operations/WEEKLY_RADAR.md",
-      "docs/CAPABILITIES.md",
-      ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.json",
-      ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.md",
-      ".ai/cockpit/task_report.json",
-      ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "ce71888487509310bc8fc04c7956063200c53cea7e912d7d7d60b94b2225ebaa"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
+  "forbiddenClaims": [],
   "forcedStops": [
     {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
       "attemptedAction": "complete the Work Item",
       "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
       "evidence": [
         {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "ce71888487509310bc8fc04c7956063200c53cea7e912d7d7d60b94b2225ebaa"
+          "digest": "c1b3fc21d10a5eabf2e4bba78a8de9906eeb5a2b44b59212f2af9c181a2beae1",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+          "subject": "verificationHistory[0] aiGuidelines failed"
         },
         {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
+          "digest": "97cc123c065ccaeb8d376f9576e43b98de0f0e553f10495d778e841cce60d3f9",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+          "subject": "verification[aiGuidelines] retry passed"
         }
-      ]
+      ],
+      "handoff": "",
+      "humanDecision": "",
+      "policyOrGuard": "required verification: aiGuidelines",
+      "reason": "aiGuidelines failed before the retry.",
+      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+      "result": "resolved",
+      "stage": "verification"
     }
   ],
   "humanDecisions": [
-    "User reported that no Telegram report was received after the same-date manual validation and identified an unprocessed remote branch.",
-    "User requested that the findings receive a corresponding Work Item.",
-    "User confirmed the explicit re-publication design: complete the Work Item, then trigger one manual validation and inspect the result."
+    "Documentation must be written for users, not as a technical or project-progress explanation.",
+    "The system should provide an independent reference for a person; it must not merge into the person's judgment or force one shared answer."
   ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "high",
-      "detail": "A new provider receipt and message ID still cannot prove that the intended human Telegram client displayed or notified the report.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "high",
-      "detail": "The later real event=schedule run and the retained cadence Work Item remain unverified.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Add an explicit, read-only-archive republish path for an already published Weekly Radar date.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/main.rs",
-          "subject": "republish_published_report_with"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Verify the committed archive, load its immutable input snapshot, render deterministically, send through the existing publisher, and report non-secret delivery evidence without archive writes.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/main.rs",
-          "subject": "republish_published_report_with"
-        },
-        {
-          "source": ".github/workflows/weekly-radar.yml",
-          "subject": "workflow_dispatch republish guard"
-        }
-      ]
-    },
-    "affectedComponents": [
-      {
-        "component": "Weekly Radar CLI",
-        "detail": "Adds --republish-published-as-of and rejects incompatible recovery options.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/main.rs",
-            "subject": "parse_options and run_weekly_radar"
-          }
-        ]
-      },
-      {
-        "component": "Weekly Radar Actions workflow",
-        "detail": "Adds an explicit workflow_dispatch input and refuses schedule, dry-run, or incomplete-final cases.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": ".github/workflows/weekly-radar.yml",
-            "subject": "REPUBLISH_PUBLISHED guards"
-          }
-        ]
-      }
-    ],
-    "designDecisions": [
-      {
-        "decision": "Keep normal same-date invocation idempotent",
-        "reason": "A duplicate report must never be sent implicitly.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "ALREADY-PUBLISHED fixture"
-          }
-        ]
-      },
-      {
-        "decision": "Treat provider receipt as delivery evidence only",
-        "reason": "A provider message ID cannot prove human-client display or notification.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "republish evidence limits"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "Archive immutability",
-        "detail": "The republish helper performs only read-only archive verification and input-snapshot loading.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/main.rs",
-            "subject": "republish_published_report_with"
-          }
-        ]
-      }
-    ],
-    "evidence": [
-      {
-        "claim": "The explicit republish implementation is present.",
-        "status": "verified",
-        "source": "src/main.rs",
-        "subject": "implementation"
-      },
-      {
-        "claim": "Focused and full runtime tests cover the republish behavior.",
-        "status": "verified",
-        "source": "tests/weekly_radar_runtime.rs",
-        "subject": "focused and full runtime tests"
-      },
-      {
-        "claim": "The workflow exposes a manual-only republish path.",
-        "status": "verified",
-        "source": ".github/workflows/weekly-radar.yml",
-        "subject": "manual-only workflow path"
-      }
-    ]
-  },
   "humanHandoff": {
-    "locale": "zh-CN",
     "completed": [
       {
-        "claim": "Changed .ai/work-items/active/wi-telegram-delivery-verification.contract.json",
-        "title": "Changed .ai/work-items/active/wi-telegram-delivery-verification.contract.json",
-        "detail": "Defines the explicit republish implementation boundary, external-operation authority, evidence distinction, and separation from the retained cadence Work Item.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json"
-          }
-        ],
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-content-quality.contract.json",
+        "detail": "Defines the accepted report-content scope, evidence boundary, acceptance, and lifecycle authorization.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-content-quality.contract.json"
       },
       {
-        "claim": "Changed .ai/work-items/active/wi-telegram-delivery-verification.summary.json",
-        "title": "Changed .ai/work-items/active/wi-telegram-delivery-verification.summary.json",
-        "detail": "Records the observed same-date no-op behavior, the confirmed republish choice, implementation evidence, and residual limits.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json"
-          }
-        ],
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-content-quality.summary.json",
+        "detail": "Records the opened Work Item handoff, planned verification, and known pre-implementation state.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-content-quality.summary.json"
       },
       {
-        "claim": "Changed .ai/work-items/starts/wi-telegram-delivery-verification.json",
-        "title": "Changed .ai/work-items/starts/wi-telegram-delivery-verification.json",
-        "detail": "Immutable Start Receipt binds the Work Item to the latest merged main commit.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/starts/wi-telegram-delivery-verification.json"
-          }
-        ],
+        "claim": "Changed .ai/work-items/starts/wi-weekly-radar-content-quality.json",
+        "detail": "Binds the Work Item to its dedicated branch and main base commit.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/starts/wi-telegram-delivery-verification.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/starts/wi-weekly-radar-content-quality.json"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/starts/wi-weekly-radar-content-quality.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/starts/wi-weekly-radar-content-quality.json"
+      },
+      {
+        "claim": "Changed tests/semantic_message_splitter_test.rs",
+        "detail": "Exercises the changed semantic splitter through the repository's existing module-based integration test association.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "tests/semantic_message_splitter_test.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "tests/semantic_message_splitter_test.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed tests/semantic_message_splitter_test.rs"
       },
       {
         "claim": "Changed .ai/cockpit/current_status.md",
-        "title": "Changed .ai/cockpit/current_status.md",
-        "detail": "Generated Cockpit projection for the active implementation Work Item.",
-        "evidenceRefs": [
+        "detail": "Generated by the AI Cockpit Work Item start lifecycle.",
+        "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
-        "evidence": [
+        "evidenceRefs": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
-        "inference": false
+        "inference": false,
+        "title": "Changed .ai/cockpit/current_status.md"
       },
       {
-        "claim": "Changed .github/workflows/weekly-radar.yml",
-        "title": "Changed .github/workflows/weekly-radar.yml",
-        "detail": "Adds an explicit workflow_dispatch-only republish input and fail-closed guards while preserving the normal same-date no-op.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".github/workflows/weekly-radar.yml"
-          }
-        ],
+        "claim": "Changed src/features/weekly_radar/interface/semantic_message_splitter.rs",
+        "detail": "Recognizes the new reader-facing confirmed-information section as part of the summary boundary.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".github/workflows/weekly-radar.yml"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "src/features/weekly_radar/interface/semantic_message_splitter.rs"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "src/features/weekly_radar/interface/semantic_message_splitter.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed src/features/weekly_radar/interface/semantic_message_splitter.rs"
       },
       {
-        "claim": "Changed src/main.rs",
-        "title": "Changed src/main.rs",
-        "detail": "Adds the explicit CLI republish mode, reconstructing the committed report from its input snapshot and reporting only non-secret provider evidence.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": "src/main.rs"
-          }
-        ],
+        "claim": "Changed src/features/weekly_radar/runtime/report.rs",
+        "detail": "Renders item-level confirmed facts, explainable system-reference evidence, and distinct evidence-availability wording.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": "src/main.rs"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "src/features/weekly_radar/runtime/report.rs"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "src/features/weekly_radar/runtime/report.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed src/features/weekly_radar/runtime/report.rs"
       },
       {
         "claim": "Changed tests/weekly_radar_runtime.rs",
-        "title": "Changed tests/weekly_radar_runtime.rs",
-        "detail": "Covers option validation, republish archive immutability, default idempotency, and workflow guards.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": "tests/weekly_radar_runtime.rs"
-          }
-        ],
+        "detail": "Verifies item-level facts, direct evidence links, and unavailable-source wording.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "tests/weekly_radar_runtime.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed tests/weekly_radar_runtime.rs"
+      },
+      {
+        "claim": "Changed tests/weekly_radar_judgment_chain.rs",
+        "detail": "Verifies explainable machine proofs, independent human reference, and no ranking without selection.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "tests/weekly_radar_judgment_chain.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "tests/weekly_radar_judgment_chain.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed tests/weekly_radar_judgment_chain.rs"
+      },
+      {
+        "claim": "Changed tests/weekly_radar_semantic_message_splitter.rs",
+        "detail": "Verifies the new reader-facing section remains deliverable through semantic Telegram splitting.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "tests/weekly_radar_semantic_message_splitter.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "tests/weekly_radar_semantic_message_splitter.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed tests/weekly_radar_semantic_message_splitter.rs"
+      },
+      {
+        "claim": "Changed tests/weekly_radar_end_to_end.rs",
+        "detail": "Verifies expanded report content remains compatible with delivery and archive retry flows.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "tests/weekly_radar_end_to_end.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "tests/weekly_radar_end_to_end.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed tests/weekly_radar_end_to_end.rs"
       },
       {
         "claim": "Changed docs/operations/WEEKLY_RADAR.md",
-        "title": "Changed docs/operations/WEEKLY_RADAR.md",
-        "detail": "Documents the user-facing distinction between normal ALREADY-PUBLISHED and explicitly confirmed duplicate re-publication.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": "docs/operations/WEEKLY_RADAR.md"
-          }
-        ],
+        "detail": "Explains the user-facing report sections, evidence links, and distinct availability meanings.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "docs/operations/WEEKLY_RADAR.md"
+          }
+        ],
+        "inference": false,
+        "title": "Changed docs/operations/WEEKLY_RADAR.md"
       },
       {
         "claim": "Changed docs/CAPABILITIES.md",
-        "title": "Changed docs/CAPABILITIES.md",
-        "detail": "Links the capability overview to the user-facing Weekly Radar delivery controls.",
-        "evidenceRefs": [
+        "detail": "Updates the user-facing capability overview with item-level evidence and independent system reference behavior.",
+        "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
             "subject": "docs/CAPABILITIES.md"
           }
         ],
-        "evidence": [
+        "evidenceRefs": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
             "subject": "docs/CAPABILITIES.md"
           }
         ],
-        "inference": false
+        "inference": false,
+        "title": "Changed docs/CAPABILITIES.md"
       },
       {
-        "claim": "Changed .ai/work-items/active/wi-telegram-delivery-verification.outcome.json",
-        "title": "Changed .ai/work-items/active/wi-telegram-delivery-verification.outcome.json",
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-content-quality.outcome.json",
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.json"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.outcome.json"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.outcome.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-content-quality.outcome.json"
       },
       {
-        "claim": "Changed .ai/work-items/active/wi-telegram-delivery-verification.outcome.md",
-        "title": "Changed .ai/work-items/active/wi-telegram-delivery-verification.outcome.md",
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-content-quality.outcome.md",
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.md"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.outcome.md"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.outcome.md"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-content-quality.outcome.md"
       },
       {
         "claim": "Changed .ai/cockpit/task_report.json",
-        "title": "Changed .ai/cockpit/task_report.json",
         "detail": "Generated machine-readable Human Benefit Review Report.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/cockpit/task_report.json"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/cockpit/task_report.json"
       },
       {
         "claim": "Changed .ai/cockpit/task_report.md",
-        "title": "Changed .ai/cockpit/task_report.md",
         "detail": "Generated human-readable Human Benefit Review Report.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": ".ai/cockpit/task_report.md"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": ".ai/cockpit/task_report.md"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/cockpit/task_report.md"
       }
     ],
+    "locale": "zh-CN",
     "passed": [
       {
         "claim": "aiWorkItem",
-        "title": "aiWorkItem",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-telegram-delivery-verification.contract.json work item contract check passed: .ai/work-items/active/wi-telegram-delivery-verification.contract.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiWorkItem",
-            "digest": "060be6d572a1ca943bfcd1be134e4bdb86bf9ddaf00bafef8108fa21a1b7ffa9"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-content-quality.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-content-quality.contract.json",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiWorkItem",
-            "digest": "060be6d572a1ca943bfcd1be134e4bdb86bf9ddaf00bafef8108fa21a1b7ffa9"
+            "digest": "8f6f40ebafe8809d80be3aa415bf30a69c0e02a1b90ebdd2b4b79f50f5343c19",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiWorkItem"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "8f6f40ebafe8809d80be3aa415bf30a69c0e02a1b90ebdd2b4b79f50f5343c19",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiWorkItem"
+          }
+        ],
+        "inference": false,
+        "title": "aiWorkItem"
       },
       {
         "claim": "aiScope",
-        "title": "aiScope",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-telegram-delivery-verification.contract.json scope guard passed: 13 changed path(s) covered",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiScope",
-            "digest": "6eee81e967f048ad5fa78a6fa303610e55d01c90fdf238dfec8e8d75b591e517"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-content-quality.contract.json scope guard passed: 16 changed path(s) covered",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiScope",
-            "digest": "6eee81e967f048ad5fa78a6fa303610e55d01c90fdf238dfec8e8d75b591e517"
+            "digest": "adaaf7fc315c5224085573f005d0ad3414e1d3134bee300a00a7c6275ffce455",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiScope"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "adaaf7fc315c5224085573f005d0ad3414e1d3134bee300a00a7c6275ffce455",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiScope"
+          }
+        ],
+        "inference": false,
+        "title": "aiScope"
       },
       {
         "claim": "aiGuards",
-        "title": "aiGuards",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json [warning] restricted_write: .github/workflows/weekly-radar.yml (.github/workflows/**) - CI workflow configuration. guard check completed: 1 warning(s) report: target/ai_guard_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiGuards",
-            "digest": "df79332aa3058cc274ff75683ae95dedffea894cf5e905526775fe947ef29e51"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-content-quality.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiGuards",
-            "digest": "df79332aa3058cc274ff75683ae95dedffea894cf5e905526775fe947ef29e51"
+            "digest": "0ca1e5cdac6941b205f0eb8add7d81b8da0dfa6399202e52a5ea5cdabd76753f",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiGuards"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "0ca1e5cdac6941b205f0eb8add7d81b8da0dfa6399202e52a5ea5cdabd76753f",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiGuards"
+          }
+        ],
+        "inference": false,
+        "title": "aiGuards"
       },
       {
         "claim": "aiCheckpoint",
-        "title": "aiCheckpoint",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-telegram-delivery-verification` - Contract Hash: `6a9bd0ca621e167f` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `7` - Unknown Count: `0` -",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiCheckpoint",
-            "digest": "7af6a0fc264df9486384984736722096e3a6a82f970cc7422903d03e51fb9c28"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-content-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-content-quality.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-content-quality` - Contract Hash: `57816c5fb2c430ba` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `8` - Unknown Count: `0` - Requi",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiCheckpoint",
-            "digest": "7af6a0fc264df9486384984736722096e3a6a82f970cc7422903d03e51fb9c28"
+            "digest": "e447574e44c41209468c759f4a677b49ec37591846c864189589f6a2fd7a48ec",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiCheckpoint"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "e447574e44c41209468c759f4a677b49ec37591846c864189589f6a2fd7a48ec",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiCheckpoint"
+          }
+        ],
+        "inference": false,
+        "title": "aiCheckpoint"
       },
       {
         "claim": "aiReviewPolicy",
-        "title": "aiReviewPolicy",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json review policy matched 8 path(s) [review] .ai/work-items/active/wi-telegram-delivery-verification.outcome.json [review] .ai/work-items/active/wi-telegram-delivery-verification.outcome.md [review] .ai/work-items/starts/wi-telegram-delivery-verification.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/co",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiReviewPolicy",
-            "digest": "97f756a96fec9f9d5e1bb4f22de17b29fcb39e4d3362de8ae2303c1a2507e6d4"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-content-quality.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-content-quality.contract.json [review] .ai/work-items/active/wi-weekly-radar-content-quality.outcome.json [review] .ai/work-items/active/wi-weekly-radar-content-quality.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-content-quality.json [review] .ai/cockpit/cu",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiReviewPolicy",
-            "digest": "97f756a96fec9f9d5e1bb4f22de17b29fcb39e4d3362de8ae2303c1a2507e6d4"
+            "digest": "4e9ba3535cc01b054dd8e8a9a24a078bfef56c88021cd50560e239cd3f21a1c1",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiReviewPolicy"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "4e9ba3535cc01b054dd8e8a9a24a078bfef56c88021cd50560e239cd3f21a1c1",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiReviewPolicy"
+          }
+        ],
+        "inference": false,
+        "title": "aiReviewPolicy"
       },
       {
         "claim": "aiBacktrack",
-        "title": "aiBacktrack",
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiBacktrack",
-            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiBacktrack",
-            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
+            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiBacktrack"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiBacktrack"
+          }
+        ],
+        "inference": false,
+        "title": "aiBacktrack"
       },
       {
         "claim": "aiCoverage",
-        "title": "aiCoverage",
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiCoverage",
-            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiCoverage",
-            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiCoverage"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiCoverage"
+          }
+        ],
+        "inference": false,
+        "title": "aiCoverage"
       },
       {
         "claim": "aiScenarioCoverage",
-        "title": "aiScenarioCoverage",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json report: target/ai_scenario_coverage_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiScenarioCoverage",
-            "digest": "f7c6cd06da0a1d21c3a93a65e1b191c816409f337d7ffcfa18ee294ace7316a7"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-content-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-content-quality.summary.json report: target/ai_scenario_coverage_report.json",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiScenarioCoverage",
-            "digest": "f7c6cd06da0a1d21c3a93a65e1b191c816409f337d7ffcfa18ee294ace7316a7"
+            "digest": "88abae951f2ff294b8b9076151670ce4932e7142c5c9f8b3c2cf56bf01272df1",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiScenarioCoverage"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "88abae951f2ff294b8b9076151670ce4932e7142c5c9f8b3c2cf56bf01272df1",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiScenarioCoverage"
+          }
+        ],
+        "inference": false,
+        "title": "aiScenarioCoverage"
       },
       {
         "claim": "aiGuidelines",
-        "title": "aiGuidelines",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json guidelines compliance check passed: 4 guideline(s) verified",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiGuidelines",
-            "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-content-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-content-quality.summary.json guidelines compliance check passed: 4 guideline(s) verified",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiGuidelines",
-            "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
+            "digest": "97cc123c065ccaeb8d376f9576e43b98de0f0e553f10495d778e841cce60d3f9",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiGuidelines"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "97cc123c065ccaeb8d376f9576e43b98de0f0e553f10495d778e841cce60d3f9",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiGuidelines"
+          }
+        ],
+        "inference": false,
+        "title": "aiGuidelines"
       },
       {
         "claim": "aiDiffOwnership",
-        "title": "aiDiffOwnership",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json ## Diff Ownership Preview - active_owned: `13`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outco",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiDiffOwnership",
-            "digest": "58875e643ead587c0973077940e92b3a6cd2f90ed61fc8aeddd6f436ef99fa3f"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-content-quality.contract.json ## Diff Ownership Preview - active_owned: `16`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiDiffOwnership",
-            "digest": "58875e643ead587c0973077940e92b3a6cd2f90ed61fc8aeddd6f436ef99fa3f"
+            "digest": "bfce9a41602cbeecc62769427955f5dd0bc2e0deeaf0f5de84c25474b7fdcf0a",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiDiffOwnership"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "bfce9a41602cbeecc62769427955f5dd0bc2e0deeaf0f5de84c25474b7fdcf0a",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiDiffOwnership"
+          }
+        ],
+        "inference": false,
+        "title": "aiDiffOwnership"
       },
       {
         "claim": "quality",
-        "title": "quality",
-        "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"workflow\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .github/workflows/weekly-radar.yml\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"quality-full\", \"requiredGroups\": [\"quality-full\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"strict\", \"base\": \"735",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "quality",
-            "digest": "f35077b7c060b45ccbb73cabaf2adbe5f1b32690f0eb83a713d4afd783b53be7"
-          }
-        ],
+        "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=standard\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\"], \"level\": \"standard\", \"qualityRouting\": {\"reason\": \"standard governance uses its profile target\", \"requiredGroups\": [\"quality-standard\"], \"target\": \"quality-standard\"}, \"qualityTarget\": \"quality-standard\", \"requiredGroups\": [\"quality-standard\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"d1476e9835de14f2c628dae699bd9",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "quality",
-            "digest": "f35077b7c060b45ccbb73cabaf2adbe5f1b32690f0eb83a713d4afd783b53be7"
+            "digest": "981f9bd14259aef83a691a3531c6c87f87d6bc22094ec33bf6d9b5010d95c491",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "quality"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "981f9bd14259aef83a691a3531c6c87f87d6bc22094ec33bf6d9b5010d95c491",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "quality"
+          }
+        ],
+        "inference": false,
+        "title": "quality"
       },
       {
         "claim": "aiStatus",
-        "title": "aiStatus",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiStatus",
-            "digest": "b168bc6a82f8303f1ead3080f7f7264df3173b00947d95f53d22df6396eeb97e"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-content-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-content-quality.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiStatus",
-            "digest": "b168bc6a82f8303f1ead3080f7f7264df3173b00947d95f53d22df6396eeb97e"
+            "digest": "4bba335f1ca45361c2dd90c849cfb4b4671d828776455ae94c8736308fa45bd1",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiStatus"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "4bba335f1ca45361c2dd90c849cfb4b4671d828776455ae94c8736308fa45bd1",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiStatus"
+          }
+        ],
+        "inference": false,
+        "title": "aiStatus"
       },
       {
         "claim": "aiStatusCheck",
-        "title": "aiStatusCheck",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiStatusCheck",
-            "digest": "e0efa02ebe8f31bf8b71ba2cfaa27114b3b47bde5a0edb6f3ec8e5ff95a7b5f0"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-content-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-content-quality.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiStatusCheck",
-            "digest": "e0efa02ebe8f31bf8b71ba2cfaa27114b3b47bde5a0edb6f3ec8e5ff95a7b5f0"
+            "digest": "ea5aad7cc7e2c593be8b3e26fa6f0895c0729bb7a17d3b066874c86272ea3e71",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiStatusCheck"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "ea5aad7cc7e2c593be8b3e26fa6f0895c0729bb7a17d3b066874c86272ea3e71",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiStatusCheck"
+          }
+        ],
+        "inference": false,
+        "title": "aiStatusCheck"
       },
       {
         "claim": "aiStatusConsistency",
-        "title": "aiStatusConsistency",
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiStatusConsistency",
-            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiStatusConsistency",
-            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
+            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiStatusConsistency"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiStatusConsistency"
+          }
+        ],
+        "inference": false,
+        "title": "aiStatusConsistency"
       },
       {
         "claim": "aiAgentRisk",
-        "title": "aiAgentRisk",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiAgentRisk",
-            "digest": "aed375bf2be447aac269901306b89cb023c47618b5dcfc2b173f05eeaa934356"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-content-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-content-quality.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiAgentRisk",
-            "digest": "aed375bf2be447aac269901306b89cb023c47618b5dcfc2b173f05eeaa934356"
+            "digest": "f0a0ec29873a54486cc5ce1b8bfddbb1b0de88696bf62527a51806c0dc5fb3a2",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiAgentRisk"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "f0a0ec29873a54486cc5ce1b8bfddbb1b0de88696bf62527a51806c0dc5fb3a2",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiAgentRisk"
+          }
+        ],
+        "inference": false,
+        "title": "aiAgentRisk"
       },
       {
         "claim": "aiSummary",
-        "title": "aiSummary",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-telegram-delivery-verification.summary.json --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json ai summary check passed: .ai/work-items/active/wi-telegram-delivery-verification.summary.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiSummary",
-            "digest": "5628ecd5ddd2d5de01f54f9ff68d61d07e7a508da40534308ce1944263b441c3"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-content-quality.summary.json --contract .ai/work-items/active/wi-weekly-radar-content-quality.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-content-quality.summary.json",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
-            "subject": "aiSummary",
-            "digest": "5628ecd5ddd2d5de01f54f9ff68d61d07e7a508da40534308ce1944263b441c3"
+            "digest": "6ee41a1139aa1ec003113b155e162049238e27cc361a145256430d4bdf3c1344",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiSummary"
           }
         ],
-        "inference": false
-      }
-    ],
-    "retained": [],
-    "risks": [
-      {
-        "claim": "human-client display",
-        "severity": "high",
-        "title": "human-client display",
-        "detail": "A new provider receipt and message ID still cannot prove that the intended human Telegram client displayed or notified the report.",
-        "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": "residualRisks"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": "residualRisks"
+            "digest": "6ee41a1139aa1ec003113b155e162049238e27cc361a145256430d4bdf3c1344",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+            "subject": "aiSummary"
           }
         ],
         "inference": false,
-        "requiredEvidence": [
-          "human-client observation, if available"
-        ],
-        "decisionOwner": "xinglun",
-        "mitigation": "Report only provider acceptance and message IDs; do not claim display or notification.",
-        "acceptanceStatus": "accepted_with_follow_up"
-      },
-      {
-        "claim": "cadence validation",
-        "severity": "high",
-        "title": "cadence validation",
-        "detail": "The later real event=schedule run and the retained cadence Work Item remain unverified.",
-        "state": "unresolved",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": "residualRisks"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-            "subject": "residualRisks"
-          }
-        ],
-        "inference": false,
-        "requiredEvidence": [
-          "a later real event=schedule hosted run"
-        ],
-        "decisionOwner": "xinglun",
-        "mitigation": "Keep cadence validation in wi-production-provider-e2e-cadence and do not infer it from this manual run.",
-        "acceptanceStatus": "accepted_with_follow_up"
+        "title": "aiSummary"
       }
     ],
-    "redReasons": [],
     "questions": {
-      "problemCount": 3,
-      "problemCountEvidenceRefs": [
+      "agentUnknowns": [],
+      "avoidedRisks": [
         {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "observedIssues"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "verification and verificationHistory"
+          "claim": "If not detected, could have led to a stale completion claim.",
+          "evidenceRefs": [],
+          "inference": true
         }
       ],
       "blockedProblems": [],
-      "resolvedProblems": [
+      "humanConfirmations": [
         {
-          "claim": "aiGuidelines failed before the retry.",
+          "claim": "Documentation must be written for users, not as a technical or project-progress explanation.",
+          "evidenceRefs": [],
+          "inference": true
+        },
+        {
+          "claim": "The system should provide an independent reference for a person; it must not merge into the person's judgment or force one shared answer.",
+          "evidenceRefs": [],
+          "inference": true
+        }
+      ],
+      "nextTime": {
+        "claim": "Bind conversation locale and preserve evidence details before the next Work Item starts.",
+        "evidenceRefs": [],
+        "inference": true
+      },
+      "problemCount": 1,
+      "problemCountEvidenceRefs": [
+        {
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+          "subject": "verification and verificationHistory"
+        }
+      ],
+      "recurrenceLikelihood": {
+        "claim": "unknown: no direct recurrence probability evidence was recorded.",
+        "evidenceRefs": [],
+        "inference": true
+      },
+      "remainingRisks": [
+        {
+          "claim": "This Work Item shares reader documentation paths with the source-coverage Work Item; implementation must be serialized and the later Work Item must synchronize to the merged base.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-              "subject": "verificationHistory[0] aiGuidelines failed",
-              "digest": "ce71888487509310bc8fc04c7956063200c53cea7e912d7d7d60b94b2225ebaa"
-            },
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+              "subject": "residualRisks"
+            }
+          ],
+          "inference": false
+        },
+        {
+          "claim": "Source availability taxonomy and provider diagnostics remain in the separate source-coverage Work Item.",
+          "evidenceRefs": [
             {
-              "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-              "subject": "verification[aiGuidelines] retry passed",
-              "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+              "subject": "residualRisks"
+            }
+          ],
+          "inference": false
+        },
+        {
+          "claim": "A real production run remains a post-merge validation step; local checks do not claim provider or Telegram delivery success.",
+          "evidenceRefs": [
+            {
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+              "subject": "residualRisks"
             }
           ],
           "inference": false
@@ -870,109 +737,318 @@
           "claim": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-              "subject": "verificationHistory[0] aiGuidelines failed",
-              "digest": "ce71888487509310bc8fc04c7956063200c53cea7e912d7d7d60b94b2225ebaa"
+              "digest": "c1b3fc21d10a5eabf2e4bba78a8de9906eeb5a2b44b59212f2af9c181a2beae1",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+              "subject": "verificationHistory[0] aiGuidelines failed"
             },
             {
-              "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-              "subject": "verification[aiGuidelines] retry passed",
-              "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
+              "digest": "97cc123c065ccaeb8d376f9576e43b98de0f0e553f10495d778e841cce60d3f9",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+              "subject": "verification[aiGuidelines] retry passed"
             }
           ],
           "inference": false
         }
       ],
-      "avoidedRisks": [
+      "resolvedProblems": [
         {
-          "claim": "If not detected, could have led to a stale completion claim.",
-          "evidenceRefs": [],
-          "inference": true
-        }
-      ],
-      "remainingRisks": [
-        {
-          "claim": "observed issue",
+          "claim": "aiGuidelines failed before the retry.",
           "evidenceRefs": [
             {
-              "source": "https://github.com/xinglun/ORG-X/actions/runs/32690297651",
-              "subject": "observedIssues[0] observed issue"
+              "digest": "c1b3fc21d10a5eabf2e4bba78a8de9906eeb5a2b44b59212f2af9c181a2beae1",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+              "subject": "verificationHistory[0] aiGuidelines failed"
             },
             {
-              "source": ".github/workflows/weekly-radar.yml",
-              "subject": "observedIssues[0] observed issue"
-            },
-            {
-              "source": "docs/operations/WEEKLY_RADAR.md",
-              "subject": "observedIssues[0] observed issue"
-            }
-          ],
-          "inference": false
-        },
-        {
-          "claim": "observed issue",
-          "evidenceRefs": [
-            {
-              "source": "https://github.com/xinglun/ORG-X/pull/56",
-              "subject": "observedIssues[1] observed issue"
-            },
-            {
-              "source": ".ai/work-items/active/wi-production-provider-e2e-cadence.contract.json",
-              "subject": "observedIssues[1] observed issue"
-            }
-          ],
-          "inference": false
-        },
-        {
-          "claim": "A new provider receipt and message ID still cannot prove that the intended human Telegram client displayed or notified the report.",
-          "evidenceRefs": [
-            {
-              "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-              "subject": "residualRisks"
-            }
-          ],
-          "inference": false
-        },
-        {
-          "claim": "The later real event=schedule run and the retained cadence Work Item remain unverified.",
-          "evidenceRefs": [
-            {
-              "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-              "subject": "residualRisks"
+              "digest": "97cc123c065ccaeb8d376f9576e43b98de0f0e553f10495d778e841cce60d3f9",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+              "subject": "verification[aiGuidelines] retry passed"
             }
           ],
           "inference": false
         }
-      ],
-      "agentUnknowns": [],
-      "humanConfirmations": [
-        {
-          "claim": "User reported that no Telegram report was received after the same-date manual validation and identified an unprocessed remote branch.",
-          "evidenceRefs": [],
-          "inference": true
-        },
-        {
-          "claim": "User requested that the findings receive a corresponding Work Item.",
-          "evidenceRefs": [],
-          "inference": true
-        },
-        {
-          "claim": "User confirmed the explicit re-publication design: complete the Work Item, then trigger one manual validation and inspect the result.",
-          "evidenceRefs": [],
-          "inference": true
-        }
-      ],
-      "recurrenceLikelihood": {
-        "claim": "unknown: no direct recurrence probability evidence was recorded.",
-        "evidenceRefs": [],
-        "inference": true
+      ]
+    },
+    "redReasons": [],
+    "retained": [],
+    "risks": [
+      {
+        "claim": "shared documentation path",
+        "detail": "This Work Item shares reader documentation paths with the source-coverage Work Item; implementation must be serialized and the later Work Item must synchronize to the merged base.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "severity": "medium",
+        "state": "unresolved",
+        "title": "shared documentation path"
       },
-      "nextTime": {
-        "claim": "Bind conversation locale and preserve evidence details before the next Work Item starts.",
-        "evidenceRefs": [],
-        "inference": true
+      {
+        "claim": "source coverage follow-up",
+        "detail": "Source availability taxonomy and provider diagnostics remain in the separate source-coverage Work Item.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "severity": "medium",
+        "state": "unresolved",
+        "title": "source coverage follow-up"
+      },
+      {
+        "claim": "production revalidation",
+        "detail": "A real production run remains a post-merge validation step; local checks do not claim provider or Telegram delivery success.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "severity": "medium",
+        "state": "unresolved",
+        "title": "production revalidation"
       }
-    }
+    ]
   },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  "implementationApproach": {
+    "affectedComponents": [
+      {
+        "component": "Weekly Radar report renderer",
+        "detail": "Adds item-level evidence and distinct wording for unavailable sources and insufficient evidence.",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "report renderer"
+          }
+        ],
+        "status": "verified"
+      },
+      {
+        "component": "Telegram semantic splitter",
+        "detail": "Accepts the new reader-facing section without coupling it to a provider or changing delivery limits.",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+            "subject": "heading mapping"
+          },
+          {
+            "source": "tests/weekly_radar_semantic_message_splitter.rs",
+            "subject": "acceptance test"
+          }
+        ],
+        "status": "verified"
+      }
+    ],
+    "approachType": "implementation",
+    "designDecisions": [
+      {
+        "decision": "Keep human reference separate from machine reference and omit ranking without explicit selection.",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_judgment_chain.rs",
+            "subject": "independent reference and no-ranking tests"
+          }
+        ],
+        "reason": "Preserves independent human judgment and the no-capital-action boundary.",
+        "status": "verified"
+      },
+      {
+        "decision": "Replace the generic summary source entry with item-level evidence links.",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "item-level evidence section"
+          },
+          {
+            "source": "docs/operations/WEEKLY_RADAR.md",
+            "subject": "reader-facing evidence explanation"
+          }
+        ],
+        "reason": "Prevents one entry point from being presented as direct evidence for every company.",
+        "status": "verified"
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "User-facing confirmed facts are rendered with their own evidence context.",
+        "source": "src/features/weekly_radar/runtime/report.rs",
+        "status": "verified",
+        "subject": "confirmed facts implementation"
+      },
+      {
+        "claim": "Machine and human reference semantics remain independent.",
+        "source": "tests/weekly_radar_judgment_chain.rs",
+        "status": "verified",
+        "subject": "reference separation regression coverage"
+      }
+    ],
+    "mechanism": {
+      "evidence": [
+        {
+          "source": "src/features/weekly_radar/runtime/report.rs",
+          "subject": "deterministic report assembly"
+        },
+        {
+          "source": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+          "subject": "confirmed-information heading boundary"
+        }
+      ],
+      "status": "verified",
+      "text": "报告使用现有 NormalizedFact provenance/effective_date 和 JudgmentSnapshot ProofView，经过安全文本与 URI 处理后确定性渲染；semantic splitter 将已确认信息标题合并到摘要边界。"
+    },
+    "status": "complete",
+    "summary": {
+      "evidence": [
+        {
+          "source": "src/features/weekly_radar/runtime/report.rs",
+          "subject": "confirmed facts and judgment reference rendering"
+        },
+        {
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "item-level fact and unavailable-state acceptance"
+        },
+        {
+          "source": "tests/weekly_radar_judgment_chain.rs",
+          "subject": "independent reference and no-ranking acceptance"
+        }
+      ],
+      "status": "verified",
+      "text": "保留现有 evidence-first 输入，在报告边界逐条展示确认事实与证据，并在系统参考区展示支持、反向和缺失证据；Telegram 仅新增已确认信息章节识别。"
+    },
+    "technicalDetails": [
+      {
+        "detail": "Focused report, judgment, delivery, splitter, and end-to-end tests passed; cargo format, clippy, all project tests, and documentation metadata checks passed.",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_end_to_end.rs",
+            "subject": "delivery and archive compatibility"
+          },
+          {
+            "source": "docs/operations/WEEKLY_RADAR.md",
+            "subject": "reader-facing operational documentation"
+          }
+        ],
+        "status": "verified",
+        "topic": "Verification"
+      }
+    ]
+  },
+  "interventions": [],
+  "issues": {
+    "detected": 1,
+    "hardStops": 1,
+    "resolved": 1,
+    "unresolved": 0,
+    "warnings": 0
+  },
+  "limitations": [],
+  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding.",
+  "phase": "review",
+  "preventedRisks": [
+    {
+      "action": "blocked",
+      "detectedBy": "required verification: aiGuidelines",
+      "evidence": [
+        {
+          "digest": "c1b3fc21d10a5eabf2e4bba78a8de9906eeb5a2b44b59212f2af9c181a2beae1",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+          "subject": "verificationHistory[0] aiGuidelines failed"
+        },
+        {
+          "digest": "97cc123c065ccaeb8d376f9576e43b98de0f0e553f10495d778e841cce60d3f9",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+          "subject": "verification[aiGuidelines] retry passed"
+        }
+      ],
+      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
+      "risk": "If not detected, could have led to a stale completion claim.",
+      "severity": "medium"
+    }
+  ],
+  "remainingRisks": [
+    {
+      "detail": "This Work Item shares reader documentation paths with the source-coverage Work Item; implementation must be serialized and the later Work Item must synchronize to the merged base.",
+      "evidence": [
+        {
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+          "subject": "residualRisks"
+        }
+      ],
+      "severity": "medium"
+    },
+    {
+      "detail": "Source availability taxonomy and provider diagnostics remain in the separate source-coverage Work Item.",
+      "evidence": [
+        {
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+          "subject": "residualRisks"
+        }
+      ],
+      "severity": "medium"
+    },
+    {
+      "detail": "A real production run remains a post-merge validation step; local checks do not claim provider or Telegram delivery success.",
+      "evidence": [
+        {
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+          "subject": "residualRisks"
+        }
+      ],
+      "severity": "medium"
+    }
+  ],
+  "reportVersion": 1,
+  "result": "completed",
+  "sourceOutcome": {
+    "digest": "7bdbecd9d03005a9e0ab6e00db6f209b7de253355e2dbe345393b66d6f90012d",
+    "format": "ai-cockpit-task-outcome",
+    "schemaVersion": 1
+  },
+  "task": {
+    "deliveredChanges": [
+      ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json",
+      ".ai/work-items/starts/wi-weekly-radar-content-quality.json",
+      "tests/semantic_message_splitter_test.rs",
+      ".ai/cockpit/current_status.md",
+      "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "src/features/weekly_radar/runtime/report.rs",
+      "tests/weekly_radar_runtime.rs",
+      "tests/weekly_radar_judgment_chain.rs",
+      "tests/weekly_radar_semantic_message_splitter.rs",
+      "tests/weekly_radar_end_to_end.rs",
+      "docs/operations/WEEKLY_RADAR.md",
+      "docs/CAPABILITIES.md",
+      ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.outcome.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.outcome.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md"
+    ],
+    "summary": "Task wi-weekly-radar-content-quality generated an evidence-derived outcome with status completed."
+  },
+  "workItemId": "wi-weekly-radar-content-quality"
 }

@@ -58,6 +58,21 @@ fn splitter_accepts_localized_weekly_radar_headings() {
 }
 
 #[test]
+fn splitter_accepts_confirmed_information_as_part_of_the_reader_summary() {
+    let rendered = "## 本周摘要\n- 本周有确认信息\n\n## 已确认信息\n### Acme\n- 证据：https://example.test/evidence\n\n## 系统状态\n- 数据正常\n";
+    let split =
+        SemanticMessageSplitter::split(rendered, SemanticSplitLimits::new(1_000, 20).unwrap())
+            .expect("confirmed-information section should be a supported reader section");
+    assert_eq!(split.chunks().len(), 2);
+    assert_eq!(
+        split.chunks()[0].boundary(),
+        SemanticBoundary::ExecutiveSummary
+    );
+    assert!(split.chunks()[0].markdown().contains("## 已确认信息"));
+    assert_eq!(split.chunks()[1].boundary(), SemanticBoundary::SystemHealth);
+}
+
+#[test]
 fn splitter_accepts_judgment_reference_heading_for_each_report_language() {
     for heading in [
         "系统参考判断",

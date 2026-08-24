@@ -213,9 +213,13 @@ fn boundary_for_heading(heading: &str) -> Result<SemanticBoundary, SemanticSplit
         "System Health" | "系统状态" | "システム状態" => {
             Ok(SemanticBoundary::SystemHealth)
         }
-        "Executive Summary" | "本周摘要" | "週次サマリー" | "No Change" => {
-            Ok(SemanticBoundary::ExecutiveSummary)
-        }
+        "Executive Summary"
+        | "本周摘要"
+        | "已确认信息"
+        | "週次サマリー"
+        | "確認済み情報"
+        | "No Change"
+        | "Confirmed Information" => Ok(SemanticBoundary::ExecutiveSummary),
         value if value.starts_with("No Change (") => Ok(SemanticBoundary::ExecutiveSummary),
         value => Err(SemanticSplitError::UnknownSection {
             heading: value.to_owned(),

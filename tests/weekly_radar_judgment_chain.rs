@@ -209,6 +209,57 @@ fn report_serializes_validated_parallel_views_without_recomputing_them() {
 }
 
 #[test]
+fn report_explains_machine_proofs_and_keeps_human_reference_separate() {
+    let facts = workflow_facts("acme");
+    let human = HumanReference::new(
+        "acme",
+        "TOOL",
+        "人的参考与系统不同。",
+        "2026-08-20T10:00:00Z",
+    )
+    .unwrap();
+    let judgment = derive_judgment_snapshot(
+        NaiveDate::from_ymd_opt(2026, 8, 20).unwrap(),
+        &facts,
+        vec![human],
+    )
+    .unwrap();
+    let mut input = RuntimeReportInput::from_date(NaiveDate::from_ymd_opt(2026, 8, 20).unwrap());
+    for fact in facts {
+        input.add_fact(fact).unwrap();
+    }
+    input.set_judgment(judgment).unwrap();
+
+    let markdown = render_report(&input).markdown().to_owned();
+    assert!(markdown.contains("workflow responsibility changed"));
+    assert!(markdown.contains("https://source-a.example/workflow"));
+    assert!(markdown.contains("quarterly_persistence"));
+    assert!(markdown.contains("人的参考与系统不同。"));
+    assert!(markdown.contains("系统判断"));
+}
+
+#[test]
+fn report_does_not_render_machine_ranking_without_explicit_company_selection() {
+    let mut facts = workflow_facts("acme");
+    facts.extend(workflow_facts("beta"));
+    let judgment = derive_judgment_snapshot(
+        NaiveDate::from_ymd_opt(2026, 8, 20).unwrap(),
+        &facts,
+        Vec::new(),
+    )
+    .unwrap();
+    let mut input = RuntimeReportInput::from_date(NaiveDate::from_ymd_opt(2026, 8, 20).unwrap());
+    for fact in facts {
+        input.add_fact(fact).unwrap();
+    }
+    input.set_judgment(judgment).unwrap();
+
+    let markdown = render_report(&input).markdown().to_owned();
+    assert!(!markdown.contains("同一阶段内的系统排序参考"));
+    assert!(!markdown.contains("1. acme"));
+}
+
+#[test]
 fn source_observations_without_explicit_stage_signals_are_visible_as_undetermined() {
     let facts = vec![fact(
         "acme",

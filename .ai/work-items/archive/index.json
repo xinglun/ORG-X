@@ -685,6 +685,18 @@
       "summarySha256": "539381cf7c06e56afb5263895c56e77487a0f51ecd170e044722c8e1b9e53c83",
       "manifestPath": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.archive-manifest.json",
       "manifestSha256": "8ca778f5a815956b863dcb53287aa656e86f1ae04ef47fbb7941fb625c86cd78"
+    },
+    {
+      "workItemId": "wi-weekly-radar-idempotent-completion",
+      "archiveSequence": 58,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
+      "contractSha256": "569e0254cc83970b2d923f9d94a44a9aecc046620e14249b7ba58d626bb2416d",
+      "archivedAt": "2026-08-24T13:14:10.417758+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+      "summarySha256": "07350deb5f4cf6b0124666cc76ad86d312eb2696e3dce7bf4b971ca836427cdc",
+      "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.archive-manifest.json",
+      "manifestSha256": "0da5082e9d10f6ca507851ca2f486fdc797fa58709534dbe16355c0dd91d84e2"
     }
   ]
 }

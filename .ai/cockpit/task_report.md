@@ -24,8 +24,8 @@ Design decisions
 - The same-date final archive is a safe idempotent success path.: tests/weekly_radar_runtime.rs#CLI and workflow regression coverage (verified)
 - Production history is not rewritten by this correction.: .github/workflows/weekly-radar.yml#no-op branch exits before Telegram/data write (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json]
+- Changed .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json]
 - Changed src/main.rs [evidence: src/main.rs]
 - Changed src/features/weekly_radar/runtime/archive.rs [evidence: src/features/weekly_radar/runtime/archive.rs]
 - Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
@@ -35,8 +35,8 @@ Design decisions
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
 - Changed .ai/work-items/starts/wi-weekly-radar-idempotent-completion.json [evidence: .ai/work-items/starts/wi-weekly-radar-idempotent-completion.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 

@@ -10,8 +10,8 @@ Task wi-weekly-radar-idempotent-completion generated an evidence-derived outcome
 Governed Work Item: wi-weekly-radar-idempotent-completion
 
 ## Delivered Changes
-- .ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json
-- .ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json
+- .ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json
+- .ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json
 - src/main.rs
 - src/features/weekly_radar/runtime/archive.rs
 - src/features/weekly_radar/runtime/report.rs
@@ -21,8 +21,8 @@ Governed Work Item: wi-weekly-radar-idempotent-completion
 - docs/operations/WEEKLY_RADAR.md
 - .ai/work-items/starts/wi-weekly-radar-idempotent-completion.json
 - .ai/cockpit/current_status.md
-- .ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.json
-- .ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.outcome.md
+- .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.json
+- .ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.md
 - .ai/cockpit/task_report.json
 - .ai/cockpit/task_report.md
 

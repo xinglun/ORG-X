@@ -16,14 +16,6 @@
       "components": [],
       "state": "verified",
       "knowledgePath": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json"
-    },
-    {
-      "workItemId": "wi-weekly-radar-idempotent-completion",
-      "title": "修复 Weekly Radar 同日完成运行的幂等状态",
-      "topics": [],
-      "components": [],
-      "state": "verified",
-      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
     }
   ]
 }

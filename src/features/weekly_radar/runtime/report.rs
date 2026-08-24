@@ -211,6 +211,7 @@ struct Labels {
     source_available: &'static str,
     source_unavailable: &'static str,
     source_not_configured: &'static str,
+    source_not_applicable: &'static str,
     discovery_note: &'static str,
     ranking_missing: &'static str,
     as_of: &'static str,
@@ -262,6 +263,7 @@ fn labels(language: ReportLanguage) -> Labels {
             source_available: "可用",
             source_unavailable: "暂不可用",
             source_not_configured: "尚未配置",
+            source_not_applicable: "不适用",
             discovery_note: "新闻和其他发现材料仅用于找线索，未作为结论依据。",
             ranking_missing: "本周未提供明确的重点公司选择，因此不生成排名。",
             as_of: "数据截至",
@@ -310,6 +312,7 @@ fn labels(language: ReportLanguage) -> Labels {
             source_available: "利用可能",
             source_unavailable: "取得できず",
             source_not_configured: "未設定",
+            source_not_applicable: "対象外",
             discovery_note: "ニュース等の探索情報は手がかりのみで、結論の根拠にはしていません。",
             ranking_missing: "明示的な注目企業の選定がないため、ランキングは作成していません。",
             as_of: "基準日",
@@ -358,6 +361,7 @@ fn labels(language: ReportLanguage) -> Labels {
             source_available: "available",
             source_unavailable: "unavailable",
             source_not_configured: "not configured",
+            source_not_applicable: "not applicable",
             discovery_note:
                 "News and other discovery material is used for leads only, not as a conclusion.",
             ranking_missing:
@@ -408,6 +412,7 @@ struct SnapshotCoverage {
     expected: usize,
     available: usize,
     not_configured: usize,
+    not_applicable: usize,
     unavailable: usize,
 }
 
@@ -1060,6 +1065,28 @@ fn coverage_line(item: &SourceCoverage, labels: Labels, language: ReportLanguage
             }
         };
     }
+    if item.available() == 0 && item.not_applicable() == total {
+        return match language {
+            ReportLanguage::English => {
+                format!(
+                    "  - {source}: {} ({total} companies)",
+                    labels.source_not_applicable
+                )
+            }
+            ReportLanguage::Japanese => {
+                format!(
+                    "  - {source}：{}（{} 社）",
+                    labels.source_not_applicable, total
+                )
+            }
+            ReportLanguage::Chinese => {
+                format!(
+                    "  - {source}：{}（{} 家）",
+                    labels.source_not_applicable, total
+                )
+            }
+        };
+    }
     let separator = if language == ReportLanguage::English {
         ":"
     } else {
@@ -1092,6 +1119,18 @@ fn coverage_line(item: &SourceCoverage, labels: Labels, language: ReportLanguage
             "{joiner}{} {}",
             item.not_configured(),
             labels.source_not_configured
+        ));
+    }
+    if item.not_applicable() > 0 {
+        let joiner = if language == ReportLanguage::English {
+            ", "
+        } else {
+            "，"
+        };
+        detail.push_str(&format!(
+            "{joiner}{} {}",
+            item.not_applicable(),
+            labels.source_not_applicable
         ));
     }
     format!("  - {detail}")
@@ -1344,6 +1383,7 @@ pub fn render_report_in_language(
             expected: item.expected(),
             available: item.available(),
             not_configured: item.not_configured(),
+            not_applicable: item.not_applicable(),
             unavailable: item.unavailable(),
         })
         .collect::<Vec<_>>();

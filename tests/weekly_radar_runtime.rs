@@ -266,7 +266,7 @@ fn gdelt_fixture_url() -> &'static str {
 }
 
 #[test]
-fn source_collection_skips_gdelt_without_configured_source_endpoints() {
+fn source_collection_marks_gdelt_not_applicable_without_configured_source_endpoints() {
     let company = CompanyConfig::new(
         "beta",
         "Beta Systems",
@@ -284,11 +284,12 @@ fn source_collection_skips_gdelt_without_configured_source_endpoints() {
 
     let observations = collect_configured_sources(&company, &client, observed_at);
 
-    assert!(
+    assert_eq!(
         observations
             .iter()
-            .all(|observation| observation.kind() != SourceKind::Gdelt),
-        "GDELT must be skipped when no configured source endpoint exists"
+            .find(|observation| observation.kind() == SourceKind::Gdelt)
+            .map(|observation| observation.status()),
+        Some(SourceStatus::NotApplicable)
     );
     assert!(
         client.requests().is_empty(),

@@ -1,0 +1,347 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-source-coverage",
+  "mode": "code",
+  "title": "Weekly Radar数据来源覆盖改善",
+  "baseCommit": "4bf5bf34332d3cbbd798a1f45fb232f08a45a58b",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-source-coverage.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-source-coverage.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-source-coverage.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-source-coverage.outcome.md",
+    "src/main.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/sec.rs",
+    "src/features/weekly_radar/runtime/http.rs",
+    "src/features/weekly_radar/runtime/config.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "tests/weekly_radar_source_coverage.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/CAPABILITIES.md"
+  ],
+  "outOfScope": [
+    "Do not redesign the user-facing report sections or expand confirmed-item presentation; that belongs to wi-weekly-radar-content-quality.",
+    "Do not change data, pending refs, publication receipts, archive retention, schedule cadence, or Telegram delivery.",
+    "Do not read, print, copy, or store Secret values, tokens, chat IDs, response bodies, or credentials.",
+    "Do not add paid APIs, LLM extraction, guessed provider endpoints, or provider-authority reinterpretation.",
+    "Do not generate ranking, system judgment, human judgment, trading conclusions, or capital-action recommendations."
+  ],
+  "sources": [
+    {
+      "path": "src/features/weekly_radar/runtime/sources.rs",
+      "reason": "Existing source collection, normalization, and source-availability boundary."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/sec.rs",
+      "reason": "SEC company-facts and submissions source adapters currently reported as unavailable for all companies."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/http.rs",
+      "reason": "Finite HTTP limits, safe error mapping, redirect policy, and response-size boundary."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/config.rs",
+      "reason": "Configured company/source endpoint registry and provider-neutral configuration rules."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "reason": "Runtime source status and availability facts carried into the report snapshot."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-18-weekly-radar-report.md",
+      "reason": "Existing user-facing source-status categories and rule against treating discovery as authority."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Existing source-adapter and HTTP safety tests that define the current behavior."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "User-facing explanation of source availability and evidence limits."
+    },
+    {
+      "path": "docs/CAPABILITIES.md",
+      "reason": "User-facing capability and limitation overview."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": [
+      "external_source_semantics",
+      "availability_truthfulness",
+      "redacted_diagnostics"
+    ],
+    "reason": "Changing source availability semantics can mislead users about evidence coverage and must preserve safe network boundaries without exposing credentials or response data.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex after the user's acceptance of the source-coverage proposal"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user accepted a separate source-coverage Work Item; implementation remains within existing provider-neutral adapters and safe availability evidence."
+  },
+  "synchronizationCheckpoint": {
+    "authorized": true,
+    "reason": "Synchronize this active Work Item to the merged WI-A base while preserving its owned governance evidence."
+  },
+  "preReviewWarnings": [
+    "Review configured-versus-unavailable-versus-not-applicable classification for every provider family.",
+    "Review that all failure evidence remains redacted and that no source is promoted from discovery to confirmed authority."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "Runtime source status distinguishes at least configured and available, configured but unavailable, not configured, not applicable, and discovery-only states without collapsing them into one unavailable count.",
+    "SEC source results for the 10 configured companies expose a redacted, evidence-bound reason for unavailable results or a successful availability state; no response body, token, user-agent secret, or credential is persisted.",
+    "News, investor-relations, career, Greenhouse, and Lever source states distinguish missing configuration from request failure, empty result, unsupported provider, and discovery-only material where the existing boundary can establish the distinction.",
+    "Provider configuration uses only explicit, validated endpoints and preserves the existing finite HTTP limits, redirect policy, and safe error redaction; no guessed URLs or paid API dependency is introduced.",
+    "The source status facts remain compatible with the user-facing report and snapshot boundaries; this Work Item does not redesign report sections or change publication behavior.",
+    "Automated tests cover mixed source availability, SEC failure classification, absent job-provider configuration, empty results, oversized/error responses, and secret-safe diagnostics.",
+    "User-facing Weekly Radar documentation explains what each availability state means and what it does not prove."
+  ],
+  "guidelines": [
+    "Never expose or persist Secret values, credentials, full response bodies, or sensitive request headers in source status or diagnostics.",
+    "Do not infer provider availability or evidence authority from a missing, empty, or discovery-only response.",
+    "Use explicit validated configuration; do not guess endpoints or silently add external dependencies.",
+    "Document source-status meanings for users without exposing implementation diagnostics."
+  ],
+  "intent": {
+    "problem": "The 2026-08-24 report contains 49 temporarily unavailable items and 29 not-configured items. SEC is unavailable for all 10 companies, while news, investor-relations, career, Greenhouse, and Lever states are aggregated too coarsely to tell a user whether a source is missing, failing, empty, unsupported, or discovery-only.",
+    "constraints": [
+      "Preserve the existing evidence-first and provider-neutral architecture.",
+      "Do not read, print, store, or expose sensitive provider values, response bodies, or sensitive headers.",
+      "Do not treat discovery material as confirmed evidence or silently infer that an unavailable source means no company change.",
+      "Keep report presentation, delivery, data publication, and schedule cadence in their separate Work Items."
+    ],
+    "rationale": "A source-coverage correction should first make availability truthfully diagnosable using existing adapters and bounded errors; it should not hide gaps by adding unsupported sources or changing report semantics."
+  },
+  "rawUserRequest": "接受关于 Weekly Radar 报告内容增强和数据覆盖拆分的建议；先开对应 WI，改善来源覆盖但保持证据和安全边界。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "conversation:user-message",
+    "capturedAt": "2026-08-24T06:00:00Z",
+    "digest": "sha256:accepted-source-coverage-proposal"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "software_design",
+      "test_automation",
+      "documentation"
+    ],
+    "prohibitedCapabilities": [
+      "secret_readback",
+      "paid_data_api_dependency",
+      "llm_fact_extraction",
+      "human_reference_override",
+      "trading_decision",
+      "capital_action"
+    ]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user accepted the proposed source-coverage improvement and requested the corresponding Work Item."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "SEC is configured but unavailable for a company.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/sec.rs",
+        "src/features/weekly_radar/runtime/http.rs",
+        "tests/weekly_radar_source_coverage.rs"
+      ],
+      "expected": "The source status records a bounded redacted reason and never turns the failed request into a confirmed fact or a silent no-change conclusion.",
+      "verificationPlan": "Add deterministic fixture responses for transport failure, non-success status, oversized body, malformed payload, and successful SEC metadata."
+    },
+    {
+      "scenario": "A career or job provider is not configured or is not applicable to a company.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/config.rs",
+        "src/features/weekly_radar/runtime/sources.rs",
+        "tests/weekly_radar_source_coverage.rs"
+      ],
+      "expected": "Not configured, not applicable, and configured-but-unavailable remain distinct and no guessed endpoint is contacted.",
+      "verificationPlan": "Test explicit provider mappings, absent mappings, unsupported provider values, and empty configured results."
+    },
+    {
+      "scenario": "A discovery-only or unavailable source is included in the weekly status aggregation.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/sources.rs",
+        "src/features/weekly_radar/runtime/model.rs",
+        "docs/operations/WEEKLY_RADAR.md"
+      ],
+      "expected": "The status remains useful to users while explicitly preserving the rule that discovery material is not conclusion evidence.",
+      "verificationPlan": "Add source-status aggregation tests and documentation assertions for the user-visible meanings and limits."
+    }
+  ],
+  "implementationSurface": {
+    "production": [
+      "src/main.rs",
+      "src/features/weekly_radar/runtime.rs",
+      "src/features/weekly_radar/runtime/sources.rs",
+      "src/features/weekly_radar/runtime/sec.rs",
+      "src/features/weekly_radar/runtime/http.rs",
+      "src/features/weekly_radar/runtime/config.rs",
+      "src/features/weekly_radar/runtime/model.rs",
+      "src/features/weekly_radar/runtime/report.rs"
+    ],
+    "tests": [
+      "tests/weekly_radar_source_coverage.rs",
+      "tests/weekly_radar_runtime.rs"
+    ],
+    "documentation": [
+      "docs/operations/WEEKLY_RADAR.md",
+      "docs/CAPABILITIES.md"
+    ],
+    "generated": [
+      ".ai/cockpit/current_status.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md"
+    ]
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 60
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-source-coverage.json",
+    "baseCommit": "d1476e9835de14f2c628dae699bd943d3ce1332d",
+    "initialScopeDigest": "d5acadc5d1e7a4adb47f977c2b079e6be6f378f380cb8e7fd17b4c8a81d410b7",
+    "contractSkeletonDigest": "13a6d77f9a77b28f3318999befd9b3feeaf1beaff84d3e7172756eccc756afd6"
+  },
+  "synchronizationHistory": [
+    {
+      "synchronizationVersion": 1,
+      "fromBaseCommit": "d1476e9835de14f2c628dae699bd943d3ce1332d",
+      "toBaseCommit": "4bf5bf34332d3cbbd798a1f45fb232f08a45a58b",
+      "baseRemote": "origin",
+      "baseBranch": "main",
+      "workBranch": "codex/wi-weekly-radar-source-coverage",
+      "recordedAt": "2026-08-24T07:14:49.109414+00:00",
+      "priorContractDigest": "74a7f292ebee229a67a6baaf64e69271842c05ef880b425bd32f71133d802483",
+      "priorSummaryDigest": "ac5eb52171402154eb8b3c85351d4b1fee3d9ad0582375b1e6ebbe92971eaf40",
+      "rebaseHeadBefore": "006ab585c238f2400a7fff5b16acb32287da57cc",
+      "rebaseHeadAfter": "006ab585c238f2400a7fff5b16acb32287da57cc"
+    }
+  ]
+}

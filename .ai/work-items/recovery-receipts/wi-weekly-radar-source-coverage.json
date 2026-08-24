@@ -1,0 +1,46 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.archive-manifest.json",
+      "sha256": "535e83216d975f93c2145b0d3f8bbbcf11215426998dbfb1194b8e51acd487df"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.contract.json",
+      "sha256": "e7739018c817e55cc207e20ea1d198d4ac5488c4e5d105fb09ba6fc4cb35065b"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.outcome.json",
+      "sha256": "a5a956f6936a5ab1c10ccf17664d733c2c473b9718f363e047d24c822d8e95e1"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+      "sha256": "a52c559b2d28b5fe3847eae809cec051c950266d0c835578797e79560b0848d1"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=4bf5bf34332d3cbbd798a1f45fb232f08a45a58b"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "9d5a1e9c79da8d839ba6fd547852585c3745411a4b2a2ad2de0fc327ff3593e7"
+  },
+  "humanAuthorization": {
+    "reference": "user-authorized same-Work-Item archive-evidence recovery on 2026-08-24",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/63",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-24T07:52:22.877637+00:00",
+  "prBaseCommit": "4bf5bf34332d3cbbd798a1f45fb232f08a45a58b",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
+  ],
+  "workItemId": "wi-weekly-radar-source-coverage"
+}

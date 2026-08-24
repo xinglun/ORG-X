@@ -403,6 +403,8 @@ pub struct SourceCoverage {
     available: usize,
     #[serde(default)]
     not_configured: usize,
+    #[serde(default)]
+    not_applicable: usize,
 }
 
 impl SourceCoverage {
@@ -412,7 +414,7 @@ impl SourceCoverage {
         expected: usize,
         available: usize,
     ) -> Result<Self, RuntimeError> {
-        Self::new_with_not_configured(source, expected, available, 0)
+        Self::new_with_states(source, expected, available, 0, 0)
     }
 
     /// Creates coverage counters including optional-source configuration gaps.
@@ -422,11 +424,23 @@ impl SourceCoverage {
         available: usize,
         not_configured: usize,
     ) -> Result<Self, RuntimeError> {
+        Self::new_with_states(source, expected, available, not_configured, 0)
+    }
+
+    /// Creates coverage counters with explicit configuration and applicability states.
+    pub fn new_with_states(
+        source: impl Into<String>,
+        expected: usize,
+        available: usize,
+        not_configured: usize,
+        not_applicable: usize,
+    ) -> Result<Self, RuntimeError> {
         let coverage = Self {
             source: source.into(),
             expected,
             available,
             not_configured,
+            not_applicable,
         };
         coverage.validate()?;
         Ok(coverage)
@@ -444,9 +458,11 @@ impl SourceCoverage {
                 "available coverage cannot exceed expected coverage",
             ));
         }
-        if self.not_configured > self.expected.saturating_sub(self.available) {
+        if self.not_configured.saturating_add(self.not_applicable)
+            > self.expected.saturating_sub(self.available)
+        {
             return Err(RuntimeError::invalid_model(
-                "not-configured coverage cannot exceed unavailable coverage",
+                "configuration and applicability coverage cannot exceed unavailable coverage",
             ));
         }
         Ok(())
@@ -472,11 +488,17 @@ impl SourceCoverage {
         self.not_configured
     }
 
+    /// Returns the number of companies for which this source does not apply.
+    pub const fn not_applicable(&self) -> usize {
+        self.not_applicable
+    }
+
     /// Returns the number of configured companies whose source was unavailable.
     pub const fn unavailable(&self) -> usize {
         self.expected
             .saturating_sub(self.available)
             .saturating_sub(self.not_configured)
+            .saturating_sub(self.not_applicable)
     }
 
     /// Returns an integer percentage, using zero for an empty expectation.

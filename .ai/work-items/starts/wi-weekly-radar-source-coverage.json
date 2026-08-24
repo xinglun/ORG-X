@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-source-coverage",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-source-coverage.json",
+  "baseCommit": "d1476e9835de14f2c628dae699bd943d3ce1332d",
+  "baseBranch": "codex/wi-weekly-radar-source-coverage",
+  "startTimestamp": "2026-08-24T06:08:04.121981+00:00",
+  "initialScopeDigest": "d5acadc5d1e7a4adb47f977c2b079e6be6f378f380cb8e7fd17b4c8a81d410b7",
+  "contractSkeletonDigest": "13a6d77f9a77b28f3318999befd9b3feeaf1beaff84d3e7172756eccc756afd6"
+}

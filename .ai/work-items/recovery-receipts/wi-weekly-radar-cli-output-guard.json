@@ -1,0 +1,49 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.archive-manifest.json",
+      "sha256": "ae199b21460e99dcf0cf3fc639c0fd77051cf71072c66be053e30f6c6cb4fe9b"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json",
+      "sha256": "8b0b3c86c2ad275c38073e689f17eefa7b9d3c273197dc229e166e17a34915d5"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.json",
+      "sha256": "2349138b734a2358dff3e5ac0efb733cd32648ba28577ffa3b9e2819bb665704"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+      "sha256": "c9dc07ed0480ac977778aee66515bffd36dea561fcbb06bb72b38048f2c65283"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=7b19df71da14b2e4f9084c51af6ed344a01cf251"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "134ac50d466224eeab95e108b19458b94a38071a4943167cc363a2d7130bc59e"
+  },
+  "humanAuthorization": {
+    "reference": "user-confirmation-2026-08-24: \u786e\u8ba4\u6309\u6b64\u65b9\u6848\u5b9e\u65bd\u5e76\u4fee\u590d\u4ee5\u540e\u518d\u8bd5",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/68",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-24T11:29:06.850280+00:00",
+  "prBaseCommit": "7b19df71da14b2e4f9084c51af6ed344a01cf251",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
+  ],
+  "workItemId": "wi-weekly-radar-cli-output-guard"
+}

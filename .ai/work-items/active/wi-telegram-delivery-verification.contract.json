@@ -1,0 +1,274 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-telegram-delivery-verification",
+  "mode": "investigate",
+  "title": "为 Weekly Radar 提供可验证的 Telegram 测试边界",
+  "rawUserRequest": "开WI对应",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "conversation:user-message",
+    "capturedAt": "2026-08-24T04:57:32Z",
+    "digest": "sha256:d851265c4a5c536d9e0e1ab630c3e76f60a4ed36b64f1d082fb5cd7db2f4ecb9"
+  },
+  "baseCommit": "735c941ebc8ce7afa7ffe802c725256f96b20baa",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-telegram-delivery-verification.contract.json",
+    ".ai/work-items/active/wi-telegram-delivery-verification.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-telegram-delivery-verification.outcome.json",
+    ".ai/work-items/active/wi-telegram-delivery-verification.outcome.md"
+  ],
+  "outOfScope": [
+    "Do not weaken the default same-date idempotency path or send a second production report without an explicit selected mode.",
+    "Do not read, print, copy, or store Secret values; do not change repository Secrets or Telegram configuration in this Work Item.",
+    "Do not hand-edit the data branch, existing report, snapshot, receipt, manifest, or pending publication ref.",
+    "Do not use workflow_dispatch as evidence for the later real event=schedule cadence gate owned by wi-production-provider-e2e-cadence.",
+    "Do not merge, delete, or close codex/wi-production-provider-e2e-cadence or PR #56 in this Work Item.",
+    "Do not claim that a Telegram API receipt proves that a human client displayed or notified the message."
+  ],
+  "sources": [
+    {
+      "path": ".github/workflows/weekly-radar.yml",
+      "reason": "The current workflow detects a final same-date archive, verifies it, and exits before Telegram and data writes."
+    },
+    {
+      "path": "src/main.rs",
+      "reason": "The current CLI exposes normal publication, dry-run, recovery, and read-only verification modes but no explicit user-visible delivery-test or republish mode."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/archive.rs",
+      "reason": "The archive identity and read-only verification boundaries determine how any new delivery path must avoid corrupting or duplicating the final archive."
+    },
+    {
+      "path": "src/features/weekly_radar/infrastructure/publication_receipt.rs",
+      "reason": "Publication receipt status and provider message IDs are the current machine-visible delivery evidence."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "The user-facing operational contract documents ALREADY-PUBLISHED as successful non-delivery and the current manual controls."
+    },
+    {
+      "path": "docs/CAPABILITIES.md",
+      "reason": "The capability overview is the user-facing index that must link to any new Telegram verification semantics."
+    },
+    {
+      "path": "https://github.com/xinglun/ORG-X/actions/runs/32690297651",
+      "reason": "The merged-main manual run returned ALREADY-PUBLISHED and explicitly skipped Telegram/data writes."
+    },
+    {
+      "path": "https://github.com/xinglun/ORG-X/actions/runs/32679132028",
+      "reason": "The earlier run produced PUBLISHED evidence and the existing receipt contains provider message IDs; it does not prove human-client display."
+    }
+  ],
+  "unknowns": [
+    "Human must choose whether verification means a clearly labeled test message to the configured destination or an explicitly confirmed, clearly labeled re-publication of an existing report; these have different external side effects and acceptance evidence."
+  ],
+  "notCodable": true,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": [
+      "external_publication",
+      "duplicate_delivery",
+      "user_observable_behavior"
+    ],
+    "reason": "Any implementation that produces a Telegram message has an external side effect and must preserve same-date archive idempotency while distinguishing API acceptance from human-visible delivery."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": false,
+    "canVerify": true,
+    "needsHumanDecision": true,
+    "blockedReason": "A human must select the permitted Telegram verification side effect before implementation."
+  },
+  "executionDecision": {
+    "status": "needs_human_decision",
+    "reason": "The current evidence proves that same-date manual dispatch is a safe no-op, but the requested human-visible Telegram verification mode is not uniquely specified."
+  },
+  "preReviewWarnings": [
+    "Review must separately verify default idempotency, selected Telegram side effect, receipt identity, and the boundary between provider acceptance and human-client display."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "The investigation records that the default same-date workflow is a successful ALREADY-PUBLISHED no-op and does not send Telegram or write data.",
+    "The investigation compares a clearly labeled test-message path and an explicitly confirmed re-publication path, including their external side effects, receipt evidence, archive impact, and user-visible result.",
+    "The investigation recommends one bounded implementation direction or records that no new implementation is justified; it does not exercise a new Telegram side effect.",
+    "The user-facing documentation impact is identified without claiming that a Telegram API receipt proves human-client display.",
+    "The cadence Work Item and PR #56 remain explicitly separate and are not merged, deleted, or closed by this Work Item."
+  ],
+  "guidelines": [
+    "The normal publication path must remain idempotent and fail closed on incomplete or conflicting archive evidence.",
+    "Any new operator-visible mode must be explicitly named, confirmed, documented for users, and covered by tests for invalid combinations and partial delivery.",
+    "Never expose or persist Telegram Secret values; record only non-secret receipt and run identity evidence.",
+    "Keep system reference and human judgment independent; do not describe provider acceptance as proof of human agreement or client display."
+  ],
+  "intent": {
+    "problem": "A manual run for an already published date correctly returned ALREADY-PUBLISHED and sent no new Telegram message, so it cannot be used to prove a human-visible Telegram report. The existing receipt shows provider message IDs from an earlier publication, but does not prove that the intended human client displayed or notified the message. Separately, the cadence validation Work Item remains active on a retained closed-PR branch and must not be silently absorbed into this delivery-mode change.",
+    "constraints": [
+      "Preserve same-date idempotency and never send a duplicate production report implicitly.",
+      "Do not expose or store Secret values and do not hand-edit data or pending refs.",
+      "Keep the real schedule cadence gate in wi-production-provider-e2e-cadence.",
+      "Treat provider receipt evidence and human-client display as different claims.",
+      "Require explicit human selection before any new Telegram side effect is implemented or exercised."
+    ],
+    "rationale": "A dedicated, explicit operator mode is the smallest way to make Telegram verification observable without weakening the normal publication safety boundary; the mode must be chosen before implementation because test-message and re-publication semantics are materially different."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "An ordinary same-date manual or scheduled invocation sees a complete final archive.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        ".github/workflows/weekly-radar.yml",
+        "src/main.rs",
+        "src/features/weekly_radar/runtime/archive.rs",
+        "tests/weekly_radar_runtime.rs"
+      ],
+      "expected": "The invocation returns ALREADY-PUBLISHED, sends no Telegram message, and leaves data and pending refs unchanged.",
+      "verificationPlan": "Run existing and new fixture/static workflow tests, then compare remote data and pending refs before and after a same-date manual validation."
+    },
+    {
+      "scenario": "The selected explicit Telegram verification mode is invoked.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        ".github/workflows/weekly-radar.yml",
+        "src/main.rs",
+        "src/features/weekly_radar/infrastructure/telegram_publisher.rs",
+        "tests/weekly_radar_telegram_publisher.rs"
+      ],
+      "expected": "Only the explicitly selected and confirmed mode causes its declared Telegram side effect, with a distinct visible result and non-secret receipt evidence.",
+      "verificationPlan": "Add unit/CLI/workflow tests for mode selection, confirmation, provider acceptance, partial failure, and no implicit activation; perform only the authorized production exercise."
+    },
+    {
+      "scenario": "Existing archive identity and cadence evidence remain isolated.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/archive.rs",
+        "docs/operations/WEEKLY_RADAR.md",
+        "https://github.com/xinglun/ORG-X/pull/56"
+      ],
+      "expected": "The new mode does not mutate existing data artifacts or claim the later real schedule acceptance owned by the retained cadence Work Item.",
+      "verificationPlan": "Run archive identity tests, review the documentation boundary, and record the related Work Item/PR without merging or deleting it here."
+    }
+  ],
+  "requiredEvidenceContext": null,
+  "implementationSurface": {
+    "production": [],
+    "tests": [],
+    "documentation": [],
+    "generated": [
+      ".ai/cockpit/current_status.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md"
+    ]
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 59
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-telegram-delivery-verification.json",
+    "baseCommit": "735c941ebc8ce7afa7ffe802c725256f96b20baa",
+    "initialScopeDigest": "09eaadc1d09be4a0d4f804cb3b90f3a8ef7adf13dc7a0c5862a7e02cafca3f93",
+    "contractSkeletonDigest": "64824f86291ba093dc0b092318337df914951c7e45d5caba561233775adf8ed9"
+  }
+}

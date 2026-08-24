@@ -79,7 +79,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "296925bfa33f6f720da73f4ac6bb12488aa90175e9c7664806bd9a87a767977f"
+      "digest": "a09f7d63e7e06f85f194336431526d2538c7f76b72c2bac8907af55872980583"
     },
     {
       "type": "code",

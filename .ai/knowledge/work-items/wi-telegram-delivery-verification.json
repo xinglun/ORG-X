@@ -50,12 +50,12 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "296925bfa33f6f720da73f4ac6bb12488aa90175e9c7664806bd9a87a767977f"
+      "digest": "a09f7d63e7e06f85f194336431526d2538c7f76b72c2bac8907af55872980583"
     },
     {
       "type": "code",
       "path": ".github/workflows/weekly-radar.yml",
-      "digest": "acaae9ca430f84252569a7c4795fe8e1e6c13043a43ee6d9f2b446aec70b0dbe"
+      "digest": "21d6e9008a9e454a5576e96b74ec114c52534c1daa2916b5f87a997a52d2c761"
     },
     {
       "type": "code",

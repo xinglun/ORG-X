@@ -38,6 +38,16 @@
         "tests/weekly_radar_runtime.rs"
       ]
     },
+    "wi-weekly-radar-cli-output-guard": {
+      "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+      "dependencies": [
+        ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+        ".github/workflows/weekly-radar.yml",
+        "tests/weekly_radar_runtime.rs"
+      ]
+    },
     "wi-weekly-radar-content-quality": {
       "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
       "dependencies": [
@@ -147,6 +157,15 @@
     ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json": [
       "wi-telegram-delivery-verification"
     ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json": [
+      "wi-weekly-radar-cli-output-guard"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.json": [
+      "wi-weekly-radar-cli-output-guard"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json": [
+      "wi-weekly-radar-cli-output-guard"
+    ],
     ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.contract.json": [
       "wi-weekly-radar-content-quality"
     ],
@@ -194,6 +213,7 @@
     ],
     ".github/workflows/weekly-radar.yml": [
       "wi-telegram-delivery-verification",
+      "wi-weekly-radar-cli-output-guard",
       "wi-weekly-radar-idempotent-completion",
       "wi-weekly-radar-same-day-canonical-update"
     ],
@@ -259,6 +279,7 @@
     "tests/weekly_radar_runtime.rs": [
       "wi-sec-submissions-response-limit",
       "wi-telegram-delivery-verification",
+      "wi-weekly-radar-cli-output-guard",
       "wi-weekly-radar-content-quality",
       "wi-weekly-radar-idempotent-completion",
       "wi-weekly-radar-input-snapshot-compatibility",

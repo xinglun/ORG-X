@@ -1,0 +1,273 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-cli-output-guard",
+  "mode": "code",
+  "title": "修复 Weekly Radar CLI 成功输出边界并恢复手动发布",
+  "rawUserRequest": "确认按此方案实施。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "conversation:user-message",
+    "digest": "sha256:accepted-cli-output-guard-plan",
+    "capturedAt": "2026-08-24T18:58:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "software_design",
+      "test_automation"
+    ],
+    "prohibitedCapabilities": [
+      "secret_readback",
+      "data_ref_mutation",
+      "weekly_radar_pending_ref_mutation",
+      "unrelated_source_changes"
+    ]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "User explicitly confirmed the bounded successor fix on 2026-08-24."
+  },
+  "baseCommit": "7b19df71da14b2e4f9084c51af6ed344a01cf251",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-cli-output-guard.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-cli-output-guard.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-cli-output-guard.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-cli-output-guard.outcome.md",
+    ".github/workflows/weekly-radar.yml",
+    "tests/weekly_radar_runtime.rs"
+  ],
+  "outOfScope": [
+    "data and weekly-radar-pending refs or their committed contents",
+    "Telegram transport, provider credentials, and source acquisition behavior",
+    "same-day canonical archive semantics already delivered by the predecessor",
+    "src/main.rs and CLI result formatting because the CLI dispatcher already emits classified results"
+  ],
+  "sources": [
+    {
+      "path": "https://github.com/xinglun/ORG-X/actions/runs/32717777698",
+      "reason": "The post-merge manual run reached normal publication but failed because the workflow received an empty CLI output file."
+    },
+    {
+      "path": ".github/workflows/weekly-radar.yml",
+      "reason": "The workflow captures CLI stdout with tee and rejects an empty or unclassified publication result before updating data."
+    },
+    {
+      "path": "src/main.rs",
+      "reason": "The CLI action dispatcher already emits classified success results; source inspection confirms the missing output is upstream in workflow branch selection."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Existing CLI and workflow regression-test boundary for Weekly Radar publication and recovery results."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json",
+      "reason": "Predecessor Contract defines the same-day canonical publication behavior that this corrective Work Item must preserve."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.json",
+      "reason": "Predecessor completion evidence establishes the changed-base successor boundary and immutable prior delivery evidence."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "delivery_reliability",
+      "user_visible_output"
+    ],
+    "reason": "A successful CLI result must remain visible to the workflow's stdout capture so a manual or scheduled publication can continue. The repair must not weaken the fail-closed publication guard or alter the already delivered archive transaction semantics.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "User confirmed the bounded CLI output guard fix on 2026-08-24"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item changes a production publication control boundary and requires focused regression coverage plus full project quality checks."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly approved the bounded successor design; the failed production run and repository sources provide a testable implementation boundary."
+  },
+  "preReviewWarnings": [
+    "Verify that successful CLI results are emitted on stdout and remain classified by the workflow without weakening the empty-output or publication-result guards.",
+    "Verify that failure paths remain non-zero and do not produce a false PUBLISHED, READY-TO-PUSH, or RECOVERED result."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "When a final run already exists for the requested date, the workflow still invokes the normal Weekly Radar CLI publication path instead of falling through to output validation with an empty capture file.",
+    "The workflow's existing empty-output and publication-classification guards continue to fail closed when the CLI fails or emits no success result.",
+    "A regression test covers the existing-final, same-date-pending, and no-existing-run branches and fails before the implementation change, then passes after the minimal fix.",
+    "No Telegram, data branch, weekly-radar-pending ref, Secret, credential, or immutable predecessor evidence is changed by this Work Item."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features."
+  ],
+  "intent": {
+    "problem": "The first post-merge manual Weekly Radar run for 2026-08-24 found an existing final run, printed that normal same-day replacement would proceed, but the workflow did not invoke cargo in that branch. It then inspected an untouched empty stdout capture and stopped before updating data, preventing the manual rerun that the predecessor intentionally permits.",
+    "constraints": [
+      "Preserve the predecessor's same-day latest-successful-update canonical semantics.",
+      "Keep Telegram delivery before archive publication and retain the workflow's fail-closed output and publication-result checks.",
+      "Do not access or persist sensitive configuration values and do not manually modify data or weekly-radar-pending.",
+      "Use a failing regression test before production-code changes and make the smallest scoped repair."
+    ],
+    "rationale": "The smallest safe repair is to invoke the existing normal CLI command in the existing-final branch, leaving CLI result formatting, acquisition, delivery, archive transactions, and fail-closed guards unchanged."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Normal publication is requested after an existing same-day final run.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "tests/weekly_radar_runtime.rs",
+        ".github/workflows/weekly-radar.yml"
+      ],
+      "expected": "The workflow invokes the normal CLI path, captures its classified result, and continues to the existing publication sequence.",
+      "verificationPlan": "Add a workflow-source regression assertion that the existing-final branch invokes the normal CLI command, run it before the fix to observe the failure, then run it after the fix and run the workflow-contract tests."
+    },
+    {
+      "scenario": "CLI failure or empty success result.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        ".github/workflows/weekly-radar.yml"
+      ],
+      "expected": "The process remains non-zero or the workflow rejects the empty/unclassified output; no false publication result is emitted.",
+      "verificationPlan": "Run existing CLI error-path tests and inspect the unchanged shell guards in the workflow source test."
+    }
+  ],
+  "predecessorWorkItem": {
+    "workItemId": "wi-weekly-radar-same-day-canonical-update",
+    "archiveOutcome": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.json",
+    "status": "closed",
+    "pr": {
+      "merged": true,
+      "mergeCommit": "7b19df71da14b2e4f9084c51af6ed344a01cf251"
+    },
+    "closure": {
+      "succeeded": true,
+      "localBranchDeleted": true,
+      "remoteBranchDeleted": true,
+      "baseSynchronized": true,
+      "evidence": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.archive-manifest.json"
+    },
+    "reason": "The defect was discovered during post-merge production validation after the predecessor was closed; this successor keeps the predecessor immutable and repairs only the newly observed CLI-to-workflow output boundary."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "xinglun",
+    "reason": "The user explicitly confirmed implementation of the bounded Weekly Radar workflow branch fix on 2026-08-24; approval is limited to the scoped workflow change and regression test."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 64
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-cli-output-guard.json",
+    "baseCommit": "7b19df71da14b2e4f9084c51af6ed344a01cf251",
+    "initialScopeDigest": "e637d2067b0e043de535dc6dfb453a354b0e59e3fcde2c5d424f580d263f9ea8",
+    "contractSkeletonDigest": "5a8f2cf20e3b615782edd27411600a2b76c476b6b3523b9ea3c26650653741c5"
+  }
+}

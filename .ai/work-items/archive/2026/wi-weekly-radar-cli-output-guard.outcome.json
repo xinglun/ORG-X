@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-cli-output-guard",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "7a7023448a44e8967e96dcb0a9e838d8ddf4774059a8095eeac99d6a4997a87f"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-cli-output-guard",
+    "contractDigest": "8b0b3c86c2ad275c38073e689f17eefa7b9d3c273197dc229e166e17a34915d5",
+    "summaryDigest": "c9dc07ed0480ac977778aee66515bffd36dea561fcbb06bb72b38048f2c65283",
+    "verificationDigest": "b6833fe4e33f60d41dd660d8338c5a28a5ff6134d9b8a548bc211fe7ffa70168",
+    "baseCommit": "7b19df71da14b2e4f9084c51af6ed344a01cf251",
+    "headCommit": "7b19df71da14b2e4f9084c51af6ed344a01cf251",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "d373c2b0d58d1ba1d2fd1191ce332264e211616778a5737e143f015a11c2e7ab",
+      "binding": {
+        "baseCommit": "7b19df71da14b2e4f9084c51af6ed344a01cf251",
+        "candidateHead": "7b19df71da14b2e4f9084c51af6ed344a01cf251",
+        "candidateTreeDigest": "5b9f87668ef4e612b238302d74326c1cdb6e143c9da1bec775f33b6bb0f45e37",
+        "candidateDiffDigest": "9c88a76c292aa4998a270f12ad8714d9c6de2bd8ac0dae8d9f857335c82b29c9"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-cli-output-guard generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-cli-output-guard generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-cli-output-guard",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
@@ -19,115 +42,174 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Local and hosted repository checks prove the branch invokes the CLI, but a post-merge non-dry-run must still confirm Telegram acceptance and non-secret data/pending bindings.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Add the existing normal Weekly Radar CLI invocation to the workflow branch that detects an existing final run, so same-day manual publication reaches the established output and archive guards.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": ".github/workflows/weekly-radar.yml",
-          "subject": "existing-final branch invokes the normal CLI and captures run_output"
-        },
-        {
-          "source": "tests/weekly_radar_runtime.rs",
-          "subject": "workflow regression assertion for existing-final branch"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Keep the existing final-run detection, explicit republish branch, same-date pending recovery branch, empty-output guard, publication classification guard, and data publication sequence; add only the missing normal CLI pipeline in the existing-final branch.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": ".github/workflows/weekly-radar.yml",
-          "subject": "ordered if/elif/else publication branches and fail-closed guards"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [
       {
-        "component": "Weekly Radar Actions workflow",
-        "detail": "Manual and scheduled runs with an existing final date now invoke normal publication instead of validating an untouched empty output capture.",
-        "status": "verified",
-        "evidence": [
+        "problem": "The existing-final branch logged the intended normal publication but did not invoke cargo, leaving run_output empty and stopping the run before publication.",
+        "action": "Added the existing normal CLI invocation and tee capture to that branch; the RED regression test now passes and the full runtime suite remains green.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+            "subject": "observedIssues[0] workflow branch control flow"
+          },
           {
             "source": ".github/workflows/weekly-radar.yml",
-            "subject": "same-date existing-final branch"
+            "subject": "observedIssues[0] workflow branch control flow"
           },
           {
             "source": "tests/weekly_radar_runtime.rs",
-            "subject": "task6_workflow_runs_normal_cli_when_same_date_final_run_exists"
+            "subject": "observedIssues[0] workflow branch control flow"
           }
-        ]
-      }
-    ],
-    "designDecisions": [
-      {
-        "decision": "Repair the workflow branch rather than alter CLI output formatting.",
-        "reason": "The CLI already prints classified results; the failed run's complete log showed the existing-final branch never invoked cargo.",
-        "status": "verified",
+        ],
         "evidence": [
-          {
-            "source": ".github/workflows/weekly-radar.yml",
-            "subject": "missing invocation in existing-final branch"
-          },
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
-            "subject": "failed run URL and redacted finding recorded in sources and observed issues"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "Branch sequencing",
-        "detail": "The existing-final path now runs the same cli_args publication command as the no-final path and tees stdout into the existing run_output guard before data-branch preparation.",
-        "status": "verified",
-        "evidence": [
+            "subject": "observedIssues[0] workflow branch control flow"
+          },
           {
             "source": ".github/workflows/weekly-radar.yml",
-            "subject": "existing-final normal publication command"
+            "subject": "observedIssues[0] workflow branch control flow"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[0] workflow branch control flow"
           }
-        ]
+        ],
+        "inference": false
       }
     ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "production validation",
+        "severity": "medium",
+        "title": "production validation",
+        "detail": "Local and hosted repository checks prove the branch invokes the CLI, but a post-merge non-dry-run must still confirm Telegram acceptance and non-secret data/pending bindings.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
     "evidence": [
       {
-        "claim": "The manual same-day rerun no longer stops with an untouched empty output capture when a final run already exists.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_runtime.rs",
         "subject": "task6_workflow_runs_normal_cli_when_same_date_final_run_exists"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Add the existing normal Weekly Radar CLI invocation to the workflow branch that detects an existing final run, so same-day manual publication reaches the established output and archive guards.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": ".github/workflows/weekly-radar.yml",
+            "subject": "existing-final branch invokes the normal CLI and captures run_output"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "workflow regression assertion for existing-final branch"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Keep the existing final-run detection, explicit republish branch, same-date pending recovery branch, empty-output guard, publication classification guard, and data publication sequence; add only the missing normal CLI pipeline in the existing-final branch.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": ".github/workflows/weekly-radar.yml",
+            "subject": "ordered if/elif/else publication branches and fail-closed guards"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Weekly Radar Actions workflow",
+          "detail": "Manual and scheduled runs with an existing final date now invoke normal publication instead of validating an untouched empty output capture.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".github/workflows/weekly-radar.yml",
+              "subject": "same-date existing-final branch"
+            },
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "task6_workflow_runs_normal_cli_when_same_date_final_run_exists"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Repair the workflow branch rather than alter CLI output formatting.",
+          "reason": "The CLI already prints classified results; the failed run's complete log showed the existing-final branch never invoked cargo.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".github/workflows/weekly-radar.yml",
+              "subject": "missing invocation in existing-final branch"
+            },
+            {
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+              "subject": "failed run URL and redacted finding recorded in sources and observed issues"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Branch sequencing",
+          "detail": "The existing-final path now runs the same cli_args publication command as the no-final path and tees stdout into the existing run_output guard before data-branch preparation.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".github/workflows/weekly-radar.yml",
+              "subject": "existing-final normal publication command"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The manual same-day rerun no longer stops with an untouched empty output capture when a final run already exists.",
+          "status": "verified",
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "task6_workflow_runs_normal_cli_when_same_date_final_run_exists"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -698,6 +780,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

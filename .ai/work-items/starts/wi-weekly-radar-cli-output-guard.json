@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-cli-output-guard",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-cli-output-guard.json",
+  "baseCommit": "7b19df71da14b2e4f9084c51af6ed344a01cf251",
+  "baseBranch": "wi/weekly-radar-cli-output-guard",
+  "startTimestamp": "2026-08-24T11:04:14.228612+00:00",
+  "initialScopeDigest": "e637d2067b0e043de535dc6dfb453a354b0e59e3fcde2c5d424f580d263f9ea8",
+  "contractSkeletonDigest": "5a8f2cf20e3b615782edd27411600a2b76c476b6b3523b9ea3c26650653741c5"
+}

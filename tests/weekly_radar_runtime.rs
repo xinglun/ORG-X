@@ -3370,6 +3370,28 @@ fn task6_workflow_runs_the_cli_and_rejects_empty_or_unpublished_output() {
 }
 
 #[test]
+fn task6_workflow_runs_normal_cli_when_same_date_final_run_exists() {
+    let workflow = task6_workflow_text();
+    let existing_final_start = workflow
+        .find("if [[ \"$REPORT_DRY_RUN\" != \"true\" && \"$data_final_run\" == \"true\" ]]")
+        .expect("existing-final branch should exist");
+    let existing_final_end = workflow[existing_final_start..]
+        .find("elif [[ \"$REPORT_DRY_RUN\" != \"true\" && \"$REPUBLISH_PUBLISHED\" == \"true\" ]]")
+        .map(|offset| existing_final_start + offset)
+        .expect("existing-final branch should be followed by republish guard");
+    let existing_final_branch = &workflow[existing_final_start..existing_final_end];
+
+    assert!(
+        existing_final_branch.contains("cargo run --release -- weekly-radar \"${cli_args[@]}\""),
+        "an existing final run must still invoke normal publication"
+    );
+    assert!(
+        existing_final_branch.contains("| tee \"$run_output\""),
+        "the existing-final publication result must be captured for validation"
+    );
+}
+
+#[test]
 fn task6_workflow_declares_explicit_republish_only_for_manual_validation() {
     let workflow = task6_workflow_text();
 

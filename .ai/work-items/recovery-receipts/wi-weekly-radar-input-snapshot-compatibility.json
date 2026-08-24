@@ -1,0 +1,48 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.archive-manifest.json",
+      "sha256": "314d2d31b0c0e452d0e63720b3c113cbad1bcbe06e9bd1311e61948e1b1720ad"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.contract.json",
+      "sha256": "cf59807e18a9dc63b756006badf3b2aa4b53cf621e41212a0fc491982facaf63"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.outcome.json",
+      "sha256": "bcb3f2b42e91a15c3f2f097a11e6eeba5352a3e4197ce3f211434a40300d97ff"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+      "sha256": "1598e4811abf1a936759ae1811845d79ba2167fc121eb48734dde8210bc86a65"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=686d812a1659752b458cb38c56d3da43861a521a"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "34d5bbe9545c7cff51b068069c34638be9f065b88dc1f153a634f26dd687c877"
+  },
+  "humanAuthorization": {
+    "reference": "Human conversation confirmation on 2026-08-24: execute the successor WI plan and complete its governed lifecycle.",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/65",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-24T08:49:57.273986+00:00",
+  "prBaseCommit": "686d812a1659752b458cb38c56d3da43861a521a",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
+  ],
+  "workItemId": "wi-weekly-radar-input-snapshot-compatibility"
+}

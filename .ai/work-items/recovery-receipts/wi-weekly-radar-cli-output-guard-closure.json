@@ -1,0 +1,43 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.archive-manifest.json",
+      "sha256": "6089fdd9d9916ae3ca7f27dca023780bfedbcb553dd1aba13fef049e1f32ee61"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.contract.json",
+      "sha256": "4e19cc8b70948bf7725ea22bce314970e237e618ecaafd7c6af0ff057c42dac4"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.outcome.json",
+      "sha256": "a9cfc2ecac7d51b353c966e51e335e25fc050c4e311dcee939678f7eabeedc74"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+      "sha256": "b740e1a1f5b885532f031c984738ee2c813462dff9a94e3a8db2fd99e73c33a4"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=d6b080459ee3000e1e6530b8e5d562930eafb740"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "7b1d4cf2b960ba402f7f56492d3503f08b9d48a5d7e912489a1a086bcb054106"
+  },
+  "humanAuthorization": {
+    "reference": "user-confirmation-2026-08-24: \u597d\uff0c\u7ee7\u7eed\u5e76\u5b8c\u6210 successor WI \u6536\u53e3",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/70",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-24T11:55:38.671868+00:00",
+  "prBaseCommit": "d6b080459ee3000e1e6530b8e5d562930eafb740",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/work-items/upgrade_ai_cockpit.json"
+  ],
+  "workItemId": "wi-weekly-radar-cli-output-guard-closure"
+}

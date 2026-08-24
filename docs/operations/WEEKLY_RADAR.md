@@ -12,6 +12,12 @@ Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置�
 
 发布只有在报告通过一手证据检查、输入快照已经持久化、Telegram receipt 与 report ID 绑定后才会写入 archive。输入快照位于 `weekly-radar/snapshots/YYYY-MM-DD.input.json`，最终渲染 snapshot 仍位于 `weekly-radar/snapshots/YYYY-MM-DD.json`。
 
+### 已有输入快照的兼容性
+
+以前保存的输入快照仍可用于重试和“已发布”只读验证。旧快照中没有记录“该来源不适用”计数时，系统按 `0` 处理；新快照在确实存在该状态时会保留计数。这样不会改变旧报告的身份，也不会要求重新获取来源。
+
+输入快照的身份仍然必须与内容一致。只要日期、事实、来源覆盖、判断或其他内容被改动，或者快照格式损坏，系统就会在重试、Telegram 发送和 archive/data 写入之前停止。不要手工编辑历史快照；如果校验失败，应保留原文件并检查对应的 `manifest`、receipt 和 transaction 记录。
+
 ## 准备工作
 
 - 本地运行需要 Rust stable、Cargo、Git，以及仓库中的 `config/weekly_radar/companies.json`。

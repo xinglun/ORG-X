@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-input-snapshot-compatibility",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "d14beac64b60e6c8ce5fc14ecc9455e01e3257991836ee8c7f869d186d94bbd5"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-input-snapshot-compatibility",
+    "contractDigest": "cf59807e18a9dc63b756006badf3b2aa4b53cf621e41212a0fc491982facaf63",
+    "summaryDigest": "1598e4811abf1a936759ae1811845d79ba2167fc121eb48734dde8210bc86a65",
+    "verificationDigest": "05217620bfeaf01c574aae10ec8780593873634d67278a08a794f682e06fef52",
+    "baseCommit": "686d812a1659752b458cb38c56d3da43861a521a",
+    "headCommit": "686d812a1659752b458cb38c56d3da43861a521a",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "729b85e7c1af522d3fc9c456f6aa623182bb9fe03bf9ac23aad2812832a97d8f",
+      "binding": {
+        "baseCommit": "686d812a1659752b458cb38c56d3da43861a521a",
+        "candidateHead": "686d812a1659752b458cb38c56d3da43861a521a",
+        "candidateTreeDigest": "e61d259c0b907ca5b09dd0f5fc3101dcbc03830845ec67d0e7e97834862390a9",
+        "candidateDiffDigest": "99478fc307f3ef494ffb7b897e5a101c018a4b3690bcb65d13357251f556d7eb"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-input-snapshot-compatibility generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-input-snapshot-compatibility generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-input-snapshot-compatibility",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
@@ -22,130 +45,182 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "high",
-      "detail": "The post-merge real event=schedule run has not yet occurred; this Work Item proves compatibility locally and leaves the production schedule receipt as a separate validation gate.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "The compatibility rule covers the known omitted zero-valued not_applicable field. Other schema changes still require explicit migration evidence and remain rejected.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Make the zero-valued not_applicable field serialization-compatible with the legacy input identity while retaining non-zero state.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/model.rs",
-          "subject": "serialization compatibility boundary"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Deserialize continues to default an omitted field to zero; serialization omits only zero and includes non-zero values, so identity validation remains deterministic.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/model.rs",
-          "subject": "SourceCoverage serde shape"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
       {
-        "component": "Input snapshot persistence and read-only committed-run verification",
-        "detail": "Existing archive consumers validate the compatible identity and retain manifest binding.",
-        "status": "verified",
+        "claim": "production schedule evidence",
+        "severity": "high",
+        "title": "production schedule evidence",
+        "detail": "The post-merge real event=schedule run has not yet occurred; this Work Item proves compatibility locally and leaves the production schedule receipt as a separate validation gate.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/archive.rs",
-            "subject": "identity and manifest validation consumers"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "A post-merge GitHub Actions event=schedule run",
+          "Non-secret report, input snapshot, receipt, manifest, and data commit bindings"
+        ],
+        "decisionOwner": "xinglun / ORG-X product owner",
+        "mitigation": "Keep the production schedule validation as a separate gate and do not claim Telegram delivery or data-ref advancement from local tests or workflow_dispatch diagnostics.",
+        "acceptanceStatus": "accepted_with_follow_up"
       },
       {
-        "component": "Weekly Radar reader operations guidance",
-        "detail": "The operations guide explains legacy compatibility and the tamper boundary.",
-        "status": "verified",
+        "claim": "legacy wire-shape boundary",
+        "severity": "medium",
+        "title": "legacy wire-shape boundary",
+        "detail": "The compatibility rule covers the known omitted zero-valued not_applicable field. Other schema changes still require explicit migration evidence and remain rejected.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "legacy compatibility and tamper boundary"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "Legacy snapshot compatibility test",
+          "Current non-zero field round-trip test",
+          "Tamper rejection test"
+        ],
+        "decisionOwner": "xinglun / ORG-X product owner",
+        "mitigation": "Keep the identity digest check fail-closed and add a new compatibility Work Item for any future persisted schema change.",
+        "acceptanceStatus": "accepted"
       }
     ],
-    "designDecisions": [
-      {
-        "decision": "Limit compatibility to the known omitted zero-valued field and do not relax identity checks for other changes.",
-        "reason": "The legacy and tamper scenarios exercise the exact compatibility and fail-closed boundaries.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "legacy and tamper scenarios"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "serialization implementation",
-        "detail": "Use a private zero predicate with serde default and skip_serializing_if; no public API or provider behavior changes.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/model.rs",
-            "subject": "implementation detail"
-          }
-        ]
-      }
-    ],
+    "humanDecisions": [],
     "evidence": [
       {
-        "claim": "Compatibility implementation and tests are present.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "src/features/weekly_radar/runtime/model.rs",
         "subject": "compatibility implementation"
       },
       {
-        "claim": "Legacy and current snapshot behavior is covered.",
-        "status": "verified",
         "source": "tests/weekly_radar_runtime.rs",
         "subject": "snapshot compatibility tests"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Make the zero-valued not_applicable field serialization-compatible with the legacy input identity while retaining non-zero state.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "serialization compatibility boundary"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Deserialize continues to default an omitted field to zero; serialization omits only zero and includes non-zero values, so identity validation remains deterministic.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "SourceCoverage serde shape"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Input snapshot persistence and read-only committed-run verification",
+          "detail": "Existing archive consumers validate the compatible identity and retain manifest binding.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/archive.rs",
+              "subject": "identity and manifest validation consumers"
+            }
+          ]
+        },
+        {
+          "component": "Weekly Radar reader operations guidance",
+          "detail": "The operations guide explains legacy compatibility and the tamper boundary.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "legacy compatibility and tamper boundary"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Limit compatibility to the known omitted zero-valued field and do not relax identity checks for other changes.",
+          "reason": "The legacy and tamper scenarios exercise the exact compatibility and fail-closed boundaries.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "legacy and tamper scenarios"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "serialization implementation",
+          "detail": "Use a private zero predicate with serde default and skip_serializing_if; no public API or provider behavior changes.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/model.rs",
+              "subject": "implementation detail"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "Compatibility implementation and tests are present.",
+          "status": "verified",
+          "source": "src/features/weekly_radar/runtime/model.rs",
+          "subject": "compatibility implementation"
+        },
+        {
+          "claim": "Legacy and current snapshot behavior is covered.",
+          "status": "verified",
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "snapshot compatibility tests"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -805,6 +880,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

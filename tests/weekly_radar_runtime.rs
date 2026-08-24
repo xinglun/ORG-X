@@ -40,6 +40,7 @@ use org_x::features::weekly_radar::runtime::sources::{
 use org_x::features::weekly_radar::runtime::telegram::{
     send_rendered_report_with_transport, TelegramError, TelegramRetryPolicy,
 };
+use serde_json::Value;
 
 #[test]
 fn registry_validation_preserves_optional_source_semantics() {
@@ -1617,6 +1618,56 @@ fn task4_report() -> RenderedReport {
     render_report(&task4_report_input())
 }
 
+fn legacy_input_snapshot_id(input: &RuntimeReportInput) -> String {
+    let bytes = serde_json::to_vec(input).expect("legacy input should be serializable");
+    let mut legacy_bytes = Vec::with_capacity(bytes.len());
+    let mut cursor = 0;
+    let field = b",\"not_applicable\":0";
+    while cursor < bytes.len() {
+        if bytes[cursor..].starts_with(field) {
+            cursor += field.len();
+        } else {
+            legacy_bytes.push(bytes[cursor]);
+            cursor += 1;
+        }
+    }
+    let mut digest = 14_695_981_039_346_656_037_u64;
+    for byte in legacy_bytes {
+        digest ^= u64::from(byte);
+        digest = digest.wrapping_mul(1_099_511_628_211);
+    }
+    format!("wr-input-{digest:016x}")
+}
+
+fn rewrite_snapshot_as_legacy(path: &Path) -> String {
+    let content = fs::read_to_string(path).expect("snapshot should be readable");
+    let mut snapshot: Value = serde_json::from_str(&content).expect("snapshot should be JSON");
+    let coverage = snapshot
+        .get_mut("input")
+        .and_then(|input| input.get_mut("source_coverage"))
+        .and_then(Value::as_array_mut)
+        .expect("snapshot should contain source coverage");
+    for entry in coverage {
+        entry
+            .as_object_mut()
+            .expect("source coverage entry should be an object")
+            .remove("not_applicable");
+    }
+    let input: RuntimeReportInput = serde_json::from_value(
+        snapshot
+            .get("input")
+            .cloned()
+            .expect("snapshot should contain input"),
+    )
+    .expect("legacy input should decode");
+    let snapshot_id = legacy_input_snapshot_id(&input);
+    snapshot["snapshot_id"] = Value::String(snapshot_id.clone());
+    let rewritten =
+        serde_json::to_string_pretty(&snapshot).expect("legacy snapshot should encode") + "\n";
+    fs::write(path, rewritten).expect("legacy snapshot should be written");
+    snapshot_id
+}
+
 #[test]
 fn task4_report_is_deterministic_and_uses_the_mobile_first_contract() {
     let first = task4_report();
@@ -2099,6 +2150,114 @@ fn task5_input_snapshot_round_trips_and_is_idempotent() {
     assert!(loaded.snapshot_id().starts_with("wr-input-"));
 
     fs::remove_dir_all(root).expect("input snapshot fixture should be removable");
+}
+
+#[test]
+fn task5_legacy_input_snapshot_without_not_applicable_remains_verifiable() {
+    let root = task4_temp_root("legacy-input-snapshot");
+    let input = task4_report_input();
+    persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+        .expect("input snapshot should persist");
+    let path = root.join("weekly-radar/snapshots/2026-08-17.input.json");
+    let legacy_id = rewrite_snapshot_as_legacy(&path);
+
+    let loaded = load_input_snapshot(&root, "data", input.as_of())
+        .expect("legacy input snapshot should remain verifiable");
+    assert_eq!(loaded.snapshot_id(), legacy_id);
+    assert!(loaded
+        .input()
+        .source_coverage()
+        .iter()
+        .all(|coverage| coverage.not_applicable() == 0));
+
+    fs::remove_dir_all(root).expect("legacy snapshot fixture should be removable");
+}
+
+#[test]
+fn task5_new_not_applicable_input_snapshot_round_trips_with_bound_identity() {
+    let root = task4_temp_root("new-input-snapshot");
+    let mut input = RuntimeReportInput::new("2026-08-17").expect("date should be valid");
+    input
+        .add_source_coverage(
+            SourceCoverage::new_with_states("gdelt-discovery", 5, 1, 0, 1)
+                .expect("coverage should be valid"),
+        )
+        .expect("coverage should be retained");
+
+    let snapshot = persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+        .expect("new input snapshot should persist");
+    let path = root.join("weekly-radar/snapshots/2026-08-17.input.json");
+    let content = fs::read_to_string(path).expect("new snapshot should be readable");
+    assert!(content.contains("\"not_applicable\": 1"));
+
+    let loaded = load_input_snapshot(&root, "data", input.as_of())
+        .expect("new input snapshot should round-trip");
+    assert_eq!(loaded, snapshot);
+    assert_eq!(loaded.input().source_coverage()[0].not_applicable(), 1);
+
+    fs::remove_dir_all(root).expect("new snapshot fixture should be removable");
+}
+
+#[test]
+fn task5_tampered_input_snapshot_is_rejected_before_archive_side_effects() {
+    let root = task4_temp_root("tampered-input-snapshot");
+    let input = task4_report_input();
+    persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+        .expect("input snapshot should persist");
+    let path = root.join("weekly-radar/snapshots/2026-08-17.input.json");
+    let content = fs::read_to_string(&path).expect("snapshot should be readable");
+    let mut snapshot: Value = serde_json::from_str(&content).expect("snapshot should be JSON");
+    snapshot["input"]["facts"][0]["value"] = Value::String("tampered".to_owned());
+    fs::write(
+        &path,
+        serde_json::to_string_pretty(&snapshot).expect("tampered snapshot should encode") + "\n",
+    )
+    .expect("tampered snapshot should be written");
+
+    let error = load_input_snapshot(&root, "data", input.as_of())
+        .expect_err("tampered snapshot must be rejected");
+    assert!(matches!(
+        error,
+        ArchiveError::InvalidInputSnapshot {
+            reason: "input identity does not match content"
+        }
+    ));
+    assert!(!root.join("weekly-radar/reports").exists());
+    assert!(!root.join("weekly-radar/receipts").exists());
+
+    fs::remove_dir_all(root).expect("tampered snapshot fixture should be removable");
+}
+
+#[test]
+fn task5_read_only_verification_accepts_a_legacy_input_snapshot() {
+    let root = task4_temp_root("legacy-committed-run");
+    let input = task4_report_input();
+    persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+        .expect("input snapshot should persist");
+    let input_path = root.join("weekly-radar/snapshots/2026-08-17.input.json");
+    let legacy_id = rewrite_snapshot_as_legacy(&input_path);
+    let legacy_snapshot = load_input_snapshot(&root, "data", input.as_of())
+        .expect("legacy snapshot should load before archive verification");
+    let report = render_report_in_language(legacy_snapshot.input(), legacy_snapshot.language());
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("fixture delivery should succeed");
+    write_run_with_input_snapshot(&root, "data", &report, &receipt, Some(&legacy_snapshot))
+        .expect("legacy snapshot run should archive");
+
+    let manifest = org_x::features::weekly_radar::runtime::archive::verify_committed_run_read_only(
+        &root,
+        "data",
+        input.as_of(),
+    )
+    .expect("read-only verification should accept the legacy snapshot");
+    assert_eq!(manifest.snapshot_id(), Some(legacy_id.as_str()));
+
+    fs::remove_dir_all(root).expect("legacy committed fixture should be removable");
 }
 
 #[test]

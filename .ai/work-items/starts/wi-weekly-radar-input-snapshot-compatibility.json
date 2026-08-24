@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-input-snapshot-compatibility",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-input-snapshot-compatibility.json",
+  "baseCommit": "686d812a1659752b458cb38c56d3da43861a521a",
+  "baseBranch": "codex/wi-weekly-radar-input-snapshot-compatibility",
+  "startTimestamp": "2026-08-24T08:20:38.729915+00:00",
+  "initialScopeDigest": "71d45ed95da85d4c5f7776b83c7131ed945eba38f3a3001e183cf15fb4826711",
+  "contractSkeletonDigest": "e52728115590b8dff08a854b842e24e4cd304f448d00a0a44d4a23a0294bedab"
+}

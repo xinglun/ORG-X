@@ -395,6 +395,10 @@ impl SourceFailure {
     }
 }
 
+fn is_zero(value: &usize) -> bool {
+    *value == 0
+}
+
 /// Coverage counters for one configured source family.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub struct SourceCoverage {
@@ -403,7 +407,7 @@ pub struct SourceCoverage {
     available: usize,
     #[serde(default)]
     not_configured: usize,
-    #[serde(default)]
+    #[serde(default, skip_serializing_if = "is_zero")]
     not_applicable: usize,
 }
 

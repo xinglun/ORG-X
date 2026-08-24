@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-source-coverage",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "373eb08aa87da284b44f8167f927195e0ce5dbcc21a3aa496321cc3e1b321703"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-source-coverage",
+    "contractDigest": "e7739018c817e55cc207e20ea1d198d4ac5488c4e5d105fb09ba6fc4cb35065b",
+    "summaryDigest": "a52c559b2d28b5fe3847eae809cec051c950266d0c835578797e79560b0848d1",
+    "verificationDigest": "97967ddbf0c1e38c0b084b3734d9d3e5b29ceccb080e454c79d96bd274458cba",
+    "baseCommit": "4bf5bf34332d3cbbd798a1f45fb232f08a45a58b",
+    "headCommit": "006ab585c238f2400a7fff5b16acb32287da57cc",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "38eb690e84b20966c24d581084c30bc7fdc004d40550d56b05e8ca9caed1bee9",
+      "binding": {
+        "baseCommit": "4bf5bf34332d3cbbd798a1f45fb232f08a45a58b",
+        "candidateHead": "006ab585c238f2400a7fff5b16acb32287da57cc",
+        "candidateTreeDigest": "4a6016676274ec354a51cf7610dc9f3571cd574e3dcd0a442cd64a8ca8953718",
+        "candidateDiffDigest": "f90075b36126f3d365b881fcf8fd19ff91cfb70f76b2981db7f669583491e50a"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-source-coverage generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-source-coverage generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-source-coverage",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
@@ -28,220 +51,276 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "f04e266c8f7466b6a1524d2612dea710ace38d51bd8db35dd81228a2da25105b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "1d343a0ae6b315c3b12b8f5190021d821b469bc9cac8de74a7bdef06fc0c619b"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "f04e266c8f7466b6a1524d2612dea710ace38d51bd8db35dd81228a2da25105b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "1d343a0ae6b315c3b12b8f5190021d821b469bc9cac8de74a7bdef06fc0c619b"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "The report must be useful to a person while keeping the system reference independent from that person's own view.",
-    "The immediate need is to explain report content and coverage gaps rather than claim success from a future scheduled run."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "This Work Item shares reader documentation paths with the content-quality Work Item; it must synchronize to the updated base before implementation to avoid overlapping history.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "high",
-      "detail": "Live providers may change response behavior after code verification; bounded errors and redacted diagnostics must remain the only basis for availability labels.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Extend the existing provider-neutral source model with explicit not-applicable coverage and safe status reasons, then bind those states through acquisition, report, snapshot, and reader documentation.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/sources.rs",
-          "subject": "explicit source taxonomy and safe observation reasons"
-        },
-        {
-          "source": "src/main.rs",
-          "subject": "source and SEC coverage aggregation"
-        },
-        {
-          "source": "tests/weekly_radar_source_coverage.rs",
-          "subject": "source-state and redaction acceptance tests"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Configured adapters retain bounded, provider-neutral observations; unavailable diagnostics use fixed safe reasons, absent SEC configuration avoids a request, GDELT becomes explicit not-applicable when no primary context exists, and report/snapshot counters keep not-applicable separate from unavailable.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/sources.rs",
-          "subject": "bounded source observation construction"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/model.rs",
-          "subject": "coverage counter invariants"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/report.rs",
-          "subject": "localized report and snapshot projection"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Weekly Radar source adapters and runtime aggregation",
-        "detail": "Preserves configured, unavailable, not configured, not applicable, unknown, and discovery-only states without guessed endpoints or response-body diagnostics.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/sources.rs",
-            "subject": "adapter state taxonomy"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "f04e266c8f7466b6a1524d2612dea710ace38d51bd8db35dd81228a2da25105b"
           },
           {
-            "source": "src/main.rs",
-            "subject": "runtime aggregation"
-          }
-        ]
-      },
-      {
-        "component": "Weekly Radar report and snapshot",
-        "detail": "Shows not-applicable separately and keeps safe source-failure reasons bound to the machine-readable snapshot.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/report.rs",
-            "subject": "reader-facing coverage and snapshot fields"
-          },
-          {
-            "source": "tests/weekly_radar_source_coverage.rs",
-            "subject": "report and snapshot acceptance"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "1d343a0ae6b315c3b12b8f5190021d821b469bc9cac8de74a7bdef06fc0c619b"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "resolutions": [
       {
-        "decision": "Represent GDELT as not applicable when no configured primary source context exists.",
-        "reason": "A skipped observation hid the distinction between an inapplicable discovery family and an unavailable configured source.",
-        "status": "verified",
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "not-applicable regression"
-          }
-        ]
-      },
-      {
-        "decision": "Persist only fixed, safe status reasons for source observations and SEC failures.",
-        "reason": "Readers need actionable state context without exposing response bodies, credentials, or sensitive headers.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_source_coverage.rs",
-            "subject": "secret-safe diagnostics"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "f04e266c8f7466b6a1524d2612dea710ace38d51bd8db35dd81228a2da25105b"
           },
           {
-            "source": "src/features/weekly_radar/runtime/sec.rs",
-            "subject": "redacted HTTP failure display"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "1d343a0ae6b315c3b12b8f5190021d821b469bc9cac8de74a7bdef06fc0c619b"
           }
         ]
       }
     ],
-    "technicalDetails": [
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
       {
-        "topic": "Verification",
-        "detail": "make check, make check-docs-metadata, cargo test --test weekly_radar_source_coverage --test weekly_radar_runtime, and cargo test --all passed.",
-        "status": "verified",
+        "claim": "shared documentation path",
+        "severity": "medium",
+        "title": "shared documentation path",
+        "detail": "This Work Item shares reader documentation paths with the content-quality Work Item; it must synchronize to the updated base before implementation to avoid overlapping history.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "Makefile",
-            "subject": "format, clippy, and all Rust tests"
-          },
-          {
-            "source": "scripts/check_docs_metadata.py",
-            "subject": "reader document metadata"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
+      },
+      {
+        "claim": "external source behavior",
+        "severity": "high",
+        "title": "external source behavior",
+        "detail": "Live providers may change response behavior after code verification; bounded errors and redacted diagnostics must remain the only basis for availability labels.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "Full Rust and source-coverage test results",
+          "User-facing source-state documentation",
+          "A later production schedule run with non-secret source-status artifacts"
+        ],
+        "decisionOwner": "xinglun / ORG-X product owner",
+        "mitigation": "Keep provider responses bounded, classify failures with safe diagnostics, preserve discovery-only and unavailable states, and require a later production validation before claiming live coverage completeness.",
+        "acceptanceStatus": "accepted_with_follow_up"
       }
+    ],
+    "humanDecisions": [
+      "The report must be useful to a person while keeping the system reference independent from that person's own view.",
+      "The immediate need is to explain report content and coverage gaps rather than claim success from a future scheduled run."
     ],
     "evidence": [
       {
-        "claim": "Source-state taxonomy and safe diagnostics are implemented and tested.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_source_coverage.rs",
         "subject": "source coverage acceptance suite"
       },
       {
-        "claim": "Full Rust quality checks passed.",
-        "status": "verified",
         "source": "Makefile",
         "subject": "make check entrypoint"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "f04e266c8f7466b6a1524d2612dea710ace38d51bd8db35dd81228a2da25105b"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "1d343a0ae6b315c3b12b8f5190021d821b469bc9cac8de74a7bdef06fc0c619b"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Extend the existing provider-neutral source model with explicit not-applicable coverage and safe status reasons, then bind those states through acquisition, report, snapshot, and reader documentation.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/sources.rs",
+            "subject": "explicit source taxonomy and safe observation reasons"
+          },
+          {
+            "source": "src/main.rs",
+            "subject": "source and SEC coverage aggregation"
+          },
+          {
+            "source": "tests/weekly_radar_source_coverage.rs",
+            "subject": "source-state and redaction acceptance tests"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Configured adapters retain bounded, provider-neutral observations; unavailable diagnostics use fixed safe reasons, absent SEC configuration avoids a request, GDELT becomes explicit not-applicable when no primary context exists, and report/snapshot counters keep not-applicable separate from unavailable.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/sources.rs",
+            "subject": "bounded source observation construction"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "coverage counter invariants"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "localized report and snapshot projection"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Weekly Radar source adapters and runtime aggregation",
+          "detail": "Preserves configured, unavailable, not configured, not applicable, unknown, and discovery-only states without guessed endpoints or response-body diagnostics.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/sources.rs",
+              "subject": "adapter state taxonomy"
+            },
+            {
+              "source": "src/main.rs",
+              "subject": "runtime aggregation"
+            }
+          ]
+        },
+        {
+          "component": "Weekly Radar report and snapshot",
+          "detail": "Shows not-applicable separately and keeps safe source-failure reasons bound to the machine-readable snapshot.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/report.rs",
+              "subject": "reader-facing coverage and snapshot fields"
+            },
+            {
+              "source": "tests/weekly_radar_source_coverage.rs",
+              "subject": "report and snapshot acceptance"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Represent GDELT as not applicable when no configured primary source context exists.",
+          "reason": "A skipped observation hid the distinction between an inapplicable discovery family and an unavailable configured source.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "not-applicable regression"
+            }
+          ]
+        },
+        {
+          "decision": "Persist only fixed, safe status reasons for source observations and SEC failures.",
+          "reason": "Readers need actionable state context without exposing response bodies, credentials, or sensitive headers.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_source_coverage.rs",
+              "subject": "secret-safe diagnostics"
+            },
+            {
+              "source": "src/features/weekly_radar/runtime/sec.rs",
+              "subject": "redacted HTTP failure display"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Verification",
+          "detail": "make check, make check-docs-metadata, cargo test --test weekly_radar_source_coverage --test weekly_radar_runtime, and cargo test --all passed.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "Makefile",
+              "subject": "format, clippy, and all Rust tests"
+            },
+            {
+              "source": "scripts/check_docs_metadata.py",
+              "subject": "reader document metadata"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "Source-state taxonomy and safe diagnostics are implemented and tested.",
+          "status": "verified",
+          "source": "tests/weekly_radar_source_coverage.rs",
+          "subject": "source coverage acceptance suite"
+        },
+        {
+          "claim": "Full Rust quality checks passed.",
+          "status": "verified",
+          "source": "Makefile",
+          "subject": "make check entrypoint"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1025,6 +1104,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

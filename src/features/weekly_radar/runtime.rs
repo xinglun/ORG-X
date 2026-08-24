@@ -75,7 +75,9 @@ pub fn normalize_source_observation(
         }
         SourceStatus::Known | SourceStatus::DiscoveryOnly => FactStatus::Unconfirmed,
         SourceStatus::Unknown => FactStatus::Unknown,
-        SourceStatus::Unavailable | SourceStatus::NotConfigured => FactStatus::Unavailable,
+        SourceStatus::Unavailable | SourceStatus::NotConfigured | SourceStatus::NotApplicable => {
+            FactStatus::Unavailable
+        }
     };
     let confidence = match status {
         FactStatus::Known => Confidence::High,

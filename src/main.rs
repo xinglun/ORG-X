@@ -228,6 +228,7 @@ struct CoverageCounts {
     expected: BTreeSet<String>,
     available: BTreeSet<String>,
     not_configured: BTreeSet<String>,
+    not_applicable: BTreeSet<String>,
 }
 
 struct AcquiredRuntimeInput {
@@ -255,25 +256,29 @@ fn acquire_runtime_input(
             .map_err(|error| CliError::Failure(error.to_string()))?;
         let sec_coverage = coverage.entry("sec".to_owned()).or_default();
         sec_coverage.expected.insert(company.id().to_owned());
-        match SecClient::collect(company, http, sec_user_agent) {
-            Ok(evidence) => {
-                sec_coverage.available.insert(company.id().to_owned());
-                for fact in evidence.facts() {
-                    if fact.status() == &FactStatus::Known {
-                        has_primary_evidence = true;
+        if company.sec_cik().is_none() {
+            sec_coverage.not_configured.insert(company.id().to_owned());
+        } else {
+            match SecClient::collect(company, http, sec_user_agent) {
+                Ok(evidence) => {
+                    sec_coverage.available.insert(company.id().to_owned());
+                    for fact in evidence.facts() {
+                        if fact.status() == &FactStatus::Known {
+                            has_primary_evidence = true;
+                        }
+                        input
+                            .add_fact(fact.clone())
+                            .map_err(|error| CliError::Failure(error.to_string()))?;
                     }
+                }
+                Err(error) => {
                     input
-                        .add_fact(fact.clone())
+                        .add_source_failure(
+                            SourceFailure::new("sec", company.id(), error.to_string())
+                                .map_err(|error| CliError::Failure(error.to_string()))?,
+                        )
                         .map_err(|error| CliError::Failure(error.to_string()))?;
                 }
-            }
-            Err(error) => {
-                input
-                    .add_source_failure(
-                        SourceFailure::new("sec", company.id(), error.to_string())
-                            .map_err(|error| CliError::Failure(error.to_string()))?,
-                    )
-                    .map_err(|error| CliError::Failure(error.to_string()))?;
             }
         }
 
@@ -286,13 +291,20 @@ fn acquire_runtime_input(
             source_coverage.expected.insert(company.id().to_owned());
             if !matches!(
                 observation.status(),
-                SourceStatus::Unavailable | SourceStatus::NotConfigured
+                SourceStatus::Unavailable
+                    | SourceStatus::NotConfigured
+                    | SourceStatus::NotApplicable
             ) {
                 available_kinds.insert(observation.kind().as_str());
             }
             if observation.status() == SourceStatus::NotConfigured {
                 source_coverage
                     .not_configured
+                    .insert(company.id().to_owned());
+            }
+            if observation.status() == SourceStatus::NotApplicable {
+                source_coverage
+                    .not_applicable
                     .insert(company.id().to_owned());
             }
             if observation.is_authoritative() && observation.status() == SourceStatus::Known {
@@ -320,11 +332,12 @@ fn acquire_runtime_input(
     for (source, counts) in coverage {
         input
             .add_source_coverage(
-                SourceCoverage::new_with_not_configured(
+                SourceCoverage::new_with_states(
                     source,
                     counts.expected.len(),
                     counts.available.len(),
                     counts.not_configured.len(),
+                    counts.not_applicable.len(),
                 )
                 .map_err(|error| CliError::Failure(error.to_string()))?,
             )

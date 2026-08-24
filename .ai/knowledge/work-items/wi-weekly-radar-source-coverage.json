@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-source-coverage",
+  "title": "Weekly Radar数据来源覆盖改善",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Extend the existing provider-neutral source model with explicit not-applicable coverage and safe status reasons, then bind those states through acquisition, report, snapshot, and reader documentation.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+    ".ai/work-items/starts/wi-weekly-radar-source-coverage.json",
+    "src/main.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/weekly_radar_source_coverage.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/CAPABILITIES.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Represent GDELT as not applicable when no configured primary source context exists.",
+      "reason": "A skipped observation hid the distinction between an inapplicable discovery family and an unavailable configured source.",
+      "status": "verified"
+    },
+    {
+      "decision": "Persist only fixed, safe status reasons for source observations and SEC failures.",
+      "reason": "Readers need actionable state context without exposing response bodies, credentials, or sensitive headers.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_source_coverage.rs",
+      "digest": "ebf0e065129c27e0d8849524e9383ff3c09ab78446041be59d0819bb62f2b74c"
+    },
+    {
+      "type": "code",
+      "path": "Makefile",
+      "digest": "ed2d7675c8d51503ac3e1bf178357508d4fee04bbefd3eaa7c00f6c809a1b659"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/sources.rs",
+      "digest": "3ac91b1565a347b40d2ea05633a1f3a21e931a815055630d3403cf612f7e388b"
+    },
+    {
+      "type": "code",
+      "path": "src/main.rs",
+      "digest": "2869a288f0cc65ef3ddedd4e971b6386f67ccb3d4c5b9a3c7b761ac57a48e924"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "digest": "214f3ebbc213e335fdb0fd9466c50a84818b06a8891a261d3914b21612b39cd9"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "digest": "9cb6a87ce535c07e9ea0cd6662392183ff4734e66401908e9c9ea05103343b12"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "1f93fbd0ee57916858f32bf0f2a5b2747f0556d0e459d46df5c77ba920b33b2c"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/sec.rs",
+      "digest": "b5baa35a40c16f42d85fe6c665a4242ac368c7c98c5e173e4b3770987ea33794"
+    },
+    {
+      "type": "code",
+      "path": "scripts/check_docs_metadata.py",
+      "digest": "b9e6e05420f93b8364cb283a1a7415496698c328bd7c204c52bbbcae959705fe"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.contract.json",
+    "contractDigest": "e7739018c817e55cc207e20ea1d198d4ac5488c4e5d105fb09ba6fc4cb35065b",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json",
+    "summaryDigest": "a52c559b2d28b5fe3847eae809cec051c950266d0c835578797e79560b0848d1",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.outcome.json",
+    "outcomeDigest": "a5a956f6936a5ab1c10ccf17664d733c2c473b9718f363e047d24c822d8e95e1"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

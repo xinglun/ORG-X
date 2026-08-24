@@ -40,6 +40,14 @@
       "components": [],
       "state": "verified",
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
+    },
+    {
+      "workItemId": "wi-weekly-radar-source-coverage",
+      "title": "Weekly Radar数据来源覆盖改善",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
     }
   ]
 }

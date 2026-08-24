@@ -66,6 +66,8 @@ pub enum SourceStatus {
     Unavailable,
     /// The optional source was not configured for this company.
     NotConfigured,
+    /// The source family does not apply because no primary source context is configured.
+    NotApplicable,
     /// The record is intentionally limited to discovery and corroboration.
     DiscoveryOnly,
 }
@@ -78,6 +80,7 @@ impl SourceStatus {
             Self::Unknown => "UNKNOWN",
             Self::Unavailable => "UNAVAILABLE",
             Self::NotConfigured => "NOT_CONFIGURED",
+            Self::NotApplicable => "NOT_APPLICABLE",
             Self::DiscoveryOnly => "DISCOVERY_ONLY",
         }
     }
@@ -131,6 +134,7 @@ pub struct SourceObservation {
     url: Option<String>,
     title: Option<String>,
     text: String,
+    status_reason: String,
     provenance: Provenance,
 }
 
@@ -142,6 +146,7 @@ struct SourceObservationInput {
     url: Option<String>,
     title: Option<String>,
     text: String,
+    status_reason: String,
     source_uri: String,
     source_field_or_passage: String,
     observed_at: DateTime<Utc>,
@@ -165,6 +170,7 @@ impl SourceObservation {
             url: input.url,
             title: input.title,
             text: input.text,
+            status_reason: input.status_reason,
             provenance,
         }
     }
@@ -218,6 +224,11 @@ impl SourceObservation {
     /// Returns normalized source text.
     pub fn text(&self) -> &str {
         &self.text
+    }
+
+    /// Returns the safe, bounded reason for the retained source status.
+    pub fn status_reason(&self) -> &str {
+        &self.status_reason
     }
 
     /// Returns complete source provenance.
@@ -278,6 +289,16 @@ pub fn collect_configured_sources(
     collect_lever(company, http, observed_at, &mut observations);
     if has_configured_source_endpoint(company) {
         collect_gdelt(company, http, observed_at, &mut observations);
+    } else {
+        observations.push(not_applicable_observation(
+            company,
+            SourceKind::Gdelt,
+            SourceTier::DiscoveryOnly,
+            None,
+            observed_at,
+            "GDELT query context",
+            "no configured primary source",
+        ));
     }
     observations
 }
@@ -340,6 +361,11 @@ fn collect_official(
             } else {
                 SourceStatus::Known
             };
+            let status_reason = if text.is_empty() {
+                "response contained no usable text"
+            } else {
+                "source returned usable text"
+            };
             observations.push(SourceObservation::new(SourceObservationInput {
                 company_id: company.id().to_owned(),
                 kind,
@@ -348,6 +374,7 @@ fn collect_official(
                 url: Some(url.to_owned()),
                 title: None,
                 text,
+                status_reason: status_reason.to_owned(),
                 source_uri: url.to_owned(),
                 source_field_or_passage: "official page text".to_owned(),
                 observed_at,
@@ -444,6 +471,7 @@ fn collect_greenhouse(
             url,
             title: Some(title),
             text,
+            status_reason: "source returned usable hiring record".to_owned(),
             source_uri,
             source_field_or_passage: field,
             observed_at,
@@ -552,6 +580,7 @@ fn collect_lever(
             url,
             title: Some(title),
             text,
+            status_reason: "source returned usable hiring record".to_owned(),
             source_uri,
             source_field_or_passage: field,
             observed_at,
@@ -624,6 +653,7 @@ fn collect_gdelt(
             url: Some(url.clone()),
             title: Some(title.clone()),
             text: title,
+            status_reason: "discovery material only; not authoritative".to_owned(),
             source_uri: url,
             source_field_or_passage: format!("GDELT query context: {endpoint}"),
             observed_at,
@@ -651,14 +681,14 @@ fn unavailable_observation(
     observed_at: DateTime<Utc>,
     field: &str,
 ) -> SourceObservation {
-    observation_with_status(
+    observation_with_status_reason(
         company,
         kind,
         tier,
         url,
         observed_at,
         field,
-        SourceStatus::Unavailable,
+        (SourceStatus::Unavailable, field),
     )
 }
 
@@ -670,26 +700,47 @@ fn not_configured_observation(
     observed_at: DateTime<Utc>,
     field: &str,
 ) -> SourceObservation {
-    observation_with_status(
+    observation_with_status_reason(
         company,
         kind,
         tier,
         url,
         observed_at,
         field,
-        SourceStatus::NotConfigured,
+        (SourceStatus::NotConfigured, field),
     )
 }
 
-fn observation_with_status(
+fn not_applicable_observation(
     company: &CompanyConfig,
     kind: SourceKind,
     tier: SourceTier,
     url: Option<&str>,
     observed_at: DateTime<Utc>,
     field: &str,
-    status: SourceStatus,
+    reason: &str,
 ) -> SourceObservation {
+    observation_with_status_reason(
+        company,
+        kind,
+        tier,
+        url,
+        observed_at,
+        field,
+        (SourceStatus::NotApplicable, reason),
+    )
+}
+
+fn observation_with_status_reason(
+    company: &CompanyConfig,
+    kind: SourceKind,
+    tier: SourceTier,
+    url: Option<&str>,
+    observed_at: DateTime<Utc>,
+    field: &str,
+    status_and_reason: (SourceStatus, &str),
+) -> SourceObservation {
+    let (status, status_reason) = status_and_reason;
     let source_uri = url
         .map(str::to_owned)
         .unwrap_or_else(|| format!("source://weekly-radar/{}/{}", company.id(), kind.as_str()));
@@ -701,6 +752,7 @@ fn observation_with_status(
         url: url.map(str::to_owned),
         title: None,
         text: String::new(),
+        status_reason: status_reason.to_owned(),
         source_uri,
         source_field_or_passage: field.to_owned(),
         observed_at,
@@ -727,6 +779,7 @@ fn unknown_observation(
         url: url.map(str::to_owned),
         title: None,
         text: String::new(),
+        status_reason: field.to_owned(),
         source_uri,
         source_field_or_passage: field.to_owned(),
         observed_at,

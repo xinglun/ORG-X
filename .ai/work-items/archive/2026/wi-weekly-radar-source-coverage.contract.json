@@ -3,7 +3,7 @@
   "workItemId": "wi-weekly-radar-source-coverage",
   "mode": "code",
   "title": "Weekly Radar数据来源覆盖改善",
-  "baseCommit": "d1476e9835de14f2c628dae699bd943d3ce1332d",
+  "baseCommit": "4bf5bf34332d3cbbd798a1f45fb232f08a45a58b",
   "baselineDirtyPaths": [],
   "scope": [
     ".ai/work-items/active/wi-weekly-radar-source-coverage.contract.json",
@@ -16,12 +16,16 @@
     ".ai/knowledge/**",
     ".ai/work-items/active/wi-weekly-radar-source-coverage.outcome.json",
     ".ai/work-items/active/wi-weekly-radar-source-coverage.outcome.md",
+    "src/main.rs",
+    "src/features/weekly_radar/runtime.rs",
     "src/features/weekly_radar/runtime/sources.rs",
     "src/features/weekly_radar/runtime/sec.rs",
     "src/features/weekly_radar/runtime/http.rs",
     "src/features/weekly_radar/runtime/config.rs",
     "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
     "tests/weekly_radar_source_coverage.rs",
+    "tests/weekly_radar_runtime.rs",
     "docs/operations/WEEKLY_RADAR.md",
     "docs/CAPABILITIES.md"
   ],
@@ -136,7 +140,7 @@
     "problem": "The 2026-08-24 report contains 49 temporarily unavailable items and 29 not-configured items. SEC is unavailable for all 10 companies, while news, investor-relations, career, Greenhouse, and Lever states are aggregated too coarsely to tell a user whether a source is missing, failing, empty, unsupported, or discovery-only.",
     "constraints": [
       "Preserve the existing evidence-first and provider-neutral architecture.",
-    "Do not read, print, store, or expose sensitive provider values, response bodies, or sensitive headers.",
+      "Do not read, print, store, or expose sensitive provider values, response bodies, or sensitive headers.",
       "Do not treat discovery material as confirmed evidence or silently infer that an unavailable source means no company change.",
       "Keep report presentation, delivery, data publication, and schedule cadence in their separate Work Items."
     ],
@@ -214,14 +218,18 @@
   ],
   "implementationSurface": {
     "production": [
+      "src/main.rs",
+      "src/features/weekly_radar/runtime.rs",
       "src/features/weekly_radar/runtime/sources.rs",
       "src/features/weekly_radar/runtime/sec.rs",
       "src/features/weekly_radar/runtime/http.rs",
       "src/features/weekly_radar/runtime/config.rs",
-      "src/features/weekly_radar/runtime/model.rs"
+      "src/features/weekly_radar/runtime/model.rs",
+      "src/features/weekly_radar/runtime/report.rs"
     ],
     "tests": [
-      "tests/weekly_radar_source_coverage.rs"
+      "tests/weekly_radar_source_coverage.rs",
+      "tests/weekly_radar_runtime.rs"
     ],
     "documentation": [
       "docs/operations/WEEKLY_RADAR.md",
@@ -320,5 +328,20 @@
     "baseCommit": "d1476e9835de14f2c628dae699bd943d3ce1332d",
     "initialScopeDigest": "d5acadc5d1e7a4adb47f977c2b079e6be6f378f380cb8e7fd17b4c8a81d410b7",
     "contractSkeletonDigest": "13a6d77f9a77b28f3318999befd9b3feeaf1beaff84d3e7172756eccc756afd6"
-  }
+  },
+  "synchronizationHistory": [
+    {
+      "synchronizationVersion": 1,
+      "fromBaseCommit": "d1476e9835de14f2c628dae699bd943d3ce1332d",
+      "toBaseCommit": "4bf5bf34332d3cbbd798a1f45fb232f08a45a58b",
+      "baseRemote": "origin",
+      "baseBranch": "main",
+      "workBranch": "codex/wi-weekly-radar-source-coverage",
+      "recordedAt": "2026-08-24T07:14:49.109414+00:00",
+      "priorContractDigest": "74a7f292ebee229a67a6baaf64e69271842c05ef880b425bd32f71133d802483",
+      "priorSummaryDigest": "ac5eb52171402154eb8b3c85351d4b1fee3d9ad0582375b1e6ebbe92971eaf40",
+      "rebaseHeadBefore": "006ab585c238f2400a7fff5b16acb32287da57cc",
+      "rebaseHeadAfter": "006ab585c238f2400a7fff5b16acb32287da57cc"
+    }
+  ]
 }

@@ -7,48 +7,51 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Add the existing normal Weekly Radar CLI invocation to the workflow branch that detects an existing final run, so same-day manual publication reaches the established output and archive guards.
-Mechanism (verified): Keep the existing final-run detection, explicit republish branch, same-date pending recovery branch, empty-output guard, publication classification guard, and data publication sequence; add only the missing normal CLI pipeline in the existing-final branch.
+Customer summary (verified): Keep codex/<task> as the canonical branch identity while allowing the exact non-canonical branch recorded in the same Work Item Start Receipt.
+Mechanism (verified): The initial branch gate compares the current branch with codex/<task> or the exact Start Receipt branch; the existing merged PR, SHA, base synchronization, remote deletion, and local deletion checks are untouched.
 
 Affected components
-- Weekly Radar Actions workflow: Manual and scheduled runs with an existing final date now invoke normal publication instead of validating an untouched empty output capture. (verified)
+- AI Cockpit Work Item closure: Previously created Work Items with an exact recorded non-canonical branch can reach normal closure verification. (verified)
 
 Design decisions
-- Repair the workflow branch rather than alter CLI output formatting.: The CLI already prints classified results; the failed run's complete log showed the existing-final branch never invoked cargo. (verified)
+- Use the Start Receipt only as an exact identity compatibility source, not as a cleanup authorization.: The receipt records the actual branch created for the merged Work Item; all destructive and provider-bound checks remain later in close_work_item. (verified)
 
 ### Technical details
-- Branch sequencing: The existing-final path now runs the same cli_args publication command as the no-final path and tees stdout into the existing run_output guard before data-branch preparation. (verified)
+- Branch matching: _work_item_branch_matches accepts the canonical branch or the exact non-empty Start Receipt branch and rejects all other names. (verified)
 
 ### Evidence
-- The manual same-day rerun no longer stops with an untouched empty output capture when a final run already exists.: tests/weekly_radar_runtime.rs#task6_workflow_runs_normal_cli_when_same_date_final_run_exists (verified)
+- The closure identity compatibility path is exact and does not bypass later lifecycle checks.: scripts/ai_close_work_item.py#branch predicate followed by existing PR and cleanup gates (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json]
-- Changed .github/workflows/weekly-radar.yml [evidence: .github/workflows/weekly-radar.yml]
-- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
-- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard-closure.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard-closure.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json]
+- Changed scripts/ai_close_work_item.py [evidence: scripts/ai_close_work_item.py]
+- Changed tests/ai_cockpit/close_work_item_test.py [evidence: tests/ai_cockpit/close_work_item_test.py]
+- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard-closure.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard-closure.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 
 Problems found
-- Total: 1
+- Total: 2
 - Blocking: 0
 - Warning: 0
 
 Stops triggered
-- None recorded.
+- Reason: aiScenarioCoverage failed before the retry. | Stage: verification | Resolution: Retry aiScenarioCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
 
 Problems resolved
-- Problem: The existing-final branch logged the intended normal publication but did not invoke cargo, leaving run_output empty and stopping the run before publication.
-  Solution: Added the existing normal CLI invocation and tee capture to that branch; the RED regression test now passes and the full runtime suite remains green.
-  Evidence: [evidence: observedIssues[0] workflow branch control flow, observedIssues[0] workflow branch control flow, observedIssues[0] workflow branch control flow]
+- Problem: The branch identity check now accepts codex/<task> or the exact non-empty branch recorded in the same Work Item Start Receipt.
+  Solution: Added _work_item_branch_matches and kept all downstream PR head, SHA, base synchronization, and cleanup gates unchanged.
+  Evidence: [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue]
+- Problem: aiScenarioCoverage failed before the retry.
+  Solution: Re-ran aiScenarioCoverage after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiScenarioCoverage failed, verification[aiScenarioCoverage] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- Local and hosted repository checks prove the branch invokes the CLI, but a post-merge non-dry-run must still confirm Telegram acceptance and non-secret data/pending bindings. [evidence: residualRisks]
+- The compatibility path relies on an immutable Start Receipt and must not become a general-purpose arbitrary branch override. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
@@ -75,9 +78,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

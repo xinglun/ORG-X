@@ -48,6 +48,17 @@
         "tests/weekly_radar_runtime.rs"
       ]
     },
+    "wi-weekly-radar-cli-output-guard-closure": {
+      "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard-closure.json",
+      "dependencies": [
+        ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.contract.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.outcome.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+        ".ai/work-items/starts/wi-weekly-radar-cli-output-guard.json",
+        "scripts/ai_close_work_item.py",
+        "tests/ai_cockpit/close_work_item_test.py"
+      ]
+    },
     "wi-weekly-radar-content-quality": {
       "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
       "dependencies": [
@@ -157,6 +168,15 @@
     ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json": [
       "wi-telegram-delivery-verification"
     ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.contract.json": [
+      "wi-weekly-radar-cli-output-guard-closure"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.outcome.json": [
+      "wi-weekly-radar-cli-output-guard-closure"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json": [
+      "wi-weekly-radar-cli-output-guard-closure"
+    ],
     ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json": [
       "wi-weekly-radar-cli-output-guard"
     ],
@@ -211,6 +231,9 @@
     ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.summary.json": [
       "wi-weekly-radar-source-coverage"
     ],
+    ".ai/work-items/starts/wi-weekly-radar-cli-output-guard.json": [
+      "wi-weekly-radar-cli-output-guard-closure"
+    ],
     ".github/workflows/weekly-radar.yml": [
       "wi-telegram-delivery-verification",
       "wi-weekly-radar-cli-output-guard",
@@ -228,6 +251,9 @@
       "wi-weekly-radar-idempotent-completion",
       "wi-weekly-radar-input-snapshot-compatibility",
       "wi-weekly-radar-same-day-canonical-update"
+    ],
+    "scripts/ai_close_work_item.py": [
+      "wi-weekly-radar-cli-output-guard-closure"
     ],
     "scripts/check_docs_metadata.py": [
       "wi-weekly-radar-source-coverage"
@@ -265,7 +291,8 @@
       "wi-weekly-radar-source-coverage"
     ],
     "tests/ai_cockpit/close_work_item_test.py": [
-      "upgrade_ai_cockpit"
+      "upgrade_ai_cockpit",
+      "wi-weekly-radar-cli-output-guard-closure"
     ],
     "tests/ai_cockpit/production_validation_policy_test.py": [
       "upgrade_ai_cockpit"

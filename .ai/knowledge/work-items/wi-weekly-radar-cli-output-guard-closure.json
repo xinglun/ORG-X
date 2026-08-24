@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-cli-output-guard-closure",
+  "title": "修复已记录分支的 Weekly Radar WI 收口身份校验",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Keep codex/<task> as the canonical branch identity while allowing the exact non-canonical branch recorded in the same Work Item Start Receipt.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+    "scripts/ai_close_work_item.py",
+    "tests/ai_cockpit/close_work_item_test.py",
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard-closure.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Use the Start Receipt only as an exact identity compatibility source, not as a cleanup authorization.",
+      "reason": "The receipt records the actual branch created for the merged Work Item; all destructive and provider-bound checks remain later in close_work_item.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "code",
+      "path": "scripts/ai_close_work_item.py",
+      "digest": "e10dfe4365560f2e414c3e90688d970a89fc864a881128577a2772d4150f6f19"
+    },
+    {
+      "type": "test",
+      "path": "tests/ai_cockpit/close_work_item_test.py",
+      "digest": "06d1d475b5f2963a09facdf63a946a354114faee54d8b6cf1988fef899bf9dff"
+    },
+    {
+      "type": "code",
+      "path": ".ai/work-items/starts/wi-weekly-radar-cli-output-guard.json",
+      "digest": "2c8696e48191aa9490d9048690c6e76c7528262eae254483697fafb777d692b8"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.contract.json",
+    "contractDigest": "4e19cc8b70948bf7725ea22bce314970e237e618ecaafd7c6af0ff057c42dac4",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+    "summaryDigest": "b740e1a1f5b885532f031c984738ee2c813462dff9a94e3a8db2fd99e73c33a4",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.outcome.json",
+    "outcomeDigest": "a9cfc2ecac7d51b353c966e51e335e25fc050c4e311dcee939678f7eabeedc74"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

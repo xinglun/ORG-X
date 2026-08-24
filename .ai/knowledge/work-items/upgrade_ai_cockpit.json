@@ -329,7 +329,7 @@
     {
       "type": "test",
       "path": "tests/ai_cockpit/close_work_item_test.py",
-      "digest": "ef7821456236fff85fb0a6aca908ca7e7a1c0a85e6f28f5e0e6463debe15f84f"
+      "digest": "06d1d475b5f2963a09facdf63a946a354114faee54d8b6cf1988fef899bf9dff"
     }
   ],
   "mergedCommit": null,

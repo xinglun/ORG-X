@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-cli-output-guard-closure",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "f35c2889c84ec1cd2e4906ca66d11a0ddeec10eb19debb75117171085f0b79c1"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-cli-output-guard-closure",
+    "contractDigest": "4e19cc8b70948bf7725ea22bce314970e237e618ecaafd7c6af0ff057c42dac4",
+    "summaryDigest": "b740e1a1f5b885532f031c984738ee2c813462dff9a94e3a8db2fd99e73c33a4",
+    "verificationDigest": "34168eafb86bc18c9e5c14916a42fa126a58da6817ba19f6d73dcf0a4a444d47",
+    "baseCommit": "d6b080459ee3000e1e6530b8e5d562930eafb740",
+    "headCommit": "d6b080459ee3000e1e6530b8e5d562930eafb740",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "002ae03d9d90566d71ef2addbf96e258bf133b4416c0e23d405587b630abf68c",
+      "binding": {
+        "baseCommit": "d6b080459ee3000e1e6530b8e5d562930eafb740",
+        "candidateHead": "d6b080459ee3000e1e6530b8e5d562930eafb740",
+        "candidateTreeDigest": "aec9d6943dd97d38fe8a00f5496a1b363587afddeea70ff5c2ec616518a47f8d",
+        "candidateDiffDigest": "afd7747f505014e3d2a1386bf945edcd1656fe07aa2827c1864b0756f5ef4d0e"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-cli-output-guard-closure generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-cli-output-guard-closure generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-cli-output-guard-closure",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
@@ -19,159 +42,220 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiScenarioCoverage",
-      "action": "blocked",
-      "resolution": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "38fc02b15d5075e6d92e7d982de5e9223a36774bac2df7fc344b71b8e3f9c9ac"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "f7661e0c3ce42f724230840c9d33e9135847c245cfaa4feebdc8541812221183"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiScenarioCoverage failed before the retry.",
-      "policyOrGuard": "required verification: aiScenarioCoverage",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "38fc02b15d5075e6d92e7d982de5e9223a36774bac2df7fc344b71b8e3f9c9ac"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "f7661e0c3ce42f724230840c9d33e9135847c245cfaa4feebdc8541812221183"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The compatibility path relies on an immutable Start Receipt and must not become a general-purpose arbitrary branch override.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Keep codex/<task> as the canonical branch identity while allowing the exact non-canonical branch recorded in the same Work Item Start Receipt.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "scripts/ai_close_work_item.py",
-          "subject": "exact recorded branch compatibility predicate"
-        },
-        {
-          "source": "tests/ai_cockpit/close_work_item_test.py",
-          "subject": "canonical, recorded, and mismatch identity tests"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "The initial branch gate compares the current branch with codex/<task> or the exact Start Receipt branch; the existing merged PR, SHA, base synchronization, remote deletion, and local deletion checks are untouched.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "scripts/ai_close_work_item.py",
-          "subject": "close_work_item downstream gates"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "AI Cockpit Work Item closure",
-        "detail": "Previously created Work Items with an exact recorded non-canonical branch can reach normal closure verification.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiScenarioCoverage failed before the retry.",
+        "policyOrGuard": "required verification: aiScenarioCoverage",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "38fc02b15d5075e6d92e7d982de5e9223a36774bac2df7fc344b71b8e3f9c9ac"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "f7661e0c3ce42f724230840c9d33e9135847c245cfaa4feebdc8541812221183"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "The branch identity check now accepts codex/<task> or the exact non-empty branch recorded in the same Work Item Start Receipt.",
+        "action": "Added _work_item_branch_matches and kept all downstream PR head, SHA, base synchronization, and cleanup gates unchanged.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
             "source": "scripts/ai_close_work_item.py",
-            "subject": "branch identity gate"
+            "subject": "observedIssues[0] observed issue"
           },
           {
             "source": "tests/ai_cockpit/close_work_item_test.py",
-            "subject": "recorded branch regression coverage"
+            "subject": "observedIssues[0] observed issue"
           }
-        ]
-      }
-    ],
-    "designDecisions": [
-      {
-        "decision": "Use the Start Receipt only as an exact identity compatibility source, not as a cleanup authorization.",
-        "reason": "The receipt records the actual branch created for the merged Work Item; all destructive and provider-bound checks remain later in close_work_item.",
-        "status": "verified",
+        ],
         "evidence": [
           {
             "source": "scripts/ai_close_work_item.py",
-            "subject": "identity predicate and unchanged downstream gates"
+            "subject": "observedIssues[0] observed issue"
           },
           {
-            "source": ".ai/work-items/starts/wi-weekly-radar-cli-output-guard.json",
-            "subject": "recorded predecessor branch identity"
+            "source": "tests/ai_cockpit/close_work_item_test.py",
+            "subject": "observedIssues[0] observed issue"
           }
-        ]
-      }
-    ],
-    "technicalDetails": [
+        ],
+        "inference": false
+      },
       {
-        "topic": "Branch matching",
-        "detail": "_work_item_branch_matches accepts the canonical branch or the exact non-empty Start Receipt branch and rejects all other names.",
-        "status": "verified",
+        "problem": "aiScenarioCoverage failed before the retry.",
+        "action": "Re-ran aiScenarioCoverage after the correction; the latest attempt passed.",
+        "verification": "aiScenarioCoverage latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "tests/ai_cockpit/close_work_item_test.py",
-            "subject": "four focused branch identity tests"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "38fc02b15d5075e6d92e7d982de5e9223a36774bac2df7fc344b71b8e3f9c9ac"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "f7661e0c3ce42f724230840c9d33e9135847c245cfaa4feebdc8541812221183"
           }
         ]
       }
     ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "governance",
+        "severity": "medium",
+        "title": "governance",
+        "detail": "The compatibility path relies on an immutable Start Receipt and must not become a general-purpose arbitrary branch override.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
     "evidence": [
       {
-        "claim": "The closure identity compatibility path is exact and does not bypass later lifecycle checks.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "scripts/ai_close_work_item.py",
         "subject": "branch predicate followed by existing PR and cleanup gates"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+        "subject": "verificationHistory[0] aiScenarioCoverage failed",
+        "digest": "38fc02b15d5075e6d92e7d982de5e9223a36774bac2df7fc344b71b8e3f9c9ac"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard-closure.summary.json",
+        "subject": "verification[aiScenarioCoverage] retry passed",
+        "digest": "f7661e0c3ce42f724230840c9d33e9135847c245cfaa4feebdc8541812221183"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Keep codex/<task> as the canonical branch identity while allowing the exact non-canonical branch recorded in the same Work Item Start Receipt.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "scripts/ai_close_work_item.py",
+            "subject": "exact recorded branch compatibility predicate"
+          },
+          {
+            "source": "tests/ai_cockpit/close_work_item_test.py",
+            "subject": "canonical, recorded, and mismatch identity tests"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "The initial branch gate compares the current branch with codex/<task> or the exact Start Receipt branch; the existing merged PR, SHA, base synchronization, remote deletion, and local deletion checks are untouched.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "scripts/ai_close_work_item.py",
+            "subject": "close_work_item downstream gates"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "AI Cockpit Work Item closure",
+          "detail": "Previously created Work Items with an exact recorded non-canonical branch can reach normal closure verification.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "scripts/ai_close_work_item.py",
+              "subject": "branch identity gate"
+            },
+            {
+              "source": "tests/ai_cockpit/close_work_item_test.py",
+              "subject": "recorded branch regression coverage"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Use the Start Receipt only as an exact identity compatibility source, not as a cleanup authorization.",
+          "reason": "The receipt records the actual branch created for the merged Work Item; all destructive and provider-bound checks remain later in close_work_item.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "scripts/ai_close_work_item.py",
+              "subject": "identity predicate and unchanged downstream gates"
+            },
+            {
+              "source": ".ai/work-items/starts/wi-weekly-radar-cli-output-guard.json",
+              "subject": "recorded predecessor branch identity"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Branch matching",
+          "detail": "_work_item_branch_matches accepts the canonical branch or the exact non-empty Start Receipt branch and rejects all other names.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/ai_cockpit/close_work_item_test.py",
+              "subject": "four focused branch identity tests"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The closure identity compatibility path is exact and does not bypass later lifecycle checks.",
+          "status": "verified",
+          "source": "scripts/ai_close_work_item.py",
+          "subject": "branch predicate followed by existing PR and cleanup gates"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -776,6 +860,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

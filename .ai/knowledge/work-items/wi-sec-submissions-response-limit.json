@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-sec-submissions-response-limit",
+  "title": "修复 SEC submissions 响应体上限导致的生产采集降级",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Use the existing finite SEC-specific response envelope for submissions while leaving the generic transport protection unchanged.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
+    ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+    "src/features/weekly_radar/runtime/sec.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.json",
+    ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Reuse the established 16 MiB SEC-specific bound instead of changing the generic 1 MiB limit or allowing unbounded reads.",
+      "reason": "The hosted failure is isolated to SEC submissions payload size, and the predecessor SEC Company Facts fix establishes this finite source-specific pattern.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/sec.rs",
+      "digest": "b5baa35a40c16f42d85fe6c665a4242ac368c7c98c5e173e4b3770987ea33794"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "9120a70c015c7a8e5e792b9b586b1ce27af56a3497462a0da043e6745dda86f3"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/http.rs",
+      "digest": "fd237acee99b1b8290d98d47aa9d76e6e08f88b6bc65aa64b851a8ea63c7a870"
+    },
+    {
+      "type": "code",
+      "path": ".ai/work-items/archive/2026/wi-sec-company-facts-response-limit.contract.json",
+      "digest": "9ee616337d390495e354e92b9a24d4eed9e733290fee75707ccf7909520ba533"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "a10e772d3ef60789ae992461f2ef28463409467e57ad0d1212d9ffb3d7eb0229"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
+    "contractDigest": "1ad76e49813d6ed2e808a6f7af712ea69422a8f78c843ac7d5b8e46376bb4bb6",
+    "summaryPath": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+    "summaryDigest": "539381cf7c06e56afb5263895c56e77487a0f51ecd170e044722c8e1b9e53c83",
+    "outcomePath": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.json",
+    "outcomeDigest": "a10a771d1b528825b12b0fc849a30d8b1ba10e7a144b2d4353647795360a6e77"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

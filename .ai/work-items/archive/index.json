@@ -673,6 +673,18 @@
       "summarySha256": "b50a9dd94f0ec2f9b0f3d7517b3d4905c30a52337aa38e93be774ae30d1826fb",
       "manifestPath": ".ai/work-items/archive/2026/upgrade_ai_cockpit.archive-manifest.json",
       "manifestSha256": "77b39e378c44939808305e531ae2c820f1a56d11ab5cb6e57e2258fe36807ff9"
+    },
+    {
+      "workItemId": "wi-sec-submissions-response-limit",
+      "archiveSequence": 57,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
+      "contractSha256": "1ad76e49813d6ed2e808a6f7af712ea69422a8f78c843ac7d5b8e46376bb4bb6",
+      "archivedAt": "2026-08-24T11:30:44.543513+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+      "summarySha256": "539381cf7c06e56afb5263895c56e77487a0f51ecd170e044722c8e1b9e53c83",
+      "manifestPath": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.archive-manifest.json",
+      "manifestSha256": "8ca778f5a815956b863dcb53287aa656e86f1ae04ef47fbb7941fb625c86cd78"
     }
   ]
 }

@@ -1,0 +1,117 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-sec-submissions-response-limit",
+  "mode": "code",
+  "title": "修复 SEC submissions 响应体上限导致的生产采集降级",
+  "baseCommit": "c19bd00ba8b89f8198fe99872502d33c68592058",
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "baselineDirtyPaths": [],
+  "rawUserRequest": "修复问题",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User approved the bounded design to fix the SEC submissions response-body limit discovered during the real workflow run.",
+    "digest": "sha256:sec-submissions-response-limit-fix-approved",
+    "capturedAt": "2026-08-24T11:08:00+09:00"
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly approved the bounded runtime fix after the hosted production run exposed the defect.",
+    "authorizedExternalEffects": [
+      "Create and update the dedicated Work Item branch and pull request.",
+      "Run repository and hosted quality checks without reading Secret values."
+    ]
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "ai_governance"],
+    "prohibitedCapabilities": ["secret_readback", "manual_data_branch_repair", "trading_decision", "capital_action", "provider_scope_expansion"]
+  },
+  "intent": {
+    "problem": "The real 2026-08-24 Weekly Radar run completed delivery and archive successfully, but all ten SEC source acquisitions failed with 'HTTP response body exceeded configured limit'. The SEC submissions JSON is sent through the generic 1 MiB transport bound even though SEC-specific JSON payloads require a larger bounded envelope, so the report is published with SEC coverage unavailable.",
+    "constraints": [
+      "Keep the generic 1 MiB HTTP limit unchanged for the default transport and non-SEC sources.",
+      "Use a finite SEC submissions-specific limit; never remove bounded reads or allow unbounded allocation.",
+      "Keep provider-specific behavior inside the Weekly Radar runtime boundary and preserve typed fail-closed errors.",
+      "Do not change source authority, judgment, ranking, Telegram, workflow, credentials, company configuration, or historical data artifacts.",
+      "Add a regression test that fails before the fix and passes only when an oversized-but-bounded SEC submissions payload is accepted."
+    ],
+    "rationale": "A source-specific finite limit is the smallest correction supported by the hosted failure evidence. It restores the SEC adapter's intended payload envelope while preserving the existing defensive bound for ordinary public sources."
+  },
+  "scope": [
+    ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+    ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/work-items/active/wi-sec-submissions-response-limit.outcome.json",
+    ".ai/work-items/active/wi-sec-submissions-response-limit.outcome.md",
+    "src/features/weekly_radar/runtime/sec.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/runtime/http.rs",
+    "src/main.rs",
+    ".github/workflows/weekly-radar.yml",
+    "config/weekly_radar/companies.json",
+    "Cargo.toml",
+    "Cargo.lock",
+    "Non-SEC source response limits.",
+    "Reading, printing, copying, or storing any Secret value.",
+    "Manual mutation, overwrite, or repair of the data branch and the already published 2026-08-24 artifacts.",
+    "Changing provider selection, report judgment semantics, ranking, Telegram behavior, or production scheduling.",
+    "External production publication before the fix is merged through the governed lifecycle."
+  ],
+  "sources": [
+    {"path": "https://github.com/xinglun/ORG-X/actions/runs/32679132028", "reason": "The current main hosted run completed successfully but exposed ten SEC source failures with the response-limit error."},
+    {"path": "origin/data:weekly-radar/snapshots/2026-08-24.input.json", "reason": "The non-secret input snapshot records SEC coverage 0/10 and the exact source failure reason for each configured company."},
+    {"path": "origin/data:weekly-radar/reports/2026-08-24.md", "reason": "The user-facing report records SEC 0 available, 10 unavailable, and the degraded system status."},
+    {"path": "src/features/weekly_radar/runtime/sec.rs", "reason": "The SEC adapter currently applies the generic response limit to submissions and a separate 16 MiB limit only to Company Facts."},
+    {"path": "src/features/weekly_radar/runtime/http.rs", "reason": "The transport defines the generic finite 1 MiB limit and the per-request bounded-read API used by source adapters."},
+    {"path": "tests/weekly_radar_runtime.rs", "reason": "Existing fixture tests cover the Company Facts source-specific limit but lack an oversized SEC submissions regression."},
+    {"path": ".ai/work-items/archive/2026/wi-sec-company-facts-response-limit.contract.json", "reason": "The predecessor Work Item establishes the approved finite SEC-specific limit pattern and non-SEC protection boundary."},
+    {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "The user-facing source-health documentation currently names Company Facts but must accurately cover SEC submissions as well."},
+    {"path": "AGENTS.md", "reason": "Repository governance and in-Work-Item problem-resolution rules."},
+    {"path": ".ai/glossary.md", "reason": "Evidence-over-self-declaration and planned-scenario verification rules."},
+    {"path": "Makefile", "reason": "Canonical project quality command."},
+    {"path": "Makefile.ai", "reason": "Canonical AI Cockpit lifecycle and verification commands."}
+  ],
+  "problemStatement": "The current production report can publish successfully while all SEC submissions acquisitions fail because the adapter uses the generic 1 MiB response limit. This reduces the evidence available to the report unless the degraded source status is inspected. The fix must restore valid SEC acquisition with a finite source-specific bound and a regression test.",
+  "scenarioCoverage": [
+    {"scenario": "The generic 1 MiB transport limit remains fail-closed for default and non-SEC requests.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/http.rs", "tests/weekly_radar_runtime.rs"], "expected": "Existing default-limit behavior remains unchanged after the SEC-only fix.", "verificationPlan": "Run the existing oversized generic-response tests and the full project test suite."},
+    {"scenario": "A valid SEC submissions payload larger than 1 MiB but within the finite SEC bound is parsed.", "required": true, "status": "unverified", "evidence": [], "expected": "SecClient::collect completes with normalized evidence when the submissions fixture exceeds the generic limit but remains below the SEC-specific limit.", "verificationPlan": "Add one fixture-driven regression test, run it before implementation to observe the expected limit failure, then run it again after the minimal fix."},
+    {"scenario": "An SEC submissions response above the finite SEC bound still fails closed.", "required": true, "status": "unverified", "evidence": [], "expected": "The transport returns the typed response-too-large error and no partial source evidence is accepted.", "verificationPlan": "Run the SEC-specific source-limit rejection test and the full runtime test suite."},
+    {"scenario": "User-facing source-health documentation describes the separate SEC submissions/Company Facts bound without exposing technical credentials.", "required": true, "status": "unverified", "evidence": [], "expected": "WEEKLY_RADAR.md says SEC JSON sources use a finite source-specific bound while ordinary sources retain the generic bound.", "verificationPlan": "Review the documentation diff and run the repository documentation/governance checks declared by the Work Item."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {"level": "medium", "riskTypes": ["runtime_reliability", "resource_bound", "evidence_quality"], "reason": "The change affects production HTTP allocation bounds. The risk is controlled by a finite SEC-only limit, unchanged generic protection, fixture regressions, and hosted quality checks.", "unknownsReviewComplete": true, "reviewedBy": "Codex after the 2026-08-24 hosted run evidence and user-approved bounded design"},
+  "governanceProfile": {"selected": "standard", "source": "automatic", "reasons": ["A bounded runtime reliability correction with no credential, data-branch, or external publication mutation in this Work Item."], "override": null},
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {"status": "continue", "reason": "The hosted failure, source code, existing transport API, and predecessor Work Item establish a deterministic, bounded, testable fix. The scope and out-of-scope boundaries are explicit."},
+  "preReviewWarnings": ["Confirm the generic 1 MiB behavior remains unchanged for non-SEC sources.", "Confirm the SEC submissions bound is finite, source-specific, documented, and tested both above and below the bound.", "Do not rewrite or repair the already published 2026-08-24 data artifacts during this Work Item.", "A green workflow result after this fix will still require separate production validation before claiming the SEC source is restored in the scheduled report."],
+  "implementationSurface": {"production": ["src/features/weekly_radar/runtime/sec.rs"], "tests": ["tests/weekly_radar_runtime.rs"], "documentation": ["docs/operations/WEEKLY_RADAR.md"], "generated": [".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md"]},
+  "acceptance": ["SEC submissions requests use a finite source-specific response limit sufficient for the observed production payloads; responses above that limit fail closed.", "The generic 1 MiB transport limit remains unchanged for default and non-SEC source requests.", "A regression test fails before the fix for an oversized-but-bounded SEC submissions payload and passes after the fix; an above-bound response remains rejected.", "User-facing Weekly Radar operations documentation accurately describes the separate finite bound for SEC JSON sources and the generic bound for ordinary sources.", "The full declared project and AI Cockpit verification checks pass without reading Secret values or modifying the data branch."],
+  "verification": [
+    {"check": "aiWorkItem", "required": true}, {"check": "aiScope", "required": true}, {"check": "aiGuards", "required": true}, {"check": "aiCheckpoint", "required": true}, {"check": "aiAgentRisk", "required": true}, {"check": "aiReviewPolicy", "required": true}, {"check": "aiBacktrack", "required": true}, {"check": "aiCoverage", "required": true}, {"check": "aiScenarioCoverage", "required": true}, {"check": "aiGuidelines", "required": true}, {"check": "aiSummary", "required": true}, {"check": "aiStatus", "required": true}, {"check": "aiStatusCheck", "required": true}, {"check": "aiStatusConsistency", "required": true}, {"check": "aiDiffOwnership", "required": true}, {"check": "quality", "required": true}
+  ],
+  "guidelines": ["New public constants and behavior must be documented.", "Keep provider-specific behavior inside the Weekly Radar runtime boundary.", "Preserve typed fail-closed errors and do not weaken the generic transport protection.", "Do not read or record Secret values.", "Do not manually modify the data branch or historical production artifacts."],
+  "checkpointPolicy": {"requiredBeforeFinish": true, "requiredStages": ["before_edit", "before_finish"], "reason": "Record checkpoints so the bounded fix, acceptance, and verification evidence remain synchronized."},
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {"approved": false, "approvedBy": "", "reason": "No restricted governance path is required for this runtime fix."},
+  "rollbackNote": "Revert the dedicated Work Item diff; the existing 1 MiB generic path and historical data branch remain recoverable without manual data mutation.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 0}},
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-sec-submissions-response-limit.json",
+    "baseCommit": "c19bd00ba8b89f8198fe99872502d33c68592058",
+    "initialScopeDigest": "4202cf08a5d37dd9f01153f92a7d73682e7302df618745349be3194a0e0540ae",
+    "contractSkeletonDigest": "7ff976c550eb2af71a1ee3a72aaf62bbdb9c5bcad35f38474a6eaedaaa4a111b"
+  }
+}

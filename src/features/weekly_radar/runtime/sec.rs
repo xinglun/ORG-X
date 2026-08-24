@@ -16,13 +16,18 @@ const SEC_SUBMISSIONS_ROOT: &str = "https://data.sec.gov/submissions";
 const SEC_FACTS_ROOT: &str = "https://data.sec.gov/api/xbrl/companyfacts";
 const SEC_ARCHIVES_ROOT: &str = "https://www.sec.gov/Archives/edgar/data";
 
-/// Finite response limit for SEC Company Facts JSON payloads.
+/// Finite response limit for SEC JSON payloads parsed by the runtime.
 ///
-/// Company Facts contains the complete fact history for a registrant and is
-/// materially larger than the default limit used for ordinary public pages.
-/// The limit remains bounded so an unexpectedly large response still fails
-/// closed before it can cause an unbounded allocation.
+/// Company Facts and submissions contain complete registrant histories and
+/// are materially larger than the default limit used for ordinary public
+/// pages. The limit remains bounded so an unexpectedly large response still
+/// fails closed before it can cause an unbounded allocation.
 pub const SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES: usize = 16 * 1024 * 1024;
+
+// SEC submissions uses the same finite JSON envelope as Company Facts. Keep
+// this adapter-specific alias separate from the generic transport limit so
+// ordinary public pages and discovery sources remain capped at 1 MiB.
+const SEC_SUBMISSIONS_MAX_RESPONSE_BODY_BYTES: usize = SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES;
 
 const REVENUE_ALIASES: &[&str] = &[
     "RevenueFromContractWithCustomerExcludingAssessedTax",
@@ -156,7 +161,7 @@ impl SecClient {
             http,
             &submissions_url,
             user_agent,
-            MAX_HTTP_RESPONSE_BODY_BYTES,
+            SEC_SUBMISSIONS_MAX_RESPONSE_BODY_BYTES,
             "SEC submissions",
         )?;
         let facts: CompanyFactsDocument = get_json(

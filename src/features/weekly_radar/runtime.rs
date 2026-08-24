@@ -18,9 +18,9 @@ pub mod telegram;
 
 pub use archive::{
     acquire_run_lock, ensure_run_available, load_input_snapshot, persist_input_snapshot,
-    recover_pending_run, retain_recent, verify_committed_run, write_run,
-    write_run_with_input_snapshot, ArchiveError, ArchiveManifest, ArchiveRunLock, InputSnapshot,
-    INPUT_SNAPSHOT_SCHEMA_VERSION,
+    recover_pending_run, retain_recent, verify_committed_run, verify_committed_run_read_only,
+    write_run, write_run_with_input_snapshot, ArchiveError, ArchiveManifest, ArchiveRunLock,
+    InputSnapshot, INPUT_SNAPSHOT_SCHEMA_VERSION,
 };
 pub use config::{CompanyConfig, CompanySourceRegistry};
 pub use error::RuntimeError;

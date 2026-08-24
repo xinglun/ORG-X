@@ -757,6 +757,18 @@
       "summarySha256": "47cd7e0ddcdc7b6fd73a890eb7b46e43a6d671bb621fefe231b34c02ecf2a599",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.archive-manifest.json",
       "manifestSha256": "e370343f692cfe3cec9c6b768b5975830d941f6d97524216fc89292296162a9e"
+    },
+    {
+      "workItemId": "wi-weekly-radar-cli-output-guard",
+      "archiveSequence": 64,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json",
+      "contractSha256": "8b0b3c86c2ad275c38073e689f17eefa7b9d3c273197dc229e166e17a34915d5",
+      "archivedAt": "2026-08-24T20:23:54.103929+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+      "summarySha256": "c9dc07ed0480ac977778aee66515bffd36dea561fcbb06bb72b38048f2c65283",
+      "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.archive-manifest.json",
+      "manifestSha256": "ae199b21460e99dcf0cf3fc639c0fd77051cf71072c66be053e30f6c6cb4fe9b"
     }
   ]
 }

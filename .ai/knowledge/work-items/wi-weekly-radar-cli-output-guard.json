@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-cli-output-guard",
+  "title": "修复 Weekly Radar CLI 成功输出边界并恢复手动发布",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Add the existing normal Weekly Radar CLI invocation to the workflow branch that detects an existing final run, so same-day manual publication reaches the established output and archive guards.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+    ".github/workflows/weekly-radar.yml",
+    "tests/weekly_radar_runtime.rs",
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Repair the workflow branch rather than alter CLI output formatting.",
+      "reason": "The CLI already prints classified results; the failed run's complete log showed the existing-final branch never invoked cargo.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "a09f7d63e7e06f85f194336431526d2538c7f76b72c2bac8907af55872980583"
+    },
+    {
+      "type": "code",
+      "path": ".github/workflows/weekly-radar.yml",
+      "digest": "21d6e9008a9e454a5576e96b74ec114c52534c1daa2916b5f87a997a52d2c761"
+    },
+    {
+      "type": "code",
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+      "digest": "c9dc07ed0480ac977778aee66515bffd36dea561fcbb06bb72b38048f2c65283"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json",
+    "contractDigest": "8b0b3c86c2ad275c38073e689f17eefa7b9d3c273197dc229e166e17a34915d5",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json",
+    "summaryDigest": "c9dc07ed0480ac977778aee66515bffd36dea561fcbb06bb72b38048f2c65283",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.json",
+    "outcomeDigest": "2349138b734a2358dff3e5ac0efb733cd32648ba28577ffa3b9e2819bb665704"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

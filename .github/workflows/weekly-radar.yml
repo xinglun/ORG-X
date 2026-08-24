@@ -168,6 +168,8 @@ jobs:
               exit 0
             fi
             echo "Weekly Radar found an existing final run for $as_of; normal publication will acquire a new update and make its last successful result canonical."
+            cargo run --release -- weekly-radar "${cli_args[@]}" \
+              | tee "$run_output"
           elif [[ "$REPORT_DRY_RUN" != "true" && "$REPUBLISH_PUBLISHED" == "true" ]]; then
             echo "Republish requires a complete final report on data for $as_of; refusing to acquire or publish a new run." >&2
             exit 1

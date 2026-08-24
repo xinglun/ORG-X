@@ -7,53 +7,32 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Use an explicit replacement transaction for normal same-day publication while retaining strict creation, retry, verify, and republish boundaries.
-Mechanism (verified): Build the input snapshot in memory, deliver Telegram, then stage report/snapshot/receipt/input snapshot/manifest with previous-artifact digests and recover prepared transactions before data publication.
+Customer summary (verified): Add the existing normal Weekly Radar CLI invocation to the workflow branch that detects an existing final run, so same-day manual publication reaches the established output and archive guards.
+Mechanism (verified): Keep the existing final-run detection, explicit republish branch, same-date pending recovery branch, empty-output guard, publication classification guard, and data publication sequence; add only the missing normal CLI pipeline in the existing-final branch.
 
 Affected components
-- Weekly Radar archive: Same-day canonical replacement and four-artifact legacy transaction compatibility. (verified)
-- Actions publication flow: Schedule/manual normal publication and same-date pending recovery are aligned with the latest successful canonical update. (verified)
-- User operations guide: Manual triggering, canonicality, recovery, retry, verify, and republish are explained for users. (verified)
+- Weekly Radar Actions workflow: Manual and scheduled runs with an existing final date now invoke normal publication instead of validating an untouched empty output capture. (verified)
 
 Design decisions
-- Do not persist a new input snapshot before Telegram succeeds.: This prevents a failed same-day attempt from binding an old report to a new input. (verified)
-- Allow a same-date pending archive to replace older data only after CLI identity verification.: A successful archive/data push gap must recover the latest canonical update without a second Telegram send. (verified)
+- Repair the workflow branch rather than alter CLI output formatting.: The CLI already prints classified results; the failed run's complete log showed the existing-final branch never invoked cargo. (verified)
 
 ### Technical details
-- transaction compatibility: Schema v1 four-artifact records remain readable; schema v2 replacement records add previous digests and the staged input snapshot. (verified)
-- quality: Formatting, clippy with warnings denied, and all Cargo tests pass. (verified)
+- Branch sequencing: The existing-final path now runs the same cli_args publication command as the no-final path and tees stdout into the existing run_output guard before data-branch preparation. (verified)
 
 ### Evidence
-- The approved same-day canonical behavior is implemented and locally verified.: tests/weekly_radar_runtime.rs#replacement and workflow regression suite (verified)
+- The manual same-day rerun no longer stops with an untouched empty output capture when a final run already exists.: tests/weekly_radar_runtime.rs#task6_workflow_runs_normal_cli_when_same_date_final_run_exists (verified)
 
-- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json]
-- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json]
-- Changed docs/superpowers/specs/2026-08-24-weekly-radar-same-day-canonical-update.md [evidence: docs/superpowers/specs/2026-08-24-weekly-radar-same-day-canonical-update.md]
-- Changed docs/superpowers/plans/2026-08-24-weekly-radar-same-day-canonical-update.md [evidence: docs/superpowers/plans/2026-08-24-weekly-radar-same-day-canonical-update.md]
-- Changed src/features/weekly_radar/runtime/archive.rs [evidence: src/features/weekly_radar/runtime/archive.rs]
-- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
-- Changed src/main.rs [evidence: src/main.rs]
-- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
+- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.summary.json]
 - Changed .github/workflows/weekly-radar.yml [evidence: .github/workflows/weekly-radar.yml]
-- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.json]
-- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.md]
+- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
+- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-cli-output-guard.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-cli-output-guard.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
-- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.archive-manifest.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json]
-- Changed .ai/knowledge/index.json [evidence: .ai/knowledge/index.json]
-- Changed .ai/knowledge/work-items/wi-sec-submissions-response-limit.json [evidence: .ai/knowledge/work-items/wi-sec-submissions-response-limit.json]
-- Changed .ai/knowledge/work-items/wi-telegram-delivery-verification.json [evidence: .ai/knowledge/work-items/wi-telegram-delivery-verification.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-content-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-content-quality.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json]
 
 Problems found
-- Total: 0
+- Total: 1
 - Blocking: 0
 - Warning: 0
 
@@ -61,14 +40,15 @@ Stops triggered
 - None recorded.
 
 Problems resolved
-- None recorded.
+- Problem: The existing-final branch logged the intended normal publication but did not invoke cargo, leaving run_output empty and stopping the run before publication.
+  Solution: Added the existing normal CLI invocation and tee capture to that branch; the RED regression test now passes and the full runtime suite remains green.
+  Evidence: [evidence: observedIssues[0] workflow branch control flow, observedIssues[0] workflow branch control flow, observedIssues[0] workflow branch control flow]
 
 Risks avoided
 - None recorded.
 
 Remaining risks
-- Telegram service acceptance still cannot prove that a human Telegram client displayed or notified the message; this remains an operational evidence limitation. [evidence: residualRisks]
-- This Work Item verifies repository behavior only; the next real schedule or manual production run must confirm provider receipt, report visibility, pending/data binding, and the user's independent reading of the report. [evidence: residualRisks]
+- Local and hosted repository checks prove the branch invokes the CLI, but a post-merge non-dry-run must still confirm Telegram acceptance and non-secret data/pending bindings. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

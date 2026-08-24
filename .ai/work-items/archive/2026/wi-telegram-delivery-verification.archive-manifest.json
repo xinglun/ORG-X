@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-telegram-delivery-verification",
+  "archiveSequence": 59,
+  "contractPath": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+  "contractSha256": "6a9bd0ca621e167f3621237bfc9bd64d51d4ab5b02489d0ba19c04cb9b921c91",
+  "summarySha256": "f3d61c51789297e47eff3ccb6b070daaf3ab75704ab55d5065309ccff26c8b85",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.json",
+      "sha256": "eabfc90754c2100fede2e043bceb693efce4fd8ec0bcad1b604637e117dca136"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.md",
+      "sha256": "c900c835aff32246b9d641f2cf5d1097d8e4fe4e7c9746c2855bd0910008640c"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "0925bf576f4551601405faf2b7a8ec1689434bb6c5370d1bc8c7d8a22cb7042f",
+    "binding": {
+      "baseCommit": "735c941ebc8ce7afa7ffe802c725256f96b20baa",
+      "candidateHead": "aae3f100d68d42fd50f8b44b2a47de100ca879af",
+      "candidateTreeDigest": "44b9b5662a32db39ba6cdaebf5cb26d97f622754759f89e0287f51ad4a1a7cbe",
+      "candidateDiffDigest": "3bfe415878cce747cfeff47fd0980d75799233007596bd427ff97c49f0f5747b"
+    }
+  }
+}

@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-telegram-delivery-verification",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "d3a921dba50377ba1ea4b2319b8bc4a0252ccc86236ef8c20e8fe0c7f568159a"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-telegram-delivery-verification",
+    "contractDigest": "6a9bd0ca621e167f3621237bfc9bd64d51d4ab5b02489d0ba19c04cb9b921c91",
+    "summaryDigest": "f3d61c51789297e47eff3ccb6b070daaf3ab75704ab55d5065309ccff26c8b85",
+    "verificationDigest": "30692ece524586ac1d42cdaf321013f8d580e8309464aafec0ec3728a46390e1",
+    "baseCommit": "735c941ebc8ce7afa7ffe802c725256f96b20baa",
+    "headCommit": "aae3f100d68d42fd50f8b44b2a47de100ca879af",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "0925bf576f4551601405faf2b7a8ec1689434bb6c5370d1bc8c7d8a22cb7042f",
+      "binding": {
+        "baseCommit": "735c941ebc8ce7afa7ffe802c725256f96b20baa",
+        "candidateHead": "aae3f100d68d42fd50f8b44b2a47de100ca879af",
+        "candidateTreeDigest": "44b9b5662a32db39ba6cdaebf5cb26d97f622754759f89e0287f51ad4a1a7cbe",
+        "candidateDiffDigest": "3bfe415878cce747cfeff47fd0980d75799233007596bd427ff97c49f0f5747b"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-telegram-delivery-verification generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-telegram-delivery-verification generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-telegram-delivery-verification",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
       ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
@@ -24,170 +47,159 @@
       ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "ce71888487509310bc8fc04c7956063200c53cea7e912d7d7d60b94b2225ebaa"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "ce71888487509310bc8fc04c7956063200c53cea7e912d7d7d60b94b2225ebaa"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "User reported that no Telegram report was received after the same-date manual validation and identified an unprocessed remote branch.",
-    "User requested that the findings receive a corresponding Work Item.",
-    "User confirmed the explicit re-publication design: complete the Work Item, then trigger one manual validation and inspect the result."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "high",
-      "detail": "A new provider receipt and message ID still cannot prove that the intended human Telegram client displayed or notified the report.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "high",
-      "detail": "The later real event=schedule run and the retained cadence Work Item remain unverified.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Add an explicit, read-only-archive republish path for an already published Weekly Radar date.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/main.rs",
-          "subject": "republish_published_report_with"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Verify the committed archive, load its immutable input snapshot, render deterministically, send through the existing publisher, and report non-secret delivery evidence without archive writes.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/main.rs",
-          "subject": "republish_published_report_with"
-        },
-        {
-          "source": ".github/workflows/weekly-radar.yml",
-          "subject": "workflow_dispatch republish guard"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Weekly Radar CLI",
-        "detail": "Adds --republish-published-as-of and rejects incompatible recovery options.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/main.rs",
-            "subject": "parse_options and run_weekly_radar"
-          }
-        ]
-      },
-      {
-        "component": "Weekly Radar Actions workflow",
-        "detail": "Adds an explicit workflow_dispatch input and refuses schedule, dry-run, or incomplete-final cases.",
-        "status": "verified",
-        "evidence": [
+            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "ce71888487509310bc8fc04c7956063200c53cea7e912d7d7d60b94b2225ebaa"
+          },
           {
-            "source": ".github/workflows/weekly-radar.yml",
-            "subject": "REPUBLISH_PUBLISHED guards"
+            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "resolutions": [
       {
-        "decision": "Keep normal same-date invocation idempotent",
-        "reason": "A duplicate report must never be sent implicitly.",
-        "status": "verified",
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "ALREADY-PUBLISHED fixture"
-          }
-        ]
-      },
-      {
-        "decision": "Treat provider receipt as delivery evidence only",
-        "reason": "A provider message ID cannot prove human-client display or notification.",
-        "status": "verified",
-        "evidence": [
+            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "ce71888487509310bc8fc04c7956063200c53cea7e912d7d7d60b94b2225ebaa"
+          },
           {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "republish evidence limits"
+            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
           }
         ]
       }
     ],
-    "technicalDetails": [
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
       {
-        "topic": "Archive immutability",
-        "detail": "The republish helper performs only read-only archive verification and input-snapshot loading.",
+        "claim": "human-client display",
+        "severity": "high",
+        "title": "human-client display",
+        "detail": "A new provider receipt and message ID still cannot prove that the intended human Telegram client displayed or notified the report.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "human-client observation, if available"
+        ],
+        "decisionOwner": "xinglun",
+        "mitigation": "Report only provider acceptance and message IDs; do not claim display or notification.",
+        "acceptanceStatus": "accepted_with_follow_up"
+      },
+      {
+        "claim": "cadence validation",
+        "severity": "high",
+        "title": "cadence validation",
+        "detail": "The later real event=schedule run and the retained cadence Work Item remain unverified.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "a later real event=schedule hosted run"
+        ],
+        "decisionOwner": "xinglun",
+        "mitigation": "Keep cadence validation in wi-production-provider-e2e-cadence and do not infer it from this manual run.",
+        "acceptanceStatus": "accepted_with_follow_up"
+      }
+    ],
+    "humanDecisions": [
+      "User reported that no Telegram report was received after the same-date manual validation and identified an unprocessed remote branch.",
+      "User requested that the findings receive a corresponding Work Item.",
+      "User confirmed the explicit re-publication design: complete the Work Item, then trigger one manual validation and inspect the result."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": "src/main.rs",
+        "subject": "implementation"
+      },
+      {
+        "source": "tests/weekly_radar_runtime.rs",
+        "subject": "focused and full runtime tests"
+      },
+      {
+        "source": ".github/workflows/weekly-radar.yml",
+        "subject": "manual-only workflow path"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "ce71888487509310bc8fc04c7956063200c53cea7e912d7d7d60b94b2225ebaa"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "3fd8d62110e46c8060abc3ae68aeecead6bf2f5acf329a21e53be66c8e76437e"
+      }
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Add an explicit, read-only-archive republish path for an already published Weekly Radar date.",
         "status": "verified",
         "evidence": [
           {
@@ -195,28 +207,103 @@
             "subject": "republish_published_report_with"
           }
         ]
-      }
-    ],
-    "evidence": [
-      {
-        "claim": "The explicit republish implementation is present.",
-        "status": "verified",
-        "source": "src/main.rs",
-        "subject": "implementation"
       },
-      {
-        "claim": "Focused and full runtime tests cover the republish behavior.",
+      "mechanism": {
+        "text": "Verify the committed archive, load its immutable input snapshot, render deterministically, send through the existing publisher, and report non-secret delivery evidence without archive writes.",
         "status": "verified",
-        "source": "tests/weekly_radar_runtime.rs",
-        "subject": "focused and full runtime tests"
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "republish_published_report_with"
+          },
+          {
+            "source": ".github/workflows/weekly-radar.yml",
+            "subject": "workflow_dispatch republish guard"
+          }
+        ]
       },
-      {
-        "claim": "The workflow exposes a manual-only republish path.",
-        "status": "verified",
-        "source": ".github/workflows/weekly-radar.yml",
-        "subject": "manual-only workflow path"
-      }
-    ]
+      "affectedComponents": [
+        {
+          "component": "Weekly Radar CLI",
+          "detail": "Adds --republish-published-as-of and rejects incompatible recovery options.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/main.rs",
+              "subject": "parse_options and run_weekly_radar"
+            }
+          ]
+        },
+        {
+          "component": "Weekly Radar Actions workflow",
+          "detail": "Adds an explicit workflow_dispatch input and refuses schedule, dry-run, or incomplete-final cases.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".github/workflows/weekly-radar.yml",
+              "subject": "REPUBLISH_PUBLISHED guards"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Keep normal same-date invocation idempotent",
+          "reason": "A duplicate report must never be sent implicitly.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "ALREADY-PUBLISHED fixture"
+            }
+          ]
+        },
+        {
+          "decision": "Treat provider receipt as delivery evidence only",
+          "reason": "A provider message ID cannot prove human-client display or notification.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "republish evidence limits"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Archive immutability",
+          "detail": "The republish helper performs only read-only archive verification and input-snapshot loading.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/main.rs",
+              "subject": "republish_published_report_with"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The explicit republish implementation is present.",
+          "status": "verified",
+          "source": "src/main.rs",
+          "subject": "implementation"
+        },
+        {
+          "claim": "Focused and full runtime tests cover the republish behavior.",
+          "status": "verified",
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "focused and full runtime tests"
+        },
+        {
+          "claim": "The workflow exposes a manual-only republish path.",
+          "status": "verified",
+          "source": ".github/workflows/weekly-radar.yml",
+          "subject": "manual-only workflow path"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -973,6 +1060,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

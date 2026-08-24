@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-telegram-delivery-verification",
+  "receiptPath": ".ai/work-items/starts/wi-telegram-delivery-verification.json",
+  "baseCommit": "735c941ebc8ce7afa7ffe802c725256f96b20baa",
+  "baseBranch": "codex/wi-telegram-delivery-verification",
+  "startTimestamp": "2026-08-24T04:52:18.401820+00:00",
+  "initialScopeDigest": "09eaadc1d09be4a0d4f804cb3b90f3a8ef7adf13dc7a0c5862a7e02cafca3f93",
+  "contractSkeletonDigest": "64824f86291ba093dc0b092318337df914951c7e45d5caba561233775adf8ed9"
+}

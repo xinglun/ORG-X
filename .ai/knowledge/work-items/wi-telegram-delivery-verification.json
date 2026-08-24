@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-telegram-delivery-verification",
+  "title": "为 Weekly Radar 提供可验证的 Telegram 测试边界",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Add an explicit, read-only-archive republish path for an already published Weekly Radar date.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
+    ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+    ".ai/work-items/starts/wi-telegram-delivery-verification.json",
+    ".ai/cockpit/current_status.md",
+    ".github/workflows/weekly-radar.yml",
+    "src/main.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/CAPABILITIES.md",
+    ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.json",
+    ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-telegram-delivery-verification.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Keep normal same-date invocation idempotent",
+      "reason": "A duplicate report must never be sent implicitly.",
+      "status": "verified"
+    },
+    {
+      "decision": "Treat provider receipt as delivery evidence only",
+      "reason": "A provider message ID cannot prove human-client display or notification.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "code",
+      "path": "src/main.rs",
+      "digest": "974a5d42f1cbf11451b2e0c2c8c42211d9d23b6b93cc8587612921985dacea6b"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "967f1ff0e71429fea0d8fa6cc136e2306a8f5b429235dc37c4e1c42de8a6bf53"
+    },
+    {
+      "type": "code",
+      "path": ".github/workflows/weekly-radar.yml",
+      "digest": "69f0f13cc25139ee91890ccef1cde34aef707ae6ec8a31bf592a87dbc16ed4e0"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "420047fbae40a7fd98fd886de254e92ede312090e853a31cfb8a7c6ecbe03d66"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
+    "contractDigest": "6a9bd0ca621e167f3621237bfc9bd64d51d4ab5b02489d0ba19c04cb9b921c91",
+    "summaryPath": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+    "summaryDigest": "f3d61c51789297e47eff3ccb6b070daaf3ab75704ab55d5065309ccff26c8b85",
+    "outcomePath": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.json",
+    "outcomeDigest": "eabfc90754c2100fede2e043bceb693efce4fd8ec0bcad1b604637e117dca136"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

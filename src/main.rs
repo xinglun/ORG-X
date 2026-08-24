@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::env;
 use std::fmt;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use chrono::{NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::CompanySourceRegistry;
@@ -30,6 +30,7 @@ struct CliOptions {
     retry_as_of: Option<NaiveDate>,
     recover_published_as_of: Option<NaiveDate>,
     verify_published_as_of: Option<NaiveDate>,
+    republish_published_as_of: Option<NaiveDate>,
     archive_dir: PathBuf,
     registry: PathBuf,
     dry_run: bool,
@@ -57,7 +58,7 @@ impl fmt::Display for CliError {
 }
 
 fn usage() -> &'static str {
-    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--language zh-CN|ja|en] [--dry-run]\n       org-x weekly-radar --retry-as-of YYYY-MM-DD [--archive-dir PATH]\n       org-x weekly-radar --recover-published-as-of YYYY-MM-DD [--archive-dir PATH]\n       org-x weekly-radar --verify-published-as-of YYYY-MM-DD [--archive-dir PATH]"
+    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--language zh-CN|ja|en] [--dry-run]\n       org-x weekly-radar --retry-as-of YYYY-MM-DD [--archive-dir PATH]\n       org-x weekly-radar --recover-published-as-of YYYY-MM-DD [--archive-dir PATH]\n       org-x weekly-radar --verify-published-as-of YYYY-MM-DD [--archive-dir PATH]\n       org-x weekly-radar --republish-published-as-of YYYY-MM-DD [--archive-dir PATH]"
 }
 
 fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
@@ -81,6 +82,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
     let mut retry_as_of = None;
     let mut recover_published_as_of = None;
     let mut verify_published_as_of = None;
+    let mut republish_published_as_of = None;
     let mut as_of_explicit = false;
     let mut language_explicit = false;
     let mut index = 1;
@@ -121,6 +123,13 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
                 })?;
                 verify_published_as_of = Some(parsed);
             }
+            "--republish-published-as-of" => {
+                let value = option_value(args, &mut index, "--republish-published-as-of")?;
+                let parsed = NaiveDate::parse_from_str(&value, "%Y-%m-%d").map_err(|_| {
+                    CliError::Usage("--republish-published-as-of must use YYYY-MM-DD".to_owned())
+                })?;
+                republish_published_as_of = Some(parsed);
+            }
             "--archive-dir" => {
                 let value = option_value(args, &mut index, "--archive-dir")?;
                 archive_dir = PathBuf::from(value);
@@ -145,6 +154,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
     if retry_as_of.is_some()
         || recover_published_as_of.is_some()
         || verify_published_as_of.is_some()
+        || republish_published_as_of.is_some()
     {
         let mut incompatible = Vec::new();
         if as_of_explicit {
@@ -163,6 +173,10 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
                 recover_published_as_of.is_some(),
             ),
             ("--verify-published-as-of", verify_published_as_of.is_some()),
+            (
+                "--republish-published-as-of",
+                republish_published_as_of.is_some(),
+            ),
         ];
         if recovery_options
             .iter()
@@ -189,6 +203,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
         retry_as_of,
         recover_published_as_of,
         verify_published_as_of,
+        republish_published_as_of,
         archive_dir,
         registry,
         dry_run,
@@ -365,6 +380,48 @@ fn registry_has_configured_primary_source(registry: &CompanySourceRegistry) -> b
     })
 }
 
+struct RepublishDeliveryEvidence {
+    report_id: String,
+    message_ids: Vec<String>,
+    attempts: Vec<u32>,
+}
+
+fn republish_published_report_with<F>(
+    archive_dir: &Path,
+    as_of: NaiveDate,
+    send: F,
+) -> Result<String, CliError>
+where
+    F: FnOnce(&RenderedReport) -> Result<RepublishDeliveryEvidence, CliError>,
+{
+    verify_committed_run_read_only(archive_dir, "data", as_of)
+        .map_err(|error| CliError::Failure(error.to_string()))?;
+    let input_snapshot = load_input_snapshot(archive_dir, "data", as_of)
+        .map_err(|error| CliError::Failure(error.to_string()))?;
+    if !input_snapshot.has_primary_evidence() {
+        return Err(CliError::Failure(
+            "cannot republish weekly radar without primary evidence".to_owned(),
+        ));
+    }
+    let report = render_report_in_language(input_snapshot.input(), input_snapshot.language());
+    validate_rendered_report(&report)?;
+    let delivery = send(&report)?;
+    if delivery.report_id != report.report_id()
+        || delivery.message_ids.is_empty()
+        || delivery.message_ids.len() != delivery.attempts.len()
+    {
+        return Err(CliError::Failure(
+            "republish delivery evidence did not bind to the report".to_owned(),
+        ));
+    }
+    Ok(format!(
+        "REPUBLISHED: report {} sent to Telegram; message_ids={:?}; attempts={:?}; archive unchanged",
+        report.report_id(),
+        delivery.message_ids,
+        delivery.attempts
+    ))
+}
+
 fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
     if let Some(verify_as_of) = options.verify_published_as_of {
         let manifest = verify_committed_run_read_only(&options.archive_dir, "data", verify_as_of)
@@ -374,6 +431,21 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
             verify_as_of,
             manifest.report()
         ));
+    }
+    if let Some(republish_as_of) = options.republish_published_as_of {
+        return republish_published_report_with(&options.archive_dir, republish_as_of, |report| {
+            let receipt = send_rendered_report(report)
+                .map_err(|error| CliError::Failure(error.to_string()))?;
+            Ok(RepublishDeliveryEvidence {
+                report_id: receipt.report_id().to_owned(),
+                message_ids: receipt
+                    .message_ids()
+                    .iter()
+                    .map(|message_id| message_id.as_str().to_owned())
+                    .collect(),
+                attempts: receipt.attempts().to_vec(),
+            })
+        });
     }
     if let Some(recover_as_of) = options.recover_published_as_of {
         let _run_lock = acquire_run_lock(&options.archive_dir, "data", recover_as_of)
@@ -534,5 +606,106 @@ fn main() {
     if let Err(error) = result {
         eprintln!("org-x: {error}");
         std::process::exit(1);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
+        TelegramMessageId, TelegramTransport, TelegramTransportError,
+    };
+    use org_x::features::weekly_radar::runtime::archive::{
+        persist_input_snapshot, write_run_with_input_snapshot,
+    };
+    use org_x::features::weekly_radar::runtime::model::RuntimeReportInput;
+    use org_x::features::weekly_radar::runtime::report::{
+        render_report_in_language, ReportLanguage,
+    };
+    use org_x::features::weekly_radar::runtime::telegram::{
+        send_rendered_report_with_transport, TelegramRetryPolicy,
+    };
+    use std::fs;
+    use std::sync::{Arc, Mutex};
+    use std::time::Duration;
+
+    struct TestTelegramTransport;
+
+    impl TelegramTransport for TestTelegramTransport {
+        fn send_message(
+            &self,
+            _destination: &str,
+            _markdown: &str,
+        ) -> Result<TelegramMessageId, TelegramTransportError> {
+            TelegramMessageId::new("fixture-message").map_err(|error| {
+                TelegramTransportError::Failed {
+                    reason: error.to_string(),
+                }
+            })
+        }
+    }
+
+    #[test]
+    fn republish_reconstructs_input_sends_once_and_leaves_archive_unchanged() {
+        let root = std::env::temp_dir().join(format!(
+            "org-x-republish-{}-{}",
+            std::process::id(),
+            Utc::now().timestamp_nanos_opt().unwrap_or_default()
+        ));
+        let as_of = NaiveDate::from_ymd_opt(2026, 8, 17).expect("fixture date should be valid");
+        let input = RuntimeReportInput::from_date(as_of);
+        let input_snapshot =
+            persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+                .expect("fixture input should persist");
+        let report = render_report_in_language(&input, ReportLanguage::Chinese);
+        let receipt = send_rendered_report_with_transport(
+            &report,
+            "fixture-chat",
+            &TestTelegramTransport,
+            TelegramRetryPolicy::new(1, Duration::ZERO),
+        )
+        .expect("fixture report should deliver");
+        write_run_with_input_snapshot(&root, "data", &report, &receipt, Some(&input_snapshot))
+            .expect("fixture archive should commit");
+        let archive_paths = [
+            root.join("weekly-radar/snapshots/2026-08-17.input.json"),
+            root.join("weekly-radar/reports/2026-08-17.md"),
+            root.join("weekly-radar/snapshots/2026-08-17.json"),
+            root.join("weekly-radar/receipts/2026-08-17.json"),
+            root.join("weekly-radar/manifest.json"),
+        ];
+        let before = archive_paths
+            .iter()
+            .map(|path| fs::read(path).expect("fixture archive file should be readable"))
+            .collect::<Vec<_>>();
+        let sent = Arc::new(Mutex::new(Vec::new()));
+        let sent_for_callback = Arc::clone(&sent);
+
+        let output = republish_published_report_with(&root, as_of, |rendered| {
+            sent_for_callback
+                .lock()
+                .expect("test send lock should work")
+                .push(rendered.report_id().to_owned());
+            Ok(RepublishDeliveryEvidence {
+                report_id: rendered.report_id().to_owned(),
+                message_ids: vec!["republish-message".to_owned()],
+                attempts: vec![1],
+            })
+        })
+        .expect("republish should use the persisted input and send once");
+
+        assert!(output.contains("REPUBLISHED: report"));
+        assert!(output.contains("message_ids=[\"republish-message\"]"));
+        assert!(output.contains("archive unchanged"));
+        assert_eq!(sent.lock().unwrap().len(), 1);
+        for (path, expected) in archive_paths.iter().zip(before) {
+            assert_eq!(
+                fs::read(path).unwrap(),
+                expected,
+                "{} changed",
+                path.display()
+            );
+        }
+        fs::remove_dir_all(root).expect("republish fixture should be removable");
     }
 }

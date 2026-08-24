@@ -9,10 +9,10 @@
   "bindings": {
     "taskId": "wi-weekly-radar-idempotent-completion",
     "contractDigest": "569e0254cc83970b2d923f9d94a44a9aecc046620e14249b7ba58d626bb2416d",
-    "summaryDigest": "4aa7f3db9a79da6e86b03f2bec975ddf9ab2bc3efb6b8491773419fcbbf61bfe",
-    "verificationDigest": "db5fbb5c4bdb012d2a5b1ecf5f8f4611f4a33d621f0e4221aeb3685381f7ad2b",
+    "summaryDigest": "2fe2bec0059d9189facbb6126fcb2a2ec1d411f7d8fe59ff6d47608d7635105e",
+    "verificationDigest": "151b884e7f277a59b4216ef2844c1c86c56ca5adb7416d356b49f0961b85ae90",
     "baseCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
-    "headCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
+    "headCommit": "e1d115014261c12058de3cbbb7bbebfaab8e0f40",
     "lifecycleStage": "pre_merge",
     "pullRequest": {
       "state": "not_created"
@@ -21,12 +21,12 @@
     "generatorVersion": "1.2",
     "locale": "zh-CN",
     "preArchiveCandidateCoverage": {
-      "reportSha256": "91ba90fb4704e31a1f3ee5a2fcf8c21fbb652753b3519eb86d845e1b2658064e",
+      "reportSha256": "439e833c98c4a2f83ae5037e7f9f51325f4b44537175ded5b8c73e45dee35c59",
       "binding": {
         "baseCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
-        "candidateHead": "2158288706aac9059a8f2713ac59d620feecab8b",
-        "candidateTreeDigest": "01cc215e0fa338bab5996b07478f9b49bead9dd2886b02c6fbfad38ce850acf9",
-        "candidateDiffDigest": "8e86f5bc461c540c98c6771f9085d79736dbf60f6e1e6733b418f700c4d7ab40"
+        "candidateHead": "e1d115014261c12058de3cbbb7bbebfaab8e0f40",
+        "candidateTreeDigest": "127a9807c0827f6ebee2bf68db2a6c6027b819096ccb563092448ae175aeb518",
+        "candidateDiffDigest": "ee702ecb98269f7f664a35959b116f9f69f5ad054eef6fe03bacedd0c9b8c0db"
       }
     }
   },
@@ -100,7 +100,7 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verification[quality] retry passed",
-            "digest": "ea0a94a3c4d51b91c40bd0dba086aa2d181df43d15c791a2956a5d7589a01515"
+            "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
           }
         ]
       }
@@ -235,7 +235,7 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
             "subject": "verification[quality] retry passed",
-            "digest": "ea0a94a3c4d51b91c40bd0dba086aa2d181df43d15c791a2956a5d7589a01515"
+            "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
           }
         ]
       }
@@ -322,7 +322,7 @@
       {
         "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
         "subject": "verification[quality] retry passed",
-        "digest": "ea0a94a3c4d51b91c40bd0dba086aa2d181df43d15c791a2956a5d7589a01515"
+        "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
       }
     ],
     "implementationApproach": {
@@ -913,14 +913,14 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "quality",
-            "digest": "ea0a94a3c4d51b91c40bd0dba086aa2d181df43d15c791a2956a5d7589a01515"
+            "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
             "subject": "quality",
-            "digest": "ea0a94a3c4d51b91c40bd0dba086aa2d181df43d15c791a2956a5d7589a01515"
+            "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
           }
         ],
         "inference": false
@@ -1161,7 +1161,7 @@
             {
               "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verification[quality] retry passed",
-              "digest": "ea0a94a3c4d51b91c40bd0dba086aa2d181df43d15c791a2956a5d7589a01515"
+              "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
             }
           ],
           "inference": false
@@ -1245,7 +1245,7 @@
             {
               "source": ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
               "subject": "verification[quality] retry passed",
-              "digest": "ea0a94a3c4d51b91c40bd0dba086aa2d181df43d15c791a2956a5d7589a01515"
+              "digest": "ad1ab1b2cd3eec1fdd2e89e0252d86c9a8f45d9f06c0ac052944a4d2f1fdebe8"
             }
           ],
           "inference": false

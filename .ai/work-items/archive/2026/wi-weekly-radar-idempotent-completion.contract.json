@@ -1,0 +1,246 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-idempotent-completion",
+  "mode": "code",
+  "title": "修复 Weekly Radar 同日完成运行的幂等状态",
+  "baseCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "baselineDirtyPaths": [],
+  "rawUserRequest": "接受建议，开始修改",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User approved the bounded recommendation after the 2026-08-24 schedule run was rejected because an earlier manual run had already completed the same date.",
+    "digest": "sha256:weekly-radar-idempotent-completion-approved",
+    "capturedAt": "2026-08-24T12:20:00+09:00"
+  },
+  "requestedOperation": {
+    "type": "repository_governance.modify",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly approved the bounded workflow correction.",
+    "authorizedExternalEffects": [
+      "Create and update the dedicated Work Item branch and pull request.",
+      "Run repository and hosted quality checks without reading Secret values.",
+      "Merge the reviewed Work Item through the repository lifecycle."
+    ]
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "ai_governance"],
+    "prohibitedCapabilities": ["secret_readback", "manual_data_branch_repair", "trading_decision", "capital_action", "provider_scope_expansion"]
+  },
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-idempotent-completion.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-idempotent-completion.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-idempotent-completion.outcome.md",
+    "src/main.rs",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/features/weekly_radar/runtime.rs",
+    ".github/workflows/weekly-radar.yml",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/runtime/telegram.rs",
+    "config/weekly_radar/companies.json",
+    "Cargo.toml",
+    "Cargo.lock",
+    "Adding a new external durable store or artifact protocol for input snapshots created before Telegram delivery.",
+    "Reading, printing, copying, or storing any Secret value.",
+    "Manual mutation, overwrite, or repair of the data branch and the already published 2026-08-24 artifacts.",
+    "Changing source authority, acquisition limits, judgment, ranking, report content, or Telegram transport behavior.",
+    "Publishing a replacement report for an already completed date."
+  ],
+  "sources": [
+    {"path": "https://github.com/xinglun/ORG-X/actions/runs/32679132028", "reason": "The earlier manual run completed PUBLISHED for 2026-08-24 before the later schedule run."},
+    {"path": "https://github.com/xinglun/ORG-X/actions/runs/32679724484", "reason": "The scheduled run failed with archive already contains a final run after the manual run had completed."},
+    {"path": "https://github.com/xinglun/ORG-X/actions/runs/32684782204", "reason": "The post-merge manual validation reproduced the same misleading duplicate-date failure before source acquisition."},
+    {"path": "origin/data:weekly-radar/manifest.json", "reason": "The non-secret data manifest proves the requested date and bound archive paths."},
+    {"path": "origin/data:weekly-radar/receipts/2026-08-24.json", "reason": "The non-secret receipt proves the existing archive is PUBLISHED with accepted message IDs."},
+    {"path": "src/main.rs", "reason": "The CLI currently exposes pending-publication verification but routes an already final date through the duplicate error path."},
+    {"path": "src/features/weekly_radar/runtime/archive.rs", "reason": "The existing verifier and fail-closed archive invariants define the safe evidence boundary for an idempotent success."},
+    {"path": "src/features/weekly_radar/runtime/report.rs", "reason": "The existing deterministic report identity is the shared binding needed to validate legacy receipt/report/snapshot consistency without duplicating the digest algorithm."},
+    {"path": "src/features/weekly_radar/runtime.rs", "reason": "The runtime facade must export the read-only committed-run verification entrypoint."},
+    {"path": ".github/workflows/weekly-radar.yml", "reason": "The workflow currently treats only PUBLISHED and READY-TO-PUSH as successful outputs and has no already-published no-op path."},
+    {"path": "tests/weekly_radar_runtime.rs", "reason": "Existing tests cover duplicate protection, pending recovery, and published verification but not a successful already-published CLI outcome."},
+    {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "User-facing operations documentation must distinguish completed idempotent no-op, recoverable publication, and fail-closed conflict."},
+    {"path": "AGENTS.md", "reason": "Repository Work Item and production-safety rules."},
+    {"path": ".ai/glossary.md", "reason": "Evidence-over-self-declaration and governed verification terminology."},
+    {"path": "Makefile", "reason": "Canonical project quality entry point."},
+    {"path": "Makefile.ai", "reason": "Canonical AI Cockpit lifecycle and verification commands."}
+  ],
+  "problemStatement": "A final successful archive is correctly protected from duplicate publication, but the workflow reports the protection as failure. Operators cannot distinguish a safe no-op from a retryable failure, and a same-date validation run on the merged code cannot provide a clear successful result.",
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["duplicate_delivery", "workflow_semantics", "recovery_safety"],
+    "reason": "The change affects a production publication workflow. Risk is bounded by requiring full archive verification before the no-op success, preserving all existing fail-closed guards, adding fixture and workflow regressions, and forbidding data or Secret mutation.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex after inspection of the three hosted runs, data manifest, receipt, CLI, archive verifier, and workflow."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["A bounded workflow/runtime semantics correction with no provider, Secret, or historical data mutation."],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The hosted run evidence, existing archive verifier, CLI, workflow, and tests establish a deterministic and bounded correction with explicit acceptance and recovery boundaries."
+  },
+  "preReviewWarnings": [
+    "The already-published branch must verify all bound artifacts before returning success.",
+    "ALREADY-PUBLISHED must never call source acquisition or Telegram and must not create a data commit.",
+    "READY-TO-PUSH pending recovery and all incomplete/conflict failures must retain their existing semantics.",
+    "The 2026-08-24 historical data artifacts are evidence only and must not be rewritten.",
+    "A green no-op run proves idempotent state handling, not a new SEC acquisition for the old date; the next real schedule remains the production validation for the merged SEC fix."
+  ],
+  "implementationSurface": {
+    "production": ["src/main.rs", "src/features/weekly_radar/runtime/archive.rs", "src/features/weekly_radar/runtime/report.rs", "src/features/weekly_radar/runtime.rs", ".github/workflows/weekly-radar.yml"],
+    "tests": ["tests/weekly_radar_runtime.rs"],
+    "documentation": ["docs/operations/WEEKLY_RADAR.md"],
+    "generated": [".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md"]
+  },
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "The CLI exposes a verified already-published outcome that validates the complete archive and exits successfully without provider acquisition or Telegram configuration.",
+    "The workflow detects a verified final run for the requested date, accepts ALREADY-PUBLISHED, skips Telegram and data-branch writes, and exits zero.",
+    "Existing pending publication recovery continues to reuse the original receipt without a second Telegram call, while partial or conflicting state remains fail closed.",
+    "Regression tests cover the new CLI outcome, workflow branch, duplicate protection, and existing recovery/fail-closed behavior.",
+    "User-facing documentation explains ALREADY-PUBLISHED, READY-TO-PUSH, retryable incomplete state, and non-retryable conflict state.",
+    "All declared project and AI Cockpit checks pass without reading Secret values or modifying the data branch."
+  ],
+  "guidelines": [
+    "New public CLI behavior must be documented and tested.",
+    "Use the existing archive verifier as the evidence boundary; do not duplicate or weaken archive validation.",
+    "Keep provider acquisition and Telegram delivery outside the already-published verification path.",
+    "Preserve typed fail-closed errors and no-overwrite behavior.",
+    "Do not read or record Secret values.",
+    "Do not manually modify the data branch or historical production artifacts."
+  ],
+  "intent": {
+    "problem": "A final successful archive is correctly protected from duplicate publication, but the workflow reports the protection as failure. Operators cannot distinguish a safe no-op from a retryable failure, and a same-date validation run on the merged code cannot provide a clear successful result.",
+    "constraints": ["Preserve immutable final-archive verification, pending artifact reuse, fail-closed conflict handling, and no sensitive-configuration/data-history mutation."],
+    "rationale": "The existing verification and duplicate guards already protect delivery and archive integrity. The smallest safe correction is to add an explicit verified-already-published outcome and make the workflow exit successfully before any provider call or data write when the requested date is already complete. Existing recovery and fail-closed paths remain separate and testable."
+  },
+  "scenarioCoverage": [
+    {"scenario": "A complete and verifiable final archive for the requested date produces a successful ALREADY-PUBLISHED result.", "required": true, "status": "unverified", "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"], "expected": "The CLI verifies report, snapshot, receipt, manifest, and optional input snapshot bindings, then exits successfully without reading provider or Telegram configuration.", "verificationPlan": "Add and run a fixture-driven CLI regression with provider and Telegram environment removed."},
+    {"scenario": "The GitHub Actions workflow treats an already-published result as a successful no-op.", "required": true, "status": "unverified", "evidence": [".github/workflows/weekly-radar.yml", "tests/weekly_radar_runtime.rs"], "expected": "The workflow accepts ALREADY-PUBLISHED, skips Telegram and data-branch writes, and exits zero after verification.", "verificationPlan": "Add static workflow assertions and run the full runtime/end-to-end test suite."},
+    {"scenario": "Pending publication recovery remains a no-second-send path.", "required": true, "status": "unverified", "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"], "expected": "Existing READY-TO-PUSH recovery behavior and receipt identity remain unchanged.", "verificationPlan": "Run the existing pending-ref recovery test and full project checks."},
+    {"scenario": "Partial, malformed, conflicting, or unverifiable archive state still fails closed.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/archive.rs", "tests/weekly_radar_runtime.rs"], "expected": "The new no-op path never converts incomplete archive evidence into success or sends a duplicate.", "verificationPlan": "Run existing archive residue/conflict tests and the new CLI verification test with invalid fixtures."},
+    {"scenario": "User-facing operations documentation explains the status meanings.", "required": true, "status": "unverified", "evidence": ["docs/operations/WEEKLY_RADAR.md"], "expected": "Operators are told that ALREADY-PUBLISHED is successful and non-delivery, READY-TO-PUSH is recoverable, and other archive errors require inspection.", "verificationPlan": "Review the documentation diff and run declared AI Cockpit/project quality checks."}
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "xinglun",
+    "reason": "The user explicitly authorized the bounded workflow/runtime correction; approval excludes live delivery, data repair, and sensitive-value readback."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 0
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-idempotent-completion.json",
+    "baseCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
+    "initialScopeDigest": "dd275efb30516d96e5dad71a5f5b973ead5d70ae07b49939aac337b43170102d",
+    "contractSkeletonDigest": "13db57ff814a5d4df095b045862d43b8ffed2d4985de2c8fe3a93e6060908c69"
+  }
+}

@@ -15,7 +15,7 @@ use chrono::{Duration, NaiveDate};
 use serde::{Deserialize, Serialize};
 
 use super::model::RuntimeReportInput;
-use super::report::{RenderedReport, ReportLanguage};
+use super::report::{report_digest, RenderedReport, ReportLanguage};
 use super::telegram::TelegramDeliveryReceipt;
 
 const ARCHIVE_DIRECTORY: &str = "weekly-radar";
@@ -862,6 +862,152 @@ pub fn verify_committed_run(
 ) -> Result<ArchiveManifest, ArchiveError> {
     let _lock = acquire_commit_lock(root, branch, as_of)?;
     verify_committed_run_unlocked(root, branch, as_of)
+}
+
+/// Verifies a previously published report without creating lock or transaction metadata.
+///
+/// This is intentionally stricter than the recovery verifier: the no-op CLI path must prove the
+/// report, rendered snapshot, receipt, manifest, and optional input snapshot are mutually bound
+/// before it can report a successful already-published run.
+pub fn verify_committed_run_read_only(
+    root: &Path,
+    branch: &str,
+    as_of: NaiveDate,
+) -> Result<ArchiveManifest, ArchiveError> {
+    validate_data_branch(branch)?;
+    if let Some(record) = read_transaction_record(root, as_of)? {
+        if record.state != ArchiveTransactionState::Committed {
+            return Err(ArchiveError::IncompleteRun { as_of });
+        }
+        verify_committed_transaction(root, &record)?;
+        verify_transaction_manifest_binding(root, &record)?;
+        verify_published_artifact_identity(root, as_of, &record.manifest)?;
+        verify_input_snapshot_reference(root, &record.manifest)?;
+        return Ok(record.manifest);
+    }
+
+    let manifest_path = archive_root(root).join("manifest.json");
+    let manifest_content =
+        fs::read_to_string(manifest_path).map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    let manifest = serde_json::from_str::<ArchiveManifest>(&manifest_content)
+        .map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    verify_published_artifact_identity(root, as_of, &manifest)?;
+    verify_input_snapshot_reference(root, &manifest)?;
+    Ok(manifest)
+}
+
+fn verify_transaction_manifest_binding(
+    root: &Path,
+    record: &ArchiveTransactionRecord,
+) -> Result<(), ArchiveError> {
+    let manifest_path = archive_root(root).join("manifest.json");
+    let manifest_content =
+        fs::read_to_string(manifest_path).map_err(|_| ArchiveError::IncompleteRun {
+            as_of: record.as_of,
+        })?;
+    let current_manifest =
+        serde_json::from_str::<ArchiveManifest>(&manifest_content).map_err(|_| {
+            ArchiveError::IncompleteRun {
+                as_of: record.as_of,
+            }
+        })?;
+    if current_manifest.as_of == record.as_of && current_manifest != record.manifest {
+        return Err(ArchiveError::IncompleteRun {
+            as_of: record.as_of,
+        });
+    }
+    Ok(())
+}
+
+fn verify_published_artifact_identity(
+    root: &Path,
+    as_of: NaiveDate,
+    manifest: &ArchiveManifest,
+) -> Result<(), ArchiveError> {
+    let expected_paths = final_relative_paths(as_of);
+    let expected_manifest = ArchiveManifest {
+        as_of,
+        report: format!("{ARCHIVE_DIRECTORY}/{}", expected_paths[0]),
+        snapshot: format!("{ARCHIVE_DIRECTORY}/{}", expected_paths[1]),
+        receipt: format!("{ARCHIVE_DIRECTORY}/{}", expected_paths[2]),
+        input_snapshot: manifest
+            .input_snapshot
+            .as_ref()
+            .map(|_| input_snapshot_relative(as_of)),
+        snapshot_id: manifest.snapshot_id.clone(),
+    };
+    if *manifest != expected_manifest {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+    if manifest.input_snapshot.is_some() != manifest.snapshot_id.is_some()
+        || manifest.snapshot_id.as_deref().is_some_and(str::is_empty)
+    {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+
+    let paths = final_paths(root, as_of);
+    let report =
+        fs::read_to_string(&paths[0]).map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    let snapshot =
+        fs::read_to_string(&paths[1]).map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    let receipt =
+        fs::read_to_string(&paths[2]).map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    if report.is_empty() || !report.ends_with('\n') {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+
+    let snapshot_json = serde_json::from_str::<serde_json::Value>(&snapshot)
+        .map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    let as_of_text = as_of.format("%Y-%m-%d").to_string();
+    let snapshot_language = snapshot_json
+        .get("language")
+        .and_then(serde_json::Value::as_str)
+        .ok_or(ArchiveError::IncompleteRun { as_of })?;
+    ReportLanguage::from_str(snapshot_language)
+        .map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    if snapshot_json
+        .get("metadata")
+        .and_then(|metadata| metadata.get("as_of"))
+        .and_then(serde_json::Value::as_str)
+        != Some(as_of_text.as_str())
+    {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+
+    let receipt_json = serde_json::from_str::<serde_json::Value>(&receipt)
+        .map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+    if receipt_json.get("status") != Some(&serde_json::Value::String("PUBLISHED".to_owned()))
+        || receipt_json
+            .get("as_of")
+            .and_then(serde_json::Value::as_str)
+            != Some(as_of_text.as_str())
+        || receipt_json
+            .get("report_id")
+            .and_then(serde_json::Value::as_str)
+            != Some(report_digest(&report, &snapshot).as_str())
+    {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+    let message_ids = receipt_json
+        .get("message_ids")
+        .and_then(serde_json::Value::as_array)
+        .ok_or(ArchiveError::IncompleteRun { as_of })?;
+    let attempts = receipt_json
+        .get("attempts")
+        .and_then(serde_json::Value::as_array)
+        .ok_or(ArchiveError::IncompleteRun { as_of })?;
+    if message_ids.is_empty()
+        || message_ids.len() != attempts.len()
+        || message_ids
+            .iter()
+            .any(|message_id| message_id.as_str().map(str::is_empty).unwrap_or(true))
+        || attempts
+            .iter()
+            .any(|attempt| attempt.as_u64().is_none_or(|value| value == 0))
+    {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+    Ok(())
 }
 
 fn verify_committed_run_unlocked(

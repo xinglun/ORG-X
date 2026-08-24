@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-idempotent-completion",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "f414adc75a32b46ffefba681eb20890dae32bface8e1bc8462c30fc0319c4294"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-idempotent-completion",
+    "contractDigest": "569e0254cc83970b2d923f9d94a44a9aecc046620e14249b7ba58d626bb2416d",
+    "summaryDigest": "07350deb5f4cf6b0124666cc76ad86d312eb2696e3dce7bf4b971ca836427cdc",
+    "verificationDigest": "5ff6cbf73e15829952355e924020f7a0da4912d87ee0ac2a770b721feeb85abb",
+    "baseCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
+    "headCommit": "3bcab5983631ea5796a3ad65e524c4e71eb005d4",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "30dd0aff4762d184bd18ead50c9864c0852433c12adc84f7212909e14a27badf",
+      "binding": {
+        "baseCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
+        "candidateHead": "3bcab5983631ea5796a3ad65e524c4e71eb005d4",
+        "candidateTreeDigest": "9d9e7a56e37d23747d28a74f7aba5123bac0f8b1b95dc9f3795a7cb42d867fbc",
+        "candidateDiffDigest": "4f3999a0ccb2b963a5b09c27084d47cb44e46842608e4d20bf8ea76134059b97"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-idempotent-completion generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-idempotent-completion generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-idempotent-completion",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
@@ -27,232 +50,386 @@
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md",
       ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json"
-    ]
-  },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: quality",
-      "action": "blocked",
-      "resolution": "Retry quality after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "7b6fcf4e2a38bd1279be3ed42391cd78e4b42c31cf60fecfa683b4163f9401c7"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "quality failed before the retry.",
-      "policyOrGuard": "required verification: quality",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry quality after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "7b6fcf4e2a38bd1279be3ed42391cd78e4b42c31cf60fecfa683b4163f9401c7"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The existing 2026-08-24 report remains unchanged; the next real weekly schedule is still needed to prove the corrected workflow handles a fresh production date and the SEC response-limit fix together.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "Creating a new durable external input store before Telegram delivery remains outside this bounded correction; explicit retry still requires the existing durable input snapshot.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Add a read-only verified-final-run outcome and make the workflow treat a complete same-date data archive as a successful no-op while preserving pending recovery.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/main.rs",
-          "subject": "ALREADY-PUBLISHED CLI verification"
-        },
-        {
-          "source": ".github/workflows/weekly-radar.yml",
-          "subject": "same-date final archive no-op branch"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "The workflow first checks exact report, snapshot, and receipt files on origin/data, then asks the CLI to verify the full committed archive before exiting without Telegram or a data push.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": ".github/workflows/weekly-radar.yml",
-          "subject": "exact final artifact detection and no-op exit"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/archive.rs",
-          "subject": "existing committed-run verification"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Weekly Radar CLI and GitHub Actions workflow",
-        "detail": "Same-date final publication is surfaced as ALREADY-PUBLISHED; pending and prepared recovery outcomes remain accepted.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/main.rs",
-            "subject": "CLI outcome"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
           },
           {
-            "source": ".github/workflows/weekly-radar.yml",
-            "subject": "workflow outcome handling"
-          }
-        ]
-      }
-    ],
-    "designDecisions": [
-      {
-        "decision": "Verify the complete committed archive before skipping rather than treating the existence of one report file as success.",
-        "reason": "This preserves fail-closed behavior for partial or conflicting state and prevents duplicate Telegram delivery.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/main.rs",
-            "subject": "verify_committed_run_read_only binding"
-          },
-          {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "complete archive and conflict regressions"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "Production archive validation",
-        "detail": "A read-only copy of origin/data verified the existing 2026-08-24 report, snapshot, receipt, and manifest binding without provider or Telegram configuration.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "read-only verified final-run path"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
           }
         ]
       },
       {
-        "topic": "User-facing operations guidance",
-        "detail": "The operations guide defines the meaning of each successful or recoverable status and the stop condition for other archive errors.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "quality failed before the retry.",
+        "policyOrGuard": "required verification: quality",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry quality after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "status interpretation"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "verificationHistory[1] quality failed",
+            "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "7b6fcf4e2a38bd1279be3ed42391cd78e4b42c31cf60fecfa683b4163f9401c7"
           }
         ]
       }
     ],
+    "resolutions": [
+      {
+        "problem": "The initial no-op path reused a verifier that did not fully bind legacy report, snapshot, receipt, and manifest identities and created lock metadata during a command documented as read-only.",
+        "action": "Added strict report/snapshot/receipt identity validation, transaction manifest binding for the no-op path, a shared report digest, and a truly non-mutating verification entrypoint; added a legacy tamper regression.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/runtime/archive.rs",
+            "subject": "observedIssues[0] merge review: already-published archive verification"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "observedIssues[0] merge review: already-published archive verification"
+          },
+          {
+            "source": "src/main.rs",
+            "subject": "observedIssues[0] merge review: already-published archive verification"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[0] merge review: already-published archive verification"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/archive.rs",
+            "subject": "observedIssues[0] merge review: already-published archive verification"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "observedIssues[0] merge review: already-published archive verification"
+          },
+          {
+            "source": "src/main.rs",
+            "subject": "observedIssues[0] merge review: already-published archive verification"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[0] merge review: already-published archive verification"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "The strict no-op verifier rejected zero attempts but accepted non-numeric, negative, boolean, null, or fractional attempt values.",
+        "action": "Require every receipt attempt to be a positive unsigned integer and add a legacy-archive regression using a non-numeric attempt value.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/runtime/archive.rs",
+            "subject": "observedIssues[1] merge review: malformed receipt attempt values"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[1] merge review: malformed receipt attempt values"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/archive.rs",
+            "subject": "observedIssues[1] merge review: malformed receipt attempt values"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[1] merge review: malformed receipt attempt values"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "The same-date transaction manifest binding was implemented but had no regression test proving that a manifest mismatch fails closed.",
+        "action": "Add a committed-transaction fixture that tampers the same-date manifest and asserts no ALREADY-PUBLISHED result.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/runtime/archive.rs",
+            "subject": "observedIssues[2] merge review: same-date transaction manifest coverage"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[2] merge review: same-date transaction manifest coverage"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/archive.rs",
+            "subject": "observedIssues[2] merge review: same-date transaction manifest coverage"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[2] merge review: same-date transaction manifest coverage"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
+          }
+        ]
+      },
+      {
+        "problem": "quality failed before the retry.",
+        "action": "Re-ran quality after the correction; the latest attempt passed.",
+        "verification": "quality latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "verificationHistory[1] quality failed",
+            "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "7b6fcf4e2a38bd1279be3ed42391cd78e4b42c31cf60fecfa683b4163f9401c7"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "production revalidation",
+        "severity": "medium",
+        "title": "production revalidation",
+        "detail": "The existing 2026-08-24 report remains unchanged; the next real weekly schedule is still needed to prove the corrected workflow handles a fresh production date and the SEC response-limit fix together.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "pre-Telegram retry durability",
+        "severity": "medium",
+        "title": "pre-Telegram retry durability",
+        "detail": "Creating a new durable external input store before Telegram delivery remains outside this bounded correction; explicit retry still requires the existing durable input snapshot.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
     "evidence": [
       {
-        "claim": "The same-date final archive is a safe idempotent success path.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_runtime.rs",
         "subject": "CLI and workflow regression coverage"
       },
       {
-        "claim": "Production history is not rewritten by this correction.",
-        "status": "verified",
         "source": ".github/workflows/weekly-radar.yml",
         "subject": "no-op branch exits before Telegram/data write"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "9c362cc357bec576cd00a4add77f3c9653b61bfede7d947295660fa241287651"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "bc4eb7cf3802359878ca02de76e6d96f4082faed6f4130edab9cae696287d93a"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+        "subject": "verificationHistory[1] quality failed",
+        "digest": "b9b63efdf320b7ddaa78c8632767e5f2614e22c7d756aea8e7eb0a2b19dffd69"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json",
+        "subject": "verification[quality] retry passed",
+        "digest": "7b6fcf4e2a38bd1279be3ed42391cd78e4b42c31cf60fecfa683b4163f9401c7"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Add a read-only verified-final-run outcome and make the workflow treat a complete same-date data archive as a successful no-op while preserving pending recovery.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "ALREADY-PUBLISHED CLI verification"
+          },
+          {
+            "source": ".github/workflows/weekly-radar.yml",
+            "subject": "same-date final archive no-op branch"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "The workflow first checks exact report, snapshot, and receipt files on origin/data, then asks the CLI to verify the full committed archive before exiting without Telegram or a data push.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": ".github/workflows/weekly-radar.yml",
+            "subject": "exact final artifact detection and no-op exit"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/archive.rs",
+            "subject": "existing committed-run verification"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Weekly Radar CLI and GitHub Actions workflow",
+          "detail": "Same-date final publication is surfaced as ALREADY-PUBLISHED; pending and prepared recovery outcomes remain accepted.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/main.rs",
+              "subject": "CLI outcome"
+            },
+            {
+              "source": ".github/workflows/weekly-radar.yml",
+              "subject": "workflow outcome handling"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Verify the complete committed archive before skipping rather than treating the existence of one report file as success.",
+          "reason": "This preserves fail-closed behavior for partial or conflicting state and prevents duplicate Telegram delivery.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/main.rs",
+              "subject": "verify_committed_run_read_only binding"
+            },
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "complete archive and conflict regressions"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Production archive validation",
+          "detail": "A read-only copy of origin/data verified the existing 2026-08-24 report, snapshot, receipt, and manifest binding without provider or Telegram configuration.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "read-only verified final-run path"
+            }
+          ]
+        },
+        {
+          "topic": "User-facing operations guidance",
+          "detail": "The operations guide defines the meaning of each successful or recoverable status and the stop condition for other archive errors.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "status interpretation"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The same-date final archive is a safe idempotent success path.",
+          "status": "verified",
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "CLI and workflow regression coverage"
+        },
+        {
+          "claim": "Production history is not rewritten by this correction.",
+          "status": "verified",
+          "source": ".github/workflows/weekly-radar.yml",
+          "subject": "no-op branch exits before Telegram/data write"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1140,6 +1317,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

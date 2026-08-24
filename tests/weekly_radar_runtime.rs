@@ -2318,19 +2318,25 @@ fn task5_cli_rejects_invalid_usage() {
 
 #[test]
 fn task5_cli_rejects_retry_with_incompatible_options() {
-    for extra in [
-        vec!["--as-of", "2026-08-17"],
-        vec!["--language", "ja"],
-        vec!["--dry-run"],
+    for recovery_option in [
+        "--retry-as-of",
+        "--recover-published-as-of",
+        "--verify-published-as-of",
     ] {
-        let mut args = vec!["weekly-radar", "--retry-as-of", "2026-08-17"];
-        args.extend(extra);
-        let output = task5_cli(&args);
-        assert!(
-            !output.status.success(),
-            "incompatible retry options must fail"
-        );
-        assert!(String::from_utf8_lossy(&output.stderr).contains("retry-as-of"));
+        for extra in [
+            vec!["--as-of", "2026-08-17"],
+            vec!["--language", "ja"],
+            vec!["--dry-run"],
+        ] {
+            let mut args = vec!["weekly-radar", recovery_option, "2026-08-17"];
+            args.extend(extra);
+            let output = task5_cli(&args);
+            assert!(
+                !output.status.success(),
+                "incompatible recovery options must fail"
+            );
+            assert!(String::from_utf8_lossy(&output.stderr).contains("recovery options"));
+        }
     }
 }
 
@@ -2371,6 +2377,202 @@ fn task5_cli_retry_uses_persisted_input_without_source_acquisition() {
     );
     assert!(!stderr.contains("ORGX_SEC_USER_AGENT"));
     fs::remove_dir_all(root).expect("retry fixture should be removable");
+}
+
+#[test]
+fn task5_cli_reports_a_verified_final_run_as_an_idempotent_success() {
+    let root = task5_cli_fixture_root("already-published");
+    let input = task4_report_input();
+    let snapshot = persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+        .expect("published input should persist");
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("fixture delivery should succeed");
+    write_run_with_input_snapshot(&root, "data", &report, &receipt, Some(&snapshot))
+        .expect("fixture publication should commit");
+
+    let output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            root.to_str().unwrap(),
+            "--verify-published-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("already-published CLI should be executable");
+
+    assert!(
+        output.status.success(),
+        "a verified final run should be a successful no-op: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(String::from_utf8_lossy(&output.stdout).contains("ALREADY-PUBLISHED:"));
+    assert!(fs::read_to_string(root.join("weekly-radar/manifest.json"))
+        .expect("manifest should remain readable")
+        .contains("2026-08-17"));
+    fs::remove_dir_all(root).expect("already-published fixture should be removable");
+}
+
+#[test]
+fn task5_cli_rejects_same_date_transaction_manifest_mismatch() {
+    let root = task5_cli_fixture_root("already-published-manifest-mismatch");
+    let input = task4_report_input();
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("fixture delivery should succeed");
+    write_run(&root, "data", &report, &receipt).expect("fixture publication should commit");
+
+    let manifest_path = root.join("weekly-radar/manifest.json");
+    let mut manifest: serde_json::Value = serde_json::from_str(
+        &fs::read_to_string(&manifest_path).expect("manifest should be readable"),
+    )
+    .expect("manifest should be valid JSON");
+    manifest["report"] = serde_json::Value::String("weekly-radar/reports/2026-08-16.md".to_owned());
+    fs::write(
+        &manifest_path,
+        serde_json::to_string_pretty(&manifest).expect("tampered manifest should serialize"),
+    )
+    .expect("tampered manifest should be writable");
+
+    let output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            root.to_str().unwrap(),
+            "--verify-published-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("manifest verification CLI should be executable");
+    assert!(
+        !output.status.success(),
+        "same-date transaction manifest mismatch must fail closed"
+    );
+    assert!(!String::from_utf8_lossy(&output.stdout).contains("ALREADY-PUBLISHED:"));
+    fs::remove_dir_all(root).expect("manifest verification fixture should be removable");
+}
+
+#[test]
+fn task5_cli_rejects_tampered_legacy_archive_without_creating_lock_metadata() {
+    let root = task5_cli_fixture_root("already-published-legacy");
+    let input = task4_report_input();
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("fixture delivery should succeed");
+    write_run(&root, "data", &report, &receipt).expect("fixture publication should commit");
+    let transaction_dir = root.join("weekly-radar/.transactions");
+    fs::remove_dir_all(&transaction_dir)
+        .expect("legacy fixture should remove transaction metadata");
+
+    let output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            root.to_str().unwrap(),
+            "--verify-published-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("legacy verification CLI should be executable");
+    assert!(
+        output.status.success(),
+        "a valid legacy archive should verify: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(String::from_utf8_lossy(&output.stdout).contains("ALREADY-PUBLISHED:"));
+    assert!(
+        !transaction_dir.exists(),
+        "read-only verification must not create lock or transaction metadata"
+    );
+
+    let receipt_path = root.join("weekly-radar/receipts/2026-08-17.json");
+    let mut receipt_json: serde_json::Value = serde_json::from_str(
+        &fs::read_to_string(&receipt_path).expect("legacy receipt should be readable"),
+    )
+    .expect("legacy receipt should be valid JSON");
+    receipt_json["report_id"] = serde_json::Value::String("wr-tampered".to_owned());
+    fs::write(
+        &receipt_path,
+        serde_json::to_string_pretty(&receipt_json).expect("tampered receipt should serialize"),
+    )
+    .expect("tampered receipt should be writable");
+
+    let output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            root.to_str().unwrap(),
+            "--verify-published-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("tampered verification CLI should be executable");
+    assert!(
+        !output.status.success(),
+        "tampered identity must fail closed"
+    );
+    assert!(!String::from_utf8_lossy(&output.stdout).contains("ALREADY-PUBLISHED:"));
+
+    receipt_json["report_id"] = serde_json::Value::String(receipt.report_id().to_owned());
+    receipt_json["attempts"]
+        .as_array_mut()
+        .expect("legacy receipt attempts should be an array")
+        .first_mut()
+        .expect("legacy receipt should contain one attempt")
+        .clone_from(&serde_json::Value::String("not-a-number".to_owned()));
+    fs::write(
+        &receipt_path,
+        serde_json::to_string_pretty(&receipt_json).expect("malformed receipt should serialize"),
+    )
+    .expect("malformed receipt should be writable");
+
+    let output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            root.to_str().unwrap(),
+            "--verify-published-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("malformed receipt verification CLI should be executable");
+    assert!(
+        !output.status.success(),
+        "malformed receipt attempts must fail closed"
+    );
+    assert!(!String::from_utf8_lossy(&output.stdout).contains("ALREADY-PUBLISHED:"));
+    fs::remove_dir_all(root).expect("legacy verification fixture should be removable");
 }
 
 #[test]
@@ -2724,6 +2926,11 @@ fn task6_workflow_runs_the_cli_and_rejects_empty_or_unpublished_output() {
     let workflow = task6_workflow_text();
 
     assert!(workflow.contains("cargo run --release -- weekly-radar"));
+    assert!(workflow.contains("--verify-published-as-of"));
+    assert!(workflow.contains("ALREADY-PUBLISHED:"));
+    assert!(workflow.contains("data_final_run=false"));
+    assert!(workflow.contains("\"$data_final_run\" == \"true\""));
+    assert!(workflow.contains("RECOVERED:"));
     assert!(workflow.contains("--archive-dir \"$GITHUB_WORKSPACE\""));
     assert!(
         workflow.contains("--registry \"$GITHUB_WORKSPACE/config/weekly_radar/companies.json\"")

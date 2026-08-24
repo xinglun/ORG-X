@@ -1137,7 +1137,7 @@ fn snapshot_company(company: &CompanyIdentity) -> SnapshotCompany {
     }
 }
 
-fn report_digest(markdown: &str, snapshot_json: &str) -> String {
+pub(crate) fn report_digest(markdown: &str, snapshot_json: &str) -> String {
     let mut digest = 14_695_981_039_346_656_037_u64;
     for byte in markdown
         .bytes()

@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-idempotent-completion",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-idempotent-completion.json",
+  "baseCommit": "2158288706aac9059a8f2713ac59d620feecab8b",
+  "baseBranch": "codex/wi-weekly-radar-idempotent-completion",
+  "startTimestamp": "2026-08-24T03:09:21.023078+00:00",
+  "initialScopeDigest": "dd275efb30516d96e5dad71a5f5b973ead5d70ae07b49939aac337b43170102d",
+  "contractSkeletonDigest": "13db57ff814a5d4df095b045862d43b8ffed2d4985de2c8fe3a93e6060908c69"
+}

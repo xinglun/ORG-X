@@ -133,7 +133,23 @@ jobs:
             exit 1
           fi
 
-          if [[ "$REPORT_DRY_RUN" != "true" && -n "$pending_as_of" && "$pending_as_of" == "$as_of" ]]; then
+          data_final_run=false
+          if git show "origin/data:weekly-radar/reports/${as_of}.md" >/dev/null 2>&1; then
+            if git show "origin/data:weekly-radar/snapshots/${as_of}.json" >/dev/null 2>&1; then
+              if git show "origin/data:weekly-radar/receipts/${as_of}.json" >/dev/null 2>&1; then
+                data_final_run=true
+              fi
+            fi
+          fi
+          if [[ "$REPORT_DRY_RUN" != "true" && "$data_final_run" == "true" ]]; then
+            cargo run --release -- weekly-radar --verify-published-as-of "$as_of" --archive-dir "$GITHUB_WORKSPACE" | tee "$run_output"
+            if ! grep -Fq 'ALREADY-PUBLISHED:' "$run_output"; then
+              echo "Weekly Radar could not verify the existing final run; refusing to skip publication." >&2
+              exit 1
+            fi
+            echo "Weekly Radar already published $as_of; no Telegram or data-branch write was needed."
+            exit 0
+          elif [[ "$REPORT_DRY_RUN" != "true" && -n "$pending_as_of" && "$pending_as_of" == "$as_of" ]]; then
             cargo run --release -- weekly-radar \
               --recover-published-as-of "$pending_as_of" \
               --archive-dir "$GITHUB_WORKSPACE" \
@@ -155,7 +171,7 @@ jobs:
             echo "Weekly Radar dry-run completed; Telegram and data branch were not contacted."
             exit 0
           fi
-          if ! grep -Fq 'PUBLISHED:' "$run_output" && ! grep -Fq 'READY-TO-PUSH:' "$run_output"; then
+          if ! grep -Fq 'PUBLISHED:' "$run_output" && ! grep -Fq 'READY-TO-PUSH:' "$run_output" && ! grep -Fq 'RECOVERED:' "$run_output"; then
             echo "Weekly Radar did not report a published or recoverable run; refusing to update data." >&2
             exit 1
           fi

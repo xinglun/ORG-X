@@ -42,7 +42,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "9120a70c015c7a8e5e792b9b586b1ce27af56a3497462a0da043e6745dda86f3"
+      "digest": "1073fbdfe8d4ef4ea70fb95b858c338d217ab07d7719cf95574e9d1c71f15a3b"
     },
     {
       "type": "code",
@@ -57,7 +57,7 @@
     {
       "type": "code",
       "path": "docs/operations/WEEKLY_RADAR.md",
-      "digest": "a10e772d3ef60789ae992461f2ef28463409467e57ad0d1212d9ffb3d7eb0229"
+      "digest": "5b48bcf926b356c11ea1798d5b2fe0521cf780676c1c668ede1a2e2d4bc0cda5"
     }
   ],
   "mergedCommit": null,

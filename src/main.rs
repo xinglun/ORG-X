@@ -17,7 +17,8 @@ use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources
 use org_x::features::weekly_radar::runtime::{
     acquire_run_lock, derive_judgment_snapshot_for_companies, ensure_run_available,
     load_input_snapshot, normalize_source_observation, persist_input_snapshot, recover_pending_run,
-    send_rendered_report, verify_committed_run, write_run_with_input_snapshot,
+    send_rendered_report, verify_committed_run, verify_committed_run_read_only,
+    write_run_with_input_snapshot,
 };
 
 const DEFAULT_REGISTRY: &str = "config/weekly_radar/companies.json";
@@ -28,6 +29,7 @@ struct CliOptions {
     as_of: NaiveDate,
     retry_as_of: Option<NaiveDate>,
     recover_published_as_of: Option<NaiveDate>,
+    verify_published_as_of: Option<NaiveDate>,
     archive_dir: PathBuf,
     registry: PathBuf,
     dry_run: bool,
@@ -55,7 +57,7 @@ impl fmt::Display for CliError {
 }
 
 fn usage() -> &'static str {
-    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--language zh-CN|ja|en] [--dry-run]\n       org-x weekly-radar --retry-as-of YYYY-MM-DD [--archive-dir PATH]\n       org-x weekly-radar --recover-published-as-of YYYY-MM-DD [--archive-dir PATH]"
+    "Usage: org-x weekly-radar [--as-of YYYY-MM-DD] [--archive-dir PATH] [--registry PATH] [--language zh-CN|ja|en] [--dry-run]\n       org-x weekly-radar --retry-as-of YYYY-MM-DD [--archive-dir PATH]\n       org-x weekly-radar --recover-published-as-of YYYY-MM-DD [--archive-dir PATH]\n       org-x weekly-radar --verify-published-as-of YYYY-MM-DD [--archive-dir PATH]"
 }
 
 fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
@@ -78,6 +80,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
     let mut language = ReportLanguage::default();
     let mut retry_as_of = None;
     let mut recover_published_as_of = None;
+    let mut verify_published_as_of = None;
     let mut as_of_explicit = false;
     let mut language_explicit = false;
     let mut index = 1;
@@ -111,6 +114,13 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
                 })?;
                 recover_published_as_of = Some(parsed);
             }
+            "--verify-published-as-of" => {
+                let value = option_value(args, &mut index, "--verify-published-as-of")?;
+                let parsed = NaiveDate::parse_from_str(&value, "%Y-%m-%d").map_err(|_| {
+                    CliError::Usage("--verify-published-as-of must use YYYY-MM-DD".to_owned())
+                })?;
+                verify_published_as_of = Some(parsed);
+            }
             "--archive-dir" => {
                 let value = option_value(args, &mut index, "--archive-dir")?;
                 archive_dir = PathBuf::from(value);
@@ -132,7 +142,10 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
         }
     }
 
-    if retry_as_of.is_some() || recover_published_as_of.is_some() {
+    if retry_as_of.is_some()
+        || recover_published_as_of.is_some()
+        || verify_published_as_of.is_some()
+    {
         let mut incompatible = Vec::new();
         if as_of_explicit {
             incompatible.push("--as-of");
@@ -143,13 +156,29 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
         if dry_run {
             incompatible.push("--dry-run");
         }
-        if retry_as_of.is_some() && recover_published_as_of.is_some() {
-            incompatible.push("--retry-as-of");
-            incompatible.push("--recover-published-as-of");
+        let recovery_options = [
+            ("--retry-as-of", retry_as_of.is_some()),
+            (
+                "--recover-published-as-of",
+                recover_published_as_of.is_some(),
+            ),
+            ("--verify-published-as-of", verify_published_as_of.is_some()),
+        ];
+        if recovery_options
+            .iter()
+            .filter(|(_, present)| *present)
+            .count()
+            > 1
+        {
+            incompatible.extend(
+                recovery_options
+                    .iter()
+                    .filter_map(|(option, present)| present.then_some(*option)),
+            );
         }
         if !incompatible.is_empty() {
             return Err(CliError::Usage(format!(
-                "--retry-as-of cannot be combined with {}",
+                "recovery options cannot be combined with {}",
                 incompatible.join(", ")
             )));
         }
@@ -159,6 +188,7 @@ fn parse_options(args: &[String]) -> Result<CliAction, CliError> {
         as_of: as_of.unwrap_or_else(|| Utc::now().date_naive()),
         retry_as_of,
         recover_published_as_of,
+        verify_published_as_of,
         archive_dir,
         registry,
         dry_run,
@@ -336,6 +366,15 @@ fn registry_has_configured_primary_source(registry: &CompanySourceRegistry) -> b
 }
 
 fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
+    if let Some(verify_as_of) = options.verify_published_as_of {
+        let manifest = verify_committed_run_read_only(&options.archive_dir, "data", verify_as_of)
+            .map_err(|error| CliError::Failure(error.to_string()))?;
+        return Ok(format!(
+            "ALREADY-PUBLISHED: report {} verified at {}",
+            verify_as_of,
+            manifest.report()
+        ));
+    }
     if let Some(recover_as_of) = options.recover_published_as_of {
         let _run_lock = acquire_run_lock(&options.archive_dir, "data", recover_as_of)
             .map_err(|error| CliError::Failure(error.to_string()))?;

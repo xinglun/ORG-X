@@ -1,15 +1,29 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-same-day-canonical-update",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "9f30b5831f2cea36cc9c3d8310fcefbbc4d8e248dfdf0e3ad0bc287c1219ae31"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-same-day-canonical-update",
+    "contractDigest": "96aa10dd0911f45627966de2a817c399097df08c366fdacb14879feb1ea30bdc",
+    "summaryDigest": "47cd7e0ddcdc7b6fd73a890eb7b46e43a6d671bb621fefe231b34c02ecf2a599",
+    "verificationDigest": "f252a0a80294ec34e7b1398e786479e4631ecd6da1bea2c99c885d764f401848",
+    "baseCommit": "ecd17580be6c234ef0208ae9f8ace07323af2bfd",
+    "headCommit": "ecd17580be6c234ef0208ae9f8ace07323af2bfd",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN"
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-same-day-canonical-update generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-same-day-canonical-update generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-same-day-canonical-update",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
@@ -36,165 +50,198 @@
       ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
       ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
       ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
-    ]
-  },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Telegram service acceptance still cannot prove that a human Telegram client displayed or notified the message; this remains an operational evidence limitation.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "This Work Item verifies repository behavior only; the next real schedule or manual production run must confirm provider receipt, report visibility, pending/data binding, and the user's independent reading of the report.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Use an explicit replacement transaction for normal same-day publication while retaining strict creation, retry, verify, and republish boundaries.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/archive.rs",
-          "subject": "replacement transaction and legacy record validation"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Build the input snapshot in memory, deliver Telegram, then stage report/snapshot/receipt/input snapshot/manifest with previous-artifact digests and recover prepared transactions before data publication.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/main.rs",
-          "subject": "normal publication ordering"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/archive.rs",
-          "subject": "five-artifact replacement and recovery"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
       {
-        "component": "Weekly Radar archive",
-        "detail": "Same-day canonical replacement and four-artifact legacy transaction compatibility.",
+        "claim": "delivery",
+        "severity": "medium",
+        "title": "delivery",
+        "detail": "Telegram service acceptance still cannot prove that a human Telegram client displayed or notified the message; this remains an operational evidence limitation.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "production validation",
+        "severity": "medium",
+        "title": "production validation",
+        "detail": "This Work Item verifies repository behavior only; the next real schedule or manual production run must confirm provider receipt, report visibility, pending/data binding, and the user's independent reading of the report.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": "tests/weekly_radar_runtime.rs",
+        "subject": "replacement and workflow regression suite"
+      }
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Use an explicit replacement transaction for normal same-day publication while retaining strict creation, retry, verify, and republish boundaries.",
         "status": "verified",
         "evidence": [
           {
             "source": "src/features/weekly_radar/runtime/archive.rs",
-            "subject": "archive identity and transaction implementation"
+            "subject": "replacement transaction and legacy record validation"
           }
         ]
       },
-      {
-        "component": "Actions publication flow",
-        "detail": "Schedule/manual normal publication and same-date pending recovery are aligned with the latest successful canonical update.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": ".github/workflows/weekly-radar.yml",
-            "subject": "normal and pending branches"
-          }
-        ]
-      },
-      {
-        "component": "User operations guide",
-        "detail": "Manual triggering, canonicality, recovery, retry, verify, and republish are explained for users.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "same-day publication behavior"
-          }
-        ]
-      }
-    ],
-    "designDecisions": [
-      {
-        "decision": "Do not persist a new input snapshot before Telegram succeeds.",
-        "reason": "This prevents a failed same-day attempt from binding an old report to a new input.",
+      "mechanism": {
+        "text": "Build the input snapshot in memory, deliver Telegram, then stage report/snapshot/receipt/input snapshot/manifest with previous-artifact digests and recover prepared transactions before data publication.",
         "status": "verified",
         "evidence": [
           {
             "source": "src/main.rs",
-            "subject": "build and replacement call order"
+            "subject": "normal publication ordering"
           },
           {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "replacement identity tests"
-          }
-        ]
-      },
-      {
-        "decision": "Allow a same-date pending archive to replace older data only after CLI identity verification.",
-        "reason": "A successful archive/data push gap must recover the latest canonical update without a second Telegram send.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": ".github/workflows/weekly-radar.yml",
-            "subject": "same-date pending recovery"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "transaction compatibility",
-        "detail": "Schema v1 four-artifact records remain readable; schema v2 replacement records add previous digests and the staged input snapshot.",
-        "status": "verified",
-        "evidence": [
-          {
             "source": "src/features/weekly_radar/runtime/archive.rs",
-            "subject": "transaction record validation"
+            "subject": "five-artifact replacement and recovery"
           }
         ]
       },
-      {
-        "topic": "quality",
-        "detail": "Formatting, clippy with warnings denied, and all Cargo tests pass.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "Makefile",
-            "subject": "check targets"
-          }
-        ]
-      }
-    ],
-    "evidence": [
-      {
-        "claim": "The approved same-day canonical behavior is implemented and locally verified.",
-        "status": "verified",
-        "source": "tests/weekly_radar_runtime.rs",
-        "subject": "replacement and workflow regression suite"
-      }
-    ]
+      "affectedComponents": [
+        {
+          "component": "Weekly Radar archive",
+          "detail": "Same-day canonical replacement and four-artifact legacy transaction compatibility.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/archive.rs",
+              "subject": "archive identity and transaction implementation"
+            }
+          ]
+        },
+        {
+          "component": "Actions publication flow",
+          "detail": "Schedule/manual normal publication and same-date pending recovery are aligned with the latest successful canonical update.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".github/workflows/weekly-radar.yml",
+              "subject": "normal and pending branches"
+            }
+          ]
+        },
+        {
+          "component": "User operations guide",
+          "detail": "Manual triggering, canonicality, recovery, retry, verify, and republish are explained for users.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "same-day publication behavior"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Do not persist a new input snapshot before Telegram succeeds.",
+          "reason": "This prevents a failed same-day attempt from binding an old report to a new input.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/main.rs",
+              "subject": "build and replacement call order"
+            },
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "replacement identity tests"
+            }
+          ]
+        },
+        {
+          "decision": "Allow a same-date pending archive to replace older data only after CLI identity verification.",
+          "reason": "A successful archive/data push gap must recover the latest canonical update without a second Telegram send.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".github/workflows/weekly-radar.yml",
+              "subject": "same-date pending recovery"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "transaction compatibility",
+          "detail": "Schema v1 four-artifact records remain readable; schema v2 replacement records add previous digests and the staged input snapshot.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/archive.rs",
+              "subject": "transaction record validation"
+            }
+          ]
+        },
+        {
+          "topic": "quality",
+          "detail": "Formatting, clippy with warnings denied, and all Cargo tests pass.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "Makefile",
+              "subject": "check targets"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The approved same-day canonical behavior is implemented and locally verified.",
+          "status": "verified",
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "replacement and workflow regression suite"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1058,6 +1105,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

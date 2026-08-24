@@ -25,7 +25,8 @@ const RECEIPTS_DIRECTORY: &str = "receipts";
 const TRANSACTIONS_DIRECTORY: &str = ".transactions";
 const DEFAULT_RETENTION_DAYS: i64 = 365;
 const INPUT_SNAPSHOT_SUFFIX: &str = ".input.json";
-const TRANSACTION_RECORD_SCHEMA_VERSION: u32 = 1;
+const TRANSACTION_RECORD_SCHEMA_VERSION: u32 = 2;
+const LEGACY_TRANSACTION_RECORD_SCHEMA_VERSION: u32 = 1;
 const RUN_LOCK_SUFFIX: &str = ".run.lock";
 const COMMIT_LOCK_SUFFIX: &str = ".commit.lock";
 
@@ -182,6 +183,12 @@ struct ArchiveTransactionArtifact {
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+struct ArchivePreviousArtifact {
+    final_path: String,
+    digest: String,
+}
+
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 struct ArchiveTransactionRecord {
     schema_version: u32,
     as_of: NaiveDate,
@@ -190,6 +197,10 @@ struct ArchiveTransactionRecord {
     staging_directory: String,
     artifacts: Vec<ArchiveTransactionArtifact>,
     manifest: ArchiveManifest,
+    #[serde(default)]
+    replace_existing: bool,
+    #[serde(default)]
+    previous_artifacts: Vec<ArchivePreviousArtifact>,
 }
 
 /// Holds the per-date lock used by the CLI across recovery, delivery, and archive commit.
@@ -213,6 +224,7 @@ enum ArchiveCommitStage {
     Report,
     Snapshot,
     Receipt,
+    InputSnapshot,
     Manifest,
 }
 
@@ -224,6 +236,7 @@ impl ArchiveCommitStage {
             Self::Report => "report",
             Self::Snapshot => "snapshot",
             Self::Receipt => "receipt",
+            Self::InputSnapshot => "input_snapshot",
             Self::Manifest => "manifest",
         }
     }
@@ -395,6 +408,19 @@ fn final_relative_paths(as_of: NaiveDate) -> [String; 4] {
     ]
 }
 
+fn transaction_relative_paths(as_of: NaiveDate, has_input_snapshot: bool) -> Vec<String> {
+    let final_paths = final_relative_paths(as_of);
+    let mut paths = final_paths[..3].to_vec();
+    if has_input_snapshot {
+        paths.push(format!(
+            "{SNAPSHOTS_DIRECTORY}/{}{INPUT_SNAPSHOT_SUFFIX}",
+            as_of.format("%Y-%m-%d")
+        ));
+    }
+    paths.push(final_paths[3].clone());
+    paths
+}
+
 fn final_paths(root: &Path, as_of: NaiveDate) -> [PathBuf; 3] {
     let archive = archive_root(root);
     let date_text = as_of.format("%Y-%m-%d");
@@ -417,21 +443,23 @@ fn transaction_artifacts(
     report: &str,
     snapshot: &str,
     receipt: &str,
+    input_snapshot: Option<&str>,
     manifest: &str,
 ) -> Vec<ArchiveTransactionArtifact> {
-    let final_paths = final_relative_paths(as_of);
-    let staged_names = [
-        "report.md",
-        "snapshot.json",
-        "receipt.json",
-        "manifest.json",
+    let mut contents = vec![
+        (report, "report.md"),
+        (snapshot, "snapshot.json"),
+        (receipt, "receipt.json"),
     ];
-    [report, snapshot, receipt, manifest]
+    if let Some(input_snapshot) = input_snapshot {
+        contents.push((input_snapshot, "input_snapshot.json"));
+    }
+    contents.push((manifest, "manifest.json"));
+    transaction_relative_paths(as_of, input_snapshot.is_some())
         .into_iter()
-        .zip(final_paths)
-        .zip(staged_names)
+        .zip(contents)
         .map(
-            |((content, final_path), staged_name)| ArchiveTransactionArtifact {
+            |(final_path, (content, staged_name))| ArchiveTransactionArtifact {
                 final_path,
                 staged_path: format!("{staging_directory}/{staged_name}"),
                 digest: digest_bytes(content.as_bytes().iter().copied()),
@@ -445,6 +473,16 @@ fn validate_transaction_record(
     as_of: NaiveDate,
 ) -> Result<(), ArchiveError> {
     let expected_paths = final_relative_paths(as_of);
+    let has_transaction_input_snapshot = record.schema_version == TRANSACTION_RECORD_SCHEMA_VERSION
+        && record.replace_existing
+        && record.manifest.input_snapshot.is_some();
+    let transaction_paths = if record.schema_version == LEGACY_TRANSACTION_RECORD_SCHEMA_VERSION
+        || !has_transaction_input_snapshot
+    {
+        expected_paths.to_vec()
+    } else {
+        transaction_relative_paths(as_of, record.manifest.input_snapshot.is_some())
+    };
     let expected_manifest = ArchiveManifest {
         as_of,
         report: format!("{ARCHIVE_DIRECTORY}/{}", expected_paths[0]),
@@ -461,7 +499,11 @@ fn validate_transaction_record(
         && Path::new(&record.transaction_id)
             .components()
             .all(|component| matches!(component, Component::Normal(_)));
-    if record.schema_version != TRANSACTION_RECORD_SCHEMA_VERSION
+    let schema_is_supported = record.schema_version == TRANSACTION_RECORD_SCHEMA_VERSION
+        || (record.schema_version == LEGACY_TRANSACTION_RECORD_SCHEMA_VERSION
+            && !record.replace_existing
+            && record.previous_artifacts.is_empty());
+    if !schema_is_supported
         || record.as_of != as_of
         || record.manifest != expected_manifest
         || record.manifest.input_snapshot.is_some() != record.manifest.snapshot_id.is_some()
@@ -473,15 +515,20 @@ fn validate_transaction_record(
         || !transaction_id_is_single_component
         || record.staging_directory != format!("{TRANSACTIONS_DIRECTORY}/{}", record.transaction_id)
         || archive_relative_path(&record.staging_directory).is_none()
-        || record.artifacts.len() != 4
+        || record.artifacts.len()
+            != if record.schema_version == LEGACY_TRANSACTION_RECORD_SCHEMA_VERSION {
+                4
+            } else {
+                transaction_paths.len()
+            }
     {
         return Err(ArchiveError::IncompleteRun { as_of });
     }
-    for expected_path in expected_paths {
+    for expected_path in &transaction_paths {
         let Some(artifact) = record
             .artifacts
             .iter()
-            .find(|artifact| artifact.final_path == expected_path)
+            .find(|artifact| artifact.final_path == *expected_path)
         else {
             return Err(ArchiveError::IncompleteRun { as_of });
         };
@@ -493,6 +540,17 @@ fn validate_transaction_record(
                 .starts_with(&format!("{}/", record.staging_directory))
         {
             return Err(ArchiveError::IncompleteRun { as_of });
+        }
+    }
+    if record.schema_version == TRANSACTION_RECORD_SCHEMA_VERSION {
+        for previous in &record.previous_artifacts {
+            if previous.digest.is_empty()
+                || !transaction_paths
+                    .iter()
+                    .any(|path| path == &previous.final_path)
+            {
+                return Err(ArchiveError::IncompleteRun { as_of });
+            }
         }
     }
     Ok(())
@@ -674,15 +732,25 @@ fn write_atomic(path: &Path, content: &str) -> Result<(), ArchiveError> {
     Ok(())
 }
 
-/// Persists the exact pre-render runtime input on the guarded data branch.
-pub fn persist_input_snapshot(
-    root: &Path,
-    branch: &str,
+fn serialize_input_snapshot(snapshot: &InputSnapshot) -> Result<String, ArchiveError> {
+    Ok(
+        serde_json::to_string_pretty(snapshot).map_err(|_| ArchiveError::InvalidInputSnapshot {
+            reason: "serialization failed",
+        })? + "\n",
+    )
+}
+
+/// Builds a validated input snapshot without writing it to the archive.
+///
+/// Callers that may deliver Telegram before archive commit should use this constructor and pass
+/// the result to [`replace_run_with_input_snapshot`]. The replacement transaction then persists
+/// the snapshot only after delivery succeeds, so a failed attempt cannot replace the current
+/// same-day canonical input.
+pub fn build_input_snapshot(
     input: &RuntimeReportInput,
     language: ReportLanguage,
     has_primary_evidence: bool,
 ) -> Result<InputSnapshot, ArchiveError> {
-    validate_data_branch(branch)?;
     let snapshot = InputSnapshot {
         schema_version: INPUT_SNAPSHOT_SCHEMA_VERSION,
         as_of: input.as_of(),
@@ -692,11 +760,20 @@ pub fn persist_input_snapshot(
         input: input.clone(),
     };
     validate_input_snapshot(&snapshot)?;
-    let content = serde_json::to_string_pretty(&snapshot).map_err(|_| {
-        ArchiveError::InvalidInputSnapshot {
-            reason: "serialization failed",
-        }
-    })? + "\n";
+    Ok(snapshot)
+}
+
+/// Persists the exact pre-render runtime input on the guarded data branch.
+pub fn persist_input_snapshot(
+    root: &Path,
+    branch: &str,
+    input: &RuntimeReportInput,
+    language: ReportLanguage,
+    has_primary_evidence: bool,
+) -> Result<InputSnapshot, ArchiveError> {
+    validate_data_branch(branch)?;
+    let snapshot = build_input_snapshot(input, language, has_primary_evidence)?;
+    let content = serialize_input_snapshot(&snapshot)?;
     let path = input_snapshot_path(root, snapshot.as_of);
     if path.exists() {
         let existing = fs::read(&path).map_err(|_| ArchiveError::Io {
@@ -784,6 +861,27 @@ fn read_staged_artifact(
     String::from_utf8(bytes).map_err(|_| ArchiveError::IncompleteRun {
         as_of: record.as_of,
     })
+}
+
+fn existing_artifacts(
+    root: &Path,
+    as_of: NaiveDate,
+    paths: &[String],
+) -> Result<Vec<ArchivePreviousArtifact>, ArchiveError> {
+    let archive = archive_root(root);
+    let mut existing = Vec::new();
+    for final_path in paths {
+        let path = archive_join_relative(&archive, final_path)
+            .map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+        if path.exists() {
+            let bytes = fs::read(path).map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+            existing.push(ArchivePreviousArtifact {
+                final_path: final_path.clone(),
+                digest: digest_bytes(bytes.iter().copied()),
+            });
+        }
+    }
+    Ok(existing)
 }
 
 fn verify_committed_transaction(
@@ -1072,6 +1170,7 @@ fn promote_staged_artifact(
     artifact: &ArchiveTransactionArtifact,
     content: &str,
     allow_existing: bool,
+    replace_existing: bool,
 ) -> Result<(), ArchiveError> {
     let archive = archive_root(root);
     let final_path = archive_join_relative(&archive, &artifact.final_path).map_err(|_| {
@@ -1083,7 +1182,7 @@ fn promote_staged_artifact(
         let existing = fs::read(&final_path).map_err(|_| ArchiveError::IncompleteRun {
             as_of: record.as_of,
         })?;
-        if artifact.final_path == "manifest.json" && allow_existing {
+        if replace_existing {
             write_atomic(&final_path, content)?;
         } else if existing != content.as_bytes() || !allow_existing {
             return Err(ArchiveError::IncompleteRun {
@@ -1123,6 +1222,20 @@ fn validate_existing_public_artifacts(
             let existing = fs::read(final_path).map_err(|_| ArchiveError::IncompleteRun {
                 as_of: record.as_of,
             })?;
+            if existing == content.as_bytes() {
+                continue;
+            }
+            if record.replace_existing {
+                let existing_digest = digest_bytes(existing.iter().copied());
+                if record.previous_artifacts.iter().any(|previous| {
+                    previous.final_path == artifact.final_path && previous.digest == existing_digest
+                }) {
+                    continue;
+                }
+            }
+            if artifact.final_path == "manifest.json" && !record.replace_existing {
+                continue;
+            }
             if existing != content.as_bytes() {
                 return Err(ArchiveError::IncompleteRun {
                     as_of: record.as_of,
@@ -1143,12 +1256,13 @@ fn complete_prepared_transaction(
     let _ = ensure_archive_directories(root)?;
     let date = record.as_of;
     compatibility_manifest_allows_update(root, date)?;
-    let final_paths = [
-        format!("{REPORTS_DIRECTORY}/{}.md", date.format("%Y-%m-%d")),
-        format!("{SNAPSHOTS_DIRECTORY}/{}.json", date.format("%Y-%m-%d")),
-        format!("{RECEIPTS_DIRECTORY}/{}.json", date.format("%Y-%m-%d")),
-        "manifest.json".to_owned(),
-    ];
+    let final_paths = if record.schema_version == LEGACY_TRANSACTION_RECORD_SCHEMA_VERSION
+        || !record.replace_existing
+    {
+        final_relative_paths(date).to_vec()
+    } else {
+        transaction_relative_paths(date, record.manifest.input_snapshot.is_some())
+    };
     let staged_artifacts = final_paths
         .iter()
         .map(|final_path| {
@@ -1159,7 +1273,8 @@ fn complete_prepared_transaction(
         .collect::<Result<Vec<_>, ArchiveError>>()?;
     validate_existing_public_artifacts(root, &record, &staged_artifacts)?;
     for (artifact, content) in staged_artifacts {
-        promote_staged_artifact(root, &record, &artifact, &content, true)?;
+        let replace_existing = record.replace_existing || artifact.final_path == "manifest.json";
+        promote_staged_artifact(root, &record, &artifact, &content, true, replace_existing)?;
     }
 
     record.state = ArchiveTransactionState::Committed;
@@ -1218,6 +1333,19 @@ pub fn ensure_run_available(
     ensure_run_available_unlocked(root, branch, as_of)
 }
 
+/// Verifies that a normal publication may replace or create the requested date.
+///
+/// A complete same-day canonical run is accepted after strict identity verification; incomplete,
+/// conflicting, or newer-date archive state is rejected before sources or Telegram are contacted.
+pub fn ensure_run_replace_available(
+    root: &Path,
+    branch: &str,
+    as_of: NaiveDate,
+) -> Result<(), ArchiveError> {
+    let _lock = acquire_commit_lock(root, branch, as_of)?;
+    ensure_run_replace_available_unlocked(root, branch, as_of)
+}
+
 fn ensure_run_available_unlocked(
     root: &Path,
     branch: &str,
@@ -1245,6 +1373,41 @@ fn ensure_run_available_unlocked(
     }
     compatibility_manifest_allows_update(root, as_of)?;
     Ok(())
+}
+
+fn ensure_run_replace_available_unlocked(
+    root: &Path,
+    branch: &str,
+    as_of: NaiveDate,
+) -> Result<(), ArchiveError> {
+    validate_data_branch(branch)?;
+    if let Some(record) = read_transaction_record(root, as_of)? {
+        if record.state == ArchiveTransactionState::Prepared {
+            return Err(ArchiveError::IncompleteRun { as_of });
+        }
+        verify_committed_transaction(root, &record)?;
+        verify_transaction_manifest_binding(root, &record)?;
+        verify_published_artifact_identity(root, as_of, &record.manifest)?;
+        verify_input_snapshot_reference(root, &record.manifest)?;
+        return Ok(());
+    }
+
+    let final_paths = final_paths(root, as_of);
+    let present_count = final_paths.iter().filter(|path| path.exists()).count();
+    if present_count == final_paths.len() {
+        let manifest_path = archive_root(root).join("manifest.json");
+        let manifest_content =
+            fs::read_to_string(manifest_path).map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+        let manifest = serde_json::from_str::<ArchiveManifest>(&manifest_content)
+            .map_err(|_| ArchiveError::IncompleteRun { as_of })?;
+        verify_published_artifact_identity(root, as_of, &manifest)?;
+        verify_input_snapshot_reference(root, &manifest)?;
+        return Ok(());
+    }
+    if present_count > 0 {
+        return Err(ArchiveError::IncompleteRun { as_of });
+    }
+    compatibility_manifest_allows_update(root, as_of)
 }
 
 /// Removes only date-prefixed files older than the requested retention window.
@@ -1291,6 +1454,7 @@ pub fn retain_recent(
     Ok(removed)
 }
 
+#[cfg(test)]
 fn commit_archive_transaction(
     root: &Path,
     branch: &str,
@@ -1300,10 +1464,49 @@ fn commit_archive_transaction(
     receipt: &str,
     fail_after: Option<ArchiveCommitStage>,
 ) -> Result<ArchiveManifest, ArchiveError> {
+    commit_archive_transaction_with_options(
+        root,
+        branch,
+        manifest,
+        report,
+        snapshot,
+        receipt,
+        ArchiveTransactionOptions {
+            input_snapshot: None,
+            replace_existing: false,
+            fail_after,
+        },
+    )
+}
+
+struct ArchiveTransactionOptions<'a> {
+    input_snapshot: Option<&'a str>,
+    replace_existing: bool,
+    fail_after: Option<ArchiveCommitStage>,
+}
+
+fn commit_archive_transaction_with_options(
+    root: &Path,
+    branch: &str,
+    manifest: &ArchiveManifest,
+    report: &str,
+    snapshot: &str,
+    receipt: &str,
+    options: ArchiveTransactionOptions<'_>,
+) -> Result<ArchiveManifest, ArchiveError> {
+    let ArchiveTransactionOptions {
+        input_snapshot,
+        replace_existing,
+        fail_after,
+    } = options;
     validate_data_branch(branch)?;
     let _lock = acquire_commit_lock(root, branch, manifest.as_of)?;
     let archive = ensure_archive_directories(root)?;
-    ensure_run_available_unlocked(root, branch, manifest.as_of)?;
+    if replace_existing {
+        ensure_run_replace_available_unlocked(root, branch, manifest.as_of)?;
+    } else {
+        ensure_run_available_unlocked(root, branch, manifest.as_of)?;
+    }
     let transaction_id = transaction_id(manifest.as_of);
     let staging_directory = format!("{TRANSACTIONS_DIRECTORY}/{transaction_id}");
     let staging_root = archive.join(&staging_directory);
@@ -1320,16 +1523,22 @@ fn commit_archive_transaction(
     })?;
     let manifest_json =
         serde_json::to_string_pretty(manifest).map_err(|_| ArchiveError::InvalidDate)? + "\n";
-    let contents = [report, snapshot, receipt, manifest_json.as_str()];
+    let transaction_input_snapshot = replace_existing.then_some(input_snapshot).flatten();
+    let mut contents = vec![report, snapshot, receipt];
+    if let Some(input_snapshot) = transaction_input_snapshot {
+        contents.push(input_snapshot);
+    }
+    contents.push(manifest_json.as_str());
     let artifacts = transaction_artifacts(
         manifest.as_of,
         &staging_directory,
         report,
         snapshot,
         receipt,
+        transaction_input_snapshot,
         &manifest_json,
     );
-    for (artifact, content) in artifacts.iter().zip(contents) {
+    for (artifact, content) in artifacts.iter().zip(contents.iter().copied()) {
         let staged_path = archive_join_relative(&archive, &artifact.staged_path).map_err(|_| {
             ArchiveError::IncompleteRun {
                 as_of: manifest.as_of,
@@ -1345,6 +1554,15 @@ fn commit_archive_transaction(
         staging_directory,
         artifacts,
         manifest: manifest.clone(),
+        replace_existing,
+        previous_artifacts: existing_artifacts(
+            root,
+            manifest.as_of,
+            &transaction_relative_paths(
+                manifest.as_of,
+                replace_existing && manifest.input_snapshot.is_some(),
+            ),
+        )?,
     };
     write_transaction_record(root, &record)?;
     maybe_injected_failure(fail_after, ArchiveCommitStage::Prepared)?;
@@ -1359,10 +1577,10 @@ fn commit_archive_transaction(
         })
         .collect::<Result<Vec<_>, ArchiveError>>()?;
     validate_existing_public_artifacts(root, &record, &staged_artifacts)?;
-    let promotion_stages = [
+    let mut promotion_stages = vec![
         (
             ArchiveCommitStage::Report,
-            false,
+            true,
             format!(
                 "{REPORTS_DIRECTORY}/{}.md",
                 manifest.as_of.format("%Y-%m-%d")
@@ -1370,7 +1588,7 @@ fn commit_archive_transaction(
         ),
         (
             ArchiveCommitStage::Snapshot,
-            false,
+            true,
             format!(
                 "{SNAPSHOTS_DIRECTORY}/{}.json",
                 manifest.as_of.format("%Y-%m-%d")
@@ -1378,18 +1596,28 @@ fn commit_archive_transaction(
         ),
         (
             ArchiveCommitStage::Receipt,
-            false,
+            true,
             format!(
                 "{RECEIPTS_DIRECTORY}/{}.json",
                 manifest.as_of.format("%Y-%m-%d")
             ),
         ),
-        (
-            ArchiveCommitStage::Manifest,
-            true,
-            "manifest.json".to_owned(),
-        ),
     ];
+    if replace_existing && manifest.input_snapshot.is_some() {
+        promotion_stages.push((
+            ArchiveCommitStage::InputSnapshot,
+            true,
+            input_snapshot_relative(manifest.as_of)
+                .strip_prefix(&format!("{ARCHIVE_DIRECTORY}/"))
+                .expect("input snapshot path is archive-relative")
+                .to_owned(),
+        ));
+    }
+    promotion_stages.push((
+        ArchiveCommitStage::Manifest,
+        true,
+        "manifest.json".to_owned(),
+    ));
     for (stage, allow_existing, final_path) in promotion_stages {
         let (artifact, content) = staged_artifacts
             .iter()
@@ -1397,7 +1625,15 @@ fn commit_archive_transaction(
             .ok_or(ArchiveError::IncompleteRun {
                 as_of: manifest.as_of,
             })?;
-        promote_staged_artifact(root, &record, artifact, content, allow_existing)?;
+        let replace_artifact = record.replace_existing || final_path == "manifest.json";
+        promote_staged_artifact(
+            root,
+            &record,
+            artifact,
+            content,
+            allow_existing,
+            replace_artifact,
+        )?;
         maybe_injected_failure(fail_after, stage)?;
     }
 
@@ -1484,20 +1720,131 @@ pub fn write_run_with_input_snapshot(
     })
     .map_err(|_| ArchiveError::InvalidDeliveryReceipt)?
         + "\n";
-    commit_archive_transaction(
+    let input_snapshot_content = input_snapshot.map(serialize_input_snapshot).transpose()?;
+    commit_archive_transaction_with_options(
         root,
         branch,
         &manifest,
         rendered_report.markdown(),
         rendered_report.snapshot_json(),
         &receipt,
-        None,
+        ArchiveTransactionOptions {
+            input_snapshot: input_snapshot_content.as_deref(),
+            replace_existing: false,
+            fail_after: None,
+        },
+    )
+}
+
+/// Replaces the current same-day canonical archive with a successfully delivered update.
+///
+/// Unlike [`write_run_with_input_snapshot`], this explicit mode accepts a complete, verified
+/// same-day run and replaces its bound report, rendered snapshot, receipt, manifest, and input
+/// snapshot. The input snapshot is staged inside the transaction, so callers can send Telegram
+/// before any previous same-day input is overwritten. A prepared replacement can be recovered by
+/// [`recover_pending_run`] without sending Telegram again.
+pub fn replace_run_with_input_snapshot(
+    root: &Path,
+    branch: &str,
+    rendered_report: &RenderedReport,
+    delivery_receipt: &TelegramDeliveryReceipt,
+    input_snapshot: &InputSnapshot,
+) -> Result<ArchiveManifest, ArchiveError> {
+    validate_data_branch(branch)?;
+    if delivery_receipt.report_id() != rendered_report.report_id() {
+        return Err(ArchiveError::ReportIdMismatch {
+            expected: rendered_report.report_id().to_owned(),
+            actual: delivery_receipt.report_id().to_owned(),
+        });
+    }
+    if delivery_receipt.message_ids().is_empty()
+        || delivery_receipt.message_ids().len() != delivery_receipt.attempts().len()
+    {
+        return Err(ArchiveError::InvalidDeliveryReceipt);
+    }
+    validate_input_snapshot(input_snapshot)?;
+    if input_snapshot.as_of != rendered_report.as_of() {
+        return Err(ArchiveError::InvalidInputSnapshot {
+            reason: "input snapshot date does not match report date",
+        });
+    }
+    let date = rendered_report.as_of();
+    let date_text = date.format("%Y-%m-%d").to_string();
+    let manifest = ArchiveManifest {
+        as_of: date,
+        report: format!("{ARCHIVE_DIRECTORY}/{REPORTS_DIRECTORY}/{date_text}.md"),
+        snapshot: format!("{ARCHIVE_DIRECTORY}/{SNAPSHOTS_DIRECTORY}/{date_text}.json"),
+        receipt: format!("{ARCHIVE_DIRECTORY}/{RECEIPTS_DIRECTORY}/{date_text}.json"),
+        input_snapshot: Some(input_snapshot_relative(date)),
+        snapshot_id: Some(input_snapshot.snapshot_id().to_owned()),
+    };
+    #[derive(Serialize)]
+    struct ArchiveReceipt {
+        as_of: NaiveDate,
+        report_id: String,
+        status: &'static str,
+        message_ids: Vec<String>,
+        attempts: Vec<u32>,
+    }
+    let receipt = serde_json::to_string_pretty(&ArchiveReceipt {
+        as_of: date,
+        report_id: rendered_report.report_id().to_owned(),
+        status: "PUBLISHED",
+        message_ids: delivery_receipt
+            .message_ids()
+            .iter()
+            .map(|message_id| message_id.as_str().to_owned())
+            .collect(),
+        attempts: delivery_receipt.attempts().to_vec(),
+    })
+    .map_err(|_| ArchiveError::InvalidDeliveryReceipt)?
+        + "\n";
+    let input_snapshot_content = serialize_input_snapshot(input_snapshot)?;
+    commit_archive_transaction_with_options(
+        root,
+        branch,
+        &manifest,
+        rendered_report.markdown(),
+        rendered_report.snapshot_json(),
+        &receipt,
+        ArchiveTransactionOptions {
+            input_snapshot: Some(&input_snapshot_content),
+            replace_existing: true,
+            fail_after: None,
+        },
     )
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::features::weekly_radar::infrastructure::telegram_publisher::{
+        TelegramMessageId, TelegramTransport, TelegramTransportError,
+    };
+    use crate::features::weekly_radar::runtime::model::RuntimeReportInput;
+    use crate::features::weekly_radar::runtime::report::{
+        render_report_in_language, ReportLanguage,
+    };
+    use crate::features::weekly_radar::runtime::telegram::{
+        send_rendered_report_with_transport, TelegramRetryPolicy,
+    };
+    use std::time::Duration;
+
+    struct TestTransport;
+
+    impl TelegramTransport for TestTransport {
+        fn send_message(
+            &self,
+            _destination: &str,
+            _markdown: &str,
+        ) -> Result<TelegramMessageId, TelegramTransportError> {
+            TelegramMessageId::new("archive-fixture-message").map_err(|error| {
+                TelegramTransportError::Failed {
+                    reason: error.to_string(),
+                }
+            })
+        }
+    }
 
     fn test_root(label: &str) -> PathBuf {
         let root = std::env::temp_dir().join(format!(
@@ -1541,7 +1888,10 @@ mod tests {
                 Some(stage),
             )
             .expect_err("injected failure must stop before commit");
-            assert!(matches!(error, ArchiveError::Io { .. }));
+            assert!(
+                matches!(error, ArchiveError::Io { .. }),
+                "stage={stage:?} error={error:?}"
+            );
 
             let recovered = recover_pending_run(&root, "data", manifest.as_of())
                 .expect("prepared transaction should be recoverable")
@@ -1685,6 +2035,135 @@ mod tests {
             None
         );
         fs::remove_dir_all(root).expect("manifest history fixture should be removable");
+    }
+
+    #[test]
+    fn replacement_transaction_recovers_after_each_promotion_failure_with_bound_input() {
+        let stages = [
+            ArchiveCommitStage::Prepared,
+            ArchiveCommitStage::Report,
+            ArchiveCommitStage::Snapshot,
+            ArchiveCommitStage::Receipt,
+            ArchiveCommitStage::InputSnapshot,
+            ArchiveCommitStage::Manifest,
+        ];
+        for stage in stages {
+            let root = test_root(&format!("replacement-{}", stage.as_str()));
+            let as_of = NaiveDate::from_ymd_opt(2026, 8, 17).expect("fixture date is valid");
+            let first_input = RuntimeReportInput::from_date(as_of);
+            let first_snapshot =
+                persist_input_snapshot(&root, "data", &first_input, ReportLanguage::Chinese, true)
+                    .expect("first input snapshot should build");
+            let first_report = render_report_in_language(&first_input, ReportLanguage::Chinese);
+            let first_receipt = send_rendered_report_with_transport(
+                &first_report,
+                "fixture-chat",
+                &TestTransport,
+                TelegramRetryPolicy::new(1, Duration::ZERO),
+            )
+            .expect("first report should deliver");
+            write_run_with_input_snapshot(
+                &root,
+                "data",
+                &first_report,
+                &first_receipt,
+                Some(&first_snapshot),
+            )
+            .expect("first report should commit");
+
+            let mut second_input = first_input.clone();
+            second_input
+                .add_fact(
+                    crate::features::weekly_radar::runtime::model::NormalizedFact::new(
+                        "archive-fixture",
+                        "facts.latest",
+                        "new canonical input",
+                        crate::features::weekly_radar::runtime::model::FactStatus::Known,
+                        crate::features::weekly_radar::runtime::model::Confidence::High,
+                        crate::features::weekly_radar::runtime::model::Provenance::new(
+                            "https://archive-fixture.example/latest",
+                            "fixture",
+                            chrono::Utc::now(),
+                            Some(as_of),
+                        )
+                        .expect("fixture provenance should build"),
+                    )
+                    .expect("fixture fact should build"),
+                )
+                .expect("fixture fact should be retained");
+            let second_snapshot =
+                build_input_snapshot(&second_input, ReportLanguage::Chinese, true)
+                    .expect("second input snapshot should build");
+            let second_report = render_report_in_language(&second_input, ReportLanguage::Chinese);
+            let second_receipt = send_rendered_report_with_transport(
+                &second_report,
+                "fixture-chat",
+                &TestTransport,
+                TelegramRetryPolicy::new(1, Duration::ZERO),
+            )
+            .expect("second report should deliver");
+            let receipt_json = serde_json::json!({
+                "as_of": as_of,
+                "report_id": second_report.report_id(),
+                "status": "PUBLISHED",
+                "message_ids": second_receipt
+                    .message_ids()
+                    .iter()
+                    .map(|message_id| message_id.as_str())
+                    .collect::<Vec<_>>(),
+                "attempts": second_receipt.attempts(),
+            });
+            let manifest = ArchiveManifest {
+                as_of,
+                report: format!("{ARCHIVE_DIRECTORY}/{REPORTS_DIRECTORY}/2026-08-17.md"),
+                snapshot: format!("{ARCHIVE_DIRECTORY}/{SNAPSHOTS_DIRECTORY}/2026-08-17.json"),
+                receipt: format!("{ARCHIVE_DIRECTORY}/{RECEIPTS_DIRECTORY}/2026-08-17.json"),
+                input_snapshot: Some(input_snapshot_relative(as_of)),
+                snapshot_id: Some(second_snapshot.snapshot_id().to_owned()),
+            };
+            let error = commit_archive_transaction_with_options(
+                &root,
+                "data",
+                &manifest,
+                second_report.markdown(),
+                second_report.snapshot_json(),
+                &(serde_json::to_string_pretty(&receipt_json).expect("receipt should encode")
+                    + "\n"),
+                ArchiveTransactionOptions {
+                    input_snapshot: Some(
+                        &serialize_input_snapshot(&second_snapshot).expect("input should encode"),
+                    ),
+                    replace_existing: true,
+                    fail_after: Some(stage),
+                },
+            )
+            .expect_err("injected replacement failure should leave a prepared transaction");
+            assert!(
+                matches!(error, ArchiveError::Io { .. }),
+                "stage={stage:?} error={error:?}"
+            );
+            assert!(matches!(
+                verify_committed_run_read_only(&root, "data", as_of),
+                Err(ArchiveError::IncompleteRun { .. })
+            ));
+
+            let recovered = recover_pending_run(&root, "data", as_of)
+                .expect("replacement transaction should recover")
+                .expect("prepared replacement should complete");
+            assert_eq!(recovered, manifest);
+            assert_eq!(
+                load_input_snapshot(&root, "data", as_of)
+                    .expect("replacement input should load")
+                    .snapshot_id(),
+                second_snapshot.snapshot_id()
+            );
+            assert_eq!(
+                verify_committed_run_read_only(&root, "data", as_of)
+                    .expect("recovered replacement should verify"),
+                manifest
+            );
+            fs::remove_dir_all(root).expect("replacement recovery fixture should be removable");
+        }
     }
 
     #[test]

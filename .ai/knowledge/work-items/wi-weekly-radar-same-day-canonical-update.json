@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-same-day-canonical-update",
+  "title": "Weekly Radar same-day latest successful update is canonical",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Use an explicit replacement transaction for normal same-day publication while retaining strict creation, retry, verify, and republish boundaries.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
+    "docs/superpowers/specs/2026-08-24-weekly-radar-same-day-canonical-update.md",
+    "docs/superpowers/plans/2026-08-24-weekly-radar-same-day-canonical-update.md",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/main.rs",
+    "tests/weekly_radar_runtime.rs",
+    ".github/workflows/weekly-radar.yml",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Do not persist a new input snapshot before Telegram succeeds.",
+      "reason": "This prevents a failed same-day attempt from binding an old report to a new input.",
+      "status": "verified"
+    },
+    {
+      "decision": "Allow a same-date pending archive to replace older data only after CLI identity verification.",
+      "reason": "A successful archive/data push gap must recover the latest canonical update without a second Telegram send.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "296925bfa33f6f720da73f4ac6bb12488aa90175e9c7664806bd9a87a767977f"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/archive.rs",
+      "digest": "249b0ee859e0a6602b112f3bc94528a79029bd0f99d427f6b6e955531d940721"
+    },
+    {
+      "type": "code",
+      "path": "src/main.rs",
+      "digest": "b94829ca9abd18a32a9b382fa186b669b393b316fde5e221de38cd56fc2574a8"
+    },
+    {
+      "type": "code",
+      "path": ".github/workflows/weekly-radar.yml",
+      "digest": "acaae9ca430f84252569a7c4795fe8e1e6c13043a43ee6d9f2b446aec70b0dbe"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "7a0ecc5791a4065721ab014d61d57586d2af0c5a734358848ce9b2960a525668"
+    },
+    {
+      "type": "code",
+      "path": "Makefile",
+      "digest": "ed2d7675c8d51503ac3e1bf178357508d4fee04bbefd3eaa7c00f6c809a1b659"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json",
+    "contractDigest": "96aa10dd0911f45627966de2a817c399097df08c366fdacb14879feb1ea30bdc",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
+    "summaryDigest": "47cd7e0ddcdc7b6fd73a890eb7b46e43a6d671bb621fefe231b34c02ecf2a599",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.json",
+    "outcomeDigest": "92f6cbdd4b2acac6e19199d6363042c59107ddee330de043facf01a2d000a40f"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

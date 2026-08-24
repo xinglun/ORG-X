@@ -43,27 +43,27 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "ef718693be9be06645cfa0cccc2cd108ff6d77205efb9bc26288e5338283c6dc"
+      "digest": "296925bfa33f6f720da73f4ac6bb12488aa90175e9c7664806bd9a87a767977f"
     },
     {
       "type": "code",
       "path": ".github/workflows/weekly-radar.yml",
-      "digest": "69f0f13cc25139ee91890ccef1cde34aef707ae6ec8a31bf592a87dbc16ed4e0"
+      "digest": "acaae9ca430f84252569a7c4795fe8e1e6c13043a43ee6d9f2b446aec70b0dbe"
     },
     {
       "type": "code",
       "path": "src/main.rs",
-      "digest": "2869a288f0cc65ef3ddedd4e971b6386f67ccb3d4c5b9a3c7b761ac57a48e924"
+      "digest": "b94829ca9abd18a32a9b382fa186b669b393b316fde5e221de38cd56fc2574a8"
     },
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/archive.rs",
-      "digest": "ce0a923ab748fb7acb4e0b16ffdef69cfd57ce5d060e088ee5fe2685e16ac8f6"
+      "digest": "249b0ee859e0a6602b112f3bc94528a79029bd0f99d427f6b6e955531d940721"
     },
     {
       "type": "code",
       "path": "docs/operations/WEEKLY_RADAR.md",
-      "digest": "b3c402d242c9709ce211eb4588d1aaa694c5239e6d344c3c9eeb0221df9b7eaf"
+      "digest": "7a0ecc5791a4065721ab014d61d57586d2af0c5a734358848ce9b2960a525668"
     }
   ],
   "mergedCommit": null,

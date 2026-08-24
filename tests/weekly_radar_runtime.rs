@@ -11,8 +11,9 @@ use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
     TelegramMessageId, TelegramTransport, TelegramTransportError,
 };
 use org_x::features::weekly_radar::runtime::archive::{
-    ensure_run_available, load_input_snapshot, persist_input_snapshot, recover_pending_run,
-    retain_recent, write_run, write_run_with_input_snapshot, ArchiveError,
+    build_input_snapshot, ensure_run_available, load_input_snapshot, persist_input_snapshot,
+    recover_pending_run, replace_run_with_input_snapshot, retain_recent, write_run,
+    write_run_with_input_snapshot, ArchiveError,
 };
 use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
 use org_x::features::weekly_radar::runtime::error::RuntimeError;
@@ -2367,6 +2368,160 @@ fn task5_archive_rejects_same_date_overwrite_without_mutation() {
 }
 
 #[test]
+fn task5_archive_replacement_makes_the_last_successful_update_canonical() {
+    let root = task4_temp_root("same-date-replacement");
+    let first_input = task4_report_input();
+    let first_snapshot =
+        persist_input_snapshot(&root, "data", &first_input, ReportLanguage::Chinese, true)
+            .expect("first input snapshot should persist");
+    let first_report = render_report_in_language(&first_input, ReportLanguage::Chinese);
+    let first_receipt = send_rendered_report_with_transport(
+        &first_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("first report should have a receipt");
+    write_run_with_input_snapshot(
+        &root,
+        "data",
+        &first_report,
+        &first_receipt,
+        Some(&first_snapshot),
+    )
+    .expect("first report should archive");
+
+    let mut second_input = first_input.clone();
+    second_input
+        .add_fact(
+            NormalizedFact::new(
+                "omega",
+                "revenue",
+                "99000000",
+                FactStatus::Known,
+                Confidence::Medium,
+                task4_provenance("facts.revenue"),
+            )
+            .expect("second fixture fact should be valid"),
+        )
+        .expect("second fixture fact should be unique");
+    let second_snapshot = build_input_snapshot(&second_input, ReportLanguage::Chinese, true)
+        .expect("second input snapshot should be buildable without persistence");
+    let second_report = render_report_in_language(&second_input, ReportLanguage::Chinese);
+    let second_receipt = send_rendered_report_with_transport(
+        &second_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("second report should have a receipt");
+
+    let manifest = replace_run_with_input_snapshot(
+        &root,
+        "data",
+        &second_report,
+        &second_receipt,
+        &second_snapshot,
+    )
+    .expect("the last successful same-day update should replace the prior canonical set");
+
+    assert_eq!(manifest.snapshot_id(), Some(second_snapshot.snapshot_id()));
+    assert_eq!(
+        load_input_snapshot(&root, "data", second_input.as_of())
+            .expect("replacement input snapshot should be persisted")
+            .snapshot_id(),
+        second_snapshot.snapshot_id()
+    );
+    assert_eq!(
+        fs::read_to_string(root.join("weekly-radar/reports/2026-08-17.md"))
+            .expect("canonical report should be readable"),
+        second_report.markdown()
+    );
+    assert_eq!(
+        org_x::features::weekly_radar::runtime::archive::verify_committed_run_read_only(
+            &root,
+            "data",
+            second_input.as_of(),
+        )
+        .expect("replacement archive should verify"),
+        manifest
+    );
+
+    fs::remove_dir_all(root).expect("same-date replacement fixture should be removable");
+}
+
+#[test]
+fn task5_archive_replacement_rejects_corrupt_old_canonical_before_overwrite() {
+    let root = task4_temp_root("same-date-replacement-corrupt-old");
+    let first_input = task4_report_input();
+    let first_snapshot =
+        persist_input_snapshot(&root, "data", &first_input, ReportLanguage::Chinese, true)
+            .expect("first input snapshot should persist");
+    let first_report = render_report_in_language(&first_input, ReportLanguage::Chinese);
+    let first_receipt = send_rendered_report_with_transport(
+        &first_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("first report should have a receipt");
+    write_run_with_input_snapshot(
+        &root,
+        "data",
+        &first_report,
+        &first_receipt,
+        Some(&first_snapshot),
+    )
+    .expect("first report should archive");
+    let report_path = root.join("weekly-radar/reports/2026-08-17.md");
+    let receipt_path = root.join("weekly-radar/receipts/2026-08-17.json");
+    let transaction_path = root.join("weekly-radar/.transactions/2026-08-17.json");
+    let old_report = fs::read(&report_path).expect("old report should be readable");
+    let old_receipt = fs::read(&receipt_path).expect("old receipt should be readable");
+    let old_transaction = fs::read(&transaction_path).expect("old transaction should be readable");
+    fs::write(
+        root.join("weekly-radar/snapshots/2026-08-17.json"),
+        "corrupt old snapshot\n",
+    )
+    .expect("fixture should corrupt the old snapshot");
+
+    let second_snapshot = build_input_snapshot(&first_input, ReportLanguage::Chinese, true)
+        .expect("replacement input snapshot should be buildable");
+    let second_report =
+        render_report_in_language(second_snapshot.input(), second_snapshot.language());
+    let second_receipt = send_rendered_report_with_transport(
+        &second_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("replacement fixture should have a receipt");
+    let error = replace_run_with_input_snapshot(
+        &root,
+        "data",
+        &second_report,
+        &second_receipt,
+        &second_snapshot,
+    )
+    .expect_err("a corrupt old canonical must block replacement before overwrite");
+
+    assert!(matches!(error, ArchiveError::IncompleteRun { .. }));
+    assert_eq!(
+        fs::read(report_path).expect("old report should remain"),
+        old_report
+    );
+    assert_eq!(
+        fs::read(receipt_path).expect("old receipt should remain"),
+        old_receipt
+    );
+    assert_eq!(
+        fs::read(transaction_path).expect("old transaction should remain"),
+        old_transaction
+    );
+    fs::remove_dir_all(root).expect("corrupt replacement fixture should be removable");
+}
+
+#[test]
 fn archive_transaction_fails_closed_for_partial_residue_and_keeps_legacy_runs_immutable() {
     let root = task4_temp_root("archive-transaction-residue");
     let archive = root.join("weekly-radar");
@@ -3173,7 +3328,7 @@ fn task6_workflow_reconstructs_data_and_creates_a_rolling_orphan_update() {
     assert!(workflow.contains("force-with-lease=refs/heads/weekly-radar-pending:"));
     assert!(workflow.contains("--recover-published-as-of"));
     assert!(workflow.contains("refusing to downgrade the archive"));
-    assert!(workflow.contains("Pending publication and data archives conflict"));
+    assert!(workflow.contains("Pending publication contains a newer same-date canonical update"));
     assert!(!workflow.contains("HEAD:refs/heads/main"));
 }
 
@@ -3198,10 +3353,12 @@ fn task6_workflow_runs_the_cli_and_rejects_empty_or_unpublished_output() {
     let workflow = task6_workflow_text();
 
     assert!(workflow.contains("cargo run --release -- weekly-radar"));
-    assert!(workflow.contains("--verify-published-as-of"));
-    assert!(workflow.contains("ALREADY-PUBLISHED:"));
     assert!(workflow.contains("data_final_run=false"));
     assert!(workflow.contains("\"$data_final_run\" == \"true\""));
+    assert!(workflow.contains("normal publication will acquire a new update and make its last successful result canonical"));
+    assert!(
+        !workflow.contains("already published $as_of; no Telegram or data-branch write was needed")
+    );
     assert!(workflow.contains("RECOVERED:"));
     assert!(workflow.contains("--archive-dir \"$GITHUB_WORKSPACE\""));
     assert!(

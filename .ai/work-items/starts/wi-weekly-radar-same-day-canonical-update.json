@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-same-day-canonical-update",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-same-day-canonical-update.json",
+  "baseCommit": "ecd17580be6c234ef0208ae9f8ace07323af2bfd",
+  "baseBranch": "codex/wi-weekly-radar-same-day-canonical-update",
+  "startTimestamp": "2026-08-24T09:47:42.478453+00:00",
+  "initialScopeDigest": "f10873e6356a31b86f8baa12f0d66d7e150fd69bba43d8d87f9772d2f14f1efa",
+  "contractSkeletonDigest": "5aded59ef26658bbdac51c4f134d2ddb06b2ab2488a6ae4d4c1d49a7a1d1b233"
+}

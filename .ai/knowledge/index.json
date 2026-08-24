@@ -50,6 +50,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json"
     },
     {
+      "workItemId": "wi-weekly-radar-same-day-canonical-update",
+      "title": "Weekly Radar same-day latest successful update is canonical",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-source-coverage",
       "title": "Weekly Radar数据来源覆盖改善",
       "topics": [],

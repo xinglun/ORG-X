@@ -15,8 +15,9 @@ use org_x::features::weekly_radar::runtime::report::{
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources, SourceStatus};
 use org_x::features::weekly_radar::runtime::{
-    acquire_run_lock, derive_judgment_snapshot_for_companies, ensure_run_available,
-    load_input_snapshot, normalize_source_observation, persist_input_snapshot, recover_pending_run,
+    acquire_run_lock, build_input_snapshot, derive_judgment_snapshot_for_companies,
+    ensure_run_available, ensure_run_replace_available, load_input_snapshot,
+    normalize_source_observation, recover_pending_run, replace_run_with_input_snapshot,
     send_rendered_report, verify_committed_run, verify_committed_run_read_only,
     write_run_with_input_snapshot,
 };
@@ -535,7 +536,7 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
                 manifest.report()
             ));
         }
-        ensure_run_available(&options.archive_dir, "data", options.as_of)
+        ensure_run_replace_available(&options.archive_dir, "data", options.as_of)
             .map_err(|error| CliError::Failure(error.to_string()))?;
     }
 
@@ -576,9 +577,7 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
         ));
     }
 
-    let input_snapshot = persist_input_snapshot(
-        &options.archive_dir,
-        "data",
+    let input_snapshot = build_input_snapshot(
         &acquired.input,
         options.language,
         acquired.has_primary_evidence,
@@ -588,12 +587,12 @@ fn run_weekly_radar(options: CliOptions) -> Result<String, CliError> {
     validate_rendered_report(&report)?;
     let receipt =
         send_rendered_report(&report).map_err(|error| CliError::Failure(error.to_string()))?;
-    let manifest = write_run_with_input_snapshot(
+    let manifest = replace_run_with_input_snapshot(
         &options.archive_dir,
         "data",
         &report,
         &receipt,
-        Some(&input_snapshot),
+        &input_snapshot,
     )
     .map_err(|error| CliError::Failure(error.to_string()))?;
     Ok(format!(

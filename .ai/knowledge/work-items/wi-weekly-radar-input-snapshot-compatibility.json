@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-input-snapshot-compatibility",
+  "title": "Preserve compatibility with legacy Weekly Radar input snapshots",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Make the zero-valued not_applicable field serialization-compatible with the legacy input identity while retaining non-zero state.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+    ".ai/work-items/starts/wi-weekly-radar-input-snapshot-compatibility.json",
+    "src/features/weekly_radar/runtime/model.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Limit compatibility to the known omitted zero-valued field and do not relax identity checks for other changes.",
+      "reason": "The legacy and tamper scenarios exercise the exact compatibility and fail-closed boundaries.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "digest": "243a9a54963d37bba524a64a1df257d2413ef9e679251d61910360ccc7575d92"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "ef718693be9be06645cfa0cccc2cd108ff6d77205efb9bc26288e5338283c6dc"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/archive.rs",
+      "digest": "ce0a923ab748fb7acb4e0b16ffdef69cfd57ce5d060e088ee5fe2685e16ac8f6"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "b3c402d242c9709ce211eb4588d1aaa694c5239e6d344c3c9eeb0221df9b7eaf"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.contract.json",
+    "contractDigest": "cf59807e18a9dc63b756006badf3b2aa4b53cf621e41212a0fc491982facaf63",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+    "summaryDigest": "1598e4811abf1a936759ae1811845d79ba2167fc121eb48734dde8210bc86a65",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.outcome.json",
+    "outcomeDigest": "bcb3f2b42e91a15c3f2f097a11e6eeba5352a3e4197ce3f211434a40300d97ff"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

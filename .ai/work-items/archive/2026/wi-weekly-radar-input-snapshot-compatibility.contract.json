@@ -1,0 +1,301 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-input-snapshot-compatibility",
+  "mode": "code",
+  "title": "Preserve compatibility with legacy Weekly Radar input snapshots",
+  "rawUserRequest": "开 successor WI，增加旧快照兼容/迁移测试后再重新验证。确认按此方案执行。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "conversation:user-message",
+    "digest": "sha256:accepted-legacy-snapshot-compatibility-plan",
+    "capturedAt": "2026-08-24T09:30:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "ai_governance",
+      "software_design",
+      "test_automation",
+      "documentation"
+    ],
+    "prohibitedCapabilities": [
+      "secret_readback",
+      "paid_data_api_dependency",
+      "external_provider_mutation",
+      "human_reference_override"
+    ]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "User explicitly confirmed the successor plan on 2026-08-24."
+  },
+  "baseCommit": "686d812a1659752b458cb38c56d3da43861a521a",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-input-snapshot-compatibility.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-input-snapshot-compatibility.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-input-snapshot-compatibility.outcome.md",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "data and weekly-radar-pending refs or their committed contents",
+    ".github/workflows/**",
+    "Telegram delivery behavior or provider credentials",
+    "new source providers or source-coverage taxonomy changes",
+    "rewriting immutable predecessor Work Item evidence"
+  ],
+  "sources": [
+    {
+      "path": "https://github.com/xinglun/ORG-X/actions/runs/32704070764",
+      "reason": "Post-merge manual validation failed while verifying the existing 2026-08-24 final run with an input identity mismatch."
+    },
+    {
+      "path": "https://github.com/xinglun/ORG-X/blob/data/weekly-radar/snapshots/2026-08-24.input.json",
+      "reason": "Existing non-secret legacy input snapshot omits the later not_applicable coverage field and must remain verifiable."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.contract.json",
+      "reason": "Predecessor scope introduced the not_applicable coverage field and its immutable archive evidence."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.outcome.json",
+      "reason": "Predecessor completed evidence and production validation finding requiring a changed-base successor."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/archive.rs",
+      "reason": "Input snapshot identity, validation, persistence, and read-only committed-run verification boundary."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "reason": "SourceCoverage serialization shape changed when not_applicable was introduced."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Existing input snapshot round-trip, conflict, and archive verification test boundary."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "User-facing operational explanation of durable snapshots and retry/verification behavior."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": [
+      "backward_compatibility",
+      "persistence_integrity",
+      "delivery_recovery"
+    ],
+    "reason": "The current main branch rejects an already published data snapshot after a serialized model field was added. The repair must preserve immutable archive identity, reject tampering, and avoid sending or writing data during verification.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "User confirmed the successor compatibility plan on 2026-08-24"
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Persistence and delivery-recovery behavior requires standard governance with full project tests."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly approved a changed-base successor to preserve legacy input snapshot verification and add migration regression tests."
+  },
+  "preReviewWarnings": [
+    "Review that legacy snapshots remain byte- and identity-compatible without rewriting immutable data artifacts.",
+    "Review that tampered snapshots still fail closed before Telegram or data publication."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "A legacy input snapshot whose source-coverage entries omit not_applicable remains loadable and preserves its original snapshot identity.",
+    "A new input snapshot with non-zero not_applicable coverage serializes and round-trips with a bound identity.",
+    "A tampered legacy or current snapshot is rejected before any retry, Telegram delivery, archive mutation, or data publication.",
+    "Read-only committed-run verification accepts a legacy snapshot fixture while retaining manifest-to-snapshot identity checks.",
+    "User-facing Weekly Radar operations documentation explains legacy snapshot compatibility and the fail-closed tamper boundary.",
+    "No data ref, weekly-radar-pending ref, Secret, credential, or immutable predecessor archive is changed by this Work Item."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features."
+  ],
+  "intent": {
+    "problem": "After wi-weekly-radar-source-coverage added SourceCoverage.not_applicable, the post-merge verification of the existing 2026-08-24 data archive failed because the legacy input snapshot identity was computed before that zero-valued field existed. The workflow therefore cannot safely recognize an already published run and stops before delivery or data publication.",
+    "constraints": [
+      "Preserve the identity of existing input snapshots and do not rewrite the data branch or pending ref.",
+      "Keep verification fail-closed for malformed or tampered snapshots.",
+      "Use local fixture data only; do not access external provider-authenticated values.",
+      "Keep Telegram delivery and source acquisition behavior unchanged; only the durable input identity compatibility boundary may change."
+    ],
+    "rationale": "The smallest safe repair is to make the newly added zero-valued field serialization-compatible with the legacy wire shape, then prove old, new, and tampered snapshots through deterministic tests before rerunning production verification."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Legacy input snapshot omits not_applicable coverage fields.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/archive.rs",
+        "src/features/weekly_radar/runtime/model.rs",
+        "tests/weekly_radar_runtime.rs"
+      ],
+      "expected": "The snapshot loads with its original wr-input identity and no archive or delivery side effect.",
+      "verificationPlan": "Write a failing fixture test from the pre-change JSON shape, then make zero-valued not_applicable omit itself during identity serialization and rerun the focused test."
+    },
+    {
+      "scenario": "New input snapshot contains non-zero not_applicable coverage.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/model.rs",
+        "tests/weekly_radar_runtime.rs"
+      ],
+      "expected": "The new field remains serialized, the snapshot identity remains bound, and a round trip returns the same coverage state.",
+      "verificationPlan": "Add a deterministic snapshot round-trip assertion using SourceCoverage::new_with_states with a non-zero not_applicable count."
+    },
+    {
+      "scenario": "Legacy or current input snapshot content is tampered.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/archive.rs",
+        "tests/weekly_radar_runtime.rs"
+      ],
+      "expected": "Validation rejects the identity mismatch before retry or publication code can proceed.",
+      "verificationPlan": "Mutate a persisted snapshot payload without updating its snapshot_id and assert InvalidInputSnapshot with no generated archive artifacts."
+    }
+  ],
+  "predecessorWorkItem": {
+    "workItemId": "wi-weekly-radar-source-coverage",
+    "archiveOutcome": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.outcome.json",
+    "status": "closed",
+    "pr": {
+      "merged": true,
+      "mergeCommit": "686d812a1659752b458cb38c56d3da43861a521a"
+    },
+    "closure": {
+      "succeeded": true,
+      "localBranchDeleted": true,
+      "remoteBranchDeleted": true,
+      "baseSynchronized": true,
+      "evidence": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.archive-manifest.json"
+    },
+    "reason": "The predecessor is closed and immutable; this successor starts from the changed post-merge base to repair legacy data compatibility discovered during production validation."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 62
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-input-snapshot-compatibility.json",
+    "baseCommit": "686d812a1659752b458cb38c56d3da43861a521a",
+    "initialScopeDigest": "71d45ed95da85d4c5f7776b83c7131ed945eba38f3a3001e183cf15fb4826711",
+    "contractSkeletonDigest": "e52728115590b8dff08a854b842e24e4cd304f448d00a0a44d4a23a0294bedab"
+  }
+}

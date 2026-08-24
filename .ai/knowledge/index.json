@@ -42,6 +42,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
     },
     {
+      "workItemId": "wi-weekly-radar-input-snapshot-compatibility",
+      "title": "Preserve compatibility with legacy Weekly Radar input snapshots",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-source-coverage",
       "title": "Weekly Radar数据来源覆盖改善",
       "topics": [],

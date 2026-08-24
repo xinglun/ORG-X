@@ -733,6 +733,18 @@
       "summarySha256": "a52c559b2d28b5fe3847eae809cec051c950266d0c835578797e79560b0848d1",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.archive-manifest.json",
       "manifestSha256": "535e83216d975f93c2145b0d3f8bbbcf11215426998dbfb1194b8e51acd487df"
+    },
+    {
+      "workItemId": "wi-weekly-radar-input-snapshot-compatibility",
+      "archiveSequence": 62,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.contract.json",
+      "contractSha256": "cf59807e18a9dc63b756006badf3b2aa4b53cf621e41212a0fc491982facaf63",
+      "archivedAt": "2026-08-24T17:41:28.719517+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+      "summarySha256": "1598e4811abf1a936759ae1811845d79ba2167fc121eb48734dde8210bc86a65",
+      "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.archive-manifest.json",
+      "manifestSha256": "314d2d31b0c0e452d0e63720b3c113cbad1bcbe06e9bd1311e61948e1b1720ad"
     }
   ]
 }

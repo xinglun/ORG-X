@@ -66,6 +66,18 @@
         "tests/weekly_radar_runtime.rs"
       ]
     },
+    "wi-weekly-radar-input-snapshot-compatibility": {
+      "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+      "dependencies": [
+        ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.contract.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.outcome.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json",
+        "docs/operations/WEEKLY_RADAR.md",
+        "src/features/weekly_radar/runtime/archive.rs",
+        "src/features/weekly_radar/runtime/model.rs",
+        "tests/weekly_radar_runtime.rs"
+      ]
+    },
     "wi-weekly-radar-source-coverage": {
       "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
       "dependencies": [
@@ -139,6 +151,15 @@
     ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json": [
       "wi-weekly-radar-idempotent-completion"
     ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.contract.json": [
+      "wi-weekly-radar-input-snapshot-compatibility"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.outcome.json": [
+      "wi-weekly-radar-input-snapshot-compatibility"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json": [
+      "wi-weekly-radar-input-snapshot-compatibility"
+    ],
     ".ai/work-items/archive/2026/wi-weekly-radar-source-coverage.contract.json": [
       "wi-weekly-radar-source-coverage"
     ],
@@ -159,7 +180,8 @@
       "wi-sec-submissions-response-limit",
       "wi-telegram-delivery-verification",
       "wi-weekly-radar-content-quality",
-      "wi-weekly-radar-idempotent-completion"
+      "wi-weekly-radar-idempotent-completion",
+      "wi-weekly-radar-input-snapshot-compatibility"
     ],
     "scripts/check_docs_metadata.py": [
       "wi-weekly-radar-source-coverage"
@@ -168,12 +190,14 @@
       "wi-weekly-radar-content-quality"
     ],
     "src/features/weekly_radar/runtime/archive.rs": [
-      "wi-weekly-radar-idempotent-completion"
+      "wi-weekly-radar-idempotent-completion",
+      "wi-weekly-radar-input-snapshot-compatibility"
     ],
     "src/features/weekly_radar/runtime/http.rs": [
       "wi-sec-submissions-response-limit"
     ],
     "src/features/weekly_radar/runtime/model.rs": [
+      "wi-weekly-radar-input-snapshot-compatibility",
       "wi-weekly-radar-source-coverage"
     ],
     "src/features/weekly_radar/runtime/report.rs": [
@@ -209,6 +233,7 @@
       "wi-telegram-delivery-verification",
       "wi-weekly-radar-content-quality",
       "wi-weekly-radar-idempotent-completion",
+      "wi-weekly-radar-input-snapshot-compatibility",
       "wi-weekly-radar-source-coverage"
     ],
     "tests/weekly_radar_semantic_message_splitter.rs": [

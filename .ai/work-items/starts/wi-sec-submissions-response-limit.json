@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-sec-submissions-response-limit",
+  "receiptPath": ".ai/work-items/starts/wi-sec-submissions-response-limit.json",
+  "baseCommit": "c19bd00ba8b89f8198fe99872502d33c68592058",
+  "baseBranch": "codex/wi-sec-submissions-response-limit",
+  "startTimestamp": "2026-08-24T02:08:25.177435+00:00",
+  "initialScopeDigest": "4202cf08a5d37dd9f01153f92a7d73682e7302df618745349be3194a0e0540ae",
+  "contractSkeletonDigest": "7ff976c550eb2af71a1ee3a72aaf62bbdb9c5bcad35f38474a6eaedaaa4a111b"
+}

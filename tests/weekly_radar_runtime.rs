@@ -855,6 +855,47 @@ fn sec_company_facts_accepts_a_payload_above_the_default_http_limit() {
         .all(|request| request.headers() == [("User-Agent".to_owned(), user_agent.to_owned())]));
 }
 
+#[test]
+fn sec_submissions_accepts_a_payload_above_the_default_http_limit() {
+    let company = sec_test_company();
+    let submissions_url = "https://data.sec.gov/submissions/CIK0001234567.json";
+    let facts_url = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json";
+    let user_agent = "ORG-X weekly-radar test contact@example.test";
+    let client = FixtureHttpClient::new();
+    let submissions = serde_json::json!({
+        "padding": "x".repeat(1_048_577),
+        "filings": {"recent": {}}
+    });
+    let submissions_body =
+        serde_json::to_string(&submissions).expect("large submissions fixture should encode");
+    assert!(submissions_body.len() > 1_048_576);
+    assert!(submissions_body.len() < SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES);
+    client.insert(submissions_url, HttpResponse::ok(submissions_body));
+    client.insert(
+        facts_url,
+        HttpResponse::ok(
+            r#"{
+              "facts": {
+                "us-gaap": {
+                  "RevenueFromContractWithCustomerExcludingAssessedTax": {
+                    "units": {"USD": [{
+                      "start":"2024-01-01","end":"2024-12-31","val":100,
+                      "accn":"000123456725000001","fp":"FY","form":"10-K","filed":"2025-02-15"
+                    }]}
+                  }
+                }
+              }
+            }"#,
+        ),
+    );
+
+    let evidence = SecClient::collect(&company, &client, user_agent)
+        .expect("SEC submissions above the generic limit should be parsed");
+
+    assert_eq!(evidence.fact("revenue").unwrap().value(), Some("100"));
+    assert_eq!(client.requests().len(), 2);
+}
+
 fn collect_revenue_alias_fixture(
     second_value: i64,
 ) -> org_x::features::weekly_radar::runtime::sec::CompanyEvidence {

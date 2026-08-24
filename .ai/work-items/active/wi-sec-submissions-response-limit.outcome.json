@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-sec-submissions-response-limit",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "6dc8dad9dfb9cc9cbc5eb78c1c2c50ec27572569cd5416e702836ae17f2205fa"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-sec-submissions-response-limit",
+    "contractDigest": "1ad76e49813d6ed2e808a6f7af712ea69422a8f78c843ac7d5b8e46376bb4bb6",
+    "summaryDigest": "12c1712706dae926adaa35ab73cf1d137c1cea5ddb63e78df77272a453797630",
+    "verificationDigest": "b1e443931bc2cfa337b8abe49adc7dee0118bf0df2c05a2824ee6b723707fab8",
+    "baseCommit": "c19bd00ba8b89f8198fe99872502d33c68592058",
+    "headCommit": "06cfcbdc0595bc08ec735b084a81e1be3ae1df70",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "4bd4b1c2047d4635b399a1093a4a7b2e3c5dc305396496e4b36cbe09fd8109a1",
+      "binding": {
+        "baseCommit": "c19bd00ba8b89f8198fe99872502d33c68592058",
+        "candidateHead": "06cfcbdc0595bc08ec735b084a81e1be3ae1df70",
+        "candidateTreeDigest": "dddaed2154a64cdcc6364a56bdf3518113ea55c9728c04f425b640ec5614c5ea",
+        "candidateDiffDigest": "874e8265266f31cdd00889b88349f7be85ae4752f5a2d4b691cebacacc881678"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-sec-submissions-response-limit generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-sec-submissions-response-limit generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-sec-submissions-response-limit",
     "deliveredChanges": [
       ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
       ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
@@ -20,190 +43,273 @@
       ".ai/work-items/active/wi-sec-submissions-response-limit.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
-        },
-        {
-          "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
-        },
-        {
-          "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "SEC public JSON payloads may grow beyond the selected finite bound in the future; the report must continue to expose unavailable source status rather than accept partial data.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "The already published 2026-08-24 report remains degraded and is not rewritten by this Work Item; post-merge validation is required to prove restored live SEC coverage.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Use the existing finite SEC-specific response envelope for submissions while leaving the generic transport protection unchanged.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/sec.rs",
-          "subject": "SEC submissions response-bound routing"
-        },
-        {
-          "source": "tests/weekly_radar_runtime.rs",
-          "subject": "oversized-but-bounded submissions regression"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "The submissions request passes the SEC 16 MiB finite maximum to the bounded JSON reader; payloads above that bound remain typed response-too-large failures.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/sec.rs",
-          "subject": "finite submissions limit"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/http.rs",
-          "subject": "bounded response reader"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Weekly Radar SEC runtime adapter",
-        "detail": "SEC submissions and Company Facts share the finite SEC JSON response envelope; ordinary requests retain the generic limit.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/sec.rs",
-            "subject": "SEC JSON response bounds"
+            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
           },
           {
-            "source": "src/features/weekly_radar/runtime/http.rs",
-            "subject": "generic response bound"
+            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "resolutions": [
       {
-        "decision": "Reuse the established 16 MiB SEC-specific bound instead of changing the generic 1 MiB limit or allowing unbounded reads.",
-        "reason": "The hosted failure is isolated to SEC submissions payload size, and the predecessor SEC Company Facts fix establishes this finite source-specific pattern.",
-        "status": "verified",
-        "evidence": [
+        "problem": "The 2026-08-24 hosted run reported HTTP response body limit failures for all ten SEC submissions requests.",
+        "action": "SEC submissions now use the existing finite 16 MiB SEC-specific limit; the focused regression demonstrated RED before the fix and GREEN after it. Governed hosted production revalidation remains a post-merge acceptance follow-up.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
           {
             "source": "src/features/weekly_radar/runtime/sec.rs",
-            "subject": "selected finite SEC bound"
+            "subject": "observedIssues[0] SEC production source acquisition"
           },
-          {
-            "source": ".ai/work-items/archive/2026/wi-sec-company-facts-response-limit.contract.json",
-            "subject": "predecessor bounded-limit pattern"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "Regression behavior",
-        "detail": "The focused fixture is larger than 1 MiB and smaller than 16 MiB; it failed before the fix and passes after the submissions reader uses the SEC bound.",
-        "status": "verified",
-        "evidence": [
           {
             "source": "tests/weekly_radar_runtime.rs",
-            "subject": "RED/GREEN regression"
-          }
-        ]
-      },
-      {
-        "topic": "User-facing operations guidance",
-        "detail": "The operations guide explains the separate finite SEC submissions/Company Facts bound and the generic bound for ordinary sources.",
-        "status": "verified",
-        "evidence": [
+            "subject": "observedIssues[0] SEC production source acquisition"
+          },
           {
             "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "source-health response limits"
+            "subject": "observedIssues[0] SEC production source acquisition"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/sec.rs",
+            "subject": "observedIssues[0] SEC production source acquisition"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[0] SEC production source acquisition"
+          },
+          {
+            "source": "docs/operations/WEEKLY_RADAR.md",
+            "subject": "observedIssues[0] SEC production source acquisition"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
+          },
+          {
+            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
           }
         ]
       }
     ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "provider payload growth",
+        "severity": "medium",
+        "title": "provider payload growth",
+        "detail": "SEC public JSON payloads may grow beyond the selected finite bound in the future; the report must continue to expose unavailable source status rather than accept partial data.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "production revalidation",
+        "severity": "medium",
+        "title": "production revalidation",
+        "detail": "The already published 2026-08-24 report remains degraded and is not rewritten by this Work Item; post-merge validation is required to prove restored live SEC coverage.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
     "evidence": [
       {
-        "claim": "The implementation is bounded and SEC-specific.",
-        "status": "verified",
+        "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "src/features/weekly_radar/runtime/sec.rs",
         "subject": "runtime implementation"
       },
       {
-        "claim": "The oversized submissions regression passed after the fix.",
-        "status": "verified",
         "source": "tests/weekly_radar_runtime.rs",
         "subject": "runtime test suite"
+      },
+      {
+        "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
+      },
+      {
+        "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Use the existing finite SEC-specific response envelope for submissions while leaving the generic transport protection unchanged.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/sec.rs",
+            "subject": "SEC submissions response-bound routing"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "oversized-but-bounded submissions regression"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "The submissions request passes the SEC 16 MiB finite maximum to the bounded JSON reader; payloads above that bound remain typed response-too-large failures.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/sec.rs",
+            "subject": "finite submissions limit"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/http.rs",
+            "subject": "bounded response reader"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Weekly Radar SEC runtime adapter",
+          "detail": "SEC submissions and Company Facts share the finite SEC JSON response envelope; ordinary requests retain the generic limit.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/sec.rs",
+              "subject": "SEC JSON response bounds"
+            },
+            {
+              "source": "src/features/weekly_radar/runtime/http.rs",
+              "subject": "generic response bound"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Reuse the established 16 MiB SEC-specific bound instead of changing the generic 1 MiB limit or allowing unbounded reads.",
+          "reason": "The hosted failure is isolated to SEC submissions payload size, and the predecessor SEC Company Facts fix establishes this finite source-specific pattern.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/sec.rs",
+              "subject": "selected finite SEC bound"
+            },
+            {
+              "source": ".ai/work-items/archive/2026/wi-sec-company-facts-response-limit.contract.json",
+              "subject": "predecessor bounded-limit pattern"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Regression behavior",
+          "detail": "The focused fixture is larger than 1 MiB and smaller than 16 MiB; it failed before the fix and passes after the submissions reader uses the SEC bound.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "RED/GREEN regression"
+            }
+          ]
+        },
+        {
+          "topic": "User-facing operations guidance",
+          "detail": "The operations guide explains the separate finite SEC submissions/Company Facts bound and the generic bound for ordinary sources.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "source-health response limits"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The implementation is bounded and SEC-specific.",
+          "status": "verified",
+          "source": "src/features/weekly_radar/runtime/sec.rs",
+          "subject": "runtime implementation"
+        },
+        {
+          "claim": "The oversized submissions regression passed after the fix.",
+          "status": "verified",
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "runtime test suite"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -864,6 +970,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

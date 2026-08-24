@@ -1,0 +1,26 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-weekly-radar-same-day-canonical-update",
+  "archiveSequence": 63,
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json",
+  "contractSha256": "96aa10dd0911f45627966de2a817c399097df08c366fdacb14879feb1ea30bdc",
+  "summarySha256": "47cd7e0ddcdc7b6fd73a890eb7b46e43a6d671bb621fefe231b34c02ecf2a599",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.json",
+      "sha256": "92f6cbdd4b2acac6e19199d6363042c59107ddee330de043facf01a2d000a40f"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "1af3206244126bc39cabfe2ebf75aef1e457ab1d0312cbde41b36acedaf6207b",
+    "binding": {
+      "baseCommit": "ecd17580be6c234ef0208ae9f8ace07323af2bfd",
+      "candidateHead": "ecd17580be6c234ef0208ae9f8ace07323af2bfd",
+      "candidateTreeDigest": "3c8a38ea58494d8fd86f8c87bc60f9a1a40b9e2c979380f310e43bcbd10ab025",
+      "candidateDiffDigest": "0e640718b990b8ded05514fcdb75db2bb87b72220f4ead7306558bdde8e69506"
+    }
+  }
+}

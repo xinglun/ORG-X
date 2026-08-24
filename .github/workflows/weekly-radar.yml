@@ -96,8 +96,7 @@ jobs:
             fi
             if [[ -n "$data_as_of" && "$pending_as_of" == "$data_as_of" ]] \
               && ! git diff --quiet origin/data origin/weekly-radar-pending -- weekly-radar; then
-              echo "Pending publication and data archives conflict for the same date; refusing recovery." >&2
-              exit 1
+              echo "Pending publication contains a newer same-date canonical update; replacing the reconstructed data tree and validating it before recovery."
             fi
             git archive origin/weekly-radar-pending -- weekly-radar | tar -x -f -
             echo "Pending publication ref reconstructed for $pending_as_of."
@@ -168,13 +167,7 @@ jobs:
               echo "Weekly Radar republished existing report; archive and data branch were not changed."
               exit 0
             fi
-            cargo run --release -- weekly-radar --verify-published-as-of "$as_of" --archive-dir "$GITHUB_WORKSPACE" | tee "$run_output"
-            if ! grep -Fq 'ALREADY-PUBLISHED:' "$run_output"; then
-              echo "Weekly Radar could not verify the existing final run; refusing to skip publication." >&2
-              exit 1
-            fi
-            echo "Weekly Radar already published $as_of; no Telegram or data-branch write was needed."
-            exit 0
+            echo "Weekly Radar found an existing final run for $as_of; normal publication will acquire a new update and make its last successful result canonical."
           elif [[ "$REPORT_DRY_RUN" != "true" && "$REPUBLISH_PUBLISHED" == "true" ]]; then
             echo "Republish requires a complete final report on data for $as_of; refusing to acquire or publish a new run." >&2
             exit 1

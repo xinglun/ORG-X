@@ -1,16 +1,16 @@
 # Weekly Radar 使用说明
 
-Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，只保留来源中实际提供的事实，先把完整的运行输入持久化为不可变快照，再生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram，并把可追溯的 report、snapshot、receipt 和 manifest 写入受保护的 `data` 分支。
+Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，只保留来源中实际提供的事实，在内存中准备完整运行输入，生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram；只有发送成功后，才把输入快照以及可追溯的 report、snapshot、receipt 和 manifest 一起写入受保护的 `data` 分支。
 
 ## 运行流程
 
 ```text
-获取来源 → 保留证据 → 系统自动给出参考判断 → 持久化输入快照
+获取来源 → 保留证据 → 系统自动给出参考判断 → 准备输入快照
                               ↓
-          报告并列呈现系统参考与人的独立判断 → Telegram → data branch archive → retention
+          报告并列呈现系统参考与人的独立判断 → Telegram → 成功后提交 archive → data branch → retention
 ```
 
-发布只有在报告通过一手证据检查、输入快照已经持久化、Telegram receipt 与 report ID 绑定后才会写入 archive。输入快照位于 `weekly-radar/snapshots/YYYY-MM-DD.input.json`，最终渲染 snapshot 仍位于 `weekly-radar/snapshots/YYYY-MM-DD.json`。
+发布只有在报告通过一手证据检查、Telegram receipt 与 report ID 绑定后才会把输入快照、report、snapshot、receipt 和 manifest 作为一个可恢复的逻辑 transaction 写入 archive。输入快照位于 `weekly-radar/snapshots/YYYY-MM-DD.input.json`，最终渲染 snapshot 仍位于 `weekly-radar/snapshots/YYYY-MM-DD.json`。
 
 ### 已有输入快照的兼容性
 
@@ -48,7 +48,7 @@ cargo run --release -- weekly-radar \
 
 重试从 `weekly-radar/snapshots/YYYY-MM-DD.input.json` 读取原始 `RuntimeReportInput` 和保存的语言，不读取 registry、不重新获取来源，也不需要 `ORGX_SEC_USER_AGENT`。`--retry-as-of` 不能和 `--as-of`、`--language` 或 `--dry-run` 一起使用；若该日期已经有最终 report、snapshot 或 receipt，命令会在发送 Telegram 前拒绝，避免重复归档和重复发送。
 
-如果目标日期已经完成发布，不要再次发送。先做只读验证：
+如果只想确认某个日期当前正本是否完整，可做只读验证：
 
 ```sh
 cargo run --release -- weekly-radar \
@@ -56,7 +56,9 @@ cargo run --release -- weekly-radar \
   --verify-published-as-of 2026-08-24
 ```
 
-输出 `ALREADY-PUBLISHED:` 表示 report、snapshot、Telegram receipt 和 manifest 已互相验证，任务成功结束且没有再次联系 Telegram，也不会新建 `data` 提交。手动运行和定时运行遇到同一个已完成日期时，都应按这个结果处理。
+输出 `ALREADY-PUBLISHED:` 表示 report、snapshot、Telegram receipt、manifest 和可用的输入快照已互相验证；该命令不会联系 Telegram，也不会新建 `data` 提交。它是明确的只读检查，不会阻止随后一次普通手动或定时发布。
+
+普通发布不区分定时触发和手动触发。同一天已经有正本时，新的普通运行仍会获取资料、生成报告并发送 Telegram；只有这次发送成功且 archive transaction 完成后，新的 report、snapshot、receipt、manifest 和输入快照才会整体替换当天正本。因此，当天最后一次成功更新就是当天正本，紧急情况下可以直接手动触发。
 
 如果已经确认该日期的报告存在，但配置的 Telegram 目标没有看到它，可以明确选择一次“重新发送已生成报告”。这会再次发送同一份已保存输入生成的报告，因此目标中会出现一条有意的重复消息；它不会重新获取资料，不会改变已有 report、snapshot、receipt、manifest，也不会写入 `data` 或 pending ref。
 
@@ -70,11 +72,11 @@ cargo run --release -- weekly-radar \
 
 只有明确的手动运行可以使用这个选项，定时运行不会启用它。输出中的 report ID、message IDs 和 attempts 是发送服务返回的凭据，只能说明服务接受了这次发送，不能证明你的 Telegram 客户端已经显示、通知或被人阅读。
 
-如果进程在 Telegram 成功后、归档提交完成前退出，归档器会把已序列化的 report、snapshot、receipt 和 manifest 保存在 `weekly-radar/.transactions/` 的 prepared transaction 中。下一次非 dry-run 或同日期 retry 会先校验并完成这个 transaction，复用已有 receipt，不再发送第二次 Telegram。若 transaction 缺失、损坏、或已有公共文件与 staged bytes 不一致，运行会以 `IncompleteRun` fail closed；它不会猜测、覆盖或删除冲突文件，需要人工检查归档残留。这里保证的是可审计的逻辑提交点，不是跨多个公共文件的物理原子事务。
+如果进程在 Telegram 成功后、归档提交完成前退出，归档器会把已序列化的 report、snapshot、receipt、manifest 和输入快照保存在 `weekly-radar/.transactions/` 的 prepared transaction 中。下一次非 dry-run 或同日期 retry 会先校验并完成这个 transaction，复用已有 receipt，不再发送第二次 Telegram。若 transaction 缺失、损坏、或已有公共文件既不是旧正本也不是 staged bytes，运行会以 `IncompleteRun` fail closed；它不会猜测、覆盖或删除冲突文件，需要人工检查归档残留。这里保证的是可审计的逻辑提交点，不是跨多个公共文件的物理原子事务。
 
 如果 Telegram 已经成功、但随后 `data` 分支 push 没有完成，系统会先尝试保留一个带有原始 report、snapshot、receipt 和 manifest 的 pending publication，再更新 `data`。下一次运行会先校验 pending publication 的日期和全部文件身份；校验通过后只把同一组已发布文件推到 `data`，不会重新获取来源、重新生成报告或再次调用 Telegram。若 pending 本身也无法保存、校验失败、日期顺序冲突或文件被改动，系统会停止并要求人工检查，不会猜测、覆盖或重复发送。`data` 已经成功更新但 pending 清理暂时失败时，下一次运行会先比较身份，再安全地清理冗余 pending 状态。
 
-运维人员按以下结果判断：`PUBLISHED:` 表示新报告已发布；`ALREADY-PUBLISHED:` 表示该日期已经成功完成、此次是安全的幂等成功；`READY-TO-PUSH:` 表示 Telegram 已接受、等待把同一组文件推进 `data`；`RECOVERED:` 表示本地 prepared transaction 已恢复。其他 archive 错误应保持停止并检查证据。不应手工复制 receipt、改写历史周报或直接修复 `data` 分支。若需在一个已取回的 archive 上做无发送验证，可使用：
+运维人员按以下结果判断：`PUBLISHED:` 表示新报告已发布并成为当天正本；`ALREADY-PUBLISHED:` 只表示显式只读验证成功；`READY-TO-PUSH:` 表示 Telegram 已接受、等待把同一组文件推进 `data`；`RECOVERED:` 表示本地 prepared transaction 已恢复。其他 archive 错误应保持停止并检查证据。不应手工复制 receipt、改写历史周报或直接修复 `data` 分支。若需在一个已取回的 archive 上做无发送验证，可使用：
 
 ```sh
 cargo run --release -- weekly-radar \
@@ -143,4 +145,4 @@ SEC submissions 和 SEC Company Facts 都是包含完整申报历史的 JSON，�
 
 ## data 分支保留
 
-每次成功运行写入 report、sanitized snapshot、绑定的 `PUBLISHED` receipt 和 manifest；manifest 会记录输入快照路径及其稳定 `snapshot_id`。同一日期的最终文件是不可覆盖的；冲突或写入失败不会先执行 retention。transaction 只有在四个公共 artifact 完成后才变为 committed，retention 也只在该提交点之后执行。retention 只删除日期前缀文件中超过 365 天的 input snapshot、report、snapshot 和 receipt；最近文件保持不动。dry-run 不执行 recovery、归档或 retention。
+每次成功运行写入 report、sanitized snapshot、绑定的 `PUBLISHED` receipt 和 manifest；manifest 会记录输入快照路径及其稳定 `snapshot_id`。同一日期允许由普通 schedule 或手动运行更新，但只有完整成功 transaction 才会替换旧正本；冲突或写入失败不会先执行 retention。transaction 只有在全部公共 artifact（包括有输入快照时的输入文件）完成后才变为 committed，retention 也只在该提交点之后执行。retention 只删除日期前缀文件中超过 365 天的 input snapshot、report、snapshot 和 receipt；最近文件保持不动。dry-run 不执行 recovery、归档或 retention。

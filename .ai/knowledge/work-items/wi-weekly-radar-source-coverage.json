@@ -64,7 +64,7 @@
     {
       "type": "code",
       "path": "src/main.rs",
-      "digest": "2869a288f0cc65ef3ddedd4e971b6386f67ccb3d4c5b9a3c7b761ac57a48e924"
+      "digest": "b94829ca9abd18a32a9b382fa186b669b393b316fde5e221de38cd56fc2574a8"
     },
     {
       "type": "code",
@@ -79,7 +79,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "ef718693be9be06645cfa0cccc2cd108ff6d77205efb9bc26288e5338283c6dc"
+      "digest": "296925bfa33f6f720da73f4ac6bb12488aa90175e9c7664806bd9a87a767977f"
     },
     {
       "type": "code",

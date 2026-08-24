@@ -7,37 +7,53 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Make the zero-valued not_applicable field serialization-compatible with the legacy input identity while retaining non-zero state.
-Mechanism (verified): Deserialize continues to default an omitted field to zero; serialization omits only zero and includes non-zero values, so identity validation remains deterministic.
+Customer summary (verified): Use an explicit replacement transaction for normal same-day publication while retaining strict creation, retry, verify, and republish boundaries.
+Mechanism (verified): Build the input snapshot in memory, deliver Telegram, then stage report/snapshot/receipt/input snapshot/manifest with previous-artifact digests and recover prepared transactions before data publication.
 
 Affected components
-- Input snapshot persistence and read-only committed-run verification: Existing archive consumers validate the compatible identity and retain manifest binding. (verified)
-- Weekly Radar reader operations guidance: The operations guide explains legacy compatibility and the tamper boundary. (verified)
+- Weekly Radar archive: Same-day canonical replacement and four-artifact legacy transaction compatibility. (verified)
+- Actions publication flow: Schedule/manual normal publication and same-date pending recovery are aligned with the latest successful canonical update. (verified)
+- User operations guide: Manual triggering, canonicality, recovery, retry, verify, and republish are explained for users. (verified)
 
 Design decisions
-- Limit compatibility to the known omitted zero-valued field and do not relax identity checks for other changes.: The legacy and tamper scenarios exercise the exact compatibility and fail-closed boundaries. (verified)
+- Do not persist a new input snapshot before Telegram succeeds.: This prevents a failed same-day attempt from binding an old report to a new input. (verified)
+- Allow a same-date pending archive to replace older data only after CLI identity verification.: A successful archive/data push gap must recover the latest canonical update without a second Telegram send. (verified)
 
 ### Technical details
-- serialization implementation: Use a private zero predicate with serde default and skip_serializing_if; no public API or provider behavior changes. (verified)
+- transaction compatibility: Schema v1 four-artifact records remain readable; schema v2 replacement records add previous digests and the staged input snapshot. (verified)
+- quality: Formatting, clippy with warnings denied, and all Cargo tests pass. (verified)
 
 ### Evidence
-- Compatibility implementation and tests are present.: src/features/weekly_radar/runtime/model.rs#compatibility implementation (verified)
-- Legacy and current snapshot behavior is covered.: tests/weekly_radar_runtime.rs#snapshot compatibility tests (verified)
+- The approved same-day canonical behavior is implemented and locally verified.: tests/weekly_radar_runtime.rs#replacement and workflow regression suite (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-input-snapshot-compatibility.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-input-snapshot-compatibility.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json]
-- Changed .ai/work-items/starts/wi-weekly-radar-input-snapshot-compatibility.json [evidence: .ai/work-items/starts/wi-weekly-radar-input-snapshot-compatibility.json]
-- Changed src/features/weekly_radar/runtime/model.rs [evidence: src/features/weekly_radar/runtime/model.rs]
+- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.contract.json]
+- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.summary.json]
+- Changed docs/superpowers/specs/2026-08-24-weekly-radar-same-day-canonical-update.md [evidence: docs/superpowers/specs/2026-08-24-weekly-radar-same-day-canonical-update.md]
+- Changed docs/superpowers/plans/2026-08-24-weekly-radar-same-day-canonical-update.md [evidence: docs/superpowers/plans/2026-08-24-weekly-radar-same-day-canonical-update.md]
+- Changed src/features/weekly_radar/runtime/archive.rs [evidence: src/features/weekly_radar/runtime/archive.rs]
+- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
+- Changed src/main.rs [evidence: src/main.rs]
 - Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
+- Changed .github/workflows/weekly-radar.yml [evidence: .github/workflows/weekly-radar.yml]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/work-items/active/wi-weekly-radar-input-snapshot-compatibility.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-input-snapshot-compatibility.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.outcome.md]
+- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.json]
+- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
+- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/work-items/archive/index.json [evidence: .ai/work-items/archive/index.json]
+- Changed .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.archive-manifest.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-same-day-canonical-update.archive-manifest.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json]
+- Changed .ai/knowledge/index.json [evidence: .ai/knowledge/index.json]
+- Changed .ai/knowledge/work-items/wi-sec-submissions-response-limit.json [evidence: .ai/knowledge/work-items/wi-sec-submissions-response-limit.json]
+- Changed .ai/knowledge/work-items/wi-telegram-delivery-verification.json [evidence: .ai/knowledge/work-items/wi-telegram-delivery-verification.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-content-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-content-quality.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json]
 
 Problems found
-- Total: 2
+- Total: 0
 - Blocking: 0
 - Warning: 0
 
@@ -51,10 +67,8 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- observed issue [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue]
-- observed issue [evidence: observedIssues[1] observed issue, observedIssues[1] observed issue]
-- The post-merge real event=schedule run has not yet occurred; this Work Item proves compatibility locally and leaves the production schedule receipt as a separate validation gate. [evidence: residualRisks]
-- The compatibility rule covers the known omitted zero-valued not_applicable field. Other schema changes still require explicit migration evidence and remain rejected. [evidence: residualRisks]
+- Telegram service acceptance still cannot prove that a human Telegram client displayed or notified the message; this remains an operational evidence limitation. [evidence: residualRisks]
+- This Work Item verifies repository behavior only; the next real schedule or manual production run must confirm provider receipt, report visibility, pending/data binding, and the user's independent reading of the report. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

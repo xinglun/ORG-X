@@ -697,6 +697,18 @@
       "summarySha256": "07350deb5f4cf6b0124666cc76ad86d312eb2696e3dce7bf4b971ca836427cdc",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.archive-manifest.json",
       "manifestSha256": "0da5082e9d10f6ca507851ca2f486fdc797fa58709534dbe16355c0dd91d84e2"
+    },
+    {
+      "workItemId": "wi-telegram-delivery-verification",
+      "archiveSequence": 59,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json",
+      "contractSha256": "6a9bd0ca621e167f3621237bfc9bd64d51d4ab5b02489d0ba19c04cb9b921c91",
+      "archivedAt": "2026-08-24T14:42:30.953104+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json",
+      "summarySha256": "f3d61c51789297e47eff3ccb6b070daaf3ab75704ab55d5065309ccff26c8b85",
+      "manifestPath": ".ai/work-items/archive/2026/wi-telegram-delivery-verification.archive-manifest.json",
+      "manifestSha256": "66615bad2720ff4b2bda5bc374d1aeab0cde2d0d86898bff6d217e91d0cca10b"
     }
   ]
 }

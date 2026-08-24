@@ -1,14 +1,40 @@
 {
   "contractVersion": 2,
   "workItemId": "wi-telegram-delivery-verification",
-  "mode": "investigate",
+  "mode": "code",
   "title": "为 Weekly Radar 提供可验证的 Telegram 测试边界",
-  "rawUserRequest": "开WI对应",
+  "rawUserRequest": "开WI对应；走完WI，触发一次再看看；确认按明确重新发送现有报告的设计执行。",
   "rawRequestSource": {
     "type": "human",
     "reference": "conversation:user-message",
-    "capturedAt": "2026-08-24T04:57:32Z",
-    "digest": "sha256:d851265c4a5c536d9e0e1ab630c3e76f60a4ed36b64f1d082fb5cd7db2f4ecb9"
+    "capturedAt": "2026-08-24T05:18:53Z",
+    "digest": "sha256:471fe9008013debcf9b5b8bc2846a2aa0654b41896dc1de2b2be9dab70590a4e"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "documentation", "production_validation", "software_design", "test_automation"],
+    "prohibitedCapabilities": ["secret_readback", "manual_data_branch_repair", "human_reference_override", "trading_decision", "capital_action"]
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Implement the explicitly confirmed Weekly Radar republish path, complete this Work Item lifecycle, then perform one bounded post-merge manual validation through the existing workflow using xinglun authorization.",
+    "reference": "current user confirmation of the explicit re-publication design and one post-merge validation run",
+    "capturedAt": "2026-08-24T05:18:53Z"
+  },
+  "requestedOperation": {
+    "type": "external_operation",
+    "action": "dispatch",
+    "target": "weekly_radar_validation",
+    "environment": "production",
+    "effect": "publish_weekly_radar_validation",
+    "authorityRequired": true,
+    "authorityReason": "The user explicitly confirmed the bounded republish-existing-report design and requested one manual validation run after the Work Item lifecycle.",
+    "authorizedExternalEffects": [
+      "After merge and hosted checks, dispatch the current main Weekly Radar workflow once with the explicit republish input for 2026-08-24.",
+      "Allow the configured Telegram destination to receive that one explicitly requested report re-publication through the workflow.",
+      "Read only redacted workflow logs, report identity, non-secret message IDs/attempts, and data/pending ref metadata.",
+      "Do not read Secret values, hand-edit data, mutate the existing receipt/manifest, or treat this manual run as schedule evidence."
+    ]
   },
   "baseCommit": "735c941ebc8ce7afa7ffe802c725256f96b20baa",
   "baselineDirtyPaths": [],
@@ -22,7 +48,12 @@
     ".ai/work-items/archive/**",
     ".ai/knowledge/**",
     ".ai/work-items/active/wi-telegram-delivery-verification.outcome.json",
-    ".ai/work-items/active/wi-telegram-delivery-verification.outcome.md"
+    ".ai/work-items/active/wi-telegram-delivery-verification.outcome.md",
+    ".github/workflows/weekly-radar.yml",
+    "src/main.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/CAPABILITIES.md"
   ],
   "outOfScope": [
     "Do not weaken the default same-date idempotency path or send a second production report without an explicit selected mode.",
@@ -66,10 +97,8 @@
       "reason": "The earlier run produced PUBLISHED evidence and the existing receipt contains provider message IDs; it does not prove human-client display."
     }
   ],
-  "unknowns": [
-    "Human must choose whether verification means a clearly labeled test message to the configured destination or an explicitly confirmed, clearly labeled re-publication of an existing report; these have different external side effects and acceptance evidence."
-  ],
-  "notCodable": true,
+  "unknowns": [],
+  "notCodable": false,
   "riskAssessment": {
     "level": "high",
     "riskTypes": [
@@ -77,7 +106,9 @@
       "duplicate_delivery",
       "user_observable_behavior"
     ],
-    "reason": "Any implementation that produces a Telegram message has an external side effect and must preserve same-date archive idempotency while distinguishing API acceptance from human-visible delivery."
+    "reason": "Any implementation that produces a Telegram message has an external side effect and must preserve same-date archive idempotency while distinguishing API acceptance from human-visible delivery.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under the user's explicit confirmation of the bounded republish design"
   },
   "governanceProfile": {
     "selected": "standard",
@@ -88,14 +119,14 @@
     "override": null
   },
   "agentCapability": {
-    "canImplement": false,
+    "canImplement": true,
     "canVerify": true,
-    "needsHumanDecision": true,
-    "blockedReason": "A human must select the permitted Telegram verification side effect before implementation."
+    "needsHumanDecision": false,
+    "blockedReason": ""
   },
   "executionDecision": {
-    "status": "needs_human_decision",
-    "reason": "The current evidence proves that same-date manual dispatch is a safe no-op, but the requested human-visible Telegram verification mode is not uniquely specified."
+    "status": "continue",
+    "reason": "The user explicitly confirmed the bounded republish-existing-report design and one post-merge manual validation run; default same-date idempotency and the later schedule gate remain protected."
   },
   "preReviewWarnings": [
     "Review must separately verify default idempotency, selected Telegram side effect, receipt identity, and the boundary between provider acceptance and human-client display."
@@ -109,11 +140,13 @@
     "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
   },
   "acceptance": [
-    "The investigation records that the default same-date workflow is a successful ALREADY-PUBLISHED no-op and does not send Telegram or write data.",
-    "The investigation compares a clearly labeled test-message path and an explicitly confirmed re-publication path, including their external side effects, receipt evidence, archive impact, and user-visible result.",
-    "The investigation recommends one bounded implementation direction or records that no new implementation is justified; it does not exercise a new Telegram side effect.",
-    "The user-facing documentation impact is identified without claiming that a Telegram API receipt proves human-client display.",
-    "The cadence Work Item and PR #56 remain explicitly separate and are not merged, deleted, or closed by this Work Item."
+    "The default same-date manual or scheduled workflow remains a successful ALREADY-PUBLISHED no-op: it verifies the final report/snapshot/receipt/manifest and performs no Telegram or data-branch write.",
+    "A distinct --republish-published-as-of path reconstructs the committed report from its input snapshot, sends it only when explicitly selected, and never writes data, receipt, manifest, or pending refs.",
+    "The workflow exposes the republish path only as an explicit workflow_dispatch input and rejects it for schedule events, dry-run, and incompatible recovery options.",
+    "The republish result reports only non-secret report identity, message IDs, and attempts; it does not claim that provider acceptance proves human-client display.",
+    "Automated tests cover default idempotency, option validation, explicit republish behavior, archive immutability, and workflow guards.",
+    "User-facing documentation explains the normal ALREADY-PUBLISHED result and the explicit republish operation, including its duplicate-message side effect and limits.",
+    "The later real event=schedule cadence validation remains separate and is not claimed complete by this Work Item."
   ],
   "guidelines": [
     "The normal publication path must remain idempotent and fail closed on incomplete or conflicting archive evidence.",
@@ -128,9 +161,9 @@
       "Do not expose or store Secret values and do not hand-edit data or pending refs.",
       "Keep the real schedule cadence gate in wi-production-provider-e2e-cadence.",
       "Treat provider receipt evidence and human-client display as different claims.",
-      "Require explicit human selection before any new Telegram side effect is implemented or exercised."
+      "Keep the republish path explicit and limited to the one authorized post-merge manual validation run."
     ],
-    "rationale": "A dedicated, explicit operator mode is the smallest way to make Telegram verification observable without weakening the normal publication safety boundary; the mode must be chosen before implementation because test-message and re-publication semantics are materially different."
+    "rationale": "The user confirmed that receiving the actual report is the required check. An explicit republish path is the smallest observable operation that reuses the committed report input without weakening the normal same-date no-op or mutating the protected archive."
   },
   "scenarioCoverage": [
     {
@@ -147,7 +180,7 @@
       "verificationPlan": "Run existing and new fixture/static workflow tests, then compare remote data and pending refs before and after a same-date manual validation."
     },
     {
-      "scenario": "The selected explicit Telegram verification mode is invoked.",
+      "scenario": "The explicitly selected republish-existing-report mode is invoked.",
       "required": true,
       "status": "unverified",
       "evidence": [
@@ -156,8 +189,8 @@
         "src/features/weekly_radar/infrastructure/telegram_publisher.rs",
         "tests/weekly_radar_telegram_publisher.rs"
       ],
-      "expected": "Only the explicitly selected and confirmed mode causes its declared Telegram side effect, with a distinct visible result and non-secret receipt evidence.",
-      "verificationPlan": "Add unit/CLI/workflow tests for mode selection, confirmation, provider acceptance, partial failure, and no implicit activation; perform only the authorized production exercise."
+      "expected": "The mode reconstructs the committed report from its input snapshot, sends it once through the existing publisher, reports non-secret provider evidence, and leaves archive/data refs unchanged.",
+      "verificationPlan": "Add unit/CLI/workflow tests for the explicit option, incompatible combinations, provider acceptance, partial failure, schedule rejection, and archive immutability; perform only the authorized production exercise."
     },
     {
       "scenario": "Existing archive identity and cadence evidence remain isolated.",
@@ -172,11 +205,30 @@
       "verificationPlan": "Run archive identity tests, review the documentation boundary, and record the related Work Item/PR without merging or deleting it here."
     }
   ],
-  "requiredEvidenceContext": null,
+  "requiredEvidenceContext": {
+    "destructiveLevel": "none",
+    "availableEvidence": [
+      "current main commit",
+      "workflow YAML",
+      "Secret names only",
+      "data branch tip",
+      "redacted hosted logs",
+      "non-secret Telegram receipt fields"
+    ],
+    "externalSystem": "GitHub Actions, configured Telegram destination, and protected data branch"
+  },
   "implementationSurface": {
-    "production": [],
-    "tests": [],
-    "documentation": [],
+    "production": [
+      ".github/workflows/weekly-radar.yml",
+      "src/main.rs"
+    ],
+    "tests": [
+      "tests/weekly_radar_runtime.rs"
+    ],
+    "documentation": [
+      "docs/operations/WEEKLY_RADAR.md",
+      "docs/CAPABILITIES.md"
+    ],
     "generated": [
       ".ai/cockpit/current_status.md",
       ".ai/cockpit/task_report.json",
@@ -255,9 +307,9 @@
     "allowPatterns": []
   },
   "restrictedWriteApproval": {
-    "approved": false,
-    "approvedBy": "",
-    "reason": "Set only when a human explicitly approves restricted governance paths."
+    "approved": true,
+    "approvedBy": "xinglun",
+    "reason": "The user explicitly confirmed the bounded republish-existing-report design and one manual validation run; approval excludes Secret readback, data repair, and schedule substitution."
   },
   "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
   "budgetImpact": {

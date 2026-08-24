@@ -1,0 +1,155 @@
+# Task Outcome: wi-telegram-delivery-verification
+
+Status: `completed`
+Human Status: `green`
+
+## Outcome Summary
+Task wi-telegram-delivery-verification generated an evidence-derived outcome with status completed.
+
+## Task Overview
+Governed Work Item: wi-telegram-delivery-verification
+
+## Delivered Changes
+- .ai/work-items/archive/2026/wi-telegram-delivery-verification.contract.json
+- .ai/work-items/archive/2026/wi-telegram-delivery-verification.summary.json
+- .ai/work-items/starts/wi-telegram-delivery-verification.json
+- .ai/cockpit/current_status.md
+- .github/workflows/weekly-radar.yml
+- src/main.rs
+- tests/weekly_radar_runtime.rs
+- docs/operations/WEEKLY_RADAR.md
+- docs/CAPABILITIES.md
+- .ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.json
+- .ai/work-items/archive/2026/wi-telegram-delivery-verification.outcome.md
+- .ai/cockpit/task_report.json
+- .ai/cockpit/task_report.md
+
+## Findings
+None
+
+## Risks
+None
+
+## Warnings
+None
+
+## Limitations
+None
+
+## Non-Risk Explanations
+None
+
+## Forbidden Claims
+None
+
+## Interventions
+None
+
+## Forced Stops
+- verification
+
+## Resolutions
+- aiGuidelines failed before the retry.
+
+## Recurrence Prevention
+None
+
+## Avoided Impact
+- If not detected, could have led to a stale completion claim.
+
+## Residual Risks
+- human-client display
+- cadence validation
+
+## Human Decisions
+- User reported that no Telegram report was received after the same-date manual validation and identified an unprocessed remote branch.
+- User requested that the findings receive a corresponding Work Item.
+- User confirmed the explicit re-publication design: complete the Work Item, then trigger one manual validation and inspect the result.
+
+## Evidence
+- Contract
+- Summary
+- implementation
+- focused and full runtime tests
+- manual-only workflow path
+- verificationHistory[0] aiGuidelines failed
+- verification[aiGuidelines] retry passed
+
+## Implementation Approach
+Status: `complete`
+Customer summary (verified): Add an explicit, read-only-archive republish path for an already published Weekly Radar date.
+Mechanism (verified): Verify the committed archive, load its immutable input snapshot, render deterministically, send through the existing publisher, and report non-secret delivery evidence without archive writes.
+
+Affected components
+- Weekly Radar CLI: Adds --republish-published-as-of and rejects incompatible recovery options. (verified)
+- Weekly Radar Actions workflow: Adds an explicit workflow_dispatch input and refuses schedule, dry-run, or incomplete-final cases. (verified)
+
+Design decisions
+- Keep normal same-date invocation idempotent: A duplicate report must never be sent implicitly. (verified)
+- Treat provider receipt as delivery evidence only: A provider message ID cannot prove human-client display or notification. (verified)
+
+### Technical details
+- Archive immutability: The republish helper performs only read-only archive verification and input-snapshot loading. (verified)
+
+### Evidence
+- The explicit republish implementation is present.: src/main.rs#implementation (verified)
+- Focused and full runtime tests cover the republish behavior.: tests/weekly_radar_runtime.rs#focused and full runtime tests (verified)
+- The workflow exposes a manual-only republish path.: .github/workflows/weekly-radar.yml#manual-only workflow path (verified)
+
+## Human Handoff
+Locale: `zh-CN`
+
+### What was completed
+- Changed .ai/work-items/active/wi-telegram-delivery-verification.contract.json: Defines the explicit republish implementation boundary, external-operation authority, evidence distinction, and separation from the retained cadence Work Item.
+- Changed .ai/work-items/active/wi-telegram-delivery-verification.summary.json: Records the observed same-date no-op behavior, the confirmed republish choice, implementation evidence, and residual limits.
+- Changed .ai/work-items/starts/wi-telegram-delivery-verification.json: Immutable Start Receipt binds the Work Item to the latest merged main commit.
+- Changed .ai/cockpit/current_status.md: Generated Cockpit projection for the active implementation Work Item.
+- Changed .github/workflows/weekly-radar.yml: Adds an explicit workflow_dispatch-only republish input and fail-closed guards while preserving the normal same-date no-op.
+- Changed src/main.rs: Adds the explicit CLI republish mode, reconstructing the committed report from its input snapshot and reporting only non-secret provider evidence.
+- Changed tests/weekly_radar_runtime.rs: Covers option validation, republish archive immutability, default idempotency, and workflow guards.
+- Changed docs/operations/WEEKLY_RADAR.md: Documents the user-facing distinction between normal ALREADY-PUBLISHED and explicitly confirmed duplicate re-publication.
+- Changed docs/CAPABILITIES.md: Links the capability overview to the user-facing Weekly Radar delivery controls.
+- Changed .ai/work-items/active/wi-telegram-delivery-verification.outcome.json: Mandatory Task Outcome evidence generated by ai-finish.
+- Changed .ai/work-items/active/wi-telegram-delivery-verification.outcome.md: Mandatory Task Outcome evidence generated by ai-finish.
+- Changed .ai/cockpit/task_report.json: Generated machine-readable Human Benefit Review Report.
+- Changed .ai/cockpit/task_report.md: Generated human-readable Human Benefit Review Report.
+
+### What passed
+- aiWorkItem: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-telegram-delivery-verification.contract.json work item contract check passed: .ai/work-items/active/wi-telegram-delivery-verification.contract.json
+- aiScope: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-telegram-delivery-verification.contract.json scope guard passed: 13 changed path(s) covered
+- aiGuards: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json [warning] restricted_write: .github/workflows/weekly-radar.yml (.github/workflows/**) - CI workflow configuration. guard check completed: 1 warning(s) report: target/ai_guard_report.json
+- aiCheckpoint: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json --stage "before_finish" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-telegram-delivery-verification` - Contract Hash: `6a9bd0ca621e167f` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `7` - Unknown Count: `0` -
+- aiReviewPolicy: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json review policy matched 8 path(s) [review] .ai/work-items/active/wi-telegram-delivery-verification.outcome.json [review] .ai/work-items/active/wi-telegram-delivery-verification.outcome.md [review] .ai/work-items/starts/wi-telegram-delivery-verification.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/co
+- aiBacktrack: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json
+- aiCoverage: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json
+- aiScenarioCoverage: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json report: target/ai_scenario_coverage_report.json
+- aiGuidelines: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json guidelines compliance check passed: 4 guideline(s) verified
+- aiDiffOwnership: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json ## Diff Ownership Preview - active_owned: `13`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outco
+- quality: {"finishQualityRoute": {"command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict", "policy": {"domains": ["docs", "project_code", "tests", "workflow"], "level": "strict", "qualityRouting": {"reason": "high-risk strict paths require full quality: .github/workflows/weekly-radar.yml", "requiredGroups": ["quality-full"], "target": "quality-full"}, "qualityTarget": "quality-full", "requiredGroups": ["quality-full"], "scope": "full", "stage": "task"}}} { "automaticProfile": "strict", "base": "735
+- aiStatus: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md
+- aiStatusCheck: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json cockpit status check passed: .ai/cockpit/current_status.md
+- aiStatusConsistency: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed
+- aiAgentRisk: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json --summary .ai/work-items/active/wi-telegram-delivery-verification.summary.json agent risk check passed report: target/ai_agent_risk_report.json
+- aiSummary: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-telegram-delivery-verification.summary.json --contract .ai/work-items/active/wi-telegram-delivery-verification.contract.json ai summary check passed: .ai/work-items/active/wi-telegram-delivery-verification.summary.json
+
+### What was retained
+None
+
+### Risks
+- human-client display: A new provider receipt and message ID still cannot prove that the intended human Telegram client displayed or notified the report.
+- cadence validation: The later real event=schedule run and the retained cadence Work Item remain unverified.
+
+### Red reasons
+None
+
+### Human questions
+- problemCount: 3
+- blockedProblems: None
+- resolvedProblems: aiGuidelines failed before the retry.
+- resolutionApproach: Re-ran aiGuidelines after the correction; the latest attempt passed.
+- avoidedRisks: If not detected, could have led to a stale completion claim.
+- remainingRisks: observed issue; observed issue; A new provider receipt and message ID still cannot prove that the intended human Telegram client displayed or notified the report.; The later real event=schedule run and the retained cadence Work Item remain unverified.
+- agentUnknowns: None
+- humanConfirmations: User reported that no Telegram report was received after the same-date manual validation and identified an unprocessed remote branch.; User requested that the findings receive a corresponding Work Item.; User confirmed the explicit re-publication design: complete the Work Item, then trigger one manual validation and inspect the result.
+- recurrenceLikelihood: unknown: no direct recurrence probability evidence was recorded.
+- nextTime: Bind conversation locale and preserve evidence details before the next Work Item starts.

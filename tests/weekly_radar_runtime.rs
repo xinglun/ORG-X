@@ -2322,6 +2322,7 @@ fn task5_cli_rejects_retry_with_incompatible_options() {
         "--retry-as-of",
         "--recover-published-as-of",
         "--verify-published-as-of",
+        "--republish-published-as-of",
     ] {
         for extra in [
             vec!["--as-of", "2026-08-17"],
@@ -2420,6 +2421,64 @@ fn task5_cli_reports_a_verified_final_run_as_an_idempotent_success() {
         .expect("manifest should remain readable")
         .contains("2026-08-17"));
     fs::remove_dir_all(root).expect("already-published fixture should be removable");
+}
+
+#[test]
+fn task5_cli_republish_requires_telegram_but_preserves_archive() {
+    let root = task5_cli_fixture_root("republish-missing-telegram");
+    let input = task4_report_input();
+    let snapshot = persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+        .expect("published input should persist");
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+    let receipt = send_rendered_report_with_transport(
+        &report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("fixture delivery should succeed");
+    write_run_with_input_snapshot(&root, "data", &report, &receipt, Some(&snapshot))
+        .expect("fixture publication should commit");
+
+    let paths = [
+        root.join("weekly-radar/snapshots/2026-08-17.input.json"),
+        root.join("weekly-radar/reports/2026-08-17.md"),
+        root.join("weekly-radar/snapshots/2026-08-17.json"),
+        root.join("weekly-radar/receipts/2026-08-17.json"),
+        root.join("weekly-radar/manifest.json"),
+    ];
+    let before = paths
+        .iter()
+        .map(|path| fs::read(path).expect("republish fixture artifact should be readable"))
+        .collect::<Vec<_>>();
+    let output = Command::new(env!("CARGO_BIN_EXE_org-x"))
+        .args([
+            "weekly-radar",
+            "--archive-dir",
+            root.to_str().unwrap(),
+            "--republish-published-as-of",
+            "2026-08-17",
+        ])
+        .env_remove("ORGX_SEC_USER_AGENT")
+        .env_remove("ORGX_TELEGRAM_BOT_TOKEN")
+        .env_remove("ORGX_TELEGRAM_CHAT_ID")
+        .output()
+        .expect("republish CLI should be executable");
+
+    assert!(
+        !output.status.success(),
+        "republish needs Telegram credentials"
+    );
+    assert!(String::from_utf8_lossy(&output.stderr).contains("Telegram bot credentials"));
+    for (path, expected) in paths.iter().zip(before) {
+        assert_eq!(
+            fs::read(path).expect("republish artifact should remain readable"),
+            expected,
+            "republish must not mutate {}",
+            path.display()
+        );
+    }
+    fs::remove_dir_all(root).expect("republish fixture should be removable");
 }
 
 #[test]
@@ -2938,6 +2997,18 @@ fn task6_workflow_runs_the_cli_and_rejects_empty_or_unpublished_output() {
     assert!(workflow.contains("PUBLISHED:"));
     assert!(workflow.contains("weekly-radar/reports/"));
     assert!(workflow.contains("set -euo pipefail"));
+}
+
+#[test]
+fn task6_workflow_declares_explicit_republish_only_for_manual_validation() {
+    let workflow = task6_workflow_text();
+
+    assert!(workflow.contains("republish_published:"));
+    assert!(workflow.contains("REPUBLISH_PUBLISHED"));
+    assert!(workflow.contains("only available to explicit workflow_dispatch"));
+    assert!(workflow.contains("--republish-published-as-of"));
+    assert!(workflow.contains("REPUBLISHED:"));
+    assert!(workflow.contains("archive and data branch were not changed"));
 }
 
 #[test]

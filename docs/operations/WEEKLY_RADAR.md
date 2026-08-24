@@ -52,6 +52,18 @@ cargo run --release -- weekly-radar \
 
 输出 `ALREADY-PUBLISHED:` 表示 report、snapshot、Telegram receipt 和 manifest 已互相验证，任务成功结束且没有再次联系 Telegram，也不会新建 `data` 提交。手动运行和定时运行遇到同一个已完成日期时，都应按这个结果处理。
 
+如果已经确认该日期的报告存在，但配置的 Telegram 目标没有看到它，可以明确选择一次“重新发送已生成报告”。这会再次发送同一份已保存输入生成的报告，因此目标中会出现一条有意的重复消息；它不会重新获取资料，不会改变已有 report、snapshot、receipt、manifest，也不会写入 `data` 或 pending ref。
+
+Actions 手动运行时，把 `republish_published` 设为 `true`，并填写已经完成发布的 `as_of` 日期；不要同时选择 `dry_run`。本地等价入口是：
+
+```sh
+cargo run --release -- weekly-radar \
+  --archive-dir . \
+  --republish-published-as-of 2026-08-24
+```
+
+只有明确的手动运行可以使用这个选项，定时运行不会启用它。输出中的 report ID、message IDs 和 attempts 是发送服务返回的凭据，只能说明服务接受了这次发送，不能证明你的 Telegram 客户端已经显示、通知或被人阅读。
+
 如果进程在 Telegram 成功后、归档提交完成前退出，归档器会把已序列化的 report、snapshot、receipt 和 manifest 保存在 `weekly-radar/.transactions/` 的 prepared transaction 中。下一次非 dry-run 或同日期 retry 会先校验并完成这个 transaction，复用已有 receipt，不再发送第二次 Telegram。若 transaction 缺失、损坏、或已有公共文件与 staged bytes 不一致，运行会以 `IncompleteRun` fail closed；它不会猜测、覆盖或删除冲突文件，需要人工检查归档残留。这里保证的是可审计的逻辑提交点，不是跨多个公共文件的物理原子事务。
 
 如果 Telegram 已经成功、但随后 `data` 分支 push 没有完成，系统会先尝试保留一个带有原始 report、snapshot、receipt 和 manifest 的 pending publication，再更新 `data`。下一次运行会先校验 pending publication 的日期和全部文件身份；校验通过后只把同一组已发布文件推到 `data`，不会重新获取来源、重新生成报告或再次调用 Telegram。若 pending 本身也无法保存、校验失败、日期顺序冲突或文件被改动，系统会停止并要求人工检查，不会猜测、覆盖或重复发送。`data` 已经成功更新但 pending 清理暂时失败时，下一次运行会先比较身份，再安全地清理冗余 pending 状态。

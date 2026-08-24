@@ -18,6 +18,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json"
     },
     {
+      "workItemId": "wi-telegram-delivery-verification",
+      "title": "为 Weekly Radar 提供可验证的 Telegram 测试边界",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-idempotent-completion",
       "title": "修复 Weekly Radar 同日完成运行的幂等状态",
       "topics": [],

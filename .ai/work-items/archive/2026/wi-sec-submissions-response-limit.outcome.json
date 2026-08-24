@@ -9,10 +9,10 @@
   "bindings": {
     "taskId": "wi-sec-submissions-response-limit",
     "contractDigest": "1ad76e49813d6ed2e808a6f7af712ea69422a8f78c843ac7d5b8e46376bb4bb6",
-    "summaryDigest": "12c1712706dae926adaa35ab73cf1d137c1cea5ddb63e78df77272a453797630",
-    "verificationDigest": "b1e443931bc2cfa337b8abe49adc7dee0118bf0df2c05a2824ee6b723707fab8",
+    "summaryDigest": "539381cf7c06e56afb5263895c56e77487a0f51ecd170e044722c8e1b9e53c83",
+    "verificationDigest": "00a9b1d1f4f756085b8d97000dd9428c078f6b4665190bed2de2077b60a61e98",
     "baseCommit": "c19bd00ba8b89f8198fe99872502d33c68592058",
-    "headCommit": "06cfcbdc0595bc08ec735b084a81e1be3ae1df70",
+    "headCommit": "e237c3c2ccac0f3c61827f5d4e01c58579eb7fca",
     "lifecycleStage": "pre_merge",
     "pullRequest": {
       "state": "not_created"
@@ -21,12 +21,12 @@
     "generatorVersion": "1.2",
     "locale": "zh-CN",
     "preArchiveCandidateCoverage": {
-      "reportSha256": "4bd4b1c2047d4635b399a1093a4a7b2e3c5dc305396496e4b36cbe09fd8109a1",
+      "reportSha256": "eef1ceeff96b6b89a6f726a986da6262d4c68c39524efbb11a47f0eb6ee8ddc1",
       "binding": {
         "baseCommit": "c19bd00ba8b89f8198fe99872502d33c68592058",
-        "candidateHead": "06cfcbdc0595bc08ec735b084a81e1be3ae1df70",
-        "candidateTreeDigest": "dddaed2154a64cdcc6364a56bdf3518113ea55c9728c04f425b640ec5614c5ea",
-        "candidateDiffDigest": "874e8265266f31cdd00889b88349f7be85ae4752f5a2d4b691cebacacc881678"
+        "candidateHead": "e237c3c2ccac0f3c61827f5d4e01c58579eb7fca",
+        "candidateTreeDigest": "33eb40b8f13d28c808d09c6163a019e94e6cb76490d185298f1583cfd28a0cba",
+        "candidateDiffDigest": "1a9c8dd51797ecce77f56e034ce85b69f4542b081a58e8621137a9feabd30e98"
       }
     }
   },
@@ -34,13 +34,13 @@
     "outcomeSummary": "Task wi-sec-submissions-response-limit generated an evidence-derived outcome with status completed.",
     "taskOverview": "Governed Work Item: wi-sec-submissions-response-limit",
     "deliveredChanges": [
-      ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
-      ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+      ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
+      ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
       "src/features/weekly_radar/runtime/sec.rs",
       "tests/weekly_radar_runtime.rs",
       "docs/operations/WEEKLY_RADAR.md",
-      ".ai/work-items/active/wi-sec-submissions-response-limit.outcome.json",
-      ".ai/work-items/active/wi-sec-submissions-response-limit.outcome.md",
+      ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.json",
+      ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
     ],
@@ -64,12 +64,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
           },
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
           }
@@ -119,12 +119,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
           },
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
           }
@@ -144,13 +144,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -164,13 +164,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -180,11 +180,11 @@
     "humanDecisions": [],
     "evidence": [
       {
-        "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+        "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
         "subject": "Contract"
       },
       {
-        "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
         "subject": "Summary"
       },
       {
@@ -196,12 +196,12 @@
         "subject": "runtime test suite"
       },
       {
-        "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
         "subject": "verificationHistory[0] aiGuidelines failed",
         "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
       },
       {
-        "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
         "subject": "verification[aiGuidelines] retry passed",
         "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
       }
@@ -320,14 +320,14 @@
         "detail": "Defines the evidence-backed SEC submissions response-limit fix, scope, acceptance, and verification boundary.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-            "subject": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-            "subject": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json"
           }
         ],
         "inference": false
@@ -338,14 +338,14 @@
         "detail": "Tracks implementation, test-first evidence, verification, and residual risk for the fix.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-            "subject": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-            "subject": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json"
           }
         ],
         "inference": false
@@ -356,13 +356,13 @@
         "detail": "Routes SEC submissions through the existing finite SEC-specific response bound while preserving the existing generic limit for other requests.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "src/features/weekly_radar/runtime/sec.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "src/features/weekly_radar/runtime/sec.rs"
           }
         ],
@@ -374,13 +374,13 @@
         "detail": "Adds the failing-then-passing oversized SEC submissions regression and retains finite-bound rejection coverage.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
@@ -392,13 +392,13 @@
         "detail": "Updates the user-facing source-health description to cover SEC submissions and Company Facts as bounded SEC JSON sources.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
@@ -410,14 +410,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-            "subject": ".ai/work-items/active/wi-sec-submissions-response-limit.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-            "subject": ".ai/work-items/active/wi-sec-submissions-response-limit.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.json"
           }
         ],
         "inference": false
@@ -428,14 +428,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-            "subject": ".ai/work-items/active/wi-sec-submissions-response-limit.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
-            "subject": ".ai/work-items/active/wi-sec-submissions-response-limit.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.md"
           }
         ],
         "inference": false
@@ -446,13 +446,13 @@
         "detail": "Generated machine-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
@@ -464,13 +464,13 @@
         "detail": "Generated human-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
@@ -484,14 +484,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-sec-submissions-response-limit.contract.json work item contract check passed: .ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiWorkItem",
             "digest": "95e58b13913dfe43b3e5d188778d04b8d89f36d6c240585742db918a769722e8"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiWorkItem",
             "digest": "95e58b13913dfe43b3e5d188778d04b8d89f36d6c240585742db918a769722e8"
           }
@@ -504,14 +504,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-sec-submissions-response-limit.contract.json scope guard passed: 11 changed path(s) covered",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiScope",
             "digest": "732d5c3ab01d01614401758221f74d01c2be8119034af0d5f64f99e6b36c6fc5"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiScope",
             "digest": "732d5c3ab01d01614401758221f74d01c2be8119034af0d5f64f99e6b36c6fc5"
           }
@@ -524,14 +524,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-sec-submissions-response-limit.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiGuards",
             "digest": "f1e39c2a9e289047c789985865dfb4ccc1de8361c1190d9564a90a4b30b307c2"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiGuards",
             "digest": "f1e39c2a9e289047c789985865dfb4ccc1de8361c1190d9564a90a4b30b307c2"
           }
@@ -544,14 +544,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-sec-submissions-response-limit.contract.json --summary .ai/work-items/active/wi-sec-submissions-response-limit.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-sec-submissions-response-limit` - Contract Hash: `1ad76e49813d6ed2` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `5` - Unknown Count: `0` -",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiCheckpoint",
             "digest": "8b3927ade6153947cdfebcec63eb5d001468b76c4bca4de4aaf1e3050ac0a851"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiCheckpoint",
             "digest": "8b3927ade6153947cdfebcec63eb5d001468b76c4bca4de4aaf1e3050ac0a851"
           }
@@ -564,14 +564,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-sec-submissions-response-limit.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-sec-submissions-response-limit.contract.json [review] .ai/work-items/active/wi-sec-submissions-response-limit.outcome.json [review] .ai/work-items/active/wi-sec-submissions-response-limit.outcome.md [review] .ai/work-items/starts/wi-sec-submissions-response-limit.json [review] .ai/",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "a2d333505e3b4549607c8f35aed5dfd85a4fdf57bcdbb2bb55d4a9bce35bde81"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "a2d333505e3b4549607c8f35aed5dfd85a4fdf57bcdbb2bb55d4a9bce35bde81"
           }
@@ -584,14 +584,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
@@ -604,14 +604,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
@@ -624,14 +624,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-sec-submissions-response-limit.contract.json --summary .ai/work-items/active/wi-sec-submissions-response-limit.summary.json report: target/ai_scenario_coverage_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "ad0b39a2ddf1de0b0a4b5b6a6de553836614f46fe843ea7f2bdbc1d1f6c57727"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "ad0b39a2ddf1de0b0a4b5b6a6de553836614f46fe843ea7f2bdbc1d1f6c57727"
           }
@@ -644,14 +644,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-sec-submissions-response-limit.contract.json --summary .ai/work-items/active/wi-sec-submissions-response-limit.summary.json guidelines compliance check passed: 5 guideline(s) verified",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiGuidelines",
             "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiGuidelines",
             "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
           }
@@ -664,14 +664,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-sec-submissions-response-limit.contract.json ## Diff Ownership Preview - active_owned: `11`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outco",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiDiffOwnership",
             "digest": "02a0546325a892503455f8c47a88e21ed1ce17c8cccbf7ab291e31e08a8b299d"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiDiffOwnership",
             "digest": "02a0546325a892503455f8c47a88e21ed1ce17c8cccbf7ab291e31e08a8b299d"
           }
@@ -684,16 +684,16 @@
         "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=standard\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\"], \"level\": \"standard\", \"qualityRouting\": {\"reason\": \"standard governance uses its profile target\", \"requiredGroups\": [\"quality-standard\"], \"target\": \"quality-standard\"}, \"qualityTarget\": \"quality-standard\", \"requiredGroups\": [\"quality-standard\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"c19bd00ba8b89f8198fe99872502d",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "quality",
-            "digest": "b61ca253de01d11cdd835efaf3549e501a03871d327e1b83322df77e8907482f"
+            "digest": "bd7b45b685b1cc91e379a9c5657edef4bf1cbbfd3287cfb113f8cec53164e89c"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "quality",
-            "digest": "b61ca253de01d11cdd835efaf3549e501a03871d327e1b83322df77e8907482f"
+            "digest": "bd7b45b685b1cc91e379a9c5657edef4bf1cbbfd3287cfb113f8cec53164e89c"
           }
         ],
         "inference": false
@@ -704,14 +704,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-sec-submissions-response-limit.contract.json --summary .ai/work-items/active/wi-sec-submissions-response-limit.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiStatus",
             "digest": "e533ab12bc4d5c104614edab451794488534e4f2cffe5a645cb8773429890057"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiStatus",
             "digest": "e533ab12bc4d5c104614edab451794488534e4f2cffe5a645cb8773429890057"
           }
@@ -724,14 +724,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-sec-submissions-response-limit.contract.json --summary .ai/work-items/active/wi-sec-submissions-response-limit.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiStatusCheck",
             "digest": "9b8f052fd172b9e90ef2580a83a3d61261ad6d268818851fc2b23b16bf517adf"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiStatusCheck",
             "digest": "9b8f052fd172b9e90ef2580a83a3d61261ad6d268818851fc2b23b16bf517adf"
           }
@@ -744,14 +744,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
@@ -764,14 +764,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-sec-submissions-response-limit.contract.json --summary .ai/work-items/active/wi-sec-submissions-response-limit.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiAgentRisk",
             "digest": "5865b1f220895cf70c88b915a1cf2ee38ebb15904adedd721dd442900a0fcdb8"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiAgentRisk",
             "digest": "5865b1f220895cf70c88b915a1cf2ee38ebb15904adedd721dd442900a0fcdb8"
           }
@@ -784,14 +784,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-sec-submissions-response-limit.summary.json --contract .ai/work-items/active/wi-sec-submissions-response-limit.contract.json ai summary check passed: .ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiSummary",
             "digest": "02d53006ce5474173f0f7053feba61daf7ba8820af4ad57cd7f76f51f51ed985"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
             "subject": "aiSummary",
             "digest": "02d53006ce5474173f0f7053feba61daf7ba8820af4ad57cd7f76f51f51ed985"
           }
@@ -809,13 +809,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -829,13 +829,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -847,11 +847,11 @@
       "problemCount": 2,
       "problemCountEvidenceRefs": [
         {
-          "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
           "subject": "observedIssues"
         },
         {
-          "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
           "subject": "verification and verificationHistory"
         }
       ],
@@ -879,12 +879,12 @@
           "claim": "aiGuidelines failed before the retry.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
             },
             {
-              "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
             }
@@ -915,12 +915,12 @@
           "claim": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "9f6117c7e3bf8b0e8a5955b599163185213821c551146249753dec58968df5c5"
             },
             {
-              "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "3c54bc883784710cfff95ad530bdfb90b2b8fe75593e9497b6e2ac45a628f31a"
             }
@@ -940,7 +940,7 @@
           "claim": "SEC public JSON payloads may grow beyond the selected finite bound in the future; the report must continue to expose unavailable source status rather than accept partial data.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
               "subject": "residualRisks"
             }
           ],
@@ -950,7 +950,7 @@
           "claim": "The already published 2026-08-24 report remains degraded and is not rewritten by this Work Item; post-merge validation is required to prove restored live SEC coverage.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-sec-submissions-response-limit.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
               "subject": "residualRisks"
             }
           ],

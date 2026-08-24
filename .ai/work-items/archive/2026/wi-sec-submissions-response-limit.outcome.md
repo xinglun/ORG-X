@@ -10,13 +10,13 @@ Task wi-sec-submissions-response-limit generated an evidence-derived outcome wit
 Governed Work Item: wi-sec-submissions-response-limit
 
 ## Delivered Changes
-- .ai/work-items/active/wi-sec-submissions-response-limit.contract.json
-- .ai/work-items/active/wi-sec-submissions-response-limit.summary.json
+- .ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json
+- .ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json
 - src/features/weekly_radar/runtime/sec.rs
 - tests/weekly_radar_runtime.rs
 - docs/operations/WEEKLY_RADAR.md
-- .ai/work-items/active/wi-sec-submissions-response-limit.outcome.json
-- .ai/work-items/active/wi-sec-submissions-response-limit.outcome.md
+- .ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.json
+- .ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.md
 - .ai/cockpit/task_report.json
 - .ai/cockpit/task_report.md
 

@@ -12,6 +12,19 @@
         "tests/ai_cockpit/close_work_item_test.py",
         "tests/ai_cockpit/production_validation_policy_test.py"
       ]
+    },
+    "wi-sec-submissions-response-limit": {
+      "recordPath": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+      "dependencies": [
+        ".ai/work-items/archive/2026/wi-sec-company-facts-response-limit.contract.json",
+        ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json",
+        ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.json",
+        ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json",
+        "docs/operations/WEEKLY_RADAR.md",
+        "src/features/weekly_radar/runtime/http.rs",
+        "src/features/weekly_radar/runtime/sec.rs",
+        "tests/weekly_radar_runtime.rs"
+      ]
     }
   },
   "byPath": {
@@ -30,11 +43,35 @@
     ".ai/work-items/archive/2026/upgrade_ai_cockpit.summary.json": [
       "upgrade_ai_cockpit"
     ],
+    ".ai/work-items/archive/2026/wi-sec-company-facts-response-limit.contract.json": [
+      "wi-sec-submissions-response-limit"
+    ],
+    ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json": [
+      "wi-sec-submissions-response-limit"
+    ],
+    ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.json": [
+      "wi-sec-submissions-response-limit"
+    ],
+    ".ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json": [
+      "wi-sec-submissions-response-limit"
+    ],
+    "docs/operations/WEEKLY_RADAR.md": [
+      "wi-sec-submissions-response-limit"
+    ],
+    "src/features/weekly_radar/runtime/http.rs": [
+      "wi-sec-submissions-response-limit"
+    ],
+    "src/features/weekly_radar/runtime/sec.rs": [
+      "wi-sec-submissions-response-limit"
+    ],
     "tests/ai_cockpit/close_work_item_test.py": [
       "upgrade_ai_cockpit"
     ],
     "tests/ai_cockpit/production_validation_policy_test.py": [
       "upgrade_ai_cockpit"
+    ],
+    "tests/weekly_radar_runtime.rs": [
+      "wi-sec-submissions-response-limit"
     ]
   }
 }

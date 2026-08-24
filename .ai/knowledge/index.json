@@ -8,6 +8,14 @@
       "components": [],
       "state": "verified",
       "knowledgePath": ".ai/knowledge/work-items/upgrade_ai_cockpit.json"
+    },
+    {
+      "workItemId": "wi-sec-submissions-response-limit",
+      "title": "修复 SEC submissions 响应体上限导致的生产采集降级",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json"
     }
   ]
 }

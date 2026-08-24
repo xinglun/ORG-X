@@ -24,13 +24,13 @@ Design decisions
 - The implementation is bounded and SEC-specific.: src/features/weekly_radar/runtime/sec.rs#runtime implementation (verified)
 - The oversized submissions regression passed after the fix.: tests/weekly_radar_runtime.rs#runtime test suite (verified)
 
-- Changed .ai/work-items/active/wi-sec-submissions-response-limit.contract.json [evidence: .ai/work-items/active/wi-sec-submissions-response-limit.contract.json]
-- Changed .ai/work-items/active/wi-sec-submissions-response-limit.summary.json [evidence: .ai/work-items/active/wi-sec-submissions-response-limit.summary.json]
+- Changed .ai/work-items/active/wi-sec-submissions-response-limit.contract.json [evidence: .ai/work-items/archive/2026/wi-sec-submissions-response-limit.contract.json]
+- Changed .ai/work-items/active/wi-sec-submissions-response-limit.summary.json [evidence: .ai/work-items/archive/2026/wi-sec-submissions-response-limit.summary.json]
 - Changed src/features/weekly_radar/runtime/sec.rs [evidence: src/features/weekly_radar/runtime/sec.rs]
 - Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed .ai/work-items/active/wi-sec-submissions-response-limit.outcome.json [evidence: .ai/work-items/active/wi-sec-submissions-response-limit.outcome.json]
-- Changed .ai/work-items/active/wi-sec-submissions-response-limit.outcome.md [evidence: .ai/work-items/active/wi-sec-submissions-response-limit.outcome.md]
+- Changed .ai/work-items/active/wi-sec-submissions-response-limit.outcome.json [evidence: .ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.json]
+- Changed .ai/work-items/active/wi-sec-submissions-response-limit.outcome.md [evidence: .ai/work-items/archive/2026/wi-sec-submissions-response-limit.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 

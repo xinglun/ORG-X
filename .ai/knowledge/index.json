@@ -50,6 +50,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard-closure.json"
     },
     {
+      "workItemId": "wi-weekly-radar-confirmed-evidence-report",
+      "title": "Weekly Radar confirmed evidence report boundary",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-content-quality",
       "title": "Weekly Radar用户报告内容增强",
       "topics": [],

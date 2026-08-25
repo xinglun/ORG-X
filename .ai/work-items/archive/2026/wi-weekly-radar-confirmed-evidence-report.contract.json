@@ -1,0 +1,270 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-confirmed-evidence-report",
+  "mode": "code",
+  "title": "Weekly Radar confirmed evidence report boundary",
+  "baseCommit": "f02e60f15c52f79aa662a6feba3bae8115d1df35",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.md"
+    ,"src/features/weekly_radar/runtime/report.rs"
+    ,"tests/weekly_radar_evidence_quality.rs"
+    ,"tests/weekly_radar_runtime.rs"
+    ,"docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "src/main.rs acquisition flow and source adapters",
+    "src/features/weekly_radar/runtime/evidence.rs claim extraction and validation",
+    "SEC collection, document discovery, ranking, judgment, Telegram delivery, and archive persistence",
+    "new dependencies and changes to the data model or serialized snapshot schema",
+    "production operation and non-Weekly-Radar bounded contexts"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository Work Item, scope, evidence, and lifecycle rules."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Repository terminology and architecture boundary definitions."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.md",
+      "reason": "Prior Work Item outcome records the post-merge dry-run finding that raw known facts remained under the confirmed-information label."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "reason": "Current report rendering, confirmed-information filter, executive summary, and health labels."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Existing report contract and regression fixtures that currently treat generic known facts as confirmed information."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "Existing evidence-gate fixtures and localized research metric assertions."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Reader-facing source and evidence lifecycle documentation."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "user_visible_output",
+      "legacy_fixture_compatibility"
+    ],
+    "reason": "The change alters which facts readers see as confirmed while retaining raw facts for judgment and snapshots; old report fixtures must be migrated without changing acquisition or persistence semantics.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "user-authorized",
+    "reviewedAt": "2026-08-25T11:45:00+09:00",
+    "reviewNote": "The post-merge dry-run supplies the concrete failure evidence. The successor is limited to report semantics and regression coverage; source acquisition and judgment inputs remain unchanged."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The final Work Item scope includes restricted Implementation Knowledge projections, so automatic quality routing requires Strict."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user confirmed the bounded report-semantics design; the dry-run evidence makes the fix codable and testable without changing acquisition or judgment."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "Only Known facts with a validated-evidence identity (kind beginning with evidence_) render in the reader-facing 已确认信息 / Confirmed Information section.",
+    "Known SEC metric facts, source observations, pending_evidence facts, and generic legacy facts remain available to the input, snapshot, health, and judgment paths but do not render as confirmed evidence.",
+    "The executive summary count and primary-evidence sentence use the same validated-evidence boundary and do not count raw SEC or source facts.",
+    "The system-health Known-fact count is explicitly labeled as known facts in Chinese, Japanese, and English so it cannot be read as validated evidence.",
+    "Focused regressions prove raw known facts are excluded, validated evidence is included, and the existing acquisition/judgment/persistence behavior remains unchanged.",
+    "Weekly Radar operations documentation describes the reader-facing distinction between SourceObservation, DocumentCandidate, ValidatedEvidence, known facts, and confirmed information.",
+    "All required local governance, quality, and project tests pass before the Work Item is finished."
+  ],
+  "guidelines": [
+    "Keep raw NormalizedFact values in the input and snapshot for judgment and audit; change only reader-facing report selection and labels.",
+    "Use the existing evidence_ identity as the promotion boundary; do not add a new provider-specific or persisted schema field.",
+    "Preserve deterministic ordering, all three report languages, and no-ranking behavior.",
+    "Do not import internal modules from other features or add dependencies.",
+    "Do not weaken or delete existing tests; update only assertions whose old confirmed-information semantics are intentionally corrected."
+  ],
+  "intent": {
+    "problem": "The post-merge Weekly Radar dry-run produced 59 Known facts under the reader-facing 已确认信息 section, including SEC metrics and raw engineering-page observations. The new claim gate created 8 validated evidence records, but the report renderer still promoted every Known non-source fact by status alone, so source availability and financial baseline facts were being presented as enterprise-change evidence.",
+    "constraints": [
+      "Only report semantics and regression coverage are in scope; acquisition, document discovery, claim extraction, judgment inputs, ranking, persistence, and delivery remain unchanged.",
+      "A validated evidence fact is identified by FactStatus::Known plus a kind beginning with evidence_; raw facts must remain in the runtime input and serialized snapshot.",
+      "Keep the report deterministic and preserve Chinese, Japanese, and English output contracts.",
+      "No new dependency, schema migration, provider call, or production delivery operation."
+    ],
+    "rationale": "The existing evidence promotion path already emits a stable evidence_ identity. Reusing that boundary in the report is the smallest change that makes the reader-facing claim semantics match the actual ingestion pipeline while preserving raw facts for judgment and audit."
+  },
+  "rawUserRequest": "继续",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "user confirmed the bounded successor design after the post-merge dry-run finding",
+    "capturedAt": "2026-08-25T11:45:00+09:00",
+    "digest": "7c9691192f1b73408bbe4c0cb6d00db94375ca9d8fce0a0d5985e7a5178f083f"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "ai_governance"],
+    "prohibitedCapabilities": ["production_operation", "external_delivery"],
+    "requestedOutcome": "Make reader-facing Weekly Radar confirmed information contain only validated evidence and clearly label raw known-fact health counts.",
+    "decisionBoundary": "The report renderer selects facts by the existing evidence_ promotion identity; it does not infer, fetch, rank, or mutate facts."
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly confirmed the bounded successor design."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Raw known facts are excluded from confirmed information",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "A report containing Known revenue, Known source observations, and Known document facts has no corresponding confirmed-information cards and does not call them primary evidence.",
+      "verificationPlan": "Add a focused report fixture with raw SEC/source facts, run the focused test to observe the expected RED failure, then verify it passes after the renderer filter changes."
+    },
+    {
+      "scenario": "Validated evidence remains visible and counted",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "A Known evidence_ fact renders in the confirmed-information section and the executive summary count/primary-evidence wording agree with it.",
+      "verificationPlan": "Add a focused fixture containing one evidence_official_material fact plus raw facts; assert the evidence card, count, and evidence basis in Chinese, Japanese, and English."
+    },
+    {
+      "scenario": "Health labels preserve raw-fact observability",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "System health continues to expose the Known status total, but the reader-facing label is Known facts / 既知の事実 / 已知事实 rather than Confirmed information.",
+      "verificationPlan": "Extend the localized report regression to assert all three labels while confirming source coverage, research metrics, judgment, and snapshot JSON remain present."
+    }
+  ],
+  "implementationSurface": {
+    "production": ["src/features/weekly_radar/runtime/report.rs"],
+    "tests": ["tests/weekly_radar_evidence_quality.rs", "tests/weekly_radar_runtime.rs"],
+    "generated": [".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md"],
+    "documentation": ["docs/operations/WEEKLY_RADAR.md"]
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution through the complete Work Item lifecycle, including generated archive and Implementation Knowledge projections."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 68
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-confirmed-evidence-report.json",
+    "baseCommit": "f02e60f15c52f79aa662a6feba3bae8115d1df35",
+    "initialScopeDigest": "a75aabd5f7c200de068269ddf7905040753aa13c2a00cde60fc44b7aa05b5717",
+    "contractSkeletonDigest": "02ba626f4bb52607a34ba8930cfff25dac77b57f6a45a0ad41d643f6cd1915ab"
+  }
+}

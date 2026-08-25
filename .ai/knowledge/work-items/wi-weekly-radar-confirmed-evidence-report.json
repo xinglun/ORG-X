@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-confirmed-evidence-report",
+  "title": "Weekly Radar confirmed evidence report boundary",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Reuse the existing Known plus evidence_ promotion identity so the reader-facing confirmed-information section, executive count, and primary-evidence wording represent validated evidence rather than every raw Known fact.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+    "src/features/weekly_radar/runtime/report.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/index.json",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.archive-manifest.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Use the existing evidence_ identity instead of adding a schema field or provider-specific rule.",
+      "reason": "The validated-evidence pipeline already emits this stable identity, so the report can align its reader-facing semantics without changing acquisition, persistence, or judgment inputs.",
+      "status": "verified"
+    },
+    {
+      "decision": "Keep raw Known facts available outside the confirmed-information section.",
+      "reason": "SEC metrics and other raw facts remain useful for audit, health, and judgment context; changing the reader label must not erase those inputs.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "digest": "d1682b7da11eaef0262641d49db4a142b19181bce9132bdd2f03b48a35086002"
+    },
+    {
+      "type": "code",
+      "path": "Makefile",
+      "digest": "ed2d7675c8d51503ac3e1bf178357508d4fee04bbefd3eaa7c00f6c809a1b659"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "digest": "8fa6edc7a2767c21f975d1678f591809a1066065b251354094f91c8018d31767"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "f5e5e7f5320d67b9323f19ecbfba62f01e3eb291a4e59095a46dda5906282582"
+    },
+    {
+      "type": "code",
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.contract.json",
+      "digest": "f3f2ed721c78851310780c6b787d2b9da4256477aafd624498c2b140dc442ad1"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "c6135f4dd8f72092df082401575e589c527a24dcfa00b5b0bbe8f9f028cf1fab"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.contract.json",
+    "contractDigest": "f3f2ed721c78851310780c6b787d2b9da4256477aafd624498c2b140dc442ad1",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+    "summaryDigest": "4604336e9f4cb9fb5b98fead216f383f35a3641ad28858560f1631ad9b36beb1",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.outcome.json",
+    "outcomeDigest": "8febeb4b9bc66c8a7ca6e04abba196d65f328af21134ecbcf38f24e8830d3cea"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

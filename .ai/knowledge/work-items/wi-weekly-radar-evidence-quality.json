@@ -53,7 +53,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_evidence_quality.rs",
-      "digest": "b4a6730df6955ec3b584a81d73fe7f3e1b4be732d833fecb761a30116144e308"
+      "digest": "d1682b7da11eaef0262641d49db4a142b19181bce9132bdd2f03b48a35086002"
     },
     {
       "type": "code",
@@ -73,7 +73,7 @@
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/report.rs",
-      "digest": "4d58735a4849869417496dc7fcf1b81d18e2d97755665554a5fa4c5655a38405"
+      "digest": "8fa6edc7a2767c21f975d1678f591809a1066065b251354094f91c8018d31767"
     },
     {
       "type": "code",
@@ -83,7 +83,7 @@
     {
       "type": "code",
       "path": "docs/operations/WEEKLY_RADAR.md",
-      "digest": "f9e713f14bbf1ff88ff6130284fee1f251ac67f17871849ec19590faf99acad2"
+      "digest": "f5e5e7f5320d67b9323f19ecbfba62f01e3eb291a4e59095a46dda5906282582"
     },
     {
       "type": "test",

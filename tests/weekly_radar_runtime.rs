@@ -1568,6 +1568,13 @@ fn task4_report_input() -> RuntimeReportInput {
             Confidence::High,
         ),
         (
+            "acme",
+            "evidence_official_material_001",
+            Some("Validated production workflow claim"),
+            FactStatus::Known,
+            Confidence::High,
+        ),
+        (
             "beta",
             "employees",
             None,
@@ -1773,7 +1780,7 @@ fn task4_report_exposes_explicit_statuses_and_discovery_health_review_items() {
 }
 
 #[test]
-fn task8_report_expands_each_confirmed_fact_with_date_and_direct_evidence() {
+fn task8_report_expands_each_validated_evidence_fact_with_date_and_direct_evidence() {
     let report = task4_report();
     let markdown = report.markdown();
     let confirmed_section = markdown
@@ -1783,15 +1790,17 @@ fn task8_report_expands_each_confirmed_fact_with_date_and_direct_evidence() {
         .expect("confirmed information section should be rendered");
 
     assert!(confirmed_section.contains("### acme"));
-    assert!(confirmed_section.contains("- 信息类型：营收"));
-    assert!(confirmed_section.contains("- 事实：123000000"));
+    assert!(confirmed_section.contains("- 信息类型：其他资料"));
+    assert!(confirmed_section.contains("- 事实：Validated production workflow claim"));
+    assert!(!confirmed_section.contains("- 信息类型：营收"));
+    assert!(!confirmed_section.contains("- 事实：123000000"));
     assert!(confirmed_section.contains("- 日期：2026-08-15"));
     assert_eq!(
         confirmed_section
             .matches("- 证据：https://example.test/evidence/2026")
             .count(),
-        3,
-        "every confirmed fact needs its own direct evidence link"
+        1,
+        "every validated evidence fact needs its own direct evidence link"
     );
 }
 

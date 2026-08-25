@@ -36,7 +36,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "dcd02589a8f02bf9a3a5bf88b38d45ebd369e7428eb4f14b75146f9b727b5e17"
+      "digest": "c6135f4dd8f72092df082401575e589c527a24dcfa00b5b0bbe8f9f028cf1fab"
     },
     {
       "type": "code",

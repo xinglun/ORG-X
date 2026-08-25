@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-confirmed-evidence-report",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "d10166a669d745b11f1deff4c5f2e60fab4eb238107af6f87c686f417c864e7e"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-confirmed-evidence-report",
+    "contractDigest": "f3f2ed721c78851310780c6b787d2b9da4256477aafd624498c2b140dc442ad1",
+    "summaryDigest": "4604336e9f4cb9fb5b98fead216f383f35a3641ad28858560f1631ad9b36beb1",
+    "verificationDigest": "fb6c4937dff1ef14507d6b04b656c1934b125336c36bf09107c23f99924ceba3",
+    "baseCommit": "f02e60f15c52f79aa662a6feba3bae8115d1df35",
+    "headCommit": "35fec0d379e05e46c248ce94940d5a0e6f4c625d",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "8f020cebe23830af25871a22484180041fa766cb424b56c14dd2cc02f096f820",
+      "binding": {
+        "baseCommit": "f02e60f15c52f79aa662a6feba3bae8115d1df35",
+        "candidateHead": "35fec0d379e05e46c248ce94940d5a0e6f4c625d",
+        "candidateTreeDigest": "a6a4cb4ea982f9e846f07b38f3968a5b5315c2f8b6b8341c769b178f5bb6ef65",
+        "candidateDiffDigest": "c649a02cd21e29af34845762773d7f3fdc558765100d92fc7e40fd9de565fbb8"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-confirmed-evidence-report generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-confirmed-evidence-report generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-confirmed-evidence-report",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
@@ -35,205 +58,243 @@
       ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
       ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
       ".ai/knowledge/index.json"
-    ]
-  },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "a0b0251bba7ebda1b21905035e5fad128e0bdb2f22660804063f2d1a292e1fed"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "de7e04a51812367731bede32b6a98ef1ac614d8e2c2bace44d46b55f0c984b05"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "a0b0251bba7ebda1b21905035e5fad128e0bdb2f22660804063f2d1a292e1fed"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "de7e04a51812367731bede32b6a98ef1ac614d8e2c2bace44d46b55f0c984b05"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The confirmed-information boundary is corrected, but the existing small-company observation section can still show raw Known facts by design; this Work Item does not change that context or imply that those facts are structural-change evidence.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Reuse the existing Known plus evidence_ promotion identity so the reader-facing confirmed-information section, executive count, and primary-evidence wording represent validated evidence rather than every raw Known fact.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/report.rs",
-          "subject": "is_validated_evidence_fact and report rendering boundary"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Filter confirmed-information cards and summary evidence wording to Known facts whose kind begins with evidence_; retain all other facts in the input, snapshot, health count, and judgment context, while relabeling the health count as known facts in all supported languages.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/report.rs",
-          "subject": "render_confirmed_facts, render_executive_summary, and render_health"
-        }
-      ]
-    },
-    "affectedComponents": [
-      {
-        "component": "Reader-facing report",
-        "detail": "Confirmed Information contains only validated evidence facts; raw SEC and generic Known facts are not promoted into that section.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "confirmed_information_contains_only_validated_evidence"
-          }
-        ]
-      },
-      {
-        "component": "Report health and localization",
-        "detail": "Known status totals remain observable under 已知事实 / 既知の事実 / Known facts and the three localized report paths use the same boundary.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "localized_reports_keep_validated_evidence_separate_from_known_facts"
-          }
-        ]
-      },
-      {
-        "component": "Operations documentation",
-        "detail": "The SourceObservation, DocumentCandidate, ValidatedEvidence, known-fact, and confirmed-information distinction is documented for operators.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "来源和事实状态 and Telegram 报告"
-          }
-        ]
-      }
     ],
-    "designDecisions": [
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "decision": "Use the existing evidence_ identity instead of adding a schema field or provider-specific rule.",
-        "reason": "The validated-evidence pipeline already emits this stable identity, so the report can align its reader-facing semantics without changing acquisition, persistence, or judgment inputs.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/report.rs",
-            "subject": "existing normalized fact identity boundary"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "a0b0251bba7ebda1b21905035e5fad128e0bdb2f22660804063f2d1a292e1fed"
           },
           {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.contract.json",
-            "subject": "acceptance and out-of-scope boundaries"
-          }
-        ]
-      },
-      {
-        "decision": "Keep raw Known facts available outside the confirmed-information section.",
-        "reason": "SEC metrics and other raw facts remain useful for audit, health, and judgment context; changing the reader label must not erase those inputs.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "health Known count and snapshot retention regression"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "de7e04a51812367731bede32b6a98ef1ac614d8e2c2bace44d46b55f0c984b05"
           }
         ]
       }
     ],
-    "technicalDetails": [
+    "resolutions": [
       {
-        "topic": "Validated evidence count",
-        "detail": "The executive summary and primary-evidence sentence use the count of Known evidence_ facts rather than the aggregate Known-fact health count.",
-        "status": "verified",
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/report.rs",
-            "subject": "validated_evidence_count"
-          }
-        ]
-      },
-      {
-        "topic": "Regression coverage",
-        "detail": "The focused suite covers Chinese, Japanese, and English section semantics; the existing runtime fixture now supplies an explicit evidence_ fact when it expects a confirmed-information card.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "21 focused tests"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "a0b0251bba7ebda1b21905035e5fad128e0bdb2f22660804063f2d1a292e1fed"
           },
           {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "task8 validated evidence report regression"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "de7e04a51812367731bede32b6a98ef1ac614d8e2c2bace44d46b55f0c984b05"
           }
         ]
       }
     ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "scope",
+        "severity": "medium",
+        "title": "scope",
+        "detail": "The confirmed-information boundary is corrected, but the existing small-company observation section can still show raw Known facts by design; this Work Item does not change that context or imply that those facts are structural-change evidence.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [],
     "evidence": [
       {
-        "claim": "The focused Weekly Radar report and runtime suites pass.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_evidence_quality.rs",
         "subject": "21 evidence-quality tests and 89 runtime tests"
       },
       {
-        "claim": "The full Rust quality suite passes with formatting and diff checks.",
-        "status": "verified",
         "source": "Makefile",
         "subject": "cargo test --all-targets --all-features; cargo fmt --all -- --check; git diff --check"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "a0b0251bba7ebda1b21905035e5fad128e0bdb2f22660804063f2d1a292e1fed"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "de7e04a51812367731bede32b6a98ef1ac614d8e2c2bace44d46b55f0c984b05"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Reuse the existing Known plus evidence_ promotion identity so the reader-facing confirmed-information section, executive count, and primary-evidence wording represent validated evidence rather than every raw Known fact.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "is_validated_evidence_fact and report rendering boundary"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Filter confirmed-information cards and summary evidence wording to Known facts whose kind begins with evidence_; retain all other facts in the input, snapshot, health count, and judgment context, while relabeling the health count as known facts in all supported languages.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "render_confirmed_facts, render_executive_summary, and render_health"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Reader-facing report",
+          "detail": "Confirmed Information contains only validated evidence facts; raw SEC and generic Known facts are not promoted into that section.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "confirmed_information_contains_only_validated_evidence"
+            }
+          ]
+        },
+        {
+          "component": "Report health and localization",
+          "detail": "Known status totals remain observable under 已知事实 / 既知の事実 / Known facts and the three localized report paths use the same boundary.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "localized_reports_keep_validated_evidence_separate_from_known_facts"
+            }
+          ]
+        },
+        {
+          "component": "Operations documentation",
+          "detail": "The SourceObservation, DocumentCandidate, ValidatedEvidence, known-fact, and confirmed-information distinction is documented for operators.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "来源和事实状态 and Telegram 报告"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Use the existing evidence_ identity instead of adding a schema field or provider-specific rule.",
+          "reason": "The validated-evidence pipeline already emits this stable identity, so the report can align its reader-facing semantics without changing acquisition, persistence, or judgment inputs.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/report.rs",
+              "subject": "existing normalized fact identity boundary"
+            },
+            {
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.contract.json",
+              "subject": "acceptance and out-of-scope boundaries"
+            }
+          ]
+        },
+        {
+          "decision": "Keep raw Known facts available outside the confirmed-information section.",
+          "reason": "SEC metrics and other raw facts remain useful for audit, health, and judgment context; changing the reader label must not erase those inputs.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "health Known count and snapshot retention regression"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Validated evidence count",
+          "detail": "The executive summary and primary-evidence sentence use the count of Known evidence_ facts rather than the aggregate Known-fact health count.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/report.rs",
+              "subject": "validated_evidence_count"
+            }
+          ]
+        },
+        {
+          "topic": "Regression coverage",
+          "detail": "The focused suite covers Chinese, Japanese, and English section semantics; the existing runtime fixture now supplies an explicit evidence_ fact when it expects a confirmed-information card.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "21 focused tests"
+            },
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "task8 validated evidence report regression"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The focused Weekly Radar report and runtime suites pass.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "21 evidence-quality tests and 89 runtime tests"
+        },
+        {
+          "claim": "The full Rust quality suite passes with formatting and diff checks.",
+          "status": "verified",
+          "source": "Makefile",
+          "subject": "cargo test --all-targets --all-features; cargo fmt --all -- --check; git diff --check"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1113,6 +1174,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

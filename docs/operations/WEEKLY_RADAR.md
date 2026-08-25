@@ -1,6 +1,6 @@
 # Weekly Radar 使用说明
 
-Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，从入口页发现有限的实际文档，再把具体主张通过 EvidenceCandidate → ValidatedEvidence 门槛；只有验证后的事实和结构化 SEC 事实进入“已确认信息”。生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram；只有发送成功后，才把输入快照以及可追溯的 report、snapshot、receipt 和 manifest 一起写入受保护的 `data` 分支。
+Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，从入口页发现有限的实际文档，再把具体主张通过 EvidenceCandidate → ValidatedEvidence 门槛；只有通过门槛并生成 `evidence_*` normalized fact 的事实进入面向人的“已确认信息”。SEC 指标、来源可用性和其他 `Known` facts 仍会保留在输入快照、系统状态和判断上下文中，但不会因为状态是 `Known` 就自动变成企业变化证据。生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram；只有发送成功后，才把输入快照以及可追溯的 report、snapshot、receipt 和 manifest 一起写入受保护的 `data` 分支。
 
 ## 运行流程
 
@@ -138,6 +138,8 @@ SEC submissions 和 SEC Company Facts 都是包含完整申报历史的 JSON，�
 - `EvidenceCandidate`：必须有对象、具体变化/事实、日期、生产环节、来源身份、权威级别、段落和 cutoff 关系；缺项保持待验证，不进入 confirmed。
 - `ValidatedEvidence`：通过确定性 gate 的主张，才会成为 `evidence_*` normalized fact 并进入“已确认信息”。GDELT、新闻、招聘记录和页面级 observation 不会绕过该 gate。
 
+报告渲染还会把事实状态和证据语义分开：只有 `status=Known` 且 `kind` 以 `evidence_` 开头的 fact 才能出现在“已确认信息”；SEC 的 `revenue`、`headcount`、`capex` 等原始指标，以及 `source_*`、`pending_evidence_*` 和其他非证据 fact，不会进入这一节。系统状态中的“已知事实”只是输入中所有 `Known` facts 的可观测计数，不等于已确认企业变化的数量。
+
 文档晋升前会先把 `<title>`、`meta`、`script`、`style`、`noscript` 和标题标签内容从正文候选中移除；这些内容只用于文档身份或完全不参与主张抽取。正文必须提供一个有终止标点的完整句子（至少 8 个词），同时命中明确的变化动作和生产系统信号，才会生成 `EvidenceCandidate`。因此，文章标题、目录标题、页面 JSON、整页拼接文本、只有关键词的句子和没有有效日期的文档，都会停留在 `DocumentCandidate`/待验证线索层，不会进入“已确认信息”。
 
 每份报告的 `research_metrics` 与首页摘要分别展示：`本周新增有效证据`、`发现文档候选`、`来源可用性确认`、`待验证线索`、`关键数据源不可用`。这些计数互不替代；尤其是来源可用不等于企业发生变化。当有效证据为零且仍有待验证线索或不可用来源时，报告使用“数据不足/无法据此确认本周没有组织变化”的 calibrated wording，而不是把它写成没有变化。
@@ -148,7 +150,7 @@ SEC submissions 和 SEC Company Facts 都是包含完整申报历史的 JSON，�
 
 报告按“本周摘要 → 已确认信息 → 系统参考判断 → 重要组织变化 → 重点公司（有明确选择时）→ 系统状态”组织，再按完整章节拆分消息。
 
-你会在“已确认信息”中逐条看到：公司、信息类型、事实内容、事实日期（资料没有日期时不补写）和直接证据链接。报告不会用一个总入口链接代替每家公司或每条事实的依据。
+你会在“已确认信息”中逐条看到经过 ValidatedEvidence gate 的事实：公司、信息类型、事实内容、事实日期（资料没有日期时不补写）和直接证据链接。报告不会用一个总入口链接代替每家公司或每条事实的依据。SEC 指标等“已知事实”会在快照和系统状态中保留，用于审计和判断上下文，但不应被解读为结构性变化结论。
 
 “系统参考判断”会逐家公司说明系统参考是什么、为什么得到这个状态、哪些资料支持它、哪些反向资料需要注意、还缺少什么证据以及对应链接。系统参考只是给人的一个可复核参考；人的判断仍然独立，可以同意、保留不同意见或继续补证，二者不会合并、投票或协作生成一个答案。
 

@@ -74,6 +74,46 @@
     {
       "path": ".ai/knowledge/index.json",
       "reason": "Rebuilt deterministic Implementation Knowledge index."
+    },
+    {
+      "path": ".ai/knowledge/dependencies.json",
+      "reason": "Rebuilt deterministic Knowledge dependency routing after shared evidence digest updates."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+      "reason": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+      "reason": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+      "reason": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+      "reason": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+      "reason": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+      "reason": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+      "reason": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+      "reason": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+      "reason": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed."
     }
   ],
   "sourcesUsed": [

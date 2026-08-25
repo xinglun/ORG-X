@@ -824,11 +824,11 @@
       "archiveYear": "2026",
       "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
       "contractSha256": "86915537921de1f6067a8d4b16d8485ce4d80f268f155b24fa9ee444a2969a8d",
-      "archivedAt": "2026-08-25T13:08:47.798856+09:00",
+      "archivedAt": "2026-08-25T13:14:05.577260+09:00",
       "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-      "summarySha256": "58e738810cce76402de1e16df1bd5119d60c011434b728c549501ddf34ad0396",
+      "summarySha256": "f4578541d2866f8a2d428637cf002036a818fe888c668a1c9a2ada74fd4f5f9a",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.archive-manifest.json",
-      "manifestSha256": "df9edc9ede10b28a19912df54003235b8f7ec4fe167229e903fa7e854452e079"
+      "manifestSha256": "b8a8d57839cfdadbca3a1f3840938cbb2c75f4a9201e97b07152cdf8d6709ae4"
     }
   ]
 }

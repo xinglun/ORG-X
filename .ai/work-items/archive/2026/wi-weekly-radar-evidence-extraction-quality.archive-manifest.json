@@ -6,16 +6,16 @@
   "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
   "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
   "contractSha256": "86915537921de1f6067a8d4b16d8485ce4d80f268f155b24fa9ee444a2969a8d",
-  "summarySha256": "58e738810cce76402de1e16df1bd5119d60c011434b728c549501ddf34ad0396",
+  "summarySha256": "f4578541d2866f8a2d428637cf002036a818fe888c668a1c9a2ada74fd4f5f9a",
   "generatedStatusExcluded": true,
   "outcomeArtifacts": [
     {
       "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.json",
-      "sha256": "2e6bd21d2c0b412ad4c6e26770db4ec8ec2dd3e87a1cfdcd28ae7c74590f2e1d"
+      "sha256": "af35cddb5b03b2f1cfdc7edc4791e41fc8de77d3a3b3c786c8b2e353a6e96354"
     },
     {
       "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.md",
-      "sha256": "ec9a571f0db27a5a41c3d7ce88b3ce4798f7cf0391e925584b5290ed0127c68d"
+      "sha256": "1551693719d0fe71cd0b38c2bd3876cca0d6e9bb80f79bf4c9d1453050463671"
     }
   ],
   "preArchiveCandidateCoverage": {

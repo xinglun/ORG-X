@@ -9,10 +9,10 @@
   "bindings": {
     "taskId": "wi-weekly-radar-structural-evidence-gate",
     "contractDigest": "cc1f4c025e028882308c0736df5bb6b45ea6ae6230326bd093269388302f45ba",
-    "summaryDigest": "9a894f475c6ffedf31439c29f78addcf67e9537339e1e6a92e26766cdf4187ba",
-    "verificationDigest": "787800df6d05408432818bf448dae442a3f563f95ea175e0df533471cbd7f217",
+    "summaryDigest": "b0847865b84598037b1dd55655356bc847cedf672175be13bb4aadfae922c2f5",
+    "verificationDigest": "7b992d13b354d68eb8359df1681a0c6e343b12b53e45098ea1c1da321c87a539",
     "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
-    "headCommit": "7f88534bcaad35cc5c20197a9285b93d52af04c5",
+    "headCommit": "58273e8fec029febbd216675bfa29bd6de98442a",
     "lifecycleStage": "pre_merge",
     "pullRequest": {
       "state": "not_created"
@@ -21,12 +21,12 @@
     "generatorVersion": "1.2",
     "locale": "zh-CN",
     "preArchiveCandidateCoverage": {
-      "reportSha256": "62342ec66f1b80c1230e7fcfc210751bbcc7c3207c65171022482ea1c468eee2",
+      "reportSha256": "99e18fc2e773c5037e22268714375408977d678aae49a617fe0c1713bcb5b5db",
       "binding": {
         "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
-        "candidateHead": "7f88534bcaad35cc5c20197a9285b93d52af04c5",
-        "candidateTreeDigest": "d405f58f601bcf0d75fa035c01070d37c99de3e4859a19101e510646f9769b48",
-        "candidateDiffDigest": "2ff09fa364fb582ce519414b50378b19321b62c4e2758ebe021bd61152b87c26"
+        "candidateHead": "58273e8fec029febbd216675bfa29bd6de98442a",
+        "candidateTreeDigest": "0e1699b3aec6e8d82856a09259e7bd3b907aad76f53981183a91eedab00ca50f",
+        "candidateDiffDigest": "126d441bd4e4688f723d9f53e22e8b00c19958c34a419e863c4462370b4eba6c"
       }
     }
   },
@@ -1075,14 +1075,14 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "quality",
-            "digest": "cab384af851121f170eba610e3bd4c024ce0208eeea9ba1b195c1f18b83a2ffe"
+            "digest": "fc6ae95b94ec97d8c6c35c3cfcf9cf694d3e5cc747fc86113ec30ebaecf22bcd"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "quality",
-            "digest": "cab384af851121f170eba610e3bd4c024ce0208eeea9ba1b195c1f18b83a2ffe"
+            "digest": "fc6ae95b94ec97d8c6c35c3cfcf9cf694d3e5cc747fc86113ec30ebaecf22bcd"
           }
         ],
         "inference": false

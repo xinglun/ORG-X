@@ -6,7 +6,7 @@
   "sourceOutcome": {
     "format": "ai-cockpit-task-outcome",
     "schemaVersion": 1,
-    "digest": "443027dd6021254855247fc529535b4446faf6fccc4e7941d1afc6cc9473cde3"
+    "digest": "abe26c9598216d16be8404b9b184e9ba1d8d01eef0008e40825f034dc1a94344"
   },
   "task": {
     "summary": "Task wi-weekly-radar-structural-evidence-gate generated an evidence-derived outcome with status completed.",
@@ -995,14 +995,14 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "quality",
-            "digest": "cab384af851121f170eba610e3bd4c024ce0208eeea9ba1b195c1f18b83a2ffe"
+            "digest": "fc6ae95b94ec97d8c6c35c3cfcf9cf694d3e5cc747fc86113ec30ebaecf22bcd"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "quality",
-            "digest": "cab384af851121f170eba610e3bd4c024ce0208eeea9ba1b195c1f18b83a2ffe"
+            "digest": "fc6ae95b94ec97d8c6c35c3cfcf9cf694d3e5cc747fc86113ec30ebaecf22bcd"
           }
         ],
         "inference": false

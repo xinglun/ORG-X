@@ -8,7 +8,9 @@ use super::discovery::DocumentKind;
 use super::model::{Confidence, FactStatus, NormalizedFact, Provenance, StructuralDimension};
 use super::sources::{SourceKind, SourceMaterialKind, SourceObservation, SourceStatus, SourceTier};
 use super::RuntimeError;
-use crate::features::transformation::domain::ReferenceModelEvidenceFamily;
+use crate::features::transformation::domain::{
+    ReferenceModelEvidenceFamily, ReferenceModelSourceRole,
+};
 
 const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v4";
 const MAX_FIELD_BYTES: usize = 512;
@@ -172,6 +174,7 @@ const REFERENCE_MODEL_DIFFUSION_SIGNALS: &[&str] = &[
 pub enum EvidenceSourceKind {
     Filing,
     OfficialMaterial,
+    IndependentMaterial,
     StructuredHiring,
     DiscoveryArticle,
     Other(String),
@@ -210,6 +213,7 @@ pub struct EvidenceCandidate {
     document_kind: Option<DocumentKind>,
     reference_model_family: Option<ReferenceModelEvidenceFamily>,
     reference_model_named_peer: Option<String>,
+    reference_model_source_role: Option<ReferenceModelSourceRole>,
     provenance: Provenance,
 }
 
@@ -262,6 +266,7 @@ impl EvidenceCandidate {
             document_kind: None,
             reference_model_family: None,
             reference_model_named_peer: None,
+            reference_model_source_role: None,
             provenance,
         })
     }
@@ -301,6 +306,15 @@ impl EvidenceCandidate {
         self.reference_model_family = Some(family);
         self.reference_model_named_peer = named_peer;
         Ok(self)
+    }
+
+    /// Adds an explicit source provenance role after the claim is bounded.
+    pub fn with_reference_model_source_role(
+        mut self,
+        source_role: Option<ReferenceModelSourceRole>,
+    ) -> Self {
+        self.reference_model_source_role = source_role;
+        self
     }
 
     /// Returns the company identity.
@@ -409,6 +423,11 @@ impl ValidatedEvidence {
         self.candidate.reference_model_named_peer.as_deref()
     }
 
+    /// Returns the source provenance role retained for the validated claim.
+    pub const fn reference_model_source_role(&self) -> Option<ReferenceModelSourceRole> {
+        self.candidate.reference_model_source_role
+    }
+
     /// Returns the validated effective date.
     pub const fn effective_date(&self) -> Option<&NaiveDate> {
         self.candidate.effective_date()
@@ -470,7 +489,8 @@ impl ValidatedEvidence {
             FactStatus::Known,
             Confidence::High,
             provenance,
-        )
+        )?
+        .with_reference_model_source_role(self.reference_model_source_role())
     }
 }
 
@@ -522,6 +542,9 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
         candidate = candidate
             .with_reference_model_metadata(family, named_peer)
             .ok()?;
+        candidate = candidate.with_reference_model_source_role(
+            reference_model_source_role_for_observation(observation.kind()),
+        );
     }
     candidate.provenance = Provenance::new(
         observation.provenance().source_uri(),
@@ -531,6 +554,19 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     )
     .ok()?;
     Some(candidate)
+}
+
+fn reference_model_source_role_for_observation(
+    source_kind: SourceKind,
+) -> Option<ReferenceModelSourceRole> {
+    match source_kind {
+        SourceKind::OfficialResearch => Some(ReferenceModelSourceRole::SupplierAttribution),
+        SourceKind::Sec | SourceKind::OfficialIr => {
+            Some(ReferenceModelSourceRole::RegulatoryOrFiling)
+        }
+        SourceKind::Gdelt => Some(ReferenceModelSourceRole::DiscoveryOnly),
+        SourceKind::Careers | SourceKind::EngineeringAiBlog | SourceKind::Greenhouse | SourceKind::Lever => None,
+    }
 }
 
 fn extract_claim_sentence(text: &str) -> Option<(String, String)> {

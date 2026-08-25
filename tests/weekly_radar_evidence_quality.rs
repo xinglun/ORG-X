@@ -1,5 +1,7 @@
 use chrono::{NaiveDate, Utc};
-use org_x::features::transformation::domain::ReferenceModelEvidenceFamily;
+use org_x::features::transformation::domain::{
+    ReferenceModelEvidenceFamily, ReferenceModelSourceRole,
+};
 use org_x::features::weekly_radar::runtime::config::CompanyConfig;
 use org_x::features::weekly_radar::runtime::discovery::{document_metadata, DocumentKind};
 use org_x::features::weekly_radar::runtime::evidence::{
@@ -60,7 +62,11 @@ fn document_observation_from_html(
     entry_url.set_query(None);
     entry_url.set_fragment(None);
     let entry_url = entry_url.to_string();
-    company.official_ir = Some(entry_url.clone());
+    if document_url.contains("/customers/") {
+        company.official_research_sources = vec![entry_url.clone()];
+    } else {
+        company.official_ir = Some(entry_url.clone());
+    }
     let client = FixtureHttpClient::new();
     let label = if document_url.contains("/careers/") {
         "Careers areas"
@@ -68,7 +74,7 @@ fn document_observation_from_html(
         "Engineering update"
     };
     client.insert(
-        company.official_ir_url().expect("IR URL exists"),
+        &entry_url,
         HttpResponse::ok(format!("<a href=\"{document_url}\">{label}</a>")),
     );
     client.insert(document_url, HttpResponse::ok(html));
@@ -245,6 +251,7 @@ fn reference_model_family_metadata_is_typed_and_legacy_json_defaults_to_none() {
     let legacy_fact: NormalizedFact = serde_json::from_value(legacy).unwrap();
     assert_eq!(legacy_fact.reference_model_family(), None);
     assert_eq!(legacy_fact.reference_model_named_peer(), None);
+    assert_eq!(legacy_fact.reference_model_source_role(), None);
 }
 
 #[test]
@@ -357,6 +364,17 @@ fn official_customer_story_rollout_is_diffusion_evidence() {
         Some(ReferenceModelEvidenceFamily::IndustryDiffusion)
     );
     assert_eq!(validated.reference_model_named_peer(), Some("PwC"));
+    assert_eq!(
+        validated.reference_model_source_role(),
+        Some(ReferenceModelSourceRole::SupplierAttribution)
+    );
+    assert_eq!(
+        validated
+            .to_normalized_fact(1)
+            .unwrap()
+            .reference_model_source_role(),
+        Some(ReferenceModelSourceRole::SupplierAttribution)
+    );
 }
 
 #[test]

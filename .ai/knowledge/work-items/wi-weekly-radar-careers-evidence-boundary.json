@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-careers-evidence-boundary",
+  "title": "Tighten Careers evidence promotion boundary",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Keep Careers material lead-only by default, require explicit hiring-change language for Careers candidate promotion, and prevent Careers candidates from becoming structural evidence while preserving non-Careers behavior.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/guards/coverage_policy.yaml",
+    ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Prefer false negatives to promoting generic employer or capability prose.",
+      "reason": "Careers homepages are source availability and discovery material, not enterprise-change claims.",
+      "status": "verified"
+    },
+    {
+      "decision": "Keep the Careers rule deterministic, provider-neutral, and narrow.",
+      "reason": "This Work Item fixes the observed false positive without adding an LLM, provider API, or unbounded synonym expansion.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "digest": "e2a45db17ae84834ca1c6c8e50341555061cc27c82a861b10a08df797f72627a"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "digest": "4b4f86ea1854c26ac7bd001ce2fcb8314ff33f3654164db8c124292ddf0b69da"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "763d3b68b0b111a7b145890f5b165e40d351a7c4f61c143898d9777b6da7619a"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "aacecc67135c19f9a2345a433c4b295ea6eba0c7529a566e2b517ecfa04040ce"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.contract.json",
+    "contractDigest": "ab481d24590c99a8dba21995324bba8a09e88c17af7cfdf36373c1a22dec0443",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
+    "summaryDigest": "e681ce7cd90e960409dae571fcef1b4937ac9ff152b8615851284ed9231d06e0",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.outcome.json",
+    "outcomeDigest": "f05261b897353ca84857f2ffee1d7c24c845c34115d1afe33961254e32d2fffa"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

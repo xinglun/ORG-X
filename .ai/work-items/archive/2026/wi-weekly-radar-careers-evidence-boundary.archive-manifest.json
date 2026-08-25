@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-weekly-radar-careers-evidence-boundary",
+  "archiveSequence": 73,
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
+  "contractSha256": "ab481d24590c99a8dba21995324bba8a09e88c17af7cfdf36373c1a22dec0443",
+  "summarySha256": "e681ce7cd90e960409dae571fcef1b4937ac9ff152b8615851284ed9231d06e0",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.outcome.json",
+      "sha256": "f05261b897353ca84857f2ffee1d7c24c845c34115d1afe33961254e32d2fffa"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.outcome.md",
+      "sha256": "21c9eff04595ae93c96142c89f4ac550d746799acc51c41f5c4f6f1514032d9d"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "4be262205a2352e55f0d13ccfc26257b462442d84533e482a4a9796fce162186",
+    "binding": {
+      "baseCommit": "8dfb3aab0f62bc2a48d1e3b9a6498776b287e9c7",
+      "candidateHead": "28a315fdd3f851ccda64b2a2d638d13ea3aa5e10",
+      "candidateTreeDigest": "d4d8d5b3a00fb86f2df46930d65da34f0d91b604bf00e519062a41705c94b5ce",
+      "candidateDiffDigest": "299ca564344db9d18eac32b254d3f64704e6a1a4af3cafb8d96fb7bb8fc4fde6"
+    }
+  }
+}

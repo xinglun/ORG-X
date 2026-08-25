@@ -55,9 +55,17 @@ fn document_observation_from_html(
     let mut company = company();
     company.official_ir = Some("https://ir.example.test/investors".to_owned());
     let client = FixtureHttpClient::new();
+    let href = document_url
+        .strip_prefix("https://ir.example.test")
+        .expect("fixture document should use the test IR origin");
+    let label = if document_url.contains("/careers/") {
+        "Careers areas"
+    } else {
+        "Engineering update"
+    };
     client.insert(
         company.official_ir_url().expect("IR URL exists"),
-        HttpResponse::ok("<a href=\"/engineering/update\">Engineering update</a>"),
+        HttpResponse::ok(format!("<a href=\"{href}\">{label}</a>")),
     );
     client.insert(document_url, HttpResponse::ok(html));
 
@@ -534,6 +542,77 @@ fn document_kind_context_is_retained_in_claim_provenance() {
         .provenance()
         .source_field_or_passage()
         .contains("document_kind=engineering"));
+}
+
+#[test]
+fn generic_careers_copy_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Careers areas</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Help transform our clients' data into tangible business value by analyzing information, communicating outcomes, and building trusted data foundations that enable responsible AI adoption across hybrid cloud environments.</p></body></html>"#,
+        "https://ir.example.test/careers/areas",
+    );
+
+    assert_eq!(observation.document_kind(), Some(DocumentKind::Careers));
+    assert!(extract_evidence_candidate(&observation).is_none());
+    assert_eq!(
+        normalize_source_observation(&observation, 1)
+            .expect("generic Careers observation should remain a lead")
+            .status(),
+        &FactStatus::Unconfirmed
+    );
+}
+
+#[test]
+fn careers_role_marketing_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering roles</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Explore engineering roles that help clients adopt AI and cloud solutions across our global teams.</p></body></html>"#,
+        "https://ir.example.test/careers/roles",
+    );
+
+    assert_eq!(observation.document_kind(), Some(DocumentKind::Careers));
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
+#[test]
+fn non_careers_hiring_language_does_not_change_candidate_boundary() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>We are hiring 200 engineers for our AI infrastructure team to expand production capacity.</p></body></html>"#,
+        "https://ir.example.test/engineering/hiring",
+    );
+
+    assert_eq!(observation.document_kind(), Some(DocumentKind::Engineering));
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
+#[test]
+fn explicit_careers_hiring_change_becomes_a_regular_validated_fact() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>AI infrastructure hiring plan</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>We are hiring 200 engineers for our AI infrastructure team to expand production capacity.</p></body></html>"#,
+        "https://ir.example.test/careers/areas",
+    );
+
+    let candidate = extract_evidence_candidate(&observation)
+        .expect("explicit dated hiring change should qualify");
+    let validated = validate_evidence_candidate(&candidate, cutoff())
+        .expect("explicit hiring claim should validate");
+    let fact = validated
+        .to_normalized_fact(1)
+        .expect("validated hiring claim should normalize");
+
+    assert_eq!(validated.evidence_class(), EvidenceClass::ValidatedFact);
+    assert_eq!(validated.structural_dimension(), None);
+    assert_eq!(fact.status(), &FactStatus::Known);
+    assert!(fact
+        .provenance()
+        .source_field_or_passage()
+        .contains("document_kind=careers"));
 }
 
 #[test]

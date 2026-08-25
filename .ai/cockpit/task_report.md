@@ -7,54 +7,40 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Keep source availability, bounded document discovery, pending Claim candidates, and ValidatedEvidence distinct while recovering deterministic document dates and context.
-Mechanism (verified): Parse bounded HTML metadata and JSON-LD with explicit date precedence, retain DocumentKind through SourceObservation and EvidenceCandidate provenance, count classified documents in optional ResearchMetrics, and render sorted localized counters without feeding judgment or Ranking.
+Customer summary (verified): Keep Careers material lead-only by default, require explicit hiring-change language for Careers candidate promotion, and prevent Careers candidates from becoming structural evidence while preserving non-Careers behavior.
+Mechanism (verified): Use a bounded deterministic Careers signal list after sentence extraction and return no structural dimension for validated Careers evidence; leave the shared non-Careers extractor and classifier unchanged.
 
 Affected components
-- Document discovery: Recovers publication/effective dates and classifies same-origin discovered documents without changing the bounded crawl. (verified)
-- Source and evidence boundaries: Propagates DocumentKind only for discovered documents and retains it in normalized claim provenance; generic, incomplete, and page-level material remains unconfirmed. (verified)
-- Research metrics and reports: Adds optional document-kind counts with legacy empty-map defaults and localized sorted display. (verified)
-- Acquisition orchestration: Counts document kinds at the existing observation loop while leaving SEC, judgment, Stage, Ranking, delivery, archive, and workflow paths unchanged. (verified)
+- Evidence extraction: Generic Careers copy remains a pending lead; explicit hiring-change prose can produce a candidate. (verified)
+- Evidence classification: Validated Careers candidates remain regular ValidatedFact and never receive a structural dimension. (verified)
+- Operations documentation: The Careers boundary and conservative recall behavior are documented without changing commands or report schemas. (verified)
 
 Design decisions
-- Prefer false negatives to page-level or generic prose promotion.: A reachable homepage or technical description does not establish an enterprise production-system change. (verified)
-- Use deterministic metadata precedence and existing cutoff validation.: The parser can recover explicit dates already present in publisher markup without guessing ambiguous values or weakening the future-date gate. (verified)
-- Keep document-kind counts observational and out of judgment.: Research Value improves through visibility into ingestion quality; Stage and Ranking must continue to consume only their existing evidence inputs. (verified)
+- Prefer false negatives to promoting generic employer or capability prose.: Careers homepages are source availability and discovery material, not enterprise-change claims. (verified)
+- Keep the Careers rule deterministic, provider-neutral, and narrow.: This Work Item fixes the observed false positive without adding an LLM, provider API, or unbounded synonym expansion. (verified)
 
 ### Technical details
-- date precedence: Checks article:published_time, meta name=date, JSON-LD datePublished, time datetime, then JSON-LD dateModified; malformed values are skipped and the existing validation cutoff rejects future evidence. (verified)
-- Claim completeness: A classified, dated official document must provide a bounded body sentence with change and production signals, source title, URI, passage, and authoritative provenance before promotion. (verified)
-- compatibility: Document-kind metrics are optional in serialized ResearchMetrics and default to an empty map for legacy runtime inputs. (verified)
-- verification: TDD fixtures cover positive and negative extraction, localized reporting, and full repository regression; governance evidence is recorded by ai-finish. (verified)
+- Careers candidate promotion: After bounded sentence extraction, Careers passages require one of the fixed hiring-change signals before an EvidenceCandidate is emitted. (verified)
+- Structural classification boundary: Validated Careers evidence returns no structural dimension, so it remains a regular ValidatedFact even when broad AI, data, cloud, or infrastructure terms appear. (verified)
+- Regression safety: Non-Careers evidence and report/runtime behavior remain covered by the complete project test suite. (verified)
 
 ### Evidence
-- The full project quality gate passes with no test weakening.: Makefile#make check (verified)
-- Document discovery and Claim extraction quality behavior is covered by deterministic fixtures.: tests/weekly_radar_evidence_quality.rs#metadata, context, promotion, negative, metrics, and compatibility tests (verified)
-- Operations documentation describes the new evidence semantics and calibrated data-insufficiency wording.: docs/operations/WEEKLY_RADAR.md#document discovery and research metrics guidance (verified)
+- The focused and complete Rust test suites pass after the Careers boundary change.: tests/weekly_radar_evidence_quality.rs#cargo test --all (verified)
+- Formatting and Clippy pass with warnings denied.: src/features/weekly_radar/runtime/evidence.rs#cargo fmt and cargo clippy (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.summary.json]
-- Changed .ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json [evidence: .ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json]
-- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/work-items/active/wi-weekly-radar-careers-evidence-boundary.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-careers-evidence-boundary.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json]
+- Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
+- Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
+- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
+- Changed .ai/guards/coverage_policy.yaml [evidence: .ai/guards/coverage_policy.yaml]
+- Changed .ai/work-items/active/wi-weekly-radar-careers-evidence-boundary.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-careers-evidence-boundary.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.md]
-- Changed docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md [evidence: docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md]
-- Changed docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md]
-- Changed src/main.rs [evidence: src/main.rs]
-- Changed src/features/weekly_radar/runtime/discovery.rs [evidence: src/features/weekly_radar/runtime/discovery.rs]
-- Changed src/features/weekly_radar/runtime/sources.rs [evidence: src/features/weekly_radar/runtime/sources.rs]
-- Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
-- Changed src/features/weekly_radar/runtime/model.rs [evidence: src/features/weekly_radar/runtime/model.rs]
-- Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
-- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
-- Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
-- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
-- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
 
 Problems found
-- Total: 7
+- Total: 6
 - Blocking: 0
 - Warning: 0
 
@@ -68,15 +54,13 @@ Risks avoided
 - None recorded.
 
 Remaining risks
-- observed issue [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue]
-- observed issue [evidence: observedIssues[1] observed issue, observedIssues[1] observed issue, observedIssues[1] observed issue]
+- observed issue [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue, observedIssues[0] observed issue]
+- observed issue [evidence: observedIssues[1] observed issue, observedIssues[1] observed issue, observedIssues[1] observed issue, observedIssues[1] observed issue]
 - observed issue [evidence: observedIssues[2] observed issue, observedIssues[2] observed issue, observedIssues[2] observed issue]
-- observed issue [evidence: observedIssues[3] observed issue, observedIssues[3] observed issue, observedIssues[3] observed issue]
+- observed issue [evidence: observedIssues[3] observed issue, observedIssues[3] observed issue]
 - observed issue [evidence: observedIssues[4] observed issue, observedIssues[4] observed issue]
-- observed issue [evidence: observedIssues[5] observed issue, observedIssues[5] observed issue, observedIssues[5] observed issue]
-- observed issue [evidence: observedIssues[6] observed issue, observedIssues[6] observed issue, observedIssues[6] observed issue]
-- Live publisher HTML can change outside deterministic fixtures; dry-run evidence remains bounded by source availability and parser rules. [evidence: residualRisks]
-- This Work Item does not add new providers or guarantee all companies expose machine-readable publication dates. [evidence: residualRisks]
+- observed issue [evidence: observedIssues[5] observed issue, observedIssues[5] observed issue]
+- Finite hiring-change signals may leave an explicit hiring claim as a pending lead when its wording uses an unseen synonym; this is an intentional conservative boundary. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

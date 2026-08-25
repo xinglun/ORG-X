@@ -1,0 +1,300 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-careers-evidence-boundary",
+  "mode": "code",
+  "title": "Tighten Careers evidence promotion boundary",
+  "baseCommit": "8dfb3aab0f62bc2a48d1e3b9a6498776b287e9c7",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-careers-evidence-boundary.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-careers-evidence-boundary.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-careers-evidence-boundary.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-careers-evidence-boundary.outcome.md",
+    ".ai/guards/coverage_policy.yaml",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "SEC ingestion, document discovery, source classification, and ResearchMetrics serialization",
+    "new providers, new careers APIs, unbounded crawling, LLM or probabilistic extraction",
+    "judgment rules, Transformation Stage definitions, Ranking thresholds, Counter Evidence, Telegram, archive persistence, data branch, and workflow publication",
+    "secrets, credentials, production operation, and external delivery"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository governance and Work Item lifecycle rules."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Canonical architecture and governance vocabulary."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "Current deterministic Claim extraction and structural classification gate."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "reason": "DocumentKind classification used to distinguish Careers documents."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/sources.rs",
+      "reason": "SourceObservation and official source boundaries."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "Existing positive and negative Claim extraction fixtures."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Reader-facing evidence and dry-run semantics."
+    }
+  ],
+  "unknowns": [],
+  "rawUserRequest": "用户确认开始 successor WI：收紧 Careers 证据晋级边界，避免通用 Careers 文案被升级为结构性证据，并通过 TDD 与完整治理流程验证。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "The user explicitly approved the bounded design to continue with a Careers evidence boundary successor Work Item.",
+    "capturedAt": "2026-08-25T18:00:00+09:00",
+    "digest": "not-generated"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "software_design",
+      "test_automation",
+      "documentation",
+      "ai_governance"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "external_delivery_without_explicit_dry_run_authorization"
+    ],
+    "requestedOutcome": "Keep generic Careers copy and undated hiring marketing text as pending leads while allowing only explicit dated hiring changes to form complete validated facts; Careers material must not create structural evidence by lexical accident.",
+    "decisionBoundary": "Only Careers-specific Claim extraction, structural classification guard, tests, and operations documentation change; discovery, SEC, judgment, Ranking, publication, and archive behavior remain unchanged."
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly approved the governed successor Work Item and its implementation lifecycle."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Generic Careers prose remains a pending lead",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "A dated official Careers document with evergreen employer or capability prose produces no EvidenceCandidate and remains unconfirmed.",
+      "verificationPlan": "Add a RED fixture using the observed IBM-style sentence, run the focused test to confirm failure, then add the Careers-specific hiring signal gate."
+    },
+    {
+      "scenario": "Explicit dated hiring change remains a regular validated fact",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "A dated official Careers document explicitly stating hiring, recruiting, headcount, or role expansion produces a complete candidate and validates with source title, passage, date, and provenance.",
+      "verificationPlan": "Add a paired RED positive fixture and assert candidate extraction, validation, and provenance after the implementation."
+    },
+    {
+      "scenario": "Careers candidates cannot become structural evidence",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "A valid Careers hiring claim containing infrastructure, AI, data, or cloud words remains ValidatedFact with no structural dimension.",
+      "verificationPlan": "Add a RED assertion on evidence_class and structural_dimension for the positive Careers fixture, then implement the source-context guard."
+    },
+    {
+      "scenario": "Non-Careers production evidence is unchanged",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The existing dated Engineering production claim continues to validate and retains its structural dimension behavior.",
+      "verificationPlan": "Run the existing Engineering positive and structural fixtures in the focused suite after the Careers guard is implemented."
+    }
+  ],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "false_positive_claim_promotion",
+      "false_negative_hiring_claim",
+      "structural_dimension_misclassification"
+    ],
+    "reason": "Careers pages mix evergreen employer marketing with real hiring changes. A broad lexical rule can keep false positives or suppress concrete dated hiring evidence, so the boundary must be deterministic and covered by paired negative/positive fixtures.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "user-authorized",
+    "reviewNote": "The user approved the bounded design: Careers evidence requires explicit hiring-change language and cannot become structural evidence from broad production vocabulary."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Medium-risk bounded code, test, and documentation change."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user approved the bounded design; scope, acceptance, scenarios, sources, and deterministic verification are defined with no unresolved unknowns."
+  },
+  "preReviewWarnings": [
+    "Careers entry points remain source availability observations, not evidence.",
+    "Generic employer marketing copy must remain a pending lead.",
+    "Only explicit hiring-change language can form a Careers candidate.",
+    "Careers candidates must not become structural evidence solely because they mention AI, data, cloud, or infrastructure.",
+    "Keep Stage, Ranking, publication, and archive behavior unchanged."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "A dated official Careers document with generic employer or capability prose cannot create an EvidenceCandidate and remains a pending lead.",
+    "A dated official Careers document with explicit hiring-change language can create a complete EvidenceCandidate with title, URI, passage, date, and hiring production area.",
+    "A validated Careers candidate is classified as a regular ValidatedFact and cannot become StructuralEvidence solely from broad AI, data, cloud, or infrastructure terms.",
+    "Non-Careers dated actionable engineering or production documents retain their existing ValidatedEvidence and structural-dimension behavior.",
+    "Extractor provenance identifies the tightened Careers boundary without changing snapshot deserialization or report schemas.",
+    "Operations documentation explains that Careers pages are leads by default and require explicit hiring-change claims for promotion.",
+    "TDD fixtures cover the generic Careers negative, explicit hiring positive, Careers structural guard, and unchanged non-Careers positive paths.",
+    "All Contract governance, focused tests, project quality, and hosted CI checks pass before Finish."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep Careers filtering deterministic, provider-neutral, bounded, and rule-only.",
+    "Prefer false negatives to promoting generic employer or capability prose.",
+    "Preserve existing non-Careers evidence and legacy snapshot compatibility.",
+    "Do not change SEC, discovery, judgment, Ranking, Telegram, archive, or workflow behavior."
+  ],
+  "intent": {
+    "problem": "The post-merge dry-run produced a structural evidence item for IBM from a generic Careers page sentence: 'Help transform our clients’ data into tangible business value ... responsible AI adoption across hybrid cloud environments.' The current extraction gate treats 'adoption', 'data', 'AI', and 'cloud' as sufficient change and production signals, even though the sentence does not state a hiring change or an enterprise production-system event.",
+    "constraints": [
+      "Build on the existing DocumentKind::Careers and EvidenceCandidate pipeline.",
+      "Use deterministic lexical rules only; do not add an LLM, probabilistic model, provider, or crawl expansion.",
+      "Keep generic Careers prose and ambiguous hiring marketing out of confirmed evidence.",
+      "Do not suppress dated explicit hiring-change claims; they may remain regular validated facts but not structural evidence.",
+      "Do not change SEC collection, document discovery, judgment, Stage, Ranking, Counter Evidence, Telegram, archive, data branch, or workflow behavior."
+    ],
+    "rationale": "The narrowest safe correction is to require an explicit hiring-change signal for Careers documents and to exclude Careers candidates from structural classification. This fixes the observed false positive while preserving concrete hiring leads and all non-Careers evidence behavior."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user",
+    "reason": "The user explicitly authorized execution through the complete Work Item lifecycle, including CI; the coverage-policy association is required to bind the new TDD fixture to the existing Weekly Radar runtime production rule."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 73
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-careers-evidence-boundary.json",
+    "baseCommit": "8dfb3aab0f62bc2a48d1e3b9a6498776b287e9c7",
+    "initialScopeDigest": "65af0f85c50989af2d3f6dc13ad49adf951d1bfde164da98f29ad19764584bb1",
+    "contractSkeletonDigest": "53b44777d3a05fc62dd2267f60aeff897bdd2165b473cb85cdf66e0cc48dc4c0"
+  }
+}

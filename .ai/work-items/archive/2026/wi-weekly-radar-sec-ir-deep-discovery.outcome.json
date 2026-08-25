@@ -9,10 +9,10 @@
   "bindings": {
     "taskId": "wi-weekly-radar-sec-ir-deep-discovery",
     "contractDigest": "bd6e2933117c20ac360c8f0bde45f412d2059f9cc80052f58f481b63fa9b44fe",
-    "summaryDigest": "f2d23a0b6d1816978d58ef8d3f0ed2cb21fae91442a2693cf0358390db0042a2",
-    "verificationDigest": "53e89e3ca6bad8abd3928211851afd5633964e4c130b9f44fc6b127f86580a81",
+    "summaryDigest": "f1e97674c13577c4b6ba33d823cb80e028d82d329c160028e67bc2e6d664c45d",
+    "verificationDigest": "c3b20cb4ac600bfb3331631bb40da5141988c4bf4a4a938be826570e524193be",
     "baseCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
-    "headCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+    "headCommit": "0bf0b97ab8f8fcd5bd443ebfab528ffab76a42ac",
     "lifecycleStage": "pre_merge",
     "pullRequest": {
       "state": "not_created"
@@ -21,12 +21,12 @@
     "generatorVersion": "1.2",
     "locale": "zh-CN",
     "preArchiveCandidateCoverage": {
-      "reportSha256": "6a86a0dc122469d8b8a9fd900a9f7e03cd21337b5185e426b72d90444d349f04",
+      "reportSha256": "8b9ac47c16161299c4cfea6719660481d49139587af3abace5b66fefb1826980",
       "binding": {
         "baseCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
-        "candidateHead": "2400abb359b5f2bb36ed90cb64db746074da8d68",
-        "candidateTreeDigest": "f71341143034db2ab2ce489edc24ff625380dc540fb51c30ff44aa3983064efe",
-        "candidateDiffDigest": "2569752c0d35c7abb69d5a734239b41594411f2f6fccde8fefe4a3935b6984e9"
+        "candidateHead": "0bf0b97ab8f8fcd5bd443ebfab528ffab76a42ac",
+        "candidateTreeDigest": "50fe16d1c0fba0675ac7a55f9f64766c158f62053b53edc95e63afdcb85e5782",
+        "candidateDiffDigest": "8f587647031bfea27123dd6bb3f0ee275a0ba2881efbc9cf1b34f04a63868a5c"
       }
     }
   },
@@ -35,8 +35,8 @@
     "taskOverview": "Governed Work Item: wi-weekly-radar-sec-ir-deep-discovery",
     "deliveredChanges": [
       ".ai/cockpit/current_status.md",
-      ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
-      ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
       ".ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json",
       "docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md",
       "docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md",
@@ -49,8 +49,8 @@
       "tests/weekly_radar_runtime.rs",
       "tests/weekly_radar_evidence_quality.rs",
       "docs/operations/WEEKLY_RADAR.md",
-      ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json",
-      ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md",
+      ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
     ],
@@ -64,7 +64,7 @@
         "reason": "The live GDELT dependency is outside this Work Item's SEC/IR scope; the limitation remains visible as residual risk while deterministic local evidence satisfies the declared local verification boundary.",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "outOfScope and acceptance boundary"
           },
           {
@@ -85,13 +85,13 @@
         "result": "resolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "preflight contract evidence"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "preflight contract evidence"
           }
         ],
@@ -104,13 +104,13 @@
         "result": "resolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "declared capabilities and requested operation"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "declared capabilities and requested operation"
           }
         ],
@@ -150,7 +150,7 @@
         "result": "resolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "amended scope and revalidation"
           },
           {
@@ -160,7 +160,7 @@
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "amended scope and revalidation"
           },
           {
@@ -231,7 +231,7 @@
         "result": "resolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "news discovery and hosted lifecycle are out of scope"
           },
           {
@@ -241,7 +241,7 @@
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "news discovery and hosted lifecycle are out of scope"
           },
           {
@@ -263,13 +263,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -283,13 +283,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -303,13 +303,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -321,11 +321,11 @@
     ],
     "evidence": [
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
         "subject": "Contract"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
         "subject": "Summary"
       },
       {
@@ -484,13 +484,13 @@
         "detail": "Generated AI Cockpit status projection for this Work Item.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
@@ -502,14 +502,14 @@
         "detail": "Bound the approved SEC/IR discovery scope, scenarios, local stop condition, and amended evidence mapping scope.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json"
           }
         ],
         "inference": false
@@ -520,14 +520,14 @@
         "detail": "Records implementation, verification, issue resolution, and residual-risk evidence.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json"
           }
         ],
         "inference": false
@@ -538,13 +538,13 @@
         "detail": "Immutable Start Receipt binds the dedicated branch to the approved base.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": ".ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": ".ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json"
           }
         ],
@@ -556,13 +556,13 @@
         "detail": "Records bounded SEC body retrieval, one-hop IR discovery, failure semantics, and non-goals.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md"
           }
         ],
@@ -574,13 +574,13 @@
         "detail": "Records the RED/GREEN TDD sequence and local verification boundary.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md"
           }
         ],
@@ -592,13 +592,13 @@
         "detail": "Fetches bounded SEC filing bodies, retains title/text/status, and preserves independent fallback failures.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime/sec.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime/sec.rs"
           }
         ],
@@ -610,13 +610,13 @@
         "detail": "Defines the finite combined document-observation cap for direct plus nested discovery.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime/discovery.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime/discovery.rs"
           }
         ],
@@ -628,13 +628,13 @@
         "detail": "Adds SEC source classification, documented document factory input, and one-hop IR traversal.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime/sources.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime/sources.rs"
           }
         ],
@@ -646,13 +646,13 @@
         "detail": "Maps SEC filing observations to the existing official evidence classification.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime/evidence.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime/evidence.rs"
           }
         ],
@@ -664,13 +664,13 @@
         "detail": "Exports the bounded document APIs through the provider-neutral runtime boundary.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/features/weekly_radar/runtime.rs"
           }
         ],
@@ -682,13 +682,13 @@
         "detail": "Routes SEC document observations through the shared normalization and evidence loop without metric double counting.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/main.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "src/main.rs"
           }
         ],
@@ -700,13 +700,13 @@
         "detail": "Covers SEC body success, partial filing failure, finite body limit, provenance, and legacy employee fallback.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
@@ -718,13 +718,13 @@
         "detail": "Covers nested IR discovery, same-origin filtering, global cap, deduplication, index non-promotion, and SEC metadata separation.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "tests/weekly_radar_evidence_quality.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "tests/weekly_radar_evidence_quality.rs"
           }
         ],
@@ -736,13 +736,13 @@
         "detail": "Documents SEC filing-body status and bounded IR deep-discovery semantics for operators and readers.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
@@ -754,14 +754,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json"
           }
         ],
         "inference": false
@@ -772,14 +772,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.md"
           }
         ],
         "inference": false
@@ -790,13 +790,13 @@
         "detail": "Generated machine-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
@@ -808,13 +808,13 @@
         "detail": "Generated human-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
@@ -828,14 +828,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiWorkItem",
             "digest": "1ca1e86499d69e1f499a5230bb3cc1d5105a0785fc0e04eced8737f5f4fab36b"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiWorkItem",
             "digest": "1ca1e86499d69e1f499a5230bb3cc1d5105a0785fc0e04eced8737f5f4fab36b"
           }
@@ -848,14 +848,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json scope guard passed: 19 changed path(s) covered",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiScope",
             "digest": "23bf9400e61fc36fa14af1b6e72242cc5f9e102712476a9b48a38d454e1a1651"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiScope",
             "digest": "23bf9400e61fc36fa14af1b6e72242cc5f9e102712476a9b48a38d454e1a1651"
           }
@@ -868,14 +868,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiGuards",
             "digest": "a439458ae0e7699c27313185e72383d8fe9251162fb2f1a84126487991be0a4f"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiGuards",
             "digest": "a439458ae0e7699c27313185e72383d8fe9251162fb2f1a84126487991be0a4f"
           }
@@ -888,14 +888,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json --summary .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-sec-ir-deep-discovery` - Contract Hash: `bd6e2933117c20ac` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `11` - Unknown",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiCheckpoint",
             "digest": "569d8cb1f34cad76342007763fae920b5cf3472d502661f3d84dd1f10c559159"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiCheckpoint",
             "digest": "569d8cb1f34cad76342007763fae920b5cf3472d502661f3d84dd1f10c559159"
           }
@@ -908,14 +908,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json [review] .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json [review] .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discover",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "5f7b0c7adadacbe2720c0446bac6ff54b52c607b8a78f7dcd482a48ebabae0e9"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "5f7b0c7adadacbe2720c0446bac6ff54b52c607b8a78f7dcd482a48ebabae0e9"
           }
@@ -928,14 +928,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
@@ -948,14 +948,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
@@ -968,14 +968,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json --summary .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json report: target/ai_scenario_coverage_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "9b629f9e68cd658599946b1ade6953dcd9c1acb7a34a7f8311e413227aaf3f57"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "9b629f9e68cd658599946b1ade6953dcd9c1acb7a34a7f8311e413227aaf3f57"
           }
@@ -988,14 +988,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json --summary .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json guidelines compliance check passed: 6 guideline(s) verified",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiGuidelines",
             "digest": "1e62d3c609c203ce6eed530498ea11d2a7faa7f82d05120ca8a6115d52797b14"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiGuidelines",
             "digest": "1e62d3c609c203ce6eed530498ea11d2a7faa7f82d05120ca8a6115d52797b14"
           }
@@ -1008,14 +1008,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json ## Diff Ownership Preview - active_owned: `19`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task O",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiDiffOwnership",
             "digest": "09d3d9a90bdfe7be846224dae978451be035edccea9697d19419699546b08844"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiDiffOwnership",
             "digest": "09d3d9a90bdfe7be846224dae978451be035edccea9697d19419699546b08844"
           }
@@ -1028,16 +1028,16 @@
         "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=standard\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\"], \"level\": \"standard\", \"qualityRouting\": {\"reason\": \"standard governance uses its profile target\", \"requiredGroups\": [\"quality-standard\"], \"target\": \"quality-standard\"}, \"qualityTarget\": \"quality-standard\", \"requiredGroups\": [\"quality-standard\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"2400abb359b5f2bb36ed90cb64db7",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "quality",
-            "digest": "32205fa2843bf1a68088f1b32682648208cff89782fce248da7f989c6c4af324"
+            "digest": "70ab450bb54f65e6485a69100a3730134a66354c097a3a5e3a3c48562525c435"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "quality",
-            "digest": "32205fa2843bf1a68088f1b32682648208cff89782fce248da7f989c6c4af324"
+            "digest": "70ab450bb54f65e6485a69100a3730134a66354c097a3a5e3a3c48562525c435"
           }
         ],
         "inference": false
@@ -1048,14 +1048,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json --summary .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiStatus",
             "digest": "ea7456a69c66d702ccd1bc34e5da3a1e8b7f062320ccd5a6fa1b25c647ccb7bd"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiStatus",
             "digest": "ea7456a69c66d702ccd1bc34e5da3a1e8b7f062320ccd5a6fa1b25c647ccb7bd"
           }
@@ -1068,14 +1068,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json --summary .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiStatusCheck",
             "digest": "3925706cb34f618c416fdd988c6cd7c52292e7909cba216c2e1f9e801a2cfd9a"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiStatusCheck",
             "digest": "3925706cb34f618c416fdd988c6cd7c52292e7909cba216c2e1f9e801a2cfd9a"
           }
@@ -1088,14 +1088,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
@@ -1108,14 +1108,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json --summary .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiAgentRisk",
             "digest": "29b95344e7474d99bf2c1d00b61ddfe4e373b14dd34676ea411aee3ecbca6387"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiAgentRisk",
             "digest": "29b95344e7474d99bf2c1d00b61ddfe4e373b14dd34676ea411aee3ecbca6387"
           }
@@ -1128,14 +1128,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json --contract .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiSummary",
             "digest": "81bcd8fb25bfd1eaef31850acf8323daa7355713fc9fa3d0e8b4efa2ceb596d5"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
             "subject": "aiSummary",
             "digest": "81bcd8fb25bfd1eaef31850acf8323daa7355713fc9fa3d0e8b4efa2ceb596d5"
           }
@@ -1153,13 +1153,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1173,13 +1173,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1193,13 +1193,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1211,7 +1211,7 @@
       "problemCount": 7,
       "problemCountEvidenceRefs": [
         {
-          "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
           "subject": "observedIssues"
         }
       ],
@@ -1221,7 +1221,7 @@
           "claim": "Initial ai-start skeleton was not_ready because Contract evidence was incomplete.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
               "subject": "preflight contract evidence"
             }
           ],
@@ -1231,7 +1231,7 @@
           "claim": "The first Contract declared an unregistered source_acquisition capability and a non-policy requested-operation target.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
               "subject": "declared capabilities and requested operation"
             }
           ],
@@ -1255,7 +1255,7 @@
           "claim": "Adding SourceKind::Sec exposed the existing evidence source-kind match in runtime/evidence.rs, which was not in the initial scope.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
               "subject": "amended scope and revalidation"
             },
             {
@@ -1297,7 +1297,7 @@
           "claim": "The full live-registry dry-run produced no output for about 100 seconds and was interrupted; a 10-second curl probe showed SEC and IR endpoints respond, while GDELT timed out at 5 seconds.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
               "subject": "news discovery and hosted lifecycle are out of scope"
             },
             {
@@ -1313,7 +1313,7 @@
           "claim": "Filled intent, sources, acceptance, scenarios, capabilities, requested operation, and execution decision; Preflight became ready.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
               "subject": "preflight contract evidence"
             }
           ],
@@ -1323,7 +1323,7 @@
           "claim": "Aligned declared capabilities with repository capabilities and changed target to repository_governance; Preflight became ready.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
               "subject": "declared capabilities and requested operation"
             }
           ],
@@ -1347,7 +1347,7 @@
           "claim": "Amended the current Contract and plan before editing the file; the source mapping is now explicit and the amendment is recorded for revalidation.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
               "subject": "amended scope and revalidation"
             },
             {
@@ -1389,7 +1389,7 @@
           "claim": "Accepted as an out-of-scope external dependency; retained as residual risk; deterministic fixture and full local tests remain the acceptance evidence and no archive or Telegram side effect occurred.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
               "subject": "news discovery and hosted lifecycle are out of scope"
             },
             {
@@ -1406,7 +1406,7 @@
           "claim": "Fixture tests cannot prove every live IR or SEC filing uses the same HTML body structure or lexical claim vocabulary.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
               "subject": "residualRisks"
             }
           ],
@@ -1416,7 +1416,7 @@
           "claim": "The full-registry dry-run can wait on GDELT when that endpoint is unreachable; this Work Item does not change news discovery or provider timeout policy.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
               "subject": "residualRisks"
             }
           ],
@@ -1426,7 +1426,7 @@
           "claim": "Deterministic claim extraction intentionally favors precision and may leave valid but unusual wording as pending evidence.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
               "subject": "residualRisks"
             }
           ],

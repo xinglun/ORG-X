@@ -11,8 +11,8 @@ Governed Work Item: wi-weekly-radar-sec-ir-deep-discovery
 
 ## Delivered Changes
 - .ai/cockpit/current_status.md
-- .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json
-- .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json
+- .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json
+- .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json
 - .ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json
 - docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md
 - docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md
@@ -25,8 +25,8 @@ Governed Work Item: wi-weekly-radar-sec-ir-deep-discovery
 - tests/weekly_radar_runtime.rs
 - tests/weekly_radar_evidence_quality.rs
 - docs/operations/WEEKLY_RADAR.md
-- .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json
-- .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md
+- .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json
+- .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.md
 - .ai/cockpit/task_report.json
 - .ai/cockpit/task_report.md
 
@@ -43,7 +43,7 @@ None
 None
 
 ## Non-Risk Explanations
-- {"evidence": [{"source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json", "subject": "outOfScope and acceptance boundary"}, {"source": "tests/weekly_radar_runtime.rs", "subject": "fixture-driven CLI dry-run regression"}], "reason": "The live GDELT dependency is outside this Work Item's SEC/IR scope; the limitation remains visible as residual risk while deterministic local evidence satisfies the declared local verification boundary.", "sourceWarning": "The full-registry live dry-run is inconclusive because GDELT is unavailable in this environment; deterministic fixture-driven acquisition and local CLI dry-run regression tests pass."}
+- {"evidence": [{"source": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json", "subject": "outOfScope and acceptance boundary"}, {"source": "tests/weekly_radar_runtime.rs", "subject": "fixture-driven CLI dry-run regression"}], "reason": "The live GDELT dependency is outside this Work Item's SEC/IR scope; the limitation remains visible as residual risk while deterministic local evidence satisfies the declared local verification boundary.", "sourceWarning": "The full-registry live dry-run is inconclusive because GDELT is unavailable in this environment; deterministic fixture-driven acquisition and local CLI dry-run regression tests pass."}
 
 ## Forbidden Claims
 None

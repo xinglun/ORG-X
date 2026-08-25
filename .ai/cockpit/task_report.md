@@ -28,8 +28,8 @@ Design decisions
 - Strict lint and AI quality pass.: Makefile.ai#cargo clippy and make ai-cockpit-quality GOVERNANCE_PROFILE=strict (verified)
 
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json]
+- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json]
 - Changed .ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json [evidence: .ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json]
 - Changed docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md [evidence: docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md]
 - Changed docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md]
@@ -42,8 +42,8 @@ Design decisions
 - Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
 - Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 

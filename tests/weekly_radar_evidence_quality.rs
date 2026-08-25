@@ -312,6 +312,59 @@ fn body_sentence_with_change_and_production_signals_creates_a_bounded_candidate(
     assert!(!candidate.concrete_change().contains("implementation details"));
 }
 
+#[test]
+fn heading_only_document_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><h1>Acme adopted an agent-assisted engineering workflow for production scheduling.</h1></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
+#[test]
+fn production_sentence_without_a_change_action_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>The engineering platform serves customer requests.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
+#[test]
+fn claim_extraction_skips_nonproduction_change_sentences_until_a_valid_claim() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Acme adopted a new legal review policy.</p>
+        <p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    let candidate = extract_evidence_candidate(&observation).expect("second body claim should qualify");
+
+    assert_eq!(
+        candidate.concrete_change(),
+        "Acme adopted an agent-assisted engineering workflow for production scheduling."
+    );
+}
+
+#[test]
+fn document_without_effective_date_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title></head>
+        <body><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
 fn cutoff() -> chrono::NaiveDate {
     chrono::NaiveDate::from_ymd_opt(2026, 8, 25).expect("cutoff fixture should be valid")
 }

@@ -170,7 +170,7 @@ git commit -m "fix: exclude metadata from weekly radar document bodies"
 
 - [ ] **Step 1: Add the sentence-level extraction helper and signal rules**
 
-Replace the current `title + observation.text()` signal scan with a deterministic helper that:
+Replace the current `title + observation.text()` signal scan with a deterministic helper that first receives body text with `script`, `style`, `noscript`, `title`, `meta`, and heading blocks removed, then:
 
 1. Normalizes whitespace.
 2. Splits on terminal punctuation (`.`, `!`, `?`, `。`, `！`, `？`).
@@ -194,7 +194,7 @@ Expected: both pass, with the candidate containing only the first claim sentence
 
 - [ ] **Step 3: Add and run rejection cases**
 
-Add tests for a heading-only body, a script-only body, a sentence with a production signal but no change signal, and an authoritative document with no effective date. Each must return `None` from extraction or fail validation at the correct existing gate. Run:
+Add tests for a heading-only body, a script-only body, a sentence with a production signal but no change signal, and an authoritative document with no effective date. Heading blocks (`h1` through `h6`) are document labels rather than body claims and must be removed with the other non-content blocks. Each must return `None` from extraction or fail validation at the correct existing gate. Run:
 
 ```bash
 cargo test --test weekly_radar_evidence_quality -- evidence

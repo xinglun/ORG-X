@@ -1,4 +1,4 @@
-use chrono::Utc;
+use chrono::{NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::CompanyConfig;
 use org_x::features::weekly_radar::runtime::discovery::document_metadata;
 use org_x::features::weekly_radar::runtime::evidence::{
@@ -7,7 +7,7 @@ use org_x::features::weekly_radar::runtime::evidence::{
 };
 use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpResponse};
 use org_x::features::weekly_radar::runtime::model::{
-    FactStatus, ResearchMetrics, RuntimeReportInput,
+    Confidence, FactStatus, NormalizedFact, Provenance, ResearchMetrics, RuntimeReportInput,
 };
 use org_x::features::weekly_radar::runtime::normalize_source_observation;
 use org_x::features::weekly_radar::runtime::report::{render_report_in_language, ReportLanguage};
@@ -457,6 +457,49 @@ fn input_with_metrics(metrics: ResearchMetrics) -> RuntimeReportInput {
     input
 }
 
+fn input_with_raw_and_validated_evidence() -> RuntimeReportInput {
+    let mut input = RuntimeReportInput::new("2026-08-25").expect("report date should be valid");
+    input
+        .add_fact(
+            NormalizedFact::new(
+                "acme",
+                "revenue",
+                "123000000",
+                FactStatus::Known,
+                Confidence::High,
+                Provenance::new(
+                    "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json",
+                    "facts.revenue",
+                    Utc::now(),
+                    Some(NaiveDate::from_ymd_opt(2026, 8, 19).expect("date should be valid")),
+                )
+                .expect("SEC provenance should be valid"),
+            )
+            .expect("known SEC fact should be valid"),
+        )
+        .expect("SEC fact should be added");
+    input
+        .add_fact(
+            NormalizedFact::new(
+                "acme",
+                "evidence_official_material_001",
+                "Acme consolidated production scheduling under one platform.",
+                FactStatus::Known,
+                Confidence::High,
+                Provenance::new(
+                    "https://ir.example.test/organization/update",
+                    "Acme consolidated production scheduling under one platform.",
+                    Utc::now(),
+                    Some(NaiveDate::from_ymd_opt(2026, 8, 19).expect("date should be valid")),
+                )
+                .expect("validated evidence provenance should be valid"),
+            )
+            .expect("validated evidence should be valid"),
+        )
+        .expect("validated evidence should be added");
+    input
+}
+
 #[test]
 fn degraded_report_separates_evidence_and_source_availability_counts() {
     let input = input_with_metrics(ResearchMetrics::new(9, 10, 0, 10, 50));
@@ -469,6 +512,59 @@ fn degraded_report_separates_evidence_and_source_availability_counts() {
     assert!(report.markdown().contains("数据不足"));
     assert!(!report.markdown().contains("Investor Relations"));
     assert!(report.snapshot_json().contains("research_metrics"));
+}
+
+#[test]
+fn confirmed_information_contains_only_validated_evidence() {
+    let input = input_with_raw_and_validated_evidence();
+
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+    let confirmed_section = report
+        .markdown()
+        .split("## 已确认信息")
+        .nth(1)
+        .and_then(|section| section.split("\n## ").next())
+        .expect("validated evidence section should be rendered");
+
+    assert!(confirmed_section.contains("Acme consolidated production scheduling"));
+    assert!(!confirmed_section.contains("123000000"));
+    assert!(report.markdown().contains("共 1 条已确认信息"));
+    assert!(report.markdown().contains("已知事实：2 条"));
+}
+
+#[test]
+fn localized_reports_keep_validated_evidence_separate_from_known_facts() {
+    let input = input_with_raw_and_validated_evidence();
+
+    let japanese = render_report_in_language(&input, ReportLanguage::Japanese);
+    assert!(japanese.markdown().contains("## 確認済み情報"));
+    assert!(japanese
+        .markdown()
+        .contains("Acme consolidated production scheduling"));
+    let japanese_confirmed_section = japanese
+        .markdown()
+        .split("## 確認済み情報")
+        .nth(1)
+        .and_then(|section| section.split("\n## ").next())
+        .expect("Japanese validated evidence section should be rendered");
+    assert!(!japanese_confirmed_section.contains("123000000"));
+    assert!(japanese.markdown().contains("1 件の確認済み情報"));
+    assert!(japanese.markdown().contains("既知の事実：2 件"));
+
+    let english = render_report_in_language(&input, ReportLanguage::English);
+    assert!(english.markdown().contains("## Confirmed Information"));
+    assert!(english
+        .markdown()
+        .contains("Acme consolidated production scheduling"));
+    let english_confirmed_section = english
+        .markdown()
+        .split("## Confirmed Information")
+        .nth(1)
+        .and_then(|section| section.split("\n## ").next())
+        .expect("English validated evidence section should be rendered");
+    assert!(!english_confirmed_section.contains("123000000"));
+    assert!(english.markdown().contains("1 confirmed items"));
+    assert!(english.markdown().contains("Known facts: 2"));
 }
 
 #[test]

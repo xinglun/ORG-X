@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-confirmed-evidence-report",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-confirmed-evidence-report.json",
+  "baseCommit": "f02e60f15c52f79aa662a6feba3bae8115d1df35",
+  "baseBranch": "codex/weekly-radar-confirmed-report",
+  "startTimestamp": "2026-08-25T02:35:24.022826+00:00",
+  "initialScopeDigest": "a75aabd5f7c200de068269ddf7905040753aa13c2a00cde60fc44b7aa05b5717",
+  "contractSkeletonDigest": "02ba626f4bb52607a34ba8930cfff25dac77b57f6a45a0ad41d643f6cd1915ab"
+}

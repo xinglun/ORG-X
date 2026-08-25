@@ -7,43 +7,36 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Separate document identity from body content and require one bounded sentence with both change and production-system signals before evidence promotion.
-Mechanism (verified): Strip title, metadata, executable/style blocks, and headings before deterministic sentence scanning; retain the source title and effective date separately.
+Customer summary (verified): Reuse the existing Known plus evidence_ promotion identity so the reader-facing confirmed-information section, executive count, and primary-evidence wording represent validated evidence rather than every raw Known fact.
+Mechanism (verified): Filter confirmed-information cards and summary evidence wording to Known facts whose kind begins with evidence_; retain all other facts in the input, snapshot, health count, and judgment context, while relabeling the health count as known facts in all supported languages.
 
 Affected components
-- Document discovery: Returns a clean bounded body while preserving title/date identity. (verified)
-- Evidence extraction: Promotes only a complete body sentence with action and production signals. (verified)
-- SEC and report boundaries: Structured SEC facts and separated report metrics remain unchanged. (verified)
+- Reader-facing report: Confirmed Information contains only validated evidence facts; raw SEC and generic Known facts are not promoted into that section. (verified)
+- Report health and localization: Known status totals remain observable under 已知事实 / 既知の事実 / Known facts and the three localized report paths use the same boundary. (verified)
+- Operations documentation: The SourceObservation, DocumentCandidate, ValidatedEvidence, known-fact, and confirmed-information distinction is documented for operators. (verified)
 
 Design decisions
-- Prefer false negatives to title/page-level promotion.: Homepage, metadata, and ambiguous material are not enterprise-change claims. (verified)
-- Keep extraction deterministic and provider-neutral.: The Work Item does not add LLM, paid API, or provider-specific behavior. (verified)
+- Use the existing evidence_ identity instead of adding a schema field or provider-specific rule.: The validated-evidence pipeline already emits this stable identity, so the report can align its reader-facing semantics without changing acquisition, persistence, or judgment inputs. (verified)
+- Keep raw Known facts available outside the confirmed-information section.: SEC metrics and other raw facts remain useful for audit, health, and judgment context; changing the reader label must not erase those inputs. (verified)
 
 ### Technical details
-- Sentence boundary: Terminal punctuation and an eight-token minimum bound the passage. (verified)
-- Regression safety: The existing main integration fixture now supplies a dated body claim rather than placing claim text inside time metadata. (verified)
+- Validated evidence count: The executive summary and primary-evidence sentence use the count of Known evidence_ facts rather than the aggregate Known-fact health count. (verified)
+- Regression coverage: The focused suite covers Chinese, Japanese, and English section semantics; the existing runtime fixture now supplies an explicit evidence_ fact when it expects a confirmed-information card. (verified)
 
 ### Evidence
-- All project tests pass after the gate tightening.: tests/weekly_radar_evidence_quality.rs#19 focused tests (verified)
-- Project quality passes after standard formatting.: Makefile#make quality (verified)
+- The focused Weekly Radar report and runtime suites pass.: tests/weekly_radar_evidence_quality.rs#21 evidence-quality tests and 89 runtime tests (verified)
+- The full Rust quality suite passes with formatting and diff checks.: Makefile#cargo test --all-targets --all-features; cargo fmt --all -- --check; git diff --check (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-claim-extraction-gate.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-claim-extraction-gate.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.summary.json]
-- Changed .ai/work-items/starts/wi-weekly-radar-claim-extraction-gate.json [evidence: .ai/work-items/starts/wi-weekly-radar-claim-extraction-gate.json]
-- Changed docs/superpowers/plans/2026-08-25-weekly-radar-claim-extraction-gate.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-claim-extraction-gate.md]
-- Changed src/features/weekly_radar/runtime/discovery.rs [evidence: src/features/weekly_radar/runtime/discovery.rs]
-- Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
-- Changed src/main.rs [evidence: src/main.rs]
+- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.summary.json]
+- Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
 - Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
 - Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/archive/** [evidence: .ai/work-items/archive/**]
-- Changed .ai/knowledge/** [evidence: .ai/knowledge/**]
-- Changed .ai/work-items/active/wi-weekly-radar-claim-extraction-gate.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-claim-extraction-gate.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.md]
 
 Problems found
 - Total: 4
@@ -51,22 +44,21 @@ Problems found
 - Warning: 0
 
 Stops triggered
-- None recorded.
+- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
 
 Problems resolved
-- None recorded.
+- Problem: aiGuidelines failed before the retry.
+  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
 - observed issue (inference)
 - observed issue (inference)
 - observed issue (inference)
-- observed issue (inference)
-- Hosted CI, merge, Work Item closure, and one post-merge Weekly Radar dry-run remain required subsequent lifecycle steps; local Finish does not claim those steps are complete. [evidence: residualRisks]
-- The fixture suite proves the deterministic HTML/content boundary but cannot prove every live company page uses terminal punctuation and semantic body tags. [evidence: residualRisks]
-- Rule-only signals intentionally trade recall for fail-closed precision; future evidence gaps should be measured before expanding the list. [evidence: residualRisks]
+- The confirmed-information boundary is corrected, but the existing small-company observation section can still show raw Known facts by design; this Work Item does not change that context or imply that those facts are structural-change evidence. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
@@ -93,9 +85,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

@@ -260,7 +260,7 @@ fn labels(language: ReportLanguage) -> Labels {
             evidence_details: "逐项证据见下方“已确认信息”。",
             evidence_insufficient: "目前没有已确认的组织变化；仍有待核实或证据不足，不能视为没有变化。",
             source_unavailable_reason: "数据不足：没有确认到组织变化；但部分相关来源暂不可用，无法据此确认本周没有组织变化。",
-            confirmed_facts: "已确认信息",
+            confirmed_facts: "已知事实",
             pending_leads: "待验证线索",
             unknown_facts: "无法确定",
             unavailable_facts: "暂不可用",
@@ -313,7 +313,7 @@ fn labels(language: ReportLanguage) -> Labels {
             evidence_details: "項目ごとの根拠は下記の「確認済み情報」に記載しています。",
             evidence_insufficient: "確認済みの組織変化はありませんが、未確認または根拠不足の情報があり、変化がないとは判断できません。",
             source_unavailable_reason: "データ不足：組織変化は確認できませんでしたが、関連情報源の一部を取得できず、変化がないとは判断できません。",
-            confirmed_facts: "確認済み情報",
+            confirmed_facts: "既知の事実",
             pending_leads: "未確認の手がかり",
             unknown_facts: "判定不能",
             unavailable_facts: "取得できず",
@@ -366,7 +366,7 @@ fn labels(language: ReportLanguage) -> Labels {
             evidence_details: "See the item-level evidence in Confirmed Information below.",
             evidence_insufficient: "No organizational change was confirmed; unverified or insufficient evidence means this is not proof that no change occurred.",
             source_unavailable_reason: "Data coverage is degraded: no organizational change was confirmed, and some relevant sources were unavailable; this is not proof that no change occurred.",
-            confirmed_facts: "Confirmed information",
+            confirmed_facts: "Known facts",
             pending_leads: "Leads to verify",
             unknown_facts: "Could not determine",
             unavailable_facts: "Unavailable",
@@ -595,10 +595,19 @@ fn is_structural_change(kind: &str) -> bool {
     )
 }
 
+fn is_validated_evidence_fact(fact: &NormalizedFact) -> bool {
+    fact.status() == &FactStatus::Known && fact.kind().starts_with("evidence_")
+}
+
 fn is_confirmed_information_fact(fact: &NormalizedFact) -> bool {
-    fact.status() == &FactStatus::Known
-        && !fact.kind().starts_with("source_")
-        && !fact.kind().starts_with("pending_evidence_")
+    is_validated_evidence_fact(fact)
+}
+
+fn validated_evidence_count(facts: &[&NormalizedFact]) -> usize {
+    facts
+        .iter()
+        .filter(|fact| is_validated_evidence_fact(fact))
+        .count()
 }
 
 fn fact_value(fact: &NormalizedFact) -> String {
@@ -671,6 +680,7 @@ fn build_health(input: &RuntimeReportInput, facts: &[&NormalizedFact]) -> Source
 fn render_executive_summary(
     input: &RuntimeReportInput,
     health: &SourceHealthFacts,
+    validated_evidence_count: usize,
     structural_count: usize,
     company_count: usize,
     language: ReportLanguage,
@@ -682,20 +692,20 @@ fn render_executive_summary(
             labels.as_of,
             input.as_of(),
             company_count,
-            health.confirmed
+            validated_evidence_count
         ),
         ReportLanguage::Japanese => format!(
             "{} {}、{} 社を対象に {} 件の確認済み情報があります。",
             labels.as_of,
             input.as_of(),
             company_count,
-            health.confirmed
+            validated_evidence_count
         ),
         ReportLanguage::English => format!(
             "As of {}, the report covers {} companies and {} confirmed items.",
             input.as_of(),
             company_count,
-            health.confirmed
+            validated_evidence_count
         ),
     };
     let mut section = format!("## {}\n{}", labels.summary, intro);
@@ -807,7 +817,7 @@ fn render_executive_summary(
     ));
     section.push('\n');
     section.push_str(&data_sentence);
-    let evidence_basis = if health.confirmed > 0 {
+    let evidence_basis = if validated_evidence_count > 0 {
         labels.evidence_details.to_owned()
     } else {
         labels.no_primary.to_owned()
@@ -1400,6 +1410,7 @@ pub fn render_report_in_language(
         input.companies().len()
     };
     let health = build_health(input, &facts);
+    let validated_evidence_count = validated_evidence_count(&facts);
     let structural_count = facts
         .iter()
         .filter(|fact| is_structural_change(fact.kind()) && fact.status() == &FactStatus::Known)
@@ -1407,6 +1418,7 @@ pub fn render_report_in_language(
     let mut sections = vec![render_executive_summary(
         input,
         &health,
+        validated_evidence_count,
         structural_count,
         company_count,
         language,

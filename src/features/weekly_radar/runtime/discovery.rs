@@ -168,7 +168,7 @@ pub fn document_metadata(html: &str, fallback_title: &str) -> (String, Option<Na
         .and_then(|regex| regex.captures(html))
         .and_then(|captures| captures.get(1))
         .and_then(|value| NaiveDate::parse_from_str(value.as_str(), "%Y-%m-%d").ok());
-    (title, date, normalize_markup(html))
+    (title, date, normalize_document_body(html))
 }
 
 fn canonical_same_origin_url(base: &Url, href: &str) -> Option<Url> {
@@ -237,4 +237,17 @@ fn normalize_markup(value: &str) -> String {
         .split_whitespace()
         .collect::<Vec<_>>()
         .join(" ")
+}
+
+fn normalize_document_body(value: &str) -> String {
+    let mut without_non_content = value.to_owned();
+    for tag in ["script", "style", "noscript"] {
+        let regex = Regex::new(&format!(r"(?is)<{tag}\b[^>]*>.*?</{tag}\s*>"))
+            .expect("valid non-content regex");
+        without_non_content = regex.replace_all(&without_non_content, " ").into_owned();
+    }
+    let without_metadata = Regex::new(r"(?is)<title\b[^>]*>.*?</title\s*>|<meta\b[^>]*>")
+        .expect("valid metadata regex")
+        .replace_all(&without_non_content, " ");
+    normalize_markup(&without_metadata)
 }

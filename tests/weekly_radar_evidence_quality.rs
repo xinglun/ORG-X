@@ -538,6 +538,78 @@ fn complete_authoritative_candidate_becomes_validated_evidence() {
     );
 }
 
+fn validated_claim(
+    passage: &str,
+) -> org_x::features::weekly_radar::runtime::evidence::ValidatedEvidence {
+    let candidate = complete_candidate("2026-08-19", "engineering systems")
+        .with_source_details("Enterprise change update", passage);
+    validate_evidence_candidate(&candidate, cutoff()).unwrap()
+}
+
+#[test]
+fn validated_structural_claims_receive_specific_dimensions() {
+    let cases = [
+        (
+            "Acme reorganized its engineering teams and moved responsibility to one division.",
+            StructuralDimension::Organization,
+        ),
+        (
+            "Acme changed its engineering workflow and approval process for production scheduling.",
+            StructuralDimension::Workflow,
+        ),
+        (
+            "Acme deployed a production platform and consolidated storage infrastructure.",
+            StructuralDimension::ProductionSystem,
+        ),
+        (
+            "Acme increased GPU utilization and reduced serving latency for production workloads.",
+            StructuralDimension::OperatingMetric,
+        ),
+    ];
+
+    for (passage, expected_dimension) in cases {
+        let validated = validated_claim(passage);
+        assert_eq!(
+            validated.evidence_class(),
+            EvidenceClass::StructuralEvidence
+        );
+        assert_eq!(validated.structural_dimension(), Some(expected_dimension));
+        assert_eq!(
+            validated
+                .to_normalized_fact(1)
+                .unwrap()
+                .structural_dimension(),
+            Some(expected_dimension)
+        );
+    }
+}
+
+#[test]
+fn metric_and_production_system_claims_are_not_organization_evidence() {
+    for passage in [
+        "Acme increased GPU utilization and reduced serving latency for production workloads.",
+        "Acme deployed a production platform and consolidated storage infrastructure.",
+    ] {
+        assert_ne!(
+            validated_claim(passage).structural_dimension(),
+            Some(StructuralDimension::Organization)
+        );
+    }
+}
+
+#[test]
+fn incomplete_structural_claim_cannot_pass_the_promotion_gate() {
+    let candidate = complete_candidate("2026-08-19", "engineering workflow")
+        .with_source_details("", "Acme reorganized its engineering teams and division.");
+
+    assert_eq!(
+        validate_evidence_candidate(&candidate, cutoff()).unwrap_err(),
+        EvidenceValidationError::MissingRequiredField {
+            field: "source_title"
+        }
+    );
+}
+
 #[test]
 fn explicit_production_system_change_becomes_structural_evidence() {
     let candidate = complete_candidate("2026-08-19", "production scheduling").with_source_details(

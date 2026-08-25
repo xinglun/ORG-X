@@ -738,6 +738,11 @@
       "stage": "archive",
       "issue": "Archive knowledge projection detected stale digests in historical records that depend on shared Weekly Radar files changed by this Work Item.",
       "resolution": "Refreshed all affected knowledge projections, validated the index, and declared the generated historical projection updates in this Summary for complete PR ownership."
+    },
+    {
+      "stage": "synchronization",
+      "issue": "The merged predecessor WI was re-delivered on a corrected history, so the original f26b950 base was no longer an ancestor of origin/main.",
+      "resolution": "Rebased this dedicated branch onto merged origin/main d37885c and recorded the baseline transition in Contract synchronizationHistory before PR audit."
     }
   ],
   "residualRisks": [

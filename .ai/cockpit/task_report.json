@@ -6,7 +6,7 @@
   "sourceOutcome": {
     "format": "ai-cockpit-task-outcome",
     "schemaVersion": 1,
-    "digest": "e721740e8051278f9945ffb5beb04c0e547c928405b50ae55fcaa3a2ee871f42"
+    "digest": "ea0e696dba7e4f87425fc46a804bc1ba3d067ca68a66594c20b4cd215d534cfc"
   },
   "task": {
     "summary": "Task wi-weekly-radar-independent-diffusion generated an evidence-derived outcome with status completed.",

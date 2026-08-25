@@ -30,7 +30,7 @@
     "reference": "User authorization: 执行到WI全部流程结束，并且触发一次CI；follow-up approval: 接受独立来源核验并要求有问题继续。",
     "capturedAt": "2026-08-26T00:00:00+09:00"
   },
-  "baseCommit": "f26b9504b8b6fd6ebc72fce34edac71f4b023825",
+  "baseCommit": "d37885c6d0a08240d8fc6f12335a47c2ddc536e2",
   "baselineDirtyPaths": [],
   "problemStatement": "The previous reference-model packet correctly found Microsoft Confirmed under the four-family gate, but its two diffusion documents were both Microsoft-published customer stories. The system therefore proves named adoption claims only through a supplier-controlled publication surface, while customer self-disclosures and SEC/IR operating results are not represented as distinct source roles. This Work Item adds an explicit independent-source boundary and updates the diffusion gate so vendor attribution, adopter self-disclosure, and financial/operating corroboration remain separate and auditable.",
   "scope": [
@@ -260,5 +260,20 @@
     "baseCommit": "f26b9504b8b6fd6ebc72fce34edac71f4b023825",
     "initialScopeDigest": "fc25020e57fa3512b31621e2a697e0f59962232a5e5262fd81f13b837d452c0d",
     "contractSkeletonDigest": "9965dc177cbba55ec3ff71812c2044c2a5ea3657716423d1439d8be6a995132f"
-  }
+  },
+  "synchronizationHistory": [
+    {
+      "synchronizationVersion": 1,
+      "fromBaseCommit": "f26b9504b8b6fd6ebc72fce34edac71f4b023825",
+      "toBaseCommit": "d37885c6d0a08240d8fc6f12335a47c2ddc536e2",
+      "baseRemote": "origin",
+      "baseBranch": "main",
+      "workBranch": "codex/wi-weekly-radar-independent-diffusion",
+      "recordedAt": "2026-08-26T06:45:48+09:00",
+      "priorContractDigest": "efaed166f0872c34de07410f2f1b0daa2f44a68ad90efd5cadf43668ddbab19d",
+      "priorSummaryDigest": "4b95b1e8a25562e3fda6d232d0c371ed9f8a510df7f9bdf7305d77e7f064ef1a",
+      "rebaseHeadBefore": "e6bffa631b8ca3c6ac7e99ae7e798778bc0201ea",
+      "rebaseHeadAfter": "99d75f6e05c9c3e05bce63c8a68281d4c22eb54d"
+    }
+  ]
 }

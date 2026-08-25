@@ -5,13 +5,13 @@
   "archiveSequence": 76,
   "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.contract.json",
   "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
-  "contractSha256": "efaed166f0872c34de07410f2f1b0daa2f44a68ad90efd5cadf43668ddbab19d",
-  "summarySha256": "4b95b1e8a25562e3fda6d232d0c371ed9f8a510df7f9bdf7305d77e7f064ef1a",
+  "contractSha256": "b2f06de3e57441804190deecb538f4857f2bbe44ed8b8d912ed1cfd237de1df4",
+  "summarySha256": "05b860d472adb308c1d09909fe5f12f6eac6af9f23b152bbc66de64d759330a0",
   "generatedStatusExcluded": true,
   "outcomeArtifacts": [
     {
       "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.outcome.json",
-      "sha256": "0760e05ce3ae16a8eaa21bb6e664cda969f919e289cf431fa31297207919773a"
+      "sha256": "a24942a01a5fa4e8fafd1aa82474df4d4584710e88bc6664d351d55f16283bea"
     },
     {
       "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.outcome.md",

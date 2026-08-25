@@ -64,22 +64,22 @@
     {
       "type": "code",
       "path": "src/main.rs",
-      "digest": "66160dd638d08bc697f2571d8ee657002a9afbe123d455f32cd9079bd5d9d602"
+      "digest": "8cac04704155d1ab62a9c71d544bd53ffe01a003cb364875530c43f7d4127f04"
     },
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/model.rs",
-      "digest": "2848a77c9fece4d53dbb23b42180de6a13e6f569b85f05922dfe711896f7567e"
+      "digest": "468795f50e875f57aeef5b0bf57f0b0228bb8d5a107f9af675ba8b3a0bfd98bf"
     },
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/report.rs",
-      "digest": "8fa6edc7a2767c21f975d1678f591809a1066065b251354094f91c8018d31767"
+      "digest": "ed185906abf42b8b316c95913698c4e2123097fd381210b7ed596b0f899d05d6"
     },
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "c6135f4dd8f72092df082401575e589c527a24dcfa00b5b0bbe8f9f028cf1fab"
+      "digest": "2589d9bd0c603be62e9f9190f8a567d75037fd222d68d61557ff69da4c38b552"
     },
     {
       "type": "code",

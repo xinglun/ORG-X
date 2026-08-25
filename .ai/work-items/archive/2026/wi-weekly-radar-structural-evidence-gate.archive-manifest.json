@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-weekly-radar-structural-evidence-gate",
+  "archiveSequence": 70,
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+  "contractSha256": "cc1f4c025e028882308c0736df5bb6b45ea6ae6230326bd093269388302f45ba",
+  "summarySha256": "96e1080c4737530b6662834bf85bf58eaac1a1bb5b8b9e693e4c2b3a92272de7",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json",
+      "sha256": "f7bfca6992d48780bc23b776dd018c710c2b68b54d96e9a393d39f5c65a1c14b"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md",
+      "sha256": "2b4640d78f9c7dde3b9f326529b11482f4a4538a0bb6e95a883570b816a62f3e"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "541200860ff763fcadacb39b2206d575ec036824434f992c0c34015ec76b73da",
+    "binding": {
+      "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
+      "candidateHead": "725ccf1507d55addb98b0580939dda9d6a113f0c",
+      "candidateTreeDigest": "56248eef7c512060643edce4e9744eb92b7994d89836e33a58e9530a1b291bdc",
+      "candidateDiffDigest": "f7f2ea56326169a9868f4b9e19cb3afa2ab3a857f5a7dfe1ea95da172602282e"
+    }
+  }
+}

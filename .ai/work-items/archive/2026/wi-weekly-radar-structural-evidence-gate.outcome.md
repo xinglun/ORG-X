@@ -10,14 +10,14 @@ Task wi-weekly-radar-structural-evidence-gate generated an evidence-derived outc
 Governed Work Item: wi-weekly-radar-structural-evidence-gate
 
 ## Delivered Changes
-- .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json
-- .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json
+- .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json
+- .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json
 - .ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json
 - .ai/cockpit/current_status.md
 - .ai/cockpit/task_report.json
 - .ai/cockpit/task_report.md
-- .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json
-- .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md
+- .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json
+- .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md
 - docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md
 - src/features/weekly_radar/runtime/evidence.rs
 - src/features/weekly_radar/runtime/model.rs
@@ -30,10 +30,10 @@ Governed Work Item: wi-weekly-radar-structural-evidence-gate
 - tests/semantic_message_splitter_test.rs
 - docs/operations/WEEKLY_RADAR.md
 - docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md
-- .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json
-- .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json
-- .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json
-- .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md
+- .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json
+- .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json
+- .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json
+- .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md
 - .ai/cockpit/task_report.json
 - .ai/cockpit/task_report.md
 

@@ -112,6 +112,14 @@
       "components": [],
       "state": "verified",
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
+    },
+    {
+      "workItemId": "wi-weekly-radar-structural-evidence-gate",
+      "title": "Weekly Radar structural evidence gate and SEC health semantics",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
     }
   ]
 }

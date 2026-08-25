@@ -9,10 +9,10 @@
   "bindings": {
     "taskId": "wi-weekly-radar-structural-evidence-gate",
     "contractDigest": "cc1f4c025e028882308c0736df5bb6b45ea6ae6230326bd093269388302f45ba",
-    "summaryDigest": "b0847865b84598037b1dd55655356bc847cedf672175be13bb4aadfae922c2f5",
-    "verificationDigest": "7b992d13b354d68eb8359df1681a0c6e343b12b53e45098ea1c1da321c87a539",
+    "summaryDigest": "96e1080c4737530b6662834bf85bf58eaac1a1bb5b8b9e693e4c2b3a92272de7",
+    "verificationDigest": "4d5d51f5242de0cb4e790f04183b4c2e47035c0b41df7a37880e7e9baf9abc21",
     "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
-    "headCommit": "58273e8fec029febbd216675bfa29bd6de98442a",
+    "headCommit": "725ccf1507d55addb98b0580939dda9d6a113f0c",
     "lifecycleStage": "pre_merge",
     "pullRequest": {
       "state": "not_created"
@@ -21,12 +21,12 @@
     "generatorVersion": "1.2",
     "locale": "zh-CN",
     "preArchiveCandidateCoverage": {
-      "reportSha256": "99e18fc2e773c5037e22268714375408977d678aae49a617fe0c1713bcb5b5db",
+      "reportSha256": "541200860ff763fcadacb39b2206d575ec036824434f992c0c34015ec76b73da",
       "binding": {
         "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
-        "candidateHead": "58273e8fec029febbd216675bfa29bd6de98442a",
-        "candidateTreeDigest": "0e1699b3aec6e8d82856a09259e7bd3b907aad76f53981183a91eedab00ca50f",
-        "candidateDiffDigest": "126d441bd4e4688f723d9f53e22e8b00c19958c34a419e863c4462370b4eba6c"
+        "candidateHead": "725ccf1507d55addb98b0580939dda9d6a113f0c",
+        "candidateTreeDigest": "56248eef7c512060643edce4e9744eb92b7994d89836e33a58e9530a1b291bdc",
+        "candidateDiffDigest": "f7f2ea56326169a9868f4b9e19cb3afa2ab3a857f5a7dfe1ea95da172602282e"
       }
     }
   },
@@ -34,14 +34,14 @@
     "outcomeSummary": "Task wi-weekly-radar-structural-evidence-gate generated an evidence-derived outcome with status completed.",
     "taskOverview": "Governed Work Item: wi-weekly-radar-structural-evidence-gate",
     "deliveredChanges": [
-      ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
-      ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
       ".ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json",
       ".ai/cockpit/current_status.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md",
-      ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json",
-      ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md",
       "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
       "src/features/weekly_radar/runtime/evidence.rs",
       "src/features/weekly_radar/runtime/model.rs",
@@ -54,10 +54,10 @@
       "tests/semantic_message_splitter_test.rs",
       "docs/operations/WEEKLY_RADAR.md",
       "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md",
-      ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
-      ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-      ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json",
-      ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
     ],
@@ -81,12 +81,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
           }
@@ -104,12 +104,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "verificationHistory[1] aiSummary failed",
             "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "verification[aiSummary] retry passed",
             "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
           }
@@ -124,12 +124,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
           }
@@ -142,12 +142,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "verificationHistory[1] aiSummary failed",
             "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "verification[aiSummary] retry passed",
             "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
           }
@@ -167,13 +167,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -187,13 +187,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -208,11 +208,11 @@
     ],
     "evidence": [
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
         "subject": "Contract"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
         "subject": "Summary"
       },
       {
@@ -224,22 +224,22 @@
         "subject": "operator-facing four-layer semantics"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
         "subject": "verificationHistory[0] aiGuidelines failed",
         "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
         "subject": "verification[aiGuidelines] retry passed",
         "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
         "subject": "verificationHistory[1] aiSummary failed",
         "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
         "subject": "verification[aiSummary] retry passed",
         "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
       }
@@ -403,14 +403,14 @@
         "detail": "Binds the approved structural-evidence, SEC-health, scope, acceptance, and lifecycle authority.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json"
           }
         ],
         "inference": false
@@ -421,14 +421,14 @@
         "detail": "Records implementation, verification, issue resolution, and residual-risk evidence.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json"
           }
         ],
         "inference": false
@@ -439,13 +439,13 @@
         "detail": "Immutable Start Receipt binds the dedicated Work Item branch to the recorded base.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json"
           }
         ],
@@ -457,13 +457,13 @@
         "detail": "Generated AI Cockpit status projection for the active Work Item.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
@@ -475,13 +475,13 @@
         "detail": "Generated Human Benefit Report JSON during Finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
@@ -493,13 +493,13 @@
         "detail": "Generated localized Human Benefit Report Markdown during Finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
@@ -511,14 +511,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json"
           }
         ],
         "inference": false
@@ -529,14 +529,14 @@
         "detail": "Mandatory localized Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md"
           }
         ],
         "inference": false
@@ -547,13 +547,13 @@
         "detail": "Defines the structural-evidence classification and SEC stage/fact semantics.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md"
           }
         ],
@@ -565,13 +565,13 @@
         "detail": "Added deterministic StructuralEvidence classification and stable normalized-fact kind prefixes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/features/weekly_radar/runtime/evidence.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/features/weekly_radar/runtime/evidence.rs"
           }
         ],
@@ -583,13 +583,13 @@
         "detail": "Added backward-compatible structural and SEC stage/fact health metrics.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/features/weekly_radar/runtime/model.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/features/weekly_radar/runtime/model.rs"
           }
         ],
@@ -601,13 +601,13 @@
         "detail": "Separated validated facts from structural evidence and rendered localized SEC health semantics.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/features/weekly_radar/runtime/report.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/features/weekly_radar/runtime/report.rs"
           }
         ],
@@ -619,13 +619,13 @@
         "detail": "Accepted new localized evidence headings while retaining legacy aliases.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/features/weekly_radar/interface/semantic_message_splitter.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/features/weekly_radar/interface/semantic_message_splitter.rs"
           }
         ],
@@ -637,13 +637,13 @@
         "detail": "Bound structural classification and distinct SEC stage/fact counters during acquisition.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/main.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "src/main.rs"
           }
         ],
@@ -655,13 +655,13 @@
         "detail": "Added positive/negative classification, metrics, SEC health, and report regressions.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "tests/weekly_radar_evidence_quality.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "tests/weekly_radar_evidence_quality.rs"
           }
         ],
@@ -673,13 +673,13 @@
         "detail": "Updated report semantics and retained runtime/archive regression coverage.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
@@ -691,13 +691,13 @@
         "detail": "Added new localized evidence heading splitting coverage.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "tests/weekly_radar_semantic_message_splitter.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "tests/weekly_radar_semantic_message_splitter.rs"
           }
         ],
@@ -709,13 +709,13 @@
         "detail": "Added structural evidence boundary coverage.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "tests/semantic_message_splitter_test.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "tests/semantic_message_splitter_test.rs"
           }
         ],
@@ -727,13 +727,13 @@
         "detail": "Documented four evidence layers, structural gate, and SEC stage-versus-fact semantics.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
@@ -745,13 +745,13 @@
         "detail": "Recorded completed TDD tasks and remaining lifecycle checks.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md"
           }
         ],
@@ -763,14 +763,14 @@
         "detail": "Active Work Item Contract is committed snapshot evidence.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json"
           }
         ],
         "inference": false
@@ -781,14 +781,14 @@
         "detail": "Active AI Change Summary is committed snapshot evidence.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json"
           }
         ],
         "inference": false
@@ -799,14 +799,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json"
           }
         ],
         "inference": false
@@ -817,14 +817,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md"
           }
         ],
         "inference": false
@@ -835,13 +835,13 @@
         "detail": "Generated machine-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
@@ -853,13 +853,13 @@
         "detail": "Generated human-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
@@ -873,14 +873,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiWorkItem",
             "digest": "5a392eff0cf88d18159eb97ec15463019ee54ead69987195332ac8210c8d3838"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiWorkItem",
             "digest": "5a392eff0cf88d18159eb97ec15463019ee54ead69987195332ac8210c8d3838"
           }
@@ -893,14 +893,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json scope guard passed: 20 changed path(s) covered",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiScope",
             "digest": "8b79f71ceede3dd5fde42a6c64083e395fcff82477796043ba2e568bd3bebccf"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiScope",
             "digest": "8b79f71ceede3dd5fde42a6c64083e395fcff82477796043ba2e568bd3bebccf"
           }
@@ -913,14 +913,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiGuards",
             "digest": "41d97db3ecf01b304ff54706a2cad0f3eac374ba0c177b5f46e64f315d6ac401"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiGuards",
             "digest": "41d97db3ecf01b304ff54706a2cad0f3eac374ba0c177b5f46e64f315d6ac401"
           }
@@ -933,14 +933,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-structural-evidence-gate` - Contract Hash: `cc1f4c025e028882` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `10`",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiCheckpoint",
             "digest": "390e4f073bead491a8d9b07a35a8b66570a47b475fe8ed7861b32c71231468c0"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiCheckpoint",
             "digest": "390e4f073bead491a8d9b07a35a8b66570a47b475fe8ed7861b32c71231468c0"
           }
@@ -953,14 +953,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json [review] .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json [review] .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-structur",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "9b48caec6bd0ebd6d7f8f0b8c4b63286125cdd52c155bb41ae7f5b73580e1ab9"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "9b48caec6bd0ebd6d7f8f0b8c4b63286125cdd52c155bb41ae7f5b73580e1ab9"
           }
@@ -973,14 +973,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
@@ -993,14 +993,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
@@ -1013,14 +1013,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json [warning] missing_scenario_coverage: - scenario coverage is missing for medium/high risk report: target/ai_scenario_coverage_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "839c2a75a81fdb43af1b5ebc93ddd1c7630e3b56ff0b83f01287e5f4ce956a95"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "839c2a75a81fdb43af1b5ebc93ddd1c7630e3b56ff0b83f01287e5f4ce956a95"
           }
@@ -1033,14 +1033,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json guidelines compliance check passed: 6 guideline(s) verified",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiGuidelines",
             "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiGuidelines",
             "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
           }
@@ -1053,14 +1053,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json ## Diff Ownership Preview - active_owned: `20`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Tas",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiDiffOwnership",
             "digest": "4e211928e43d11a51c913b15778e6de56da46a5caa17e97905c42c18f8213480"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiDiffOwnership",
             "digest": "4e211928e43d11a51c913b15778e6de56da46a5caa17e97905c42c18f8213480"
           }
@@ -1073,16 +1073,16 @@
         "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"explicit strict governance requires the complete quality graph\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"quality-full\", \"requiredGroups\": [\"quality-full\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"caeb66cf732d35155b25b098a3b378",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "quality",
-            "digest": "fc6ae95b94ec97d8c6c35c3cfcf9cf694d3e5cc747fc86113ec30ebaecf22bcd"
+            "digest": "e231740c990be91f5e47dde21a369b18907acd4efc44e200d5453b4e107a95ef"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "quality",
-            "digest": "fc6ae95b94ec97d8c6c35c3cfcf9cf694d3e5cc747fc86113ec30ebaecf22bcd"
+            "digest": "e231740c990be91f5e47dde21a369b18907acd4efc44e200d5453b4e107a95ef"
           }
         ],
         "inference": false
@@ -1093,14 +1093,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiStatus",
             "digest": "2583c0f768306ccbdce4dc8eceb912241ea5ed02adb4fadec08f1a2f5a9b9d1c"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiStatus",
             "digest": "2583c0f768306ccbdce4dc8eceb912241ea5ed02adb4fadec08f1a2f5a9b9d1c"
           }
@@ -1113,14 +1113,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiStatusCheck",
             "digest": "ccd40c26ba6746c87317476ef11f36020a0b0b6171d974664bc93af02f05b307"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiStatusCheck",
             "digest": "ccd40c26ba6746c87317476ef11f36020a0b0b6171d974664bc93af02f05b307"
           }
@@ -1133,14 +1133,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
@@ -1153,14 +1153,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiAgentRisk",
             "digest": "c562ea11d8a36338ed7fc431f49f292dff29d586805773143d712a519607ec48"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiAgentRisk",
             "digest": "c562ea11d8a36338ed7fc431f49f292dff29d586805773143d712a519607ec48"
           }
@@ -1173,14 +1173,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiSummary",
             "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
             "subject": "aiSummary",
             "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
           }
@@ -1198,13 +1198,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1218,13 +1218,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1236,11 +1236,11 @@
       "problemCount": 3,
       "problemCountEvidenceRefs": [
         {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
           "subject": "observedIssues"
         },
         {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
           "subject": "verification and verificationHistory"
         }
       ],
@@ -1250,12 +1250,12 @@
           "claim": "aiGuidelines failed before the retry.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
             }
@@ -1266,12 +1266,12 @@
           "claim": "aiSummary failed before the retry.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "verificationHistory[1] aiSummary failed",
               "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "verification[aiSummary] retry passed",
               "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
             }
@@ -1284,12 +1284,12 @@
           "claim": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
             }
@@ -1300,12 +1300,12 @@
           "claim": "Re-ran aiSummary after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "verificationHistory[1] aiSummary failed",
               "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "verification[aiSummary] retry passed",
               "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
             }
@@ -1335,7 +1335,7 @@
           "claim": "The classifier is deterministic and intentionally conservative; real provider wording may remain a regular validated fact until the signal vocabulary is amended in a governed follow-up.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "residualRisks"
             }
           ],
@@ -1345,7 +1345,7 @@
           "claim": "No post-merge dry-run has been executed for this Work Item yet; live SEC/source availability and the resulting structural count remain unverified until the authorized dispatch.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
               "subject": "residualRisks"
             }
           ],

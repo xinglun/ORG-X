@@ -27,14 +27,14 @@ Design decisions
 - The implementation preserves the approved four-layer evidence boundary and does not promote page availability into structural evidence.: docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md#approved design boundary (verified)
 - The operator guide explains validated facts, structural evidence, SEC stage health, and usable SEC facts without claiming a live run.: docs/operations/WEEKLY_RADAR.md#operator-facing four-layer semantics (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json]
+- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json]
 - Changed .ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json [evidence: .ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md]
 - Changed docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md [evidence: docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md]
 - Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
 - Changed src/features/weekly_radar/runtime/model.rs [evidence: src/features/weekly_radar/runtime/model.rs]
@@ -47,10 +47,10 @@ Design decisions
 - Changed tests/semantic_message_splitter_test.rs [evidence: tests/semantic_message_splitter_test.rs]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
 - Changed docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json]
+- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 

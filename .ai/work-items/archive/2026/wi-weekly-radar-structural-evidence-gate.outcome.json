@@ -9,7 +9,7 @@
   "bindings": {
     "taskId": "wi-weekly-radar-structural-evidence-gate",
     "contractDigest": "cc1f4c025e028882308c0736df5bb6b45ea6ae6230326bd093269388302f45ba",
-    "summaryDigest": "96e1080c4737530b6662834bf85bf58eaac1a1bb5b8b9e693e4c2b3a92272de7",
+    "summaryDigest": "bc46ba7085017b62cf7621001ac597edcc15b0ca98d87f271e587e6718d1fd07",
     "verificationDigest": "4d5d51f5242de0cb4e790f04183b4c2e47035c0b41df7a37880e7e9baf9abc21",
     "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
     "headCommit": "725ccf1507d55addb98b0580939dda9d6a113f0c",

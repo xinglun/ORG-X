@@ -33,7 +33,20 @@
     ".ai/work-items/archive/index.json",
     ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.archive-manifest.json",
     ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json",
-    ".ai/knowledge/index.json"
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
   ],
   "designDecisions": [
     {
@@ -108,9 +121,9 @@
     "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
     "contractDigest": "cc1f4c025e028882308c0736df5bb6b45ea6ae6230326bd093269388302f45ba",
     "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
-    "summaryDigest": "96e1080c4737530b6662834bf85bf58eaac1a1bb5b8b9e693e4c2b3a92272de7",
+    "summaryDigest": "bc46ba7085017b62cf7621001ac597edcc15b0ca98d87f271e587e6718d1fd07",
     "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json",
-    "outcomeDigest": "f7bfca6992d48780bc23b776dd018c710c2b68b54d96e9a393d39f5c65a1c14b"
+    "outcomeDigest": "e24653cbe8197bb6476eef7c3e8cd2c9b04a71a8ff957a706d31321ee924e5d2"
   },
   "knowledgeState": "verified",
   "unknowns": []

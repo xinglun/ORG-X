@@ -838,9 +838,9 @@
       "contractSha256": "cc1f4c025e028882308c0736df5bb6b45ea6ae6230326bd093269388302f45ba",
       "archivedAt": "2026-08-25T15:02:46.260316+09:00",
       "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
-      "summarySha256": "96e1080c4737530b6662834bf85bf58eaac1a1bb5b8b9e693e4c2b3a92272de7",
+      "summarySha256": "bc46ba7085017b62cf7621001ac597edcc15b0ca98d87f271e587e6718d1fd07",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.archive-manifest.json",
-      "manifestSha256": "11b3b046ef34bee518e7102b0c6d756d5471c2664f5bfe039c543e5746dbe246"
+      "manifestSha256": "fd3b2bb2c935d14596a80e2d9613f9981cb7569113b2c95ea7259e479f18f8fd"
     }
   ]
 }

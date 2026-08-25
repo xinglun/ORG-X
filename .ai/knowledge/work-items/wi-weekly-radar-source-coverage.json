@@ -49,7 +49,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_source_coverage.rs",
-      "digest": "ebf0e065129c27e0d8849524e9383ff3c09ab78446041be59d0819bb62f2b74c"
+      "digest": "d33f5a6654ebef2a298e2957fa3abb25ca16bbef22fdb0ca29e4f1fb408ca96b"
     },
     {
       "type": "code",
@@ -59,32 +59,32 @@
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/sources.rs",
-      "digest": "3ac91b1565a347b40d2ea05633a1f3a21e931a815055630d3403cf612f7e388b"
+      "digest": "acf0881377207c3f185756f00e4bd6d3dcb2e2c1aef6b372b53014665f982f40"
     },
     {
       "type": "code",
       "path": "src/main.rs",
-      "digest": "b94829ca9abd18a32a9b382fa186b669b393b316fde5e221de38cd56fc2574a8"
+      "digest": "86c4c9ac0bb73107367c7cb0a4ce79bcf048e73a37629e3ff885a8349488ed1d"
     },
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/model.rs",
-      "digest": "243a9a54963d37bba524a64a1df257d2413ef9e679251d61910360ccc7575d92"
+      "digest": "2848a77c9fece4d53dbb23b42180de6a13e6f569b85f05922dfe711896f7567e"
     },
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/report.rs",
-      "digest": "9cb6a87ce535c07e9ea0cd6662392183ff4734e66401908e9c9ea05103343b12"
+      "digest": "4d58735a4849869417496dc7fcf1b81d18e2d97755665554a5fa4c5655a38405"
     },
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "a09f7d63e7e06f85f194336431526d2538c7f76b72c2bac8907af55872980583"
+      "digest": "c8a7132c55e9411a9f7a4ebb9b2b5949665ae2fd1edc5a14d337a72bf93dda8c"
     },
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/sec.rs",
-      "digest": "b5baa35a40c16f42d85fe6c665a4242ac368c7c98c5e173e4b3770987ea33794"
+      "digest": "775583db6bb57e7e7303ea23f2fff7874c86fc1ce4e3d729cc06a8ab993a81e9"
     },
     {
       "type": "code",

@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-evidence-quality",
+  "title": "Weekly Radar Evidence Acquisition Quality",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Implement a vertical source-to-evidence boundary that keeps page availability, discovered documents, pending claims, and validated evidence distinct.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.summary.json",
+    ".ai/work-items/starts/wi-weekly-radar-evidence-quality.json",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-evidence-acquisition-quality.md",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/sec.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/main.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/weekly_radar_source_coverage.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Keep page-level observations out of Confirmed Information and the primary-evidence guard.",
+      "reason": "Reachability proves source availability, not an enterprise production-system change.",
+      "status": "verified"
+    },
+    {
+      "decision": "Preserve fail-closed Stage-before-Ranking behavior when validated evidence is absent.",
+      "reason": "The research pipeline must not manufacture ranking value from incomplete coverage.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "digest": "3471e459826664b20ae7dbb4edf279d0990252aad53e9bfc4c6521793c10be40"
+    },
+    {
+      "type": "code",
+      "path": "Makefile",
+      "digest": "ed2d7675c8d51503ac3e1bf178357508d4fee04bbefd3eaa7c00f6c809a1b659"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "digest": "cb9cd0e5c1c62423977c3e7f4b46bba2d46fa888ec9a89f413afc73df3e4062f"
+    },
+    {
+      "type": "code",
+      "path": "src/main.rs",
+      "digest": "86c4c9ac0bb73107367c7cb0a4ce79bcf048e73a37629e3ff885a8349488ed1d"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "digest": "4d58735a4849869417496dc7fcf1b81d18e2d97755665554a5fa4c5655a38405"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/sec.rs",
+      "digest": "775583db6bb57e7e7303ea23f2fff7874c86fc1ce4e3d729cc06a8ab993a81e9"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "9426f4342055cb4b4f85633a746e9f93fa555c2769690333a47fcc85964a8dd8"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_judgment_chain.rs",
+      "digest": "21b4c2e20b98682d5649a9e0ba3e825f9bfe72f99190c272e5406a60962c31e9"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "digest": "22d226932707f44755851b27ae5237c92a96ea2fcf2af60e02f752d6c94bced8"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.contract.json",
+    "contractDigest": "f38c3fca9e9fd6942c230b2f84c99fa667e53d3bc2b95eca2483c248bee258e9",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.summary.json",
+    "summaryDigest": "500662c92239628096479ee7dc041a195b8d2809e856061742313778b240c04f",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.outcome.json",
+    "outcomeDigest": "ae770db77b8f8cacaa3a231dd3b371d9a4d0b37f7e99294246e610ae9adca47d"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

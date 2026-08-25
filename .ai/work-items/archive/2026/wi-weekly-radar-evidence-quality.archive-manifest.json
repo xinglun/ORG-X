@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-weekly-radar-evidence-quality",
+  "archiveSequence": 66,
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.summary.json",
+  "contractSha256": "f38c3fca9e9fd6942c230b2f84c99fa667e53d3bc2b95eca2483c248bee258e9",
+  "summarySha256": "500662c92239628096479ee7dc041a195b8d2809e856061742313778b240c04f",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.outcome.json",
+      "sha256": "ae770db77b8f8cacaa3a231dd3b371d9a4d0b37f7e99294246e610ae9adca47d"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.outcome.md",
+      "sha256": "cd678dbdaaa88b8ae6e86783bd135112e0e72294e7450d8895b951142f0d5922"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "bf2213b2aef3aef71457a06842e1b4d8c2ea22fa9c75bacede1881179ab963be",
+    "binding": {
+      "baseCommit": "7ea05a9a464657f4bf8c8ec391f1efa66d9e28ae",
+      "candidateHead": "b1f3cdff8050eddde265a72c41e87730e2a8a58e",
+      "candidateTreeDigest": "a62ec5609fd1bdbddbc5fd1748909bf2ab4bd2365f1922ea4c0dbec20cf2a285",
+      "candidateDiffDigest": "068fbec0180e9abc536e3a96e3b843b7ffb174ea93edad630f9b8fe2b90d13a9"
+    }
+  }
+}

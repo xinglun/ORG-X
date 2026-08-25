@@ -50,6 +50,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json"
     },
     {
+      "workItemId": "wi-weekly-radar-evidence-quality",
+      "title": "Weekly Radar Evidence Acquisition Quality",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-idempotent-completion",
       "title": "修复 Weekly Radar 同日完成运行的幂等状态",
       "topics": [],

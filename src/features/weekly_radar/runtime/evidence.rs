@@ -58,6 +58,7 @@ pub struct EvidenceCandidate {
 
 impl EvidenceCandidate {
     /// Creates a candidate with source identity and the minimum claim fields.
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         company_id: impl Into<String>,
         company_name: impl Into<String>,

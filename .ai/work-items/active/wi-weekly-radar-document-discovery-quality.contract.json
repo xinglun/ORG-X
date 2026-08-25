@@ -1,0 +1,196 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-document-discovery-quality",
+  "mode": "code",
+  "title": "Improve Weekly Radar document discovery and Claim extraction quality",
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "baseCommit": "c7f0f3c466164cf7f104940d57de5d732eb60c1e",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.md",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md",
+    "src/main.rs",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "SEC endpoint parsing, CIK registry, company facts, and SEC transport behavior",
+    "new providers, Greenhouse/Lever configuration, unbounded crawling, LLM or probabilistic extraction",
+    "judgment rules, Transformation Stage definitions, Ranking thresholds, Counter Evidence, Telegram, archive persistence, data branch, and workflow publication",
+    "secrets, credentials, production operation, and external delivery"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Repository governance and Work Item lifecycle rules."},
+    {"path": ".ai/glossary.md", "reason": "Canonical architecture and governance vocabulary."},
+    {"path": "docs/superpowers/specs/2026-08-25-weekly-radar-evidence-dimension-design.md", "reason": "Existing EvidenceCandidate and structural-dimension boundary."},
+    {"path": "src/features/weekly_radar/runtime/discovery.rs", "reason": "Existing bounded same-origin document discovery and metadata extraction."},
+    {"path": "src/features/weekly_radar/runtime/sources.rs", "reason": "Source observations, source material kinds, and discovery integration."},
+    {"path": "src/features/weekly_radar/runtime/evidence.rs", "reason": "Deterministic Claim extraction and promotion gate."},
+    {"path": "src/features/weekly_radar/runtime/model.rs", "reason": "Research metrics and normalized fact compatibility boundary."},
+    {"path": "src/features/weekly_radar/runtime/report.rs", "reason": "Reader-facing localized report and snapshot assembly."},
+    {"path": "src/main.rs", "reason": "Runtime acquisition loop that counts candidates, leads, and validated evidence."},
+    {"path": "tests/weekly_radar_evidence_quality.rs", "reason": "Existing discovery and Claim extraction fixtures."},
+    {"path": "tests/weekly_radar_runtime.rs", "reason": "Runtime and report regression coverage."},
+    {"path": "docs/operations/WEEKLY_RADAR.md", "reason": "Operational source, evidence, and dry-run semantics."}
+  ],
+  "unknowns": [],
+  "rawUserRequest": "同意继续，创建并执行 Document Discovery + Claim Extraction Quality Work Item。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "The user explicitly accepted the next-step recommendation to continue with a new Work Item focused on Document Discovery and Claim Extraction Quality.",
+    "capturedAt": "2026-08-25T16:00:00+09:00",
+    "digest": "not-generated"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "documentation", "ai_governance"],
+    "prohibitedCapabilities": ["production_operation", "external_delivery_without_explicit_dry_run_authorization"],
+    "requestedOutcome": "Increase the conversion of concrete official document candidates into complete, traceable ValidatedEvidence while keeping homepage observations, discovery articles, and incomplete claims out of confirmed evidence.",
+    "decisionBoundary": "Only bounded document metadata, document-kind provenance, deterministic Claim extraction, acquisition counters, localized report visibility, tests, and operations documentation change; SEC, judgment, Ranking, publication, and archive behavior remain unchanged."
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly approved the new governed Work Item and its implementation lifecycle."
+  },
+  "notCodable": false,
+  "scenarioCoverage": [
+    {
+      "scenario": "Document publication metadata is recovered deterministically",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/discovery.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "A document with article metadata, JSON-LD, or time markup retains the first valid published/effective date; malformed or absent metadata remains undated.",
+      "verificationPlan": "Add RED fixtures for meta, JSON-LD, time, precedence, and malformed dates, then implement the smallest parser and rerun focused tests GREEN."
+    },
+    {
+      "scenario": "Discovered document kind remains attached to the source observation",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/discovery.rs", "src/features/weekly_radar/runtime/sources.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "An earnings, engineering, organization, product/platform, or AI/automation candidate retains its deterministic DocumentKind without turning an entry point into a document.",
+      "verificationPlan": "Add a fixture assertion that the discovered observation exposes its kind and that homepage-only input remains EntryPoint."
+    },
+    {
+      "scenario": "A dated actionable production claim promotes to ValidatedEvidence",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/evidence.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "A dated official document with an explicit change action and production-area signal becomes validated; its document context is retained in provenance.",
+      "verificationPlan": "Add RED fixtures for a dated engineering/AI automation claim and assert complete source, date, passage, and production fields before implementing extraction changes."
+    },
+    {
+      "scenario": "Homepage, generic prose, and incomplete claims remain non-confirmed",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/discovery.rs", "src/features/weekly_radar/runtime/evidence.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "EntryPoint observations, title-only pages, generic architecture prose, missing dates, and non-actionable production sentences remain leads or non-confirmed facts.",
+      "verificationPlan": "Run the existing negative fixtures plus new missing-metadata cases before and after the implementation."
+    },
+    {
+      "scenario": "Report exposes document discovery quality without changing judgment",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/model.rs", "src/features/weekly_radar/runtime/report.rs", "tests/weekly_radar_runtime.rs"],
+      "expected": "The snapshot/report distinguishes document candidates, validated evidence, pending leads, and document-kind counts; Stage and Ranking output remains unchanged and fail-closed.",
+      "verificationPlan": "Add a report fixture with multiple document kinds and assert localized counters plus unchanged no-ranking behavior."
+    }
+  ],
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["false_positive_claim_promotion", "date_parsing_error", "source_context_loss", "serialized_metrics_compatibility"],
+    "reason": "Improving date recovery and Claim extraction can promote stale or generic prose if rules are too broad. New source context and metrics must remain optional and backward compatible.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "user-authorized",
+    "reviewNote": "The post-merge dry-run found 76 document candidates but only 5 validated claims and 71 pending leads, so the evidence conversion boundary is the next bottleneck."
+  },
+  "governanceProfile": {"selected": "standard", "source": "automatic", "reasons": ["Medium-risk bounded code and test/documentation change."], "override": null},
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {"status": "continue", "reason": "Scope, acceptance, scenarios, sources, and deterministic verification are defined; no unresolved unknowns require a human decision before implementation."},
+  "preReviewWarnings": [
+    "Do not treat entry-point availability as document evidence.",
+    "Do not recover dates from ambiguous prose or future-dated content.",
+    "Prefer false negatives to promoting generic technical descriptions.",
+    "Keep Stage, Ranking, publication, and archive behavior unchanged."
+  ],
+  "checkpointPolicy": {"requiredBeforeFinish": true, "requiredStages": ["before_edit", "before_finish"], "reason": "Record immutable pre-edit and pre-finish checkpoints for the bounded extraction change."},
+  "acceptance": [
+    "Official document metadata recovers a valid published/effective date from bounded, deterministic metadata sources with explicit precedence and rejects malformed or future dates at the existing cutoff gate.",
+    "Discovered observations retain DocumentKind for at least filing, earnings, engineering, AI/automation, organization, and product/platform material; entry points remain distinct.",
+    "A dated authoritative document with an explicit change action and production-area signal can become ValidatedEvidence with complete source title, URI, passage, date, and provenance.",
+    "Homepage observations, discovery-only material, title-only pages, generic technical prose, missing dates, and non-actionable production sentences cannot become confirmed evidence.",
+    "ResearchMetrics and localized reports expose document candidates, validated evidence, pending leads, unavailable sources, and deterministic document-kind counts with legacy defaults.",
+    "Existing Stage, Ranking, Counter Evidence, Telegram, archive, workflow, and SEC behavior is unchanged.",
+    "TDD fixtures cover metadata precedence, document-kind propagation, positive Claim extraction, negative Claim cases, report metrics, and legacy JSON compatibility.",
+    "Operations documentation explains document discovery, Claim completeness, document-kind semantics, and the distinction between data insufficiency and no change.",
+    "All Contract governance, focused tests, project quality, and hosted CI checks pass before Finish."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep discovery and extraction deterministic, provider-neutral, bounded, and rule-only.",
+    "Prefer false negatives to promoting generic technical prose as enterprise change.",
+    "Preserve legacy snapshot and ResearchMetrics deserialization with optional defaults.",
+    "Do not change SEC, judgment, Ranking, Telegram, archive, or workflow behavior."
+  ],
+  "intent": {
+    "problem": "The merged Weekly Radar implementation now discovers concrete official documents, but the dry-run produced 76 candidates, only 5 validated facts, and 71 pending leads. The main conversion loss is the document-to-Claim boundary: publication dates are not recovered from common page metadata, document type context is discarded after discovery, and deterministic Claim extraction has too little context to turn dated actionable documents into complete EvidenceCandidate records.",
+    "constraints": [
+      "Build on the existing bounded same-origin discovery and SourceObservation to EvidenceCandidate pipeline.",
+      "Use only deterministic parsing and lexical rules; do not add an LLM, probabilistic model, new provider, or unbounded crawl.",
+      "Keep entry points, discovery-only articles, incomplete claims, and ambiguous dates out of ValidatedEvidence.",
+      "Keep ResearchMetrics and any new document context backward compatible for existing snapshots.",
+      "Do not change SEC collection, judgment, Stage, Ranking, Counter Evidence, Telegram, archive, data branch, or workflow behavior."
+    ],
+    "rationale": "The smallest useful next change is to recover evidence already present in bounded official documents and make the loss points visible. This increases research value at the ingestion boundary without weakening fail-closed judgment or adding a speculative source."
+  },
+  "verification": [
+    {"check": "aiWorkItem", "required": true},
+    {"check": "aiScope", "required": true},
+    {"check": "aiGuards", "required": true},
+    {"check": "aiCheckpoint", "required": true},
+    {"check": "aiAgentRisk", "required": true},
+    {"check": "aiReviewPolicy", "required": true},
+    {"check": "aiBacktrack", "required": true},
+    {"check": "aiCoverage", "required": true},
+    {"check": "aiScenarioCoverage", "required": true},
+    {"check": "aiGuidelines", "required": true},
+    {"check": "aiSummary", "required": true},
+    {"check": "aiStatus", "required": true},
+    {"check": "aiStatusCheck", "required": true},
+    {"check": "aiStatusConsistency", "required": true},
+    {"check": "aiDiffOwnership", "required": true},
+    {"check": "quality", "required": true}
+  ],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {"approved": false, "approvedBy": "", "reason": "No restricted governance write is requested."},
+  "rollbackNote": "Revert this Work Item diff; existing document discovery, Claim validation, snapshots, and report compatibility remain available on the base commit.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 72}},
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json",
+    "baseCommit": "c7f0f3c466164cf7f104940d57de5d732eb60c1e",
+    "initialScopeDigest": "0f07d4304999dfbe85ca81e09f5f2e66408d03bbd3a610997b0dd9427d2e2339",
+    "contractSkeletonDigest": "c3ed7b5143a09f1ca49fb8708f931dc95f89d90c06d13c0887144db10bbe3f46"
+  }
+}

@@ -1,0 +1,310 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "wi-weekly-radar-document-discovery-quality",
+  "contractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+  "changedFiles": [
+    {
+      "path": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "reason": "Approved v2 Work Item boundary and evidence-backed execution decision."
+    },
+    {
+      "path": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "reason": "Records implementation, verification, governance, and residual-risk evidence."
+    },
+    {
+      "path": ".ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json",
+      "reason": "Immutable Start Receipt binds the dedicated branch to the approved base."
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "Generated AI Cockpit status projection."
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "reason": "Generated Human Benefit Report JSON."
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "reason": "Generated localized Human Benefit Report Markdown."
+    },
+    {
+      "path": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.json",
+      "reason": "Mandatory Task Outcome evidence generated during Finish."
+    },
+    {
+      "path": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.md",
+      "reason": "Human-readable Task Outcome evidence generated during Finish."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md",
+      "reason": "Design for bounded metadata recovery, document context, Claim extraction, and report visibility."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md",
+      "reason": "TDD implementation plan and verification sequence."
+    },
+    {
+      "path": "src/main.rs",
+      "reason": "Counts document-kind discovery metrics without changing judgment or publication."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "reason": "Recovers bounded document metadata and deterministic document classification."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/sources.rs",
+      "reason": "Retains DocumentKind on source observations."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "Improves deterministic complete Claim extraction and provenance context."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "reason": "Adds backward-compatible document-kind research metrics."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "reason": "Renders localized discovery-quality counters."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime.rs",
+      "reason": "Maintains documented public runtime exports for the new boundary."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "RED/GREEN coverage for metadata, document context, Claim promotion, and negative cases."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Runtime, snapshot, report, and fail-closed regression coverage."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Documents discovery, Claim completeness, and data-insufficiency semantics."
+    }
+  ],
+  "sourcesUsed": [
+    "AGENTS.md",
+    ".ai/glossary.md",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-evidence-dimension-design.md",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/main.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "Makefile"
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "result": "not_run"
+    },
+    {
+      "check": "aiScope",
+      "result": "not_run"
+    },
+    {
+      "check": "aiGuards",
+      "result": "not_run"
+    },
+    {
+      "check": "aiCheckpoint",
+      "result": "not_run"
+    },
+    {
+      "check": "aiAgentRisk",
+      "result": "not_run"
+    },
+    {
+      "check": "aiReviewPolicy",
+      "result": "not_run"
+    },
+    {
+      "check": "aiBacktrack",
+      "result": "not_run"
+    },
+    {
+      "check": "aiCoverage",
+      "result": "not_run"
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "result": "not_run"
+    },
+    {
+      "check": "aiGuidelines",
+      "result": "not_run"
+    },
+    {
+      "check": "aiSummary",
+      "result": "not_run"
+    },
+    {
+      "check": "aiStatus",
+      "result": "not_run"
+    },
+    {
+      "check": "aiStatusCheck",
+      "result": "not_run"
+    },
+    {
+      "check": "aiStatusConsistency",
+      "result": "not_run"
+    },
+    {
+      "check": "aiDiffOwnership",
+      "result": "not_run"
+    },
+    {
+      "check": "quality",
+      "result": "not_run"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "New public APIs must be documented.",
+      "compliant": false,
+      "evidence": "Pending implementation and verification."
+    },
+    {
+      "guideline": "Do not import internal modules from other features.",
+      "compliant": false,
+      "evidence": "Pending implementation and verification."
+    },
+    {
+      "guideline": "Keep discovery and extraction deterministic, provider-neutral, bounded, and rule-only.",
+      "compliant": false,
+      "evidence": "Pending implementation and verification."
+    },
+    {
+      "guideline": "Prefer false negatives to promoting generic technical prose as enterprise change.",
+      "compliant": false,
+      "evidence": "Pending implementation and verification."
+    },
+    {
+      "guideline": "Preserve legacy snapshot and ResearchMetrics deserialization with optional defaults.",
+      "compliant": false,
+      "evidence": "Pending implementation and verification."
+    },
+    {
+      "guideline": "Do not change SEC, judgment, Ranking, Telegram, archive, or workflow behavior.",
+      "compliant": false,
+      "evidence": "Pending implementation and verification."
+    }
+  ],
+  "unknownsRemaining": [],
+  "risk": {
+    "level": "medium",
+    "detail": "Date and lexical extraction changes may cause false positives or false negatives; bounded precedence, negative fixtures, and legacy defaults are required."
+  },
+  "generatedFiles": [],
+  "destructiveChanges": [],
+  "observedIssues": [],
+  "residualRisks": [
+    {
+      "level": "medium",
+      "area": "external_source_variability",
+      "detail": "Live publisher HTML can change outside deterministic fixtures; dry-run evidence remains bounded by source availability and parser rules.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    },
+    {
+      "level": "low",
+      "area": "coverage_threshold",
+      "detail": "This Work Item does not add new providers or guarantee all companies expose machine-readable publication dates.",
+      "reviewRecommended": true,
+      "followUpCandidate": false
+    }
+  ],
+  "reviewReadiness": {
+    "status": "not_ready",
+    "reason": "Implementation and required verification have not yet run.",
+    "expectedReviewFocus": [
+      "date precedence",
+      "document-kind propagation",
+      "Claim false-positive boundary",
+      "legacy metrics compatibility"
+    ]
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "pending",
+    "userVisibleOutput": "pending",
+    "persistence": "pending",
+    "localization": "pending",
+    "generatedArtifacts": "pending",
+    "makeEntrypoints": "pending"
+  },
+  "userCorrectionsCaptured": [],
+  "userCorrectionSolidification": [],
+  "checkpointEvidence": [
+    {
+      "stage": "before_edit",
+      "recorded": true,
+      "contractHash": "5d712ccaf582b322",
+      "acceptanceCount": 9,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "5d712ccaf582b322",
+      "previousContractHash": "5d712ccaf582b322",
+      "contractHash": "52ea5b33b6b290e2",
+      "acceptanceCount": 9,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Correct the requested-operation policy target to repository_governance after preflight identified the repository policy key; implementation scope and authority are unchanged.",
+      "verificationStarted": false,
+      "invalidatedRequiredChecks": [],
+      "requiredChecksPassedAtAmendment": 0,
+      "recordedAt": "2026-08-25T07:40:44.306501+00:00"
+    }
+  ],
+  "knownGaps": [],
+  "overclaimPrevention": "Do not report increased validated-evidence yield or live-source coverage until focused tests and a post-merge dry-run provide direct evidence.",
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "not_checked",
+    "checkedAt": null,
+    "checks": [
+      {
+        "area": "plan",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete after writing and reviewing the implementation plan."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete during Finish."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete during Finish."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete during Finish."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "not_checked",
+        "evidence": [],
+        "reason": "Complete during Finish."
+      }
+    ]
+  }
+}

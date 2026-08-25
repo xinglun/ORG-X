@@ -204,7 +204,16 @@
   },
   "generatedFiles": [],
   "destructiveChanges": [],
-  "observedIssues": [],
+  "observedIssues": [
+    {
+      "issue": "TDD RED focused tests exposed that SourceObservation does not yet retain the discovered DocumentKind, and the current parser does not recover published metadata or JSON-LD dates.",
+      "resolution": "Added the focused metadata precedence, malformed-date fallback, and DocumentKind propagation tests before production implementation; the focused cargo test currently fails at the missing document_kind API as expected.",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "cargo test --test weekly_radar_evidence_quality document_metadata_ -- --nocapture"
+      ]
+    }
+  ],
   "residualRisks": [
     {
       "level": "medium",

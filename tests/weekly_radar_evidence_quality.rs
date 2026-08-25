@@ -1,6 +1,6 @@
 use chrono::{NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::CompanyConfig;
-use org_x::features::weekly_radar::runtime::discovery::document_metadata;
+use org_x::features::weekly_radar::runtime::discovery::{document_metadata, DocumentKind};
 use org_x::features::weekly_radar::runtime::evidence::{
     extract_evidence_candidate, validate_evidence_candidate, EvidenceCandidate, EvidenceClass,
     EvidencePolarity, EvidenceSourceKind, EvidenceValidationError,
@@ -334,6 +334,59 @@ fn document_discovery_deduplicates_and_caps_followed_links() {
         .iter()
         .all(|url| url.starts_with("https://ir.example.test/")));
     assert!(urls.iter().all(|url| !url.contains('#')));
+}
+
+#[test]
+fn document_metadata_prefers_published_metadata_over_modified_date() {
+    let (_, date, _) = document_metadata(
+        r#"<html><head>
+            <meta property="article:published_time" content="2026-08-19T09:30:00Z">
+            <meta property="article:modified_time" content="2026-08-25T09:30:00Z">
+        </head><body><p>Acme changed an engineering workflow.</p></body></html>"#,
+        "fallback",
+    );
+
+    assert_eq!(date, NaiveDate::from_ymd_opt(2026, 8, 19));
+}
+
+#[test]
+fn document_metadata_reads_json_ld_and_iso_datetime() {
+    let (_, date, _) = document_metadata(
+        r#"<html><head><script type="application/ld+json">
+            {"@context":"https://schema.org","datePublished":"2026-08-20T14:00:00Z"}
+        </script></head><body><p>Acme launched a production platform.</p></body></html>"#,
+        "fallback",
+    );
+
+    assert_eq!(date, NaiveDate::from_ymd_opt(2026, 8, 20));
+}
+
+#[test]
+fn document_metadata_rejects_malformed_dates_without_guessing() {
+    let (_, date, _) = document_metadata(
+        r#"<html><head>
+            <meta property="article:published_time" content="2026-99-99">
+            <script type="application/ld+json">
+                {"dateModified":"2026-08-23T12:00:00Z"}
+            </script>
+        </head><body><p>Acme changed a production workflow.</p></body></html>"#,
+        "fallback",
+    );
+
+    assert_eq!(date, NaiveDate::from_ymd_opt(2026, 8, 23));
+}
+
+#[test]
+fn discovered_document_retains_document_kind_without_promoting_entry_point() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert_eq!(observation.material_kind(), SourceMaterialKind::Document);
+    assert_eq!(observation.document_kind(), Some(DocumentKind::Engineering));
 }
 
 #[test]

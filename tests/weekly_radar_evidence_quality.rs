@@ -3,7 +3,7 @@ use org_x::features::weekly_radar::runtime::config::CompanyConfig;
 use org_x::features::weekly_radar::runtime::discovery::document_metadata;
 use org_x::features::weekly_radar::runtime::evidence::{
     extract_evidence_candidate, validate_evidence_candidate, EvidenceCandidate, EvidencePolarity,
-    EvidenceSourceKind, EvidenceValidationError,
+    EvidenceClass, EvidenceSourceKind, EvidenceValidationError,
 };
 use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpResponse};
 use org_x::features::weekly_radar::runtime::model::{
@@ -470,6 +470,40 @@ fn complete_authoritative_candidate_becomes_validated_evidence() {
         validated.effective_date(),
         Some(&chrono::NaiveDate::from_ymd_opt(2026, 8, 19).unwrap())
     );
+}
+
+#[test]
+fn explicit_production_system_change_becomes_structural_evidence() {
+    let candidate = complete_candidate("2026-08-19", "production scheduling").with_source_details(
+        "Production scheduling update",
+        "Acme consolidated production scheduling under one platform.",
+    );
+
+    let validated = validate_evidence_candidate(&candidate, cutoff()).unwrap();
+
+    assert_eq!(validated.evidence_class(), EvidenceClass::StructuralEvidence);
+    assert!(validated
+        .to_normalized_fact(1)
+        .unwrap()
+        .kind()
+        .starts_with("evidence_structural_change_"));
+}
+
+#[test]
+fn generic_research_description_remains_a_regular_validated_fact() {
+    let candidate = complete_candidate("2026-08-19", "research").with_source_details(
+        "Model research update",
+        "The research model shifted representation modeling for long-range graph topologies.",
+    );
+
+    let validated = validate_evidence_candidate(&candidate, cutoff()).unwrap();
+
+    assert_eq!(validated.evidence_class(), EvidenceClass::ValidatedFact);
+    assert!(validated
+        .to_normalized_fact(1)
+        .unwrap()
+        .kind()
+        .starts_with("evidence_official_material_"));
 }
 
 #[test]

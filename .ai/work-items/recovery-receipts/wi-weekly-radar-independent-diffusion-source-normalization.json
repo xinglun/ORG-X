@@ -1,0 +1,62 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.archive-manifest.json",
+      "sha256": "cb07bfdfb2f67f40da90696991fc472bbd2a708fc3d50243abb07e972bb27994"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+      "sha256": "2eac13c1636eb2e7fcb3b12faae95c099363927acecf418c8cee4c9c997fbdf3"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json",
+      "sha256": "ba45fafa99ca4238b498ef569b825b5d77cc99d054ab14fc75c63b4a342ec263"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+      "sha256": "353daac427d7eeb49f13da7c424d2cc87b51ac28aacb2f81aac4e92a7f89c46a"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=037f39e28a64a88eb3426bc92c629bd388b33b7b"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "9fe636fae2a1b2dd56e3a0cf31d514ae429e279dfeca0ac170440ad91b537a46"
+  },
+  "humanAuthorization": {
+    "reference": "User-authorized full lifecycle execution; bind only the regenerated historical knowledge projections exposed by the failed pre-merge ownership audit.",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/87",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-25T23:15:19.169797+00:00",
+  "prBaseCommit": "037f39e28a64a88eb3426bc92c629bd388b33b7b",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
+  ],
+  "workItemId": "wi-weekly-radar-independent-diffusion-source-normalization"
+}

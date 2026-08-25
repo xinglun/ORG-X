@@ -8,10 +8,14 @@ use chrono::{DateTime, NaiveDate, Utc};
 use regex::Regex;
 use serde::de::{DeserializeOwned, Error as DeError, IgnoredAny, SeqAccess, Visitor};
 use serde::Deserialize;
+use std::collections::BTreeSet;
 use std::marker::PhantomData;
 
 use super::config::{is_safe_source_identifier, CompanyConfig};
-use super::discovery::{discover_documents, document_metadata, DocumentCandidate, DocumentKind};
+use super::discovery::{
+    discover_documents, document_metadata, DocumentCandidate, DocumentKind,
+    MAX_DOCUMENT_OBSERVATIONS_PER_ENTRY,
+};
 use super::http::{HttpClient, HttpResponse, MAX_HTTP_RESPONSE_BODY_BYTES};
 use super::model::Provenance;
 
@@ -27,6 +31,8 @@ const GDELT_USER_AGENT: &str = "ORG-X weekly-radar source adapter";
 #[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum SourceKind {
+    /// SEC EDGAR filing material.
+    Sec,
     /// Configured official investor-relations material.
     OfficialIr,
     /// Configured official careers material.
@@ -45,6 +51,7 @@ impl SourceKind {
     /// Returns the stable source-family label.
     pub const fn as_str(self) -> &'static str {
         match self {
+            Self::Sec => "sec_filing",
             Self::OfficialIr => "official_ir",
             Self::Careers => "careers",
             Self::EngineeringAiBlog => "engineering_ai_blog",
@@ -281,10 +288,61 @@ impl SourceObservation {
     }
 }
 
+/// Input required to build one official document observation.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct DocumentObservationInput {
+    /// Company identity retained by the observation.
+    pub company_id: String,
+    /// Source family that exposed the document.
+    pub kind: SourceKind,
+    /// Canonical document URI.
+    pub url: String,
+    /// Document title or safe fallback label.
+    pub title: String,
+    /// Normalized document body.
+    pub text: String,
+    /// Retrieval status of the document.
+    pub status: SourceStatus,
+    /// Safe status explanation.
+    pub status_reason: String,
+    /// Deterministic document classification.
+    pub document_kind: DocumentKind,
+    /// Discovery or filing provenance field.
+    pub source_field_or_passage: String,
+    /// Observation timestamp.
+    pub observed_at: DateTime<Utc>,
+    /// Authoritative document date when available.
+    pub effective_date: Option<NaiveDate>,
+}
+
+/// Builds one official document observation for the shared runtime path.
+///
+/// SEC filing documents and configured official documents use this factory so
+/// they share the same status, provenance, and claim-extraction boundary.
+pub fn document_observation(input: DocumentObservationInput) -> SourceObservation {
+    SourceObservation::new(SourceObservationInput {
+        company_id: input.company_id,
+        kind: input.kind,
+        material_kind: SourceMaterialKind::Document,
+        status: input.status,
+        tier: SourceTier::OfficialPrimary,
+        url: Some(input.url.clone()),
+        title: Some(input.title),
+        text: input.text,
+        status_reason: input.status_reason,
+        document_kind: Some(input.document_kind),
+        source_uri: input.url,
+        source_field_or_passage: input.source_field_or_passage,
+        observed_at: input.observed_at,
+        effective_date: input.effective_date,
+    })
+}
+
 /// Collects all configured official, hiring, and discovery observations for a
 /// company using the injected HTTP boundary.
 ///
-/// The number of requests is bounded to three configured official pages, one
+/// The number of requests is bounded to three configured official pages, up to
+/// twelve documents per official entry point (including one nested pass), one
 /// Greenhouse endpoint, one Lever endpoint, and, when a company source
 /// endpoint is configured, one GDELT query. Individual failures become
 /// explicit source statuses so optional source gaps do not abort collection
@@ -444,63 +502,95 @@ fn collect_discovered_documents(
     candidates: Vec<DocumentCandidate>,
     observations: &mut Vec<SourceObservation>,
 ) {
+    let mut seen_urls = candidates
+        .iter()
+        .map(|candidate| candidate.url().to_owned())
+        .collect::<BTreeSet<_>>();
+    let mut nested_candidates = Vec::new();
+
     for candidate in candidates {
-        let response = http.get(
-            candidate.url(),
-            &[(
-                "Accept".to_owned(),
-                "text/html,application/xhtml+xml".to_owned(),
-            )],
-        );
-        let Some(response) = response.ok().filter(|response| response.is_success()) else {
+        if let Some(body) = collect_document(company, http, observed_at, &candidate, observations) {
+            nested_candidates.extend(discover_documents(
+                company.id(),
+                candidate.source_kind(),
+                candidate.url(),
+                &body,
+                observed_at,
+            ));
+        }
+    }
+
+    for candidate in nested_candidates {
+        if seen_urls.len() >= MAX_DOCUMENT_OBSERVATIONS_PER_ENTRY {
+            break;
+        }
+        if !seen_urls.insert(candidate.url().to_owned()) {
+            continue;
+        }
+        collect_document(company, http, observed_at, &candidate, observations);
+    }
+}
+
+fn collect_document(
+    company: &CompanyConfig,
+    http: &dyn HttpClient,
+    observed_at: DateTime<Utc>,
+    candidate: &DocumentCandidate,
+    observations: &mut Vec<SourceObservation>,
+) -> Option<String> {
+    let response = http.get(
+        candidate.url(),
+        &[(
+            "Accept".to_owned(),
+            "text/html,application/xhtml+xml".to_owned(),
+        )],
+    );
+    let Some(response) = response.ok().filter(|response| response.is_success()) else {
+        observations.push(discovered_document_status(
+            company,
+            candidate,
+            observed_at,
+            "discovered document request unavailable",
+        ));
+        return None;
+    };
+    let body = match bounded_body(&response) {
+        Ok(body) => body,
+        Err(FetchFailure::Unavailable) => {
             observations.push(discovered_document_status(
                 company,
-                &candidate,
+                candidate,
                 observed_at,
-                "discovered document request unavailable",
+                "discovered document response exceeds size limit",
             ));
-            continue;
-        };
-        let body = match bounded_body(&response) {
-            Ok(body) => body,
-            Err(FetchFailure::Unavailable) => {
-                observations.push(discovered_document_status(
-                    company,
-                    &candidate,
-                    observed_at,
-                    "discovered document response exceeds size limit",
-                ));
-                continue;
-            }
-            Err(FetchFailure::InvalidPayload) => unreachable!("body bounds do not decode"),
-        };
-        let (title, effective_date, text) = document_metadata(body, candidate.title());
-        let status = if text.is_empty() {
-            SourceStatus::Unknown
+            return None;
+        }
+        Err(FetchFailure::InvalidPayload) => unreachable!("body bounds do not decode"),
+    };
+    let (title, effective_date, text) = document_metadata(body, candidate.title());
+    let status = if text.is_empty() {
+        SourceStatus::Unknown
+    } else {
+        SourceStatus::Known
+    };
+    observations.push(document_observation(DocumentObservationInput {
+        company_id: company.id().to_owned(),
+        kind: candidate.source_kind(),
+        url: candidate.url().to_owned(),
+        title,
+        text,
+        status,
+        status_reason: if status == SourceStatus::Known {
+            "discovered document returned usable text".to_owned()
         } else {
-            SourceStatus::Known
-        };
-        observations.push(SourceObservation::new(SourceObservationInput {
-            company_id: company.id().to_owned(),
-            kind: candidate.source_kind(),
-            material_kind: SourceMaterialKind::Document,
-            status,
-            tier: SourceTier::OfficialPrimary,
-            url: Some(candidate.url().to_owned()),
-            title: Some(title),
-            text,
-            status_reason: if status == SourceStatus::Known {
-                "discovered document returned usable text".to_owned()
-            } else {
-                "discovered document contained no usable text".to_owned()
-            },
-            document_kind: Some(candidate.document_kind()),
-            source_uri: candidate.url().to_owned(),
-            source_field_or_passage: candidate.provenance().to_owned(),
-            observed_at,
-            effective_date,
-        }));
-    }
+            "discovered document contained no usable text".to_owned()
+        },
+        document_kind: candidate.document_kind(),
+        source_field_or_passage: candidate.provenance().to_owned(),
+        observed_at,
+        effective_date,
+    }));
+    Some(body.to_owned())
 }
 
 fn discovered_document_status(

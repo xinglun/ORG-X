@@ -411,9 +411,10 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     let source_kind = match observation.kind() {
         SourceKind::Gdelt => EvidenceSourceKind::DiscoveryArticle,
         SourceKind::Greenhouse | SourceKind::Lever => EvidenceSourceKind::StructuredHiring,
-        SourceKind::OfficialIr | SourceKind::Careers | SourceKind::EngineeringAiBlog => {
-            EvidenceSourceKind::OfficialMaterial
-        }
+        SourceKind::Sec
+        | SourceKind::OfficialIr
+        | SourceKind::Careers
+        | SourceKind::EngineeringAiBlog => EvidenceSourceKind::OfficialMaterial,
     };
     let mut candidate = EvidenceCandidate::new(
         observation.company_id(),

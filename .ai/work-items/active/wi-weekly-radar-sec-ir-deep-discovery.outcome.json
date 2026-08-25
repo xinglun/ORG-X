@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-sec-ir-deep-discovery",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "1e2c122d4c80af3d02f1d6f423009787315f727782c878966f6bb236eb9cc4fd"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-sec-ir-deep-discovery",
+    "contractDigest": "bd6e2933117c20ac360c8f0bde45f412d2059f9cc80052f58f481b63fa9b44fe",
+    "summaryDigest": "f2d23a0b6d1816978d58ef8d3f0ed2cb21fae91442a2693cf0358390db0042a2",
+    "verificationDigest": "53e89e3ca6bad8abd3928211851afd5633964e4c130b9f44fc6b127f86580a81",
+    "baseCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+    "headCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "6a86a0dc122469d8b8a9fd900a9f7e03cd21337b5185e426b72d90444d349f04",
+      "binding": {
+        "baseCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+        "candidateHead": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+        "candidateTreeDigest": "f71341143034db2ab2ce489edc24ff625380dc540fb51c30ff44aa3983064efe",
+        "candidateDiffDigest": "2569752c0d35c7abb69d5a734239b41594411f2f6fccde8fefe4a3935b6984e9"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-sec-ir-deep-discovery generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-sec-ir-deep-discovery generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-sec-ir-deep-discovery",
     "deliveredChanges": [
       ".ai/cockpit/current_status.md",
       ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
@@ -30,191 +53,427 @@
       ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [
-    "Stopping condition is local problem resolution; CI, PR, merge, and Work Item closure are not mandatory endpoints."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Fixture tests cannot prove every live IR or SEC filing uses the same HTML body structure or lexical claim vocabulary.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "The full-registry dry-run can wait on GDELT when that endpoint is unreachable; this Work Item does not change news discovery or provider timeout policy.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "low",
-      "detail": "Deterministic claim extraction intentionally favors precision and may leave valid but unusual wording as pending evidence.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Bounded SEC filing bodies and one-hop official IR discovery now share the existing source-observation and evidence-validation path.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/sec.rs",
-          "subject": "SEC filing body acquisition"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/sources.rs",
-          "subject": "IR traversal and document factory"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Fetch validated SEC candidates once under a finite limit, expand each official IR entry by one same-origin nested pass, and process all document observations exactly once in main.rs.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/main.rs",
-          "subject": "shared acquisition loop"
-        },
-        {
-          "source": "tests/weekly_radar_runtime.rs",
-          "subject": "SEC integration regression"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [
       {
-        "component": "SEC adapter",
-        "detail": "Known, Unknown, and Unavailable filing body states with safe independent failures.",
-        "status": "verified",
+        "sourceWarning": "The full-registry live dry-run is inconclusive because GDELT is unavailable in this environment; deterministic fixture-driven acquisition and local CLI dry-run regression tests pass.",
+        "reason": "The live GDELT dependency is outside this Work Item's SEC/IR scope; the limitation remains visible as residual risk while deterministic local evidence satisfies the declared local verification boundary.",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/sec.rs",
-            "subject": "SecDocumentStatus"
-          }
-        ]
-      },
-      {
-        "component": "Official source adapter",
-        "detail": "Direct plus one nested IR discovery under same-origin and global caps.",
-        "status": "verified",
-        "evidence": [
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "subject": "outOfScope and acceptance boundary"
+          },
           {
-            "source": "src/features/weekly_radar/runtime/sources.rs",
-            "subject": "collect_discovered_documents"
-          }
-        ]
-      },
-      {
-        "component": "Evidence runtime",
-        "detail": "SEC and IR documents use one claim extraction and validation path.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/main.rs",
-            "subject": "document observation integration"
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "fixture-driven CLI dry-run regression"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [
       {
-        "decision": "Keep SEC stage health separate from filing document availability.",
-        "reason": "A filing document failure must not make Company Facts disappear or make stage coverage negative.",
-        "status": "verified",
+        "problem": "Initial ai-start skeleton was not_ready because Contract evidence was incomplete.",
+        "action": "Filled intent, sources, acceptance, scenarios, capabilities, requested operation, and execution decision; Preflight became ready.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "subject": "preflight contract evidence"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/main.rs",
-            "subject": "SEC health metric separation"
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "subject": "preflight contract evidence"
           }
-        ]
+        ],
+        "inference": false
       },
       {
-        "decision": "Use one public input struct for document observation construction.",
-        "reason": "The shared boundary remains explicit without violating strict Clippy argument limits.",
-        "status": "verified",
+        "problem": "The first Contract declared an unregistered source_acquisition capability and a non-policy requested-operation target.",
+        "action": "Aligned declared capabilities with repository capabilities and changed target to repository_governance; Preflight became ready.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "subject": "declared capabilities and requested operation"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "subject": "declared capabilities and requested operation"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "The first multi-filter Cargo test command was invalid and did not exercise the intended RED tests.",
+        "action": "Re-ran with the single sec_ filter and observed the expected missing-interface compile failure before implementation.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md",
+            "subject": "RED/GREEN test sequence"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "SEC TDD fixtures"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md",
+            "subject": "RED/GREEN test sequence"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "SEC TDD fixtures"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "Adding SourceKind::Sec exposed the existing evidence source-kind match in runtime/evidence.rs, which was not in the initial scope.",
+        "action": "Amended the current Contract and plan before editing the file; the source mapping is now explicit and the amendment is recorded for revalidation.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "subject": "amended scope and revalidation"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "explicit SEC source mapping"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "subject": "amended scope and revalidation"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "explicit SEC source mapping"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "Clippy rejected the first 11-argument document factory.",
+        "action": "Replaced it with the documented DocumentObservationInput boundary; strict Clippy now passes.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/runtime/sources.rs",
+            "subject": "DocumentObservationInput"
+          },
+          {
+            "source": "Makefile.ai",
+            "subject": "strict quality route"
+          }
+        ],
         "evidence": [
           {
             "source": "src/features/weekly_radar/runtime/sources.rs",
             "subject": "DocumentObservationInput"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "TDD",
-        "detail": "New SEC, IR, and runtime tests were observed failing before their implementation slices and pass in the final local suite.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "SEC RED/GREEN fixtures"
           },
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "IR RED/GREEN fixtures"
+            "source": "Makefile.ai",
+            "subject": "strict quality route"
           }
-        ]
+        ],
+        "inference": false
       },
       {
-        "topic": "bounded retrieval",
-        "detail": "SEC filing body limit is 8 MiB and the official IR combined document cap is 12.",
-        "status": "verified",
+        "problem": "A filing body that succeeds without usable text was initially treated as unavailable for employee fallback.",
+        "action": "Split Unknown from Unavailable in the fallback path; only request failure or finite-limit failure is unavailable.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": "src/features/weekly_radar/runtime/sec.rs",
+            "subject": "Known/Unknown/Unavailable fallback semantics"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "SEC status regression"
+          }
+        ],
         "evidence": [
           {
             "source": "src/features/weekly_radar/runtime/sec.rs",
-            "subject": "SEC_FILING_DOCUMENT_MAX_RESPONSE_BODY_BYTES"
+            "subject": "Known/Unknown/Unavailable fallback semantics"
           },
           {
-            "source": "src/features/weekly_radar/runtime/discovery.rs",
-            "subject": "MAX_DOCUMENT_OBSERVATIONS_PER_ENTRY"
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "SEC status regression"
           }
-        ]
+        ],
+        "inference": false
+      },
+      {
+        "problem": "The full live-registry dry-run produced no output for about 100 seconds and was interrupted; a 10-second curl probe showed SEC and IR endpoints respond, while GDELT timed out at 5 seconds.",
+        "action": "Accepted as an out-of-scope external dependency; retained as residual risk; deterministic fixture and full local tests remain the acceptance evidence and no archive or Telegram side effect occurred.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "subject": "news discovery and hosted lifecycle are out of scope"
+          },
+          {
+            "source": "docs/operations/WEEKLY_RADAR.md",
+            "subject": "degraded-data and source availability semantics"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+            "subject": "news discovery and hosted lifecycle are out of scope"
+          },
+          {
+            "source": "docs/operations/WEEKLY_RADAR.md",
+            "subject": "degraded-data and source availability semantics"
+          }
+        ],
+        "inference": false
       }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
+      {
+        "claim": "live_html_variation",
+        "severity": "medium",
+        "title": "live_html_variation",
+        "detail": "Fixture tests cannot prove every live IR or SEC filing uses the same HTML body structure or lexical claim vocabulary.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "external_gdelt_latency",
+        "severity": "medium",
+        "title": "external_gdelt_latency",
+        "detail": "The full-registry dry-run can wait on GDELT when that endpoint is unreachable; this Work Item does not change news discovery or provider timeout policy.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "rule_recall",
+        "severity": "low",
+        "title": "rule_recall",
+        "detail": "Deterministic claim extraction intentionally favors precision and may leave valid but unusual wording as pending evidence.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "Stopping condition is local problem resolution; CI, PR, merge, and Work Item closure are not mandatory endpoints."
     ],
     "evidence": [
       {
-        "claim": "All local Rust tests pass.",
-        "status": "verified",
+        "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_runtime.rs",
         "subject": "cargo test --all"
       },
       {
-        "claim": "Strict lint and AI quality pass.",
-        "status": "verified",
         "source": "Makefile.ai",
         "subject": "cargo clippy and make ai-cockpit-quality GOVERNANCE_PROFILE=strict"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Bounded SEC filing bodies and one-hop official IR discovery now share the existing source-observation and evidence-validation path.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/sec.rs",
+            "subject": "SEC filing body acquisition"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/sources.rs",
+            "subject": "IR traversal and document factory"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Fetch validated SEC candidates once under a finite limit, expand each official IR entry by one same-origin nested pass, and process all document observations exactly once in main.rs.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "shared acquisition loop"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "SEC integration regression"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "SEC adapter",
+          "detail": "Known, Unknown, and Unavailable filing body states with safe independent failures.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/sec.rs",
+              "subject": "SecDocumentStatus"
+            }
+          ]
+        },
+        {
+          "component": "Official source adapter",
+          "detail": "Direct plus one nested IR discovery under same-origin and global caps.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/sources.rs",
+              "subject": "collect_discovered_documents"
+            }
+          ]
+        },
+        {
+          "component": "Evidence runtime",
+          "detail": "SEC and IR documents use one claim extraction and validation path.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/main.rs",
+              "subject": "document observation integration"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Keep SEC stage health separate from filing document availability.",
+          "reason": "A filing document failure must not make Company Facts disappear or make stage coverage negative.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/main.rs",
+              "subject": "SEC health metric separation"
+            }
+          ]
+        },
+        {
+          "decision": "Use one public input struct for document observation construction.",
+          "reason": "The shared boundary remains explicit without violating strict Clippy argument limits.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/sources.rs",
+              "subject": "DocumentObservationInput"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "TDD",
+          "detail": "New SEC, IR, and runtime tests were observed failing before their implementation slices and pass in the final local suite.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "SEC RED/GREEN fixtures"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "IR RED/GREEN fixtures"
+            }
+          ]
+        },
+        {
+          "topic": "bounded retrieval",
+          "detail": "SEC filing body limit is 8 MiB and the official IR combined document cap is 12.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/sec.rs",
+              "subject": "SEC_FILING_DOCUMENT_MAX_RESPONSE_BODY_BYTES"
+            },
+            {
+              "source": "src/features/weekly_radar/runtime/discovery.rs",
+              "subject": "MAX_DOCUMENT_OBSERVATIONS_PER_ENTRY"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "All local Rust tests pass.",
+          "status": "verified",
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "cargo test --all"
+        },
+        {
+          "claim": "Strict lint and AI quality pass.",
+          "status": "verified",
+          "source": "Makefile.ai",
+          "subject": "cargo clippy and make ai-cockpit-quality GOVERNANCE_PROFILE=strict"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1193,6 +1452,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

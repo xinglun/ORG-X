@@ -13,8 +13,13 @@ use org_x::features::weekly_radar::runtime::model::{
 use org_x::features::weekly_radar::runtime::report::{
     render_report_in_language, RenderedReport, ReportLanguage,
 };
-use org_x::features::weekly_radar::runtime::sec::SecClient;
-use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources, SourceStatus};
+use org_x::features::weekly_radar::runtime::sec::{
+    SecClient, SecDocumentCandidate, SecDocumentStatus,
+};
+use org_x::features::weekly_radar::runtime::sources::{
+    collect_configured_sources, document_observation, DocumentObservationInput, SourceKind,
+    SourceStatus,
+};
 use org_x::features::weekly_radar::runtime::{
     acquire_run_lock, build_input_snapshot, derive_judgment_snapshot_for_companies,
     ensure_run_available, ensure_run_replace_available, extract_evidence_candidate,
@@ -273,6 +278,7 @@ fn acquire_runtime_input(
                     .map_err(|error| CliError::Failure(error.to_string()))?,
             )
             .map_err(|error| CliError::Failure(error.to_string()))?;
+        let mut observations = Vec::new();
         let sec_coverage = coverage.entry("sec".to_owned()).or_default();
         sec_coverage.expected.insert(company.id().to_owned());
         if company.sec_cik().is_none() {
@@ -298,15 +304,17 @@ fn acquire_runtime_input(
                         .count();
                     let mut sec_stage_successes = 2usize;
                     for failure in evidence.failures() {
-                        metrics.unavailable_sources += 1;
                         if matches!(failure.stage(), "submissions" | "company_facts") {
+                            metrics.unavailable_sources += 1;
                             sec_stage_successes = sec_stage_successes.saturating_sub(1);
                         }
                     }
                     metrics.source_available += sec_stage_successes;
-                    metrics.document_candidates += evidence.documents().len();
-                    metrics.pending_leads += evidence.documents().len();
-                    if evidence.failures().len() < 2 {
+                    let sec_stage_failures = failed_stages
+                        .iter()
+                        .filter(|stage| matches!(**stage, "submissions" | "company_facts"))
+                        .count();
+                    if sec_stage_failures < 2 {
                         sec_coverage.available.insert(company.id().to_owned());
                     }
                     for fact in evidence.facts() {
@@ -316,6 +324,13 @@ fn acquire_runtime_input(
                         input
                             .add_fact(fact.clone())
                             .map_err(|error| CliError::Failure(error.to_string()))?;
+                    }
+                    for document in evidence.documents() {
+                        observations.push(sec_document_observation(
+                            company.id(),
+                            document,
+                            observed_at,
+                        ));
                     }
                     if !evidence.failures().is_empty() {
                         let reason = evidence
@@ -343,7 +358,7 @@ fn acquire_runtime_input(
             }
         }
 
-        let observations = collect_configured_sources(company, http, observed_at);
+        observations.extend(collect_configured_sources(company, http, observed_at));
         let mut available_kinds = BTreeSet::new();
         let mut source_indices = BTreeMap::<&str, usize>::new();
         let mut evidence_indices = BTreeMap::<&str, usize>::new();
@@ -496,6 +511,41 @@ fn acquire_runtime_input(
     Ok(AcquiredRuntimeInput {
         input,
         has_primary_evidence,
+    })
+}
+
+fn sec_document_observation(
+    company_id: &str,
+    document: &SecDocumentCandidate,
+    observed_at: chrono::DateTime<Utc>,
+) -> org_x::features::weekly_radar::runtime::SourceObservation {
+    let status = match document.status() {
+        SecDocumentStatus::Known => SourceStatus::Known,
+        SecDocumentStatus::Unknown => SourceStatus::Unknown,
+        SecDocumentStatus::Unavailable => SourceStatus::Unavailable,
+    };
+    let provenance = format!(
+        "SEC filing accession={} form={} filing_date={} report_date={}",
+        document.accession_number(),
+        document.form(),
+        document.filing_date(),
+        document
+            .report_date()
+            .map(|date| date.to_string())
+            .unwrap_or_else(|| "unknown".to_owned()),
+    );
+    document_observation(DocumentObservationInput {
+        company_id: company_id.to_owned(),
+        kind: SourceKind::Sec,
+        url: document.source_uri().to_owned(),
+        title: document.title().to_owned(),
+        text: document.text().to_owned(),
+        status,
+        status_reason: document.status_reason().to_owned(),
+        document_kind: org_x::features::weekly_radar::runtime::DocumentKind::Filing,
+        source_field_or_passage: provenance,
+        observed_at,
+        effective_date: Some(document.filing_date()),
     })
 }
 
@@ -955,6 +1005,61 @@ mod tests {
         assert_eq!(acquired.input.research_metrics().sec_stage_available(), 2);
         assert!(acquired.input.research_metrics().sec_fact_expected() > 0);
         assert_eq!(acquired.input.research_metrics().sec_fact_available(), 0);
+    }
+
+    #[test]
+    fn sec_filing_document_enters_common_evidence_loop_once() {
+        let company = CompanyConfig::new(
+            "acme",
+            "Acme Corporation",
+            "ACME",
+            Some("0001234567".to_owned()),
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+        .expect("SEC document fixture company should be valid");
+        let registry = CompanySourceRegistry::new(1, vec![company]).unwrap();
+        let client = FixtureHttpClient::new();
+        client.insert(
+            "https://data.sec.gov/submissions/CIK0001234567.json",
+            HttpResponse::ok(
+                r#"{"filings":{"recent":{"accessionNumber":["0001234567-25-000001"],"filingDate":["2025-02-15"],"reportDate":["2024-12-31"],"form":["8-K"],"primaryDocument":["acme-update.htm"]}}}"#,
+            ),
+        );
+        client.insert(
+            "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json",
+            HttpResponse::ok(r#"{"facts":{}}"#),
+        );
+        client.insert(
+            "https://www.sec.gov/Archives/edgar/data/1234567/000123456725000001/acme-update.htm",
+            HttpResponse::ok(
+                "<title>Acme organization update</title><time datetime=\"2025-02-15\"><p>Acme reorganized its engineering workflow and consolidated production scheduling under one platform.</p>",
+            ),
+        );
+
+        let acquired = acquire_runtime_input(
+            &registry,
+            &client,
+            "ORG-X test contact@example.test",
+            NaiveDate::from_ymd_opt(2026, 8, 25).unwrap(),
+        )
+        .expect("SEC document acquisition should complete");
+
+        assert!(acquired.has_primary_evidence);
+        assert_eq!(acquired.input.research_metrics().document_candidates(), 1);
+        assert_eq!(acquired.input.research_metrics().validated_evidence(), 1);
+        assert_eq!(acquired.input.research_metrics().pending_leads(), 0);
+        assert_eq!(
+            acquired
+                .input
+                .research_metrics()
+                .document_kind_counts()
+                .get("filing"),
+            Some(&1)
+        );
     }
 
     #[test]

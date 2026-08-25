@@ -6,7 +6,7 @@
   "sourceOutcome": {
     "format": "ai-cockpit-task-outcome",
     "schemaVersion": 1,
-    "digest": "3fcece4f09a97685267730e140b3fa801bea4db7ef1034224e70ca5b9ac403cb"
+    "digest": "228cfdda9e49dde38c14e5fb4964b3139f6eae0f2f615aa12cf88d196162e3d9"
   },
   "task": {
     "summary": "Task wi-weekly-radar-confirmed-evidence-report generated an evidence-derived outcome with status completed.",
@@ -474,14 +474,14 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "40e68d4f607e30e9d656ca6cb051fc309fadea0594a2f33727e88875f4dcaa67"
+            "digest": "af373a49a075ca0b377e768c5954a9b095db74cd73c6323701c82848d4df9f47"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "40e68d4f607e30e9d656ca6cb051fc309fadea0594a2f33727e88875f4dcaa67"
+            "digest": "af373a49a075ca0b377e768c5954a9b095db74cd73c6323701c82848d4df9f47"
           }
         ],
         "inference": false
@@ -489,19 +489,19 @@
       {
         "claim": "aiReviewPolicy",
         "title": "aiReviewPolicy",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json [review] .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.json [review] .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-conf",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json [review] .ai/work-items/starts/wi-weekly-radar-confirmed-evidence-report.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md [review] .ai/work-items/active",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json",
             "subject": "aiReviewPolicy",
-            "digest": "18040d43f8de3c0fb95a6f371bdbfdcc56f6f2317747fcec7c258e9d440641bf"
+            "digest": "6a6b864f7857f3c20664041065f4a99088446ce96ca7ad021395085b6d95b0e3"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json",
             "subject": "aiReviewPolicy",
-            "digest": "18040d43f8de3c0fb95a6f371bdbfdcc56f6f2317747fcec7c258e9d440641bf"
+            "digest": "6a6b864f7857f3c20664041065f4a99088446ce96ca7ad021395085b6d95b0e3"
           }
         ],
         "inference": false
@@ -589,19 +589,19 @@
       {
         "claim": "aiDiffOwnership",
         "title": "aiDiffOwnership",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json ## Diff Ownership Preview - active_owned: `12`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.m",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json ## Diff Ownership Preview - active_owned: `12`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Ta",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json",
             "subject": "aiDiffOwnership",
-            "digest": "bd23fd31c24b0d838cf28a1c82a3e6153a493f1d5d72d7d6e96bbf2182206084"
+            "digest": "1a4fc08e235ec1f6974a812a214e9e8a01c03c2e3979d11f193e081ad5155428"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json",
             "subject": "aiDiffOwnership",
-            "digest": "bd23fd31c24b0d838cf28a1c82a3e6153a493f1d5d72d7d6e96bbf2182206084"
+            "digest": "1a4fc08e235ec1f6974a812a214e9e8a01c03c2e3979d11f193e081ad5155428"
           }
         ],
         "inference": false
@@ -614,14 +614,14 @@
           {
             "source": ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json",
             "subject": "quality",
-            "digest": "7c8ab2202cdefd2edf293f7c0f79f339e575f618213d7092da4d5b3c05595433"
+            "digest": "e9a5076f8d30c0e6c1a4be4ba10ad50c801b890a1b7da6f7a3a49435e52b34c1"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json",
             "subject": "quality",
-            "digest": "7c8ab2202cdefd2edf293f7c0f79f339e575f618213d7092da4d5b3c05595433"
+            "digest": "e9a5076f8d30c0e6c1a4be4ba10ad50c801b890a1b7da6f7a3a49435e52b34c1"
           }
         ],
         "inference": false

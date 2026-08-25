@@ -11,6 +11,7 @@ use serde::Deserialize;
 use std::marker::PhantomData;
 
 use super::config::{is_safe_source_identifier, CompanyConfig};
+use super::discovery::{discover_documents, document_metadata, DocumentCandidate};
 use super::http::{HttpClient, HttpResponse, MAX_HTTP_RESPONSE_BODY_BYTES};
 use super::model::Provenance;
 
@@ -98,6 +99,22 @@ pub enum SourceTier {
     DiscoveryOnly,
 }
 
+/// Role of the material represented by one source observation.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SourceMaterialKind {
+    /// A configured page that is an entry point to further research.
+    EntryPoint,
+    /// A bounded document discovered from an entry point or filing index.
+    Document,
+    /// A structured public hiring record.
+    HiringRecord,
+    /// A secondary article retained only as a discovery lead.
+    DiscoveryArticle,
+    /// An unavailable, unknown, or configuration-status observation.
+    Status,
+}
+
 impl SourceTier {
     /// Returns the stable authority-tier label.
     pub const fn as_str(self) -> &'static str {
@@ -129,6 +146,7 @@ impl SourceTier {
 pub struct SourceObservation {
     company_id: String,
     kind: SourceKind,
+    material_kind: SourceMaterialKind,
     status: SourceStatus,
     tier: SourceTier,
     url: Option<String>,
@@ -141,6 +159,7 @@ pub struct SourceObservation {
 struct SourceObservationInput {
     company_id: String,
     kind: SourceKind,
+    material_kind: SourceMaterialKind,
     status: SourceStatus,
     tier: SourceTier,
     url: Option<String>,
@@ -165,6 +184,7 @@ impl SourceObservation {
         Self {
             company_id: input.company_id,
             kind: input.kind,
+            material_kind: input.material_kind,
             status: input.status,
             tier: input.tier,
             url: input.url,
@@ -183,6 +203,11 @@ impl SourceObservation {
     /// Returns the source family.
     pub const fn kind(&self) -> SourceKind {
         self.kind
+    }
+
+    /// Returns the material role represented by this observation.
+    pub const fn material_kind(&self) -> SourceMaterialKind {
+        self.material_kind
     }
 
     /// Returns the source status.
@@ -355,6 +380,8 @@ fn collect_official(
                 }
                 Err(FetchFailure::InvalidPayload) => unreachable!("body bounds do not decode"),
             };
+            let document_candidates =
+                discover_documents(company.id(), kind, url, body, observed_at);
             let text = normalize_html_text(body);
             let status = if text.is_empty() {
                 SourceStatus::Unknown
@@ -369,6 +396,7 @@ fn collect_official(
             observations.push(SourceObservation::new(SourceObservationInput {
                 company_id: company.id().to_owned(),
                 kind,
+                material_kind: SourceMaterialKind::EntryPoint,
                 status,
                 tier: SourceTier::OfficialPrimary,
                 url: Some(url.to_owned()),
@@ -380,6 +408,13 @@ fn collect_official(
                 observed_at,
                 effective_date: None,
             }));
+            collect_discovered_documents(
+                company,
+                http,
+                observed_at,
+                document_candidates,
+                observations,
+            );
         }
         Ok(_) | Err(_) => observations.push(unavailable_observation(
             company,
@@ -390,6 +425,94 @@ fn collect_official(
             "official page request unavailable",
         )),
     }
+}
+
+fn collect_discovered_documents(
+    company: &CompanyConfig,
+    http: &dyn HttpClient,
+    observed_at: DateTime<Utc>,
+    candidates: Vec<DocumentCandidate>,
+    observations: &mut Vec<SourceObservation>,
+) {
+    for candidate in candidates {
+        let response = http.get(
+            candidate.url(),
+            &[(
+                "Accept".to_owned(),
+                "text/html,application/xhtml+xml".to_owned(),
+            )],
+        );
+        let Some(response) = response.ok().filter(|response| response.is_success()) else {
+            observations.push(discovered_document_status(
+                company,
+                &candidate,
+                observed_at,
+                "discovered document request unavailable",
+            ));
+            continue;
+        };
+        let body = match bounded_body(&response) {
+            Ok(body) => body,
+            Err(FetchFailure::Unavailable) => {
+                observations.push(discovered_document_status(
+                    company,
+                    &candidate,
+                    observed_at,
+                    "discovered document response exceeds size limit",
+                ));
+                continue;
+            }
+            Err(FetchFailure::InvalidPayload) => unreachable!("body bounds do not decode"),
+        };
+        let (title, effective_date, text) = document_metadata(body, candidate.title());
+        let status = if text.is_empty() {
+            SourceStatus::Unknown
+        } else {
+            SourceStatus::Known
+        };
+        observations.push(SourceObservation::new(SourceObservationInput {
+            company_id: company.id().to_owned(),
+            kind: candidate.source_kind(),
+            material_kind: SourceMaterialKind::Document,
+            status,
+            tier: SourceTier::OfficialPrimary,
+            url: Some(candidate.url().to_owned()),
+            title: Some(title),
+            text,
+            status_reason: if status == SourceStatus::Known {
+                "discovered document returned usable text".to_owned()
+            } else {
+                "discovered document contained no usable text".to_owned()
+            },
+            source_uri: candidate.url().to_owned(),
+            source_field_or_passage: candidate.provenance().to_owned(),
+            observed_at,
+            effective_date,
+        }));
+    }
+}
+
+fn discovered_document_status(
+    company: &CompanyConfig,
+    candidate: &DocumentCandidate,
+    observed_at: DateTime<Utc>,
+    reason: &str,
+) -> SourceObservation {
+    SourceObservation::new(SourceObservationInput {
+        company_id: company.id().to_owned(),
+        kind: candidate.source_kind(),
+        material_kind: SourceMaterialKind::Document,
+        status: SourceStatus::Unavailable,
+        tier: SourceTier::OfficialPrimary,
+        url: Some(candidate.url().to_owned()),
+        title: Some(candidate.title().to_owned()),
+        text: String::new(),
+        status_reason: reason.to_owned(),
+        source_uri: candidate.url().to_owned(),
+        source_field_or_passage: candidate.provenance().to_owned(),
+        observed_at,
+        effective_date: candidate.published_or_effective_date(),
+    })
 }
 
 fn collect_greenhouse(
@@ -466,6 +589,7 @@ fn collect_greenhouse(
         observations.push(SourceObservation::new(SourceObservationInput {
             company_id: company.id().to_owned(),
             kind: SourceKind::Greenhouse,
+            material_kind: SourceMaterialKind::HiringRecord,
             status: SourceStatus::Known,
             tier: SourceTier::StructuredHiring,
             url,
@@ -575,6 +699,7 @@ fn collect_lever(
         observations.push(SourceObservation::new(SourceObservationInput {
             company_id: company.id().to_owned(),
             kind: SourceKind::Lever,
+            material_kind: SourceMaterialKind::HiringRecord,
             status: SourceStatus::Known,
             tier: SourceTier::StructuredHiring,
             url,
@@ -648,6 +773,7 @@ fn collect_gdelt(
         observations.push(SourceObservation::new(SourceObservationInput {
             company_id: company.id().to_owned(),
             kind: SourceKind::Gdelt,
+            material_kind: SourceMaterialKind::DiscoveryArticle,
             status: SourceStatus::DiscoveryOnly,
             tier: SourceTier::DiscoveryOnly,
             url: Some(url.clone()),
@@ -747,6 +873,7 @@ fn observation_with_status_reason(
     SourceObservation::new(SourceObservationInput {
         company_id: company.id().to_owned(),
         kind,
+        material_kind: SourceMaterialKind::Status,
         status,
         tier,
         url: url.map(str::to_owned),
@@ -774,6 +901,7 @@ fn unknown_observation(
     SourceObservation::new(SourceObservationInput {
         company_id: company.id().to_owned(),
         kind,
+        material_kind: SourceMaterialKind::Status,
         status: SourceStatus::Unknown,
         tier,
         url: url.map(str::to_owned),

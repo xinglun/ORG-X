@@ -13,8 +13,8 @@ use serde::Serialize;
 
 use super::judgment::MachineStage;
 use super::model::{
-    CompanyIdentity, Confidence, FactStatus, NormalizedFact, RuntimeReportInput, SourceCoverage,
-    SourceFailure,
+    CompanyIdentity, Confidence, FactStatus, NormalizedFact, ResearchMetrics, RuntimeReportInput,
+    SourceCoverage, SourceFailure,
 };
 
 const MAX_CHANGE_CARDS: usize = 3;
@@ -208,6 +208,10 @@ struct Labels {
     pending_leads: &'static str,
     unknown_facts: &'static str,
     unavailable_facts: &'static str,
+    validated_evidence: &'static str,
+    document_candidates: &'static str,
+    source_availability: &'static str,
+    unavailable_sources_metric: &'static str,
     source_available: &'static str,
     source_unavailable: &'static str,
     source_not_configured: &'static str,
@@ -255,11 +259,15 @@ fn labels(language: ReportLanguage) -> Labels {
             evidence: "证据",
             evidence_details: "逐项证据见下方“已确认信息”。",
             evidence_insufficient: "目前没有已确认的组织变化；仍有待核实或证据不足，不能视为没有变化。",
-            source_unavailable_reason: "没有确认到组织变化；但部分相关来源暂不可用，无法据此确认本周没有组织变化。",
+            source_unavailable_reason: "数据不足：没有确认到组织变化；但部分相关来源暂不可用，无法据此确认本周没有组织变化。",
             confirmed_facts: "已确认信息",
-            pending_leads: "待核实线索",
+            pending_leads: "待验证线索",
             unknown_facts: "无法确定",
             unavailable_facts: "暂不可用",
+            validated_evidence: "本周新增有效证据",
+            document_candidates: "发现文档候选",
+            source_availability: "来源可用性确认",
+            unavailable_sources_metric: "关键数据源不可用",
             source_available: "可用",
             source_unavailable: "暂不可用",
             source_not_configured: "尚未配置",
@@ -304,11 +312,15 @@ fn labels(language: ReportLanguage) -> Labels {
             evidence: "根拠",
             evidence_details: "項目ごとの根拠は下記の「確認済み情報」に記載しています。",
             evidence_insufficient: "確認済みの組織変化はありませんが、未確認または根拠不足の情報があり、変化がないとは判断できません。",
-            source_unavailable_reason: "組織変化は確認できませんでしたが、関連情報源の一部を取得できず、変化がないとは判断できません。",
+            source_unavailable_reason: "データ不足：組織変化は確認できませんでしたが、関連情報源の一部を取得できず、変化がないとは判断できません。",
             confirmed_facts: "確認済み情報",
             pending_leads: "未確認の手がかり",
             unknown_facts: "判定不能",
             unavailable_facts: "取得できず",
+            validated_evidence: "今週の新規有効根拠",
+            document_candidates: "発見した文書候補",
+            source_availability: "情報源の利用可能性確認",
+            unavailable_sources_metric: "重要な情報源を取得できず",
             source_available: "利用可能",
             source_unavailable: "取得できず",
             source_not_configured: "未設定",
@@ -353,11 +365,15 @@ fn labels(language: ReportLanguage) -> Labels {
             evidence: "Evidence",
             evidence_details: "See the item-level evidence in Confirmed Information below.",
             evidence_insufficient: "No organizational change was confirmed; unverified or insufficient evidence means this is not proof that no change occurred.",
-            source_unavailable_reason: "No organizational change was confirmed; some relevant sources were unavailable, so this is not proof that no change occurred.",
+            source_unavailable_reason: "Data coverage is degraded: no organizational change was confirmed, and some relevant sources were unavailable; this is not proof that no change occurred.",
             confirmed_facts: "Confirmed information",
             pending_leads: "Leads to verify",
             unknown_facts: "Could not determine",
             unavailable_facts: "Unavailable",
+            validated_evidence: "New validated evidence this week",
+            document_candidates: "Document candidates discovered",
+            source_availability: "Source availability confirmed",
+            unavailable_sources_metric: "Key data sources unavailable",
             source_available: "available",
             source_unavailable: "unavailable",
             source_not_configured: "not configured",
@@ -423,6 +439,7 @@ struct SnapshotDocument {
     companies: Vec<SnapshotCompany>,
     facts: Vec<SnapshotFact>,
     source_coverage: Vec<SnapshotCoverage>,
+    research_metrics: ResearchMetrics,
     health: SourceHealthFacts,
     #[serde(skip_serializing_if = "Option::is_none")]
     judgment: Option<super::judgment::JudgmentSnapshot>,
@@ -578,6 +595,12 @@ fn is_structural_change(kind: &str) -> bool {
     )
 }
 
+fn is_confirmed_information_fact(fact: &NormalizedFact) -> bool {
+    fact.status() == &FactStatus::Known
+        && !fact.kind().starts_with("source_")
+        && !fact.kind().starts_with("pending_evidence_")
+}
+
 fn fact_value(fact: &NormalizedFact) -> String {
     fact.value()
         .map(safe_text)
@@ -678,7 +701,12 @@ fn render_executive_summary(
     let mut section = format!("## {}\n{}", labels.summary, intro);
     let change_sentence = match language {
         ReportLanguage::Chinese => {
-            if structural_count == 0 && health.unavailable > 0 {
+            if input.research_metrics().validated_evidence() == 0
+                && (input.research_metrics().pending_leads() > 0
+                    || input.research_metrics().unavailable_sources() > 0
+                    || health.unavailable > 0
+                    || health.unconfirmed > 0)
+            {
                 labels.source_unavailable_reason.to_owned()
             } else if structural_count == 0 && (health.unknown > 0 || health.unconfirmed > 0) {
                 labels.evidence_insufficient.to_owned()
@@ -689,7 +717,12 @@ fn render_executive_summary(
             }
         }
         ReportLanguage::Japanese => {
-            if structural_count == 0 && health.unavailable > 0 {
+            if input.research_metrics().validated_evidence() == 0
+                && (input.research_metrics().pending_leads() > 0
+                    || input.research_metrics().unavailable_sources() > 0
+                    || health.unavailable > 0
+                    || health.unconfirmed > 0)
+            {
                 labels.source_unavailable_reason.to_owned()
             } else if structural_count == 0 && (health.unknown > 0 || health.unconfirmed > 0) {
                 labels.evidence_insufficient.to_owned()
@@ -700,7 +733,12 @@ fn render_executive_summary(
             }
         }
         ReportLanguage::English => {
-            if structural_count == 0 && health.unavailable > 0 {
+            if input.research_metrics().validated_evidence() == 0
+                && (input.research_metrics().pending_leads() > 0
+                    || input.research_metrics().unavailable_sources() > 0
+                    || health.unavailable > 0
+                    || health.unconfirmed > 0)
+            {
                 labels.source_unavailable_reason.to_owned()
             } else if structural_count == 0 && (health.unknown > 0 || health.unconfirmed > 0) {
                 labels.evidence_insufficient.to_owned()
@@ -716,16 +754,46 @@ fn render_executive_summary(
     };
     let data_sentence = match language {
         ReportLanguage::Chinese => format!(
-            "- {}：{} 条待核实线索，{} 条无法确定，{} 条暂不可用。",
-            labels.data_status, health.unconfirmed, health.unknown, health.unavailable
+            "- {}：{}：{} 条\n- {}：{} 条\n- {}：{} 条\n- {}：{} 条\n- {}：{} 条",
+            labels.data_status,
+            labels.validated_evidence,
+            input.research_metrics().validated_evidence(),
+            labels.document_candidates,
+            input.research_metrics().document_candidates(),
+            labels.source_availability,
+            input.research_metrics().source_available(),
+            labels.pending_leads,
+            input.research_metrics().pending_leads(),
+            labels.unavailable_sources_metric,
+            input.research_metrics().unavailable_sources()
         ),
         ReportLanguage::Japanese => format!(
-            "- {}：未確認 {} 件、判定不能 {} 件、取得できず {} 件。",
-            labels.data_status, health.unconfirmed, health.unknown, health.unavailable
+            "- {}：{}：{} 件\n- {}：{} 件\n- {}：{} 件\n- {}：{} 件\n- {}：{} 件",
+            labels.data_status,
+            labels.validated_evidence,
+            input.research_metrics().validated_evidence(),
+            labels.document_candidates,
+            input.research_metrics().document_candidates(),
+            labels.source_availability,
+            input.research_metrics().source_available(),
+            labels.pending_leads,
+            input.research_metrics().pending_leads(),
+            labels.unavailable_sources_metric,
+            input.research_metrics().unavailable_sources()
         ),
         ReportLanguage::English => format!(
-            "- {}: {} leads to verify, {} could not be determined, {} unavailable.",
-            labels.data_status, health.unconfirmed, health.unknown, health.unavailable
+            "- {}: {}: {}\n- {}: {}\n- {}: {}\n- {}: {}\n- {}: {}",
+            labels.data_status,
+            labels.validated_evidence,
+            input.research_metrics().validated_evidence(),
+            labels.document_candidates,
+            input.research_metrics().document_candidates(),
+            labels.source_availability,
+            input.research_metrics().source_available(),
+            labels.pending_leads,
+            input.research_metrics().pending_leads(),
+            labels.unavailable_sources_metric,
+            input.research_metrics().unavailable_sources()
         ),
     };
     let separator = if language == ReportLanguage::English {
@@ -767,7 +835,7 @@ fn render_confirmed_facts(
     let confirmed = facts
         .iter()
         .copied()
-        .filter(|fact| fact.status() == &FactStatus::Known)
+        .filter(|fact| is_confirmed_information_fact(fact))
         .collect::<Vec<_>>();
     if confirmed.is_empty() {
         return None;
@@ -1394,6 +1462,7 @@ pub fn render_report_in_language(
         companies,
         facts: snapshot_facts,
         source_coverage,
+        research_metrics: input.research_metrics().clone(),
         health: health.clone(),
         judgment: input.judgment().cloned(),
     })

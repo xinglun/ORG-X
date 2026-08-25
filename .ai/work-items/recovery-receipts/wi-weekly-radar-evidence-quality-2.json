@@ -1,0 +1,52 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.archive-manifest.json",
+      "sha256": "0caba42f8379da3ea067090a8cc37497359a9357f8eff3f24d96d5873b05de0e"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.contract.json",
+      "sha256": "f38c3fca9e9fd6942c230b2f84c99fa667e53d3bc2b95eca2483c248bee258e9"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.outcome.json",
+      "sha256": "ae770db77b8f8cacaa3a231dd3b371d9a4d0b37f7e99294246e610ae9adca47d"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.summary.json",
+      "sha256": "500662c92239628096479ee7dc041a195b8d2809e856061742313778b240c04f"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=3952e7d361c838beae2fe408517d4b1c2f639a01"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "dec9a62f772c3e08982c8dbb912015cce83d0dda92f9ef6aa56e7baf1f22febf"
+  },
+  "humanAuthorization": {
+    "reference": "User-authorized same-Work-Item archive-evidence recovery on 2026-08-25; execute WI through CI and closure.",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/72",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-25T00:47:32.524099+00:00",
+  "prBaseCommit": "3952e7d361c838beae2fe408517d4b1c2f639a01",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/work-items/recovery-receipts/wi-weekly-radar-evidence-quality.json",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-evidence-acquisition-quality-design.md",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
+  ],
+  "workItemId": "wi-weekly-radar-evidence-quality"
+}

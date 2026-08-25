@@ -106,10 +106,15 @@ fn sec_failure_display_is_safe_for_source_status_binding() {
         HttpResponse::new(503, "secret response body"),
     );
 
-    let error = SecClient::collect(&company, &client, "ORG-X test contact@example.test")
-        .expect_err("non-success SEC response should fail closed");
-    assert_eq!(error.to_string(), "HTTP response body could not be read");
-    assert!(!error.to_string().contains("secret"));
+    let evidence = SecClient::collect(&company, &client, "ORG-X test contact@example.test")
+        .expect("independent SEC stage failures should retain a partial result");
+    let failure = evidence
+        .failures()
+        .iter()
+        .find(|failure| failure.stage() == "submissions")
+        .expect("submissions failure should be retained");
+    assert_eq!(failure.reason(), "HTTP response unavailable");
+    assert!(!failure.reason().contains("secret"));
 }
 
 #[test]

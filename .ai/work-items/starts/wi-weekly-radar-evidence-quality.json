@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-evidence-quality",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-evidence-quality.json",
+  "baseCommit": "7ea05a9a464657f4bf8c8ec391f1efa66d9e28ae",
+  "baseBranch": "codex/weekly-radar-evidence-quality",
+  "startTimestamp": "2026-08-24T23:48:44.304157+00:00",
+  "initialScopeDigest": "7de99b618c1617bad8d8c2ce97956c207c46cde2442bff0d9ea9e01268f7af0d",
+  "contractSkeletonDigest": "3a3bf6697db53e1996e39467065bf0c806e089a436ef80767ab034025b75f202"
+}

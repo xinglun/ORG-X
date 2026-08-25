@@ -16,6 +16,9 @@ const SEC_SUBMISSIONS_ROOT: &str = "https://data.sec.gov/submissions";
 const SEC_FACTS_ROOT: &str = "https://data.sec.gov/api/xbrl/companyfacts";
 const SEC_ARCHIVES_ROOT: &str = "https://www.sec.gov/Archives/edgar/data";
 
+/// Maximum number of recent filing documents retained as discovery candidates.
+pub const MAX_SEC_DOCUMENT_CANDIDATES: usize = 3;
+
 /// Finite response limit for SEC JSON payloads parsed by the runtime.
 ///
 /// Company Facts and submissions contain complete registrant histories and
@@ -105,13 +108,102 @@ const FACT_SPECS: &[FactSpec] = &[
 pub struct CompanyEvidence {
     company_id: String,
     facts: Vec<NormalizedFact>,
+    documents: Vec<SecDocumentCandidate>,
+    failures: Vec<SecStageFailure>,
+}
+
+/// Safe diagnostic for one independently acquired SEC stage.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct SecStageFailure {
+    stage: String,
+    reason: String,
+}
+
+impl SecStageFailure {
+    fn new(stage: &'static str, error: &RuntimeError) -> Self {
+        let reason = match error {
+            RuntimeError::JsonDecode { .. } => "invalid JSON response",
+            RuntimeError::HttpRequest => "HTTP request unavailable",
+            RuntimeError::HttpResponse => "HTTP response unavailable",
+            RuntimeError::HttpResponseTooLarge => "response exceeded finite limit",
+            RuntimeError::FixtureMissing => "fixture response unavailable",
+            RuntimeError::FixtureState => "fixture transport unavailable",
+            RuntimeError::InvalidConfiguration { .. }
+            | RuntimeError::InvalidModel { .. }
+            | RuntimeError::ConfigurationIo { .. } => "SEC response could not be normalized",
+        };
+        Self {
+            stage: stage.to_owned(),
+            reason: reason.to_owned(),
+        }
+    }
+
+    /// Returns the stable SEC stage label.
+    pub fn stage(&self) -> &str {
+        &self.stage
+    }
+
+    /// Returns the safe failure category without response payloads.
+    pub fn reason(&self) -> &str {
+        &self.reason
+    }
+}
+
+/// One bounded filing document candidate derived from SEC submissions metadata.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct SecDocumentCandidate {
+    accession_number: String,
+    form: String,
+    filing_date: NaiveDate,
+    report_date: Option<NaiveDate>,
+    primary_document: String,
+    source_uri: String,
+}
+
+impl SecDocumentCandidate {
+    /// Returns the SEC accession identity.
+    pub fn accession_number(&self) -> &str {
+        &self.accession_number
+    }
+
+    /// Returns the filing form.
+    pub fn form(&self) -> &str {
+        &self.form
+    }
+
+    /// Returns the filing date.
+    pub const fn filing_date(&self) -> NaiveDate {
+        self.filing_date
+    }
+
+    /// Returns the optional report period end date.
+    pub const fn report_date(&self) -> Option<NaiveDate> {
+        self.report_date
+    }
+
+    /// Returns the validated primary document name.
+    pub fn primary_document(&self) -> &str {
+        &self.primary_document
+    }
+
+    /// Returns the SEC archive URI constructed from validated metadata.
+    pub fn source_uri(&self) -> &str {
+        &self.source_uri
+    }
 }
 
 impl CompanyEvidence {
-    fn new(company_id: impl Into<String>, facts: Vec<NormalizedFact>) -> Self {
+    fn new(
+        company_id: impl Into<String>,
+        facts: Vec<NormalizedFact>,
+        documents: Vec<SecDocumentCandidate>,
+        failures: Vec<SecStageFailure>,
+    ) -> Self {
         Self {
             company_id: company_id.into(),
             facts,
+            documents,
+            failures,
         }
     }
 
@@ -128,6 +220,16 @@ impl CompanyEvidence {
     /// Returns one normalized fact by its provider-neutral kind.
     pub fn fact(&self, kind: &str) -> Option<&NormalizedFact> {
         self.facts.iter().find(|fact| fact.kind() == kind)
+    }
+
+    /// Returns bounded filing document candidates.
+    pub fn documents(&self) -> &[SecDocumentCandidate] {
+        &self.documents
+    }
+
+    /// Returns safe failures for independently acquired SEC stages.
+    pub fn failures(&self) -> &[SecStageFailure] {
+        &self.failures
     }
 }
 
@@ -157,59 +259,103 @@ impl SecClient {
         let cik_path = if cik_path.is_empty() { "0" } else { cik_path };
         let submissions_url = format!("{SEC_SUBMISSIONS_ROOT}/CIK{cik}.json");
         let facts_url = format!("{SEC_FACTS_ROOT}/CIK{cik}.json");
-        let submissions: SubmissionsDocument = get_json(
+        let mut failures = Vec::new();
+        let submissions: Option<SubmissionsDocument> = match get_json(
             http,
             &submissions_url,
             user_agent,
             SEC_SUBMISSIONS_MAX_RESPONSE_BODY_BYTES,
             "SEC submissions",
-        )?;
-        let facts: CompanyFactsDocument = get_json(
+        ) {
+            Ok(value) => Some(value),
+            Err(error) => {
+                failures.push(SecStageFailure::new("submissions", &error));
+                None
+            }
+        };
+        let facts: Option<CompanyFactsDocument> = match get_json(
             http,
             &facts_url,
             user_agent,
             SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES,
             "SEC Company Facts",
-        )?;
-        let latest_filing = submissions.latest_10k();
+        ) {
+            Ok(value) => Some(value),
+            Err(error) => {
+                failures.push(SecStageFailure::new("company_facts", &error));
+                None
+            }
+        };
+        let documents = submissions
+            .as_ref()
+            .map(|value| value.filing_documents(cik_path))
+            .unwrap_or_default();
+        let latest_filing = submissions
+            .as_ref()
+            .and_then(SubmissionsDocument::latest_10k);
         let retrieved_at = Utc::now();
         let mut normalized = Vec::with_capacity(FACT_SPECS.len());
 
         for spec in FACT_SPECS {
-            if let Some(selected) = select_annual_observation(&facts, spec) {
-                let value = value_as_text(&selected.observation.val).ok_or_else(|| {
-                    RuntimeError::invalid_model(format!(
-                        "SEC annual {} value is not scalar",
-                        spec.kind
-                    ))
-                })?;
-                let effective_date = parse_date(selected.observation.end.as_deref());
-                let provenance = Provenance::new(
-                    facts_url.clone(),
-                    observation_description(&selected, &value),
-                    retrieved_at,
-                    effective_date,
-                )?;
-                normalized.push(NormalizedFact::new(
-                    company.id(),
-                    spec.kind,
-                    value,
-                    FactStatus::Known,
-                    Confidence::High,
-                    provenance,
-                )?);
-                continue;
+            if let Some(facts) = facts.as_ref() {
+                if let Some(selected) = select_annual_observation(facts, spec) {
+                    let Some(value) = value_as_text(&selected.observation.val) else {
+                        failures.push(SecStageFailure {
+                            stage: "company_facts".to_owned(),
+                            reason: "annual value was not scalar".to_owned(),
+                        });
+                        normalized.push(unknown_fact(
+                            company,
+                            spec.kind,
+                            facts_url.clone(),
+                            "SEC Company Facts: annual value was not scalar",
+                            parse_date(selected.observation.end.as_deref()),
+                            retrieved_at,
+                        )?);
+                        continue;
+                    };
+                    let effective_date = parse_date(selected.observation.end.as_deref());
+                    let provenance = Provenance::new(
+                        facts_url.clone(),
+                        observation_description(&selected, &value),
+                        retrieved_at,
+                        effective_date,
+                    )?;
+                    normalized.push(NormalizedFact::new(
+                        company.id(),
+                        spec.kind,
+                        value,
+                        FactStatus::Known,
+                        Confidence::High,
+                        provenance,
+                    )?);
+                    continue;
+                }
             }
 
             if spec.kind == "employee_count" {
                 if let Some(filing) = latest_filing.as_ref() {
                     let filing_url = filing.url(cik_path);
-                    let body = get_response_body(
+                    let body = match get_response_body(
                         http,
                         &filing_url,
                         user_agent,
                         MAX_HTTP_RESPONSE_BODY_BYTES,
-                    )?;
+                    ) {
+                        Ok(body) => body,
+                        Err(error) => {
+                            failures.push(SecStageFailure::new("filing_document", &error));
+                            normalized.push(unavailable_fact(
+                                company,
+                                spec.kind,
+                                filing_url,
+                                "SEC filing document unavailable",
+                                filing.report_date(),
+                                retrieved_at,
+                            )?);
+                            continue;
+                        }
+                    };
                     if let Some(candidate) =
                         extract_employee_candidate(&body, filing.report_date(), &filing_url)
                     {
@@ -245,17 +391,35 @@ impl SecClient {
                 }
             }
 
-            normalized.push(unknown_fact(
+            let status = if facts.is_none() {
+                FactStatus::Unavailable
+            } else {
+                FactStatus::Unknown
+            };
+            let passage = if status == FactStatus::Unavailable {
+                "SEC Company Facts unavailable"
+            } else if submissions.is_none() {
+                "SEC submissions unavailable; no filing metadata"
+            } else {
+                "SEC Company Facts: no unambiguous annual value"
+            };
+            normalized.push(missing_fact(
                 company,
                 spec.kind,
                 facts_url.clone(),
-                "SEC Company Facts: no unambiguous annual value",
+                passage,
                 latest_filing.as_ref().and_then(FilingMetadata::report_date),
                 retrieved_at,
+                status,
             )?);
         }
 
-        Ok(CompanyEvidence::new(company.id(), normalized))
+        Ok(CompanyEvidence::new(
+            company.id(),
+            normalized,
+            documents,
+            failures,
+        ))
     }
 }
 
@@ -267,19 +431,52 @@ fn unknown_fact(
     effective_date: Option<NaiveDate>,
     retrieved_at: chrono::DateTime<Utc>,
 ) -> Result<NormalizedFact, RuntimeError> {
+    missing_fact(
+        company,
+        kind,
+        source_uri,
+        source_field_or_passage,
+        effective_date,
+        retrieved_at,
+        FactStatus::Unknown,
+    )
+}
+
+fn unavailable_fact(
+    company: &CompanyConfig,
+    kind: &str,
+    source_uri: String,
+    source_field_or_passage: &str,
+    effective_date: Option<NaiveDate>,
+    retrieved_at: chrono::DateTime<Utc>,
+) -> Result<NormalizedFact, RuntimeError> {
+    missing_fact(
+        company,
+        kind,
+        source_uri,
+        source_field_or_passage,
+        effective_date,
+        retrieved_at,
+        FactStatus::Unavailable,
+    )
+}
+
+fn missing_fact(
+    company: &CompanyConfig,
+    kind: &str,
+    source_uri: String,
+    source_field_or_passage: &str,
+    effective_date: Option<NaiveDate>,
+    retrieved_at: chrono::DateTime<Utc>,
+    status: FactStatus,
+) -> Result<NormalizedFact, RuntimeError> {
     let provenance = Provenance::new(
         source_uri,
         source_field_or_passage,
         retrieved_at,
         effective_date,
     )?;
-    NormalizedFact::without_value(
-        company.id(),
-        kind,
-        FactStatus::Unknown,
-        Confidence::Unknown,
-        provenance,
-    )
+    NormalizedFact::without_value(company.id(), kind, status, Confidence::Unknown, provenance)
 }
 
 fn get_json<T: for<'de> Deserialize<'de>>(
@@ -506,11 +703,8 @@ impl RecentFilings {
             if !form.starts_with("10-K") {
                 continue;
             }
-            let candidate = FilingMetadata {
-                accession_number: self.accession_numbers.get(index)?.clone(),
-                filing_date: self.filing_dates.get(index)?.clone(),
-                report_date_value: self.report_dates.get(index).cloned(),
-                primary_document: self.primary_documents.get(index)?.clone(),
+            let Some(candidate) = self.at(index) else {
+                continue;
             };
             if latest
                 .as_ref()
@@ -520,6 +714,38 @@ impl RecentFilings {
             }
         }
         latest
+    }
+
+    fn filing_documents(&self, cik_path: &str) -> Vec<SecDocumentCandidate> {
+        let mut candidates = (0..self.form.len())
+            .filter_map(|index| {
+                let form = self.form.get(index)?;
+                if !matches!(
+                    form.as_str(),
+                    "10-K" | "10-K/A" | "10-Q" | "10-Q/A" | "8-K" | "8-K/A"
+                ) {
+                    return None;
+                }
+                self.at(index)?.document_candidate(cik_path, form)
+            })
+            .collect::<Vec<_>>();
+        candidates.sort_by(|left, right| {
+            right
+                .filing_date
+                .cmp(&left.filing_date)
+                .then_with(|| left.accession_number.cmp(&right.accession_number))
+        });
+        candidates.truncate(MAX_SEC_DOCUMENT_CANDIDATES);
+        candidates
+    }
+
+    fn at(&self, index: usize) -> Option<FilingMetadata> {
+        Some(FilingMetadata {
+            accession_number: self.accession_numbers.get(index)?.clone(),
+            filing_date: self.filing_dates.get(index)?.clone(),
+            report_date_value: self.report_dates.get(index).cloned(),
+            primary_document: self.primary_documents.get(index)?.clone(),
+        })
     }
 }
 
@@ -535,10 +761,50 @@ impl FilingMetadata {
             self.primary_document
         )
     }
+
+    fn document_candidate(&self, cik_path: &str, form: &str) -> Option<SecDocumentCandidate> {
+        let filing_date = parse_date(Some(&self.filing_date))?;
+        if !is_valid_accession(&self.accession_number)
+            || !is_safe_document_name(&self.primary_document)
+        {
+            return None;
+        }
+        Some(SecDocumentCandidate {
+            accession_number: self.accession_number.clone(),
+            form: form.to_owned(),
+            filing_date,
+            report_date: self.report_date(),
+            primary_document: self.primary_document.clone(),
+            source_uri: self.url(cik_path),
+        })
+    }
 }
 
 impl SubmissionsDocument {
     fn latest_10k(&self) -> Option<FilingMetadata> {
         self.filings.recent.latest_10k()
     }
+
+    fn filing_documents(&self, cik_path: &str) -> Vec<SecDocumentCandidate> {
+        self.filings.recent.filing_documents(cik_path)
+    }
+}
+
+fn is_valid_accession(value: &str) -> bool {
+    value.len() == 20
+        && value.bytes().enumerate().all(|(index, byte)| {
+            if index == 10 || index == 13 {
+                byte == b'-'
+            } else {
+                byte.is_ascii_digit()
+            }
+        })
+}
+
+fn is_safe_document_name(value: &str) -> bool {
+    !value.trim().is_empty()
+        && value.len() <= 256
+        && value
+            .bytes()
+            .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'.' | b'-' | b'_'))
 }

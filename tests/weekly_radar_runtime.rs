@@ -502,12 +502,12 @@ fn source_observations_normalize_to_facts_with_status_and_passage_provenance() {
     let official_fact =
         normalize_source_observation(official, 1).expect("official observation should normalize");
     assert_eq!(official_fact.kind(), "source_official_ir_001");
-    assert_eq!(official_fact.status(), &FactStatus::Known);
-    assert_eq!(official_fact.value(), Some("Official strategy update"));
-    assert_eq!(
-        official_fact.provenance().source_field_or_passage(),
-        "official page text"
-    );
+    assert_eq!(official_fact.status(), &FactStatus::Unconfirmed);
+    assert_eq!(official_fact.value(), None);
+    assert!(official_fact
+        .provenance()
+        .source_field_or_passage()
+        .contains("official page text"));
 
     let greenhouse = observations
         .iter()
@@ -1750,7 +1750,7 @@ fn task4_report_exposes_explicit_statuses_and_discovery_health_review_items() {
     assert!(report.snapshot_json().contains("UNKNOWN"));
     assert!(report.snapshot_json().contains("UNAVAILABLE"));
     assert!(report.snapshot_json().contains("UNCONFIRMED"));
-    assert!(markdown.contains("待核实线索"));
+    assert!(markdown.contains("待验证线索"));
     assert!(markdown.contains("来源情况"));
     assert!(markdown.contains("新闻和其他发现材料"));
     assert!(!markdown.contains("source_"));

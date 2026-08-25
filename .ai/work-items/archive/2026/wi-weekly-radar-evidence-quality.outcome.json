@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-evidence-quality",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "a85ed6d3a39516440bfce0d2f543a0e19b07e1fe8fc5af6c007fba32517b15ac"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-evidence-quality",
+    "contractDigest": "f38c3fca9e9fd6942c230b2f84c99fa667e53d3bc2b95eca2483c248bee258e9",
+    "summaryDigest": "500662c92239628096479ee7dc041a195b8d2809e856061742313778b240c04f",
+    "verificationDigest": "3342e71868b54f87846b2408303c355a3e931c77db1da8ba73b5953f92ba18fb",
+    "baseCommit": "7ea05a9a464657f4bf8c8ec391f1efa66d9e28ae",
+    "headCommit": "b1f3cdff8050eddde265a72c41e87730e2a8a58e",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "bf2213b2aef3aef71457a06842e1b4d8c2ea22fa9c75bacede1881179ab963be",
+      "binding": {
+        "baseCommit": "7ea05a9a464657f4bf8c8ec391f1efa66d9e28ae",
+        "candidateHead": "b1f3cdff8050eddde265a72c41e87730e2a8a58e",
+        "candidateTreeDigest": "a62ec5609fd1bdbddbc5fd1748909bf2ab4bd2365f1922ea4c0dbec20cf2a285",
+        "candidateDiffDigest": "068fbec0180e9abc536e3a96e3b843b7ffb174ea93edad630f9b8fe2b90d13a9"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-evidence-quality generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-evidence-quality generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-evidence-quality",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.summary.json",
@@ -31,150 +54,183 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [
-    "Separate source availability from Evidence semantics.",
-    "Prioritize SEC coverage over lower-value source expansion.",
-    "Keep calibrated no-change and fail-closed Ranking behavior."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Local verification uses bounded fixtures and does not establish that every configured live SEC or official endpoint is currently reachable; the runtime now preserves endpoint-scoped degradation instead of treating it as no change.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Implement a vertical source-to-evidence boundary that keeps page availability, discovered documents, pending claims, and validated evidence distinct.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "EvidenceCandidate validation and ValidatedEvidence promotion"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Acquire SEC stages independently, discover bounded same-origin documents, apply a deterministic claim gate, bind only validated output to the existing primary-evidence guard, and render separate research counters.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/main.rs",
-          "subject": "Acquisition orchestration and evidence guard wiring"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/report.rs",
-          "subject": "Localized research counter rendering"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
       {
-        "component": "SEC runtime adapter",
-        "detail": "Retains independent facts, bounded filing candidates, and safe endpoint-scoped failures.",
-        "status": "verified",
+        "claim": "live-provider validation",
+        "severity": "medium",
+        "title": "live-provider validation",
+        "detail": "Local verification uses bounded fixtures and does not establish that every configured live SEC or official endpoint is currently reachable; the runtime now preserves endpoint-scoped degradation instead of treating it as no change.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/sec.rs",
-            "subject": "Independent SEC acquisition stages"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.summary.json",
+            "subject": "residualRisks"
           }
-        ]
-      },
-      {
-        "component": "Weekly Radar report",
-        "detail": "Separates validated evidence, availability, pending leads, and unavailable sources in localized output.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "Documented acquisition state machine and report semantics"
-          }
-        ]
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "exact-branch hosted CI and a future provider-backed run, if authorized"
+        ],
+        "decisionOwner": "xinglun",
+        "mitigation": "Keep provider-backed validation separate from fixture-backed unit and integration evidence; retain calibrated degraded wording.",
+        "acceptanceStatus": "accepted_with_follow_up"
       }
     ],
-    "designDecisions": [
-      {
-        "decision": "Keep page-level observations out of Confirmed Information and the primary-evidence guard.",
-        "reason": "Reachability proves source availability, not an enterprise production-system change.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "Homepage availability and page-level non-promotion regressions"
-          }
-        ]
-      },
-      {
-        "decision": "Preserve fail-closed Stage-before-Ranking behavior when validated evidence is absent.",
-        "reason": "The research pipeline must not manufacture ranking value from incomplete coverage.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_judgment_chain.rs",
-            "subject": "Insufficient evidence suppresses machine ranking"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "bounded acquisition",
-        "detail": "Discovery follows only same-origin links under finite candidate and response limits with deterministic ordering.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/discovery.rs",
-            "subject": "Bounded same-origin document discovery"
-          }
-        ]
-      },
-      {
-        "topic": "legacy compatibility",
-        "detail": "Legacy runtime inputs default new research metrics to zero without rewriting historical snapshots.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "Legacy runtime input compatibility"
-          }
-        ]
-      }
+    "humanDecisions": [
+      "Separate source availability from Evidence semantics.",
+      "Prioritize SEC coverage over lower-value source expansion.",
+      "Keep calibrated no-change and fail-closed Ranking behavior."
     ],
     "evidence": [
       {
-        "claim": "The implementation preserves the source availability versus validated evidence boundary.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_evidence_quality.rs",
         "subject": "Evidence-quality regression suite"
       },
       {
-        "claim": "The complete repository quality gate passes without test weakening.",
-        "status": "verified",
         "source": "Makefile",
         "subject": "Canonical quality entrypoint"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Implement a vertical source-to-evidence boundary that keeps page availability, discovered documents, pending claims, and validated evidence distinct.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "EvidenceCandidate validation and ValidatedEvidence promotion"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Acquire SEC stages independently, discover bounded same-origin documents, apply a deterministic claim gate, bind only validated output to the existing primary-evidence guard, and render separate research counters.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "Acquisition orchestration and evidence guard wiring"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "Localized research counter rendering"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "SEC runtime adapter",
+          "detail": "Retains independent facts, bounded filing candidates, and safe endpoint-scoped failures.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/sec.rs",
+              "subject": "Independent SEC acquisition stages"
+            }
+          ]
+        },
+        {
+          "component": "Weekly Radar report",
+          "detail": "Separates validated evidence, availability, pending leads, and unavailable sources in localized output.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "Documented acquisition state machine and report semantics"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Keep page-level observations out of Confirmed Information and the primary-evidence guard.",
+          "reason": "Reachability proves source availability, not an enterprise production-system change.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "Homepage availability and page-level non-promotion regressions"
+            }
+          ]
+        },
+        {
+          "decision": "Preserve fail-closed Stage-before-Ranking behavior when validated evidence is absent.",
+          "reason": "The research pipeline must not manufacture ranking value from incomplete coverage.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_judgment_chain.rs",
+              "subject": "Insufficient evidence suppresses machine ranking"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "bounded acquisition",
+          "detail": "Discovery follows only same-origin links under finite candidate and response limits with deterministic ordering.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/discovery.rs",
+              "subject": "Bounded same-origin document discovery"
+            }
+          ]
+        },
+        {
+          "topic": "legacy compatibility",
+          "detail": "Legacy runtime inputs default new research metrics to zero without rewriting historical snapshots.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "Legacy runtime input compatibility"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The implementation preserves the source availability versus validated evidence boundary.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "Evidence-quality regression suite"
+        },
+        {
+          "claim": "The complete repository quality gate passes without test weakening.",
+          "status": "verified",
+          "source": "Makefile",
+          "subject": "Canonical quality entrypoint"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -960,6 +1016,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

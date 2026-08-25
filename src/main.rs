@@ -7,7 +7,8 @@ use chrono::{NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::CompanySourceRegistry;
 use org_x::features::weekly_radar::runtime::http::{HttpClient, UreqHttpClient};
 use org_x::features::weekly_radar::runtime::model::{
-    CompanyIdentity, FactStatus, RuntimeReportInput, SourceCoverage, SourceFailure,
+    CompanyIdentity, FactStatus, NormalizedFact, Provenance, ResearchMetrics, RuntimeReportInput,
+    SourceCoverage, SourceFailure,
 };
 use org_x::features::weekly_radar::runtime::report::{
     render_report_in_language, RenderedReport, ReportLanguage,
@@ -16,10 +17,11 @@ use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{collect_configured_sources, SourceStatus};
 use org_x::features::weekly_radar::runtime::{
     acquire_run_lock, build_input_snapshot, derive_judgment_snapshot_for_companies,
-    ensure_run_available, ensure_run_replace_available, load_input_snapshot,
-    normalize_source_observation, recover_pending_run, replace_run_with_input_snapshot,
-    send_rendered_report, verify_committed_run, verify_committed_run_read_only,
-    write_run_with_input_snapshot,
+    ensure_run_available, ensure_run_replace_available, extract_evidence_candidate,
+    load_input_snapshot, normalize_source_observation, recover_pending_run,
+    replace_run_with_input_snapshot, send_rendered_report, validate_evidence_candidate,
+    verify_committed_run, verify_committed_run_read_only, write_run_with_input_snapshot,
+    SourceMaterialKind,
 };
 
 const DEFAULT_REGISTRY: &str = "config/weekly_radar/companies.json";
@@ -237,6 +239,15 @@ struct AcquiredRuntimeInput {
     has_primary_evidence: bool,
 }
 
+#[derive(Default)]
+struct ResearchMetricCounts {
+    source_available: usize,
+    document_candidates: usize,
+    validated_evidence: usize,
+    pending_leads: usize,
+    unavailable_sources: usize,
+}
+
 fn acquire_runtime_input(
     registry: &CompanySourceRegistry,
     http: &dyn HttpClient,
@@ -246,6 +257,7 @@ fn acquire_runtime_input(
     let mut input = RuntimeReportInput::from_date(as_of);
     let mut coverage = BTreeMap::<String, CoverageCounts>::new();
     let mut has_primary_evidence = false;
+    let mut metrics = ResearchMetricCounts::default();
     let observed_at = Utc::now();
 
     for company in registry.companies() {
@@ -262,13 +274,39 @@ fn acquire_runtime_input(
         } else {
             match SecClient::collect(company, http, sec_user_agent) {
                 Ok(evidence) => {
-                    sec_coverage.available.insert(company.id().to_owned());
+                    let mut sec_stage_successes = 2usize;
+                    for failure in evidence.failures() {
+                        metrics.unavailable_sources += 1;
+                        if matches!(failure.stage(), "submissions" | "company_facts") {
+                            sec_stage_successes = sec_stage_successes.saturating_sub(1);
+                        }
+                    }
+                    metrics.source_available += sec_stage_successes;
+                    metrics.document_candidates += evidence.documents().len();
+                    metrics.pending_leads += evidence.documents().len();
+                    if evidence.failures().len() < 2 {
+                        sec_coverage.available.insert(company.id().to_owned());
+                    }
                     for fact in evidence.facts() {
                         if fact.status() == &FactStatus::Known {
                             has_primary_evidence = true;
                         }
                         input
                             .add_fact(fact.clone())
+                            .map_err(|error| CliError::Failure(error.to_string()))?;
+                    }
+                    if !evidence.failures().is_empty() {
+                        let reason = evidence
+                            .failures()
+                            .iter()
+                            .map(|failure| format!("{}: {}", failure.stage(), failure.reason()))
+                            .collect::<Vec<_>>()
+                            .join("; ");
+                        input
+                            .add_source_failure(
+                                SourceFailure::new("sec", company.id(), reason)
+                                    .map_err(|error| CliError::Failure(error.to_string()))?,
+                            )
                             .map_err(|error| CliError::Failure(error.to_string()))?;
                     }
                 }
@@ -286,6 +324,7 @@ fn acquire_runtime_input(
         let observations = collect_configured_sources(company, http, observed_at);
         let mut available_kinds = BTreeSet::new();
         let mut source_indices = BTreeMap::<&str, usize>::new();
+        let mut evidence_indices = BTreeMap::<&str, usize>::new();
         for observation in &observations {
             let kind = observation.kind().as_str().to_owned();
             let source_coverage = coverage.entry(kind).or_default();
@@ -308,8 +347,21 @@ fn acquire_runtime_input(
                     .not_applicable
                     .insert(company.id().to_owned());
             }
-            if observation.is_authoritative() && observation.status() == SourceStatus::Known {
-                has_primary_evidence = true;
+            if observation.status() == SourceStatus::Unavailable {
+                metrics.unavailable_sources += 1;
+            }
+            if observation.material_kind() == SourceMaterialKind::EntryPoint
+                && !matches!(
+                    observation.status(),
+                    SourceStatus::Unavailable
+                        | SourceStatus::NotConfigured
+                        | SourceStatus::NotApplicable
+                )
+            {
+                metrics.source_available += 1;
+            }
+            if observation.material_kind() == SourceMaterialKind::Document {
+                metrics.document_candidates += 1;
             }
             let index = source_indices
                 .entry(observation.kind().as_str())
@@ -320,6 +372,51 @@ fn acquire_runtime_input(
             input
                 .add_fact(fact)
                 .map_err(|error| CliError::Failure(error.to_string()))?;
+
+            if observation.material_kind() == SourceMaterialKind::Document {
+                let evidence_result = extract_evidence_candidate(observation)
+                    .map(|candidate| validate_evidence_candidate(&candidate, as_of));
+                match evidence_result {
+                    Some(Ok(validated)) => {
+                        let index = evidence_indices
+                            .entry("official_material")
+                            .and_modify(|index| *index += 1)
+                            .or_insert(1);
+                        let validated_fact = validated
+                            .to_normalized_fact(*index)
+                            .map_err(|error| CliError::Failure(error.to_string()))?;
+                        input
+                            .add_fact(validated_fact)
+                            .map_err(|error| CliError::Failure(error.to_string()))?;
+                        metrics.validated_evidence += 1;
+                        has_primary_evidence = true;
+                    }
+                    Some(Err(error)) => {
+                        metrics.pending_leads += 1;
+                        add_pending_evidence_fact(
+                            &mut input,
+                            observation,
+                            source_indices
+                                .get(observation.kind().as_str())
+                                .copied()
+                                .unwrap_or(1),
+                            error.to_string(),
+                        )?;
+                    }
+                    None => {
+                        metrics.pending_leads += 1;
+                        add_pending_evidence_fact(
+                            &mut input,
+                            observation,
+                            source_indices
+                                .get(observation.kind().as_str())
+                                .copied()
+                                .unwrap_or(1),
+                            "claim extraction did not produce required fields".to_owned(),
+                        )?;
+                    }
+                }
+            }
         }
         for kind in available_kinds {
             coverage
@@ -345,10 +442,47 @@ fn acquire_runtime_input(
             .map_err(|error| CliError::Failure(error.to_string()))?;
     }
 
+    input.set_research_metrics(ResearchMetrics::new(
+        metrics.source_available,
+        metrics.document_candidates,
+        metrics.validated_evidence,
+        metrics.pending_leads,
+        metrics.unavailable_sources,
+    ));
+
     Ok(AcquiredRuntimeInput {
         input,
         has_primary_evidence,
     })
+}
+
+fn add_pending_evidence_fact(
+    input: &mut RuntimeReportInput,
+    observation: &org_x::features::weekly_radar::runtime::SourceObservation,
+    index: usize,
+    reason: String,
+) -> Result<(), CliError> {
+    let provenance = Provenance::new(
+        observation.provenance().source_uri(),
+        format!("pending evidence: {reason}"),
+        *observation.provenance().retrieved_at(),
+        observation.provenance().effective_date().copied(),
+    )
+    .map_err(|error| CliError::Failure(error.to_string()))?;
+    let fact = NormalizedFact::without_value(
+        observation.company_id(),
+        format!(
+            "pending_evidence_{}_{index:03}",
+            observation.kind().as_str()
+        ),
+        FactStatus::Unconfirmed,
+        org_x::features::weekly_radar::runtime::Confidence::Unknown,
+        provenance,
+    )
+    .map_err(|error| CliError::Failure(error.to_string()))?;
+    input
+        .add_fact(fact)
+        .map_err(|error| CliError::Failure(error.to_string()))
 }
 
 fn validate_rendered_report(report: &RenderedReport) -> Result<(), CliError> {
@@ -630,6 +764,8 @@ mod tests {
     use org_x::features::weekly_radar::runtime::archive::{
         persist_input_snapshot, write_run_with_input_snapshot,
     };
+    use org_x::features::weekly_radar::runtime::config::CompanyConfig;
+    use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpResponse};
     use org_x::features::weekly_radar::runtime::model::RuntimeReportInput;
     use org_x::features::weekly_radar::runtime::report::{
         render_report_in_language, ReportLanguage,
@@ -655,6 +791,85 @@ mod tests {
                 }
             })
         }
+    }
+
+    #[test]
+    fn homepage_availability_does_not_satisfy_primary_evidence_guard() {
+        let company = CompanyConfig::new(
+            "acme",
+            "Acme Corporation",
+            "ACME",
+            None,
+            Some("https://example.test/investors".to_owned()),
+            None,
+            None,
+            None,
+            None,
+        )
+        .expect("homepage-only fixture company should be valid");
+        let registry = CompanySourceRegistry::new(1, vec![company.clone()])
+            .expect("homepage-only fixture registry should be valid");
+        let client = FixtureHttpClient::with_response(
+            company.official_ir_url().expect("IR URL exists"),
+            HttpResponse::ok("<title>Investor Relations</title><p>Investor Relations</p>"),
+        );
+
+        let acquired = acquire_runtime_input(
+            &registry,
+            &client,
+            "ORG-X test contact@example.test",
+            NaiveDate::from_ymd_opt(2026, 8, 25).expect("fixture date should be valid"),
+        )
+        .expect("homepage-only acquisition should complete");
+
+        assert!(!acquired.has_primary_evidence);
+        assert_eq!(acquired.input.research_metrics().source_available(), 1);
+        assert_eq!(acquired.input.research_metrics().validated_evidence(), 0);
+    }
+
+    #[test]
+    fn validated_document_claim_is_counted_and_can_feed_judgment() {
+        let company = CompanyConfig::new(
+            "acme",
+            "Acme Corporation",
+            "ACME",
+            None,
+            Some("https://ir.example.test/investors".to_owned()),
+            None,
+            None,
+            None,
+            None,
+        )
+        .expect("valid-document fixture company should be valid");
+        let registry = CompanySourceRegistry::new(1, vec![company.clone()])
+            .expect("valid-document fixture registry should be valid");
+        let client = FixtureHttpClient::new();
+        client.insert(
+            company.official_ir_url().expect("IR URL exists"),
+            HttpResponse::ok("<a href=\"/organization/update\">Organization update</a>"),
+        );
+        client.insert(
+            "https://ir.example.test/organization/update",
+            HttpResponse::ok(
+                "<title>Organization update</title><time datetime=\"2026-08-19\">Acme reorganized its engineering workflow.</time>",
+            ),
+        );
+
+        let acquired = acquire_runtime_input(
+            &registry,
+            &client,
+            "ORG-X test contact@example.test",
+            NaiveDate::from_ymd_opt(2026, 8, 25).expect("fixture date should be valid"),
+        )
+        .expect("valid-document acquisition should complete");
+
+        assert!(acquired.has_primary_evidence);
+        assert_eq!(acquired.input.research_metrics().validated_evidence(), 1);
+        assert!(acquired
+            .input
+            .facts()
+            .iter()
+            .any(|fact| fact.kind().starts_with("evidence_")));
     }
 
     #[test]

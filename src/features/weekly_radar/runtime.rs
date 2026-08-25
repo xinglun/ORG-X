@@ -6,7 +6,9 @@
 
 pub mod archive;
 pub mod config;
+pub mod discovery;
 pub mod error;
+pub mod evidence;
 pub mod http;
 pub mod judgment;
 pub mod model;
@@ -24,7 +26,12 @@ pub use archive::{
     ArchiveManifest, ArchiveRunLock, InputSnapshot, INPUT_SNAPSHOT_SCHEMA_VERSION,
 };
 pub use config::{CompanyConfig, CompanySourceRegistry};
+pub use discovery::{DocumentCandidate, DocumentKind, MAX_DOCUMENT_CANDIDATES_PER_ENTRY};
 pub use error::RuntimeError;
+pub use evidence::{
+    extract_evidence_candidate, validate_evidence_candidate, EvidenceCandidate, EvidencePolarity,
+    EvidenceSourceKind, EvidenceValidationError, ValidatedEvidence,
+};
 pub use http::{
     FixtureHttpClient, HttpClient, HttpResponse, HttpTimeouts, UreqHttpClient,
     MAX_HTTP_RESPONSE_BODY_BYTES,
@@ -34,18 +41,20 @@ pub use judgment::{
     JudgmentSnapshot, MachineStage,
 };
 pub use model::{
-    CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput,
-    SourceCoverage, SourceFailure,
+    CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, ResearchMetrics,
+    RuntimeReportInput, SourceCoverage, SourceFailure,
 };
 pub use report::{
     render_report, render_report_in_language, RenderedReport, ReportLanguage, SnapshotMetadata,
     SourceHealthFacts,
 };
 pub use rules::extract_employee_count;
-pub use sec::{CompanyEvidence, SecClient};
+pub use sec::{
+    CompanyEvidence, SecClient, SecDocumentCandidate, SecStageFailure, MAX_SEC_DOCUMENT_CANDIDATES,
+};
 pub use sources::{
-    collect_configured_sources, SourceKind, SourceObservation, SourceStatus, SourceTier,
-    MAX_HIRING_RECORDS, MAX_SOURCE_BODY_BYTES,
+    collect_configured_sources, SourceKind, SourceMaterialKind, SourceObservation, SourceStatus,
+    SourceTier, MAX_HIRING_RECORDS, MAX_SOURCE_BODY_BYTES,
 };
 pub use telegram::{
     send_rendered_report, send_rendered_report_with_transport, EnvTelegramTransport,
@@ -55,10 +64,9 @@ pub use telegram::{
 /// Converts one acquired source observation into a provider-neutral fact.
 ///
 /// `index` is a one-based, stable index within the observation's source kind
-/// for one company. Official known observations retain their text as a
-/// confirmed value. Structured hiring and discovery observations retain their
-/// text in provenance while remaining unconfirmed, and missing/ambiguous
-/// observations retain no concrete value.
+/// for one company. Source observations retain text only as a lead or audit
+/// passage; the EvidenceCandidate gate is the only path that can promote a
+/// concrete claim to a confirmed fact.
 pub fn normalize_source_observation(
     observation: &SourceObservation,
     index: usize,
@@ -71,9 +79,6 @@ pub fn normalize_source_observation(
 
     let kind = format!("source_{}_{index:03}", observation.kind().as_str());
     let status = match observation.status() {
-        SourceStatus::Known if observation.tier() == SourceTier::OfficialPrimary => {
-            FactStatus::Known
-        }
         SourceStatus::Known | SourceStatus::DiscoveryOnly => FactStatus::Unconfirmed,
         SourceStatus::Unknown => FactStatus::Unknown,
         SourceStatus::Unavailable | SourceStatus::NotConfigured | SourceStatus::NotApplicable => {

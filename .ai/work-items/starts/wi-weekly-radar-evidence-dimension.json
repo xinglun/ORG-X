@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-evidence-dimension",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-evidence-dimension.json",
+  "baseCommit": "8d0d38137cd2c0fc04e19767bf298bdc6a5bd212",
+  "baseBranch": "codex/wi-weekly-radar-evidence-dimension",
+  "startTimestamp": "2026-08-25T06:32:35.104448+00:00",
+  "initialScopeDigest": "f72fbc966d8642c730103c114ef73a9787bda522c298ed142cf63df9e6d282b3",
+  "contractSkeletonDigest": "0da1705661150927d923fa634fcb6ec1885d8108c9c26854651289b79970319c"
+}

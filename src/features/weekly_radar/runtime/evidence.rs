@@ -8,7 +8,7 @@ use super::model::{Confidence, FactStatus, NormalizedFact, Provenance, Structura
 use super::sources::{SourceKind, SourceMaterialKind, SourceObservation, SourceStatus, SourceTier};
 use super::RuntimeError;
 
-const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v3";
+const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v4";
 const MAX_FIELD_BYTES: usize = 512;
 const MIN_CLAIM_WORDS: usize = 8;
 
@@ -28,20 +28,27 @@ const CHANGE_SIGNALS: &[&str] = &[
     "doubled",
     "reduced",
     "increased",
-    "hiring",
-    "recruit",
-    "headcount",
-    "workforce",
-    "positions",
 ];
 
-const CAREERS_CHANGE_SIGNALS: &[&str] = &[
-    "hiring",
-    "recruit",
-    "headcount",
-    "workforce",
-    "positions",
-    "roles",
+const CAREERS_EXPLICIT_HIRING_PATTERNS: &[&str] = &[
+    "we are hiring",
+    "we're hiring",
+    "we will hire",
+    "we plan to hire",
+    "we are recruiting",
+    "we're recruiting",
+    "we will recruit",
+    "we plan to recruit",
+    "increase headcount",
+    "increased headcount",
+    "grow our workforce",
+    "growing our workforce",
+    "expand our workforce",
+    "expanding our workforce",
+    "add positions",
+    "adding positions",
+    "new positions",
+    "additional positions",
 ];
 
 const PRODUCTION_SIGNALS: &[&str] = &[
@@ -397,14 +404,10 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
         .title()
         .filter(|title| !title.trim().is_empty())?;
     let document_kind = observation.document_kind()?;
-    let (passage, production_signal) = extract_claim_sentence(observation.text())?;
-    if document_kind == DocumentKind::Careers
-        && !CAREERS_CHANGE_SIGNALS
-            .iter()
-            .any(|signal| passage.to_ascii_lowercase().contains(signal))
-    {
-        return None;
-    }
+    let (passage, production_signal) = match document_kind {
+        DocumentKind::Careers => extract_careers_claim_sentence(observation.text()),
+        _ => extract_claim_sentence(observation.text()),
+    }?;
     let source_kind = match observation.kind() {
         SourceKind::Gdelt => EvidenceSourceKind::DiscoveryArticle,
         SourceKind::Greenhouse | SourceKind::Lever => EvidenceSourceKind::StructuredHiring,
@@ -438,6 +441,25 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
 }
 
 fn extract_claim_sentence(text: &str) -> Option<(String, String)> {
+    extract_claim_sentence_with_predicate(text, |lower| {
+        CHANGE_SIGNALS.iter().any(|signal| lower.contains(signal))
+    })
+}
+
+fn extract_careers_claim_sentence(text: &str) -> Option<(String, String)> {
+    extract_claim_sentence_with_predicate(text, careers_has_explicit_hiring_change)
+}
+
+fn careers_has_explicit_hiring_change(lower: &str) -> bool {
+    CAREERS_EXPLICIT_HIRING_PATTERNS
+        .iter()
+        .any(|pattern| lower.contains(pattern))
+}
+
+fn extract_claim_sentence_with_predicate(
+    text: &str,
+    qualifies_change: impl Fn(&str) -> bool,
+) -> Option<(String, String)> {
     let normalized = text.split_whitespace().collect::<Vec<_>>().join(" ");
     let mut sentence_start = 0;
     for (index, character) in normalized.char_indices() {
@@ -451,7 +473,7 @@ fn extract_claim_sentence(text: &str) -> Option<(String, String)> {
             continue;
         }
         let lower = sentence.to_ascii_lowercase();
-        if !CHANGE_SIGNALS.iter().any(|signal| lower.contains(signal)) {
+        if !qualifies_change(&lower) {
             continue;
         }
         let Some(production_signal) = PRODUCTION_SIGNALS

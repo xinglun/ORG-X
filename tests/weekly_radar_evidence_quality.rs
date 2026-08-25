@@ -55,10 +55,13 @@ fn document_observation_from_html(
     let mut company = company();
     company.official_ir = Some("https://ir.example.test/investors".to_owned());
     let client = FixtureHttpClient::new();
-    let (href, label) = if document_url.contains("/careers/") {
-        ("/careers/areas", "Careers areas")
+    let href = document_url
+        .strip_prefix("https://ir.example.test")
+        .expect("fixture document should use the test IR origin");
+    let label = if document_url.contains("/careers/") {
+        "Careers areas"
     } else {
-        ("/engineering/update", "Engineering update")
+        "Engineering update"
     };
     client.insert(
         company.official_ir_url().expect("IR URL exists"),
@@ -558,6 +561,32 @@ fn generic_careers_copy_does_not_create_a_claim_candidate() {
             .status(),
         &FactStatus::Unconfirmed
     );
+}
+
+#[test]
+fn careers_role_marketing_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering roles</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Explore engineering roles that help clients adopt AI and cloud solutions across our global teams.</p></body></html>"#,
+        "https://ir.example.test/careers/roles",
+    );
+
+    assert_eq!(observation.document_kind(), Some(DocumentKind::Careers));
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
+#[test]
+fn non_careers_hiring_language_does_not_change_candidate_boundary() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>We are hiring 200 engineers for our AI infrastructure team to expand production capacity.</p></body></html>"#,
+        "https://ir.example.test/engineering/hiring",
+    );
+
+    assert_eq!(observation.document_kind(), Some(DocumentKind::Engineering));
+    assert!(extract_evidence_candidate(&observation).is_none());
 }
 
 #[test]

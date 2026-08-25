@@ -73,6 +73,24 @@ fn splitter_accepts_confirmed_information_as_part_of_the_reader_summary() {
 }
 
 #[test]
+fn splitter_accepts_validated_facts_and_structural_evidence_headings() {
+    let rendered = "## Validated Facts\n### Acme\n- fact\n\n## Structural Evidence\n### Acme\n- workflow change\n\n## System Health\n- data available\n";
+    let split =
+        SemanticMessageSplitter::split(rendered, SemanticSplitLimits::new(1_000, 20).unwrap())
+            .expect("new evidence sections should be supported reader sections");
+    assert_eq!(split.chunks().len(), 3);
+    assert_eq!(
+        split.chunks()[0].boundary(),
+        SemanticBoundary::ExecutiveSummary
+    );
+    assert_eq!(
+        split.chunks()[1].boundary(),
+        SemanticBoundary::ImportantTransition
+    );
+    assert_eq!(split.chunks()[2].boundary(), SemanticBoundary::SystemHealth);
+}
+
+#[test]
 fn splitter_accepts_judgment_reference_heading_for_each_report_language() {
     for heading in [
         "系统参考判断",

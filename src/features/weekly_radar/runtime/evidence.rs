@@ -48,6 +48,34 @@ const PRODUCTION_SIGNALS: &[&str] = &[
     "infrastructure",
 ];
 
+const STRUCTURAL_SIGNALS: &[&str] = &[
+    "organization",
+    "organiz",
+    "responsibil",
+    "reporting",
+    "team",
+    "division",
+    "operating model",
+    "workflow",
+    "process",
+    "operation",
+    "production",
+    "deploy",
+    "rollout",
+    "automation",
+    "agent",
+    "platform",
+    "infrastructure",
+    "utilization",
+    "latency",
+    "throughput",
+    "capacity",
+    "cost",
+    "headcount",
+    "margin",
+    "cash flow",
+];
+
 /// Source classification used by the evidence gate.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EvidenceSourceKind {
@@ -58,16 +86,13 @@ pub enum EvidenceSourceKind {
     Other(String),
 }
 
-impl EvidenceSourceKind {
-    fn as_str(&self) -> String {
-        match self {
-            Self::Filing => "filing".to_owned(),
-            Self::OfficialMaterial => "official_material".to_owned(),
-            Self::StructuredHiring => "structured_hiring".to_owned(),
-            Self::DiscoveryArticle => "discovery_article".to_owned(),
-            Self::Other(value) => value.clone(),
-        }
-    }
+/// Semantic class assigned after a candidate has passed the evidence gate.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum EvidenceClass {
+    /// A dated authoritative claim that is verified but not structurally relevant.
+    ValidatedFact,
+    /// A verified claim with an explicit organization, production-system, or operating-impact signal.
+    StructuralEvidence,
 }
 
 /// Polarity retained for later supporting/counter routing.
@@ -254,6 +279,18 @@ impl ValidatedEvidence {
         &self.content_hash
     }
 
+    /// Returns the deterministic semantic class of the validated claim.
+    pub fn evidence_class(&self) -> EvidenceClass {
+        if STRUCTURAL_SIGNALS
+            .iter()
+            .any(|signal| self.candidate.passage.to_ascii_lowercase().contains(signal))
+        {
+            EvidenceClass::StructuralEvidence
+        } else {
+            EvidenceClass::ValidatedFact
+        }
+    }
+
     /// Converts validated evidence into the existing normalized fact boundary.
     pub fn to_normalized_fact(&self, index: usize) -> Result<NormalizedFact, RuntimeError> {
         if index == 0 {
@@ -278,12 +315,13 @@ impl ValidatedEvidence {
             *self.candidate.provenance.retrieved_at(),
             self.candidate.effective_date,
         )?;
+        let kind_prefix = match self.evidence_class() {
+            EvidenceClass::ValidatedFact => "evidence_official_material",
+            EvidenceClass::StructuralEvidence => "evidence_structural_change",
+        };
         NormalizedFact::new(
             self.candidate.company_id.clone(),
-            format!(
-                "evidence_{}_{index:03}",
-                self.candidate.source_kind.as_str()
-            ),
+            format!("{kind_prefix}_{index:03}"),
             self.candidate.concrete_change.clone(),
             FactStatus::Known,
             Confidence::High,

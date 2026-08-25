@@ -1,0 +1,339 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-structural-evidence-gate",
+  "mode": "code",
+  "title": "Weekly Radar structural evidence gate and SEC health semantics",
+  "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md"
+    ,"docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md"
+    ,"docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md"
+    ,"src/features/weekly_radar/runtime/evidence.rs"
+    ,"src/features/weekly_radar/runtime/model.rs"
+    ,"src/features/weekly_radar/runtime/report.rs"
+    ,"src/features/weekly_radar/interface/semantic_message_splitter.rs"
+    ,"src/main.rs"
+    ,"tests/weekly_radar_evidence_quality.rs"
+    ,"tests/weekly_radar_runtime.rs"
+    ,"tests/weekly_radar_semantic_message_splitter.rs"
+    ,"tests/semantic_message_splitter_test.rs"
+    ,"docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "SEC HTTP parsing, CIK registry, response-size limits, and provider URL construction",
+    "new source providers, broader document crawling, Greenhouse/Lever configuration, and LLM or probabilistic extraction",
+    "judgment rules, Transformation Stage definitions, Ranking thresholds, Counter Evidence, Telegram delivery, archive persistence, and data-branch publication",
+    "changes to the Weekly Radar workflow or production publication behavior",
+    "secrets, credentials, provider accounts, and external state mutation"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository Work Item, scope, evidence, and lifecycle governance."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Canonical domain and governance terminology."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-25-weekly-radar-evidence-acquisition-quality-design.md",
+      "reason": "Existing source, document, claim, and validated-evidence boundaries."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.md",
+      "reason": "Prior extraction-gate outcome and known residual live-run limitations."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "Current deterministic candidate extraction and promotion boundary."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "reason": "Backward-compatible runtime metrics and normalized fact envelope."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "reason": "Reader-facing localized report and snapshot metric rendering."
+    },
+    {
+      "path": "src/main.rs",
+      "reason": "SEC acquisition aggregation, evidence promotion, and primary-evidence guard."
+    },
+    {
+      "path": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "reason": "Top-level report heading aliases used by Telegram chunking."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "Existing evidence, report, SEC, and acquisition fixtures."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Existing report and SEC runtime regression coverage."
+    },
+    {
+      "path": "tests/weekly_radar_semantic_message_splitter.rs",
+      "reason": "Report heading/splitting integration coverage."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Operator-facing evidence-layer and SEC health semantics."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "false_positive_structural_promotion",
+      "false_negative_structural_classification",
+      "serialized_metric_compatibility",
+      "localized_report_contract"
+    ],
+    "reason": "The Work Item changes which validated document claims are presented as structural evidence and adds SEC fact-health counters to the serialized report metrics. False positives can overstate enterprise change; false negatives can hide useful evidence; legacy snapshots and localized Telegram headings must remain readable.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "user-authorized",
+    "reviewNote": "The 2026-08-25 post-merge dry-run produced five validated Meta engineering claims but zero structural-change judgments. The user accepted a new WI to separate validated facts from structural evidence and to distinguish SEC stage reachability from usable facts."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item changes evidence promotion semantics, user-visible report labels, serialized research metrics, and a Ranking input boundary."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly accepted the proposed structural-evidence and SEC-health design; scope, acceptance, scenarios, and local verification are deterministic and no unknowns remain open."
+  },
+  "preReviewWarnings": [
+    "Do not count an official engineering article as structural evidence without an explicit production-system or organizational change signal.",
+    "Do not report SEC endpoint reachability as equivalent to usable Company Facts or filing-derived facts.",
+    "Keep validated facts available for audit and publication guards, but keep structural evidence separate from Stage and Ranking computation."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "ValidatedEvidence is classified deterministically as a regular validated fact or StructuralEvidence; only the latter receives the structural evidence kind and metric.",
+    "Generic technical or research descriptions without an explicit organization/process/production-system change signal remain validated facts or pending leads and never become StructuralEvidence.",
+    "A dated authoritative claim that explicitly changes an organization, workflow, production system, deployment, utilization, latency, capacity, or operating metric is classified as StructuralEvidence and retains direct provenance.",
+    "ResearchMetrics remains backward-compatible for legacy snapshots while exposing structural evidence count and separate SEC stage/fact health counters.",
+    "The report distinguishes validated facts, structural evidence, source availability, pending leads, and unavailable facts in Chinese, Japanese, and English; legacy headings remain accepted by the semantic splitter.",
+    "SEC reporting distinguishes reachable submissions/Company Facts stages from usable normalized SEC facts; the report cannot claim full SEC fact coverage when returned facts are unavailable.",
+    "StructuralEvidence is visible in the report but does not bypass the existing judgment Stage/Ranking gates or change Ranking thresholds.",
+    "TDD fixtures cover a structural positive, a generic engineering negative, an ordinary validated fact, SEC partial fact health, legacy metric deserialization, and localized report/splitter behavior.",
+    "Weekly Radar operations documentation explains the four evidence layers and SEC stage-versus-fact semantics.",
+    "All required governance, focused, module, integration, architecture, and project quality checks pass before Finish."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep evidence classification deterministic, provider-neutral, bounded, and rule-only.",
+    "Prefer false negatives to promoting technical prose as structural enterprise change.",
+    "Preserve legacy snapshot deserialization by defaulting new counters to zero.",
+    "Do not change judgment, Ranking, Telegram, archive, or workflow behavior outside the new report/evidence classification boundary."
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-confirmed",
+    "reason": "The user explicitly accepted the recommended WI scope and authorized execution through verification and a dry-run."
+  },
+  "rollbackNote": "Revert this Work Item diff to restore the prior validated-evidence classification, report headings/metrics, and SEC health aggregation; no external provider or data-branch state is mutated by the code change.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 80
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json",
+    "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
+    "initialScopeDigest": "d12453fba8dbb5b710a85b38da7de85eef47a353526a90cfbd706c6f272d1617",
+    "contractSkeletonDigest": "008e4824ae8f7d2edf2c3a96a58c53c9aa8cc90a01feb5e918c4c13f139a25bb"
+  },
+  "intent": {
+    "problem": "The post-merge Weekly Radar dry-run reached the document and claim layers, but its five validated Meta engineering claims were still reported as confirmed information without a structural-relevance decision. The report therefore cannot distinguish a verified technical fact from evidence that an enterprise organization or production system changed. The run also reports SEC source availability at the request/stage level while separately surfacing returned fact failures, which makes the coverage state ambiguous to readers.",
+    "constraints": [
+      "Preserve the existing SourceObservation → EvidenceCandidate → ValidatedEvidence flow and add only the missing StructuralEvidence classification boundary.",
+      "Use deterministic lexical/rule-based classification with bounded fields; do not add an LLM, probabilistic model, provider, dependency, or unbounded crawl.",
+      "Keep SEC parsing and source acquisition behavior intact; add aggregation and report semantics that distinguish stage reachability from usable normalized facts.",
+      "Keep legacy ResearchMetrics and report snapshots deserializable with zero defaults for new counters.",
+      "Keep the existing fail-closed judgment and Ranking gates; StructuralEvidence may be visible and counted but cannot alone create a Stage or Ranking."
+    ],
+    "rationale": "A second deterministic classification gate is the smallest change that makes the current five validated technical claims honest without discarding them or manufacturing organizational change. Explicit SEC health counters make the degraded state explainable and testable without changing provider acquisition."
+  },
+  "rawUserRequest": "接受建议，执行",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "The user accepted the recommended structural-evidence gate, SEC health semantics, report-layer separation, TDD implementation, and subsequent execution.",
+    "capturedAt": "2026-08-25T13:00:00+09:00",
+    "digest": "not-generated"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "ai_governance"],
+    "prohibitedCapabilities": ["production_operation", "external_delivery_without_explicit_dry_run_authorization"],
+    "requestedOutcome": "Make the Weekly Radar report distinguish validated facts from structural evidence, make SEC health truthful at both stage and fact level, and preserve fail-closed Stage/Ranking behavior.",
+    "decisionBoundary": "Only evidence classification, research metrics, report rendering/splitting aliases, SEC aggregation counters, tests, and operations documentation change; provider parsing, Stage rules, Ranking thresholds, Telegram, archive, and workflow publication remain unchanged."
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized the governed implementation and later dry-run validation."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "An explicit production-system change is classified as StructuralEvidence",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/evidence.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "A dated authoritative sentence such as 'Acme consolidated production scheduling under one platform' remains validated and is emitted with the structural evidence kind/count.",
+      "verificationPlan": "Write the focused assertion first and run it RED against the existing generic evidence kind; implement the classifier and rerun it GREEN."
+    },
+    {
+      "scenario": "A generic engineering or research description is not structural evidence",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/evidence.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "A dated authoritative article describing a model or architecture without deployment, operating change, or measurable production impact remains a regular validated fact or pending lead, never StructuralEvidence.",
+      "verificationPlan": "Add a negative fixture that contains engineering/research terminology and a broad change signal but no structural-production signal; observe RED, then enforce the structural predicate."
+    },
+    {
+      "scenario": "SEC stage availability and usable fact health are reported separately",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/main.rs", "src/features/weekly_radar/runtime/model.rs", "src/features/weekly_radar/runtime/report.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "A Company Facts response with one unavailable fact reports reachable SEC stages separately from usable/expected SEC facts and does not claim full SEC fact coverage.",
+      "verificationPlan": "Use the existing partial SEC fixture, assert the new counters and report lines first, then add the aggregation and render fields."
+    },
+    {
+      "scenario": "Legacy snapshots and localized Telegram splitting remain compatible",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/model.rs", "src/features/weekly_radar/interface/semantic_message_splitter.rs", "tests/weekly_radar_semantic_message_splitter.rs", "tests/semantic_message_splitter_test.rs"],
+      "expected": "Snapshots without new counters deserialize as zero; new validated-fact/structural-evidence headings split as complete sections; old confirmed-information aliases remain accepted.",
+      "verificationPlan": "Run legacy JSON and all three localized report/splitter fixtures in focused tests before the full quality suite."
+    }
+  ],
+  "implementationSurface": {
+    "production": [
+      "src/features/weekly_radar/runtime/evidence.rs",
+      "src/features/weekly_radar/runtime/model.rs",
+      "src/features/weekly_radar/runtime/report.rs",
+      "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "src/main.rs"
+    ],
+    "tests": [
+      "tests/weekly_radar_evidence_quality.rs",
+      "tests/weekly_radar_runtime.rs",
+      "tests/weekly_radar_semantic_message_splitter.rs",
+      "tests/semantic_message_splitter_test.rs"
+    ],
+    "generated": [
+      ".ai/cockpit/current_status.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md"
+    ],
+    "documentation": [
+      "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
+      "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md",
+      "docs/operations/WEEKLY_RADAR.md"
+    ]
+  }
+}

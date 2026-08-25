@@ -258,6 +258,11 @@ fn acquire_runtime_input(
     let mut coverage = BTreeMap::<String, CoverageCounts>::new();
     let mut has_primary_evidence = false;
     let mut metrics = ResearchMetricCounts::default();
+    let mut structural_evidence = 0usize;
+    let mut sec_stage_expected = 0usize;
+    let mut sec_stage_available = 0usize;
+    let mut sec_fact_expected = 0usize;
+    let mut sec_fact_available = 0usize;
     let observed_at = Utc::now();
 
     for company in registry.companies() {
@@ -272,8 +277,24 @@ fn acquire_runtime_input(
         if company.sec_cik().is_none() {
             sec_coverage.not_configured.insert(company.id().to_owned());
         } else {
+            sec_stage_expected += 2;
             match SecClient::collect(company, http, sec_user_agent) {
                 Ok(evidence) => {
+                    let failed_stages = evidence
+                        .failures()
+                        .iter()
+                        .map(|failure| failure.stage())
+                        .collect::<BTreeSet<_>>();
+                    sec_stage_available += ["submissions", "company_facts"]
+                        .iter()
+                        .filter(|stage| !failed_stages.contains(*stage))
+                        .count();
+                    sec_fact_expected += evidence.facts().len();
+                    sec_fact_available += evidence
+                        .facts()
+                        .iter()
+                        .filter(|fact| fact.status() == &FactStatus::Known)
+                        .count();
                     let mut sec_stage_successes = 2usize;
                     for failure in evidence.failures() {
                         metrics.unavailable_sources += 1;
@@ -389,6 +410,11 @@ fn acquire_runtime_input(
                             .add_fact(validated_fact)
                             .map_err(|error| CliError::Failure(error.to_string()))?;
                         metrics.validated_evidence += 1;
+                        if validated.evidence_class()
+                            == org_x::features::weekly_radar::runtime::evidence::EvidenceClass::StructuralEvidence
+                        {
+                            structural_evidence += 1;
+                        }
                         has_primary_evidence = true;
                     }
                     Some(Err(error)) => {
@@ -442,13 +468,22 @@ fn acquire_runtime_input(
             .map_err(|error| CliError::Failure(error.to_string()))?;
     }
 
-    input.set_research_metrics(ResearchMetrics::new(
-        metrics.source_available,
-        metrics.document_candidates,
-        metrics.validated_evidence,
-        metrics.pending_leads,
-        metrics.unavailable_sources,
-    ));
+    input.set_research_metrics(
+        ResearchMetrics::new(
+            metrics.source_available,
+            metrics.document_candidates,
+            metrics.validated_evidence,
+            metrics.pending_leads,
+            metrics.unavailable_sources,
+        )
+        .with_structural_evidence(structural_evidence)
+        .with_sec_health(
+            sec_stage_expected,
+            sec_stage_available,
+            sec_fact_expected,
+            sec_fact_available,
+        ),
+    );
 
     Ok(AcquiredRuntimeInput {
         input,
@@ -865,11 +900,53 @@ mod tests {
 
         assert!(acquired.has_primary_evidence);
         assert_eq!(acquired.input.research_metrics().validated_evidence(), 1);
+        assert_eq!(acquired.input.research_metrics().structural_evidence(), 1);
         assert!(acquired
             .input
             .facts()
             .iter()
             .any(|fact| fact.kind().starts_with("evidence_")));
+    }
+
+    #[test]
+    fn sec_health_distinguishes_reachable_stages_from_usable_facts() {
+        let company = CompanyConfig::new(
+            "acme",
+            "Acme Corporation",
+            "ACME",
+            Some("0001234567".to_owned()),
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+        .expect("SEC health fixture company should be valid");
+        let registry = CompanySourceRegistry::new(1, vec![company]).unwrap();
+        let client = FixtureHttpClient::new();
+        client.insert(
+            "https://data.sec.gov/submissions/CIK0001234567.json",
+            HttpResponse::ok(
+                r#"{"filings":{"recent":{"accessionNumber":["0001234567-25-000001"],"filingDate":["2025-02-15"],"reportDate":["2024-12-31"],"form":["10-K"],"primaryDocument":["acme-2024.htm"]}}}"#,
+            ),
+        );
+        client.insert(
+            "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json",
+            HttpResponse::ok(r#"{"facts":{}}"#),
+        );
+
+        let acquired = acquire_runtime_input(
+            &registry,
+            &client,
+            "ORG-X test contact@example.test",
+            NaiveDate::from_ymd_opt(2026, 8, 25).unwrap(),
+        )
+        .expect("partial SEC health acquisition should complete");
+
+        assert_eq!(acquired.input.research_metrics().sec_stage_expected(), 2);
+        assert_eq!(acquired.input.research_metrics().sec_stage_available(), 2);
+        assert!(acquired.input.research_metrics().sec_fact_expected() > 0);
+        assert_eq!(acquired.input.research_metrics().sec_fact_available(), 0);
     }
 
     #[test]

@@ -54,7 +54,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_evidence_quality.rs",
-      "digest": "ed24e149d10a71abbdd5df8abb07119ebab66da444a4d5bf3d8d05fcd706450e"
+      "digest": "adc72913a8eae39dae92bf794b211e5589eac603d0e5f8ccbef5d1abfb4ed95e"
     },
     {
       "type": "code",
@@ -64,12 +64,12 @@
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/report.rs",
-      "digest": "8fa6edc7a2767c21f975d1678f591809a1066065b251354094f91c8018d31767"
+      "digest": "ed185906abf42b8b316c95913698c4e2123097fd381210b7ed596b0f899d05d6"
     },
     {
       "type": "code",
       "path": "docs/operations/WEEKLY_RADAR.md",
-      "digest": "76b4a9aac0a66fa7d67ea9ce0e69d0daca5b72c4aef90dd44ff1f2e7c8dc59d0"
+      "digest": "6d86dba7cb7fe26bb86e78cc69160e410a9a9c4c12b88eb5d1e785a0cdd72042"
     },
     {
       "type": "code",
@@ -79,7 +79,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "c6135f4dd8f72092df082401575e589c527a24dcfa00b5b0bbe8f9f028cf1fab"
+      "digest": "2589d9bd0c603be62e9f9190f8a567d75037fd222d68d61557ff69da4c38b552"
     }
   ],
   "mergedCommit": null,

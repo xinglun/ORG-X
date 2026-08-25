@@ -2,8 +2,8 @@ use chrono::{NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::CompanyConfig;
 use org_x::features::weekly_radar::runtime::discovery::document_metadata;
 use org_x::features::weekly_radar::runtime::evidence::{
-    extract_evidence_candidate, validate_evidence_candidate, EvidenceCandidate, EvidencePolarity,
-    EvidenceSourceKind, EvidenceValidationError,
+    extract_evidence_candidate, validate_evidence_candidate, EvidenceCandidate, EvidenceClass,
+    EvidencePolarity, EvidenceSourceKind, EvidenceValidationError,
 };
 use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpResponse};
 use org_x::features::weekly_radar::runtime::model::{
@@ -126,6 +126,24 @@ fn legacy_runtime_input_defaults_research_metrics_to_zero() {
 
     assert_eq!(input.research_metrics().validated_evidence(), 0);
     assert_eq!(input.research_metrics().source_available(), 0);
+    assert_eq!(input.research_metrics().structural_evidence(), 0);
+    assert_eq!(input.research_metrics().sec_stage_expected(), 0);
+    assert_eq!(input.research_metrics().sec_stage_available(), 0);
+    assert_eq!(input.research_metrics().sec_fact_expected(), 0);
+    assert_eq!(input.research_metrics().sec_fact_available(), 0);
+}
+
+#[test]
+fn research_metrics_retain_structural_and_sec_health_counts() {
+    let metrics = ResearchMetrics::new(9, 10, 5, 71, 32)
+        .with_structural_evidence(2)
+        .with_sec_health(20, 18, 80, 74);
+
+    assert_eq!(metrics.structural_evidence(), 2);
+    assert_eq!(metrics.sec_stage_expected(), 20);
+    assert_eq!(metrics.sec_stage_available(), 18);
+    assert_eq!(metrics.sec_fact_expected(), 80);
+    assert_eq!(metrics.sec_fact_available(), 74);
 }
 
 #[test]
@@ -473,6 +491,43 @@ fn complete_authoritative_candidate_becomes_validated_evidence() {
 }
 
 #[test]
+fn explicit_production_system_change_becomes_structural_evidence() {
+    let candidate = complete_candidate("2026-08-19", "production scheduling").with_source_details(
+        "Production scheduling update",
+        "Acme consolidated production scheduling under one platform.",
+    );
+
+    let validated = validate_evidence_candidate(&candidate, cutoff()).unwrap();
+
+    assert_eq!(
+        validated.evidence_class(),
+        EvidenceClass::StructuralEvidence
+    );
+    assert!(validated
+        .to_normalized_fact(1)
+        .unwrap()
+        .kind()
+        .starts_with("evidence_structural_change_"));
+}
+
+#[test]
+fn generic_research_description_remains_a_regular_validated_fact() {
+    let candidate = complete_candidate("2026-08-19", "research").with_source_details(
+        "Model research update",
+        "The research model shifted representation modeling for long-range graph topologies.",
+    );
+
+    let validated = validate_evidence_candidate(&candidate, cutoff()).unwrap();
+
+    assert_eq!(validated.evidence_class(), EvidenceClass::ValidatedFact);
+    assert!(validated
+        .to_normalized_fact(1)
+        .unwrap()
+        .kind()
+        .starts_with("evidence_official_material_"));
+}
+
+#[test]
 fn page_level_observation_cannot_create_an_evidence_candidate() {
     let company = company();
     let client = FixtureHttpClient::with_response(
@@ -537,11 +592,62 @@ fn input_with_raw_and_validated_evidence() -> RuntimeReportInput {
 }
 
 #[test]
+fn report_separates_validated_facts_from_structural_evidence() {
+    let mut input = input_with_raw_and_validated_evidence();
+    input
+        .add_fact(
+            NormalizedFact::new(
+                "acme",
+                "evidence_structural_change_002",
+                "Acme deployed an agent-assisted scheduler to production.",
+                FactStatus::Known,
+                Confidence::High,
+                Provenance::new(
+                    "https://ir.example.test/organization/update",
+                    "Acme deployed an agent-assisted scheduler to production.",
+                    Utc::now(),
+                    Some(NaiveDate::from_ymd_opt(2026, 8, 20).expect("date should be valid")),
+                )
+                .expect("structural evidence provenance should be valid"),
+            )
+            .expect("structural evidence should be valid"),
+        )
+        .expect("structural evidence should be added");
+    input.set_research_metrics(
+        ResearchMetrics::new(9, 10, 2, 10, 1)
+            .with_structural_evidence(1)
+            .with_sec_health(20, 20, 16, 14),
+    );
+
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+
+    assert!(report.markdown().contains("## 已验证事实"));
+    assert!(report.markdown().contains("## 结构性证据"));
+    assert!(report.markdown().contains("本周新增已验证事实：2"));
+    assert!(report.markdown().contains("本周新增结构性证据：1"));
+    assert!(report.markdown().contains("SEC 可用事实"));
+    let validated_section = report
+        .markdown()
+        .split("## 已验证事实")
+        .nth(1)
+        .and_then(|section| section.split("\n## ").next())
+        .expect("validated fact section should be rendered");
+    assert!(!validated_section.contains("deployed an agent-assisted scheduler"));
+    let structural_section = report
+        .markdown()
+        .split("## 结构性证据")
+        .nth(1)
+        .and_then(|section| section.split("\n## ").next())
+        .expect("structural evidence section should be rendered");
+    assert!(structural_section.contains("deployed an agent-assisted scheduler"));
+}
+
+#[test]
 fn degraded_report_separates_evidence_and_source_availability_counts() {
     let input = input_with_metrics(ResearchMetrics::new(9, 10, 0, 10, 50));
     let report = render_report_in_language(&input, ReportLanguage::Chinese);
 
-    assert!(report.markdown().contains("本周新增有效证据：0"));
+    assert!(report.markdown().contains("本周新增已验证事实：0"));
     assert!(report.markdown().contains("来源可用性确认：9"));
     assert!(report.markdown().contains("待验证线索：10"));
     assert!(report.markdown().contains("关键数据源不可用：50"));
@@ -557,14 +663,16 @@ fn confirmed_information_contains_only_validated_evidence() {
     let report = render_report_in_language(&input, ReportLanguage::Chinese);
     let confirmed_section = report
         .markdown()
-        .split("## 已确认信息")
+        .split("## 已验证事实")
         .nth(1)
         .and_then(|section| section.split("\n## ").next())
         .expect("validated evidence section should be rendered");
 
     assert!(confirmed_section.contains("Acme consolidated production scheduling"));
     assert!(!confirmed_section.contains("123000000"));
-    assert!(report.markdown().contains("共 1 条已确认信息"));
+    assert!(report
+        .markdown()
+        .contains("共 1 条已验证事实，其中 0 条结构性证据"));
     assert!(report.markdown().contains("已知事实：2 条"));
 }
 
@@ -573,33 +681,33 @@ fn localized_reports_keep_validated_evidence_separate_from_known_facts() {
     let input = input_with_raw_and_validated_evidence();
 
     let japanese = render_report_in_language(&input, ReportLanguage::Japanese);
-    assert!(japanese.markdown().contains("## 確認済み情報"));
+    assert!(japanese.markdown().contains("## 検証済み事実"));
     assert!(japanese
         .markdown()
         .contains("Acme consolidated production scheduling"));
     let japanese_confirmed_section = japanese
         .markdown()
-        .split("## 確認済み情報")
+        .split("## 検証済み事実")
         .nth(1)
         .and_then(|section| section.split("\n## ").next())
         .expect("Japanese validated evidence section should be rendered");
     assert!(!japanese_confirmed_section.contains("123000000"));
-    assert!(japanese.markdown().contains("1 件の確認済み情報"));
+    assert!(japanese.markdown().contains("1 件の検証済み事実"));
     assert!(japanese.markdown().contains("既知の事実：2 件"));
 
     let english = render_report_in_language(&input, ReportLanguage::English);
-    assert!(english.markdown().contains("## Confirmed Information"));
+    assert!(english.markdown().contains("## Validated Facts"));
     assert!(english
         .markdown()
         .contains("Acme consolidated production scheduling"));
     let english_confirmed_section = english
         .markdown()
-        .split("## Confirmed Information")
+        .split("## Validated Facts")
         .nth(1)
         .and_then(|section| section.split("\n## ").next())
         .expect("English validated evidence section should be rendered");
     assert!(!english_confirmed_section.contains("123000000"));
-    assert!(english.markdown().contains("1 confirmed items"));
+    assert!(english.markdown().contains("1 validated facts"));
     assert!(english.markdown().contains("Known facts: 2"));
 }
 

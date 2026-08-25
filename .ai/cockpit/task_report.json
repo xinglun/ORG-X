@@ -1,1235 +1,855 @@
 {
-  "reportVersion": 1,
-  "workItemId": "wi-weekly-radar-evidence-extraction-quality",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "05e80989170dd893fdc783ac88b3032109bf15ff39ae37392f4f610667bfb512"
-  },
-  "task": {
-    "summary": "Task wi-weekly-radar-evidence-extraction-quality generated an evidence-derived outcome with status completed.",
-    "deliveredChanges": [
-      ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
-      ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-      ".ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json",
-      ".ai/cockpit/current_status.md",
-      "src/features/weekly_radar/runtime/discovery.rs",
-      "src/features/weekly_radar/runtime/evidence.rs",
-      "tests/weekly_radar_evidence_quality.rs",
-      "tests/discovery_test.rs",
-      "tests/evidence_test.rs",
-      "docs/operations/WEEKLY_RADAR.md",
-      ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.json",
-      ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.md",
-      ".ai/cockpit/task_report.json",
-      ".ai/cockpit/task_report.md",
-      ".ai/work-items/archive/index.json",
-      ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.archive-manifest.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
-      ".ai/knowledge/index.json",
-      ".ai/knowledge/dependencies.json",
-      ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
-      ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json"
-    ]
-  },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "2c2adfc8ea7c4094770382133ff718fce0aae0294cf7064502dce2adf5afec9b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: quality",
-      "action": "blocked",
-      "resolution": "Retry quality after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "f4423f533d4ce55f99d4f1411f48a688683a288aa89af9724f05e6dc4bb9a2c4"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
+  "forbiddenClaims": [],
   "forcedStops": [
     {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
       "attemptedAction": "complete the Work Item",
       "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+      "evidence": [
+        {
+          "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "verificationHistory[0] aiGuidelines failed"
+        },
+        {
+          "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "verification[aiGuidelines] retry passed"
+        }
+      ],
       "handoff": "",
       "humanDecision": "",
+      "policyOrGuard": "required verification: aiGuidelines",
+      "reason": "aiGuidelines failed before the retry.",
       "recovery": "Retry aiGuidelines after correcting the recorded failure.",
       "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "2c2adfc8ea7c4094770382133ff718fce0aae0294cf7064502dce2adf5afec9b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
-        }
-      ]
+      "stage": "verification"
     },
     {
-      "stage": "verification",
-      "reason": "quality failed before the retry.",
-      "policyOrGuard": "required verification: quality",
       "attemptedAction": "complete the Work Item",
       "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry quality after correcting the recorded failure.",
-      "result": "resolved",
       "evidence": [
         {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "f4423f533d4ce55f99d4f1411f48a688683a288aa89af9724f05e6dc4bb9a2c4"
+          "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "verificationHistory[1] aiSummary failed"
         },
         {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
+          "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "verification[aiSummary] retry passed"
         }
-      ]
+      ],
+      "handoff": "",
+      "humanDecision": "",
+      "policyOrGuard": "required verification: aiSummary",
+      "reason": "aiSummary failed before the retry.",
+      "recovery": "Retry aiSummary after correcting the recorded failure.",
+      "result": "resolved",
+      "stage": "verification"
     }
   ],
   "humanDecisions": [
-    "The user accepted the bounded extraction-quality design and requested a new WI with TDD implementation."
+    "Keep fail-closed Ranking behavior.",
+    "Separate source availability, leads, validated facts, and structural evidence.",
+    "Prioritize truthful SEC stage/fact health.",
+    "Execute the governed Work Item through CI and one authorized dry-run."
   ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Regex cleanup covers common semantic tags and marked containers; site-specific nested boilerplate may remain.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "Removing built rejects generic architecture descriptions but may leave genuine build-only changes pending.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Clean document bodies before extraction and require an explicit production-system change action before creating an EvidenceCandidate.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/discovery.rs",
-          "subject": "Document body normalization"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "Deterministic change-signal gate"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Remove semantic non-content blocks and marked share/menu containers, prefer cleaned paragraph text, and exclude built-only architecture descriptions from the change signal set.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/discovery.rs",
-          "subject": "normalize_document_body"
-        },
-        {
-          "source": "tests/weekly_radar_evidence_quality.rs",
-          "subject": "Boilerplate and generic-description regressions"
-        }
-      ]
-    },
-    "affectedComponents": [
-      {
-        "component": "Weekly Radar document discovery",
-        "detail": "HTML body normalization now excludes common navigation and social boilerplate before claim extraction.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/discovery.rs",
-            "subject": "normalize_document_body"
-          }
-        ]
-      },
-      {
-        "component": "Weekly Radar evidence extraction",
-        "detail": "Generic architecture descriptions using built-only wording no longer become EvidenceCandidates.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "CHANGE_SIGNALS"
-          },
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "generic_architecture_description_does_not_create_a_claim_candidate"
-          }
-        ]
-      }
-    ],
-    "designDecisions": [
-      {
-        "decision": "Keep the existing evidence_* schema and validation boundary.",
-        "reason": "The fix is limited to upstream content quality and deterministic candidate promotion; report, Ranking, persistence, and SEC behavior remain unchanged.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "Declared decision boundary"
-          },
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "Existing evidence validation regressions"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "TDD regression coverage",
-        "detail": "Two new tests failed against the baseline and passed after the minimal implementation; the focused suite has 23 passing tests.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "RED/GREEN evidence-quality tests"
-          }
-        ]
-      },
-      {
-        "topic": "Project verification",
-        "detail": "fmt, clippy with warnings denied, all-target all-feature tests, and the project check target passed.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "Makefile",
-            "subject": "Project quality commands"
-          }
-        ]
-      }
-    ],
-    "evidence": [
-      {
-        "claim": "Boilerplate is excluded while a substantive dated production claim remains extractable.",
-        "status": "verified",
-        "source": "tests/weekly_radar_evidence_quality.rs",
-        "subject": "document_body_ignores_navigation_and_social_boilerplate_before_claim_extraction"
-      },
-      {
-        "claim": "Generic architecture descriptions are not promoted by the built-only wording.",
-        "status": "verified",
-        "source": "tests/weekly_radar_evidence_quality.rs",
-        "subject": "generic_architecture_description_does_not_create_a_claim_candidate"
-      }
-    ]
-  },
   "humanHandoff": {
-    "locale": "zh-CN",
     "completed": [
       {
-        "claim": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
-        "title": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
-        "detail": "Declared bounded extraction-quality scope and governance evidence.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json"
-          }
-        ],
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+        "detail": "Binds the approved structural-evidence, SEC-health, scope, acceptance, and lifecycle authority.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json"
       },
       {
-        "claim": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-        "title": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-        "detail": "Records active TDD implementation and verification evidence.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json"
-          }
-        ],
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "detail": "Records implementation, verification, issue resolution, and residual-risk evidence.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json"
       },
       {
-        "claim": "Changed .ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json",
-        "title": "Changed .ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json",
-        "detail": "Immutable Start Receipt binds this branch to origin/main.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json"
-          }
-        ],
+        "claim": "Changed .ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json",
+        "detail": "Immutable Start Receipt binds the dedicated Work Item branch to the recorded base.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json"
       },
       {
         "claim": "Changed .ai/cockpit/current_status.md",
-        "title": "Changed .ai/cockpit/current_status.md",
-        "detail": "Generated AI Cockpit status projection.",
-        "evidenceRefs": [
+        "detail": "Generated AI Cockpit status projection for the active Work Item.",
+        "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
-        "evidence": [
+        "evidenceRefs": [
           {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
-        "inference": false
-      },
-      {
-        "claim": "Changed src/features/weekly_radar/runtime/discovery.rs",
-        "title": "Changed src/features/weekly_radar/runtime/discovery.rs",
-        "detail": "Cleans non-content HTML and marked boilerplate containers before extraction.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "src/features/weekly_radar/runtime/discovery.rs"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "src/features/weekly_radar/runtime/discovery.rs"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed src/features/weekly_radar/runtime/evidence.rs",
-        "title": "Changed src/features/weekly_radar/runtime/evidence.rs",
-        "detail": "Removes the broad built-only trigger for generic architecture descriptions.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "src/features/weekly_radar/runtime/evidence.rs"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "src/features/weekly_radar/runtime/evidence.rs"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed tests/weekly_radar_evidence_quality.rs",
-        "title": "Changed tests/weekly_radar_evidence_quality.rs",
-        "detail": "Adds RED/GREEN regressions for boilerplate and generic-description rejection.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "tests/weekly_radar_evidence_quality.rs"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "tests/weekly_radar_evidence_quality.rs"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed tests/discovery_test.rs",
-        "title": "Changed tests/discovery_test.rs",
-        "detail": "Adds the coverage-guard-associated document normalization regression.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "tests/discovery_test.rs"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "tests/discovery_test.rs"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed tests/evidence_test.rs",
-        "title": "Changed tests/evidence_test.rs",
-        "detail": "Adds the coverage-guard-associated evidence identity regression.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "tests/evidence_test.rs"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "tests/evidence_test.rs"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed docs/operations/WEEKLY_RADAR.md",
-        "title": "Changed docs/operations/WEEKLY_RADAR.md",
-        "detail": "Documents the stronger normalization and explicit-change boundary.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "docs/operations/WEEKLY_RADAR.md"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "docs/operations/WEEKLY_RADAR.md"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.json",
-        "title": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.json",
-        "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.md",
-        "title": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.md",
-        "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.md"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.md"
-          }
-        ],
-        "inference": false
+        "inference": false,
+        "title": "Changed .ai/cockpit/current_status.md"
       },
       {
         "claim": "Changed .ai/cockpit/task_report.json",
-        "title": "Changed .ai/cockpit/task_report.json",
-        "detail": "Generated machine-readable Human Benefit Review Report.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/cockpit/task_report.json"
-          }
-        ],
+        "detail": "Generated Human Benefit Report JSON during Finish.",
         "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/cockpit/task_report.json"
       },
       {
         "claim": "Changed .ai/cockpit/task_report.md",
-        "title": "Changed .ai/cockpit/task_report.md",
+        "detail": "Generated localized Human Benefit Report Markdown during Finish.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/cockpit/task_report.md"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/cockpit/task_report.md"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/cockpit/task_report.md"
+      },
+      {
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json",
+        "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json"
+      },
+      {
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md",
+        "detail": "Mandatory localized Task Outcome evidence generated by ai-finish.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md"
+      },
+      {
+        "claim": "Changed docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
+        "detail": "Defines the structural-evidence classification and SEC stage/fact semantics.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md"
+          }
+        ],
+        "inference": false,
+        "title": "Changed docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md"
+      },
+      {
+        "claim": "Changed src/features/weekly_radar/runtime/evidence.rs",
+        "detail": "Added deterministic StructuralEvidence classification and stable normalized-fact kind prefixes.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/features/weekly_radar/runtime/evidence.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/features/weekly_radar/runtime/evidence.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed src/features/weekly_radar/runtime/evidence.rs"
+      },
+      {
+        "claim": "Changed src/features/weekly_radar/runtime/model.rs",
+        "detail": "Added backward-compatible structural and SEC stage/fact health metrics.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/features/weekly_radar/runtime/model.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/features/weekly_radar/runtime/model.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed src/features/weekly_radar/runtime/model.rs"
+      },
+      {
+        "claim": "Changed src/features/weekly_radar/runtime/report.rs",
+        "detail": "Separated validated facts from structural evidence and rendered localized SEC health semantics.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/features/weekly_radar/runtime/report.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/features/weekly_radar/runtime/report.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed src/features/weekly_radar/runtime/report.rs"
+      },
+      {
+        "claim": "Changed src/features/weekly_radar/interface/semantic_message_splitter.rs",
+        "detail": "Accepted new localized evidence headings while retaining legacy aliases.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/features/weekly_radar/interface/semantic_message_splitter.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/features/weekly_radar/interface/semantic_message_splitter.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed src/features/weekly_radar/interface/semantic_message_splitter.rs"
+      },
+      {
+        "claim": "Changed src/main.rs",
+        "detail": "Bound structural classification and distinct SEC stage/fact counters during acquisition.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/main.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "src/main.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed src/main.rs"
+      },
+      {
+        "claim": "Changed tests/weekly_radar_evidence_quality.rs",
+        "detail": "Added positive/negative classification, metrics, SEC health, and report regressions.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "tests/weekly_radar_evidence_quality.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "tests/weekly_radar_evidence_quality.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed tests/weekly_radar_evidence_quality.rs"
+      },
+      {
+        "claim": "Changed tests/weekly_radar_runtime.rs",
+        "detail": "Updated report semantics and retained runtime/archive regression coverage.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "tests/weekly_radar_runtime.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "tests/weekly_radar_runtime.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed tests/weekly_radar_runtime.rs"
+      },
+      {
+        "claim": "Changed tests/weekly_radar_semantic_message_splitter.rs",
+        "detail": "Added new localized evidence heading splitting coverage.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "tests/weekly_radar_semantic_message_splitter.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "tests/weekly_radar_semantic_message_splitter.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed tests/weekly_radar_semantic_message_splitter.rs"
+      },
+      {
+        "claim": "Changed tests/semantic_message_splitter_test.rs",
+        "detail": "Added structural evidence boundary coverage.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "tests/semantic_message_splitter_test.rs"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "tests/semantic_message_splitter_test.rs"
+          }
+        ],
+        "inference": false,
+        "title": "Changed tests/semantic_message_splitter_test.rs"
+      },
+      {
+        "claim": "Changed docs/operations/WEEKLY_RADAR.md",
+        "detail": "Documented four evidence layers, structural gate, and SEC stage-versus-fact semantics.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "docs/operations/WEEKLY_RADAR.md"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "docs/operations/WEEKLY_RADAR.md"
+          }
+        ],
+        "inference": false,
+        "title": "Changed docs/operations/WEEKLY_RADAR.md"
+      },
+      {
+        "claim": "Changed docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md",
+        "detail": "Recorded completed TDD tasks and remaining lifecycle checks.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md"
+          }
+        ],
+        "inference": false,
+        "title": "Changed docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md"
+      },
+      {
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+        "detail": "Active Work Item Contract is committed snapshot evidence.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json"
+      },
+      {
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "detail": "Active AI Change Summary is committed snapshot evidence.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json"
+      },
+      {
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json",
+        "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json"
+      },
+      {
+        "claim": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md",
+        "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md"
+      },
+      {
+        "claim": "Changed .ai/cockpit/task_report.json",
+        "detail": "Generated machine-readable Human Benefit Review Report.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": ".ai/cockpit/task_report.json"
+          }
+        ],
+        "inference": false,
+        "title": "Changed .ai/cockpit/task_report.json"
+      },
+      {
+        "claim": "Changed .ai/cockpit/task_report.md",
         "detail": "Generated human-readable Human Benefit Review Report.",
-        "evidenceRefs": [
+        "evidence": [
           {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
-        "evidence": [
+        "evidenceRefs": [
           {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/work-items/archive/index.json",
-        "title": "Changed .ai/work-items/archive/index.json",
-        "detail": "Generated archive discovery index.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/index.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/index.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.archive-manifest.json",
-        "title": "Changed .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.archive-manifest.json",
-        "detail": "Immutable archive evidence root.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.archive-manifest.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.archive-manifest.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
-        "title": "Changed .ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
-        "detail": "Generated evidence-bound Implementation Knowledge Record.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/index.json",
-        "title": "Changed .ai/knowledge/index.json",
-        "detail": "Rebuilt deterministic Implementation Knowledge index.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/index.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/index.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/dependencies.json",
-        "title": "Changed .ai/knowledge/dependencies.json",
-        "detail": "Rebuilt deterministic Knowledge dependency routing after shared evidence digest updates.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/dependencies.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/dependencies.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
-        "title": "Changed .ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
-        "detail": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-telegram-delivery-verification.json",
-        "title": "Changed .ai/knowledge/work-items/wi-telegram-delivery-verification.json",
-        "detail": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
-        "title": "Changed .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
-        "detail": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
-        "title": "Changed .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
-        "detail": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
-        "title": "Changed .ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
-        "detail": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
-        "title": "Changed .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
-        "detail": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
-        "title": "Changed .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
-        "detail": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
-        "title": "Changed .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
-        "detail": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "Changed .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
-        "title": "Changed .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
-        "detail": "Rebuilt an evidence-bound Knowledge record whose shared Weekly Radar evidence digest changed.",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json"
-          }
-        ],
-        "inference": false
+        "inference": false,
+        "title": "Changed .ai/cockpit/task_report.md"
       }
     ],
+    "locale": "zh-CN",
     "passed": [
       {
         "claim": "aiWorkItem",
-        "title": "aiWorkItem",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiWorkItem",
-            "digest": "cf32e2bd0924d5db929820b226ea2f2998e718c1abcdb6a90dfea718d8fdb701"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiWorkItem",
-            "digest": "cf32e2bd0924d5db929820b226ea2f2998e718c1abcdb6a90dfea718d8fdb701"
+            "digest": "5a392eff0cf88d18159eb97ec15463019ee54ead69987195332ac8210c8d3838",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiWorkItem"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "5a392eff0cf88d18159eb97ec15463019ee54ead69987195332ac8210c8d3838",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiWorkItem"
+          }
+        ],
+        "inference": false,
+        "title": "aiWorkItem"
       },
       {
         "claim": "aiScope",
-        "title": "aiScope",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json scope guard passed: 14 changed path(s) covered",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiScope",
-            "digest": "487455de86c5a2ef6e06259c1083418dd714edd28d9098dd7942789fcbc6c72d"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json scope guard passed: 20 changed path(s) covered",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiScope",
-            "digest": "487455de86c5a2ef6e06259c1083418dd714edd28d9098dd7942789fcbc6c72d"
+            "digest": "8b79f71ceede3dd5fde42a6c64083e395fcff82477796043ba2e568bd3bebccf",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiScope"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "8b79f71ceede3dd5fde42a6c64083e395fcff82477796043ba2e568bd3bebccf",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiScope"
+          }
+        ],
+        "inference": false,
+        "title": "aiScope"
       },
       {
         "claim": "aiGuards",
-        "title": "aiGuards",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiGuards",
-            "digest": "4294368660336ca3f76d914ff7531d782973b36b2889e09f491a909abe1e7a63"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiGuards",
-            "digest": "4294368660336ca3f76d914ff7531d782973b36b2889e09f491a909abe1e7a63"
+            "digest": "41d97db3ecf01b304ff54706a2cad0f3eac374ba0c177b5f46e64f315d6ac401",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiGuards"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "41d97db3ecf01b304ff54706a2cad0f3eac374ba0c177b5f46e64f315d6ac401",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiGuards"
+          }
+        ],
+        "inference": false,
+        "title": "aiGuards"
       },
       {
         "claim": "aiCheckpoint",
-        "title": "aiCheckpoint",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-evidence-extraction-quality` - Contract Hash: `86915537921de1f6` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Cou",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiCheckpoint",
-            "digest": "b11bca5d725631574635aba6209f29e64007e73e9a3a1a9d0dfd151fb7a4e6af"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-structural-evidence-gate` - Contract Hash: `cc1f4c025e028882` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `10`",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiCheckpoint",
-            "digest": "b11bca5d725631574635aba6209f29e64007e73e9a3a1a9d0dfd151fb7a4e6af"
+            "digest": "390e4f073bead491a8d9b07a35a8b66570a47b475fe8ed7861b32c71231468c0",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiCheckpoint"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "390e4f073bead491a8d9b07a35a8b66570a47b475fe8ed7861b32c71231468c0",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiCheckpoint"
+          }
+        ],
+        "inference": false,
+        "title": "aiCheckpoint"
       },
       {
         "claim": "aiReviewPolicy",
-        "title": "aiReviewPolicy",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json [review] .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.json [review] .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.md [review] .ai/work-items/starts/wi-weekly-ra",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiReviewPolicy",
-            "digest": "881eb45ebbc142815ee19b105e0d3ae572dd0e69b15a02e342844c6a8c6023a9"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json [review] .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json [review] .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-structur",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiReviewPolicy",
-            "digest": "881eb45ebbc142815ee19b105e0d3ae572dd0e69b15a02e342844c6a8c6023a9"
+            "digest": "9b48caec6bd0ebd6d7f8f0b8c4b63286125cdd52c155bb41ae7f5b73580e1ab9",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiReviewPolicy"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "9b48caec6bd0ebd6d7f8f0b8c4b63286125cdd52c155bb41ae7f5b73580e1ab9",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiReviewPolicy"
+          }
+        ],
+        "inference": false,
+        "title": "aiReviewPolicy"
       },
       {
         "claim": "aiBacktrack",
-        "title": "aiBacktrack",
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiBacktrack",
-            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiBacktrack",
-            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
+            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiBacktrack"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiBacktrack"
+          }
+        ],
+        "inference": false,
+        "title": "aiBacktrack"
       },
       {
         "claim": "aiCoverage",
-        "title": "aiCoverage",
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiCoverage",
-            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiCoverage",
-            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiCoverage"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiCoverage"
+          }
+        ],
+        "inference": false,
+        "title": "aiCoverage"
       },
       {
         "claim": "aiScenarioCoverage",
-        "title": "aiScenarioCoverage",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json report: target/ai_scenario_coverage_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiScenarioCoverage",
-            "digest": "94343b7d9bc554203ed276051ec2a192941751bb5304eb7fc175e03cd5340170"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json [warning] missing_scenario_coverage: - scenario coverage is missing for medium/high risk report: target/ai_scenario_coverage_report.json",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiScenarioCoverage",
-            "digest": "94343b7d9bc554203ed276051ec2a192941751bb5304eb7fc175e03cd5340170"
+            "digest": "839c2a75a81fdb43af1b5ebc93ddd1c7630e3b56ff0b83f01287e5f4ce956a95",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiScenarioCoverage"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "839c2a75a81fdb43af1b5ebc93ddd1c7630e3b56ff0b83f01287e5f4ce956a95",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiScenarioCoverage"
+          }
+        ],
+        "inference": false,
+        "title": "aiScenarioCoverage"
       },
       {
         "claim": "aiGuidelines",
-        "title": "aiGuidelines",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json guidelines compliance check passed: 5 guideline(s) verified",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiGuidelines",
-            "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json guidelines compliance check passed: 6 guideline(s) verified",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiGuidelines",
-            "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
+            "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiGuidelines"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiGuidelines"
+          }
+        ],
+        "inference": false,
+        "title": "aiGuidelines"
       },
       {
         "claim": "aiDiffOwnership",
-        "title": "aiDiffOwnership",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json ## Diff Ownership Preview - active_owned: `14`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiDiffOwnership",
-            "digest": "a69262b9825600bc6a2a8b5229d91ccd5a3745e8167fdbc04c701d2f1d4f2c64"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json ## Diff Ownership Preview - active_owned: `20`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Tas",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiDiffOwnership",
-            "digest": "a69262b9825600bc6a2a8b5229d91ccd5a3745e8167fdbc04c701d2f1d4f2c64"
+            "digest": "4e211928e43d11a51c913b15778e6de56da46a5caa17e97905c42c18f8213480",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiDiffOwnership"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "4e211928e43d11a51c913b15778e6de56da46a5caa17e97905c42c18f8213480",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiDiffOwnership"
+          }
+        ],
+        "inference": false,
+        "title": "aiDiffOwnership"
       },
       {
         "claim": "quality",
-        "title": "quality",
-        "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"explicit strict governance requires the complete quality graph\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"quality-full\", \"requiredGroups\": [\"quality-full\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"0004c92896e0d75ecdcd15f70d86a2",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "quality",
-            "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
-          }
-        ],
+        "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"explicit strict governance requires the complete quality graph\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"quality-full\", \"requiredGroups\": [\"quality-full\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"caeb66cf732d35155b25b098a3b378",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "quality",
-            "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
+            "digest": "e231740c990be91f5e47dde21a369b18907acd4efc44e200d5453b4e107a95ef",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "quality"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "e231740c990be91f5e47dde21a369b18907acd4efc44e200d5453b4e107a95ef",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "quality"
+          }
+        ],
+        "inference": false,
+        "title": "quality"
       },
       {
         "claim": "aiStatus",
-        "title": "aiStatus",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiStatus",
-            "digest": "c74fa091b17c5bd5c94cc6d77da1ed1799bc7bf3ff02bd4c9e0f0bec8463c42a"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiStatus",
-            "digest": "c74fa091b17c5bd5c94cc6d77da1ed1799bc7bf3ff02bd4c9e0f0bec8463c42a"
+            "digest": "2583c0f768306ccbdce4dc8eceb912241ea5ed02adb4fadec08f1a2f5a9b9d1c",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiStatus"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "2583c0f768306ccbdce4dc8eceb912241ea5ed02adb4fadec08f1a2f5a9b9d1c",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiStatus"
+          }
+        ],
+        "inference": false,
+        "title": "aiStatus"
       },
       {
         "claim": "aiStatusCheck",
-        "title": "aiStatusCheck",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiStatusCheck",
-            "digest": "aa9d9f662d3836e78cafc21752ef210ee3b2f2b19b89450d3fad8f6910747db2"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiStatusCheck",
-            "digest": "aa9d9f662d3836e78cafc21752ef210ee3b2f2b19b89450d3fad8f6910747db2"
+            "digest": "ccd40c26ba6746c87317476ef11f36020a0b0b6171d974664bc93af02f05b307",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiStatusCheck"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "ccd40c26ba6746c87317476ef11f36020a0b0b6171d974664bc93af02f05b307",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiStatusCheck"
+          }
+        ],
+        "inference": false,
+        "title": "aiStatusCheck"
       },
       {
         "claim": "aiStatusConsistency",
-        "title": "aiStatusConsistency",
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiStatusConsistency",
-            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
-          }
-        ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiStatusConsistency",
-            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
+            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiStatusConsistency"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiStatusConsistency"
+          }
+        ],
+        "inference": false,
+        "title": "aiStatusConsistency"
       },
       {
         "claim": "aiAgentRisk",
-        "title": "aiAgentRisk",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiAgentRisk",
-            "digest": "9acc698605cacb77ad176e4a6c96dec1e830a537b7dae418601e8e6a57c52b0c"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json --summary .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiAgentRisk",
-            "digest": "9acc698605cacb77ad176e4a6c96dec1e830a537b7dae418601e8e6a57c52b0c"
+            "digest": "c562ea11d8a36338ed7fc431f49f292dff29d586805773143d712a519607ec48",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiAgentRisk"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "c562ea11d8a36338ed7fc431f49f292dff29d586805773143d712a519607ec48",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiAgentRisk"
+          }
+        ],
+        "inference": false,
+        "title": "aiAgentRisk"
       },
       {
         "claim": "aiSummary",
-        "title": "aiSummary",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json --contract .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiSummary",
-            "digest": "0e78b1f2eb9e7644b0cb1edc76be9b0d21fee98d10f7b361399f3bc7839da1a6"
-          }
-        ],
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json --contract .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "aiSummary",
-            "digest": "0e78b1f2eb9e7644b0cb1edc76be9b0d21fee98d10f7b361399f3bc7839da1a6"
+            "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiSummary"
           }
         ],
-        "inference": false
+        "evidenceRefs": [
+          {
+            "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+            "subject": "aiSummary"
+          }
+        ],
+        "inference": false,
+        "title": "aiSummary"
       }
     ],
-    "retained": [],
-    "risks": [
-      {
-        "claim": "html_normalization",
-        "severity": "medium",
-        "title": "html_normalization",
-        "detail": "Regex cleanup covers common semantic tags and marked containers; site-specific nested boilerplate may remain.",
-        "state": "unresolved",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "residualRisks"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "residualRisks"
-          }
-        ],
-        "inference": false
-      },
-      {
-        "claim": "claim_recall",
-        "severity": "medium",
-        "title": "claim_recall",
-        "detail": "Removing built rejects generic architecture descriptions but may leave genuine build-only changes pending.",
-        "state": "unresolved",
-        "evidenceRefs": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "residualRisks"
-          }
-        ],
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-            "subject": "residualRisks"
-          }
-        ],
-        "inference": false
-      }
-    ],
-    "redReasons": [],
     "questions": {
-      "problemCount": 2,
-      "problemCountEvidenceRefs": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verification and verificationHistory"
-        }
-      ],
-      "blockedProblems": [],
-      "resolvedProblems": [
-        {
-          "claim": "aiGuidelines failed before the retry.",
-          "evidenceRefs": [
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "verificationHistory[0] aiGuidelines failed",
-              "digest": "2c2adfc8ea7c4094770382133ff718fce0aae0294cf7064502dce2adf5afec9b"
-            },
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "verification[aiGuidelines] retry passed",
-              "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
-            }
-          ],
-          "inference": false
-        },
-        {
-          "claim": "quality failed before the retry.",
-          "evidenceRefs": [
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "verificationHistory[1] quality failed",
-              "digest": "f4423f533d4ce55f99d4f1411f48a688683a288aa89af9724f05e6dc4bb9a2c4"
-            },
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "verification[quality] retry passed",
-              "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
-            }
-          ],
-          "inference": false
-        }
-      ],
-      "resolutionApproach": [
-        {
-          "claim": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
-          "evidenceRefs": [
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "verificationHistory[0] aiGuidelines failed",
-              "digest": "2c2adfc8ea7c4094770382133ff718fce0aae0294cf7064502dce2adf5afec9b"
-            },
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "verification[aiGuidelines] retry passed",
-              "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
-            }
-          ],
-          "inference": false
-        },
-        {
-          "claim": "Re-ran quality after the correction; the latest attempt passed.",
-          "evidenceRefs": [
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "verificationHistory[1] quality failed",
-              "digest": "f4423f533d4ce55f99d4f1411f48a688683a288aa89af9724f05e6dc4bb9a2c4"
-            },
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "verification[quality] retry passed",
-              "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
-            }
-          ],
-          "inference": false
-        }
-      ],
+      "agentUnknowns": [],
       "avoidedRisks": [
         {
           "claim": "If not detected, could have led to a stale completion claim.",
@@ -1242,34 +862,43 @@
           "inference": true
         }
       ],
-      "remainingRisks": [
-        {
-          "claim": "Regex cleanup covers common semantic tags and marked containers; site-specific nested boilerplate may remain.",
-          "evidenceRefs": [
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "residualRisks"
-            }
-          ],
-          "inference": false
-        },
-        {
-          "claim": "Removing built rejects generic architecture descriptions but may leave genuine build-only changes pending.",
-          "evidenceRefs": [
-            {
-              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-              "subject": "residualRisks"
-            }
-          ],
-          "inference": false
-        }
-      ],
-      "agentUnknowns": [],
+      "blockedProblems": [],
       "humanConfirmations": [
         {
-          "claim": "The user accepted the bounded extraction-quality design and requested a new WI with TDD implementation.",
+          "claim": "Keep fail-closed Ranking behavior.",
           "evidenceRefs": [],
           "inference": true
+        },
+        {
+          "claim": "Separate source availability, leads, validated facts, and structural evidence.",
+          "evidenceRefs": [],
+          "inference": true
+        },
+        {
+          "claim": "Prioritize truthful SEC stage/fact health.",
+          "evidenceRefs": [],
+          "inference": true
+        },
+        {
+          "claim": "Execute the governed Work Item through CI and one authorized dry-run.",
+          "evidenceRefs": [],
+          "inference": true
+        }
+      ],
+      "nextTime": {
+        "claim": "Bind conversation locale and preserve evidence details before the next Work Item starts.",
+        "evidenceRefs": [],
+        "inference": true
+      },
+      "problemCount": 3,
+      "problemCountEvidenceRefs": [
+        {
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "observedIssues"
+        },
+        {
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "verification and verificationHistory"
         }
       ],
       "recurrenceLikelihood": {
@@ -1277,12 +906,406 @@
         "evidenceRefs": [],
         "inference": true
       },
-      "nextTime": {
-        "claim": "Bind conversation locale and preserve evidence details before the next Work Item starts.",
-        "evidenceRefs": [],
-        "inference": true
+      "remainingRisks": [
+        {
+          "claim": "Reader-facing headings changed from confirmed-information wording to validated-fact and structural-evidence wording; legacy splitter aliases remain accepted.",
+          "evidenceRefs": [],
+          "inference": true
+        },
+        {
+          "claim": "The classifier is deterministic and intentionally conservative; real provider wording may remain a regular validated fact until the signal vocabulary is amended in a governed follow-up.",
+          "evidenceRefs": [
+            {
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "residualRisks"
+            }
+          ],
+          "inference": false
+        },
+        {
+          "claim": "No post-merge dry-run has been executed for this Work Item yet; live SEC/source availability and the resulting structural count remain unverified until the authorized dispatch.",
+          "evidenceRefs": [
+            {
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "residualRisks"
+            }
+          ],
+          "inference": false
+        }
+      ],
+      "resolutionApproach": [
+        {
+          "claim": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+          "evidenceRefs": [
+            {
+              "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "verificationHistory[0] aiGuidelines failed"
+            },
+            {
+              "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "verification[aiGuidelines] retry passed"
+            }
+          ],
+          "inference": false
+        },
+        {
+          "claim": "Re-ran aiSummary after the correction; the latest attempt passed.",
+          "evidenceRefs": [
+            {
+              "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "verificationHistory[1] aiSummary failed"
+            },
+            {
+              "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "verification[aiSummary] retry passed"
+            }
+          ],
+          "inference": false
+        }
+      ],
+      "resolvedProblems": [
+        {
+          "claim": "aiGuidelines failed before the retry.",
+          "evidenceRefs": [
+            {
+              "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "verificationHistory[0] aiGuidelines failed"
+            },
+            {
+              "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "verification[aiGuidelines] retry passed"
+            }
+          ],
+          "inference": false
+        },
+        {
+          "claim": "aiSummary failed before the retry.",
+          "evidenceRefs": [
+            {
+              "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "verificationHistory[1] aiSummary failed"
+            },
+            {
+              "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+              "subject": "verification[aiSummary] retry passed"
+            }
+          ],
+          "inference": false
+        }
+      ]
+    },
+    "redReasons": [],
+    "retained": [],
+    "risks": [
+      {
+        "claim": "classification",
+        "detail": "The classifier is deterministic and intentionally conservative; real provider wording may remain a regular validated fact until the signal vocabulary is amended in a governed follow-up.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "severity": "medium",
+        "state": "unresolved",
+        "title": "classification"
+      },
+      {
+        "claim": "live-validation",
+        "detail": "No post-merge dry-run has been executed for this Work Item yet; live SEC/source availability and the resulting structural count remain unverified until the authorized dispatch.",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false,
+        "severity": "medium",
+        "state": "unresolved",
+        "title": "live-validation"
       }
-    }
+    ]
   },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  "implementationApproach": {
+    "affectedComponents": [
+      {
+        "component": "Evidence classification",
+        "detail": "Validated document claims receive regular or structural evidence prefixes while preserving provenance.",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "ValidatedEvidence::evidence_class"
+          }
+        ],
+        "status": "verified"
+      },
+      {
+        "component": "SEC health reporting",
+        "detail": "Stage availability and usable normalized facts are counted independently.",
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "SEC counters"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "partial SEC fixture"
+          }
+        ],
+        "status": "verified"
+      },
+      {
+        "component": "Reader-facing report",
+        "detail": "Validated Facts and Structural Evidence are separate localized sections; old splitter aliases remain accepted.",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "report renderer"
+          },
+          {
+            "source": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+            "subject": "heading aliases"
+          }
+        ],
+        "status": "verified"
+      }
+    ],
+    "approachType": "implementation",
+    "designDecisions": [
+      {
+        "decision": "Prefer false negatives over promoting generic engineering prose.",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "generic research negative fixture"
+          }
+        ],
+        "reason": "A validated technical article is not evidence of enterprise production-system change without an explicit structural signal.",
+        "status": "verified"
+      },
+      {
+        "decision": "Do not equate SEC stage reachability with usable SEC facts.",
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "distinct SEC stage/fact counters"
+          },
+          {
+            "source": "docs/operations/WEEKLY_RADAR.md",
+            "subject": "operator semantics"
+          }
+        ],
+        "reason": "A reachable endpoint can return unavailable or empty normalized facts; readers need both counters.",
+        "status": "verified"
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "The implementation preserves the approved four-layer evidence boundary and does not promote page availability into structural evidence.",
+        "source": "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
+        "status": "verified",
+        "subject": "approved design boundary"
+      },
+      {
+        "claim": "The operator guide explains validated facts, structural evidence, SEC stage health, and usable SEC facts without claiming a live run.",
+        "source": "docs/operations/WEEKLY_RADAR.md",
+        "status": "verified",
+        "subject": "operator-facing four-layer semantics"
+      }
+    ],
+    "mechanism": {
+      "evidence": [
+        {
+          "source": "src/main.rs",
+          "subject": "acquisition counters and SEC stage/fact aggregation"
+        },
+        {
+          "source": "src/features/weekly_radar/runtime/report.rs",
+          "subject": "localized report sections and health metrics"
+        }
+      ],
+      "status": "verified",
+      "text": "Classify only validated bounded passage text using fixed structural signals; aggregate SEC submissions/Company Facts stage reachability separately from normalized FactStatus::Known facts; render both dimensions read-only in localized reports."
+    },
+    "status": "complete",
+    "summary": {
+      "evidence": [
+        {
+          "source": "src/features/weekly_radar/runtime/evidence.rs",
+          "subject": "EvidenceClass and normalized-fact kind boundary"
+        },
+        {
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "positive and negative structural classification tests"
+        }
+      ],
+      "status": "verified",
+      "text": "Keep the existing SourceObservation to EvidenceCandidate to ValidatedEvidence pipeline, then add a deterministic second classification that separates ordinary validated facts from structural evidence without changing Stage or Ranking gates."
+    },
+    "technicalDetails": [
+      {
+        "detail": "New ResearchMetrics fields default to zero during legacy RuntimeReportInput deserialization.",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "serde defaults"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "legacy snapshot test"
+          }
+        ],
+        "status": "verified",
+        "topic": "Compatibility"
+      },
+      {
+        "detail": "Focused evidence/runtime/splitter suites and make quality pass; hosted CI and post-merge dry-run remain lifecycle steps.",
+        "evidence": [
+          {
+            "source": "Makefile",
+            "subject": "quality target"
+          },
+          {
+            "source": "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md",
+            "subject": "lifecycle checklist"
+          }
+        ],
+        "status": "verified",
+        "topic": "Verification"
+      }
+    ]
+  },
+  "interventions": [],
+  "issues": {
+    "detected": 2,
+    "hardStops": 2,
+    "resolved": 2,
+    "unresolved": 0,
+    "warnings": 0
+  },
+  "limitations": [],
+  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding.",
+  "phase": "review",
+  "preventedRisks": [
+    {
+      "action": "blocked",
+      "detectedBy": "required verification: aiGuidelines",
+      "evidence": [
+        {
+          "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "verificationHistory[0] aiGuidelines failed"
+        },
+        {
+          "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "verification[aiGuidelines] retry passed"
+        }
+      ],
+      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
+      "risk": "If not detected, could have led to a stale completion claim.",
+      "severity": "medium"
+    },
+    {
+      "action": "blocked",
+      "detectedBy": "required verification: aiSummary",
+      "evidence": [
+        {
+          "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "verificationHistory[1] aiSummary failed"
+        },
+        {
+          "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "verification[aiSummary] retry passed"
+        }
+      ],
+      "resolution": "Retry aiSummary after correcting the recorded failure.",
+      "risk": "If not detected, could have led to a stale completion claim.",
+      "severity": "medium"
+    }
+  ],
+  "remainingRisks": [
+    {
+      "detail": "The classifier is deterministic and intentionally conservative; real provider wording may remain a regular validated fact until the signal vocabulary is amended in a governed follow-up.",
+      "evidence": [
+        {
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "residualRisks"
+        }
+      ],
+      "severity": "medium"
+    },
+    {
+      "detail": "No post-merge dry-run has been executed for this Work Item yet; live SEC/source availability and the resulting structural count remain unverified until the authorized dispatch.",
+      "evidence": [
+        {
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+          "subject": "residualRisks"
+        }
+      ],
+      "severity": "medium"
+    }
+  ],
+  "reportVersion": 1,
+  "result": "completed",
+  "sourceOutcome": {
+    "digest": "c030224a7104e9a9c13fea4667e42572e7534c2d9a5f8620dbfa15659af11bf8",
+    "format": "ai-cockpit-task-outcome",
+    "schemaVersion": 1
+  },
+  "task": {
+    "deliveredChanges": [
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+      ".ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json",
+      ".ai/cockpit/current_status.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md",
+      "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
+      "src/features/weekly_radar/runtime/evidence.rs",
+      "src/features/weekly_radar/runtime/model.rs",
+      "src/features/weekly_radar/runtime/report.rs",
+      "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "src/main.rs",
+      "tests/weekly_radar_evidence_quality.rs",
+      "tests/weekly_radar_runtime.rs",
+      "tests/weekly_radar_semantic_message_splitter.rs",
+      "tests/semantic_message_splitter_test.rs",
+      "docs/operations/WEEKLY_RADAR.md",
+      "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md"
+    ],
+    "summary": "Task wi-weekly-radar-structural-evidence-gate generated an evidence-derived outcome with status completed."
+  },
+  "workItemId": "wi-weekly-radar-structural-evidence-gate"
 }

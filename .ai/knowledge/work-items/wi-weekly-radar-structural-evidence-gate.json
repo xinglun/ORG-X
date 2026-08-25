@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-structural-evidence-gate",
+  "title": "Weekly Radar structural evidence gate and SEC health semantics",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Keep the existing SourceObservation to EvidenceCandidate to ValidatedEvidence pipeline, then add a deterministic second classification that separates ordinary validated facts from structural evidence without changing Stage or Ranking gates.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+    ".ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+    "src/main.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/weekly_radar_semantic_message_splitter.rs",
+    "tests/semantic_message_splitter_test.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json",
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Prefer false negatives over promoting generic engineering prose.",
+      "reason": "A validated technical article is not evidence of enterprise production-system change without an explicit structural signal.",
+      "status": "verified"
+    },
+    {
+      "decision": "Do not equate SEC stage reachability with usable SEC facts.",
+      "reason": "A reachable endpoint can return unavailable or empty normalized facts; readers need both counters.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "code",
+      "path": "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
+      "digest": "8b2738939e2e5ff1b4b2cff586bbf5b78ad3f16881e5cd3e074d280681b72fee"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "6d86dba7cb7fe26bb86e78cc69160e410a9a9c4c12b88eb5d1e785a0cdd72042"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "digest": "93265dad2e0de58cf33b4dbae9425bdd8452ae17017d1f3db212588d9fc5c5e1"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "digest": "adc72913a8eae39dae92bf794b211e5589eac603d0e5f8ccbef5d1abfb4ed95e"
+    },
+    {
+      "type": "code",
+      "path": "src/main.rs",
+      "digest": "8cac04704155d1ab62a9c71d544bd53ffe01a003cb364875530c43f7d4127f04"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "digest": "ed185906abf42b8b316c95913698c4e2123097fd381210b7ed596b0f899d05d6"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "digest": "beef114c73aa57f2dfd08c66ce68013b683719871e5b413b86df4cf47b6340b5"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "digest": "468795f50e875f57aeef5b0bf57f0b0228bb8d5a107f9af675ba8b3a0bfd98bf"
+    },
+    {
+      "type": "code",
+      "path": "Makefile",
+      "digest": "ed2d7675c8d51503ac3e1bf178357508d4fee04bbefd3eaa7c00f6c809a1b659"
+    },
+    {
+      "type": "code",
+      "path": "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md",
+      "digest": "4aef1a2b1e7798fd0a6eb5ce323bf37f70ec628d536f8cd2b676710b3a95d19e"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json",
+    "contractDigest": "cc1f4c025e028882308c0736df5bb6b45ea6ae6230326bd093269388302f45ba",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json",
+    "summaryDigest": "bc46ba7085017b62cf7621001ac597edcc15b0ca98d87f271e587e6718d1fd07",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json",
+    "outcomeDigest": "e24653cbe8197bb6476eef7c3e8cd2c9b04a71a8ff957a706d31321ee924e5d2"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

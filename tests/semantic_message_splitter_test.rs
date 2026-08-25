@@ -19,3 +19,16 @@ fn splitter_keeps_confirmed_information_in_the_reader_summary() {
     assert!(split.chunks()[0].markdown().contains("## 已确认信息"));
     assert_eq!(split.chunks()[1].boundary(), SemanticBoundary::SystemHealth);
 }
+
+#[test]
+fn splitter_accepts_structural_evidence_as_an_important_transition() {
+    let rendered = "## 结构性证据\n### Acme\n- workflow change\n";
+    let split =
+        SemanticMessageSplitter::split(rendered, SemanticSplitLimits::new(1_000, 20).unwrap())
+            .expect("structural evidence should be a supported reader section");
+    assert_eq!(split.chunks().len(), 1);
+    assert_eq!(
+        split.chunks()[0].boundary(),
+        SemanticBoundary::ImportantTransition
+    );
+}

@@ -197,6 +197,7 @@ struct Labels {
     attention: &'static str,
     no_attention: &'static str,
     confirmed_detail: &'static str,
+    structural_evidence_detail: &'static str,
     information_type: &'static str,
     fact: &'static str,
     date: &'static str,
@@ -209,9 +210,12 @@ struct Labels {
     unknown_facts: &'static str,
     unavailable_facts: &'static str,
     validated_evidence: &'static str,
+    structural_evidence: &'static str,
     document_candidates: &'static str,
     source_availability: &'static str,
     unavailable_sources_metric: &'static str,
+    sec_stage_health: &'static str,
+    sec_fact_health: &'static str,
     source_available: &'static str,
     source_unavailable: &'static str,
     source_not_configured: &'static str,
@@ -241,33 +245,37 @@ fn labels(language: ReportLanguage) -> Labels {
     match language {
         ReportLanguage::Chinese => Labels {
             summary: "本周摘要",
-            changes: "重要组织变化",
+            changes: "结构性变化证据",
             company_observation: "重点公司",
             health: "系统状态",
             change_status: "组织变化",
-            no_change: "本周没有发现已确认的组织结构变化。",
+            no_change: "本周没有发现已确认的结构性生产系统变化。",
             evidence_basis: "主证据",
-            no_primary: "本周没有可作为主证据的确认信息。",
+            no_primary: "本周没有可作为主证据的已验证事实。",
             data_status: "数据状态",
             source_status: "来源情况",
             attention: "需要关注",
             no_attention: "目前没有需要人工处理的异常。",
-            confirmed_detail: "已确认信息",
+            confirmed_detail: "已验证事实",
+            structural_evidence_detail: "结构性证据",
             information_type: "信息类型",
             fact: "事实",
             date: "日期",
             evidence: "证据",
-            evidence_details: "逐项证据见下方“已确认信息”。",
-            evidence_insufficient: "目前没有已确认的组织变化；仍有待核实或证据不足，不能视为没有变化。",
+            evidence_details: "逐项证据见下方“已验证事实”和“结构性证据”。",
+            evidence_insufficient: "尚未确认结构性变化；仍有待核实或证据不足，不能视为没有变化。",
             source_unavailable_reason: "数据不足：没有确认到组织变化；但部分相关来源暂不可用，无法据此确认本周没有组织变化。",
             confirmed_facts: "已知事实",
             pending_leads: "待验证线索",
             unknown_facts: "无法确定",
             unavailable_facts: "暂不可用",
-            validated_evidence: "本周新增有效证据",
+            validated_evidence: "本周新增已验证事实",
+            structural_evidence: "本周新增结构性证据",
             document_candidates: "发现文档候选",
             source_availability: "来源可用性确认",
             unavailable_sources_metric: "关键数据源不可用",
+            sec_stage_health: "SEC 阶段可用",
+            sec_fact_health: "SEC 可用事实",
             source_available: "可用",
             source_unavailable: "暂不可用",
             source_not_configured: "尚未配置",
@@ -294,33 +302,37 @@ fn labels(language: ReportLanguage) -> Labels {
         },
         ReportLanguage::Japanese => Labels {
             summary: "週次サマリー",
-            changes: "重要な組織変化",
+            changes: "構造的変化の根拠",
             company_observation: "注目企業",
             health: "システム状態",
             change_status: "組織変化",
-            no_change: "今週、確認済みの組織構造の変化はありません。",
+            no_change: "今週、確認済みの構造的な生産システム変化はありません。",
             evidence_basis: "主な根拠",
-            no_primary: "今週、主な根拠として使える確認済み情報はありません。",
+            no_primary: "今週、主な根拠として使える検証済み事実はありません。",
             data_status: "データ状態",
             source_status: "情報源の状況",
             attention: "要確認",
             no_attention: "現在、手動対応が必要な異常はありません。",
-            confirmed_detail: "確認済み情報",
+            confirmed_detail: "検証済み事実",
+            structural_evidence_detail: "構造的証拠",
             information_type: "情報種別",
             fact: "事実",
             date: "日付",
             evidence: "根拠",
-            evidence_details: "項目ごとの根拠は下記の「確認済み情報」に記載しています。",
-            evidence_insufficient: "確認済みの組織変化はありませんが、未確認または根拠不足の情報があり、変化がないとは判断できません。",
+            evidence_details: "項目ごとの根拠は下記の「検証済み事実」と「構造的証拠」に記載しています。",
+            evidence_insufficient: "構造的変化は確認できませんが、未確認または根拠不足の情報があり、変化がないとは判断できません。",
             source_unavailable_reason: "データ不足：組織変化は確認できませんでしたが、関連情報源の一部を取得できず、変化がないとは判断できません。",
             confirmed_facts: "既知の事実",
             pending_leads: "未確認の手がかり",
             unknown_facts: "判定不能",
             unavailable_facts: "取得できず",
-            validated_evidence: "今週の新規有効根拠",
+            validated_evidence: "今週の新規検証済み事実",
+            structural_evidence: "今週の新規構造的証拠",
             document_candidates: "発見した文書候補",
             source_availability: "情報源の利用可能性確認",
             unavailable_sources_metric: "重要な情報源を取得できず",
+            sec_stage_health: "SEC ステージ利用可能",
+            sec_fact_health: "SEC 利用可能な事実",
             source_available: "利用可能",
             source_unavailable: "取得できず",
             source_not_configured: "未設定",
@@ -347,33 +359,37 @@ fn labels(language: ReportLanguage) -> Labels {
         },
         ReportLanguage::English => Labels {
             summary: "Executive Summary",
-            changes: "Important Organizational Changes",
+            changes: "Structural Change Evidence",
             company_observation: "Companies to Watch",
             health: "System Health",
             change_status: "Change signal",
-            no_change: "No confirmed organizational-structure change was found this week.",
+            no_change: "No confirmed structural production-system change was found this week.",
             evidence_basis: "Primary evidence",
-            no_primary: "No confirmed information was available as primary evidence this week.",
+            no_primary: "No validated fact was available as primary evidence this week.",
             data_status: "Data status",
             source_status: "Source status",
             attention: "Needs attention",
             no_attention: "No manual action is currently required.",
-            confirmed_detail: "Confirmed Information",
+            confirmed_detail: "Validated Facts",
+            structural_evidence_detail: "Structural Evidence",
             information_type: "Information type",
             fact: "Fact",
             date: "Date",
             evidence: "Evidence",
-            evidence_details: "See the item-level evidence in Confirmed Information below.",
-            evidence_insufficient: "No organizational change was confirmed; unverified or insufficient evidence means this is not proof that no change occurred.",
+            evidence_details: "See the item-level evidence in Validated Facts and Structural Evidence below.",
+            evidence_insufficient: "No structural change was confirmed; unverified or insufficient evidence means this is not proof that no change occurred.",
             source_unavailable_reason: "Data coverage is degraded: no organizational change was confirmed, and some relevant sources were unavailable; this is not proof that no change occurred.",
             confirmed_facts: "Known facts",
             pending_leads: "Leads to verify",
             unknown_facts: "Could not determine",
             unavailable_facts: "Unavailable",
-            validated_evidence: "New validated evidence this week",
+            validated_evidence: "New validated facts this week",
+            structural_evidence: "New structural evidence this week",
             document_candidates: "Document candidates discovered",
             source_availability: "Source availability confirmed",
             unavailable_sources_metric: "Key data sources unavailable",
+            sec_stage_health: "SEC stages available",
+            sec_fact_health: "Usable SEC facts",
             source_available: "available",
             source_unavailable: "unavailable",
             source_not_configured: "not configured",
@@ -544,6 +560,9 @@ fn source_label(source: &str, labels: Labels) -> String {
 
 fn fact_label(kind: &str, labels: Labels) -> String {
     let lower = kind.to_ascii_lowercase();
+    if lower.starts_with("evidence_structural_change_") {
+        return labels.field_structural_change.to_owned();
+    }
     if let Some(source) = source_kind_for_fact(kind) {
         return source_label(source, labels);
     }
@@ -599,8 +618,12 @@ fn is_validated_evidence_fact(fact: &NormalizedFact) -> bool {
     fact.status() == &FactStatus::Known && fact.kind().starts_with("evidence_")
 }
 
+fn is_structural_evidence_fact(fact: &NormalizedFact) -> bool {
+    is_validated_evidence_fact(fact) && fact.kind().starts_with("evidence_structural_change_")
+}
+
 fn is_confirmed_information_fact(fact: &NormalizedFact) -> bool {
-    is_validated_evidence_fact(fact)
+    is_validated_evidence_fact(fact) && !is_structural_evidence_fact(fact)
 }
 
 fn validated_evidence_count(facts: &[&NormalizedFact]) -> usize {
@@ -688,34 +711,36 @@ fn render_executive_summary(
     let labels = labels(language);
     let intro = match language {
         ReportLanguage::Chinese => format!(
-            "{} {}，覆盖 {} 家公司，共 {} 条已确认信息。",
+            "{} {}，覆盖 {} 家公司，共 {} 条已验证事实，其中 {} 条结构性证据。",
             labels.as_of,
             input.as_of(),
             company_count,
-            validated_evidence_count
+            validated_evidence_count,
+            structural_count
         ),
         ReportLanguage::Japanese => format!(
-            "{} {}、{} 社を対象に {} 件の確認済み情報があります。",
+            "{} {}、{} 社を対象に {} 件の検証済み事実があり、そのうち {} 件は構造的証拠です。",
             labels.as_of,
             input.as_of(),
             company_count,
-            validated_evidence_count
+            validated_evidence_count,
+            structural_count
         ),
         ReportLanguage::English => format!(
-            "As of {}, the report covers {} companies and {} confirmed items.",
+            "As of {}, the report covers {} companies and {} validated facts, including {} structural evidence items.",
             input.as_of(),
             company_count,
-            validated_evidence_count
+            validated_evidence_count,
+            structural_count
         ),
     };
     let mut section = format!("## {}\n{}", labels.summary, intro);
     let change_sentence = match language {
         ReportLanguage::Chinese => {
-            if input.research_metrics().validated_evidence() == 0
-                && (input.research_metrics().pending_leads() > 0
-                    || input.research_metrics().unavailable_sources() > 0
-                    || health.unavailable > 0
-                    || health.unconfirmed > 0)
+            if input.research_metrics().pending_leads() > 0
+                || input.research_metrics().unavailable_sources() > 0
+                || health.unavailable > 0
+                || health.unconfirmed > 0
             {
                 labels.source_unavailable_reason.to_owned()
             } else if structural_count == 0 && (health.unknown > 0 || health.unconfirmed > 0) {
@@ -723,15 +748,14 @@ fn render_executive_summary(
             } else if structural_count == 0 {
                 labels.no_change.to_owned()
             } else {
-                format!("发现 {} 条已确认的组织变化。", structural_count)
+                format!("发现 {} 条结构性变化证据。", structural_count)
             }
         }
         ReportLanguage::Japanese => {
-            if input.research_metrics().validated_evidence() == 0
-                && (input.research_metrics().pending_leads() > 0
-                    || input.research_metrics().unavailable_sources() > 0
-                    || health.unavailable > 0
-                    || health.unconfirmed > 0)
+            if input.research_metrics().pending_leads() > 0
+                || input.research_metrics().unavailable_sources() > 0
+                || health.unavailable > 0
+                || health.unconfirmed > 0
             {
                 labels.source_unavailable_reason.to_owned()
             } else if structural_count == 0 && (health.unknown > 0 || health.unconfirmed > 0) {
@@ -739,15 +763,14 @@ fn render_executive_summary(
             } else if structural_count == 0 {
                 labels.no_change.to_owned()
             } else {
-                format!("確認済みの組織変化が {} 件あります。", structural_count)
+                format!("構造的変化の根拠が {} 件あります。", structural_count)
             }
         }
         ReportLanguage::English => {
-            if input.research_metrics().validated_evidence() == 0
-                && (input.research_metrics().pending_leads() > 0
-                    || input.research_metrics().unavailable_sources() > 0
-                    || health.unavailable > 0
-                    || health.unconfirmed > 0)
+            if input.research_metrics().pending_leads() > 0
+                || input.research_metrics().unavailable_sources() > 0
+                || health.unavailable > 0
+                || health.unconfirmed > 0
             {
                 labels.source_unavailable_reason.to_owned()
             } else if structural_count == 0 && (health.unknown > 0 || health.unconfirmed > 0) {
@@ -756,7 +779,7 @@ fn render_executive_summary(
                 labels.no_change.to_owned()
             } else {
                 format!(
-                    "{} confirmed organizational changes were found.",
+                    "{} structural change evidence items were found.",
                     structural_count
                 )
             }
@@ -764,10 +787,13 @@ fn render_executive_summary(
     };
     let data_sentence = match language {
         ReportLanguage::Chinese => format!(
-            "- {}：{}：{} 条\n- {}：{} 条\n- {}：{} 条\n- {}：{} 条\n- {}：{} 条",
+            "- {}：{}：{} 条\n- {}：{}：{} 条\n- {}：{} 条\n- {}：{} 条\n- {}：{} 条\n- {}：{}\n- {}：{}\n- {}：{}",
             labels.data_status,
             labels.validated_evidence,
             input.research_metrics().validated_evidence(),
+            labels.data_status,
+            labels.structural_evidence,
+            input.research_metrics().structural_evidence(),
             labels.document_candidates,
             input.research_metrics().document_candidates(),
             labels.source_availability,
@@ -775,13 +801,28 @@ fn render_executive_summary(
             labels.pending_leads,
             input.research_metrics().pending_leads(),
             labels.unavailable_sources_metric,
-            input.research_metrics().unavailable_sources()
+            input.research_metrics().unavailable_sources(),
+            labels.sec_stage_health,
+            format_args!(
+                "{}/{}",
+                input.research_metrics().sec_stage_available(),
+                input.research_metrics().sec_stage_expected()
+            ),
+            labels.sec_fact_health,
+            format_args!(
+                "{}/{}",
+                input.research_metrics().sec_fact_available(),
+                input.research_metrics().sec_fact_expected()
+            )
         ),
         ReportLanguage::Japanese => format!(
-            "- {}：{}：{} 件\n- {}：{} 件\n- {}：{} 件\n- {}：{} 件\n- {}：{} 件",
+            "- {}：{}：{} 件\n- {}：{}：{} 件\n- {}：{} 件\n- {}：{} 件\n- {}：{} 件\n- {}：{}\n- {}：{}\n- {}：{}",
             labels.data_status,
             labels.validated_evidence,
             input.research_metrics().validated_evidence(),
+            labels.data_status,
+            labels.structural_evidence,
+            input.research_metrics().structural_evidence(),
             labels.document_candidates,
             input.research_metrics().document_candidates(),
             labels.source_availability,
@@ -789,13 +830,27 @@ fn render_executive_summary(
             labels.pending_leads,
             input.research_metrics().pending_leads(),
             labels.unavailable_sources_metric,
-            input.research_metrics().unavailable_sources()
+            input.research_metrics().unavailable_sources(),
+            labels.sec_stage_health,
+            format_args!(
+                "{}/{}",
+                input.research_metrics().sec_stage_available(),
+                input.research_metrics().sec_stage_expected()
+            ),
+            labels.sec_fact_health,
+            format_args!(
+                "{}/{}",
+                input.research_metrics().sec_fact_available(),
+                input.research_metrics().sec_fact_expected()
+            )
         ),
         ReportLanguage::English => format!(
-            "- {}: {}: {}\n- {}: {}\n- {}: {}\n- {}: {}\n- {}: {}",
+            "- {}: {}: {}\n- {}: {}\n- {}: {}\n- {}: {}\n- {}: {}\n- {}: {}\n- {}: {}\n- {}: {}",
             labels.data_status,
             labels.validated_evidence,
             input.research_metrics().validated_evidence(),
+            labels.structural_evidence,
+            input.research_metrics().structural_evidence(),
             labels.document_candidates,
             input.research_metrics().document_candidates(),
             labels.source_availability,
@@ -803,7 +858,19 @@ fn render_executive_summary(
             labels.pending_leads,
             input.research_metrics().pending_leads(),
             labels.unavailable_sources_metric,
-            input.research_metrics().unavailable_sources()
+            input.research_metrics().unavailable_sources(),
+            labels.sec_stage_health,
+            format_args!(
+                "{}/{}",
+                input.research_metrics().sec_stage_available(),
+                input.research_metrics().sec_stage_expected()
+            ),
+            labels.sec_fact_health,
+            format_args!(
+                "{}/{}",
+                input.research_metrics().sec_fact_available(),
+                input.research_metrics().sec_fact_expected()
+            )
         ),
     };
     let separator = if language == ReportLanguage::English {
@@ -858,6 +925,54 @@ fn render_confirmed_facts(
     };
     let mut section = format!("## {}", labels.confirmed_detail);
     for fact in confirmed {
+        section.push_str(&format!(
+            "\n### {}",
+            company_label(input, fact.company_id())
+        ));
+        section.push_str(&format!(
+            "\n- {}{separator}{}",
+            labels.information_type,
+            fact_label(fact.kind(), labels)
+        ));
+        section.push_str(&format!(
+            "\n- {}{separator}{}",
+            labels.fact,
+            fact_value(fact)
+        ));
+        if let Some(date) = fact.provenance().effective_date() {
+            section.push_str(&format!("\n- {}{separator}{}", labels.date, date));
+        }
+        section.push_str(&format!(
+            "\n- {}{separator}{}",
+            labels.evidence,
+            safe_uri(fact.provenance().source_uri())
+        ));
+    }
+    Some(section)
+}
+
+fn render_structural_evidence(
+    input: &RuntimeReportInput,
+    facts: &[&NormalizedFact],
+    language: ReportLanguage,
+) -> Option<String> {
+    let labels = labels(language);
+    let structural = facts
+        .iter()
+        .copied()
+        .filter(|fact| is_structural_evidence_fact(fact))
+        .collect::<Vec<_>>();
+    if structural.is_empty() {
+        return None;
+    }
+
+    let separator = if language == ReportLanguage::English {
+        ":"
+    } else {
+        "："
+    };
+    let mut section = format!("## {}", labels.structural_evidence_detail);
+    for fact in structural {
         section.push_str(&format!(
             "\n### {}",
             company_label(input, fact.company_id())
@@ -1411,10 +1526,7 @@ pub fn render_report_in_language(
     };
     let health = build_health(input, &facts);
     let validated_evidence_count = validated_evidence_count(&facts);
-    let structural_count = facts
-        .iter()
-        .filter(|fact| is_structural_change(fact.kind()) && fact.status() == &FactStatus::Known)
-        .count();
+    let structural_count = input.research_metrics().structural_evidence();
     let mut sections = vec![render_executive_summary(
         input,
         &health,
@@ -1424,6 +1536,9 @@ pub fn render_report_in_language(
         language,
     )];
     if let Some(section) = render_confirmed_facts(input, &facts, language) {
+        sections.push(section);
+    }
+    if let Some(section) = render_structural_evidence(input, &facts, language) {
         sections.push(section);
     }
     if let Some(section) = render_structural_changes(input, &facts, language) {

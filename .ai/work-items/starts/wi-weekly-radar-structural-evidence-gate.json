@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-structural-evidence-gate",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json",
+  "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
+  "baseBranch": "codex/wi-weekly-radar-structural-evidence-gate",
+  "startTimestamp": "2026-08-25T05:19:50.042546+00:00",
+  "initialScopeDigest": "d12453fba8dbb5b710a85b38da7de85eef47a353526a90cfbd706c6f272d1617",
+  "contractSkeletonDigest": "008e4824ae8f7d2edf2c3a96a58c53c9aa8cc90a01feb5e918c4c13f139a25bb"
+}

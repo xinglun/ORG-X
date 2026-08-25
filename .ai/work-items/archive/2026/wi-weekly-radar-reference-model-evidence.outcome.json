@@ -9,24 +9,24 @@
   "bindings": {
     "taskId": "wi-weekly-radar-reference-model-evidence",
     "contractDigest": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
-    "summaryDigest": "e90a3d25887e89bdf3590cc2b07c356d2e4ad39104095d1492f248cedfb8fceb",
-    "verificationDigest": "df5da4407c59509384843538fed2648e0774590b0f097791524f2e142d1e9afd",
+    "summaryDigest": "99f0f91e6f12905300453216f50ecae7c774582b57e7268191b9cb6d8a4c4419",
+    "verificationDigest": "ed02c1b1114391795109f740bae53586fc968b97a540ae2e2989eb5b8bb8fd85",
     "baseCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
-    "headCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
+    "headCommit": "b8965f6ad03d4672b8da93a00599be6ee220806a",
     "lifecycleStage": "pre_merge",
     "pullRequest": {
       "state": "not_created"
     },
     "aiCockpitVersion": "repository-governance",
     "generatorVersion": "1.2",
-    "locale": "en",
+    "locale": "zh-CN",
     "preArchiveCandidateCoverage": {
-      "reportSha256": "5dbf36ae7c1d14a233b272e1be0ea123f2ece38f19aa5846c75db69427780b92",
+      "reportSha256": "f12ec0460c71fff2c7a34aed30ff3baac2b245365e6332a1d93149794993dbb1",
       "binding": {
         "baseCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
-        "candidateHead": "2161d3f645805bb6f5ab212f782bb979f196e93f",
-        "candidateTreeDigest": "7997b48c9b68b35ea8c83e0f13d8e724e44031020b4ac95a442a0f74fc433849",
-        "candidateDiffDigest": "fc7bc39e05ba57040608f11ed83cbf95b04ac76bab379e36a3a2a8ec63b1e03c"
+        "candidateHead": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+        "candidateTreeDigest": "1077aa8288abe19ceb58b5bb1d3c5dd4eb0ceda2204db3de0aa916c28cd69bfb",
+        "candidateDiffDigest": "265e9bdd93d3324ea10973c161be69eb1264cf4b30fa4450adab6e5280b94a55"
       }
     }
   },
@@ -56,10 +56,10 @@
       "docs/operations/WEEKLY_RADAR.md",
       "docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md",
       "docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md",
-      ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
-      ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
-      ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json",
-      ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.md",
+      ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md",
       ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
@@ -104,12 +104,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
           }
@@ -127,12 +127,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "verificationHistory[1] aiSummary failed",
             "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "verification[aiSummary] retry passed",
             "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
           }
@@ -147,12 +147,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
           }
@@ -165,12 +165,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "verificationHistory[1] aiSummary failed",
             "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "verification[aiSummary] retry passed",
             "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
           }
@@ -190,13 +190,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -210,13 +210,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -228,11 +228,11 @@
     ],
     "evidence": [
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
         "subject": "Contract"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
         "subject": "Summary"
       },
       {
@@ -248,22 +248,22 @@
         "subject": "2026-08-25 bounded Microsoft reference-model validation run"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
         "subject": "verificationHistory[0] aiGuidelines failed",
         "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
         "subject": "verification[aiGuidelines] retry passed",
         "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
         "subject": "verificationHistory[1] aiSummary failed",
         "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
         "subject": "verification[aiSummary] retry passed",
         "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
       }
@@ -405,7 +405,7 @@
     }
   },
   "humanHandoff": {
-    "locale": "en",
+    "locale": "zh-CN",
     "completed": [
       {
         "claim": "Changed config/weekly_radar/companies.json",
@@ -413,13 +413,13 @@
         "detail": "Configured bounded Microsoft organization, production-system, and named-peer customer-story entrypoints for live research.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "config/weekly_radar/companies.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "config/weekly_radar/companies.json"
           }
         ],
@@ -431,13 +431,13 @@
         "detail": "Added the one-company Microsoft research slice used for repeatable bounded live validation.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "config/weekly_radar/reference_model_candidates.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "config/weekly_radar/reference_model_candidates.json"
           }
         ],
@@ -449,13 +449,13 @@
         "detail": "Added the required reference-impact evidence for the new repository-local candidate registry after the strict coverage gate identified the missing target.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json"
           }
         ],
@@ -467,13 +467,13 @@
         "detail": "Added validated optional official-research source lists without guessing URLs or changing existing constructor compatibility.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/config.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/config.rs"
           }
         ],
@@ -485,13 +485,13 @@
         "detail": "Prioritized content paths, promoted explicit content URLs to documents, and extracted visible US publication dates.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/discovery.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/discovery.rs"
           }
         ],
@@ -503,13 +503,13 @@
         "detail": "Collected explicitly configured official research documents while retaining bounded same-origin discovery.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/sources.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/sources.rs"
           }
         ],
@@ -521,13 +521,13 @@
         "detail": "Added explicit bounded counter-review records and wired confirmed reference-model eligibility to the highest Stage.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/main.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/main.rs"
           }
         ],
@@ -539,13 +539,13 @@
         "detail": "Added regressions for direct official documents, visible publication dates, and content-path discovery priority.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
@@ -557,13 +557,13 @@
         "detail": "Added typed four-family evidence bundle and fail-closed eligibility assessment.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/transformation/domain/mod.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/transformation/domain/mod.rs"
           }
         ],
@@ -575,13 +575,13 @@
         "detail": "Added domain gate tests for Candidate, Confirmed, NotEligible, periods, authority, and counter review.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/transformation/domain/mod_test.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/transformation/domain/mod_test.rs"
           }
         ],
@@ -593,13 +593,13 @@
         "detail": "Attached conservative reference-model family and named-peer metadata only after document Claim validation.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/evidence.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/evidence.rs"
           }
         ],
@@ -611,13 +611,13 @@
         "detail": "Added backward-compatible family, named-peer, and bounded outcome-period metadata to NormalizedFact.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/model.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/model.rs"
           }
         ],
@@ -629,13 +629,13 @@
         "detail": "Retained up to four distinct annual outcome periods without duplicating fact identity; latest-period ambiguity remains UNKNOWN.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/sec.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/sec.rs"
           }
         ],
@@ -647,13 +647,13 @@
         "detail": "Precomputed reference-model assessment and made confirmed eligibility mandatory for REFERENCE_MODEL Stage.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/judgment.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/judgment.rs"
           }
         ],
@@ -665,13 +665,13 @@
         "detail": "Rendered localized four-family matrix, eligibility, period/source counts, counter review, and missing conditions.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/report.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "src/features/weekly_radar/runtime/report.rs"
           }
         ],
@@ -683,13 +683,13 @@
         "detail": "Added family, named-peer, legacy JSON, and SEC multi-period fixtures.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "tests/weekly_radar_evidence_quality.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "tests/weekly_radar_evidence_quality.rs"
           }
         ],
@@ -701,13 +701,13 @@
         "detail": "Added Candidate suppression, Confirmed Stage gate, and localized report matrix fixtures.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "tests/weekly_radar_judgment_chain.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "tests/weekly_radar_judgment_chain.rs"
           }
         ],
@@ -719,13 +719,13 @@
         "detail": "Documented the four-family ReferenceModel hard boundary.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/domain/PRODUCTION_SYSTEM_MODEL.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/domain/PRODUCTION_SYSTEM_MODEL.md"
           }
         ],
@@ -737,13 +737,13 @@
         "detail": "Documented fail-closed multi-period and independent-diffusion validation.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/validation/VALIDATION_STRATEGY.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/validation/VALIDATION_STRATEGY.md"
           }
         ],
@@ -755,13 +755,13 @@
         "detail": "Documented the four-family runtime pipeline and report semantics.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
@@ -773,13 +773,13 @@
         "detail": "Approved design for the reference-model evidence gate.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md"
           }
         ],
@@ -791,13 +791,13 @@
         "detail": "Implementation and hard-acceptance plan.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md"
           }
         ],
@@ -809,14 +809,14 @@
         "detail": "Bound Work Item scope, acceptance, sources, risk, and execution decision.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json"
           }
         ],
         "inference": false
@@ -827,14 +827,14 @@
         "detail": "Recorded evidence-bound implementation and verification handoff.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json"
           }
         ],
         "inference": false
@@ -845,14 +845,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json"
           }
         ],
         "inference": false
@@ -863,14 +863,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.md"
           }
         ],
         "inference": false
@@ -881,13 +881,13 @@
         "detail": "Generated machine-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
@@ -899,13 +899,13 @@
         "detail": "Generated human-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
@@ -917,13 +917,13 @@
         "detail": "Refreshed the stale installed script digest and preserved customization hash identified by the full Python governance suite.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json"
           }
         ],
@@ -935,13 +935,13 @@
         "detail": "Restored the historical Contract fixture declared by documentation-alignment regression coverage.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json"
           }
         ],
@@ -953,13 +953,13 @@
         "detail": "Restored the historical Summary fixture declared by legacy intent-alignment regression coverage.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json"
           }
         ],
@@ -971,13 +971,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after refreshing installer evidence.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/upgrade_ai_cockpit.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/upgrade_ai_cockpit.json"
           }
         ],
@@ -989,13 +989,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after SEC runtime changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json"
           }
         ],
@@ -1007,13 +1007,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared report changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json"
           }
         ],
@@ -1025,13 +1025,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared evidence changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json"
           }
         ],
@@ -1043,13 +1043,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared evidence changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json"
           }
         ],
@@ -1061,13 +1061,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared report changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json"
           }
         ],
@@ -1079,13 +1079,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared report changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json"
           }
         ],
@@ -1097,13 +1097,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared discovery changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json"
           }
         ],
@@ -1115,13 +1115,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared CLI/report changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json"
           }
         ],
@@ -1133,13 +1133,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared evidence-model changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json"
           }
         ],
@@ -1151,13 +1151,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared extraction changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json"
           }
         ],
@@ -1169,13 +1169,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared evidence changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json"
           }
         ],
@@ -1187,13 +1187,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared report changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
           }
         ],
@@ -1205,13 +1205,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared runtime changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json"
           }
         ],
@@ -1223,13 +1223,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared report changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json"
           }
         ],
@@ -1241,13 +1241,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after SEC/IR runtime changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json"
           }
         ],
@@ -1259,13 +1259,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared runtime changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json"
           }
         ],
@@ -1277,13 +1277,13 @@
         "detail": "Rebuilt the evidence-bound knowledge projection after shared evidence and report changes.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
           }
         ],
@@ -1297,14 +1297,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiWorkItem",
             "digest": "419dab111007841b8ffd35563a9b1bb37bdbed3280a072a91f6c97b24685fba7"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiWorkItem",
             "digest": "419dab111007841b8ffd35563a9b1bb37bdbed3280a072a91f6c97b24685fba7"
           }
@@ -1317,14 +1317,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json scope guard passed: 51 changed path(s) covered",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiScope",
             "digest": "3af3a1c73a9aa28335a873f70a4830bda4106e459b1725143e106a1fed9e28c0"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiScope",
             "digest": "3af3a1c73a9aa28335a873f70a4830bda4106e459b1725143e106a1fed9e28c0"
           }
@@ -1337,14 +1337,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json [warning] restricted_write: .ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/evidence/ai-cockpit-upgrade-feature-checklist.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/upgrade_ai_cockpit.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiGuards",
             "digest": "cc66009fd0f55219c6159bbb6fc989d864a80f4c0b1f15c20c788ae36436746e"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiGuards",
             "digest": "cc66009fd0f55219c6159bbb6fc989d864a80f4c0b1f15c20c788ae36436746e"
           }
@@ -1357,16 +1357,16 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-reference-model-evidence` - Contract Hash: `445b2ce63040f971` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `14`",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "aec179ab4c4131bcd0d566d594a8721bb3cb56a01369ec3907dc0ce5a48ca5a9"
+            "digest": "428acbd0b342d58b948daedf07bc751f4902dabc695bbc8a4cfb7beb071abb9c"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "aec179ab4c4131bcd0d566d594a8721bb3cb56a01369ec3907dc0ce5a48ca5a9"
+            "digest": "428acbd0b342d58b948daedf07bc751f4902dabc695bbc8a4cfb7beb071abb9c"
           }
         ],
         "inference": false
@@ -1377,14 +1377,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json review policy matched 28 path(s) [review] .ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json [review] .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json [review] .ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json [review] .ai/work-items/active/wi-weekly-rada",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "06a50814485686443457ee81edcafab2b43375f78f314ace0274a558a9c2a080"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "06a50814485686443457ee81edcafab2b43375f78f314ace0274a558a9c2a080"
           }
@@ -1397,14 +1397,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
@@ -1417,14 +1417,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
@@ -1437,14 +1437,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json report: target/ai_scenario_coverage_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "76b8d64dc6c0d322db167af9610507007bd1b403580c23b0a73c78552dd4b65d"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "76b8d64dc6c0d322db167af9610507007bd1b403580c23b0a73c78552dd4b65d"
           }
@@ -1457,14 +1457,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json guidelines compliance check passed: 10 guideline(s) verified",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiGuidelines",
             "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiGuidelines",
             "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
           }
@@ -1474,19 +1474,19 @@
       {
         "claim": "aiDiffOwnership",
         "title": "aiDiffOwnership",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json ## Diff Ownership Preview - active_owned: `49`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.md",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json ## Diff Ownership Preview - active_owned: `49`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Tas",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiDiffOwnership",
-            "digest": "0a209a4160593e95c81e88f8d26e83f45855e4b06662c48bc919810228a985a6"
+            "digest": "680c6e7d1ab2545709e2a84f1bd94d5d42b296eb8758e56d37de0454553b7d28"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiDiffOwnership",
-            "digest": "0a209a4160593e95c81e88f8d26e83f45855e4b06662c48bc919810228a985a6"
+            "digest": "680c6e7d1ab2545709e2a84f1bd94d5d42b296eb8758e56d37de0454553b7d28"
           }
         ],
         "inference": false
@@ -1497,16 +1497,16 @@
         "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json, .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"qual",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "quality",
-            "digest": "9b9d024efc5a7886b9717965bee1955c71ccc4fd5d0e2c140dc8ac0aa4da0aea"
+            "digest": "ac5cda6a7c332377753ccf760465a7440456bc48b0a2011484cb2a5e0ab944dc"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "quality",
-            "digest": "9b9d024efc5a7886b9717965bee1955c71ccc4fd5d0e2c140dc8ac0aa4da0aea"
+            "digest": "ac5cda6a7c332377753ccf760465a7440456bc48b0a2011484cb2a5e0ab944dc"
           }
         ],
         "inference": false
@@ -1517,14 +1517,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiStatus",
             "digest": "3c1783febc15072c0d3f0bfc726fb4be43ae75af1cc065f41c9451a1f2a670ae"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiStatus",
             "digest": "3c1783febc15072c0d3f0bfc726fb4be43ae75af1cc065f41c9451a1f2a670ae"
           }
@@ -1537,14 +1537,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiStatusCheck",
             "digest": "a2782ff4a49908ba509b986865853e24e000353dae756163f6051022dc04f918"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiStatusCheck",
             "digest": "a2782ff4a49908ba509b986865853e24e000353dae756163f6051022dc04f918"
           }
@@ -1557,14 +1557,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
@@ -1577,14 +1577,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiAgentRisk",
             "digest": "ceb3c2a8abc4dad68b7172a774b748b03da7a332b3bac14175d64c3793df30a8"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiAgentRisk",
             "digest": "ceb3c2a8abc4dad68b7172a774b748b03da7a332b3bac14175d64c3793df30a8"
           }
@@ -1597,14 +1597,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiSummary",
             "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
             "subject": "aiSummary",
             "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
           }
@@ -1622,13 +1622,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1642,13 +1642,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1660,11 +1660,11 @@
       "problemCount": 7,
       "problemCountEvidenceRefs": [
         {
-          "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
           "subject": "observedIssues"
         },
         {
-          "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
           "subject": "verification and verificationHistory"
         }
       ],
@@ -1674,12 +1674,12 @@
           "claim": "aiGuidelines failed before the retry.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
             }
@@ -1690,12 +1690,12 @@
           "claim": "aiSummary failed before the retry.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "verificationHistory[1] aiSummary failed",
               "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "verification[aiSummary] retry passed",
               "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
             }
@@ -1708,12 +1708,12 @@
           "claim": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
             }
@@ -1724,12 +1724,12 @@
           "claim": "Re-ran aiSummary after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "verificationHistory[1] aiSummary failed",
               "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "verification[aiSummary] retry passed",
               "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
             }
@@ -1779,7 +1779,7 @@
           "claim": "The CLI renders after acquisition, so long multi-company waits do not show progress; no claim is made from the terminated run.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "residualRisks"
             }
           ],
@@ -1789,7 +1789,7 @@
           "claim": "Microsoft now has two named-peer diffusion URIs in the machine-confirmed packet, but both are Microsoft-published customer stories; independent publisher corroboration remains outside this bounded source set.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
               "subject": "residualRisks"
             }
           ],

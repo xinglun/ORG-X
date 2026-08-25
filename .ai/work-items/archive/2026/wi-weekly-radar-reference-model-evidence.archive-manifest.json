@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-weekly-radar-reference-model-evidence",
+  "archiveSequence": 75,
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+  "contractSha256": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+  "summarySha256": "99f0f91e6f12905300453216f50ecae7c774582b57e7268191b9cb6d8a4c4419",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json",
+      "sha256": "07b93b6de47b991086642c2d8b3b3e22dc7ece0f2a2fc63b4d3272c207166bb5"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.md",
+      "sha256": "0906f3ab5f9f1181219dd71272bd2c9865a28d4413461789abbc7c71de6dbdd8"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "f12ec0460c71fff2c7a34aed30ff3baac2b245365e6332a1d93149794993dbb1",
+    "binding": {
+      "baseCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
+      "candidateHead": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "candidateTreeDigest": "1077aa8288abe19ceb58b5bb1d3c5dd4eb0ceda2204db3de0aa916c28cd69bfb",
+      "candidateDiffDigest": "265e9bdd93d3324ea10973c161be69eb1264cf4b30fa4450adab6e5280b94a55"
+    }
+  }
+}

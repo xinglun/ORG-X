@@ -32,10 +32,10 @@ Governed Work Item: wi-weekly-radar-reference-model-evidence
 - docs/operations/WEEKLY_RADAR.md
 - docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md
 - docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md
-- .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json
-- .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json
-- .ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json
-- .ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.md
+- .ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json
+- .ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json
+- .ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json
+- .ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.md
 - .ai/cockpit/task_report.json
 - .ai/cockpit/task_report.md
 - .ai/evidence/ai-cockpit-upgrade-feature-checklist.json
@@ -137,7 +137,7 @@ Design decisions
 - The bounded Microsoft run produced organization rewrite, production-system rewrite, four outcome periods, two named-peer diffusion URIs, and completed counter review.: config/weekly_radar/reference_model_candidates.json#2026-08-25 bounded Microsoft reference-model validation run (verified)
 
 ## Human Handoff
-Locale: `en`
+Locale: `zh-CN`
 
 ### What was completed
 - Changed config/weekly_radar/companies.json: Configured bounded Microsoft organization, production-system, and named-peer customer-story entrypoints for live research.
@@ -200,7 +200,7 @@ Locale: `en`
 - aiCoverage: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json
 - aiScenarioCoverage: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json report: target/ai_scenario_coverage_report.json
 - aiGuidelines: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json guidelines compliance check passed: 10 guideline(s) verified
-- aiDiffOwnership: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json ## Diff Ownership Preview - active_owned: `49`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.md
+- aiDiffOwnership: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json ## Diff Ownership Preview - active_owned: `49`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Tas
 - quality: {"finishQualityRoute": {"command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict", "policy": {"domains": ["docs", "project_code", "tests", "trust", "unknown"], "level": "strict", "qualityRouting": {"reason": "high-risk strict paths require full quality: .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json, .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json", "requiredGroups": ["quality-full"], "target": "quality-full"}, "qualityTarget": "qual
 - aiStatus: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md
 - aiStatusCheck: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json cockpit status check passed: .ai/cockpit/current_status.md

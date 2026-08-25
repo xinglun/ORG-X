@@ -92,8 +92,76 @@
       "reason": "Generated evidence-bound Implementation Knowledge Record."
     },
     {
+      "path": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json",
+      "reason": "Refreshed historical Knowledge projection required to keep the repository-wide index deterministic after archive generation."
+    },
+    {
       "path": ".ai/knowledge/index.json",
       "reason": "Rebuilt deterministic Implementation Knowledge index."
+    },
+    {
+      "path": ".ai/knowledge/dependencies.json",
+      "reason": "Rebuilt deterministic Implementation Knowledge dependency routing after archive projection ownership was completed."
     }
   ],
   "sourcesUsed": [

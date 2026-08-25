@@ -886,9 +886,9 @@
       "contractSha256": "bd6e2933117c20ac360c8f0bde45f412d2059f9cc80052f58f481b63fa9b44fe",
       "archivedAt": "2026-08-25T21:35:57.852451+09:00",
       "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
-      "summarySha256": "f1e97674c13577c4b6ba33d823cb80e028d82d329c160028e67bc2e6d664c45d",
+      "summarySha256": "1d8e736eb99a8801ffa83363e3af04b05e1fd1c9e3022546fc1fecbce5fcc473",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.archive-manifest.json",
-      "manifestSha256": "d7006f894d2465623f3e096e33d86f4e68ddc014a23448d884d144b270e7ba5a"
+      "manifestSha256": "296b52d790c24e74dd1bbca988cdfe895ccec448110c9a66689db48ad3bd25fe"
     }
   ]
 }

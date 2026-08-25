@@ -6,12 +6,12 @@
   "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
   "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
   "contractSha256": "bd6e2933117c20ac360c8f0bde45f412d2059f9cc80052f58f481b63fa9b44fe",
-  "summarySha256": "f1e97674c13577c4b6ba33d823cb80e028d82d329c160028e67bc2e6d664c45d",
+  "summarySha256": "1d8e736eb99a8801ffa83363e3af04b05e1fd1c9e3022546fc1fecbce5fcc473",
   "generatedStatusExcluded": true,
   "outcomeArtifacts": [
     {
       "path": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json",
-      "sha256": "04a049d28efcb36f36a1f39905e095b30ce5a4c753ea59dfe9dc33721398c2c9"
+      "sha256": "cad6e408184b1b1f6633c0b570b5434060750f17641c98d05ce2a86956f0780b"
     },
     {
       "path": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.md",

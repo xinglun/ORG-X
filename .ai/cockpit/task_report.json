@@ -6,7 +6,7 @@
   "sourceOutcome": {
     "format": "ai-cockpit-task-outcome",
     "schemaVersion": 1,
-    "digest": "aa203e39a83cdb4c1edb449e6fc1696a0d37750b1a72da1b7aad21ac50e9fd74"
+    "digest": "893f039b38be1fd7e66d63b501b1f75c50981e97a4ce91f41252a8caec6485b0"
   },
   "task": {
     "summary": "Task wi-weekly-radar-sec-ir-deep-discovery generated an evidence-derived outcome with status completed.",

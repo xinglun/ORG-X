@@ -476,6 +476,69 @@ fn body_sentence_with_change_and_production_signals_creates_a_bounded_candidate(
 }
 
 #[test]
+fn dated_engineering_document_promotes_a_complete_claim() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    let candidate =
+        extract_evidence_candidate(&observation).expect("dated engineering claim should qualify");
+    let validated = validate_evidence_candidate(&candidate, cutoff())
+        .expect("complete authoritative claim should validate");
+    let fact = validated
+        .to_normalized_fact(1)
+        .expect("validated claim should normalize");
+
+    assert_eq!(fact.status(), &FactStatus::Known);
+    assert_eq!(
+        fact.value(),
+        Some("Acme adopted an agent-assisted engineering workflow for production scheduling.")
+    );
+}
+
+#[test]
+fn document_kind_context_is_retained_in_claim_provenance() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    let candidate = extract_evidence_candidate(&observation).expect("claim should qualify");
+    let fact = validate_evidence_candidate(&candidate, cutoff())
+        .expect("claim should validate")
+        .to_normalized_fact(1)
+        .expect("claim should normalize");
+
+    assert!(fact
+        .provenance()
+        .source_field_or_passage()
+        .contains("document_kind=engineering"));
+}
+
+#[test]
+fn generic_or_non_actionable_document_remains_a_pending_lead() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Our storage service exposes object storage, file systems, and block-device APIs, and these APIs are built on a horizontally scalable foundational block layer called Tectonic.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
+    assert_eq!(
+        normalize_source_observation(&observation, 1)
+            .expect("source observation should remain a lead")
+            .status(),
+        &FactStatus::Unconfirmed
+    );
+}
+
+#[test]
 fn heading_only_document_does_not_create_a_claim_candidate() {
     let observation = document_observation_from_html(
         r#"<html><head><title>Engineering update</title>

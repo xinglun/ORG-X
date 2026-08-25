@@ -82,6 +82,24 @@
     {
       "path": "docs/operations/WEEKLY_RADAR.md",
       "reason": "Documents discovery, Claim completeness, and data-insufficiency semantics."
+    },
+    {
+      "issue": "TDD RED claim provenance test exposed that validated facts discarded the discovered DocumentKind context.",
+      "resolution": "Stored DocumentKind on EvidenceCandidate and included its stable label in normalized fact provenance; the complete-claim and negative-lead tests now pass.",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "cargo test --test weekly_radar_evidence_quality"
+      ]
+    },
+    {
+      "issue": "An initial focused Cargo invocation supplied two test filters, which Cargo rejects as an unexpected second positional argument.",
+      "resolution": "Reran each focused test as a separate Cargo invocation; both focused tests and the complete evidence-quality suite passed.",
+      "evidence": [
+        "cargo test --test weekly_radar_evidence_quality dated_engineering_document_promotes_a_complete_claim -- --nocapture",
+        "cargo test --test weekly_radar_evidence_quality generic_or_non_actionable_document_remains_a_pending_lead -- --nocapture",
+        "cargo test --test weekly_radar_evidence_quality"
+      ]
     }
   ],
   "sourcesUsed": [
@@ -211,6 +229,24 @@
       "evidence": [
         "tests/weekly_radar_evidence_quality.rs",
         "cargo test --test weekly_radar_evidence_quality document_metadata_ -- --nocapture"
+      ]
+    },
+    {
+      "issue": "TDD RED claim provenance test exposed that validated facts discarded the discovered DocumentKind context.",
+      "resolution": "Stored DocumentKind on EvidenceCandidate and included its stable label in normalized fact provenance; the complete-claim and negative-lead tests now pass.",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "cargo test --test weekly_radar_evidence_quality"
+      ]
+    },
+    {
+      "issue": "An initial focused Cargo invocation supplied two test filters, which Cargo rejects as an unexpected second positional argument.",
+      "resolution": "Reran each focused test as a separate Cargo invocation; both focused tests and the complete evidence-quality suite passed.",
+      "evidence": [
+        "cargo test --test weekly_radar_evidence_quality dated_engineering_document_promotes_a_complete_claim -- --nocapture",
+        "cargo test --test weekly_radar_evidence_quality generic_or_non_actionable_document_remains_a_pending_lead -- --nocapture",
+        "cargo test --test weekly_radar_evidence_quality"
       ]
     }
   ],

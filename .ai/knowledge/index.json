@@ -122,6 +122,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion.json"
     },
     {
+      "workItemId": "wi-weekly-radar-independent-diffusion-source-normalization",
+      "title": "Make independent diffusion documents promotable",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion-source-normalization.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-input-snapshot-compatibility",
       "title": "Preserve compatibility with legacy Weekly Radar input snapshots",
       "topics": [],

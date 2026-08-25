@@ -1,0 +1,88 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-independent-diffusion-source-normalization",
+  "mode": "code",
+  "title": "Make independent diffusion documents promotable",
+  "rawUserRequest": "实时 Weekly Radar 已发现 Microsoft 只有候选资格：独立客户披露为 0，供应商归因为 4；如果问题来自来源解析或配置，请继续修复，直到本地、CI、PR、合并、关闭和再次触发均确认。产品目标仍是找出 AI 时代改变组织结构并成为行业范本的公司。",
+  "rawRequestSource": {"type": "human", "reference": "conversation:user-message", "digest": "not-generated", "capturedAt": "2026-08-26T00:00:00+09:00"},
+  "declaredIntent": {"requestedCapabilities": ["software_design", "test_automation", "documentation", "ai_governance"], "prohibitedCapabilities": ["production_operation", "external_publication", "secret_readback", "unbounded_crawl", "manual_data_mutation", "investment_decision"]},
+  "requestedOperation": {"type": "repository_governance", "action": "modify", "target": "repository_governance", "environment": "repository", "effect": "enforce", "authorityRequired": true, "authorityReason": "The user explicitly authorized iterative in-scope repair and the complete local, CI, PR, merge, closure, and re-trigger workflow."},
+  "authorityEvidence": {"type": "human_authorization", "granted": true, "scope": "Implement, verify, publish the PR, run hosted CI, merge, close, and re-trigger this Work Item; continue in scope when live evidence exposes a defect.", "reference": "User authorization: 不是不会合并，是走完流程，并确认。如果有问题继续。", "capturedAt": "2026-08-26T00:00:00+09:00"},
+  "baseCommit": "037f39e28a64a88eb3426bc92c629bd388b33b7b",
+  "baselineDirtyPaths": [],
+  "problemStatement": "The live dry-run reached 37 validated facts, 19 structural evidence items, and 178 discovered documents, but Microsoft remained only a Candidate because independent diffusion sources were zero. Direct inspection showed that PwC's reachable customer disclosure uses site-specific pwcReleaseDate metadata that the bounded date parser ignores, while the configured NIQ disclosure returned HTTP 403. The system must promote valid customer-owned documents without weakening the four-family gate or treating supplier-controlled material as independent.",
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+    ".ai/cockpit/current_status.md", ".ai/cockpit/task_report.json", ".ai/cockpit/task_report.md", ".ai/work-items/starts/**", ".ai/work-items/archive/**", ".ai/knowledge/**",
+    ".ai/evidence/reference-impact/wi-weekly-radar-independent-diffusion-source-normalization-config.json",
+    ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md",
+    "config/weekly_radar/companies.json", "config/weekly_radar/reference_model_candidates.json",
+    "docs/superpowers/specs/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md",
+    "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md",
+    "docs/operations/WEEKLY_RADAR.md", "src/features/weekly_radar/runtime/discovery.rs", "src/features/weekly_radar/runtime/evidence.rs", "tests/weekly_radar_evidence_quality.rs", "tests/weekly_radar_runtime.rs"
+  ],
+  "outOfScope": [
+    "Changing the four-family gate thresholds, Ranking semantics, Stage semantics, or counter-evidence policy",
+    "Adding an unbounded crawler, paid search provider, LLM judgment, guessed URLs, or new external provider",
+    "Changing SEC acquisition, Telegram publication, data-branch writes, repository secrets, or production scheduling",
+    "Treating supplier-controlled Microsoft pages, discovery articles, or social posts as independent customer disclosure",
+    "Claiming the product goal is achieved solely because a parser or source configuration test passes"
+  ],
+  "sources": [
+    {"path": "AGENTS.md", "reason": "Defines one Work Item per branch/PR, in-scope repair, fail-closed evidence, and full lifecycle closure."},
+    {"path": ".ai/glossary.md", "reason": "Canonical repository terminology and evidence-over-self-declaration rules."},
+    {"path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.contract.json", "reason": "Predecessor source-role boundary and hard independent diffusion condition."},
+    {"path": "src/features/weekly_radar/runtime/discovery.rs", "reason": "Bounded document metadata and date extraction boundary."},
+    {"path": "src/features/weekly_radar/runtime/evidence.rs", "reason": "Claim extraction, named adopter, and source-role promotion boundary."},
+    {"path": "src/features/weekly_radar/runtime/sources.rs", "reason": "Bounded explicit source collection and source tier semantics."},
+    {"path": "tests/weekly_radar_evidence_quality.rs", "reason": "Existing date and independent evidence regression coverage."},
+    {"path": "tests/weekly_radar_runtime.rs", "reason": "Existing source collection and document discovery regression coverage."},
+    {"path": "conversation:live-weekly-radar-dry-run-2026-08-26", "reason": "Observed run: 37 validated facts, 19 structural items, 178 document candidates, Microsoft candidate, independent diffusion 0, supplier attribution 4, exit 0."},
+    {"path": "https://www.pwc.com/us/en/library/case-studies/pwc-microsoft-copilot-enterprise-ai.html", "reason": "Reachable PwC-owned disclosure with named deployment, users, workflow, and operating-result claims; observed HTTP 200."},
+    {"path": "https://www.atosgroup.com/en/press/atos-group-and-microsoft-expand-strategic-collaboration-scale-secure-agentic-ai-across-atos", "reason": "Atos Group-owned disclosure of workforce-wide Microsoft Copilot deployment and agent operating model; bounded replacement for the inaccessible NIQ URL."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {"level": "high", "riskTypes": ["false_positive_diffusion", "source_role_misclassification", "date_provenance_loss", "external_source_availability", "legacy_serialization", "hosted_lifecycle"], "reason": "Promoting a real customer disclosure is necessary for research value, but a broad date or subject heuristic could create false diffusion evidence. The fix must stay bounded, preserve effective-date provenance, keep supplier material separate, preserve legacy snapshots, and prove behavior through fixtures and the complete governed lifecycle.", "unknownsReviewComplete": true},
+  "governanceProfile": {"selected": "strict", "source": "automatic", "reasons": ["The Work Item changes authoritative evidence promotion and the hard reference-model gate input boundary."]},
+  "agentCapability": {"canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": ""},
+  "executionDecision": {"status": "continue", "reason": "The live failure is reproducible, the bounded sources and parser boundary are known, acceptance is testable, and no unresolved question blocks implementation."},
+  "intent": {
+    "problem": "The live report has enough structural evidence to investigate Microsoft, but valid customer-owned disclosures are being lost before the independent diffusion gate because the parser misses site-specific release metadata and one configured source is unavailable. This blocks the product's ability to identify a real AI-era reference model.",
+    "constraints": [
+      "Keep the four-family gate, fail-closed Ranking behavior, and supplier-versus-independent source roles unchanged.",
+      "Only explicitly configured bounded URLs may be fetched; do not add crawling, guessed URLs, paid search, or LLM judgment.",
+      "Preserve effective-date provenance and legacy snapshot deserialization; malformed metadata must not be guessed.",
+      "Rust owns classification and evidence semantics; Python and Shell only orchestrate and verify.",
+      "Complete the full local, CI, PR, merge, closure, and post-merge trigger workflow with evidence."
+    ],
+    "rationale": "A narrowly scoped date/document promotion fix can turn the observed reachable customer disclosures into auditable evidence while preserving the hard gate that prevents supplier marketing from becoming independent corroboration."
+  },
+  "preReviewWarnings": ["Do not broaden generic date matching to arbitrary metadata without a bounded allowlist and precedence test.", "Do not count two URLs on a supplier-controlled domain as independent customer disclosure.", "A successful gate is not evidence that the product goal is achieved until the live report contains a confirmed, source-bound company claim."],
+  "checkpointPolicy": {"requiredBeforeFinish": true, "requiredStages": ["before_edit", "before_finish"], "reason": "Record contract readiness before code and final evidence before lifecycle finish."},
+  "acceptance": [
+    "document_metadata recognizes bounded site-specific publication metadata including pwcReleaseDate and prefers release/published dates over modified dates; malformed values remain rejected without guessing.",
+    "Bounded direct document classification recognizes the explicit Atos press URL and does not create additional URLs through crawling or guessing.",
+    "The registry replaces the inaccessible NIQ independent URL with the explicit Atos Group customer-owned disclosure while retaining PwC; supplier Microsoft URLs remain supplier attribution.",
+    "An authoritative independent document with a sentence such as 'PwC deploys Microsoft Copilot...' or 'Atos is rolling out Microsoft 365 Copilot...' yields an IndustryDiffusion candidate with a bounded named adopter and IndependentCustomerDisclosure role.",
+    "Regression tests prove supplier-only material remains insufficient, independent source roles survive normalization, legacy deserialization remains readable, and the four-family gate is unchanged.",
+    "Python and Shell remain limited to orchestration and verification; Rust owns date parsing, source classification, named-adopter extraction, evidence metadata, and judgment inputs.",
+    "All declared local quality gates, canonical finish, PR checks, hosted CI, merge, Work Item closure, and one post-merge dry-run complete with evidence; any failure is repaired in scope before progression."
+  ],
+  "guidelines": ["New public APIs must be documented.", "Keep source-role classification and evidence promotion deterministic in Rust.", "Use only explicitly configured bounded URLs for cross-origin sources.", "Preserve supplier attribution, independent customer disclosure, regulatory/IR, and discovery-only roles as distinct evidence states.", "Do not weaken fail-closed gates or infer confirmation from source availability alone.", "Use Python and Shell only for bounded orchestration, fixtures, and verification."],
+  "scenarioCoverage": [
+    {"scenario": "PwC site-specific release date", "required": true, "status": "unverified", "evidence": ["https://www.pwc.com/us/en/library/case-studies/pwc-microsoft-copilot-enterprise-ai.html", "src/features/weekly_radar/runtime/discovery.rs"], "expected": "The 2026-01-16 release date is selected over the 2026-06-23 modified date and the document can reach evidence extraction.", "verificationPlan": "Add a fixture with pwcReleaseDate and pwcLastModifiedDate; assert date and candidate promotion."},
+    {"scenario": "Atos explicit press document", "required": true, "status": "unverified", "evidence": ["https://www.atosgroup.com/en/press/atos-group-and-microsoft-expand-strategic-collaboration-scale-secure-agentic-ai-across-atos", "src/features/weekly_radar/runtime/discovery.rs"], "expected": "The URL is classified as a bounded AI/organization document without guessing sibling paths.", "verificationPlan": "Add direct-document classification and fixture collection assertions."},
+    {"scenario": "Independent named adopter extraction", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/evidence.rs", "tests/weekly_radar_evidence_quality.rs"], "expected": "PwC and Atos are retained as bounded named peers for independent diffusion; no blank or unbounded text is promoted.", "verificationPlan": "Add candidate extraction fixtures for both sentence forms and assert family, peer, and role."},
+    {"scenario": "Supplier/independent separation", "required": true, "status": "unverified", "evidence": [".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.contract.json", "src/features/weekly_radar/runtime/evidence.rs"], "expected": "Microsoft customer-story pages remain supplier attribution and cannot satisfy independent diffusion alone.", "verificationPlan": "Run existing supplier-only judgment tests plus the new source-role regression."},
+    {"scenario": "Full governed lifecycle", "required": true, "status": "unverified", "evidence": ["AGENTS.md", "Makefile.ai"], "expected": "Local checks, finish, PR audit, hosted CI, merge, close, and post-merge trigger all have identity-bound evidence.", "verificationPlan": "Run canonical lifecycle commands and capture each result before the next stage."}
+  ],
+  "verification": [{"check": "aiWorkItem", "required": true}, {"check": "aiScope", "required": true}, {"check": "aiGuards", "required": true}, {"check": "aiCheckpoint", "required": true}, {"check": "aiAgentRisk", "required": true}, {"check": "aiReviewPolicy", "required": true}, {"check": "aiBacktrack", "required": true}, {"check": "aiCoverage", "required": true}, {"check": "aiScenarioCoverage", "required": true}, {"check": "aiGuidelines", "required": true}, {"check": "aiSummary", "required": true}, {"check": "aiStatus", "required": true}, {"check": "aiStatusCheck", "required": true}, {"check": "aiStatusConsistency", "required": true}, {"check": "aiDiffOwnership", "required": true}, {"check": "quality", "required": true}],
+  "destructiveChangePolicy": {"allowed": false, "requiresHumanApproval": true, "allowPatterns": []},
+  "restrictedWriteApproval": {"approved": true, "approvedBy": "user-authorized", "reason": "The user authorized iterative in-scope repair and the complete governed lifecycle."},
+  "rollbackNote": "Revert this Work Item diff, remove the new explicit customer source configuration, and restore the predecessor's bounded date/document promotion behavior without editing archived predecessor records.",
+  "budgetImpact": {"expectedMetrics": {"archiveGrowth": 1}},
+  "startReceipt": {"path": ".ai/work-items/starts/wi-weekly-radar-independent-diffusion-source-normalization.json", "baseCommit": "037f39e28a64a88eb3426bc92c629bd388b33b7b", "initialScopeDigest": "375629b1d8ab867ca62314607139553cd93369b680eb99ccf4f41fe07a138cc6", "contractSkeletonDigest": "9fd60442f1af9c5bc7e444636fe63f7cc1dbdd44d208d09a7a9e50f92afa84a9"}
+}

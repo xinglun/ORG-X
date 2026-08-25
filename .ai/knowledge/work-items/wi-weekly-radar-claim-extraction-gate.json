@@ -49,7 +49,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_evidence_quality.rs",
-      "digest": "c91743cfa234bf58813ffad9f04dd61c6fc7bbb2781c5df41f21e5e07e543d99"
+      "digest": "21edecec2408884422b1ab16a733a6a094d1857da4792313ee32273382d07676"
     },
     {
       "type": "code",
@@ -59,17 +59,17 @@
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/evidence.rs",
-      "digest": "90859d4d0432ed6a6929a3403c642e5d4efe7311f05c2a2d7bcbf8ca042f03df"
+      "digest": "d895419fc00b9b07ae5d7b07942547931de0c5611a359c45d21f515b2537fae8"
     },
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/discovery.rs",
-      "digest": "bcc4298d28f1c700947a2f1ad5916e2a7a025d6e8b252c96594119bcd605437b"
+      "digest": "7ddb0f9e90d56aacf29a6897c039fcc2bdc01693feb9b9f2c1fb7a4e8c54756c"
     },
     {
       "type": "code",
       "path": "docs/operations/WEEKLY_RADAR.md",
-      "digest": "0df97f84bf2c263470f2bf54a5588ad31c8b491eba0780fbe006c2ef4e98fb67"
+      "digest": "99abaa012106e2ca3a04ea9752b74c17f2bbc04e027c6eb049d289feec2886c1"
     },
     {
       "type": "code",

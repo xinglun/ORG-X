@@ -27,6 +27,7 @@ const CHANGE_SIGNALS: &[&str] = &[
     "launch",
     "adopt",
     "roll",
+    "integrat",
     "automat",
     "deploy",
     "replaced",
@@ -65,6 +66,7 @@ const PRODUCTION_SIGNALS: &[&str] = &[
     "workflow",
     "automation",
     "ai",
+    "copilot",
     "agent",
     "data",
     "cloud",
@@ -159,7 +161,10 @@ const REFERENCE_MODEL_OUTCOME_SIGNALS: &[&str] = &[
 const REFERENCE_MODEL_DIFFUSION_SIGNALS: &[&str] = &[
     "adopted by",
     "adopted ",
+    "deploys ",
     "rolled out",
+    "rolling out",
+    "rolls out",
     "implemented by",
     "implemented ",
     "used by",
@@ -507,9 +512,16 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
         .title()
         .filter(|title| !title.trim().is_empty())?;
     let document_kind = observation.document_kind()?;
+    let extraction_text = if observation.kind() == SourceKind::IndependentResearch
+        && !observation.text().trim().is_empty()
+    {
+        format!("{title}: {}", observation.text())
+    } else {
+        observation.text().to_owned()
+    };
     let (passage, production_signal) = match document_kind {
         DocumentKind::Careers => extract_careers_claim_sentence(observation.text()),
-        _ => extract_claim_sentence(observation.text()),
+        _ => extract_claim_sentence(&extraction_text),
     }?;
     let source_kind = match observation.kind() {
         SourceKind::Gdelt => EvidenceSourceKind::DiscoveryArticle,
@@ -789,7 +801,7 @@ fn reference_model_named_peer_for_text(text: &str) -> Option<String> {
         }
     }
     let adoption_regex = Regex::new(
-        r"(?i)^\s*([A-Z][A-Za-z0-9&.'-]*(?:\s+[A-Z][A-Za-z0-9&.'-]*){0,4})\s+(?:has\s+adopted|has\s+implemented|is\s+using|adopted|implemented|used|uses|deployed|rolled\s+out|built|launched)\b",
+        r"(?i)^\s*([A-Z][A-Za-z0-9&.'-]*(?:\s+[A-Z][A-Za-z0-9&.'-]*){0,4})\s+(?:has\s+adopted|has\s+implemented|is\s+using|is\s+rolling\s+out|adopted|implemented|used|uses|deployed|deploys|rolled\s+out|rolls\s+out|built|launched)\b",
     )
     .ok()?;
     let peer = adoption_regex

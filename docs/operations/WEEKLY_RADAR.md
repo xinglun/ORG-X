@@ -137,6 +137,8 @@ SEC 申报候选在保留元数据后，还会逐个读取最多 3 个最近的�
 
 对 `official_research_sources` 明确配置的内容 URL，系统只在 URL 路径表现为文章、博客、新闻、press 或 customer story 时把该入口同时作为一个有界文档读取；普通首页和分类页仍只保留为 `EntryPoint`。`independent_research_sources` 是另一组显式、可跨 origin 的采用者自有披露或 IR 文档 URL；它们使用独立的 authoritative tier，仍遵守相同的有限正文和文档发现边界。系统不会猜测未配置 URL，也不会把供应商域名上的另一个页面自动视为独立来源。这允许研究配置绑定实际发布内容，同时不把“页面可访问”升级为证据。内容路径优先于通用导航链接，避免有限 discovery budget 被菜单耗尽。
 
+站点如果使用受限的发布元数据（例如 PwC 的 `pwcReleaseDate`），适配器只允许显式登记的发布日期字段，并优先于修改日期；未知或格式错误的字段不会被猜测。当前 Microsoft 独立扩散配置绑定 PwC 自有案例和 Atos Group 自有 press disclosure；Microsoft 域名上的客户案例仍然只属于供应商归因。
+
 研究状态必须按以下层次解释：
 
 - `SourceObservation`：入口页或接口是否可访问；入口页的可访问性不是企业变化证据。

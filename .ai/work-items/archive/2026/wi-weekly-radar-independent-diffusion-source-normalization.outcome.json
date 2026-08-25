@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-independent-diffusion-source-normalization",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "5a5979035dadccfe0529f858eec4999e444f81f4f438b8038bb7cbd07dfa2ae8"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-independent-diffusion-source-normalization",
+    "contractDigest": "2eac13c1636eb2e7fcb3b12faae95c099363927acecf418c8cee4c9c997fbdf3",
+    "summaryDigest": "353daac427d7eeb49f13da7c424d2cc87b51ac28aacb2f81aac4e92a7f89c46a",
+    "verificationDigest": "7b7580dc378acf2f40ecc63f664842b4557f2bb0e2d12dd59d2cfc23bb0a4bd5",
+    "baseCommit": "037f39e28a64a88eb3426bc92c629bd388b33b7b",
+    "headCommit": "10871b5ca3e7a63cbbe94a20563671c54cf230df",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "50aafc4e1bbb8fea293ec012b15e5d24095abfa0d3fa4782c160d7233134b077",
+      "binding": {
+        "baseCommit": "037f39e28a64a88eb3426bc92c629bd388b33b7b",
+        "candidateHead": "10871b5ca3e7a63cbbe94a20563671c54cf230df",
+        "candidateTreeDigest": "302e94ef3ba52ab5f15b68ab0fffc8ff31dc22158d2c1617939e391864a51faf",
+        "candidateDiffDigest": "2f67fdaca5dca8212bd83260326cf2433aacdc3c5431635456a3e3cfe3a438d5"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-independent-diffusion-source-normalization generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-independent-diffusion-source-normalization generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-independent-diffusion-source-normalization",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
@@ -28,309 +51,418 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: quality",
-      "action": "blocked",
-      "resolution": "Retry quality after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "quality failed before the retry.",
-      "policyOrGuard": "required verification: quality",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry quality after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "Keep the product goal focused on identifying an AI-era industry reference model; continue iterating when the triggered result exposes a real defect."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "high",
-      "detail": "No company has yet been confirmed as an AI-era reference model in the live report; this WI only addresses the observed source-promotion defect.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Used RED fixtures for site-specific dates, bounded press classification, and named-adopter extraction; implemented the smallest Rust changes and replaced the inaccessible explicit independent URL.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "tests/weekly_radar_evidence_quality.rs",
-          "subject": "PwC release-date precedence and named-adopter promotion fixtures"
-        },
-        {
-          "source": "tests/weekly_radar_runtime.rs",
-          "subject": "Explicit Atos press-document collection fixture"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Use a bounded site-specific metadata allowlist, deterministic press classification, and independent-only title context; keep supplier roles and the four-family gate unchanged.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/discovery.rs",
-          "subject": "Bounded site-specific metadata and AI press classification"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "Independent title context and bounded adoption-verb extraction"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Document discovery and metadata",
-        "detail": "PwC release metadata is recognized before modified metadata, and the explicit Atos press URL is classified without URL guessing.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/discovery.rs",
-            "subject": "document_metadata and classify_document"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
           },
           {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "Atos direct-document fixture"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
           }
         ]
       },
       {
-        "component": "Independent evidence extraction",
-        "detail": "Substantive independent title/body claims can yield IndustryDiffusion candidates with a bounded named adopter and independent customer-disclosure role.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "quality failed before the retry.",
+        "policyOrGuard": "required verification: quality",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry quality after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "extract_evidence_candidate and named-adopter regex"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "verificationHistory[1] quality failed",
+            "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
           },
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "PwC independent named-adopter fixture"
-          }
-        ]
-      },
-      {
-        "component": "Weekly Radar source registry",
-        "detail": "The unavailable NIQ URL is replaced with the explicit Atos disclosure while supplier Microsoft URLs remain unchanged.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "config/weekly_radar/companies.json",
-            "subject": "production company source registry"
-          },
-          {
-            "source": "config/weekly_radar/reference_model_candidates.json",
-            "subject": "reference-model calibration registry"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "resolutions": [
       {
-        "decision": "Allow only bounded site-specific publication metadata names and prefer release/published values over modified values.",
-        "reason": "The live PwC page exposes a valid release date under a site-specific key; broad date guessing would weaken provenance.",
-        "status": "verified",
-        "evidence": [
+        "problem": "PwC reachable document was omitted because pwcReleaseDate metadata was not recognized; the configured NIQ independent URL returned HTTP 403.",
+        "action": "Added the bounded PwC release-date key, classified the explicit Atos press document, replaced the inaccessible NIQ URL, and added passing PwC/Atos regression tests.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
           {
             "source": "src/features/weekly_radar/runtime/discovery.rs",
-            "subject": "ordered metadata allowlist"
+            "subject": "observedIssues[0] independent diffusion source promotion"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "observedIssues[0] independent diffusion source promotion"
+          },
+          {
+            "source": "config/weekly_radar/companies.json",
+            "subject": "observedIssues[0] independent diffusion source promotion"
           },
           {
             "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "release date precedence regression"
-          }
-        ]
-      },
-      {
-        "decision": "Use an explicit Atos URL instead of retaining an inaccessible NIQ source or guessing alternate URLs.",
-        "reason": "The goal is auditable independent disclosure, not maximum source count; the registry must remain deterministic.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "config/weekly_radar/companies.json",
-            "subject": "explicit Atos source replacement"
+            "subject": "observedIssues[0] independent diffusion source promotion"
           },
           {
             "source": "tests/weekly_radar_runtime.rs",
-            "subject": "no-guessing direct-document fixture"
+            "subject": "observedIssues[0] independent diffusion source promotion"
+          }
+        ],
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/discovery.rs",
+            "subject": "observedIssues[0] independent diffusion source promotion"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "observedIssues[0] independent diffusion source promotion"
+          },
+          {
+            "source": "config/weekly_radar/companies.json",
+            "subject": "observedIssues[0] independent diffusion source promotion"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "observedIssues[0] independent diffusion source promotion"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "observedIssues[0] independent diffusion source promotion"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
           }
         ]
       },
       {
-        "decision": "Provide title context only for independent documents with substantive bodies.",
-        "reason": "The PwC customer disclosure puts the named adopter and adoption verb in the title, while title-only homepages must remain non-evidence.",
-        "status": "verified",
+        "problem": "quality failed before the retry.",
+        "action": "Re-ran quality after the correction; the latest attempt passed.",
+        "verification": "quality latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "independent-only title/body extraction"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "verificationHistory[1] quality failed",
+            "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
           },
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "title/body named-adopter promotion"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
           }
         ]
       }
     ],
-    "technicalDetails": [
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
       {
-        "topic": "Source-role separation",
-        "detail": "Microsoft supplier-controlled pages continue to normalize as SupplierAttribution and cannot satisfy the independent diffusion condition alone.",
-        "status": "verified",
+        "claim": "research_value",
+        "severity": "high",
+        "title": "research_value",
+        "detail": "No company has yet been confirmed as an AI-era reference model in the live report; this WI only addresses the observed source-promotion defect.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "source-kind role mapping"
-          },
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "supplier-only regression coverage"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": "residualRisks"
           }
-        ]
-      },
-      {
-        "topic": "Legacy compatibility",
-        "detail": "The change is limited to discovery metadata, document classification, extraction signals, and source configuration; existing legacy deserialization and gate tests remain in the complete suite.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "complete runtime regression suite"
-          }
-        ]
-      },
-      {
-        "topic": "Python and Shell boundary",
-        "detail": "No Python or Shell semantic implementation was added; orchestration remains in the existing Make/Python governance tooling and Rust owns the runtime behavior.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/discovery.rs",
-            "subject": "Rust discovery semantics"
-          },
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "Rust evidence semantics"
-          }
-        ]
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "merged-main post-fix dry-run report",
+          "source-bound four-family evidence for a Confirmed company"
+        ],
+        "decisionOwner": "human product reviewer",
+        "mitigation": "Run the required post-merge dry-run, inspect source roles and missing proof, and open or continue an in-scope corrective WI if the live result exposes another bounded defect.",
+        "acceptanceStatus": "pending_live_trigger"
       }
+    ],
+    "humanDecisions": [
+      "Keep the product goal focused on identifying an AI-era industry reference model; continue iterating when the triggered result exposes a real defect."
     ],
     "evidence": [
       {
-        "claim": "The focused and complete Rust test suites pass after the source normalization change.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_runtime.rs",
         "subject": "cargo test --all"
       },
       {
-        "claim": "Formatting, Clippy, and Python tests pass with the repository quality commands.",
-        "status": "verified",
         "source": "src/features/weekly_radar/runtime/evidence.rs",
         "subject": "cargo fmt, cargo clippy, and pytest"
       },
       {
-        "claim": "The post-merge trigger is a required lifecycle step and is not represented as implementation evidence.",
-        "status": "verified",
         "source": "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md",
         "subject": "post-merge trigger requirement"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "subject": "verificationHistory[1] quality failed",
+        "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "subject": "verification[quality] retry passed",
+        "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Used RED fixtures for site-specific dates, bounded press classification, and named-adopter extraction; implemented the smallest Rust changes and replaced the inaccessible explicit independent URL.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "PwC release-date precedence and named-adopter promotion fixtures"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "Explicit Atos press-document collection fixture"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Use a bounded site-specific metadata allowlist, deterministic press classification, and independent-only title context; keep supplier roles and the four-family gate unchanged.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/discovery.rs",
+            "subject": "Bounded site-specific metadata and AI press classification"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "Independent title context and bounded adoption-verb extraction"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Document discovery and metadata",
+          "detail": "PwC release metadata is recognized before modified metadata, and the explicit Atos press URL is classified without URL guessing.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/discovery.rs",
+              "subject": "document_metadata and classify_document"
+            },
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "Atos direct-document fixture"
+            }
+          ]
+        },
+        {
+          "component": "Independent evidence extraction",
+          "detail": "Substantive independent title/body claims can yield IndustryDiffusion candidates with a bounded named adopter and independent customer-disclosure role.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "extract_evidence_candidate and named-adopter regex"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "PwC independent named-adopter fixture"
+            }
+          ]
+        },
+        {
+          "component": "Weekly Radar source registry",
+          "detail": "The unavailable NIQ URL is replaced with the explicit Atos disclosure while supplier Microsoft URLs remain unchanged.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "config/weekly_radar/companies.json",
+              "subject": "production company source registry"
+            },
+            {
+              "source": "config/weekly_radar/reference_model_candidates.json",
+              "subject": "reference-model calibration registry"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Allow only bounded site-specific publication metadata names and prefer release/published values over modified values.",
+          "reason": "The live PwC page exposes a valid release date under a site-specific key; broad date guessing would weaken provenance.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/discovery.rs",
+              "subject": "ordered metadata allowlist"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "release date precedence regression"
+            }
+          ]
+        },
+        {
+          "decision": "Use an explicit Atos URL instead of retaining an inaccessible NIQ source or guessing alternate URLs.",
+          "reason": "The goal is auditable independent disclosure, not maximum source count; the registry must remain deterministic.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "config/weekly_radar/companies.json",
+              "subject": "explicit Atos source replacement"
+            },
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "no-guessing direct-document fixture"
+            }
+          ]
+        },
+        {
+          "decision": "Provide title context only for independent documents with substantive bodies.",
+          "reason": "The PwC customer disclosure puts the named adopter and adoption verb in the title, while title-only homepages must remain non-evidence.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "independent-only title/body extraction"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "title/body named-adopter promotion"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Source-role separation",
+          "detail": "Microsoft supplier-controlled pages continue to normalize as SupplierAttribution and cannot satisfy the independent diffusion condition alone.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "source-kind role mapping"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "supplier-only regression coverage"
+            }
+          ]
+        },
+        {
+          "topic": "Legacy compatibility",
+          "detail": "The change is limited to discovery metadata, document classification, extraction signals, and source configuration; existing legacy deserialization and gate tests remain in the complete suite.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "complete runtime regression suite"
+            }
+          ]
+        },
+        {
+          "topic": "Python and Shell boundary",
+          "detail": "No Python or Shell semantic implementation was added; orchestration remains in the existing Make/Python governance tooling and Rust owns the runtime behavior.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/discovery.rs",
+              "subject": "Rust discovery semantics"
+            },
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "Rust evidence semantics"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The focused and complete Rust test suites pass after the source normalization change.",
+          "status": "verified",
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "cargo test --all"
+        },
+        {
+          "claim": "Formatting, Clippy, and Python tests pass with the repository quality commands.",
+          "status": "verified",
+          "source": "src/features/weekly_radar/runtime/evidence.rs",
+          "subject": "cargo fmt, cargo clippy, and pytest"
+        },
+        {
+          "claim": "The post-merge trigger is a required lifecycle step and is not represented as implementation evidence.",
+          "status": "verified",
+          "source": "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md",
+          "subject": "post-merge trigger requirement"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1171,6 +1303,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

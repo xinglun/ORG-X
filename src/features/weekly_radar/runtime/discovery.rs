@@ -241,7 +241,9 @@ fn normalize_markup(value: &str) -> String {
 
 fn normalize_document_body(value: &str) -> String {
     let mut without_non_content = value.to_owned();
-    for tag in ["script", "style", "noscript", "h1", "h2", "h3", "h4", "h5", "h6"] {
+    for tag in [
+        "script", "style", "noscript", "h1", "h2", "h3", "h4", "h5", "h6",
+    ] {
         let regex = Regex::new(&format!(r"(?is)<{tag}\b[^>]*>.*?</{tag}\s*>"))
             .expect("valid non-content regex");
         without_non_content = regex.replace_all(&without_non_content, " ").into_owned();

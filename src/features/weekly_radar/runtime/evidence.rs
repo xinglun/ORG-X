@@ -302,7 +302,9 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     {
         return None;
     }
-    let title = observation.title().filter(|title| !title.trim().is_empty())?;
+    let title = observation
+        .title()
+        .filter(|title| !title.trim().is_empty())?;
     let (passage, production_signal) = extract_claim_sentence(observation.text())?;
     let source_kind = match observation.kind() {
         SourceKind::Gdelt => EvidenceSourceKind::DiscoveryArticle,
@@ -349,10 +351,7 @@ fn extract_claim_sentence(text: &str) -> Option<(String, String)> {
             continue;
         }
         let lower = sentence.to_ascii_lowercase();
-        if !CHANGE_SIGNALS
-            .iter()
-            .any(|signal| lower.contains(signal))
-        {
+        if !CHANGE_SIGNALS.iter().any(|signal| lower.contains(signal)) {
             continue;
         }
         let Some(production_signal) = PRODUCTION_SIGNALS
@@ -361,7 +360,10 @@ fn extract_claim_sentence(text: &str) -> Option<(String, String)> {
         else {
             continue;
         };
-        return Some((bounded(sentence.to_owned()), (*production_signal).to_owned()));
+        return Some((
+            bounded(sentence.to_owned()),
+            (*production_signal).to_owned(),
+        ));
     }
     None
 }

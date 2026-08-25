@@ -261,6 +261,7 @@ git commit -m "docs: clarify weekly radar claim promotion"
 
 **Files:**
 - Modify: `.ai/work-items/active/wi-weekly-radar-claim-extraction-gate.summary.json`
+- Modify: `src/main.rs` (update the existing integration fixture to use a dated body claim)
 - Generated: `.ai/cockpit/current_status.md`, `.ai/cockpit/task_report.json`, `.ai/cockpit/task_report.md`, `.ai/knowledge/**`, `.ai/work-items/archive/**`
 
 **Interfaces:**

@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-weekly-radar-claim-extraction-gate",
+  "archiveSequence": 67,
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.summary.json",
+  "contractSha256": "fa5c33719dbfe4369bb6e4f09a3dec34a12dc4f5c0c010b42f9ab74418f425bd",
+  "summarySha256": "3812671d63bdf0533dd52d981bad77e5c740d513c841edd777355eda5aa67bb9",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.json",
+      "sha256": "4da17f017db1fbbdf295827fe9ed260c740e770470534414807852d9afedbe55"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.md",
+      "sha256": "e413f2ea77d24768c7872c3863fd87b175475e90cc5815122c36b76f88bc03f6"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "22c7d086a8afdcc85f6e4a9f2a4f8a33cd6f2ba4699f086cb8243fdec73b080d",
+    "binding": {
+      "baseCommit": "ad641e0d9f1fad1d7f13d9676f8800cfd6abb14c",
+      "candidateHead": "c2b9481d49cb47ebb42fe7b3e481861bc5571a1d",
+      "candidateTreeDigest": "78031c47cf38f39e643fd8c4691b57f99c97dde4d9a3762ec4bba1c10f1dfd98",
+      "candidateDiffDigest": "685f55fdf17c075567af849b690032a31ac356317c242559097bee9e37a005d4"
+    }
+  }
+}

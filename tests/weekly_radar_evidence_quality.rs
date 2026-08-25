@@ -46,7 +46,10 @@ fn sec_company() -> CompanyConfig {
     .expect("SEC fixture company should be valid")
 }
 
-fn document_observation_from_html(html: &str, document_url: &str) -> org_x::features::weekly_radar::runtime::SourceObservation {
+fn document_observation_from_html(
+    html: &str,
+    document_url: &str,
+) -> org_x::features::weekly_radar::runtime::SourceObservation {
     let mut company = company();
     company.official_ir = Some("https://ir.example.test/investors".to_owned());
     let client = FixtureHttpClient::new();
@@ -279,7 +282,10 @@ fn document_body_excludes_title_script_and_metadata_before_claim_extraction() {
 
     assert_eq!(title, "Acme engineering update");
     assert_eq!(date, None);
-    assert_eq!(body, "Acme moved its engineering workflow to an agent-assisted scheduler.");
+    assert_eq!(
+        body,
+        "Acme moved its engineering workflow to an agent-assisted scheduler."
+    );
 }
 
 #[test]
@@ -309,7 +315,9 @@ fn body_sentence_with_change_and_production_signals_creates_a_bounded_candidate(
         candidate.concrete_change(),
         "Acme adopted an agent-assisted engineering workflow for production scheduling."
     );
-    assert!(!candidate.concrete_change().contains("implementation details"));
+    assert!(!candidate
+        .concrete_change()
+        .contains("implementation details"));
 }
 
 #[test]
@@ -346,7 +354,8 @@ fn claim_extraction_skips_nonproduction_change_sentences_until_a_valid_claim() {
         "https://ir.example.test/engineering/update",
     );
 
-    let candidate = extract_evidence_candidate(&observation).expect("second body claim should qualify");
+    let candidate =
+        extract_evidence_candidate(&observation).expect("second body claim should qualify");
 
     assert_eq!(
         candidate.concrete_change(),

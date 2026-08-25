@@ -409,9 +409,19 @@ pub struct ResearchMetrics {
     #[serde(default, skip_serializing_if = "is_zero")]
     validated_evidence: usize,
     #[serde(default, skip_serializing_if = "is_zero")]
+    structural_evidence: usize,
+    #[serde(default, skip_serializing_if = "is_zero")]
     pending_leads: usize,
     #[serde(default, skip_serializing_if = "is_zero")]
     unavailable_sources: usize,
+    #[serde(default, skip_serializing_if = "is_zero")]
+    sec_stage_expected: usize,
+    #[serde(default, skip_serializing_if = "is_zero")]
+    sec_stage_available: usize,
+    #[serde(default, skip_serializing_if = "is_zero")]
+    sec_fact_expected: usize,
+    #[serde(default, skip_serializing_if = "is_zero")]
+    sec_fact_available: usize,
 }
 
 impl ResearchMetrics {
@@ -427,9 +437,35 @@ impl ResearchMetrics {
             source_available,
             document_candidates,
             validated_evidence,
+            structural_evidence: 0,
             pending_leads,
             unavailable_sources,
+            sec_stage_expected: 0,
+            sec_stage_available: 0,
+            sec_fact_expected: 0,
+            sec_fact_available: 0,
         }
+    }
+
+    /// Returns a copy with the number of promoted structural evidence records.
+    pub const fn with_structural_evidence(mut self, structural_evidence: usize) -> Self {
+        self.structural_evidence = structural_evidence;
+        self
+    }
+
+    /// Returns a copy with distinct SEC stage and normalized-fact health.
+    pub const fn with_sec_health(
+        mut self,
+        sec_stage_expected: usize,
+        sec_stage_available: usize,
+        sec_fact_expected: usize,
+        sec_fact_available: usize,
+    ) -> Self {
+        self.sec_stage_expected = sec_stage_expected;
+        self.sec_stage_available = sec_stage_available;
+        self.sec_fact_expected = sec_fact_expected;
+        self.sec_fact_available = sec_fact_available;
+        self
     }
 
     /// Returns the number of reachable configured source entry points.
@@ -447,6 +483,11 @@ impl ResearchMetrics {
         self.validated_evidence
     }
 
+    /// Returns the number of validated claims classified as structural evidence.
+    pub const fn structural_evidence(&self) -> usize {
+        self.structural_evidence
+    }
+
     /// Returns the number of extracted but not yet validated leads.
     pub const fn pending_leads(&self) -> usize {
         self.pending_leads
@@ -455,6 +496,26 @@ impl ResearchMetrics {
     /// Returns the number of configured source acquisitions that were unavailable.
     pub const fn unavailable_sources(&self) -> usize {
         self.unavailable_sources
+    }
+
+    /// Returns the number of SEC collection stages expected for configured CIKs.
+    pub const fn sec_stage_expected(&self) -> usize {
+        self.sec_stage_expected
+    }
+
+    /// Returns the number of SEC collection stages that completed without a stage failure.
+    pub const fn sec_stage_available(&self) -> usize {
+        self.sec_stage_available
+    }
+
+    /// Returns the number of normalized SEC facts produced by the adapter.
+    pub const fn sec_fact_expected(&self) -> usize {
+        self.sec_fact_expected
+    }
+
+    /// Returns the number of normalized SEC facts with a known value.
+    pub const fn sec_fact_available(&self) -> usize {
+        self.sec_fact_available
     }
 }
 

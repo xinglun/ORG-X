@@ -126,6 +126,24 @@ fn legacy_runtime_input_defaults_research_metrics_to_zero() {
 
     assert_eq!(input.research_metrics().validated_evidence(), 0);
     assert_eq!(input.research_metrics().source_available(), 0);
+    assert_eq!(input.research_metrics().structural_evidence(), 0);
+    assert_eq!(input.research_metrics().sec_stage_expected(), 0);
+    assert_eq!(input.research_metrics().sec_stage_available(), 0);
+    assert_eq!(input.research_metrics().sec_fact_expected(), 0);
+    assert_eq!(input.research_metrics().sec_fact_available(), 0);
+}
+
+#[test]
+fn research_metrics_retain_structural_and_sec_health_counts() {
+    let metrics = ResearchMetrics::new(9, 10, 5, 71, 32)
+        .with_structural_evidence(2)
+        .with_sec_health(20, 18, 80, 74);
+
+    assert_eq!(metrics.structural_evidence(), 2);
+    assert_eq!(metrics.sec_stage_expected(), 20);
+    assert_eq!(metrics.sec_stage_available(), 18);
+    assert_eq!(metrics.sec_fact_expected(), 80);
+    assert_eq!(metrics.sec_fact_available(), 74);
 }
 
 #[test]

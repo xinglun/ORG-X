@@ -6,7 +6,7 @@
   "sourceOutcome": {
     "format": "ai-cockpit-task-outcome",
     "schemaVersion": 1,
-    "digest": "4de08f9fb46fbae5fe38216f63d1d1778d473527f17afcf40aafd278187b2a93"
+    "digest": "005e909a14fd19c5cffe24ea14a5a8291aad435ea08bc37b98d3715687f80e3f"
   },
   "task": {
     "summary": "Task wi-weekly-radar-reference-model-evidence generated an evidence-derived outcome with status completed.",
@@ -40,8 +40,9 @@
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md",
       ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
-      ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
-      ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json",
+      "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
+      "tests/fixtures/realign_ai_cockpit_v2.summary.json",
+      "tests/test_ai_check_summary.py",
       ".ai/knowledge/work-items/upgrade_ai_cockpit.json",
       ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
       ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
@@ -59,7 +60,12 @@
       ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
       ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json",
       ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
+      ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json",
+      ".ai/cockpit/current_status.md",
+      ".ai/work-items/archive/index.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.archive-manifest.json",
+      ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
+      ".ai/knowledge/index.json"
     ]
   },
   "issues": {
@@ -846,37 +852,37 @@
         "inference": false
       },
       {
-        "claim": "Changed .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
-        "title": "Changed .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
+        "claim": "Changed tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
+        "title": "Changed tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
         "detail": "Restored the historical Contract fixture declared by documentation-alignment regression coverage.",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json"
+            "subject": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json"
+            "subject": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json"
           }
         ],
         "inference": false
       },
       {
-        "claim": "Changed .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json",
-        "title": "Changed .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json",
+        "claim": "Changed tests/fixtures/realign_ai_cockpit_v2.summary.json",
+        "title": "Changed tests/fixtures/realign_ai_cockpit_v2.summary.json",
         "detail": "Restored the historical Summary fixture declared by legacy intent-alignment regression coverage.",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json"
+            "subject": "tests/fixtures/realign_ai_cockpit_v2.summary.json"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json"
+            "subject": "tests/fixtures/realign_ai_cockpit_v2.summary.json"
           }
         ],
         "inference": false
@@ -1410,7 +1416,7 @@
       {
         "claim": "quality",
         "title": "quality",
-        "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json, .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"qual",
+        "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json, tests/fixtures/realign_ai_cockpit_v2.summary.json\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"qual",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",

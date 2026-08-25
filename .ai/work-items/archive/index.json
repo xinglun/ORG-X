@@ -895,12 +895,12 @@
       "archiveSequence": 75,
       "archiveYear": "2026",
       "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
-      "contractSha256": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "contractSha256": "204413ed649d320b3c1832e9e0b048518191ae330f16a7e44ea322b6928e9346",
       "archivedAt": "2026-08-26T05:15:55.322131+09:00",
       "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-      "summarySha256": "99f0f91e6f12905300453216f50ecae7c774582b57e7268191b9cb6d8a4c4419",
+      "summarySha256": "466198602567ff6f7890fbfbb7de23abc32bf462cba368202420e60398b750d1",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.archive-manifest.json",
-      "manifestSha256": "5801d88683e048437717ec88e7f80319ed2807d45a9245b35018330aea6c6df1"
+      "manifestSha256": "6a8d6b4bb9f55b116631f17be9dd46e38af63f62f0831697b1b480a7dcece883"
     }
   ]
 }

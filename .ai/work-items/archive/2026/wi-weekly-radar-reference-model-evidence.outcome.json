@@ -8,8 +8,8 @@
   "recoveryCondition": "",
   "bindings": {
     "taskId": "wi-weekly-radar-reference-model-evidence",
-    "contractDigest": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
-    "summaryDigest": "99f0f91e6f12905300453216f50ecae7c774582b57e7268191b9cb6d8a4c4419",
+    "contractDigest": "204413ed649d320b3c1832e9e0b048518191ae330f16a7e44ea322b6928e9346",
+    "summaryDigest": "466198602567ff6f7890fbfbb7de23abc32bf462cba368202420e60398b750d1",
     "verificationDigest": "ed02c1b1114391795109f740bae53586fc968b97a540ae2e2989eb5b8bb8fd85",
     "baseCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
     "headCommit": "b8965f6ad03d4672b8da93a00599be6ee220806a",
@@ -63,8 +63,9 @@
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md",
       ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
-      ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
-      ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json",
+      "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
+      "tests/fixtures/realign_ai_cockpit_v2.summary.json",
+      "tests/test_ai_check_summary.py",
       ".ai/knowledge/work-items/upgrade_ai_cockpit.json",
       ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
       ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
@@ -82,7 +83,12 @@
       ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
       ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json",
       ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
-      ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
+      ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json",
+      ".ai/cockpit/current_status.md",
+      ".ai/work-items/archive/index.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.archive-manifest.json",
+      ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
+      ".ai/knowledge/index.json"
     ],
     "findings": [],
     "risks": [],
@@ -930,37 +936,37 @@
         "inference": false
       },
       {
-        "claim": "Changed .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
-        "title": "Changed .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
+        "claim": "Changed tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
+        "title": "Changed tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
         "detail": "Restored the historical Contract fixture declared by documentation-alignment regression coverage.",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json"
+            "subject": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json"
+            "subject": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json"
           }
         ],
         "inference": false
       },
       {
-        "claim": "Changed .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json",
-        "title": "Changed .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json",
+        "claim": "Changed tests/fixtures/realign_ai_cockpit_v2.summary.json",
+        "title": "Changed tests/fixtures/realign_ai_cockpit_v2.summary.json",
         "detail": "Restored the historical Summary fixture declared by legacy intent-alignment regression coverage.",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json"
+            "subject": "tests/fixtures/realign_ai_cockpit_v2.summary.json"
           }
         ],
         "evidence": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-            "subject": ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json"
+            "subject": "tests/fixtures/realign_ai_cockpit_v2.summary.json"
           }
         ],
         "inference": false
@@ -1494,7 +1500,7 @@
       {
         "claim": "quality",
         "title": "quality",
-        "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json, .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"qual",
+        "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json, tests/fixtures/realign_ai_cockpit_v2.summary.json\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"qual",
         "evidenceRefs": [
           {
             "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",

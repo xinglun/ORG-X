@@ -39,8 +39,9 @@
     ".ai/cockpit/task_report.json",
     ".ai/cockpit/task_report.md",
     ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
-    ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
-    ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json",
+    "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
+    "tests/fixtures/realign_ai_cockpit_v2.summary.json",
+    "tests/test_ai_check_summary.py",
     ".ai/knowledge/work-items/upgrade_ai_cockpit.json",
     ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
     ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
@@ -141,11 +142,11 @@
   "supersedes": [],
   "generatedFrom": {
     "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
-    "contractDigest": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+    "contractDigest": "204413ed649d320b3c1832e9e0b048518191ae330f16a7e44ea322b6928e9346",
     "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-    "summaryDigest": "99f0f91e6f12905300453216f50ecae7c774582b57e7268191b9cb6d8a4c4419",
+    "summaryDigest": "466198602567ff6f7890fbfbb7de23abc32bf462cba368202420e60398b750d1",
     "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json",
-    "outcomeDigest": "07b93b6de47b991086642c2d8b3b3e22dc7ece0f2a2fc63b4d3272c207166bb5"
+    "outcomeDigest": "3f73238566c2d8bbd5e10af927f2d818f48098be2979f59a4f4b1845150766b0"
   },
   "knowledgeState": "verified",
   "unknowns": []

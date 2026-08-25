@@ -120,12 +120,16 @@
       "reason": "Refreshed the stale installed script digest and preserved customization hash identified by the full Python governance suite."
     },
     {
-      "path": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
-      "reason": "Restored the historical Contract fixture declared by documentation-alignment regression coverage."
+      "path": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
+      "reason": "Moved the historical Contract fixture out of the archive namespace so it remains test data rather than a false Work Item archive."
     },
     {
-      "path": ".ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json",
-      "reason": "Restored the historical Summary fixture declared by legacy intent-alignment regression coverage."
+      "path": "tests/fixtures/realign_ai_cockpit_v2.summary.json",
+      "reason": "Moved the historical Summary fixture out of the archive namespace so it remains test data rather than a false Work Item archive."
+    },
+    {
+      "path": "tests/test_ai_check_summary.py",
+      "reason": "Updated the regression consumer to load historical schema fixtures from the explicit test-fixture namespace."
     },
     {
       "path": ".ai/knowledge/work-items/upgrade_ai_cockpit.json",

@@ -62,7 +62,9 @@
     "tests/weekly_radar_evidence_quality.rs",
     "tests/weekly_radar_judgment_chain.rs",
     "tests/weekly_radar_runtime.rs",
-    "tests/semantic_message_splitter_test.rs"
+    "tests/semantic_message_splitter_test.rs",
+    "tests/test_ai_check_summary.py",
+    "tests/fixtures/**"
   ],
   "outOfScope": [
     "Adding new external providers, paid search, unbounded crawling, guessed URLs, LLM judgment, probabilistic scoring, or news promotion to authoritative evidence",

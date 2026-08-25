@@ -131,7 +131,7 @@ def test_documentation_alignment_accepts_complete_source_bound_record():
 def test_generated_documentation_alignment_completes_bounded_installer_record():
     changed = [
         {
-            "path": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
+            "path": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
             "reason": "durable contract fixture",
         },
         {"path": "docs/contract-fields.md", "reason": "Japanese field guide"},

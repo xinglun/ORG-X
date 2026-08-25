@@ -1,6 +1,12 @@
 {
   "summaryVersion": 2,
   "workItemId": "realign_ai_cockpit_v2",
+  "intentAlignment": {
+    "problemResolved": true,
+    "constraintsRespected": true,
+    "nonGoalsAvoided": true,
+    "rationaleValidated": "Historical legacy fixture retained for intent-alignment validator coverage."
+  },
   "contractPath": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
   "changedFiles": [
     {"path": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json", "reason": "Historical Contract fixture."}

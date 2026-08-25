@@ -54,7 +54,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_evidence_quality.rs",
-      "digest": "c92c743de7cc30805435932d11260e578e20abef0a5029df14f689a90b83cec6"
+      "digest": "e2a45db17ae84834ca1c6c8e50341555061cc27c82a861b10a08df797f72627a"
     },
     {
       "type": "code",

@@ -451,6 +451,9 @@ impl ReferenceModelEvidenceBundle {
         let mut diffusion_peers = std::collections::BTreeSet::new();
         let mut supplier_attribution_sources = std::collections::BTreeSet::new();
         for evidence in authoritative {
+            if evidence.source_role() == Some(ReferenceModelSourceRole::SupplierAttribution) {
+                supplier_attribution_sources.insert(evidence.source_uri().to_owned());
+            }
             families.insert(evidence.family());
             if evidence.family() == ReferenceModelEvidenceFamily::SustainedOutcome {
                 if let Some(period) = evidence.period() {
@@ -465,9 +468,7 @@ impl ReferenceModelEvidenceBundle {
                             diffusion_peers.insert(peer.to_owned());
                         }
                     }
-                    Some(ReferenceModelSourceRole::SupplierAttribution) => {
-                        supplier_attribution_sources.insert(evidence.source_uri().to_owned());
-                    }
+                    Some(ReferenceModelSourceRole::SupplierAttribution) => {}
                     Some(ReferenceModelSourceRole::RegulatoryOrFiling)
                     | Some(ReferenceModelSourceRole::DiscoveryOnly)
                     | None => {}

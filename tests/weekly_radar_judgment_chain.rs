@@ -56,7 +56,7 @@ fn reference_fact(
 ) -> NormalizedFact {
     let source_role = (family == ReferenceModelEvidenceFamily::IndustryDiffusion)
         .then_some(ReferenceModelSourceRole::IndependentCustomerDisclosure);
-    reference_fact_with_role(
+    reference_fact_with_role(ReferenceFactSpec {
         company_id,
         kind,
         value,
@@ -65,38 +65,40 @@ fn reference_fact(
         family,
         named_peer,
         source_role,
-    )
+    })
 }
 
-fn reference_fact_with_role(
-    company_id: &str,
-    kind: &str,
-    value: &str,
-    source_uri: &str,
-    effective_date: &str,
+struct ReferenceFactSpec<'a> {
+    company_id: &'a str,
+    kind: &'a str,
+    value: &'a str,
+    source_uri: &'a str,
+    effective_date: &'a str,
     family: ReferenceModelEvidenceFamily,
-    named_peer: Option<&str>,
+    named_peer: Option<&'a str>,
     source_role: Option<ReferenceModelSourceRole>,
-) -> NormalizedFact {
+}
+
+fn reference_fact_with_role(spec: ReferenceFactSpec<'_>) -> NormalizedFact {
     NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
-        company_id,
-        kind,
-        value,
+        spec.company_id,
+        spec.kind,
+        spec.value,
         None,
-        Some(family),
-        named_peer.map(str::to_owned),
+        Some(spec.family),
+        spec.named_peer.map(str::to_owned),
         FactStatus::Known,
         Confidence::High,
         Provenance::new(
-            source_uri,
+            spec.source_uri,
             "reference-model claim",
             Utc::now(),
-            Some(NaiveDate::parse_from_str(effective_date, "%Y-%m-%d").unwrap()),
+            Some(NaiveDate::parse_from_str(spec.effective_date, "%Y-%m-%d").unwrap()),
         )
         .unwrap(),
     )
     .unwrap()
-    .with_reference_model_source_role(source_role)
+    .with_reference_model_source_role(spec.source_role)
     .unwrap()
 }
 
@@ -302,16 +304,17 @@ fn supplier_only_diffusion_remains_candidate_and_has_no_reference_stage() {
     let mut facts = confirmed_reference_model_facts("supplier-only");
     for fact in &mut facts {
         if fact.reference_model_family() == Some(ReferenceModelEvidenceFamily::IndustryDiffusion) {
-            *fact = reference_fact_with_role(
-                fact.company_id(),
-                fact.kind(),
-                fact.value().unwrap(),
-                fact.provenance().source_uri(),
-                &fact.provenance().effective_date().unwrap().to_string(),
-                ReferenceModelEvidenceFamily::IndustryDiffusion,
-                fact.reference_model_named_peer(),
-                Some(ReferenceModelSourceRole::SupplierAttribution),
-            );
+            let effective_date = fact.provenance().effective_date().unwrap().to_string();
+            *fact = reference_fact_with_role(ReferenceFactSpec {
+                company_id: fact.company_id(),
+                kind: fact.kind(),
+                value: fact.value().unwrap(),
+                source_uri: fact.provenance().source_uri(),
+                effective_date: &effective_date,
+                family: ReferenceModelEvidenceFamily::IndustryDiffusion,
+                named_peer: fact.reference_model_named_peer(),
+                source_role: Some(ReferenceModelSourceRole::SupplierAttribution),
+            });
         }
     }
 

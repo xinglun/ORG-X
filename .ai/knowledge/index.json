@@ -114,6 +114,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
     },
     {
+      "workItemId": "wi-weekly-radar-independent-diffusion",
+      "title": "Independently corroborate AI-era diffusion evidence",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-input-snapshot-compatibility",
       "title": "Preserve compatibility with legacy Weekly Radar input snapshots",
       "topics": [],

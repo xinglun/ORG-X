@@ -407,6 +407,13 @@ fn calibration_registry_contains_only_configured_prd_companies() {
         assert_eq!(company.greenhouse_board(), None);
         assert_eq!(company.lever_site(), None);
     }
+    assert_eq!(
+        registry.company("msft").unwrap().independent_research_source_urls(),
+        [
+            "https://www.pwc.com/us/en/library/case-studies/pwc-microsoft-copilot-enterprise-ai.html",
+            "https://investors.nielseniq.com/news/news-details/2026/NIQ-Announces-First-Quarter-2026-Results-That-Exceed-Expectations/default.aspx"
+        ]
+    );
 }
 
 #[test]

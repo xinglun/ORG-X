@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-independent-diffusion",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "99a15e9d458e8da0d15c0734bea77629101e38bd6706f5c3aca41247737d2097"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-independent-diffusion",
+    "contractDigest": "efaed166f0872c34de07410f2f1b0daa2f44a68ad90efd5cadf43668ddbab19d",
+    "summaryDigest": "914f8740ddaf38a1fe04eab2c50b334f52b82a67414e45696723f94c44fe40d3",
+    "verificationDigest": "177d700138f72dfecceecaa532e417090d61c42e90179c04f59771194e3c6194",
+    "baseCommit": "f26b9504b8b6fd6ebc72fce34edac71f4b023825",
+    "headCommit": "9c9a752373d2c64d2d1a3e0601421ae3666dc0cf",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "6fb44dd61d37b2ec1b81682bda4144a2301c92e5b0012bac15f1f207c7fd34a1",
+      "binding": {
+        "baseCommit": "f26b9504b8b6fd6ebc72fce34edac71f4b023825",
+        "candidateHead": "9c9a752373d2c64d2d1a3e0601421ae3666dc0cf",
+        "candidateTreeDigest": "6944760bff2a8a490e36fdfdc7c0ecf7734a9e722dd4fa85b32fd22734ab8fc1",
+        "candidateDiffDigest": "f3dc3417ffdfedde0cadf0ed8a211498c4160aa08e79457d2eeb3cccdba73c89"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-independent-diffusion generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-independent-diffusion generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-independent-diffusion",
     "deliveredChanges": [
       ".ai/cockpit/current_status.md",
       ".ai/cockpit/task_report.json",
@@ -41,192 +64,239 @@
       "tests/weekly_radar_evidence_quality.rs",
       "tests/weekly_radar_judgment_chain.rs",
       "tests/weekly_radar_runtime.rs"
-    ]
-  },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [
-    "User authorized execution through CI, PR, merge, closure, and in-scope repair; user requires continuation until problems are resolved.",
-    "User reaffirmed the product focus: identify AI-era organizational/production-system exemplars, not merely source availability."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Explicit PwC/NIQ independent URLs and SEC/IR endpoints may be unavailable or change markup; unavailable sources must remain degraded rather than become negative evidence.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "The bounded deterministic discovery list intentionally prefers false negatives to guessed or unbounded cross-origin crawling.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "PR checks, hosted CI, merge, remote branch deletion, and Work Item closure remain to be executed and verified in subsequent lifecycle stages.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Separate supplier attribution from independent adopter disclosure, carry the typed role through bounded document discovery and validated facts, and require independent corroboration before the reference-model diffusion gate can confirm.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/transformation/domain/mod.rs",
-          "subject": "typed source-role diffusion gate"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "role-preserving claim promotion"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Explicit independent URLs are collected at a distinct authoritative tier; source kind maps to ReferenceModelSourceRole; only IndependentCustomerDisclosure contributes URI and named-peer sets for diffusion confirmation.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/sources.rs",
-          "subject": "bounded independent source collection"
-        },
-        {
-          "source": "src/features/transformation/domain/mod.rs",
-          "subject": "independent diffusion assessment"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
       {
-        "component": "Source acquisition",
-        "detail": "Adds explicit, validated independent customer/IR research URLs without guessed cross-origin crawling.",
-        "status": "verified",
+        "claim": "live_source_availability",
+        "severity": "medium",
+        "title": "live_source_availability",
+        "detail": "Explicit PwC/NIQ independent URLs and SEC/IR endpoints may be unavailable or change markup; unavailable sources must remain degraded rather than become negative evidence.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/config.rs",
-            "subject": "independent_research_sources"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
       },
       {
-        "component": "Evidence and judgment",
-        "detail": "Preserves source role from observation through normalized fact and applies the hard independent diffusion condition.",
-        "status": "verified",
+        "claim": "recall",
+        "severity": "medium",
+        "title": "recall",
+        "detail": "The bounded deterministic discovery list intentionally prefers false negatives to guessed or unbounded cross-origin crawling.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "role mapping"
-          },
-          {
-            "source": "src/features/weekly_radar/runtime/judgment.rs",
-            "subject": "reference-model gate"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
       },
       {
-        "component": "Weekly Radar report",
-        "detail": "Shows independent diffusion and supplier attribution counts separately with localized role labels.",
-        "status": "verified",
+        "claim": "hosted_lifecycle",
+        "severity": "medium",
+        "title": "hosted_lifecycle",
+        "detail": "PR checks, hosted CI, merge, remote branch deletion, and Work Item closure remain to be executed and verified in subsequent lifecycle stages.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/report.rs",
-            "subject": "source-role report rendering"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
       }
     ],
-    "designDecisions": [
-      {
-        "decision": "Supplier case studies remain attribution, not independent corroboration.",
-        "reason": "The target claim is industry diffusion, so supplier-controlled material cannot prove adopter-side imitation.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_judgment_chain.rs",
-            "subject": "supplier-only diffusion regression"
-          }
-        ]
-      },
-      {
-        "decision": "Use explicit bounded URLs for cross-origin research.",
-        "reason": "This preserves fail-closed acquisition and prevents guessed or unbounded crawling.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "source configuration boundary"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "Legacy compatibility",
-        "detail": "New source-role fields are optional and legacy JSON deserializes with None.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "legacy JSON regression"
-          }
-        ]
-      },
-      {
-        "topic": "Quality evidence",
-        "detail": "Rust and Python full suites plus strict AI Cockpit quality passed before Finish.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "focused runtime evidence suite"
-          },
-          {
-            "source": "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion.md",
-            "subject": "verification plan"
-          }
-        ]
-      }
+    "humanDecisions": [
+      "User authorized execution through CI, PR, merge, closure, and in-scope repair; user requires continuation until problems are resolved.",
+      "User reaffirmed the product focus: identify AI-era organizational/production-system exemplars, not merely source availability."
     ],
     "evidence": [
       {
-        "claim": "Supplier-only diffusion remains Candidate and cannot enter the reference stage.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_judgment_chain.rs",
         "subject": "supplier_only_diffusion_remains_candidate_and_has_no_reference_stage"
       },
       {
-        "claim": "Full local quality passed before governed Finish.",
-        "status": "verified",
         "source": "tests/weekly_radar_runtime.rs",
         "subject": "cargo test and pytest evidence recorded in Summary"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Separate supplier attribution from independent adopter disclosure, carry the typed role through bounded document discovery and validated facts, and require independent corroboration before the reference-model diffusion gate can confirm.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/transformation/domain/mod.rs",
+            "subject": "typed source-role diffusion gate"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "role-preserving claim promotion"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Explicit independent URLs are collected at a distinct authoritative tier; source kind maps to ReferenceModelSourceRole; only IndependentCustomerDisclosure contributes URI and named-peer sets for diffusion confirmation.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/sources.rs",
+            "subject": "bounded independent source collection"
+          },
+          {
+            "source": "src/features/transformation/domain/mod.rs",
+            "subject": "independent diffusion assessment"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Source acquisition",
+          "detail": "Adds explicit, validated independent customer/IR research URLs without guessed cross-origin crawling.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/config.rs",
+              "subject": "independent_research_sources"
+            }
+          ]
+        },
+        {
+          "component": "Evidence and judgment",
+          "detail": "Preserves source role from observation through normalized fact and applies the hard independent diffusion condition.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "role mapping"
+            },
+            {
+              "source": "src/features/weekly_radar/runtime/judgment.rs",
+              "subject": "reference-model gate"
+            }
+          ]
+        },
+        {
+          "component": "Weekly Radar report",
+          "detail": "Shows independent diffusion and supplier attribution counts separately with localized role labels.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/report.rs",
+              "subject": "source-role report rendering"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Supplier case studies remain attribution, not independent corroboration.",
+          "reason": "The target claim is industry diffusion, so supplier-controlled material cannot prove adopter-side imitation.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_judgment_chain.rs",
+              "subject": "supplier-only diffusion regression"
+            }
+          ]
+        },
+        {
+          "decision": "Use explicit bounded URLs for cross-origin research.",
+          "reason": "This preserves fail-closed acquisition and prevents guessed or unbounded crawling.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "source configuration boundary"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Legacy compatibility",
+          "detail": "New source-role fields are optional and legacy JSON deserializes with None.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "legacy JSON regression"
+            }
+          ]
+        },
+        {
+          "topic": "Quality evidence",
+          "detail": "Rust and Python full suites plus strict AI Cockpit quality passed before Finish.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "focused runtime evidence suite"
+            },
+            {
+              "source": "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion.md",
+              "subject": "verification plan"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "Supplier-only diffusion remains Candidate and cannot enter the reference stage.",
+          "status": "verified",
+          "source": "tests/weekly_radar_judgment_chain.rs",
+          "subject": "supplier_only_diffusion_remains_candidate_and_has_no_reference_stage"
+        },
+        {
+          "claim": "Full local quality passed before governed Finish.",
+          "status": "verified",
+          "source": "tests/weekly_radar_runtime.rs",
+          "subject": "cargo test and pytest evidence recorded in Summary"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1241,6 +1311,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

@@ -38,3 +38,9 @@ Stage 2 / Stage 3 detected at T0
 - `ValidationEvaluator` 只报告缺少哪些 horizon 以及记录是否 complete，不计算 Stage、score、ranking、threshold、经济显著性或投资结论。
 
 这个 bounded context 目前是内存 store 和纯 application/domain 边界，不接入 Weekly Radar runtime，不调度真实的 6/12/24 个月任务，也不包含外部 Provider 数据。权威的 S&P 500/Nasdaq 100 universe、生产运行 receipt、runtime judgment-chain integration 和 source-host 安全策略仍需独立证据或产品决策。
+
+扩散验证还要区分来源角色：供应商控制的客户案例只记录为
+`SupplierAttribution`；客户自有披露才可作为
+`IndependentCustomerDisclosure`；SEC/IR 结果记录为
+`RegulatoryOrFiling`，只能支持其明确的经营周期主张。不同角色不能通过
+URL 数量或叙事强度互相替代，旧快照缺失角色时保持非独立。

@@ -231,6 +231,7 @@ struct Labels {
     source_label_careers: &'static str,
     source_label_engineering: &'static str,
     source_label_official_research: &'static str,
+    source_label_independent_research: &'static str,
     source_label_greenhouse: &'static str,
     source_label_lever: &'static str,
     source_label_gdelt: &'static str,
@@ -299,6 +300,7 @@ fn labels(language: ReportLanguage) -> Labels {
             source_label_careers: "职业与招聘页面",
             source_label_engineering: "工程与 AI 资料",
             source_label_official_research: "官方研究资料",
+            source_label_independent_research: "独立客户与 IR 披露",
             source_label_greenhouse: "Greenhouse 招聘接口",
             source_label_lever: "Lever 招聘接口",
             source_label_gdelt: "新闻发现",
@@ -364,6 +366,7 @@ fn labels(language: ReportLanguage) -> Labels {
             source_label_careers: "採用ページ",
             source_label_engineering: "Engineering / AI 資料",
             source_label_official_research: "公式研究資料",
+            source_label_independent_research: "独立顧客・IR 開示",
             source_label_greenhouse: "Greenhouse 採用 API",
             source_label_lever: "Lever 採用 API",
             source_label_gdelt: "ニュース探索",
@@ -431,6 +434,7 @@ fn labels(language: ReportLanguage) -> Labels {
             source_label_careers: "Careers and hiring pages",
             source_label_engineering: "Engineering and AI material",
             source_label_official_research: "Official research material",
+            source_label_independent_research: "Independent customer and IR disclosures",
             source_label_greenhouse: "Greenhouse hiring API",
             source_label_lever: "Lever hiring API",
             source_label_gdelt: "News discovery",
@@ -577,6 +581,8 @@ fn source_kind_for_fact(kind: &str) -> Option<&'static str> {
         Some("engineering_ai_blog")
     } else if lower.starts_with("source_official_research") {
         Some("official_research")
+    } else if lower.starts_with("source_independent_research") {
+        Some("independent_research")
     } else if lower.starts_with("source_greenhouse") {
         Some("greenhouse")
     } else if lower.starts_with("source_lever") {
@@ -594,6 +600,7 @@ fn source_label(source: &str, labels: Labels) -> String {
         "careers" => labels.source_label_careers.to_owned(),
         "engineering_ai_blog" => labels.source_label_engineering.to_owned(),
         "official_research" => labels.source_label_official_research.to_owned(),
+        "independent_research" => labels.source_label_independent_research.to_owned(),
         "greenhouse" => labels.source_label_greenhouse.to_owned(),
         "lever" => labels.source_label_lever.to_owned(),
         "gdelt" | "gdelt-discovery" => labels.source_label_gdelt.to_owned(),

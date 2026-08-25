@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-independent-diffusion",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-independent-diffusion.json",
+  "baseCommit": "f26b9504b8b6fd6ebc72fce34edac71f4b023825",
+  "baseBranch": "codex/wi-weekly-radar-independent-diffusion",
+  "startTimestamp": "2026-08-25T20:16:15.690487+00:00",
+  "initialScopeDigest": "fc25020e57fa3512b31621e2a697e0f59962232a5e5262fd81f13b837d452c0d",
+  "contractSkeletonDigest": "9965dc177cbba55ec3ff71812c2044c2a5ea3657716423d1439d8be6a995132f"
+}

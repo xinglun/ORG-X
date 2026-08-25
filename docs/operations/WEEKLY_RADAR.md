@@ -135,10 +135,12 @@ SEC submissions 和 SEC Company Facts 都是包含完整申报历史的 JSON，�
 
 - `SourceObservation`：入口页或接口是否可访问；入口页的可访问性不是企业变化证据。
 - `DocumentCandidate`：从同源入口发现的有限文档，保留 URL、标题、文档类型、日期和发现 provenance；不会猜测 URL，也不会无限爬取。
-- `EvidenceCandidate`：必须有对象、具体变化/事实、日期、生产环节、来源身份、权威级别、段落和 cutoff 关系；缺项保持待验证，不进入 confirmed。
+- `EvidenceCandidate`：必须有公司 ID、公司名称、具体变化/事实、有效日期、生产环节、来源 URI、来源标题、权威级别、正文段落和 cutoff 关系；任一字段缺失都保持待验证，不进入 confirmed 或 StructuralEvidence。
 - `ValidatedEvidence`：通过确定性 gate 的主张，才会成为 `evidence_*` normalized fact；它随后按主张段落中的结构性信号分为普通已验证事实或 StructuralEvidence。GDELT、新闻、招聘记录和页面级 observation 不会绕过该 gate。
+- `StructuralDimension`：StructuralEvidence 的维度只描述主张涉及的变化域，不改变其 evidence kind 前缀、Stage、Ranking、Counter Evidence、Telegram 或 archive 行为。固定优先级为 `OperatingMetric`（利用率、延迟、吞吐、产能、成本、利润/现金流、GPU 等）→ `ProductionSystem`（部署、发布、平台、基础设施、存储、云、自动化、agent 等）→ `Workflow`（工作流、流程、审批、排程、交接等）→ `Organization`（组织、职责、汇报关系、团队、部门、人员规模等）。
+- `NormalizedFact.structural_dimension`：新事实会保存可选的 `organization`、`workflow`、`production_system` 或 `operating_metric`；旧快照缺少该字段时按 `None` 读取，旧的 `evidence_structural_change_<index>` kind 保持可读，并在报告中使用通用“结构性证据”标签。
 - `ValidatedFact`：已验证但未满足结构性变化信号的事实，使用 `evidence_official_material_<index>`，进入报告的“已验证事实”。
-- `StructuralEvidence`：已验证且明确涉及组织、责任、生产系统、工作流、部署、利用率、延迟、产能、成本、人员或经营指标变化的事实，使用 `evidence_structural_change_<index>`，进入报告单独的“结构性证据”；它不会绕过既有 Stage 或 Ranking gate。
+- `StructuralEvidence`：已验证且明确涉及组织、责任、生产系统、工作流、部署、利用率、延迟、产能、成本、人员或经营指标变化的事实，使用 `evidence_structural_change_<index>`，进入报告单独的“结构性证据”；报告会按维度显示中/日/英标签，但它不会绕过既有 Stage 或 Ranking gate。
 
 报告渲染还会把事实状态和证据语义分开：只有 `status=Known` 且 `kind` 以 `evidence_` 开头的 fact 才能进入证据明细，并按上述两类分别出现在“已验证事实”或“结构性证据”；SEC 的 `revenue`、`headcount`、`capex` 等原始指标，以及 `source_*`、`pending_evidence_*` 和其他非证据 fact，不会进入这两节。系统状态中的“已知事实”只是输入中所有 `Known` facts 的可观测计数，不等于已确认企业变化的数量。
 

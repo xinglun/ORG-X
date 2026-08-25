@@ -73,10 +73,10 @@
     "reviewNote": "The post-merge dry-run supplies the concrete failure evidence. The successor is limited to report semantics and regression coverage; source acquisition and judgment inputs remain unchanged."
   },
   "governanceProfile": {
-    "selected": "standard",
+    "selected": "strict",
     "source": "automatic",
     "reasons": [
-      "Initial Work Item skeleton defaults to Standard until scope is classified."
+      "The final Work Item scope includes restricted Implementation Knowledge projections, so automatic quality routing requires Strict."
     ],
     "override": null
   },
@@ -251,9 +251,9 @@
     "allowPatterns": []
   },
   "restrictedWriteApproval": {
-    "approved": false,
-    "approvedBy": "",
-    "reason": "Set only when a human explicitly approves restricted governance paths."
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized execution through the complete Work Item lifecycle, including generated archive and Implementation Knowledge projections."
   },
   "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
   "budgetImpact": {

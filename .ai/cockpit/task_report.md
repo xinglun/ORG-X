@@ -27,16 +27,30 @@ Design decisions
 - The focused Weekly Radar report and runtime suites pass.: tests/weekly_radar_evidence_quality.rs#21 evidence-quality tests and 89 runtime tests (verified)
 - The full Rust quality suite passes with formatting and diff checks.: Makefile#cargo test --all-targets --all-features; cargo fmt --all -- --check; git diff --check (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.summary.json]
+- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json]
 - Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
 - Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
 - Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
+- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed .ai/knowledge/dependencies.json [evidence: .ai/knowledge/dependencies.json]
+- Changed .ai/knowledge/work-items/wi-sec-submissions-response-limit.json [evidence: .ai/knowledge/work-items/wi-sec-submissions-response-limit.json]
+- Changed .ai/knowledge/work-items/wi-telegram-delivery-verification.json [evidence: .ai/knowledge/work-items/wi-telegram-delivery-verification.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-content-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-content-quality.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json]
+- Changed .ai/knowledge/index.json [evidence: .ai/knowledge/index.json]
 
 Problems found
 - Total: 4

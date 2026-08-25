@@ -74,12 +74,12 @@
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/report.rs",
-      "digest": "4d58735a4849869417496dc7fcf1b81d18e2d97755665554a5fa4c5655a38405"
+      "digest": "8fa6edc7a2767c21f975d1678f591809a1066065b251354094f91c8018d31767"
     },
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "dcd02589a8f02bf9a3a5bf88b38d45ebd369e7428eb4f14b75146f9b727b5e17"
+      "digest": "c6135f4dd8f72092df082401575e589c527a24dcfa00b5b0bbe8f9f028cf1fab"
     },
     {
       "type": "code",

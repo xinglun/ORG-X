@@ -262,13 +262,29 @@ fn acquire_runtime_input(
         } else {
             match SecClient::collect(company, http, sec_user_agent) {
                 Ok(evidence) => {
-                    sec_coverage.available.insert(company.id().to_owned());
+                    if evidence.failures().len() < 2 {
+                        sec_coverage.available.insert(company.id().to_owned());
+                    }
                     for fact in evidence.facts() {
                         if fact.status() == &FactStatus::Known {
                             has_primary_evidence = true;
                         }
                         input
                             .add_fact(fact.clone())
+                            .map_err(|error| CliError::Failure(error.to_string()))?;
+                    }
+                    if !evidence.failures().is_empty() {
+                        let reason = evidence
+                            .failures()
+                            .iter()
+                            .map(|failure| format!("{}: {}", failure.stage(), failure.reason()))
+                            .collect::<Vec<_>>()
+                            .join("; ");
+                        input
+                            .add_source_failure(
+                                SourceFailure::new("sec", company.id(), reason)
+                                    .map_err(|error| CliError::Failure(error.to_string()))?,
+                            )
                             .map_err(|error| CliError::Failure(error.to_string()))?;
                     }
                 }
@@ -307,9 +323,6 @@ fn acquire_runtime_input(
                 source_coverage
                     .not_applicable
                     .insert(company.id().to_owned());
-            }
-            if observation.is_authoritative() && observation.status() == SourceStatus::Known {
-                has_primary_evidence = true;
             }
             let index = source_indices
                 .entry(observation.kind().as_str())
@@ -630,6 +643,8 @@ mod tests {
     use org_x::features::weekly_radar::runtime::archive::{
         persist_input_snapshot, write_run_with_input_snapshot,
     };
+    use org_x::features::weekly_radar::runtime::config::CompanyConfig;
+    use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpResponse};
     use org_x::features::weekly_radar::runtime::model::RuntimeReportInput;
     use org_x::features::weekly_radar::runtime::report::{
         render_report_in_language, ReportLanguage,
@@ -655,6 +670,38 @@ mod tests {
                 }
             })
         }
+    }
+
+    #[test]
+    fn homepage_availability_does_not_satisfy_primary_evidence_guard() {
+        let company = CompanyConfig::new(
+            "acme",
+            "Acme Corporation",
+            "ACME",
+            None,
+            Some("https://example.test/investors".to_owned()),
+            None,
+            None,
+            None,
+            None,
+        )
+        .expect("homepage-only fixture company should be valid");
+        let registry = CompanySourceRegistry::new(1, vec![company.clone()])
+            .expect("homepage-only fixture registry should be valid");
+        let client = FixtureHttpClient::with_response(
+            company.official_ir_url().expect("IR URL exists"),
+            HttpResponse::ok("<title>Investor Relations</title><p>Investor Relations</p>"),
+        );
+
+        let acquired = acquire_runtime_input(
+            &registry,
+            &client,
+            "ORG-X test contact@example.test",
+            NaiveDate::from_ymd_opt(2026, 8, 25).expect("fixture date should be valid"),
+        )
+        .expect("homepage-only acquisition should complete");
+
+        assert!(!acquired.has_primary_evidence);
     }
 
     #[test]

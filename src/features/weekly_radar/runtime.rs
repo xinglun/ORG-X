@@ -42,7 +42,10 @@ pub use report::{
     SourceHealthFacts,
 };
 pub use rules::extract_employee_count;
-pub use sec::{CompanyEvidence, SecClient};
+pub use sec::{
+    CompanyEvidence, SecClient, SecDocumentCandidate, SecStageFailure,
+    MAX_SEC_DOCUMENT_CANDIDATES,
+};
 pub use sources::{
     collect_configured_sources, SourceKind, SourceMaterialKind, SourceObservation, SourceStatus,
     SourceTier, MAX_HIRING_RECORDS, MAX_SOURCE_BODY_BYTES,

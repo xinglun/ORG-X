@@ -502,12 +502,12 @@ fn source_observations_normalize_to_facts_with_status_and_passage_provenance() {
     let official_fact =
         normalize_source_observation(official, 1).expect("official observation should normalize");
     assert_eq!(official_fact.kind(), "source_official_ir_001");
-    assert_eq!(official_fact.status(), &FactStatus::Known);
-    assert_eq!(official_fact.value(), Some("Official strategy update"));
-    assert_eq!(
-        official_fact.provenance().source_field_or_passage(),
-        "official page text"
-    );
+    assert_eq!(official_fact.status(), &FactStatus::Unconfirmed);
+    assert_eq!(official_fact.value(), None);
+    assert!(official_fact
+        .provenance()
+        .source_field_or_passage()
+        .contains("official page text"));
 
     let greenhouse = observations
         .iter()

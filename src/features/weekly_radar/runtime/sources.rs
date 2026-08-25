@@ -98,6 +98,22 @@ pub enum SourceTier {
     DiscoveryOnly,
 }
 
+/// Role of the material represented by one source observation.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum SourceMaterialKind {
+    /// A configured page that is an entry point to further research.
+    EntryPoint,
+    /// A bounded document discovered from an entry point or filing index.
+    Document,
+    /// A structured public hiring record.
+    HiringRecord,
+    /// A secondary article retained only as a discovery lead.
+    DiscoveryArticle,
+    /// An unavailable, unknown, or configuration-status observation.
+    Status,
+}
+
 impl SourceTier {
     /// Returns the stable authority-tier label.
     pub const fn as_str(self) -> &'static str {
@@ -129,6 +145,7 @@ impl SourceTier {
 pub struct SourceObservation {
     company_id: String,
     kind: SourceKind,
+    material_kind: SourceMaterialKind,
     status: SourceStatus,
     tier: SourceTier,
     url: Option<String>,
@@ -141,6 +158,7 @@ pub struct SourceObservation {
 struct SourceObservationInput {
     company_id: String,
     kind: SourceKind,
+    material_kind: SourceMaterialKind,
     status: SourceStatus,
     tier: SourceTier,
     url: Option<String>,
@@ -165,6 +183,7 @@ impl SourceObservation {
         Self {
             company_id: input.company_id,
             kind: input.kind,
+            material_kind: input.material_kind,
             status: input.status,
             tier: input.tier,
             url: input.url,
@@ -183,6 +202,11 @@ impl SourceObservation {
     /// Returns the source family.
     pub const fn kind(&self) -> SourceKind {
         self.kind
+    }
+
+    /// Returns the material role represented by this observation.
+    pub const fn material_kind(&self) -> SourceMaterialKind {
+        self.material_kind
     }
 
     /// Returns the source status.
@@ -369,6 +393,7 @@ fn collect_official(
             observations.push(SourceObservation::new(SourceObservationInput {
                 company_id: company.id().to_owned(),
                 kind,
+                material_kind: SourceMaterialKind::EntryPoint,
                 status,
                 tier: SourceTier::OfficialPrimary,
                 url: Some(url.to_owned()),
@@ -466,6 +491,7 @@ fn collect_greenhouse(
         observations.push(SourceObservation::new(SourceObservationInput {
             company_id: company.id().to_owned(),
             kind: SourceKind::Greenhouse,
+            material_kind: SourceMaterialKind::HiringRecord,
             status: SourceStatus::Known,
             tier: SourceTier::StructuredHiring,
             url,
@@ -575,6 +601,7 @@ fn collect_lever(
         observations.push(SourceObservation::new(SourceObservationInput {
             company_id: company.id().to_owned(),
             kind: SourceKind::Lever,
+            material_kind: SourceMaterialKind::HiringRecord,
             status: SourceStatus::Known,
             tier: SourceTier::StructuredHiring,
             url,
@@ -648,6 +675,7 @@ fn collect_gdelt(
         observations.push(SourceObservation::new(SourceObservationInput {
             company_id: company.id().to_owned(),
             kind: SourceKind::Gdelt,
+            material_kind: SourceMaterialKind::DiscoveryArticle,
             status: SourceStatus::DiscoveryOnly,
             tier: SourceTier::DiscoveryOnly,
             url: Some(url.clone()),
@@ -747,6 +775,7 @@ fn observation_with_status_reason(
     SourceObservation::new(SourceObservationInput {
         company_id: company.id().to_owned(),
         kind,
+        material_kind: SourceMaterialKind::Status,
         status,
         tier,
         url: url.map(str::to_owned),
@@ -774,6 +803,7 @@ fn unknown_observation(
     SourceObservation::new(SourceObservationInput {
         company_id: company.id().to_owned(),
         kind,
+        material_kind: SourceMaterialKind::Status,
         status: SourceStatus::Unknown,
         tier,
         url: url.map(str::to_owned),

@@ -399,6 +399,65 @@ fn is_zero(value: &usize) -> bool {
     *value == 0
 }
 
+/// Acquisition counters kept separate from confirmed fact counts.
+#[derive(Clone, Debug, Default, Eq, PartialEq, Serialize, Deserialize)]
+pub struct ResearchMetrics {
+    #[serde(default, skip_serializing_if = "is_zero")]
+    source_available: usize,
+    #[serde(default, skip_serializing_if = "is_zero")]
+    document_candidates: usize,
+    #[serde(default, skip_serializing_if = "is_zero")]
+    validated_evidence: usize,
+    #[serde(default, skip_serializing_if = "is_zero")]
+    pending_leads: usize,
+    #[serde(default, skip_serializing_if = "is_zero")]
+    unavailable_sources: usize,
+}
+
+impl ResearchMetrics {
+    /// Creates one complete acquisition-metrics envelope.
+    pub const fn new(
+        source_available: usize,
+        document_candidates: usize,
+        validated_evidence: usize,
+        pending_leads: usize,
+        unavailable_sources: usize,
+    ) -> Self {
+        Self {
+            source_available,
+            document_candidates,
+            validated_evidence,
+            pending_leads,
+            unavailable_sources,
+        }
+    }
+
+    /// Returns the number of reachable configured source entry points.
+    pub const fn source_available(&self) -> usize {
+        self.source_available
+    }
+
+    /// Returns the number of bounded document candidates discovered.
+    pub const fn document_candidates(&self) -> usize {
+        self.document_candidates
+    }
+
+    /// Returns the number of candidates promoted to validated evidence.
+    pub const fn validated_evidence(&self) -> usize {
+        self.validated_evidence
+    }
+
+    /// Returns the number of extracted but not yet validated leads.
+    pub const fn pending_leads(&self) -> usize {
+        self.pending_leads
+    }
+
+    /// Returns the number of configured source acquisitions that were unavailable.
+    pub const fn unavailable_sources(&self) -> usize {
+        self.unavailable_sources
+    }
+}
+
 /// Coverage counters for one configured source family.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
 pub struct SourceCoverage {
@@ -528,6 +587,8 @@ pub struct RuntimeReportInput {
     #[serde(default)]
     source_failures: Vec<SourceFailure>,
     #[serde(default)]
+    research_metrics: ResearchMetrics,
+    #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     judgment: Option<super::judgment::JudgmentSnapshot>,
 }
@@ -547,6 +608,8 @@ impl<'de> Deserialize<'de> for RuntimeReportInput {
             #[serde(default)]
             source_failures: Vec<SourceFailure>,
             #[serde(default)]
+            research_metrics: ResearchMetrics,
+            #[serde(default)]
             judgment: Option<super::judgment::JudgmentSnapshot>,
         }
 
@@ -557,6 +620,7 @@ impl<'de> Deserialize<'de> for RuntimeReportInput {
             facts: wire.facts,
             source_coverage: wire.source_coverage,
             source_failures: wire.source_failures,
+            research_metrics: wire.research_metrics,
             judgment: wire.judgment,
         };
         input.validate().map_err(D::Error::custom)?;
@@ -575,6 +639,7 @@ impl RuntimeReportInput {
             facts: Vec::new(),
             source_coverage: Vec::new(),
             source_failures: Vec::new(),
+            research_metrics: ResearchMetrics::new(0, 0, 0, 0, 0),
             judgment: None,
         })
     }
@@ -587,6 +652,7 @@ impl RuntimeReportInput {
             facts: Vec::new(),
             source_coverage: Vec::new(),
             source_failures: Vec::new(),
+            research_metrics: ResearchMetrics::new(0, 0, 0, 0, 0),
             judgment: None,
         }
     }
@@ -756,6 +822,16 @@ impl RuntimeReportInput {
     /// Returns safe acquisition failures in insertion order.
     pub fn source_failures(&self) -> &[SourceFailure] {
         &self.source_failures
+    }
+
+    /// Replaces acquisition counters before report rendering.
+    pub fn set_research_metrics(&mut self, research_metrics: ResearchMetrics) {
+        self.research_metrics = research_metrics;
+    }
+
+    /// Returns acquisition counters without conflating them with fact status.
+    pub const fn research_metrics(&self) -> &ResearchMetrics {
+        &self.research_metrics
     }
 
     /// Returns the validated judgment snapshot when the runtime supplied one.

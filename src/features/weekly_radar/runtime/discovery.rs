@@ -173,11 +173,11 @@ pub fn document_metadata(html: &str, fallback_title: &str) -> (String, Option<Na
     (title, date, normalize_document_body(html))
 }
 
-fn first_valid_date<const N: usize, F>(names: [&str; N], mut extract: F) -> Option<NaiveDate>
+fn first_valid_date<const N: usize, F>(names: [&str; N], extract: F) -> Option<NaiveDate>
 where
     F: FnMut(&str) -> Option<NaiveDate>,
 {
-    names.into_iter().find_map(|name| extract(name))
+    names.into_iter().find_map(extract)
 }
 
 fn meta_date(html: &str, expected_name: &str) -> Option<NaiveDate> {
@@ -218,8 +218,12 @@ fn json_ld_date(html: &str, expected_key: &str) -> Option<NaiveDate> {
     )
     .ok()?;
     for captures in script_regex.captures_iter(html) {
-        let body = captures.get(1)?.as_str();
-        let value = serde_json::from_str::<serde_json::Value>(body).ok()?;
+        let Some(body) = captures.get(1).map(|capture| capture.as_str()) else {
+            continue;
+        };
+        let Ok(value) = serde_json::from_str::<serde_json::Value>(body) else {
+            continue;
+        };
         if let Some(date) = json_ld_date_value(&value, expected_key) {
             if let Some(date) = parse_iso_date_prefix(&date) {
                 return Some(date);

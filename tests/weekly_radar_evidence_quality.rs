@@ -16,6 +16,7 @@ use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{
     collect_configured_sources, SourceKind, SourceMaterialKind,
 };
+use std::collections::BTreeMap;
 
 fn company() -> CompanyConfig {
     CompanyConfig::new(
@@ -132,6 +133,7 @@ fn legacy_runtime_input_defaults_research_metrics_to_zero() {
     assert_eq!(input.research_metrics().sec_stage_available(), 0);
     assert_eq!(input.research_metrics().sec_fact_expected(), 0);
     assert_eq!(input.research_metrics().sec_fact_available(), 0);
+    assert!(input.research_metrics().document_kind_counts().is_empty());
 }
 
 #[test]
@@ -192,6 +194,20 @@ fn research_metrics_retain_structural_and_sec_health_counts() {
     assert_eq!(metrics.sec_stage_available(), 18);
     assert_eq!(metrics.sec_fact_expected(), 80);
     assert_eq!(metrics.sec_fact_available(), 74);
+}
+
+#[test]
+fn research_metrics_document_kind_counts_default_for_legacy_json() {
+    let legacy = serde_json::json!({
+        "source_available": 9,
+        "document_candidates": 10,
+        "validated_evidence": 5,
+        "pending_leads": 71,
+        "unavailable_sources": 32
+    });
+    let metrics: ResearchMetrics = serde_json::from_value(legacy).unwrap();
+
+    assert!(metrics.document_kind_counts().is_empty());
 }
 
 #[test]
@@ -945,6 +961,25 @@ fn localized_reports_keep_validated_evidence_separate_from_known_facts() {
     assert!(!english_confirmed_section.contains("123000000"));
     assert!(english.markdown().contains("1 validated facts"));
     assert!(english.markdown().contains("Known facts: 2"));
+}
+
+#[test]
+fn localized_reports_render_document_kind_counts_without_ranking() {
+    let metrics = ResearchMetrics::new(9, 10, 1, 9, 2).with_document_kind_counts(BTreeMap::from([
+        ("engineering".to_owned(), 2),
+        ("earnings".to_owned(), 1),
+    ]));
+    let input = input_with_metrics(metrics);
+
+    let english = render_report_in_language(&input, ReportLanguage::English);
+    assert!(english
+        .markdown()
+        .contains("Document kinds: earnings=1, engineering=2"));
+    assert!(!english.markdown().contains("Top 5"));
+
+    let chinese = render_report_in_language(&input, ReportLanguage::Chinese);
+    assert!(chinese.markdown().contains("文档类型"));
+    assert!(chinese.markdown().contains("工程"));
 }
 
 #[test]

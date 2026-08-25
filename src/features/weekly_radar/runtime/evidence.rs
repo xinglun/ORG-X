@@ -24,7 +24,6 @@ const CHANGE_SIGNALS: &[&str] = &[
     "automat",
     "replaced",
     "moderniz",
-    "built",
     "doubled",
     "reduced",
     "increased",

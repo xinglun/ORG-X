@@ -54,7 +54,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_evidence_quality.rs",
-      "digest": "d1682b7da11eaef0262641d49db4a142b19181bce9132bdd2f03b48a35086002"
+      "digest": "ed24e149d10a71abbdd5df8abb07119ebab66da444a4d5bf3d8d05fcd706450e"
     },
     {
       "type": "code",
@@ -69,7 +69,7 @@
     {
       "type": "code",
       "path": "docs/operations/WEEKLY_RADAR.md",
-      "digest": "f5e5e7f5320d67b9323f19ecbfba62f01e3eb291a4e59095a46dda5906282582"
+      "digest": "76b4a9aac0a66fa7d67ea9ce0e69d0daca5b72c4aef90dd44ff1f2e7c8dc59d0"
     },
     {
       "type": "code",

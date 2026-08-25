@@ -1,15 +1,29 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-evidence-extraction-quality",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "05e80989170dd893fdc783ac88b3032109bf15ff39ae37392f4f610667bfb512"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-evidence-extraction-quality",
+    "contractDigest": "86915537921de1f6067a8d4b16d8485ce4d80f268f155b24fa9ee444a2969a8d",
+    "summaryDigest": "f4578541d2866f8a2d428637cf002036a818fe888c668a1c9a2ada74fd4f5f9a",
+    "verificationDigest": "b1ae572c718d80246ad0f7457037c701fcc417b67c82ab5142a933e543e0dd46",
+    "baseCommit": "0004c92896e0d75ecdcd15f70d86a21a04e0f4c3",
+    "headCommit": "e9ef3e969a517679ccbdce7a95759a1d0c0bdb44",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN"
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-evidence-extraction-quality generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-evidence-extraction-quality generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-evidence-extraction-quality",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
@@ -39,245 +53,302 @@
       ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
       ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
       ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json"
-    ]
-  },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "2c2adfc8ea7c4094770382133ff718fce0aae0294cf7064502dce2adf5afec9b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: quality",
-      "action": "blocked",
-      "resolution": "Retry quality after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "f4423f533d4ce55f99d4f1411f48a688683a288aa89af9724f05e6dc4bb9a2c4"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "2c2adfc8ea7c4094770382133ff718fce0aae0294cf7064502dce2adf5afec9b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "quality failed before the retry.",
-      "policyOrGuard": "required verification: quality",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry quality after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verificationHistory[1] quality failed",
-          "digest": "f4423f533d4ce55f99d4f1411f48a688683a288aa89af9724f05e6dc4bb9a2c4"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "verification[quality] retry passed",
-          "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "The user accepted the bounded extraction-quality design and requested a new WI with TDD implementation."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Regex cleanup covers common semantic tags and marked containers; site-specific nested boilerplate may remain.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "Removing built rejects generic architecture descriptions but may leave genuine build-only changes pending.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Clean document bodies before extraction and require an explicit production-system change action before creating an EvidenceCandidate.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/discovery.rs",
-          "subject": "Document body normalization"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "Deterministic change-signal gate"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Remove semantic non-content blocks and marked share/menu containers, prefer cleaned paragraph text, and exclude built-only architecture descriptions from the change signal set.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/discovery.rs",
-          "subject": "normalize_document_body"
-        },
-        {
-          "source": "tests/weekly_radar_evidence_quality.rs",
-          "subject": "Boilerplate and generic-description regressions"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Weekly Radar document discovery",
-        "detail": "HTML body normalization now excludes common navigation and social boilerplate before claim extraction.",
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "2c2adfc8ea7c4094770382133ff718fce0aae0294cf7064502dce2adf5afec9b"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "quality failed before the retry.",
+        "policyOrGuard": "required verification: quality",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry quality after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "verificationHistory[1] quality failed",
+            "digest": "f4423f533d4ce55f99d4f1411f48a688683a288aa89af9724f05e6dc4bb9a2c4"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
+          }
+        ]
+      }
+    ],
+    "resolutions": [
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "2c2adfc8ea7c4094770382133ff718fce0aae0294cf7064502dce2adf5afec9b"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
+          }
+        ]
+      },
+      {
+        "problem": "quality failed before the retry.",
+        "action": "Re-ran quality after the correction; the latest attempt passed.",
+        "verification": "quality latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "verificationHistory[1] quality failed",
+            "digest": "f4423f533d4ce55f99d4f1411f48a688683a288aa89af9724f05e6dc4bb9a2c4"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "verification[quality] retry passed",
+            "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
+          }
+        ]
+      }
+    ],
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
+      {
+        "claim": "html_normalization",
+        "severity": "medium",
+        "title": "html_normalization",
+        "detail": "Regex cleanup covers common semantic tags and marked containers; site-specific nested boilerplate may remain.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      },
+      {
+        "claim": "claim_recall",
+        "severity": "medium",
+        "title": "claim_recall",
+        "detail": "Removing built rejects generic architecture descriptions but may leave genuine build-only changes pending.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
+      }
+    ],
+    "humanDecisions": [
+      "The user accepted the bounded extraction-quality design and requested a new WI with TDD implementation."
+    ],
+    "evidence": [
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+        "subject": "Summary"
+      },
+      {
+        "source": "tests/weekly_radar_evidence_quality.rs",
+        "subject": "document_body_ignores_navigation_and_social_boilerplate_before_claim_extraction"
+      },
+      {
+        "source": "tests/weekly_radar_evidence_quality.rs",
+        "subject": "generic_architecture_description_does_not_create_a_claim_candidate"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "2c2adfc8ea7c4094770382133ff718fce0aae0294cf7064502dce2adf5afec9b"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "1e904c3c4e7d949de50da3923303a9a6ec4f41dd5df3ec538706a3d060066aa7"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+        "subject": "verificationHistory[1] quality failed",
+        "digest": "f4423f533d4ce55f99d4f1411f48a688683a288aa89af9724f05e6dc4bb9a2c4"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+        "subject": "verification[quality] retry passed",
+        "digest": "203edad0e661fc6ec718df847d221974cc2fef20dadb742be84895e4c2f3c6ff"
+      }
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Clean document bodies before extraction and require an explicit production-system change action before creating an EvidenceCandidate.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/discovery.rs",
+            "subject": "Document body normalization"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "Deterministic change-signal gate"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Remove semantic non-content blocks and marked share/menu containers, prefer cleaned paragraph text, and exclude built-only architecture descriptions from the change signal set.",
         "status": "verified",
         "evidence": [
           {
             "source": "src/features/weekly_radar/runtime/discovery.rs",
             "subject": "normalize_document_body"
-          }
-        ]
-      },
-      {
-        "component": "Weekly Radar evidence extraction",
-        "detail": "Generic architecture descriptions using built-only wording no longer become EvidenceCandidates.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "CHANGE_SIGNALS"
           },
           {
             "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "generic_architecture_description_does_not_create_a_claim_candidate"
-          }
-        ]
-      }
-    ],
-    "designDecisions": [
-      {
-        "decision": "Keep the existing evidence_* schema and validation boundary.",
-        "reason": "The fix is limited to upstream content quality and deterministic candidate promotion; report, Ranking, persistence, and SEC behavior remain unchanged.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
-            "subject": "Declared decision boundary"
-          },
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "Existing evidence validation regressions"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "TDD regression coverage",
-        "detail": "Two new tests failed against the baseline and passed after the minimal implementation; the focused suite has 23 passing tests.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "RED/GREEN evidence-quality tests"
+            "subject": "Boilerplate and generic-description regressions"
           }
         ]
       },
-      {
-        "topic": "Project verification",
-        "detail": "fmt, clippy with warnings denied, all-target all-feature tests, and the project check target passed.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "Makefile",
-            "subject": "Project quality commands"
-          }
-        ]
-      }
-    ],
-    "evidence": [
-      {
-        "claim": "Boilerplate is excluded while a substantive dated production claim remains extractable.",
-        "status": "verified",
-        "source": "tests/weekly_radar_evidence_quality.rs",
-        "subject": "document_body_ignores_navigation_and_social_boilerplate_before_claim_extraction"
-      },
-      {
-        "claim": "Generic architecture descriptions are not promoted by the built-only wording.",
-        "status": "verified",
-        "source": "tests/weekly_radar_evidence_quality.rs",
-        "subject": "generic_architecture_description_does_not_create_a_claim_candidate"
-      }
-    ]
+      "affectedComponents": [
+        {
+          "component": "Weekly Radar document discovery",
+          "detail": "HTML body normalization now excludes common navigation and social boilerplate before claim extraction.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/discovery.rs",
+              "subject": "normalize_document_body"
+            }
+          ]
+        },
+        {
+          "component": "Weekly Radar evidence extraction",
+          "detail": "Generic architecture descriptions using built-only wording no longer become EvidenceCandidates.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "CHANGE_SIGNALS"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "generic_architecture_description_does_not_create_a_claim_candidate"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Keep the existing evidence_* schema and validation boundary.",
+          "reason": "The fix is limited to upstream content quality and deterministic candidate promotion; report, Ranking, persistence, and SEC behavior remain unchanged.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
+              "subject": "Declared decision boundary"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "Existing evidence validation regressions"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "TDD regression coverage",
+          "detail": "Two new tests failed against the baseline and passed after the minimal implementation; the focused suite has 23 passing tests.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "RED/GREEN evidence-quality tests"
+            }
+          ]
+        },
+        {
+          "topic": "Project verification",
+          "detail": "fmt, clippy with warnings denied, all-target all-feature tests, and the project check target passed.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "Makefile",
+              "subject": "Project quality commands"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "Boilerplate is excluded while a substantive dated production claim remains extractable.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "document_body_ignores_navigation_and_social_boilerplate_before_claim_extraction"
+        },
+        {
+          "claim": "Generic architecture descriptions are not promoted by the built-only wording.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "generic_architecture_description_does_not_create_a_claim_candidate"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1283,6 +1354,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

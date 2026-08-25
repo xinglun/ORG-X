@@ -26,6 +26,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json"
     },
     {
+      "workItemId": "wi-weekly-radar-careers-evidence-boundary",
+      "title": "Tighten Careers evidence promotion boundary",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-claim-extraction-gate",
       "title": "Weekly Radar claim extraction gate",
       "topics": [],

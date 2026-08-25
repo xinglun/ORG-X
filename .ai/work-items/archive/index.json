@@ -865,6 +865,18 @@
       "summarySha256": "f70f73405aa7e1f34b788402370dae37fcea4f69a7da840656b31a1948639f53",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.archive-manifest.json",
       "manifestSha256": "346c1effc18670297e6a14b54f43d809481938f51e0e565e71dfc36d8ccec53d"
+    },
+    {
+      "workItemId": "wi-weekly-radar-careers-evidence-boundary",
+      "archiveSequence": 73,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.contract.json",
+      "contractSha256": "ab481d24590c99a8dba21995324bba8a09e88c17af7cfdf36373c1a22dec0443",
+      "archivedAt": "2026-08-25T18:02:35.799974+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
+      "summarySha256": "e681ce7cd90e960409dae571fcef1b4937ac9ff152b8615851284ed9231d06e0",
+      "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.archive-manifest.json",
+      "manifestSha256": "6e9a753cd69300eb3abdf5dc71ff4a5f6fed9726175c18189a1fc966e98aad75"
     }
   ]
 }

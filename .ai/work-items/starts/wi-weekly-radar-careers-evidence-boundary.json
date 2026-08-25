@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-careers-evidence-boundary",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-careers-evidence-boundary.json",
+  "baseCommit": "8dfb3aab0f62bc2a48d1e3b9a6498776b287e9c7",
+  "baseBranch": "codex/wi-weekly-radar-careers-evidence-boundary",
+  "startTimestamp": "2026-08-25T08:44:15.731058+00:00",
+  "initialScopeDigest": "65af0f85c50989af2d3f6dc13ad49adf951d1bfde164da98f29ad19764584bb1",
+  "contractSkeletonDigest": "53b44777d3a05fc62dd2267f60aeff897bdd2165b473cb85cdf66e0cc48dc4c0"
+}

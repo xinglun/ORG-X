@@ -8,7 +8,7 @@ use super::model::{Confidence, FactStatus, NormalizedFact, Provenance, Structura
 use super::sources::{SourceKind, SourceMaterialKind, SourceObservation, SourceStatus, SourceTier};
 use super::RuntimeError;
 
-const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v2";
+const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v3";
 const MAX_FIELD_BYTES: usize = 512;
 const MIN_CLAIM_WORDS: usize = 8;
 
@@ -28,6 +28,20 @@ const CHANGE_SIGNALS: &[&str] = &[
     "doubled",
     "reduced",
     "increased",
+    "hiring",
+    "recruit",
+    "headcount",
+    "workforce",
+    "positions",
+];
+
+const CAREERS_CHANGE_SIGNALS: &[&str] = &[
+    "hiring",
+    "recruit",
+    "headcount",
+    "workforce",
+    "positions",
+    "roles",
 ];
 
 const PRODUCTION_SIGNALS: &[&str] = &[
@@ -301,6 +315,9 @@ impl ValidatedEvidence {
 
     /// Returns the deterministic structural domain, when the claim is structural.
     pub fn structural_dimension(&self) -> Option<StructuralDimension> {
+        if self.candidate.document_kind == Some(DocumentKind::Careers) {
+            return None;
+        }
         structural_dimension_for_text(&self.candidate.passage)
     }
 
@@ -381,6 +398,13 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
         .filter(|title| !title.trim().is_empty())?;
     let document_kind = observation.document_kind()?;
     let (passage, production_signal) = extract_claim_sentence(observation.text())?;
+    if document_kind == DocumentKind::Careers
+        && !CAREERS_CHANGE_SIGNALS
+            .iter()
+            .any(|signal| passage.to_ascii_lowercase().contains(signal))
+    {
+        return None;
+    }
     let source_kind = match observation.kind() {
         SourceKind::Gdelt => EvidenceSourceKind::DiscoveryArticle,
         SourceKind::Greenhouse | SourceKind::Lever => EvidenceSourceKind::StructuredHiring,

@@ -366,6 +366,7 @@ associations:
       - "src/features/weekly_radar/runtime/**"
     tests:
       - "tests/weekly_radar_runtime.rs"
+      - "tests/weekly_radar_evidence_quality.rs"
   startReceipt:
     production:
       - "scripts/ai_start_receipt.py"

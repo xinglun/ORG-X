@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-careers-evidence-boundary",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "8cf01a166694875486d93e38b90b64e0fe97fc39fb9b996286900ddd16c2880c"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-careers-evidence-boundary",
+    "contractDigest": "ab481d24590c99a8dba21995324bba8a09e88c17af7cfdf36373c1a22dec0443",
+    "summaryDigest": "e681ce7cd90e960409dae571fcef1b4937ac9ff152b8615851284ed9231d06e0",
+    "verificationDigest": "95ebf9deff3565465147b7e895b515b95d21fda8fd770a2b6fa93e2024a7b976",
+    "baseCommit": "8dfb3aab0f62bc2a48d1e3b9a6498776b287e9c7",
+    "headCommit": "28a315fdd3f851ccda64b2a2d638d13ea3aa5e10",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "4be262205a2352e55f0d13ccfc26257b462442d84533e482a4a9796fce162186",
+      "binding": {
+        "baseCommit": "8dfb3aab0f62bc2a48d1e3b9a6498776b287e9c7",
+        "candidateHead": "28a315fdd3f851ccda64b2a2d638d13ea3aa5e10",
+        "candidateTreeDigest": "d4d8d5b3a00fb86f2df46930d65da34f0d91b604bf00e519062a41705c94b5ce",
+        "candidateDiffDigest": "299ca564344db9d18eac32b254d3f64704e6a1a4af3cafb8d96fb7bb8fc4fde6"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-careers-evidence-boundary generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-careers-evidence-boundary generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-careers-evidence-boundary",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
@@ -21,172 +44,199 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "Finite hiring-change signals may leave an explicit hiring claim as a pending lead when its wording uses an unseen synonym; this is an intentional conservative boundary.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Keep Careers material lead-only by default, require explicit hiring-change language for Careers candidate promotion, and prevent Careers candidates from becoming structural evidence while preserving non-Careers behavior.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "Careers-specific candidate and structural gates"
-        },
-        {
-          "source": "tests/weekly_radar_evidence_quality.rs",
-          "subject": "paired generic and explicit-hiring fixtures"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Use a bounded deterministic Careers signal list after sentence extraction and return no structural dimension for validated Careers evidence; leave the shared non-Careers extractor and classifier unchanged.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "CAREERS_CHANGE_SIGNALS and document-kind guard"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [],
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
       {
-        "component": "Evidence extraction",
-        "detail": "Generic Careers copy remains a pending lead; explicit hiring-change prose can produce a candidate.",
-        "status": "verified",
+        "claim": "careers_signal_recall",
+        "severity": "low",
+        "title": "careers_signal_recall",
+        "detail": "Finite hiring-change signals may leave an explicit hiring claim as a pending lead when its wording uses an unseen synonym; this is an intentional conservative boundary.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "extract_evidence_candidate"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
+            "subject": "residualRisks"
           }
-        ]
-      },
-      {
-        "component": "Evidence classification",
-        "detail": "Validated Careers candidates remain regular ValidatedFact and never receive a structural dimension.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "ValidatedEvidence::structural_dimension"
-          }
-        ]
-      },
-      {
-        "component": "Operations documentation",
-        "detail": "The Careers boundary and conservative recall behavior are documented without changing commands or report schemas.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "Careers evidence semantics"
-          }
-        ]
+        ],
+        "inference": false
       }
     ],
-    "designDecisions": [
-      {
-        "decision": "Prefer false negatives to promoting generic employer or capability prose.",
-        "reason": "Careers homepages are source availability and discovery material, not enterprise-change claims.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "generic Careers negative fixture"
-          }
-        ]
-      },
-      {
-        "decision": "Keep the Careers rule deterministic, provider-neutral, and narrow.",
-        "reason": "This Work Item fixes the observed false positive without adding an LLM, provider API, or unbounded synonym expansion.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "fixed Careers signal table"
-          }
-        ]
-      }
-    ],
-    "technicalDetails": [
-      {
-        "topic": "Careers candidate promotion",
-        "detail": "After bounded sentence extraction, Careers passages require one of the fixed hiring-change signals before an EvidenceCandidate is emitted.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "CAREERS_CHANGE_SIGNALS"
-          }
-        ]
-      },
-      {
-        "topic": "Structural classification boundary",
-        "detail": "Validated Careers evidence returns no structural dimension, so it remains a regular ValidatedFact even when broad AI, data, cloud, or infrastructure terms appear.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "explicit Careers hiring positive fixture"
-          }
-        ]
-      },
-      {
-        "topic": "Regression safety",
-        "detail": "Non-Careers evidence and report/runtime behavior remain covered by the complete project test suite.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "dated engineering and report regression tests"
-          },
-          {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "complete runtime regression suite"
-          }
-        ]
-      }
-    ],
+    "humanDecisions": [],
     "evidence": [
       {
-        "claim": "The focused and complete Rust test suites pass after the Careers boundary change.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_evidence_quality.rs",
         "subject": "cargo test --all"
       },
       {
-        "claim": "Formatting and Clippy pass with warnings denied.",
-        "status": "verified",
         "source": "src/features/weekly_radar/runtime/evidence.rs",
         "subject": "cargo fmt and cargo clippy"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Keep Careers material lead-only by default, require explicit hiring-change language for Careers candidate promotion, and prevent Careers candidates from becoming structural evidence while preserving non-Careers behavior.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "Careers-specific candidate and structural gates"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "paired generic and explicit-hiring fixtures"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Use a bounded deterministic Careers signal list after sentence extraction and return no structural dimension for validated Careers evidence; leave the shared non-Careers extractor and classifier unchanged.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "CAREERS_CHANGE_SIGNALS and document-kind guard"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Evidence extraction",
+          "detail": "Generic Careers copy remains a pending lead; explicit hiring-change prose can produce a candidate.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "extract_evidence_candidate"
+            }
+          ]
+        },
+        {
+          "component": "Evidence classification",
+          "detail": "Validated Careers candidates remain regular ValidatedFact and never receive a structural dimension.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "ValidatedEvidence::structural_dimension"
+            }
+          ]
+        },
+        {
+          "component": "Operations documentation",
+          "detail": "The Careers boundary and conservative recall behavior are documented without changing commands or report schemas.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "Careers evidence semantics"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Prefer false negatives to promoting generic employer or capability prose.",
+          "reason": "Careers homepages are source availability and discovery material, not enterprise-change claims.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "generic Careers negative fixture"
+            }
+          ]
+        },
+        {
+          "decision": "Keep the Careers rule deterministic, provider-neutral, and narrow.",
+          "reason": "This Work Item fixes the observed false positive without adding an LLM, provider API, or unbounded synonym expansion.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "fixed Careers signal table"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Careers candidate promotion",
+          "detail": "After bounded sentence extraction, Careers passages require one of the fixed hiring-change signals before an EvidenceCandidate is emitted.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "CAREERS_CHANGE_SIGNALS"
+            }
+          ]
+        },
+        {
+          "topic": "Structural classification boundary",
+          "detail": "Validated Careers evidence returns no structural dimension, so it remains a regular ValidatedFact even when broad AI, data, cloud, or infrastructure terms appear.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "explicit Careers hiring positive fixture"
+            }
+          ]
+        },
+        {
+          "topic": "Regression safety",
+          "detail": "Non-Careers evidence and report/runtime behavior remain covered by the complete project test suite.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "dated engineering and report regression tests"
+            },
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "complete runtime regression suite"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The focused and complete Rust test suites pass after the Careers boundary change.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "cargo test --all"
+        },
+        {
+          "claim": "Formatting and Clippy pass with warnings denied.",
+          "status": "verified",
+          "source": "src/features/weekly_radar/runtime/evidence.rs",
+          "subject": "cargo fmt and cargo clippy"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -855,6 +905,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

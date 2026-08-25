@@ -25,8 +25,8 @@ use org_x::features::weekly_radar::runtime::judgment::{
     derive_judgment_snapshot, HumanReference, MachineStage,
 };
 use org_x::features::weekly_radar::runtime::model::{
-    CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput,
-    SourceCoverage, SourceFailure, StructuralDimension,
+    CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, ResearchMetrics,
+    RuntimeReportInput, SourceCoverage, SourceFailure, StructuralDimension,
 };
 use org_x::features::weekly_radar::runtime::normalize_source_observation;
 use org_x::features::weekly_radar::runtime::report::{
@@ -1202,6 +1202,24 @@ fn runtime_public_api_retains_structural_dimension_without_changing_fact_identit
         Some(StructuralDimension::Workflow)
     );
     assert_eq!(fact.kind(), "evidence_structural_change_001");
+}
+
+#[test]
+fn runtime_metrics_round_trip_document_kind_counts_without_inference() {
+    let metrics = ResearchMetrics::new(1, 2, 0, 2, 0).with_document_kind_counts(
+        std::collections::BTreeMap::from([
+            ("engineering".to_owned(), 1),
+            ("earnings".to_owned(), 1),
+        ]),
+    );
+
+    let serialized = serde_json::to_value(&metrics).expect("metrics should serialize");
+    let restored: ResearchMetrics =
+        serde_json::from_value(serialized).expect("metrics should deserialize");
+
+    assert_eq!(restored.document_kind_counts().get("engineering"), Some(&1));
+    assert_eq!(restored.document_candidates(), 2);
+    assert_eq!(restored.validated_evidence(), 0);
 }
 
 #[test]

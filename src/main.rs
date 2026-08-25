@@ -243,6 +243,7 @@ struct AcquiredRuntimeInput {
 struct ResearchMetricCounts {
     source_available: usize,
     document_candidates: usize,
+    document_kind_counts: BTreeMap<String, usize>,
     validated_evidence: usize,
     pending_leads: usize,
     unavailable_sources: usize,
@@ -383,6 +384,12 @@ fn acquire_runtime_input(
             }
             if observation.material_kind() == SourceMaterialKind::Document {
                 metrics.document_candidates += 1;
+                if let Some(document_kind) = observation.document_kind() {
+                    *metrics
+                        .document_kind_counts
+                        .entry(document_kind.as_str().to_owned())
+                        .or_insert(0) += 1;
+                }
             }
             let index = source_indices
                 .entry(observation.kind().as_str())
@@ -476,6 +483,7 @@ fn acquire_runtime_input(
             metrics.pending_leads,
             metrics.unavailable_sources,
         )
+        .with_document_kind_counts(metrics.document_kind_counts)
         .with_structural_evidence(structural_evidence)
         .with_sec_health(
             sec_stage_expected,

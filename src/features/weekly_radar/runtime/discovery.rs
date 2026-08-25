@@ -10,7 +10,8 @@ use super::sources::SourceKind;
 pub const MAX_DOCUMENT_CANDIDATES_PER_ENTRY: usize = 8;
 
 /// Coarse document class used to route deterministic claim extraction rules.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum DocumentKind {
     Filing,
     Earnings,
@@ -151,7 +152,7 @@ pub fn discover_documents(
     candidates
 }
 
-/// Extracts a bounded title, explicit HTML time/date, and normalized body text.
+/// Extracts a bounded title, publication/effective date, and normalized body.
 pub fn document_metadata(html: &str, fallback_title: &str) -> (String, Option<NaiveDate>, String) {
     let title = Regex::new(r"(?is)<title\b[^>]*>(.*?)</title\s*>")
         .ok()
@@ -163,12 +164,113 @@ pub fn document_metadata(html: &str, fallback_title: &str) -> (String, Option<Na
         })
         .filter(|value| !value.is_empty())
         .unwrap_or_else(|| fallback_title.to_owned());
-    let date = Regex::new(r#"(?i)<time\b[^>]*datetime\s*=\s*["'](\d{4}-\d{2}-\d{2})["'][^>]*>"#)
-        .ok()
-        .and_then(|regex| regex.captures(html))
-        .and_then(|captures| captures.get(1))
-        .and_then(|value| NaiveDate::parse_from_str(value.as_str(), "%Y-%m-%d").ok());
+    let date = first_valid_date(["article:published_time", "date"], |name| {
+        meta_date(html, name)
+    })
+    .or_else(|| json_ld_date(html, "datePublished"))
+    .or_else(|| time_date(html))
+    .or_else(|| json_ld_date(html, "dateModified"));
     (title, date, normalize_document_body(html))
+}
+
+fn first_valid_date<const N: usize, F>(names: [&str; N], extract: F) -> Option<NaiveDate>
+where
+    F: FnMut(&str) -> Option<NaiveDate>,
+{
+    names.into_iter().find_map(extract)
+}
+
+fn meta_date(html: &str, expected_name: &str) -> Option<NaiveDate> {
+    let meta_regex = Regex::new(r"(?is)<meta\b[^>]*>").ok()?;
+    let attribute_regex =
+        Regex::new(r#"(?is)(property|name|content)\s*=\s*["']([^"']*)["']"#).ok()?;
+    for tag in meta_regex.find_iter(html).map(|match_| match_.as_str()) {
+        let mut name = None;
+        let mut content = None;
+        for captures in attribute_regex.captures_iter(tag) {
+            let key = captures
+                .get(1)
+                .map(|value| value.as_str().to_ascii_lowercase());
+            let value = captures.get(2).map(|value| value.as_str().trim());
+            match (key.as_deref(), value) {
+                (Some("property") | Some("name"), Some(value)) => name = Some(value),
+                (Some("content"), Some(value)) => content = Some(value),
+                _ => {}
+            }
+        }
+        if name
+            .map(|name| name.eq_ignore_ascii_case(expected_name))
+            .unwrap_or(false)
+        {
+            if let Some(content) = content {
+                if let Some(date) = parse_iso_date_prefix(content) {
+                    return Some(date);
+                }
+            }
+        }
+    }
+    None
+}
+
+fn json_ld_date(html: &str, expected_key: &str) -> Option<NaiveDate> {
+    let script_regex = Regex::new(
+        r#"(?is)<script\b[^>]*type\s*=\s*["']application/ld\+json["'][^>]*>(.*?)</script\s*>"#,
+    )
+    .ok()?;
+    for captures in script_regex.captures_iter(html) {
+        let Some(body) = captures.get(1).map(|capture| capture.as_str()) else {
+            continue;
+        };
+        let Ok(value) = serde_json::from_str::<serde_json::Value>(body) else {
+            continue;
+        };
+        if let Some(date) = json_ld_date_value(&value, expected_key) {
+            if let Some(date) = parse_iso_date_prefix(&date) {
+                return Some(date);
+            }
+        }
+    }
+    None
+}
+
+fn json_ld_date_value(value: &serde_json::Value, expected_key: &str) -> Option<String> {
+    match value {
+        serde_json::Value::Object(object) => {
+            if let Some(serde_json::Value::String(date)) = object.get(expected_key) {
+                return Some(date.clone());
+            }
+            object
+                .values()
+                .find_map(|value| json_ld_date_value(value, expected_key))
+        }
+        serde_json::Value::Array(values) => values
+            .iter()
+            .find_map(|value| json_ld_date_value(value, expected_key)),
+        _ => None,
+    }
+}
+
+fn time_date(html: &str) -> Option<NaiveDate> {
+    let regex = Regex::new(r#"(?is)<time\b[^>]*datetime\s*=\s*["']([^"']+)["'][^>]*>"#).ok()?;
+    let date = regex
+        .captures_iter(html)
+        .filter_map(|captures| captures.get(1))
+        .find_map(|value| parse_iso_date_prefix(value.as_str()));
+    date
+}
+
+fn parse_iso_date_prefix(value: &str) -> Option<NaiveDate> {
+    let bytes = value.as_bytes();
+    if bytes.len() < 10
+        || !bytes[..4].iter().all(u8::is_ascii_digit)
+        || bytes[4] != b'-'
+        || !bytes[5..7].iter().all(u8::is_ascii_digit)
+        || bytes[7] != b'-'
+        || !bytes[8..10].iter().all(u8::is_ascii_digit)
+    {
+        return None;
+    }
+    NaiveDate::parse_from_str(&value[..10], "%Y-%m-%d").ok()
 }
 
 fn canonical_same_origin_url(base: &Url, href: &str) -> Option<Url> {

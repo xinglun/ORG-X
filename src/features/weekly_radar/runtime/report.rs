@@ -212,6 +212,7 @@ struct Labels {
     validated_evidence: &'static str,
     structural_evidence: &'static str,
     document_candidates: &'static str,
+    document_kind_counts: &'static str,
     source_availability: &'static str,
     unavailable_sources_metric: &'static str,
     sec_stage_health: &'static str,
@@ -278,6 +279,7 @@ fn labels(language: ReportLanguage) -> Labels {
             validated_evidence: "本周新增已验证事实",
             structural_evidence: "本周新增结构性证据",
             document_candidates: "发现文档候选",
+            document_kind_counts: "文档类型计数",
             source_availability: "来源可用性确认",
             unavailable_sources_metric: "关键数据源不可用",
             sec_stage_health: "SEC 阶段可用",
@@ -341,6 +343,7 @@ fn labels(language: ReportLanguage) -> Labels {
             validated_evidence: "今週の新規検証済み事実",
             structural_evidence: "今週の新規構造的証拠",
             document_candidates: "発見した文書候補",
+            document_kind_counts: "文書種別の件数",
             source_availability: "情報源の利用可能性確認",
             unavailable_sources_metric: "重要な情報源を取得できず",
             sec_stage_health: "SEC ステージ利用可能",
@@ -404,6 +407,7 @@ fn labels(language: ReportLanguage) -> Labels {
             validated_evidence: "New validated facts this week",
             structural_evidence: "New structural evidence this week",
             document_candidates: "Document candidates discovered",
+            document_kind_counts: "Document kinds",
             source_availability: "Source availability confirmed",
             unavailable_sources_metric: "Key data sources unavailable",
             sec_stage_health: "SEC stages available",
@@ -665,6 +669,74 @@ fn validated_evidence_count(facts: &[&NormalizedFact]) -> usize {
         .count()
 }
 
+fn localized_document_kind(kind: &str, language: ReportLanguage) -> &str {
+    match (language, kind) {
+        (ReportLanguage::Chinese, "filing") => "申报",
+        (ReportLanguage::Chinese, "earnings") => "业绩",
+        (ReportLanguage::Chinese, "investor_day") => "投资者日",
+        (ReportLanguage::Chinese, "engineering") => "工程",
+        (ReportLanguage::Chinese, "ai_automation") => "AI/自动化",
+        (ReportLanguage::Chinese, "organization") => "组织",
+        (ReportLanguage::Chinese, "product_platform") => "产品/平台",
+        (ReportLanguage::Chinese, "careers") => "招聘",
+        (ReportLanguage::Japanese, "filing") => "提出資料",
+        (ReportLanguage::Japanese, "earnings") => "決算",
+        (ReportLanguage::Japanese, "investor_day") => "Investor Day",
+        (ReportLanguage::Japanese, "engineering") => "Engineering",
+        (ReportLanguage::Japanese, "ai_automation") => "AI/自動化",
+        (ReportLanguage::Japanese, "organization") => "組織",
+        (ReportLanguage::Japanese, "product_platform") => "製品/Platform",
+        (ReportLanguage::Japanese, "careers") => "採用",
+        (ReportLanguage::English, "filing") => "filing",
+        (ReportLanguage::English, "earnings") => "earnings",
+        (ReportLanguage::English, "investor_day") => "investor day",
+        (ReportLanguage::English, "engineering") => "engineering",
+        (ReportLanguage::English, "ai_automation") => "AI/automation",
+        (ReportLanguage::English, "organization") => "organization",
+        (ReportLanguage::English, "product_platform") => "product/platform",
+        (ReportLanguage::English, "careers") => "careers",
+        (_, other) => other,
+    }
+}
+
+fn render_document_kind_counts(
+    metrics: &ResearchMetrics,
+    labels: Labels,
+    language: ReportLanguage,
+) -> Option<String> {
+    if metrics.document_kind_counts().is_empty() {
+        return None;
+    }
+    let separator = if language == ReportLanguage::English {
+        ", "
+    } else {
+        "、"
+    };
+    let counts = metrics
+        .document_kind_counts()
+        .iter()
+        .map(|(kind, count)| {
+            format!(
+                "{}{}{}",
+                localized_document_kind(kind, language),
+                if language == ReportLanguage::English {
+                    "="
+                } else {
+                    "："
+                },
+                count
+            )
+        })
+        .collect::<Vec<_>>()
+        .join(separator);
+    Some(match language {
+        ReportLanguage::English => format!("- {}: {counts}", labels.document_kind_counts),
+        ReportLanguage::Chinese | ReportLanguage::Japanese => {
+            format!("- {}：{counts}", labels.document_kind_counts)
+        }
+    })
+}
+
 fn fact_value(fact: &NormalizedFact) -> String {
     fact.value()
         .map(safe_text)
@@ -905,6 +977,11 @@ fn render_executive_summary(
             )
         ),
     };
+    let data_sentence =
+        match render_document_kind_counts(input.research_metrics(), labels, language) {
+            Some(document_kind_counts) => format!("{data_sentence}\n{document_kind_counts}"),
+            None => data_sentence,
+        };
     let separator = if language == ReportLanguage::English {
         ":"
     } else {

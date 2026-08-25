@@ -11,7 +11,7 @@ use serde::Deserialize;
 use std::marker::PhantomData;
 
 use super::config::{is_safe_source_identifier, CompanyConfig};
-use super::discovery::{discover_documents, document_metadata, DocumentCandidate};
+use super::discovery::{discover_documents, document_metadata, DocumentCandidate, DocumentKind};
 use super::http::{HttpClient, HttpResponse, MAX_HTTP_RESPONSE_BODY_BYTES};
 use super::model::Provenance;
 
@@ -153,6 +153,7 @@ pub struct SourceObservation {
     title: Option<String>,
     text: String,
     status_reason: String,
+    document_kind: Option<DocumentKind>,
     provenance: Provenance,
 }
 
@@ -166,6 +167,7 @@ struct SourceObservationInput {
     title: Option<String>,
     text: String,
     status_reason: String,
+    document_kind: Option<DocumentKind>,
     source_uri: String,
     source_field_or_passage: String,
     observed_at: DateTime<Utc>,
@@ -191,6 +193,7 @@ impl SourceObservation {
             title: input.title,
             text: input.text,
             status_reason: input.status_reason,
+            document_kind: input.document_kind,
             provenance,
         }
     }
@@ -244,6 +247,12 @@ impl SourceObservation {
     /// Returns the optional source title.
     pub fn title(&self) -> Option<&str> {
         self.title.as_deref()
+    }
+
+    /// Returns the deterministic class of a discovered document, when this
+    /// observation represents one.
+    pub const fn document_kind(&self) -> Option<DocumentKind> {
+        self.document_kind
     }
 
     /// Returns normalized source text.
@@ -403,6 +412,7 @@ fn collect_official(
                 title: None,
                 text,
                 status_reason: status_reason.to_owned(),
+                document_kind: None,
                 source_uri: url.to_owned(),
                 source_field_or_passage: "official page text".to_owned(),
                 observed_at,
@@ -484,6 +494,7 @@ fn collect_discovered_documents(
             } else {
                 "discovered document contained no usable text".to_owned()
             },
+            document_kind: Some(candidate.document_kind()),
             source_uri: candidate.url().to_owned(),
             source_field_or_passage: candidate.provenance().to_owned(),
             observed_at,
@@ -508,6 +519,7 @@ fn discovered_document_status(
         title: Some(candidate.title().to_owned()),
         text: String::new(),
         status_reason: reason.to_owned(),
+        document_kind: Some(candidate.document_kind()),
         source_uri: candidate.url().to_owned(),
         source_field_or_passage: candidate.provenance().to_owned(),
         observed_at,
@@ -596,6 +608,7 @@ fn collect_greenhouse(
             title: Some(title),
             text,
             status_reason: "source returned usable hiring record".to_owned(),
+            document_kind: None,
             source_uri,
             source_field_or_passage: field,
             observed_at,
@@ -706,6 +719,7 @@ fn collect_lever(
             title: Some(title),
             text,
             status_reason: "source returned usable hiring record".to_owned(),
+            document_kind: None,
             source_uri,
             source_field_or_passage: field,
             observed_at,
@@ -780,6 +794,7 @@ fn collect_gdelt(
             title: Some(title.clone()),
             text: title,
             status_reason: "discovery material only; not authoritative".to_owned(),
+            document_kind: None,
             source_uri: url,
             source_field_or_passage: format!("GDELT query context: {endpoint}"),
             observed_at,
@@ -880,6 +895,7 @@ fn observation_with_status_reason(
         title: None,
         text: String::new(),
         status_reason: status_reason.to_owned(),
+        document_kind: None,
         source_uri,
         source_field_or_passage: field.to_owned(),
         observed_at,
@@ -908,6 +924,7 @@ fn unknown_observation(
         title: None,
         text: String::new(),
         status_reason: field.to_owned(),
+        document_kind: None,
         source_uri,
         source_field_or_passage: field.to_owned(),
         observed_at,

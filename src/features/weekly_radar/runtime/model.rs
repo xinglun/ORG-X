@@ -2,6 +2,7 @@
 
 use chrono::{DateTime, NaiveDate, Utc};
 use serde::{de::Error as _, Deserialize, Deserializer, Serialize};
+use std::collections::BTreeMap;
 
 use super::error::RuntimeError;
 
@@ -457,6 +458,8 @@ pub struct ResearchMetrics {
     source_available: usize,
     #[serde(default, skip_serializing_if = "is_zero")]
     document_candidates: usize,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    document_kind_counts: BTreeMap<String, usize>,
     #[serde(default, skip_serializing_if = "is_zero")]
     validated_evidence: usize,
     #[serde(default, skip_serializing_if = "is_zero")]
@@ -487,6 +490,7 @@ impl ResearchMetrics {
         Self {
             source_available,
             document_candidates,
+            document_kind_counts: BTreeMap::new(),
             validated_evidence,
             structural_evidence: 0,
             pending_leads,
@@ -501,6 +505,16 @@ impl ResearchMetrics {
     /// Returns a copy with the number of promoted structural evidence records.
     pub const fn with_structural_evidence(mut self, structural_evidence: usize) -> Self {
         self.structural_evidence = structural_evidence;
+        self
+    }
+
+    /// Returns a copy with deterministic counts for classified discovered
+    /// document kinds.
+    pub fn with_document_kind_counts(
+        mut self,
+        document_kind_counts: BTreeMap<String, usize>,
+    ) -> Self {
+        self.document_kind_counts = document_kind_counts;
         self
     }
 
@@ -527,6 +541,11 @@ impl ResearchMetrics {
     /// Returns the number of bounded document candidates discovered.
     pub const fn document_candidates(&self) -> usize {
         self.document_candidates
+    }
+
+    /// Returns classified discovered-document counts, keyed by stable kind.
+    pub fn document_kind_counts(&self) -> &BTreeMap<String, usize> {
+        &self.document_kind_counts
     }
 
     /// Returns the number of candidates promoted to validated evidence.

@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-document-discovery-quality",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json",
+  "baseCommit": "c7f0f3c466164cf7f104940d57de5d732eb60c1e",
+  "baseBranch": "codex/wi-weekly-radar-document-discovery-quality",
+  "startTimestamp": "2026-08-25T07:34:43.194254+00:00",
+  "initialScopeDigest": "0f07d4304999dfbe85ca81e09f5f2e66408d03bbd3a610997b0dd9427d2e2339",
+  "contractSkeletonDigest": "c3ed7b5143a09f1ca49fb8708f931dc95f89d90c06d13c0887144db10bbe3f46"
+}

@@ -3,11 +3,12 @@
 use chrono::{NaiveDate, Utc};
 use std::fmt;
 
+use super::discovery::DocumentKind;
 use super::model::{Confidence, FactStatus, NormalizedFact, Provenance, StructuralDimension};
 use super::sources::{SourceKind, SourceMaterialKind, SourceObservation, SourceStatus, SourceTier};
 use super::RuntimeError;
 
-const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v1";
+const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v2";
 const MAX_FIELD_BYTES: usize = 512;
 const MIN_CLAIM_WORDS: usize = 8;
 
@@ -137,6 +138,7 @@ pub struct EvidenceCandidate {
     source_uri: String,
     source_title: String,
     passage: String,
+    document_kind: Option<DocumentKind>,
     provenance: Provenance,
 }
 
@@ -186,6 +188,7 @@ impl EvidenceCandidate {
             source_uri,
             source_title: String::new(),
             passage: concrete_change,
+            document_kind: None,
             provenance,
         })
     }
@@ -236,6 +239,12 @@ impl EvidenceCandidate {
     /// Returns the source URI.
     pub fn source_uri(&self) -> &str {
         &self.source_uri
+    }
+
+    /// Returns the discovered document context retained for deterministic
+    /// extraction, when the candidate came from a classified document.
+    pub const fn document_kind(&self) -> Option<DocumentKind> {
+        self.document_kind
     }
 }
 
@@ -324,8 +333,12 @@ impl ValidatedEvidence {
         let provenance = Provenance::new(
             self.candidate.source_uri.clone(),
             format!(
-                "title={}; production_area={}; effective_date={}; passage={}; extractor={}; content_hash={}",
+                "title={}; document_kind={}; production_area={}; effective_date={}; passage={}; extractor={}; content_hash={}",
                 self.candidate.source_title,
+                self.candidate
+                    .document_kind
+                    .map(DocumentKind::as_str)
+                    .unwrap_or("unknown"),
                 self.candidate.production_area,
                 self.candidate
                     .effective_date
@@ -366,6 +379,7 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     let title = observation
         .title()
         .filter(|title| !title.trim().is_empty())?;
+    let document_kind = observation.document_kind()?;
     let (passage, production_signal) = extract_claim_sentence(observation.text())?;
     let source_kind = match observation.kind() {
         SourceKind::Gdelt => EvidenceSourceKind::DiscoveryArticle,
@@ -388,6 +402,7 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     .ok()?;
     candidate.source_title = bounded(title.to_owned());
     candidate.passage = passage.clone();
+    candidate.document_kind = Some(document_kind);
     candidate.provenance = Provenance::new(
         observation.provenance().source_uri(),
         passage,

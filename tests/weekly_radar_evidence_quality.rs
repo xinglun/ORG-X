@@ -1,6 +1,6 @@
 use chrono::{NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::CompanyConfig;
-use org_x::features::weekly_radar::runtime::discovery::document_metadata;
+use org_x::features::weekly_radar::runtime::discovery::{document_metadata, DocumentKind};
 use org_x::features::weekly_radar::runtime::evidence::{
     extract_evidence_candidate, validate_evidence_candidate, EvidenceCandidate, EvidenceClass,
     EvidencePolarity, EvidenceSourceKind, EvidenceValidationError,
@@ -16,6 +16,7 @@ use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{
     collect_configured_sources, SourceKind, SourceMaterialKind,
 };
+use std::collections::BTreeMap;
 
 fn company() -> CompanyConfig {
     CompanyConfig::new(
@@ -132,6 +133,7 @@ fn legacy_runtime_input_defaults_research_metrics_to_zero() {
     assert_eq!(input.research_metrics().sec_stage_available(), 0);
     assert_eq!(input.research_metrics().sec_fact_expected(), 0);
     assert_eq!(input.research_metrics().sec_fact_available(), 0);
+    assert!(input.research_metrics().document_kind_counts().is_empty());
 }
 
 #[test]
@@ -192,6 +194,20 @@ fn research_metrics_retain_structural_and_sec_health_counts() {
     assert_eq!(metrics.sec_stage_available(), 18);
     assert_eq!(metrics.sec_fact_expected(), 80);
     assert_eq!(metrics.sec_fact_available(), 74);
+}
+
+#[test]
+fn research_metrics_document_kind_counts_default_for_legacy_json() {
+    let legacy = serde_json::json!({
+        "source_available": 9,
+        "document_candidates": 10,
+        "validated_evidence": 5,
+        "pending_leads": 71,
+        "unavailable_sources": 32
+    });
+    let metrics: ResearchMetrics = serde_json::from_value(legacy).unwrap();
+
+    assert!(metrics.document_kind_counts().is_empty());
 }
 
 #[test]
@@ -337,6 +353,59 @@ fn document_discovery_deduplicates_and_caps_followed_links() {
 }
 
 #[test]
+fn document_metadata_prefers_published_metadata_over_modified_date() {
+    let (_, date, _) = document_metadata(
+        r#"<html><head>
+            <meta property="article:published_time" content="2026-08-19T09:30:00Z">
+            <meta property="article:modified_time" content="2026-08-25T09:30:00Z">
+        </head><body><p>Acme changed an engineering workflow.</p></body></html>"#,
+        "fallback",
+    );
+
+    assert_eq!(date, NaiveDate::from_ymd_opt(2026, 8, 19));
+}
+
+#[test]
+fn document_metadata_reads_json_ld_and_iso_datetime() {
+    let (_, date, _) = document_metadata(
+        r#"<html><head><script type="application/ld+json">
+            {"@context":"https://schema.org","datePublished":"2026-08-20T14:00:00Z"}
+        </script></head><body><p>Acme launched a production platform.</p></body></html>"#,
+        "fallback",
+    );
+
+    assert_eq!(date, NaiveDate::from_ymd_opt(2026, 8, 20));
+}
+
+#[test]
+fn document_metadata_rejects_malformed_dates_without_guessing() {
+    let (_, date, _) = document_metadata(
+        r#"<html><head>
+            <meta property="article:published_time" content="2026-99-99">
+            <script type="application/ld+json">
+                {"dateModified":"2026-08-23T12:00:00Z"}
+            </script>
+        </head><body><p>Acme changed a production workflow.</p></body></html>"#,
+        "fallback",
+    );
+
+    assert_eq!(date, NaiveDate::from_ymd_opt(2026, 8, 23));
+}
+
+#[test]
+fn discovered_document_retains_document_kind_without_promoting_entry_point() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert_eq!(observation.material_kind(), SourceMaterialKind::Document);
+    assert_eq!(observation.document_kind(), Some(DocumentKind::Engineering));
+}
+
+#[test]
 fn document_body_excludes_title_script_and_metadata_before_claim_extraction() {
     let (title, date, body) = document_metadata(
         r#"<html><head><title>Acme engineering update</title>
@@ -420,6 +489,69 @@ fn body_sentence_with_change_and_production_signals_creates_a_bounded_candidate(
     assert!(!candidate
         .concrete_change()
         .contains("implementation details"));
+}
+
+#[test]
+fn dated_engineering_document_promotes_a_complete_claim() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    let candidate =
+        extract_evidence_candidate(&observation).expect("dated engineering claim should qualify");
+    let validated = validate_evidence_candidate(&candidate, cutoff())
+        .expect("complete authoritative claim should validate");
+    let fact = validated
+        .to_normalized_fact(1)
+        .expect("validated claim should normalize");
+
+    assert_eq!(fact.status(), &FactStatus::Known);
+    assert_eq!(
+        fact.value(),
+        Some("Acme adopted an agent-assisted engineering workflow for production scheduling.")
+    );
+}
+
+#[test]
+fn document_kind_context_is_retained_in_claim_provenance() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    let candidate = extract_evidence_candidate(&observation).expect("claim should qualify");
+    let fact = validate_evidence_candidate(&candidate, cutoff())
+        .expect("claim should validate")
+        .to_normalized_fact(1)
+        .expect("claim should normalize");
+
+    assert!(fact
+        .provenance()
+        .source_field_or_passage()
+        .contains("document_kind=engineering"));
+}
+
+#[test]
+fn generic_or_non_actionable_document_remains_a_pending_lead() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Our storage service exposes object storage, file systems, and block-device APIs, and these APIs are built on a horizontally scalable foundational block layer called Tectonic.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
+    assert_eq!(
+        normalize_source_observation(&observation, 1)
+            .expect("source observation should remain a lead")
+            .status(),
+        &FactStatus::Unconfirmed
+    );
 }
 
 #[test]
@@ -829,6 +961,25 @@ fn localized_reports_keep_validated_evidence_separate_from_known_facts() {
     assert!(!english_confirmed_section.contains("123000000"));
     assert!(english.markdown().contains("1 validated facts"));
     assert!(english.markdown().contains("Known facts: 2"));
+}
+
+#[test]
+fn localized_reports_render_document_kind_counts_without_ranking() {
+    let metrics = ResearchMetrics::new(9, 10, 1, 9, 2).with_document_kind_counts(BTreeMap::from([
+        ("engineering".to_owned(), 2),
+        ("earnings".to_owned(), 1),
+    ]));
+    let input = input_with_metrics(metrics);
+
+    let english = render_report_in_language(&input, ReportLanguage::English);
+    assert!(english
+        .markdown()
+        .contains("Document kinds: earnings=1, engineering=2"));
+    assert!(!english.markdown().contains("Top 5"));
+
+    let chinese = render_report_in_language(&input, ReportLanguage::Chinese);
+    assert!(chinese.markdown().contains("文档类型"));
+    assert!(chinese.markdown().contains("工程"));
 }
 
 #[test]

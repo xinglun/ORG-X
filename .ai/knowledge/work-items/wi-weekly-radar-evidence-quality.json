@@ -53,7 +53,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_evidence_quality.rs",
-      "digest": "d1682b7da11eaef0262641d49db4a142b19181bce9132bdd2f03b48a35086002"
+      "digest": "ed24e149d10a71abbdd5df8abb07119ebab66da444a4d5bf3d8d05fcd706450e"
     },
     {
       "type": "code",
@@ -63,7 +63,7 @@
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/evidence.rs",
-      "digest": "414a47efb6040fd1549a36fce600652fcbe50a29870378d7ddb0eaaab958ba05"
+      "digest": "05379cba1753e0760326005df0730d32565581fd4b393b4a37b3085e19d49b43"
     },
     {
       "type": "code",
@@ -83,7 +83,7 @@
     {
       "type": "code",
       "path": "docs/operations/WEEKLY_RADAR.md",
-      "digest": "f5e5e7f5320d67b9323f19ecbfba62f01e3eb291a4e59095a46dda5906282582"
+      "digest": "76b4a9aac0a66fa7d67ea9ce0e69d0daca5b72c4aef90dd44ff1f2e7c8dc59d0"
     },
     {
       "type": "test",
@@ -93,7 +93,7 @@
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/discovery.rs",
-      "digest": "7008a5cdb833e970765667ad77573dbaa8e09d5d3bc1a464d4a7402a85befec7"
+      "digest": "5bce333086de28384025dc2e86c79877cbc0bceb581e099eabf79a834f5a3b25"
     }
   ],
   "mergedCommit": null,

@@ -66,6 +66,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json"
     },
     {
+      "workItemId": "wi-weekly-radar-evidence-extraction-quality",
+      "title": "Weekly Radar evidence extraction quality",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-evidence-quality",
       "title": "Weekly Radar Evidence Acquisition Quality",
       "topics": [],

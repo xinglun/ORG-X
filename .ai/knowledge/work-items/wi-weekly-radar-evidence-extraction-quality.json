@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-evidence-extraction-quality",
+  "title": "Weekly Radar evidence extraction quality",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Clean document bodies before extraction and require an explicit production-system change action before creating an EvidenceCandidate.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+    ".ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/cockpit/current_status.md",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/discovery_test.rs",
+    "tests/evidence_test.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Keep the existing evidence_* schema and validation boundary.",
+      "reason": "The fix is limited to upstream content quality and deterministic candidate promotion; report, Ranking, persistence, and SEC behavior remain unchanged.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "digest": "ed24e149d10a71abbdd5df8abb07119ebab66da444a4d5bf3d8d05fcd706450e"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "digest": "5bce333086de28384025dc2e86c79877cbc0bceb581e099eabf79a834f5a3b25"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "digest": "05379cba1753e0760326005df0730d32565581fd4b393b4a37b3085e19d49b43"
+    },
+    {
+      "type": "code",
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
+      "digest": "86915537921de1f6067a8d4b16d8485ce4d80f268f155b24fa9ee444a2969a8d"
+    },
+    {
+      "type": "code",
+      "path": "Makefile",
+      "digest": "ed2d7675c8d51503ac3e1bf178357508d4fee04bbefd3eaa7c00f6c809a1b659"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json",
+    "contractDigest": "86915537921de1f6067a8d4b16d8485ce4d80f268f155b24fa9ee444a2969a8d",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json",
+    "summaryDigest": "58e738810cce76402de1e16df1bd5119d60c011434b728c549501ddf34ad0396",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.json",
+    "outcomeDigest": "2e6bd21d2c0b412ad4c6e26770db4ec8ec2dd3e87a1cfdcd28ae7c74590f2e1d"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

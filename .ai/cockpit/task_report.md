@@ -25,8 +25,8 @@ Design decisions
 - Boilerplate is excluded while a substantive dated production claim remains extractable.: tests/weekly_radar_evidence_quality.rs#document_body_ignores_navigation_and_social_boilerplate_before_claim_extraction (verified)
 - Generic architecture descriptions are not promoted by the built-only wording.: tests/weekly_radar_evidence_quality.rs#generic_architecture_description_does_not_create_a_claim_candidate (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.summary.json]
 - Changed .ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json [evidence: .ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed src/features/weekly_radar/runtime/discovery.rs [evidence: src/features/weekly_radar/runtime/discovery.rs]
@@ -35,8 +35,8 @@ Design decisions
 - Changed tests/discovery_test.rs [evidence: tests/discovery_test.rs]
 - Changed tests/evidence_test.rs [evidence: tests/evidence_test.rs]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-extraction-quality.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 

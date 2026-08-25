@@ -14,7 +14,7 @@ Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置�
 
 ### 已有输入快照的兼容性
 
-以前保存的输入快照仍可用于重试和“已发布”只读验证。旧快照中没有记录“该来源不适用”计数或 `research_metrics` 时，系统分别按 `0` 处理；新快照会保留来源获取与证据验证计数。这样不会改变旧报告的身份，也不会要求重新获取来源。
+以前保存的输入快照仍可用于重试和“已发布”只读验证。旧快照中没有记录“该来源不适用”计数或 `research_metrics` 时，系统分别按 `0` 处理；新快照会保留来源获取、文档类型和证据验证计数。这样不会改变旧报告的身份，也不会要求重新获取来源。
 
 输入快照的身份仍然必须与内容一致。只要日期、事实、来源覆盖、判断或其他内容被改动，或者快照格式损坏，系统就会在重试、Telegram 发送和 archive/data 写入之前停止。不要手工编辑历史快照；如果校验失败，应保留原文件并检查对应的 `manifest`、receipt 和 transaction 记录。
 
@@ -134,7 +134,7 @@ SEC submissions 和 SEC Company Facts 都是包含完整申报历史的 JSON，�
 研究状态必须按以下层次解释：
 
 - `SourceObservation`：入口页或接口是否可访问；入口页的可访问性不是企业变化证据。
-- `DocumentCandidate`：从同源入口发现的有限文档，保留 URL、标题、文档类型、日期和发现 provenance；不会猜测 URL，也不会无限爬取。
+- `DocumentCandidate`：从同源入口发现的有限文档，保留 URL、标题、`filing`/`earnings`/`engineering`/`organization` 等文档类型、日期和发现 provenance；不会猜测 URL，也不会无限爬取。入口页仍是 `SourceMaterialKind::EntryPoint`，不会继承文档类型或被晋升为证据。
 - `EvidenceCandidate`：必须有公司 ID、公司名称、具体变化/事实、有效日期、生产环节、来源 URI、来源标题、权威级别、正文段落和 cutoff 关系；任一字段缺失都保持待验证，不进入 confirmed 或 StructuralEvidence。
 - `ValidatedEvidence`：通过确定性 gate 的主张，才会成为 `evidence_*` normalized fact；它随后按主张段落中的结构性信号分为普通已验证事实或 StructuralEvidence。GDELT、新闻、招聘记录和页面级 observation 不会绕过该 gate。
 - `StructuralDimension`：StructuralEvidence 的维度只描述主张涉及的变化域，不改变其 evidence kind 前缀、Stage、Ranking、Counter Evidence、Telegram 或 archive 行为。固定优先级为 `OperatingMetric`（利用率、延迟、吞吐、产能、成本、利润/现金流、GPU 等）→ `ProductionSystem`（部署、发布、平台、基础设施、存储、云、自动化、agent 等）→ `Workflow`（工作流、流程、审批、排程、交接等）→ `Organization`（组织、职责、汇报关系、团队、部门、人员规模等）。
@@ -144,9 +144,9 @@ SEC submissions 和 SEC Company Facts 都是包含完整申报历史的 JSON，�
 
 报告渲染还会把事实状态和证据语义分开：只有 `status=Known` 且 `kind` 以 `evidence_` 开头的 fact 才能进入证据明细，并按上述两类分别出现在“已验证事实”或“结构性证据”；SEC 的 `revenue`、`headcount`、`capex` 等原始指标，以及 `source_*`、`pending_evidence_*` 和其他非证据 fact，不会进入这两节。系统状态中的“已知事实”只是输入中所有 `Known` facts 的可观测计数，不等于已确认企业变化的数量。
 
-文档晋升前会先把 `<title>`、`meta`、`script`、`style`、`noscript`、标题标签以及 `nav`、`header`、`footer`、`aside`、`form` 等非正文块从候选正文中移除；带有 `share`、`social`、`menu`、`breadcrumb`、`sidebar`、`navigation` 等标记的常见容器也会被排除。若页面包含段落，抽取只使用清洗后的 `<p>` 内容，避免把“Skip to content”、分享链接、页脚或菜单拼进主张。正文必须提供一个有终止标点的完整句子（至少 8 个词），同时命中明确的生产系统变化动作和生产环节信号，才会生成 `EvidenceCandidate`；仅描述既有架构、接口或系统组成而没有变化动作的句子不会晋升。因此，文章标题、目录标题、页面 JSON、整页拼接文本、只有关键词的句子和没有有效日期的文档，都会停留在 `DocumentCandidate`/待验证线索层，不会进入“已确认信息”。
+文档晋升前会先按以下确定性顺序恢复日期：`article:published_time`、`meta name=date`、JSON-LD `datePublished`、`<time datetime>`，最后才使用 JSON-LD `dateModified`；只取可解析的 ISO 日期前缀，畸形或无法解析的值不会被猜测。随后系统会把 `<title>`、`meta`、`script`、`style`、`noscript`、标题标签以及 `nav`、`header`、`footer`、`aside`、`form` 等非正文块从候选正文中移除；带有 `share`、`social`、`menu`、`breadcrumb`、`sidebar`、`navigation` 等标记的常见容器也会被排除。若页面包含段落，抽取只使用清洗后的 `<p>` 内容，避免把“Skip to content”、分享链接、页脚或菜单拼进主张。正文必须提供一个有终止标点的完整句子（至少 8 个词），同时命中明确的生产系统变化动作和生产环节信号，且保留文档类型上下文，才会生成 `EvidenceCandidate`；该类型会写入最终事实 provenance。仅描述既有架构、接口或系统组成而没有变化动作的句子不会晋升。因此，文章标题、目录标题、页面 JSON、整页拼接文本、只有关键词的句子和没有有效日期的文档，都会停留在 `DocumentCandidate`/待验证线索层，不会进入“已确认信息”。
 
-每份报告的 `research_metrics` 与首页摘要分别展示：`本周新增已验证事实`、`本周新增结构性证据`、`发现文档候选`、`来源可用性确认`、`待验证线索`、`关键数据源不可用`，以及 SEC 的“阶段可用/期望”和“可用事实/期望”。这些计数互不替代：来源可用不等于企业发生变化，SEC 阶段可达也不等于 SEC normalized facts 可用。当结构性证据为零且仍有待验证线索、不可用来源或不可用事实时，报告使用“数据不足/无法据此确认本周没有组织变化”的 calibrated wording，而不是把它写成没有变化。
+每份报告的 `research_metrics` 与首页摘要分别展示：`本周新增已验证事实`、`本周新增结构性证据`、`发现文档候选`、按 `engineering`、`earnings` 等稳定类型排序的文档类型计数、`来源可用性确认`、`待验证线索`、`关键数据源不可用`，以及 SEC 的“阶段可用/期望”和“可用事实/期望”。旧快照没有文档类型计数时按空映射读取，报告不显示该附加行。这些计数互不替代：来源可用不等于企业发生变化，文档候选不等于 Claim，SEC 阶段可达也不等于 SEC normalized facts 可用。当结构性证据为零且仍有待验证线索、不可用来源或不可用事实时，报告使用“数据不足/无法据此确认本周没有组织变化”的 calibrated wording，而不是把它写成没有变化。
 
 规则抽取保留来源、字段或原文片段和日期。系统会在证据达到门槛时自动给出一个可复核的参考判断；缺少、歧义、冲突、日期不明、对象不相关或格式错误不会被猜测，证据不足时显示“系统暂无法判断”。人的判断保持独立，系统只提供参考，报告不会把两者合并成一个答案，方便人自行核验、保留不同意见或继续补证。运行时不使用付费 API、LLM 抽取或投资结论。
 

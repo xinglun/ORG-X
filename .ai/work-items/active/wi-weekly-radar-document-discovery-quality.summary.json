@@ -100,6 +100,23 @@
         "cargo test --test weekly_radar_evidence_quality generic_or_non_actionable_document_remains_a_pending_lead -- --nocapture",
         "cargo test --test weekly_radar_evidence_quality"
       ]
+    },
+    {
+      "issue": "The first localized report assertion assumed insertion order for a BTreeMap of document kinds.",
+      "resolution": "Aligned the assertion with the deterministic key-sorted order; English and Chinese report tests now pass without adding Ranking output.",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/report.rs",
+        "cargo test --test weekly_radar_evidence_quality localized_reports_render_document_kind_counts_without_ranking -- --nocapture"
+      ]
+    },
+    {
+      "issue": "Initial Clippy verification reported one redundant closure and one unnecessary mutable binding in the new date parser helper.",
+      "resolution": "Applied the two mechanical lint corrections and reran Clippy with -D warnings successfully.",
+      "evidence": [
+        "src/features/weekly_radar/runtime/discovery.rs",
+        "cargo clippy --all-targets --all-features -- -D warnings"
+      ]
     }
   ],
   "sourcesUsed": [

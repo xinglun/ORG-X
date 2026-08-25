@@ -101,6 +101,25 @@
         "tests/weekly_radar_semantic_message_splitter.rs"
       ]
     },
+    "wi-weekly-radar-document-discovery-quality": {
+      "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+      "dependencies": [
+        ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.contract.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.summary.json",
+        "Makefile",
+        "docs/operations/WEEKLY_RADAR.md",
+        "docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md",
+        "src/features/weekly_radar/runtime/discovery.rs",
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "src/features/weekly_radar/runtime/model.rs",
+        "src/features/weekly_radar/runtime/report.rs",
+        "src/features/weekly_radar/runtime/sources.rs",
+        "src/main.rs",
+        "tests/weekly_radar_evidence_quality.rs",
+        "tests/weekly_radar_runtime.rs"
+      ]
+    },
     "wi-weekly-radar-evidence-dimension": {
       "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
       "dependencies": [
@@ -301,6 +320,15 @@
     ".ai/work-items/archive/2026/wi-weekly-radar-content-quality.summary.json": [
       "wi-weekly-radar-content-quality"
     ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.contract.json": [
+      "wi-weekly-radar-document-discovery-quality"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.json": [
+      "wi-weekly-radar-document-discovery-quality"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.summary.json": [
+      "wi-weekly-radar-document-discovery-quality"
+    ],
     ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.contract.json": [
       "wi-weekly-radar-evidence-dimension"
     ],
@@ -385,6 +413,7 @@
     "Makefile": [
       "wi-weekly-radar-claim-extraction-gate",
       "wi-weekly-radar-confirmed-evidence-report",
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-evidence-dimension",
       "wi-weekly-radar-evidence-extraction-quality",
       "wi-weekly-radar-evidence-quality",
@@ -398,6 +427,7 @@
       "wi-weekly-radar-claim-extraction-gate",
       "wi-weekly-radar-confirmed-evidence-report",
       "wi-weekly-radar-content-quality",
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-evidence-quality",
       "wi-weekly-radar-idempotent-completion",
       "wi-weekly-radar-input-snapshot-compatibility",
@@ -409,6 +439,9 @@
     ],
     "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md": [
       "wi-weekly-radar-structural-evidence-gate"
+    ],
+    "docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md": [
+      "wi-weekly-radar-document-discovery-quality"
     ],
     "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md": [
       "wi-weekly-radar-structural-evidence-gate"
@@ -430,11 +463,13 @@
     ],
     "src/features/weekly_radar/runtime/discovery.rs": [
       "wi-weekly-radar-claim-extraction-gate",
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-evidence-extraction-quality",
       "wi-weekly-radar-evidence-quality"
     ],
     "src/features/weekly_radar/runtime/evidence.rs": [
       "wi-weekly-radar-claim-extraction-gate",
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-evidence-dimension",
       "wi-weekly-radar-evidence-extraction-quality",
       "wi-weekly-radar-evidence-quality",
@@ -444,6 +479,7 @@
       "wi-sec-submissions-response-limit"
     ],
     "src/features/weekly_radar/runtime/model.rs": [
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-evidence-dimension",
       "wi-weekly-radar-input-snapshot-compatibility",
       "wi-weekly-radar-source-coverage",
@@ -452,6 +488,7 @@
     "src/features/weekly_radar/runtime/report.rs": [
       "wi-weekly-radar-confirmed-evidence-report",
       "wi-weekly-radar-content-quality",
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-evidence-dimension",
       "wi-weekly-radar-evidence-quality",
       "wi-weekly-radar-source-coverage",
@@ -463,11 +500,13 @@
       "wi-weekly-radar-source-coverage"
     ],
     "src/features/weekly_radar/runtime/sources.rs": [
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-source-coverage"
     ],
     "src/main.rs": [
       "wi-telegram-delivery-verification",
       "wi-weekly-radar-claim-extraction-gate",
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-evidence-quality",
       "wi-weekly-radar-idempotent-completion",
       "wi-weekly-radar-same-day-canonical-update",
@@ -487,6 +526,7 @@
     "tests/weekly_radar_evidence_quality.rs": [
       "wi-weekly-radar-claim-extraction-gate",
       "wi-weekly-radar-confirmed-evidence-report",
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-evidence-dimension",
       "wi-weekly-radar-evidence-extraction-quality",
       "wi-weekly-radar-evidence-quality",
@@ -502,6 +542,7 @@
       "wi-weekly-radar-cli-output-guard",
       "wi-weekly-radar-confirmed-evidence-report",
       "wi-weekly-radar-content-quality",
+      "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-idempotent-completion",
       "wi-weekly-radar-input-snapshot-compatibility",
       "wi-weekly-radar-same-day-canonical-update",

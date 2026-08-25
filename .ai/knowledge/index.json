@@ -66,6 +66,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json"
     },
     {
+      "workItemId": "wi-weekly-radar-document-discovery-quality",
+      "title": "Improve Weekly Radar document discovery and Claim extraction quality",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-evidence-dimension",
       "title": "Separate structural evidence dimensions and require complete claims",
       "topics": [],

@@ -7,69 +7,82 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Add an optional provider-neutral structural dimension to validated evidence while preserving existing evidence class and kind-prefix compatibility.
-Mechanism (verified): Classify complete authoritative claims with bounded fixed signal tables using OperatingMetric > ProductionSystem > Workflow > Organization precedence, then render dimension-specific labels without feeding Stage or Ranking.
+Customer summary (verified): Keep source availability, bounded document discovery, pending Claim candidates, and ValidatedEvidence distinct while recovering deterministic document dates and context.
+Mechanism (verified): Parse bounded HTML metadata and JSON-LD with explicit date precedence, retain DocumentKind through SourceObservation and EvidenceCandidate provenance, count classified documents in optional ResearchMetrics, and render sorted localized counters without feeding judgment or Ranking.
 
 Affected components
-- Normalized fact model: Stores optional StructuralDimension and defaults absent legacy JSON to None. (verified)
-- Evidence validation: Requires complete company/claim/date/area/source/passage data and attaches a dimension only to structural evidence. (verified)
-- Localized report: Shows Organization, Workflow, ProductionSystem, and OperatingMetric labels in zh-CN, ja, and en; legacy structural facts use a generic fallback. (verified)
+- Document discovery: Recovers publication/effective dates and classifies same-origin discovered documents without changing the bounded crawl. (verified)
+- Source and evidence boundaries: Propagates DocumentKind only for discovered documents and retains it in normalized claim provenance; generic, incomplete, and page-level material remains unconfirmed. (verified)
+- Research metrics and reports: Adds optional document-kind counts with legacy empty-map defaults and localized sorted display. (verified)
+- Acquisition orchestration: Counts document kinds at the existing observation loop while leaving SEC, judgment, Stage, Ranking, delivery, archive, and workflow paths unchanged. (verified)
 
 Design decisions
-- Keep the existing evidence_structural_change_<index> kind prefix.: Downstream report, snapshot, Stage, Ranking, and archive compatibility must remain stable. (verified)
-- Prefer false negatives and fixed precedence over broad semantic inference.: Technical prose must not be promoted as enterprise structural change without a bounded signal and complete Claim fields. (verified)
+- Prefer false negatives to page-level or generic prose promotion.: A reachable homepage or technical description does not establish an enterprise production-system change. (verified)
+- Use deterministic metadata precedence and existing cutoff validation.: The parser can recover explicit dates already present in publisher markup without guessing ambiguous values or weakening the future-date gate. (verified)
+- Keep document-kind counts observational and out of judgment.: Research Value improves through visibility into ingestion quality; Stage and Ranking must continue to consume only their existing evidence inputs. (verified)
 
 ### Technical details
-- TDD: Model, classifier, and localized report tests were written RED before their production implementations and then passed GREEN. (verified)
-- Compatibility: Optional serde field is skipped when absent and legacy NormalizedFact JSON deserializes with None. (verified)
+- date precedence: Checks article:published_time, meta name=date, JSON-LD datePublished, time datetime, then JSON-LD dateModified; malformed values are skipped and the existing validation cutoff rejects future evidence. (verified)
+- Claim completeness: A classified, dated official document must provide a bounded body sentence with change and production signals, source title, URI, passage, and authoritative provenance before promotion. (verified)
+- compatibility: Document-kind metrics are optional in serialized ResearchMetrics and default to an empty map for legacy runtime inputs. (verified)
+- verification: TDD fixtures cover positive and negative extraction, localized reporting, and full repository regression; governance evidence is recorded by ai-finish. (verified)
 
 ### Evidence
-- All four structural dimensions are classified and localized.: tests/weekly_radar_evidence_quality.rs#validated_structural_claims_receive_specific_dimensions and localized_reports_render_structural_dimensions_and_legacy_fallback (verified)
-- Project quality and regression tests pass.: Makefile#make check (verified)
+- The full project quality gate passes with no test weakening.: Makefile#make check (verified)
+- Document discovery and Claim extraction quality behavior is covered by deterministic fixtures.: tests/weekly_radar_evidence_quality.rs#metadata, context, promotion, negative, metrics, and compatibility tests (verified)
+- Operations documentation describes the new evidence semantics and calibrated data-insufficiency wording.: docs/operations/WEEKLY_RADAR.md#document discovery and research metrics guidance (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-evidence-dimension.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-evidence-dimension.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json]
-- Changed .ai/work-items/starts/wi-weekly-radar-evidence-dimension.json [evidence: .ai/work-items/starts/wi-weekly-radar-evidence-dimension.json]
+- Changed .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.summary.json]
+- Changed .ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json [evidence: .ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/active/wi-weekly-radar-evidence-dimension.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-evidence-dimension.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.outcome.md]
-- Changed docs/superpowers/specs/2026-08-25-weekly-radar-evidence-dimension-design.md [evidence: docs/superpowers/specs/2026-08-25-weekly-radar-evidence-dimension-design.md]
-- Changed docs/superpowers/plans/2026-08-25-weekly-radar-evidence-dimension.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-evidence-dimension.md]
-- Changed src/features/weekly_radar/runtime/model.rs [evidence: src/features/weekly_radar/runtime/model.rs]
-- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
+- Changed .ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.md]
+- Changed docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md [evidence: docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md]
+- Changed docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md]
+- Changed src/main.rs [evidence: src/main.rs]
+- Changed src/features/weekly_radar/runtime/discovery.rs [evidence: src/features/weekly_radar/runtime/discovery.rs]
+- Changed src/features/weekly_radar/runtime/sources.rs [evidence: src/features/weekly_radar/runtime/sources.rs]
 - Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
+- Changed src/features/weekly_radar/runtime/model.rs [evidence: src/features/weekly_radar/runtime/model.rs]
 - Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
+- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
 - Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
 - Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
 
 Problems found
-- Total: 2
+- Total: 7
 - Blocking: 0
 - Warning: 0
 
 Stops triggered
-- Reason: aiCoverage failed before the retry. | Stage: verification | Resolution: Retry aiCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiCoverage failed, verification[aiCoverage] retry passed]
+- None recorded.
 
 Problems resolved
-- Problem: aiCoverage failed before the retry.
-  Solution: Re-ran aiCoverage after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[0] aiCoverage failed, verification[aiCoverage] retry passed]
+- None recorded.
 
 Risks avoided
-- If not detected, could have led to a stale completion claim. (inference)
+- None recorded.
 
 Remaining risks
-- Fixed signal tables may produce a false negative for an unseen synonym or a false positive when a structural term is used in a non-change context; focused negative fixtures and fail-closed Claim validation limit promotion risk. [evidence: residualRisks]
-- SEC ingestion, broader document discovery, and provider availability remain outside this Work Item, so this change improves semantic honesty without claiming complete enterprise-change coverage. [evidence: residualRisks]
+- observed issue [evidence: observedIssues[0] observed issue, observedIssues[0] observed issue]
+- observed issue [evidence: observedIssues[1] observed issue, observedIssues[1] observed issue, observedIssues[1] observed issue]
+- observed issue [evidence: observedIssues[2] observed issue, observedIssues[2] observed issue, observedIssues[2] observed issue]
+- observed issue [evidence: observedIssues[3] observed issue, observedIssues[3] observed issue, observedIssues[3] observed issue]
+- observed issue [evidence: observedIssues[4] observed issue, observedIssues[4] observed issue]
+- observed issue [evidence: observedIssues[5] observed issue, observedIssues[5] observed issue, observedIssues[5] observed issue]
+- observed issue [evidence: observedIssues[6] observed issue, observedIssues[6] observed issue, observedIssues[6] observed issue]
+- Live publisher HTML can change outside deterministic fixtures; dry-run evidence remains bounded by source availability and parser rules. [evidence: residualRisks]
+- This Work Item does not add new providers or guarantee all companies expose machine-readable publication dates. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- The user approved dimension-specific structural evidence and explicitly authorized continuation through TDD, CI, and one safe dry-run. (inference)
+- None recorded.
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]
@@ -90,9 +103,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
+- Rework avoided: None recorded.
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
+- Major risk prevented: None recorded.
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

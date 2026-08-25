@@ -1,0 +1,1002 @@
+{
+  "implementationApproach": {
+    "approachType": "implementation",
+    "status": "complete",
+    "summary": {
+      "text": "Keep source availability, bounded document discovery, pending Claim candidates, and ValidatedEvidence distinct while recovering deterministic document dates and context.",
+      "status": "verified",
+      "evidence": [
+        {
+          "source": "docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md",
+          "subject": "approved discovery-quality design"
+        },
+        {
+          "source": "src/features/weekly_radar/runtime/evidence.rs",
+          "subject": "EvidenceCandidate to ValidatedEvidence gate"
+        }
+      ]
+    },
+    "mechanism": {
+      "text": "Parse bounded HTML metadata and JSON-LD with explicit date precedence, retain DocumentKind through SourceObservation and EvidenceCandidate provenance, count classified documents in optional ResearchMetrics, and render sorted localized counters without feeding judgment or Ranking.",
+      "status": "verified",
+      "evidence": [
+        {
+          "source": "src/features/weekly_radar/runtime/discovery.rs",
+          "subject": "document_metadata precedence and bounded parsing"
+        },
+        {
+          "source": "src/features/weekly_radar/runtime/report.rs",
+          "subject": "localized document-kind metrics"
+        }
+      ]
+    },
+    "affectedComponents": [
+      {
+        "component": "Document discovery",
+        "detail": "Recovers publication/effective dates and classifies same-origin discovered documents without changing the bounded crawl.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/discovery.rs",
+            "subject": "date metadata and DocumentKind"
+          }
+        ]
+      },
+      {
+        "component": "Source and evidence boundaries",
+        "detail": "Propagates DocumentKind only for discovered documents and retains it in normalized claim provenance; generic, incomplete, and page-level material remains unconfirmed.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/sources.rs",
+            "subject": "SourceObservation document context"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "complete Claim extraction and provenance"
+          }
+        ]
+      },
+      {
+        "component": "Research metrics and reports",
+        "detail": "Adds optional document-kind counts with legacy empty-map defaults and localized sorted display.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "backward-compatible ResearchMetrics"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "legacy and localized report tests"
+          }
+        ]
+      },
+      {
+        "component": "Acquisition orchestration",
+        "detail": "Counts document kinds at the existing observation loop while leaving SEC, judgment, Stage, Ranking, delivery, archive, and workflow paths unchanged.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "document-kind metrics wiring"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "runtime metrics compatibility regression"
+          }
+        ]
+      }
+    ],
+    "designDecisions": [
+      {
+        "decision": "Prefer false negatives to page-level or generic prose promotion.",
+        "reason": "A reachable homepage or technical description does not establish an enterprise production-system change.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "homepage, generic, title-only, and non-actionable negative fixtures"
+          }
+        ]
+      },
+      {
+        "decision": "Use deterministic metadata precedence and existing cutoff validation.",
+        "reason": "The parser can recover explicit dates already present in publisher markup without guessing ambiguous values or weakening the future-date gate.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/discovery.rs",
+            "subject": "metadata precedence and ISO date-prefix parsing"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "published, JSON-LD, and malformed-date fixtures"
+          }
+        ]
+      },
+      {
+        "decision": "Keep document-kind counts observational and out of judgment.",
+        "reason": "Research Value improves through visibility into ingestion quality; Stage and Ranking must continue to consume only their existing evidence inputs.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "metrics-only wiring"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "report metrics without Ranking"
+          }
+        ]
+      }
+    ],
+    "technicalDetails": [
+      {
+        "topic": "date precedence",
+        "detail": "Checks article:published_time, meta name=date, JSON-LD datePublished, time datetime, then JSON-LD dateModified; malformed values are skipped and the existing validation cutoff rejects future evidence.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/discovery.rs",
+            "subject": "document_metadata"
+          }
+        ]
+      },
+      {
+        "topic": "Claim completeness",
+        "detail": "A classified, dated official document must provide a bounded body sentence with change and production signals, source title, URI, passage, and authoritative provenance before promotion.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "extract_evidence_candidate and validate_evidence_candidate"
+          }
+        ]
+      },
+      {
+        "topic": "compatibility",
+        "detail": "Document-kind metrics are optional in serialized ResearchMetrics and default to an empty map for legacy runtime inputs.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "serde defaults and getter"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "metrics round-trip regression"
+          }
+        ]
+      },
+      {
+        "topic": "verification",
+        "detail": "TDD fixtures cover positive and negative extraction, localized reporting, and full repository regression; governance evidence is recorded by ai-finish.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "41 evidence-quality tests"
+          },
+          {
+            "source": "Makefile",
+            "subject": "canonical make check"
+          }
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "The full project quality gate passes with no test weakening.",
+        "status": "verified",
+        "source": "Makefile",
+        "subject": "make check"
+      },
+      {
+        "claim": "Document discovery and Claim extraction quality behavior is covered by deterministic fixtures.",
+        "status": "verified",
+        "source": "tests/weekly_radar_evidence_quality.rs",
+        "subject": "metadata, context, promotion, negative, metrics, and compatibility tests"
+      },
+      {
+        "claim": "Operations documentation describes the new evidence semantics and calibrated data-insufficiency wording.",
+        "status": "verified",
+        "source": "docs/operations/WEEKLY_RADAR.md",
+        "subject": "document discovery and research metrics guidance"
+      }
+    ]
+  },
+  "summaryVersion": 2,
+  "workItemId": "wi-weekly-radar-document-discovery-quality",
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.contract.json",
+  "changedFiles": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.contract.json",
+      "reason": "Approved v2 Work Item boundary and evidence-backed execution decision."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.summary.json",
+      "reason": "Records implementation, verification, governance, and residual-risk evidence."
+    },
+    {
+      "path": ".ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json",
+      "reason": "Immutable Start Receipt binds the dedicated branch to the approved base."
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "Generated AI Cockpit status projection."
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "reason": "Generated Human Benefit Report JSON."
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "reason": "Generated localized Human Benefit Report Markdown."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.json",
+      "reason": "Mandatory Task Outcome evidence generated during Finish."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.md",
+      "reason": "Human-readable Task Outcome evidence generated during Finish."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md",
+      "reason": "Design for bounded metadata recovery, document context, Claim extraction, and report visibility."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md",
+      "reason": "TDD implementation plan and verification sequence."
+    },
+    {
+      "path": "src/main.rs",
+      "reason": "Counts document-kind discovery metrics without changing judgment or publication."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "reason": "Recovers bounded document metadata and deterministic document classification."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/sources.rs",
+      "reason": "Retains DocumentKind on source observations."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "Improves deterministic complete Claim extraction and provenance context."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "reason": "Adds backward-compatible document-kind research metrics."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "reason": "Renders localized discovery-quality counters."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime.rs",
+      "reason": "Maintains documented public runtime exports for the new boundary."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "RED/GREEN coverage for metadata, document context, Claim promotion, and negative cases."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Runtime, snapshot, report, and fail-closed regression coverage."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Documents discovery, Claim completeness, and data-insufficiency semantics."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Generated archive discovery index."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.archive-manifest.json",
+      "reason": "Immutable archive evidence root."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+      "reason": "Generated evidence-bound Implementation Knowledge Record."
+    },
+    {
+      "path": ".ai/knowledge/index.json",
+      "reason": "Rebuilt deterministic Implementation Knowledge index."
+    },
+    {
+      "path": ".ai/knowledge/dependencies.json",
+      "reason": "Rebuilt deterministic Implementation Knowledge dependency routing after projection refresh."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json",
+      "reason": "Refreshed generated evidence digests after shared Weekly Radar source files changed."
+    }
+  ],
+  "sourcesUsed": [
+    "AGENTS.md",
+    ".ai/glossary.md",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-evidence-dimension-design.md",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/main.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "Makefile.ai",
+    "Makefile"
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "command": "make check-ai-contract CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:12.006148+00:00",
+      "exitCode": 0,
+      "durationMs": 53,
+      "outputDigest": "e3fa6858442a8a6f0d7c48b4a3f1214f21145f57dc9312a4522b99352004314f",
+      "commandHash": "a796bc98481e02896ff4454a929752ca05537bbf0684fffb033d7f6d9c651ed4",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "161262937ba83378de65a83116a082062c7577f61bebcf15d52fb2e3930a6eec",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "outputBytes": 316
+    },
+    {
+      "check": "aiScope",
+      "command": "make check-ai-scope CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:12.239175+00:00",
+      "exitCode": 0,
+      "durationMs": 141,
+      "outputDigest": "3d53d2cab3cee9fc4dfba24a67eaea229c31170d5ba0aec6c8c40ad835dca2c9",
+      "commandHash": "5a487d028f1575f031c71cc2100cb8e62b68bac89bc6b0d716e2828b7813adfb",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "7089cf110f5fdf193055b66262b62bf3271302899970f18c7cd4577445d66134",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json scope guard passed: 19 changed path(s) covered",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json scope guard passed: 19 changed path(s) covered",
+      "outputBytes": 247
+    },
+    {
+      "check": "aiGuards",
+      "command": "make check-ai-guards",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:12.500750+00:00",
+      "exitCode": 0,
+      "durationMs": 150,
+      "outputDigest": "448afc3811f4e45b918877d817f89e19a22e9461da0fdd8e27076d7c6fa8b9f0",
+      "commandHash": "769f935b899dad1a2abcf23ef3cd08c6904b7f7d03a988b5ce6aa573d18b1e83",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "8223884c34904978d5e3cd92fbc1579328e7a81c35f2e1dd5e5242bd8a4a602c",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
+      "outputBytes": 284
+    },
+    {
+      "check": "aiCheckpoint",
+      "command": "make ai-checkpoint CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json STAGE=before_finish",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:13.789048+00:00",
+      "exitCode": 0,
+      "durationMs": 1197,
+      "outputDigest": "4b8426c33d98324af9284365baf484e4b7d420f32c3356d0d16090fd1935d8ca",
+      "commandHash": "13ad4d2efb462eed1fa7561d7922b605364ac79c16ea6f5c6d5c76d49975f5d1",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "0acd41557ee4d4c45420d4418c909f7c2600a0f3c9c074818f47ce1a42395f33",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-document-discovery-quality` - Contract Hash: `52ea5b33b6b290e2` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count:",
+      "outputTail": "nt_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/cockpit/task_report.md` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.md` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json` — covered by Contract scope - [active_owned] `.ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json` — covered by Contract scope - [active_owned] `docs/operations/WEEKLY_RADAR.md` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/discovery.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/evidence.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/model.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/report.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/sources.rs` — covered by Contract scope - [active_owned] `src/main.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_evidence_quality.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_runtime.rs` — covered by Contract scope ## Next Action - Ready for final status generation and human review.",
+      "outputBytes": 7797
+    },
+    {
+      "check": "aiReviewPolicy",
+      "command": "make check-ai-review-policy SUMMARY=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:14.028496+00:00",
+      "exitCode": 0,
+      "durationMs": 139,
+      "outputDigest": "5d7e6be04c0f5e370817559a1b42f9813e4ec2bf9bad32de985a256b311fe3d0",
+      "commandHash": "04b6262303a79bf2c2c7a621fca50917d6596ef65f4bd1fa9c18f2e10101659f",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "ddead7cb8821ffa810a95d68e6801a85ef016f4cb123c4c559e585ef0c829af2",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json [review] .ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.json [review] .ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json [review] .ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.json [review] .ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.md [review] .ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md review focus recorded: 4 item(s) report: target/ai_review_policy_report.json",
+      "outputBytes": 778
+    },
+    {
+      "check": "aiBacktrack",
+      "command": "make check-ai-backtrack",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:14.250923+00:00",
+      "exitCode": 0,
+      "durationMs": 134,
+      "outputDigest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+      "commandHash": "3ae95e96677b5ecabc3d873ff9cda8d7d3c807724cd86bda76ebb00cef4e4f88",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "eb099e122b6a7d3b20de9ff1dd8518177e9088ccfd0094d11f40e0724c5f1e3a",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputBytes": 192
+    },
+    {
+      "check": "aiCoverage",
+      "command": "make check-ai-coverage-guard",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:14.477853+00:00",
+      "exitCode": 0,
+      "durationMs": 137,
+      "outputDigest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+      "commandHash": "296a9883f8b9ad27f3d57afdee3ebdea5c75869c899a00e55d80563bc889328a",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "f45631d005a901fdd8d08e55c5870d7845974df9785c45e6dd6a9459903ed350",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputBytes": 201
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "command": "make check-ai-scenario-coverage CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:14.626931+00:00",
+      "exitCode": 0,
+      "durationMs": 58,
+      "outputDigest": "52158be04971367640b6dd6461c37f74b19316327d61e5c3cf4d5160f88c56a4",
+      "commandHash": "d6208dd4556cd495436ab4d8e3d80b3afcedc119fe1da73616fcc73fb60164e9",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "a80ebc3e752d8dd6d10b40f20972bd6060d879930c99efb165e7f039d03ec4a7",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputBytes": 359
+    },
+    {
+      "check": "aiGuidelines",
+      "command": "make check-ai-guidelines CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:14.771172+00:00",
+      "exitCode": 0,
+      "durationMs": 54,
+      "outputDigest": "91c1f3ecfa328de5a9bd51beaa814801a6da34429924c47575aad2d52e1e49cc",
+      "commandHash": "d34d2b9ff4a3831abd87d5aec15ddc8586adc7ead95e26fc360dbd35de4a86c9",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "6c94625c038638c45009c426e9bd143ecd10081fd1003d8ee1202a50b71041f9",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json guidelines compliance check passed: 6 guideline(s) verified",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json guidelines compliance check passed: 6 guideline(s) verified",
+      "outputBytes": 364
+    },
+    {
+      "check": "aiDiffOwnership",
+      "command": "make check-ai-diff-ownership CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:15.989949+00:00",
+      "exitCode": 0,
+      "durationMs": 1116,
+      "outputDigest": "642ae5eff1073ed0d13eedd04711a970423f382a0dc364d4c45eea5d845fbc6d",
+      "commandHash": "ed9b9a0b132055eacf161ca01bf325c0736ceb181214fc7c4e259a1b85497d71",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "5386739049f8e07e0a3ba8af7249faa44cfa398f92483092f44b51f051c3064e",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json ## Diff Ownership Preview - active_owned: `19`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active T",
+      "outputTail": ", out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/cockpit/task_report.md` — exact generated Human Benefit Report pair validates against active Task Outcome - [active_owned] `.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.json` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.md` — covered by Contract scope - [active_owned] `.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json` — covered by Contract scope - [active_owned] `.ai/work-items/starts/wi-weekly-radar-document-discovery-quality.json` — covered by Contract scope - [active_owned] `docs/operations/WEEKLY_RADAR.md` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/discovery.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/evidence.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/model.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/report.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/sources.rs` — covered by Contract scope - [active_owned] `src/main.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_evidence_quality.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_runtime.rs` — covered by Contract scope",
+      "outputBytes": 2367
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=standard",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:21.665910+00:00",
+      "exitCode": 0,
+      "durationMs": 5493,
+      "outputDigest": "b4976e1afbdf47c8787279f07f9564d4e097edf7a1534d40c19e250df166c027",
+      "commandHash": "f8ba96b5afceaa393f091bd180d3300671c86bd3540cf2959df684bfe07cf74b",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "d7cca993a3dff7eae20f9684bae8bd0c65c1f38876c92f022d3a2cbf187ee3a0",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=standard\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\"], \"level\": \"standard\", \"qualityRouting\": {\"reason\": \"standard governance uses its profile target\", \"requiredGroups\": [\"quality-standard\"], \"target\": \"quality-standard\"}, \"qualityTarget\": \"quality-standard\", \"requiredGroups\": [\"quality-standard\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"c7f0f3c466164cf7f104940d57de5",
+      "outputTail": "t: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/weekly_radar_top5.rs (target/debug/deps/weekly_radar_top5-d74b0faa16cd0578) running 7 tests test blank_values_are_rejected_before_an_entry_is_created ... ok test entry_retains_all_supplied_facts_without_normalizing_them ... ok test duplicate_candidate_is_rejected_before_capacity_and_does_not_mutate_model ... ok test top5_weekly_read_model::module_tests::from_entries_keeps_input_order ... ok test read_model_accepts_empty_input_and_preserves_supplied_order ... ok test top5_weekly_read_model::module_tests::blank_candidate_is_rejected ... ok test read_model_accepts_five_entries_and_rejects_a_sixth_without_mutation ... ok test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Doc-tests org_x running 1 test test src/features/weekly_radar/runtime/sources.rs - features::weekly_radar::runtime::sources::SourceObservation (line 141) - compile fail ... ok test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-reference-impact { \"decision\": \"not_applicable\", \"missingTargets\": [], \"recordedTargets\": [], \"recordsEvaluated\": 0, \"recordScan\": \"skipped\" } Reference impact: not applicable; repository records were not scanned. \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-test-weakening PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_test_weakening.py --root . --mode full --policy .ai/guards/test_weakening_policy.yaml {\"baseRef\": \"c7f0f3c466164cf7f104940d57de5d732eb60c1e\", \"decision\": \"continue\", \"limitations\": [\"Static signals do not prove semantic equivalence or complete test coverage.\"], \"mode\": \"full\", \"recoveryCondition\": \"No recovery action is required for the analyzed diff.\", \"requiredExplanation\": false, \"signals\": [], \"version\": 1}",
+      "outputBytes": 54239
+    },
+    {
+      "check": "aiStatus",
+      "command": "make generate-cockpit-status CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:25.143343+00:00",
+      "exitCode": 0,
+      "durationMs": 1672,
+      "outputDigest": "cd4671a78480ff8aaee67ae7eb02dd7a8f89a2d6e5fcb09539cb51a84ee62803",
+      "commandHash": "7f1b7a94993c2286dfd72d7603b4e25cd7d6d21ebe18e31d8582a5bee190b53b",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "59b0cc8d0ab30f79a2a86b655f2e57c2d73c11feac07aa5bdc262f86f63e1365",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputBytes": 444
+    },
+    {
+      "check": "aiStatusCheck",
+      "command": "make check-ai-status CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:28.417331+00:00",
+      "exitCode": 0,
+      "durationMs": 1577,
+      "outputDigest": "786848200f9bd1a50ee58504b85c07c2df00b1ddceb3c8ba5457e76a5b054e54",
+      "commandHash": "5fed8527b034fe13f20f3e585d39c55c3961359931d02edb2b819a8815f189c3",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "21e0a4fef2a94aafefdc6ce51cc93d4a44661214d66e21c7cad46ba9eb112ada",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputBytes": 389
+    },
+    {
+      "check": "aiStatusConsistency",
+      "command": "make check-ai-status-consistency",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:30.136278+00:00",
+      "exitCode": 0,
+      "durationMs": 67,
+      "outputDigest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+      "commandHash": "ddd5a0e5fa9b289b1ab3ba23cf37c1a7f01d48f31e2ad99e85762ba20f93c2a6",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "dccc6466ab738a893314c2dd3ae3011fccbfa62b7c675f5f89e92e2cca952c65",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputBytes": 169
+    },
+    {
+      "check": "aiAgentRisk",
+      "command": "make check-ai-agent-risk CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:30.289026+00:00",
+      "exitCode": 0,
+      "durationMs": 57,
+      "outputDigest": "7f8630d8d010d24642ef29a90d5d44cfd95cc6bcf6b5ed2918b57f99d19e78c7",
+      "commandHash": "5b8c0a75007c460ebb207e792f33d1377b2888e000ce921f32f5fef5c3d27bf3",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "e2eceebae8f35c602124b0b673f03d0aceefe2f0d0666f274fd067631c423aee",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json --summary .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputBytes": 369
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json CONTRACT=.ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T08:05:35.018035+00:00",
+      "exitCode": 0,
+      "durationMs": 677,
+      "outputDigest": "cfaf906cc918c7820feb2db5d48743469337e8a75e67f5d1f3d26798d811b3d8",
+      "commandHash": "1cbecb1d6366127694176945d3b6822775537c028f56a70fd5018e381b23d750",
+      "contractHash": "52ea5b33b6b290e25b8ac581ab2f0cb6716c17a8592254b0babe6ecafa44a9b2",
+      "commitSha": "62236059605f5ad5eabd0ea35ad26dd72fa8040b",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "worktreeDigest": "d0b8bffef551d71ae9c30c81eb179fa706378d5f0e64aa1a4f6423c3389e15d6",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json --contract .ai/work-items/active/wi-weekly-radar-document-discovery-quality.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-document-discovery-quality.summary.json",
+      "outputBytes": 395,
+      "outcomeInputDigest": "c3f937e496a26b60284dfaca0ebf440c1a8c6493a0daf8970726ff36c4851e41"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "New public APIs must be documented.",
+      "compliant": true,
+      "evidence": "DocumentKind, SourceObservation::document_kind, ResearchMetrics::document_kind_counts, and EvidenceCandidate::document_kind have rustdoc; cargo clippy and cargo test pass."
+    },
+    {
+      "guideline": "Do not import internal modules from other features.",
+      "compliant": true,
+      "evidence": "Changes remain inside Weekly Radar runtime modules and main acquisition wiring; no cross-feature internal imports were added."
+    },
+    {
+      "guideline": "Keep discovery and extraction deterministic, provider-neutral, bounded, and rule-only.",
+      "compliant": true,
+      "evidence": "Date precedence uses bounded HTML/JSON-LD metadata parsing, same-origin discovery remains capped, and Claim extraction remains lexical; cargo test --all and Clippy pass."
+    },
+    {
+      "guideline": "Prefer false negatives to promoting generic technical prose as enterprise change.",
+      "compliant": true,
+      "evidence": "Negative fixtures cover generic architecture, title-only, heading-only, missing-date, and non-actionable production prose; all 41 evidence-quality tests pass."
+    },
+    {
+      "guideline": "Preserve legacy snapshot and ResearchMetrics deserialization with optional defaults.",
+      "compliant": true,
+      "evidence": "ResearchMetrics document_kind_counts uses serde default/empty-map compatibility; legacy JSON tests pass and the full runtime suite passes."
+    },
+    {
+      "guideline": "Do not change SEC, judgment, Ranking, Telegram, archive, or workflow behavior.",
+      "compliant": true,
+      "evidence": "Only document discovery, claim provenance, metrics, report display, tests, and operations documentation changed; make check passed including 90 runtime tests and all integration suites."
+    }
+  ],
+  "unknownsRemaining": [],
+  "risk": {
+    "level": "medium",
+    "detail": "Date and lexical extraction changes may cause false positives or false negatives; bounded precedence, negative fixtures, and legacy defaults are required."
+  },
+  "generatedFiles": [],
+  "destructiveChanges": [],
+  "observedIssues": [
+    {
+      "issue": "TDD RED focused tests exposed that SourceObservation does not yet retain the discovered DocumentKind, and the current parser does not recover published metadata or JSON-LD dates.",
+      "resolution": "Added the focused metadata precedence, malformed-date fallback, and DocumentKind propagation tests before production implementation; the focused cargo test currently fails at the missing document_kind API as expected.",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "cargo test --test weekly_radar_evidence_quality document_metadata_ -- --nocapture"
+      ]
+    },
+    {
+      "issue": "TDD RED claim provenance test exposed that validated facts discarded the discovered DocumentKind context.",
+      "resolution": "Stored DocumentKind on EvidenceCandidate and included its stable label in normalized fact provenance; the complete-claim and negative-lead tests now pass.",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "cargo test --test weekly_radar_evidence_quality"
+      ]
+    },
+    {
+      "issue": "An initial focused Cargo invocation supplied two test filters, which Cargo rejects as an unexpected second positional argument.",
+      "resolution": "Reran each focused test as a separate Cargo invocation; both focused tests and the complete evidence-quality suite passed.",
+      "evidence": [
+        "cargo test --test weekly_radar_evidence_quality dated_engineering_document_promotes_a_complete_claim -- --nocapture",
+        "cargo test --test weekly_radar_evidence_quality generic_or_non_actionable_document_remains_a_pending_lead -- --nocapture",
+        "cargo test --test weekly_radar_evidence_quality"
+      ]
+    },
+    {
+      "issue": "The first localized report assertion assumed insertion order for a BTreeMap of document kinds.",
+      "resolution": "Aligned the assertion with the deterministic key-sorted order; English and Chinese report tests now pass without adding Ranking output.",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/report.rs",
+        "cargo test --test weekly_radar_evidence_quality localized_reports_render_document_kind_counts_without_ranking -- --nocapture"
+      ]
+    },
+    {
+      "issue": "Initial Clippy verification reported one redundant closure and one unnecessary mutable binding in the new date parser helper.",
+      "resolution": "Applied the two mechanical lint corrections and reran Clippy with -D warnings successfully.",
+      "evidence": [
+        "src/features/weekly_radar/runtime/discovery.rs",
+        "cargo clippy --all-targets --all-features -- -D warnings"
+      ]
+    },
+    {
+      "issue": "The repository instructions require make ai-revalidate-contract-amendment for a stale immutable before_edit binding, but this Makefile.ai entrypoint is not defined.",
+      "resolution": "Used the canonical scripts/ai_checkpoint.py contract_amendment_revalidation path with the immutable before_edit hash; implementation scope and authority remained unchanged.",
+      "evidence": [
+        "Makefile.ai",
+        "scripts/ai_checkpoint.py",
+        ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.summary.json"
+      ]
+    },
+    {
+      "issue": "The first ai-finish attempt stopped at taskOutcomeGreenGate because the active Summary lacked an evidence-bound Implementation Approach.",
+      "resolution": "Added complete approach, mechanism, affected-component, design-decision, technical-detail, and evidence sections; the subsequent ai-finish completed with Outcome green.",
+      "evidence": [
+        ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.summary.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.md",
+        "make ai-finish TASK=wi-weekly-radar-document-discovery-quality REPORT_LANGUAGE=zh-CN"
+      ]
+    },
+    {
+      "issue": "PR audit found historical Implementation Knowledge records with stale digests after this Work Item changed shared Weekly Radar evidence files.",
+      "resolution": "Rebuilt the affected generated knowledge projections and declared all refreshed records in this archive Summary; the knowledge index now validates deterministically.",
+      "evidence": [
+        "scripts/ai_generate_knowledge_record.py",
+        "make ai-check-knowledge-index",
+        ".ai/knowledge/index.json"
+      ]
+    }
+  ],
+  "residualRisks": [
+    {
+      "level": "medium",
+      "area": "external_source_variability",
+      "detail": "Live publisher HTML can change outside deterministic fixtures; dry-run evidence remains bounded by source availability and parser rules.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    },
+    {
+      "level": "low",
+      "area": "coverage_threshold",
+      "detail": "This Work Item does not add new providers or guarantee all companies expose machine-readable publication dates.",
+      "reviewRecommended": true,
+      "followUpCandidate": false
+    }
+  ],
+  "reviewReadiness": {
+    "status": "ready_with_risks",
+    "reason": "All required verification passed; residual risk remains documented.",
+    "expectedReviewFocus": [
+      "date precedence",
+      "document-kind propagation",
+      "Claim false-positive boundary",
+      "legacy metrics compatibility"
+    ]
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "pending",
+    "userVisibleOutput": "pending",
+    "persistence": "pending",
+    "localization": "pending",
+    "generatedArtifacts": "pending",
+    "makeEntrypoints": "pending"
+  },
+  "userCorrectionsCaptured": [],
+  "userCorrectionSolidification": [],
+  "checkpointEvidence": [
+    {
+      "stage": "before_edit",
+      "recorded": true,
+      "contractHash": "5d712ccaf582b322",
+      "acceptanceCount": 9,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "5d712ccaf582b322",
+      "previousContractHash": "5d712ccaf582b322",
+      "contractHash": "52ea5b33b6b290e2",
+      "acceptanceCount": 9,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Correct the requested-operation policy target to repository_governance after preflight identified the repository policy key; implementation scope and authority are unchanged.",
+      "verificationStarted": false,
+      "invalidatedRequiredChecks": [],
+      "requiredChecksPassedAtAmendment": 0,
+      "recordedAt": "2026-08-25T07:40:44.306501+00:00"
+    },
+    {
+      "stage": "before_finish",
+      "recorded": true,
+      "contractHash": "52ea5b33b6b290e2",
+      "acceptanceCount": 9,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 16
+    }
+  ],
+  "knownGaps": [],
+  "scenarioCoverage": [
+    {
+      "scenario": "Official document metadata recovers a published/effective date using explicit precedence and rejects malformed values without guessing.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/discovery.rs",
+        "cargo test --test weekly_radar_evidence_quality document_metadata_ -- --nocapture"
+      ],
+      "result": "Published metadata, JSON-LD ISO datetimes, malformed-date fallback, and existing time metadata all pass deterministic fixtures."
+    },
+    {
+      "scenario": "Discovered documents retain DocumentKind while entry points remain separate observations.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/sources.rs",
+        "cargo test --test weekly_radar_evidence_quality discovered_document_retains_document_kind_without_promoting_entry_point -- --nocapture"
+      ],
+      "result": "Official discovered documents expose engineering context; entry-point observations remain page-level and unpromoted."
+    },
+    {
+      "scenario": "A dated authoritative actionable production claim promotes with complete provenance, while generic or non-actionable prose remains a lead.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "cargo test --test weekly_radar_evidence_quality"
+      ],
+      "result": "Complete claims normalize as Known evidence with document-kind provenance; negative fixtures remain Unconfirmed/pending."
+    },
+    {
+      "scenario": "Legacy ResearchMetrics JSON defaults document-kind counts to an empty map and localized reports expose sorted counts without Ranking.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/model.rs",
+        "src/features/weekly_radar/runtime/report.rs",
+        "cargo test --test weekly_radar_evidence_quality research_metrics_document_kind_counts_default_for_legacy_json -- --nocapture",
+        "cargo test --test weekly_radar_evidence_quality localized_reports_render_document_kind_counts_without_ranking -- --nocapture"
+      ],
+      "result": "Legacy JSON remains readable; English and Chinese reports render deterministic document-kind counters and no ranking."
+    },
+    {
+      "scenario": "Existing Weekly Radar runtime, SEC, judgment, archive, Telegram, and workflow behavior remains regression-free.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "make check"
+      ],
+      "result": "Project formatter, Clippy, all Cargo tests, 90 Weekly Radar runtime tests, and integration suites pass."
+    }
+  ],
+  "overclaimPrevention": "Do not report increased validated-evidence yield or live-source coverage until focused tests and a post-merge dry-run provide direct evidence.",
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "aligned",
+    "checkedAt": "2026-08-25T17:00:32+09:00",
+    "checks": [
+      {
+        "area": "plan",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/plans/2026-08-25-weekly-radar-document-discovery-quality.md",
+          "docs/superpowers/specs/2026-08-25-weekly-radar-document-discovery-quality-design.md"
+        ],
+        "reason": "The TDD plan and design match the Contract scope, acceptance, and implementation sequence."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.contract.json",
+          ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.summary.json",
+          ".ai/cockpit/task_report.md"
+        ],
+        "reason": "Summary scope, risks, scenario coverage, and verification evidence are bound to the active Contract."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "aligned",
+        "evidence": [
+          "docs/operations/WEEKLY_RADAR.md",
+          "Makefile",
+          "Makefile.ai",
+          ".ai/cockpit/task_report.md",
+          ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.outcome.md"
+        ],
+        "reason": "The operations guide documents metadata precedence, Claim completeness, metrics, compatibility, and calibrated data insufficiency; required commands were run."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "aligned",
+        "evidence": [
+          "src/features/weekly_radar/runtime/report.rs",
+          "tests/weekly_radar_evidence_quality.rs"
+        ],
+        "reason": "Chinese, Japanese, and English report labels and deterministic document-kind counters are covered without changing judgment or Ranking."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "aligned",
+        "evidence": [
+          "docs/operations/WEEKLY_RADAR.md",
+          ".ai/work-items/archive/2026/wi-weekly-radar-document-discovery-quality.summary.json"
+        ],
+        "reason": "The documentation and Summary retain bounded-source limitations, legacy defaults, external HTML variability, and the no-overclaim rule."
+      }
+    ]
+  },
+  "taskOutcome": {
+    "status": "completed",
+    "jsonPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.json",
+    "markdownPath": ".ai/work-items/active/wi-weekly-radar-document-discovery-quality.outcome.md",
+    "rawEvidencePath": "derived:pre_merge",
+    "evidenceCount": 5,
+    "humanStatusColor": "green",
+    "completionFact": "All declared finish checks passed.",
+    "recoveryCondition": ""
+  },
+  "archiveSequence": 72
+}

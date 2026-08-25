@@ -11,6 +11,7 @@ use serde::Deserialize;
 use std::marker::PhantomData;
 
 use super::config::{is_safe_source_identifier, CompanyConfig};
+use super::discovery::{discover_documents, document_metadata, DocumentCandidate};
 use super::http::{HttpClient, HttpResponse, MAX_HTTP_RESPONSE_BODY_BYTES};
 use super::model::Provenance;
 
@@ -379,6 +380,8 @@ fn collect_official(
                 }
                 Err(FetchFailure::InvalidPayload) => unreachable!("body bounds do not decode"),
             };
+            let document_candidates =
+                discover_documents(company.id(), kind, url, body, observed_at);
             let text = normalize_html_text(body);
             let status = if text.is_empty() {
                 SourceStatus::Unknown
@@ -405,6 +408,13 @@ fn collect_official(
                 observed_at,
                 effective_date: None,
             }));
+            collect_discovered_documents(
+                company,
+                http,
+                observed_at,
+                document_candidates,
+                observations,
+            );
         }
         Ok(_) | Err(_) => observations.push(unavailable_observation(
             company,
@@ -415,6 +425,94 @@ fn collect_official(
             "official page request unavailable",
         )),
     }
+}
+
+fn collect_discovered_documents(
+    company: &CompanyConfig,
+    http: &dyn HttpClient,
+    observed_at: DateTime<Utc>,
+    candidates: Vec<DocumentCandidate>,
+    observations: &mut Vec<SourceObservation>,
+) {
+    for candidate in candidates {
+        let response = http.get(
+            candidate.url(),
+            &[(
+                "Accept".to_owned(),
+                "text/html,application/xhtml+xml".to_owned(),
+            )],
+        );
+        let Some(response) = response.ok().filter(|response| response.is_success()) else {
+            observations.push(discovered_document_status(
+                company,
+                &candidate,
+                observed_at,
+                "discovered document request unavailable",
+            ));
+            continue;
+        };
+        let body = match bounded_body(&response) {
+            Ok(body) => body,
+            Err(FetchFailure::Unavailable) => {
+                observations.push(discovered_document_status(
+                    company,
+                    &candidate,
+                    observed_at,
+                    "discovered document response exceeds size limit",
+                ));
+                continue;
+            }
+            Err(FetchFailure::InvalidPayload) => unreachable!("body bounds do not decode"),
+        };
+        let (title, effective_date, text) = document_metadata(body, candidate.title());
+        let status = if text.is_empty() {
+            SourceStatus::Unknown
+        } else {
+            SourceStatus::Known
+        };
+        observations.push(SourceObservation::new(SourceObservationInput {
+            company_id: company.id().to_owned(),
+            kind: candidate.source_kind(),
+            material_kind: SourceMaterialKind::Document,
+            status,
+            tier: SourceTier::OfficialPrimary,
+            url: Some(candidate.url().to_owned()),
+            title: Some(title),
+            text,
+            status_reason: if status == SourceStatus::Known {
+                "discovered document returned usable text".to_owned()
+            } else {
+                "discovered document contained no usable text".to_owned()
+            },
+            source_uri: candidate.url().to_owned(),
+            source_field_or_passage: candidate.provenance().to_owned(),
+            observed_at,
+            effective_date,
+        }));
+    }
+}
+
+fn discovered_document_status(
+    company: &CompanyConfig,
+    candidate: &DocumentCandidate,
+    observed_at: DateTime<Utc>,
+    reason: &str,
+) -> SourceObservation {
+    SourceObservation::new(SourceObservationInput {
+        company_id: company.id().to_owned(),
+        kind: candidate.source_kind(),
+        material_kind: SourceMaterialKind::Document,
+        status: SourceStatus::Unavailable,
+        tier: SourceTier::OfficialPrimary,
+        url: Some(candidate.url().to_owned()),
+        title: Some(candidate.title().to_owned()),
+        text: String::new(),
+        status_reason: reason.to_owned(),
+        source_uri: candidate.url().to_owned(),
+        source_field_or_passage: candidate.provenance().to_owned(),
+        observed_at,
+        effective_date: candidate.published_or_effective_date(),
+    })
 }
 
 fn collect_greenhouse(

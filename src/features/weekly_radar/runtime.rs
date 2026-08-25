@@ -6,7 +6,9 @@
 
 pub mod archive;
 pub mod config;
+pub mod discovery;
 pub mod error;
+pub mod evidence;
 pub mod http;
 pub mod judgment;
 pub mod model;
@@ -24,7 +26,12 @@ pub use archive::{
     ArchiveManifest, ArchiveRunLock, InputSnapshot, INPUT_SNAPSHOT_SCHEMA_VERSION,
 };
 pub use config::{CompanyConfig, CompanySourceRegistry};
+pub use discovery::{DocumentCandidate, DocumentKind, MAX_DOCUMENT_CANDIDATES_PER_ENTRY};
 pub use error::RuntimeError;
+pub use evidence::{
+    extract_evidence_candidate, validate_evidence_candidate, EvidenceCandidate, EvidencePolarity,
+    EvidenceSourceKind, EvidenceValidationError, ValidatedEvidence,
+};
 pub use http::{
     FixtureHttpClient, HttpClient, HttpResponse, HttpTimeouts, UreqHttpClient,
     MAX_HTTP_RESPONSE_BODY_BYTES,
@@ -43,8 +50,7 @@ pub use report::{
 };
 pub use rules::extract_employee_count;
 pub use sec::{
-    CompanyEvidence, SecClient, SecDocumentCandidate, SecStageFailure,
-    MAX_SEC_DOCUMENT_CANDIDATES,
+    CompanyEvidence, SecClient, SecDocumentCandidate, SecStageFailure, MAX_SEC_DOCUMENT_CANDIDATES,
 };
 pub use sources::{
     collect_configured_sources, SourceKind, SourceMaterialKind, SourceObservation, SourceStatus,

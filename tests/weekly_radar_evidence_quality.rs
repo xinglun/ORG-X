@@ -289,6 +289,42 @@ fn document_body_excludes_title_script_and_metadata_before_claim_extraction() {
 }
 
 #[test]
+fn document_body_ignores_navigation_and_social_boilerplate_before_claim_extraction() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><nav><a>Skip to content</a><a>Share on Facebook</a></nav>
+        <header>Company navigation</header>
+        <div class="social-share"><p>Share this article on LinkedIn.</p></div>
+        <div id="main-menu"><a>More navigation</a></div>
+        <main><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></main>
+        <aside>Share this update with your team.</aside>
+        <footer>Privacy policy and cookie settings.</footer></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    let candidate = extract_evidence_candidate(&observation)
+        .expect("substantive paragraph should remain a candidate");
+
+    assert_eq!(
+        candidate.concrete_change(),
+        "Acme adopted an agent-assisted engineering workflow for production scheduling."
+    );
+}
+
+#[test]
+fn generic_architecture_description_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Our storage service exposes object storage, file systems, and block-device APIs, and these APIs are built on a horizontally scalable foundational block layer called Tectonic.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
+#[test]
 fn title_only_document_does_not_create_a_claim_candidate() {
     let observation = document_observation_from_html(
         r#"<html><head><title>Acme adopted an agent-assisted engineering workflow.</title>

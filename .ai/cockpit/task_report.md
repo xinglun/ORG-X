@@ -7,78 +7,69 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Reuse the existing Known plus evidence_ promotion identity so the reader-facing confirmed-information section, executive count, and primary-evidence wording represent validated evidence rather than every raw Known fact.
-Mechanism (verified): Filter confirmed-information cards and summary evidence wording to Known facts whose kind begins with evidence_; retain all other facts in the input, snapshot, health count, and judgment context, while relabeling the health count as known facts in all supported languages.
+Customer summary (verified): Clean document bodies before extraction and require an explicit production-system change action before creating an EvidenceCandidate.
+Mechanism (verified): Remove semantic non-content blocks and marked share/menu containers, prefer cleaned paragraph text, and exclude built-only architecture descriptions from the change signal set.
 
 Affected components
-- Reader-facing report: Confirmed Information contains only validated evidence facts; raw SEC and generic Known facts are not promoted into that section. (verified)
-- Report health and localization: Known status totals remain observable under 已知事实 / 既知の事実 / Known facts and the three localized report paths use the same boundary. (verified)
-- Operations documentation: The SourceObservation, DocumentCandidate, ValidatedEvidence, known-fact, and confirmed-information distinction is documented for operators. (verified)
+- Weekly Radar document discovery: HTML body normalization now excludes common navigation and social boilerplate before claim extraction. (verified)
+- Weekly Radar evidence extraction: Generic architecture descriptions using built-only wording no longer become EvidenceCandidates. (verified)
 
 Design decisions
-- Use the existing evidence_ identity instead of adding a schema field or provider-specific rule.: The validated-evidence pipeline already emits this stable identity, so the report can align its reader-facing semantics without changing acquisition, persistence, or judgment inputs. (verified)
-- Keep raw Known facts available outside the confirmed-information section.: SEC metrics and other raw facts remain useful for audit, health, and judgment context; changing the reader label must not erase those inputs. (verified)
+- Keep the existing evidence_* schema and validation boundary.: The fix is limited to upstream content quality and deterministic candidate promotion; report, Ranking, persistence, and SEC behavior remain unchanged. (verified)
 
 ### Technical details
-- Validated evidence count: The executive summary and primary-evidence sentence use the count of Known evidence_ facts rather than the aggregate Known-fact health count. (verified)
-- Regression coverage: The focused suite covers Chinese, Japanese, and English section semantics; the existing runtime fixture now supplies an explicit evidence_ fact when it expects a confirmed-information card. (verified)
+- TDD regression coverage: Two new tests failed against the baseline and passed after the minimal implementation; the focused suite has 23 passing tests. (verified)
+- Project verification: fmt, clippy with warnings denied, all-target all-feature tests, and the project check target passed. (verified)
 
 ### Evidence
-- The focused Weekly Radar report and runtime suites pass.: tests/weekly_radar_evidence_quality.rs#21 evidence-quality tests and 89 runtime tests (verified)
-- The full Rust quality suite passes with formatting and diff checks.: Makefile#cargo test --all-targets --all-features; cargo fmt --all -- --check; git diff --check (verified)
+- Boilerplate is excluded while a substantive dated production claim remains extractable.: tests/weekly_radar_evidence_quality.rs#document_body_ignores_navigation_and_social_boilerplate_before_claim_extraction (verified)
+- Generic architecture descriptions are not promoted by the built-only wording.: tests/weekly_radar_evidence_quality.rs#generic_architecture_description_does_not_create_a_claim_candidate (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.summary.json]
-- Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json]
+- Changed .ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json [evidence: .ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json]
+- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
+- Changed src/features/weekly_radar/runtime/discovery.rs [evidence: src/features/weekly_radar/runtime/discovery.rs]
+- Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
 - Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
-- Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
+- Changed tests/discovery_test.rs [evidence: tests/discovery_test.rs]
+- Changed tests/evidence_test.rs [evidence: tests/evidence_test.rs]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-confirmed-evidence-report.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-confirmed-evidence-report.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/knowledge/dependencies.json [evidence: .ai/knowledge/dependencies.json]
-- Changed .ai/knowledge/work-items/wi-sec-submissions-response-limit.json [evidence: .ai/knowledge/work-items/wi-sec-submissions-response-limit.json]
-- Changed .ai/knowledge/work-items/wi-telegram-delivery-verification.json [evidence: .ai/knowledge/work-items/wi-telegram-delivery-verification.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-content-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-content-quality.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json]
-- Changed .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json]
-- Changed .ai/knowledge/index.json [evidence: .ai/knowledge/index.json]
 
 Problems found
-- Total: 4
+- Total: 2
 - Blocking: 0
 - Warning: 0
 
 Stops triggered
 - Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Reason: quality failed before the retry. | Stage: verification | Resolution: Retry quality after correcting the recorded failure. [evidence: verificationHistory[1] quality failed, verification[quality] retry passed]
 
 Problems resolved
 - Problem: aiGuidelines failed before the retry.
   Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
   Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Problem: quality failed before the retry.
+  Solution: Re-ran quality after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[1] quality failed, verification[quality] retry passed]
 
 Risks avoided
 - If not detected, could have led to a stale completion claim. (inference)
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- observed issue (inference)
-- observed issue (inference)
-- observed issue (inference)
-- The confirmed-information boundary is corrected, but the existing small-company observation section can still show raw Known facts by design; this Work Item does not change that context or imply that those facts are structural-change evidence. [evidence: residualRisks]
+- Regex cleanup covers common semantic tags and marked containers; site-specific nested boilerplate may remain. [evidence: residualRisks]
+- Removing built rejects generic architecture descriptions but may leave genuine build-only changes pending. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- None recorded.
+- The user accepted the bounded extraction-quality design and requested a new WI with TDD implementation. (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]

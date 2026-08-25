@@ -140,7 +140,7 @@ SEC submissions 和 SEC Company Facts 都是包含完整申报历史的 JSON，�
 
 报告渲染还会把事实状态和证据语义分开：只有 `status=Known` 且 `kind` 以 `evidence_` 开头的 fact 才能出现在“已确认信息”；SEC 的 `revenue`、`headcount`、`capex` 等原始指标，以及 `source_*`、`pending_evidence_*` 和其他非证据 fact，不会进入这一节。系统状态中的“已知事实”只是输入中所有 `Known` facts 的可观测计数，不等于已确认企业变化的数量。
 
-文档晋升前会先把 `<title>`、`meta`、`script`、`style`、`noscript` 和标题标签内容从正文候选中移除；这些内容只用于文档身份或完全不参与主张抽取。正文必须提供一个有终止标点的完整句子（至少 8 个词），同时命中明确的变化动作和生产系统信号，才会生成 `EvidenceCandidate`。因此，文章标题、目录标题、页面 JSON、整页拼接文本、只有关键词的句子和没有有效日期的文档，都会停留在 `DocumentCandidate`/待验证线索层，不会进入“已确认信息”。
+文档晋升前会先把 `<title>`、`meta`、`script`、`style`、`noscript`、标题标签以及 `nav`、`header`、`footer`、`aside`、`form` 等非正文块从候选正文中移除；带有 `share`、`social`、`menu`、`breadcrumb`、`sidebar`、`navigation` 等标记的常见容器也会被排除。若页面包含段落，抽取只使用清洗后的 `<p>` 内容，避免把“Skip to content”、分享链接、页脚或菜单拼进主张。正文必须提供一个有终止标点的完整句子（至少 8 个词），同时命中明确的生产系统变化动作和生产环节信号，才会生成 `EvidenceCandidate`；仅描述既有架构、接口或系统组成而没有变化动作的句子不会晋升。因此，文章标题、目录标题、页面 JSON、整页拼接文本、只有关键词的句子和没有有效日期的文档，都会停留在 `DocumentCandidate`/待验证线索层，不会进入“已确认信息”。
 
 每份报告的 `research_metrics` 与首页摘要分别展示：`本周新增有效证据`、`发现文档候选`、`来源可用性确认`、`待验证线索`、`关键数据源不可用`。这些计数互不替代；尤其是来源可用不等于企业发生变化。当有效证据为零且仍有待验证线索或不可用来源时，报告使用“数据不足/无法据此确认本周没有组织变化”的 calibrated wording，而不是把它写成没有变化。
 

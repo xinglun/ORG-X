@@ -242,14 +242,32 @@ fn normalize_markup(value: &str) -> String {
 fn normalize_document_body(value: &str) -> String {
     let mut without_non_content = value.to_owned();
     for tag in [
-        "script", "style", "noscript", "h1", "h2", "h3", "h4", "h5", "h6",
+        "script", "style", "noscript", "h1", "h2", "h3", "h4", "h5", "h6", "nav", "header",
+        "footer", "aside", "form",
     ] {
         let regex = Regex::new(&format!(r"(?is)<{tag}\b[^>]*>.*?</{tag}\s*>"))
             .expect("valid non-content regex");
         without_non_content = regex.replace_all(&without_non_content, " ").into_owned();
     }
+    let boilerplate_container = Regex::new(
+        r#"(?is)<(?:div|section|ul|ol)\b[^>]*(?:class|id)\s*=\s*["'][^"']*(?:share|social|menu|breadcrumb|sidebar|navigation|footer|header)[^"']*["'][^>]*>.*?</(?:div|section|ul|ol)\s*>"#,
+    )
+    .expect("valid boilerplate container regex");
+    without_non_content = boilerplate_container
+        .replace_all(&without_non_content, " ")
+        .into_owned();
     let without_metadata = Regex::new(r"(?is)<title\b[^>]*>.*?</title\s*>|<meta\b[^>]*>")
         .expect("valid metadata regex")
         .replace_all(&without_non_content, " ");
+    let paragraphs = Regex::new(r"(?is)<p\b[^>]*>(.*?)</p\s*>")
+        .expect("valid paragraph regex")
+        .captures_iter(&without_metadata)
+        .filter_map(|captures| captures.get(1))
+        .map(|paragraph| normalize_markup(paragraph.as_str()))
+        .filter(|paragraph| !paragraph.is_empty())
+        .collect::<Vec<_>>();
+    if !paragraphs.is_empty() {
+        return paragraphs.join(" ");
+    }
     normalize_markup(&without_metadata)
 }

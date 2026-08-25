@@ -1,0 +1,294 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-evidence-extraction-quality",
+  "mode": "code",
+  "title": "Weekly Radar evidence extraction quality",
+  "baseCommit": "0004c92896e0d75ecdcd15f70d86a21a04e0f4c3",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-evidence-extraction-quality.outcome.md",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/discovery_test.rs",
+    "tests/evidence_test.rs",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "src/main.rs acquisition flow and source adapters",
+    "src/features/weekly_radar/runtime/model.rs and serialized snapshot schema",
+    "SEC collection, company facts, and source adapter availability",
+    "document discovery policy beyond the document-body normalization helper",
+    "report rendering, Ranking, judgment, Telegram delivery, and archive persistence",
+    "new dependencies, LLM/provider calls, and production operation"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository Work Item, evidence, scope, and lifecycle rules."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Repository terminology and evidence-layer boundaries."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "reason": "Current HTML document metadata and body normalization implementation."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "Current deterministic claim extraction and evidence-candidate gate."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "Existing extraction fixtures and regression boundaries."
+    },
+    {
+      "path": "tests/discovery_test.rs",
+      "reason": "Coverage-guard-associated regression for document-body normalization."
+    },
+    {
+      "path": "tests/evidence_test.rs",
+      "reason": "Coverage-guard-associated regression for evidence promotion identity."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Reader-facing source/evidence lifecycle documentation."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.md",
+      "reason": "Prior outcome and live-run evidence identifying extraction quality as the next bottleneck."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "evidence_false_positive",
+      "source_text_normalization_regression",
+      "legacy_fixture_compatibility"
+    ],
+    "reason": "Tightening candidate promotion changes confirmed-evidence counts; the implementation must remove page boilerplate without dropping substantive dated claims or changing provenance/schema behavior.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "user-authorized",
+    "reviewedAt": "2026-08-25T12:30:00+09:00",
+    "reviewNote": "The 2026-08-25 dry-run exposed boilerplate and generic architecture descriptions in confirmed candidates. The user approved a bounded extraction-quality WI while keeping SEC, report, judgment, Ranking, and delivery unchanged."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The final Work Item scope includes restricted Implementation Knowledge projections, so automatic quality routing requires Strict."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user accepted the bounded extraction-quality design and explicitly requested a new WI with TDD implementation; the existing fixtures make the behavior codable and testable."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "Document-body normalization removes navigation, header/footer/aside, form, and share/social/menu boilerplate before claim extraction while retaining substantive paragraph text.",
+    "Evidence extraction rejects UI boilerplate and generic architecture descriptions that lack an explicit production-system change action.",
+    "A concrete dated authoritative production-system change sentence still produces an EvidenceCandidate and passes the existing evidence_ validation path.",
+    "Promotion remains deterministic and preserves the existing evidence_* schema, provenance, source boundary, and snapshot/hash behavior; page-level observations remain non-evidence.",
+    "No SEC coverage, Ranking, judgment, report, Telegram, archive, persistence, dependency, or provider-call behavior changes.",
+    "Focused red-green regressions cover boilerplate rejection, generic-description rejection, and valid claim preservation.",
+    "Weekly Radar operations documentation describes the stronger normalization and explicit-change extraction boundary.",
+    "All required governance, project quality, and regression checks pass before the Work Item is finished."
+  ],
+  "guidelines": [
+    "Do not add LLM/provider calls or dependencies; keep extraction deterministic.",
+    "Preserve all languages, deterministic ordering, provenance, and the existing evidence_* schema.",
+    "Page-level, UI, and source-availability observations must never become validated evidence.",
+    "Do not change the SEC, report, judgment, Ranking, persistence, or delivery boundaries.",
+    "Do not weaken or delete existing tests; add targeted red-green regression coverage."
+  ],
+  "intent": {
+    "problem": "The 2026-08-25 live dry-run produced eight confirmed candidates from Meta Engineering, but several snippets began with navigation/share boilerplate or described generic architecture. The gate still used whole normalized document text plus broad keywords, so reader-facing evidence remained closer to page/technical-description level than a concrete enterprise production-system change.",
+    "constraints": [
+      "Only discovery body normalization and deterministic EvidenceCandidate extraction are in scope; SEC, document discovery policy, report semantics, judgment, Ranking, persistence, and delivery remain unchanged.",
+      "Keep the existing evidence_* schema, provenance, deterministic ordering, all supported report languages, and no new dependency or provider call.",
+      "Require an explicit effective date, authoritative document, production-system context, and an explicit change action for candidate promotion.",
+      "Preserve valid body claims and keep source/page observations out of ValidatedEvidence."
+    ],
+    "rationale": "Cleaning non-content HTML before extraction and narrowing the deterministic action-plus-production gate is the smallest change that addresses the observed false positives without expanding the system architecture."
+  },
+  "rawUserRequest": "接受建议，请创建新的 WI 并开始 TDD 编码。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "The user accepted the extraction-quality recommendation and explicitly requested a new governed Work Item with TDD implementation.",
+    "capturedAt": "2026-08-25T12:30:00+09:00",
+    "digest": "not-generated"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "ai_governance"],
+    "prohibitedCapabilities": ["production_operation", "external_delivery"],
+    "requestedOutcome": "Prevent UI boilerplate and generic architecture descriptions from becoming Weekly Radar ValidatedEvidence while preserving concrete dated production-system claims.",
+    "decisionBoundary": "Only discovery normalization and deterministic EvidenceCandidate extraction change; SEC, judgment, Ranking, report, persistence, and delivery do not."
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly requested creation and TDD implementation of this Work Item."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Document boilerplate is removed before extraction",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "Navigation, share/social, header/footer, and aside text cannot prefix or contaminate a candidate while a substantive paragraph remains extractable.",
+      "verificationPlan": "Add an HTML fixture first and run the focused test to observe the expected RED failure; implement normalization and verify the candidate contains only the substantive claim."
+    },
+    {
+      "scenario": "Generic architecture description is not promoted",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "A dated authoritative document containing a generic architecture sentence with production terminology but no explicit change action yields no EvidenceCandidate.",
+      "verificationPlan": "Add a focused generic-description fixture first and confirm the current broad keyword gate fails the new assertion; narrow the action gate and rerun it GREEN."
+    },
+    {
+      "scenario": "Concrete dated production change remains promotable",
+      "required": true,
+      "status": "unverified",
+      "evidence": [],
+      "expected": "A dated authoritative sentence describing an explicit organizational or production-system change still yields a candidate and preserves the existing evidence_* validation identity.",
+      "verificationPlan": "Reuse and extend the existing valid body-claim fixture, run focused extraction tests, then run the full evidence-quality suite."
+    }
+  ],
+  "implementationSurface": {
+    "production": [
+      "src/features/weekly_radar/runtime/discovery.rs",
+      "src/features/weekly_radar/runtime/evidence.rs"
+    ],
+    "tests": [
+      "tests/weekly_radar_evidence_quality.rs",
+      "tests/discovery_test.rs",
+      "tests/evidence_test.rs"
+    ],
+    "generated": [
+      ".ai/cockpit/current_status.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md"
+    ],
+    "documentation": ["docs/operations/WEEKLY_RADAR.md"]
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly authorized creation and TDD implementation of this governed Work Item; generated governance projections remain within its declared scope."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 69
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json",
+    "baseCommit": "0004c92896e0d75ecdcd15f70d86a21a04e0f4c3",
+    "initialScopeDigest": "9b176b430fe2f9bf47e824d0bc436ec6ce9d578579844a6d439584827f6d636f",
+    "contractSkeletonDigest": "c72fe20f46a735ab3b8f66199defd3e9408ed71d5fa42f50b6b1e342a148ffb1"
+  }
+}

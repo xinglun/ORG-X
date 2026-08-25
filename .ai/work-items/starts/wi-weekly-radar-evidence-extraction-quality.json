@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-evidence-extraction-quality",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-evidence-extraction-quality.json",
+  "baseCommit": "0004c92896e0d75ecdcd15f70d86a21a04e0f4c3",
+  "baseBranch": "codex/weekly-radar-extraction-quality",
+  "startTimestamp": "2026-08-25T03:33:17.268144+00:00",
+  "initialScopeDigest": "9b176b430fe2f9bf47e824d0bc436ec6ce9d578579844a6d439584827f6d636f",
+  "contractSkeletonDigest": "c72fe20f46a735ab3b8f66199defd3e9408ed71d5fa42f50b6b1e342a148ffb1"
+}

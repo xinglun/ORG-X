@@ -1713,8 +1713,9 @@ fn task4_report_is_deterministic_and_uses_the_mobile_first_contract() {
         matches!(
             *heading,
             "本周摘要"
-                | "已确认信息"
-                | "重要组织变化"
+                | "已验证事实"
+                | "结构性证据"
+                | "结构性变化证据"
                 | "重点公司"
                 | "Rising"
                 | "Dropped"
@@ -1722,7 +1723,7 @@ fn task4_report_is_deterministic_and_uses_the_mobile_first_contract() {
         )
     }));
     assert!(first.markdown().matches("### ").count() <= 8);
-    assert!(first.markdown().contains("## 重要组织变化"));
+    assert!(first.markdown().contains("## 结构性变化证据"));
     assert!(first.markdown().contains("## 重点公司"));
     assert!(!first.markdown().contains("Stage"));
     assert!(!first.markdown().contains("rank"));
@@ -1761,7 +1762,7 @@ fn task4_empty_report_states_that_no_evidence_was_supplied() {
 
     assert!(report
         .markdown()
-        .contains("主证据：本周没有可作为主证据的确认信息"));
+        .contains("主证据：本周没有可作为主证据的已验证事实"));
 }
 
 #[test]
@@ -1784,7 +1785,7 @@ fn task8_report_expands_each_validated_evidence_fact_with_date_and_direct_eviden
     let report = task4_report();
     let markdown = report.markdown();
     let confirmed_section = markdown
-        .split("## 已确认信息")
+        .split("## 已验证事实")
         .nth(1)
         .and_then(|section| section.split("\n## ").next())
         .expect("confirmed information section should be rendered");
@@ -1875,7 +1876,9 @@ fn task7_unavailable_first_fact_never_becomes_evidence_basis() {
         .expect("fact should be unique");
 
     let report = render_report(&input);
-    assert!(report.markdown().contains("本周没有可作为主证据的确认信息"));
+    assert!(report
+        .markdown()
+        .contains("本周没有可作为主证据的已验证事实"));
     assert!(!report
         .markdown()
         .contains("official page request unavailable"));

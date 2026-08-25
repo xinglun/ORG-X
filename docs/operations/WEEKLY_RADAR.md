@@ -1,6 +1,6 @@
 # Weekly Radar 使用说明
 
-Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，从入口页发现有限的实际文档，再把具体主张通过 EvidenceCandidate → ValidatedEvidence 门槛；只有通过门槛并生成 `evidence_*` normalized fact 的事实进入面向人的“已确认信息”。SEC 指标、来源可用性和其他 `Known` facts 仍会保留在输入快照、系统状态和判断上下文中，但不会因为状态是 `Known` 就自动变成企业变化证据。生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram；只有发送成功后，才把输入快照以及可追溯的 report、snapshot、receipt 和 manifest 一起写入受保护的 `data` 分支。
+Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，从入口页发现有限的实际文档，再把具体主张通过 EvidenceCandidate → ValidatedEvidence 门槛。通过门槛的内容还会继续区分为“已验证事实”和“结构性证据”；入口页可访问性本身不会被写成企业变化。SEC 指标、来源可用性和其他 `Known` facts 仍会保留在输入快照、系统状态和判断上下文中，但不会因为状态是 `Known` 就自动变成企业变化证据。生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram；只有发送成功后，才把输入快照以及可追溯的 report、snapshot、receipt 和 manifest 一起写入受保护的 `data` 分支。
 
 ## 运行流程
 
@@ -136,21 +136,23 @@ SEC submissions 和 SEC Company Facts 都是包含完整申报历史的 JSON，�
 - `SourceObservation`：入口页或接口是否可访问；入口页的可访问性不是企业变化证据。
 - `DocumentCandidate`：从同源入口发现的有限文档，保留 URL、标题、文档类型、日期和发现 provenance；不会猜测 URL，也不会无限爬取。
 - `EvidenceCandidate`：必须有对象、具体变化/事实、日期、生产环节、来源身份、权威级别、段落和 cutoff 关系；缺项保持待验证，不进入 confirmed。
-- `ValidatedEvidence`：通过确定性 gate 的主张，才会成为 `evidence_*` normalized fact 并进入“已确认信息”。GDELT、新闻、招聘记录和页面级 observation 不会绕过该 gate。
+- `ValidatedEvidence`：通过确定性 gate 的主张，才会成为 `evidence_*` normalized fact；它随后按主张段落中的结构性信号分为普通已验证事实或 StructuralEvidence。GDELT、新闻、招聘记录和页面级 observation 不会绕过该 gate。
+- `ValidatedFact`：已验证但未满足结构性变化信号的事实，使用 `evidence_official_material_<index>`，进入报告的“已验证事实”。
+- `StructuralEvidence`：已验证且明确涉及组织、责任、生产系统、工作流、部署、利用率、延迟、产能、成本、人员或经营指标变化的事实，使用 `evidence_structural_change_<index>`，进入报告单独的“结构性证据”；它不会绕过既有 Stage 或 Ranking gate。
 
-报告渲染还会把事实状态和证据语义分开：只有 `status=Known` 且 `kind` 以 `evidence_` 开头的 fact 才能出现在“已确认信息”；SEC 的 `revenue`、`headcount`、`capex` 等原始指标，以及 `source_*`、`pending_evidence_*` 和其他非证据 fact，不会进入这一节。系统状态中的“已知事实”只是输入中所有 `Known` facts 的可观测计数，不等于已确认企业变化的数量。
+报告渲染还会把事实状态和证据语义分开：只有 `status=Known` 且 `kind` 以 `evidence_` 开头的 fact 才能进入证据明细，并按上述两类分别出现在“已验证事实”或“结构性证据”；SEC 的 `revenue`、`headcount`、`capex` 等原始指标，以及 `source_*`、`pending_evidence_*` 和其他非证据 fact，不会进入这两节。系统状态中的“已知事实”只是输入中所有 `Known` facts 的可观测计数，不等于已确认企业变化的数量。
 
 文档晋升前会先把 `<title>`、`meta`、`script`、`style`、`noscript`、标题标签以及 `nav`、`header`、`footer`、`aside`、`form` 等非正文块从候选正文中移除；带有 `share`、`social`、`menu`、`breadcrumb`、`sidebar`、`navigation` 等标记的常见容器也会被排除。若页面包含段落，抽取只使用清洗后的 `<p>` 内容，避免把“Skip to content”、分享链接、页脚或菜单拼进主张。正文必须提供一个有终止标点的完整句子（至少 8 个词），同时命中明确的生产系统变化动作和生产环节信号，才会生成 `EvidenceCandidate`；仅描述既有架构、接口或系统组成而没有变化动作的句子不会晋升。因此，文章标题、目录标题、页面 JSON、整页拼接文本、只有关键词的句子和没有有效日期的文档，都会停留在 `DocumentCandidate`/待验证线索层，不会进入“已确认信息”。
 
-每份报告的 `research_metrics` 与首页摘要分别展示：`本周新增有效证据`、`发现文档候选`、`来源可用性确认`、`待验证线索`、`关键数据源不可用`。这些计数互不替代；尤其是来源可用不等于企业发生变化。当有效证据为零且仍有待验证线索或不可用来源时，报告使用“数据不足/无法据此确认本周没有组织变化”的 calibrated wording，而不是把它写成没有变化。
+每份报告的 `research_metrics` 与首页摘要分别展示：`本周新增已验证事实`、`本周新增结构性证据`、`发现文档候选`、`来源可用性确认`、`待验证线索`、`关键数据源不可用`，以及 SEC 的“阶段可用/期望”和“可用事实/期望”。这些计数互不替代：来源可用不等于企业发生变化，SEC 阶段可达也不等于 SEC normalized facts 可用。当结构性证据为零且仍有待验证线索、不可用来源或不可用事实时，报告使用“数据不足/无法据此确认本周没有组织变化”的 calibrated wording，而不是把它写成没有变化。
 
 规则抽取保留来源、字段或原文片段和日期。系统会在证据达到门槛时自动给出一个可复核的参考判断；缺少、歧义、冲突、日期不明、对象不相关或格式错误不会被猜测，证据不足时显示“系统暂无法判断”。人的判断保持独立，系统只提供参考，报告不会把两者合并成一个答案，方便人自行核验、保留不同意见或继续补证。运行时不使用付费 API、LLM 抽取或投资结论。
 
 ## Telegram 报告
 
-报告按“本周摘要 → 已确认信息 → 系统参考判断 → 重要组织变化 → 重点公司（有明确选择时）→ 系统状态”组织，再按完整章节拆分消息。
+报告按“本周摘要 → 已验证事实（如有）→ 结构性证据（如有）→ 系统参考判断 → 结构性变化证据 → 重点公司（有明确选择时）→ 系统状态”组织，再按完整章节拆分消息；旧版“已确认信息”等标题仍作为输入兼容别名接受。
 
-你会在“已确认信息”中逐条看到经过 ValidatedEvidence gate 的事实：公司、信息类型、事实内容、事实日期（资料没有日期时不补写）和直接证据链接。报告不会用一个总入口链接代替每家公司或每条事实的依据。SEC 指标等“已知事实”会在快照和系统状态中保留，用于审计和判断上下文，但不应被解读为结构性变化结论。
+你会在“已验证事实”和“结构性证据”中逐条看到经过 ValidatedEvidence gate 的事实：公司、信息类型、事实内容、事实日期（资料没有日期时不补写）和直接证据链接。报告不会用一个总入口链接代替每家公司或每条事实的依据。SEC 指标等“已知事实”会在快照和系统状态中保留，用于审计和判断上下文，但不应被解读为结构性变化结论。
 
 “系统参考判断”会逐家公司说明系统参考是什么、为什么得到这个状态、哪些资料支持它、哪些反向资料需要注意、还缺少什么证据以及对应链接。系统参考只是给人的一个可复核参考；人的判断仍然独立，可以同意、保留不同意见或继续补证，二者不会合并、投票或协作生成一个答案。
 

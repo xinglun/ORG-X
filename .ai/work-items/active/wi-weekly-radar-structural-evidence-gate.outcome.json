@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-structural-evidence-gate",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "443027dd6021254855247fc529535b4446faf6fccc4e7941d1afc6cc9473cde3"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-structural-evidence-gate",
+    "contractDigest": "cc1f4c025e028882308c0736df5bb6b45ea6ae6230326bd093269388302f45ba",
+    "summaryDigest": "9a894f475c6ffedf31439c29f78addcf67e9537339e1e6a92e26766cdf4187ba",
+    "verificationDigest": "787800df6d05408432818bf448dae442a3f563f95ea175e0df533471cbd7f217",
+    "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
+    "headCommit": "7f88534bcaad35cc5c20197a9285b93d52af04c5",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "62342ec66f1b80c1230e7fcfc210751bbcc7c3207c65171022482ea1c468eee2",
+      "binding": {
+        "baseCommit": "caeb66cf732d35155b25b098a3b3788695837a56",
+        "candidateHead": "7f88534bcaad35cc5c20197a9285b93d52af04c5",
+        "candidateTreeDigest": "d405f58f601bcf0d75fa035c01070d37c99de3e4859a19101e510646f9769b48",
+        "candidateDiffDigest": "2ff09fa364fb582ce519414b50378b19321b62c4e2758ebe021bd61152b87c26"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-structural-evidence-gate generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-structural-evidence-gate generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-structural-evidence-gate",
     "deliveredChanges": [
       ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
       ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
@@ -37,282 +60,339 @@
       ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
-        },
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiSummary",
-      "action": "blocked",
-      "resolution": "Retry aiSummary after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
-        },
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
-        },
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "aiSummary failed before the retry.",
-      "policyOrGuard": "required verification: aiSummary",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiSummary after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
-        },
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "Keep fail-closed Ranking behavior.",
-    "Separate source availability, leads, validated facts, and structural evidence.",
-    "Prioritize truthful SEC stage/fact health.",
-    "Execute the governed Work Item through CI and one authorized dry-run."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The classifier is deterministic and intentionally conservative; real provider wording may remain a regular validated fact until the signal vocabulary is amended in a governed follow-up.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "No post-merge dry-run has been executed for this Work Item yet; live SEC/source availability and the resulting structural count remain unverified until the authorized dispatch.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Keep the existing SourceObservation to EvidenceCandidate to ValidatedEvidence pipeline, then add a deterministic second classification that separates ordinary validated facts from structural evidence without changing Stage or Ranking gates.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "EvidenceClass and normalized-fact kind boundary"
-        },
-        {
-          "source": "tests/weekly_radar_evidence_quality.rs",
-          "subject": "positive and negative structural classification tests"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Classify only validated bounded passage text using fixed structural signals; aggregate SEC submissions/Company Facts stage reachability separately from normalized FactStatus::Known facts; render both dimensions read-only in localized reports.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/main.rs",
-          "subject": "acquisition counters and SEC stage/fact aggregation"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/report.rs",
-          "subject": "localized report sections and health metrics"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Evidence classification",
-        "detail": "Validated document claims receive regular or structural evidence prefixes while preserving provenance.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "ValidatedEvidence::evidence_class"
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
+          },
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
           }
         ]
       },
       {
-        "component": "SEC health reporting",
-        "detail": "Stage availability and usable normalized facts are counted independently.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiSummary failed before the retry.",
+        "policyOrGuard": "required verification: aiSummary",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiSummary after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/main.rs",
-            "subject": "SEC counters"
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
           },
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "partial SEC fixture"
-          }
-        ]
-      },
-      {
-        "component": "Reader-facing report",
-        "detail": "Validated Facts and Structural Evidence are separate localized sections; old splitter aliases remain accepted.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/report.rs",
-            "subject": "report renderer"
-          },
-          {
-            "source": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
-            "subject": "heading aliases"
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "resolutions": [
       {
-        "decision": "Prefer false negatives over promoting generic engineering prose.",
-        "reason": "A validated technical article is not evidence of enterprise production-system change without an explicit structural signal.",
-        "status": "verified",
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "generic research negative fixture"
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
+          },
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
           }
         ]
       },
       {
-        "decision": "Do not equate SEC stage reachability with usable SEC facts.",
-        "reason": "A reachable endpoint can return unavailable or empty normalized facts; readers need both counters.",
-        "status": "verified",
+        "problem": "aiSummary failed before the retry.",
+        "action": "Re-ran aiSummary after the correction; the latest attempt passed.",
+        "verification": "aiSummary latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/main.rs",
-            "subject": "distinct SEC stage/fact counters"
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
           },
           {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "operator semantics"
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
           }
         ]
       }
     ],
-    "technicalDetails": [
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
       {
-        "topic": "Compatibility",
-        "detail": "New ResearchMetrics fields default to zero during legacy RuntimeReportInput deserialization.",
-        "status": "verified",
+        "claim": "classification",
+        "severity": "medium",
+        "title": "classification",
+        "detail": "The classifier is deterministic and intentionally conservative; real provider wording may remain a regular validated fact until the signal vocabulary is amended in a governed follow-up.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/model.rs",
-            "subject": "serde defaults"
-          },
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "legacy snapshot test"
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
       },
       {
-        "topic": "Verification",
-        "detail": "Focused evidence/runtime/splitter suites and make quality pass; hosted CI and post-merge dry-run remain lifecycle steps.",
-        "status": "verified",
+        "claim": "live-validation",
+        "severity": "medium",
+        "title": "live-validation",
+        "detail": "No post-merge dry-run has been executed for this Work Item yet; live SEC/source availability and the resulting structural count remain unverified until the authorized dispatch.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "Makefile",
-            "subject": "quality target"
-          },
-          {
-            "source": "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md",
-            "subject": "lifecycle checklist"
+            "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
       }
+    ],
+    "humanDecisions": [
+      "Keep fail-closed Ranking behavior.",
+      "Separate source availability, leads, validated facts, and structural evidence.",
+      "Prioritize truthful SEC stage/fact health.",
+      "Execute the governed Work Item through CI and one authorized dry-run."
     ],
     "evidence": [
       {
-        "claim": "The implementation preserves the approved four-layer evidence boundary and does not promote page availability into structural evidence.",
-        "status": "verified",
+        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
         "subject": "approved design boundary"
       },
       {
-        "claim": "The operator guide explains validated facts, structural evidence, SEC stage health, and usable SEC facts without claiming a live run.",
-        "status": "verified",
         "source": "docs/operations/WEEKLY_RADAR.md",
         "subject": "operator-facing four-layer semantics"
+      },
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "f1c5a172a0ebda4c6b3f6d5129a375b904db24e0f34abd13fe1a182d3747ec3d"
+      },
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "fd2d425c0ab5cea6d458b8b2215a45307ecb2471bfe5bc66df9bbff528e6184b"
+      },
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "subject": "verificationHistory[1] aiSummary failed",
+        "digest": "af0ac9a92c575ae9430b4750686e611babb36a94fa649d70af6ba5db98aaa0fe"
+      },
+      {
+        "source": ".ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json",
+        "subject": "verification[aiSummary] retry passed",
+        "digest": "e284ef55462f49b894145c3fd2c0c93744ac8ba1888babf13d2f995b9633771c"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Keep the existing SourceObservation to EvidenceCandidate to ValidatedEvidence pipeline, then add a deterministic second classification that separates ordinary validated facts from structural evidence without changing Stage or Ranking gates.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "EvidenceClass and normalized-fact kind boundary"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "positive and negative structural classification tests"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Classify only validated bounded passage text using fixed structural signals; aggregate SEC submissions/Company Facts stage reachability separately from normalized FactStatus::Known facts; render both dimensions read-only in localized reports.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/main.rs",
+            "subject": "acquisition counters and SEC stage/fact aggregation"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "localized report sections and health metrics"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Evidence classification",
+          "detail": "Validated document claims receive regular or structural evidence prefixes while preserving provenance.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "ValidatedEvidence::evidence_class"
+            }
+          ]
+        },
+        {
+          "component": "SEC health reporting",
+          "detail": "Stage availability and usable normalized facts are counted independently.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/main.rs",
+              "subject": "SEC counters"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "partial SEC fixture"
+            }
+          ]
+        },
+        {
+          "component": "Reader-facing report",
+          "detail": "Validated Facts and Structural Evidence are separate localized sections; old splitter aliases remain accepted.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/report.rs",
+              "subject": "report renderer"
+            },
+            {
+              "source": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+              "subject": "heading aliases"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Prefer false negatives over promoting generic engineering prose.",
+          "reason": "A validated technical article is not evidence of enterprise production-system change without an explicit structural signal.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "generic research negative fixture"
+            }
+          ]
+        },
+        {
+          "decision": "Do not equate SEC stage reachability with usable SEC facts.",
+          "reason": "A reachable endpoint can return unavailable or empty normalized facts; readers need both counters.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/main.rs",
+              "subject": "distinct SEC stage/fact counters"
+            },
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "operator semantics"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Compatibility",
+          "detail": "New ResearchMetrics fields default to zero during legacy RuntimeReportInput deserialization.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/model.rs",
+              "subject": "serde defaults"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "legacy snapshot test"
+            }
+          ]
+        },
+        {
+          "topic": "Verification",
+          "detail": "Focused evidence/runtime/splitter suites and make quality pass; hosted CI and post-merge dry-run remain lifecycle steps.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "Makefile",
+              "subject": "quality target"
+            },
+            {
+              "source": "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md",
+              "subject": "lifecycle checklist"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The implementation preserves the approved four-layer evidence boundary and does not promote page availability into structural evidence.",
+          "status": "verified",
+          "source": "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
+          "subject": "approved design boundary"
+        },
+        {
+          "claim": "The operator guide explains validated facts, structural evidence, SEC stage health, and usable SEC facts without claiming a live run.",
+          "status": "verified",
+          "source": "docs/operations/WEEKLY_RADAR.md",
+          "subject": "operator-facing four-layer semantics"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1306,6 +1386,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

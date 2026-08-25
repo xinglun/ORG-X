@@ -202,6 +202,12 @@ fn boundary_for_heading(heading: &str) -> Result<SemanticBoundary, SemanticSplit
         | "Important Organizational Changes"
         | "重要组织变化"
         | "重要な組織変化"
+        | "Structural Evidence"
+        | "结构性证据"
+        | "構造的証拠"
+        | "Structural Change Evidence"
+        | "结构性变化证据"
+        | "構造的変化の根拠"
         | "Stage Transition" => Ok(SemanticBoundary::ImportantTransition),
         "Top5" | "Companies to Watch" | "重点公司" | "注目企業" | "Threshold Distance" => {
             Ok(SemanticBoundary::Top5)
@@ -216,6 +222,9 @@ fn boundary_for_heading(heading: &str) -> Result<SemanticBoundary, SemanticSplit
         "Executive Summary"
         | "本周摘要"
         | "已确认信息"
+        | "Validated Facts"
+        | "已验证事实"
+        | "検証済み事実"
         | "週次サマリー"
         | "確認済み情報"
         | "No Change"

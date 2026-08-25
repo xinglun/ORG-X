@@ -32,24 +32,24 @@
 - Consumes: existing EvidenceCandidate fields concrete_change, production_area, source_kind, source_tier, source_title, and passage.
 - Produces: public EvidenceClass::{ValidatedFact, StructuralEvidence}, ValidatedEvidence::evidence_class(), and normalized fact kinds evidence_official_material_<index> or evidence_structural_change_<index>.
 
-- [ ] Write a failing structural-positive test. Add a dated candidate with source details “Acme consolidated production scheduling under one platform.” Assert evidence_class() is StructuralEvidence and to_normalized_fact(1).kind() starts with evidence_structural_change_.
-- [ ] Run the focused test:
+- [x] Write a failing structural-positive test. Add a dated candidate with source details “Acme consolidated production scheduling under one platform.” Assert evidence_class() is StructuralEvidence and to_normalized_fact(1).kind() starts with evidence_structural_change_.
+- [x] Run the focused test:
   
   ~~~bash
   cargo test --test weekly_radar_evidence_quality explicit_production_system_change_becomes_structural_evidence -- --exact
   ~~~
   
   Expected: compilation failure because EvidenceClass and evidence_class() do not exist.
-- [ ] Write a failing structural-negative test. Add a dated candidate with “The research model shifted representation modeling for long-range graph topologies.” Assert evidence_class() is ValidatedFact and the normalized kind starts with evidence_official_material_.
-- [ ] Run the negative test and confirm the same missing-API RED failure.
-- [ ] Implement EvidenceClass, a private structural-signal classifier, ValidatedEvidence::evidence_class(), and the kind selection in to_normalized_fact(). Require an existing change action plus organization/operating-model, production/workflow/deployment, or measurable operating-impact signals. Do not treat research, architecture, model, or product alone as structural.
-- [ ] Run:
+- [x] Write a failing structural-negative test. Add a dated candidate with “The research model shifted representation modeling for long-range graph topologies.” Assert evidence_class() is ValidatedFact and the normalized kind starts with evidence_official_material_.
+- [x] Run the negative test and confirm the same missing-API RED failure.
+- [x] Implement EvidenceClass, a private structural-signal classifier, ValidatedEvidence::evidence_class(), and the kind selection in to_normalized_fact(). Require an existing change action plus organization/operating-model, production/workflow/deployment, or measurable operating-impact signals. Do not treat research, architecture, model, or product alone as structural.
+- [x] Run:
   
   ~~~bash
   cargo test --test weekly_radar_evidence_quality explicit_production_system_change_becomes_structural_evidence generic_research_description_remains_a_regular_validated_fact -- --exact
   cargo test --test evidence_test
   ~~~
-- [ ] Commit with git add src/features/weekly_radar/runtime/evidence.rs tests/weekly_radar_evidence_quality.rs tests/evidence_test.rs && git commit -m "feat: classify structural weekly radar evidence".
+- [x] Commit with git add src/features/weekly_radar/runtime/evidence.rs tests/weekly_radar_evidence_quality.rs tests/evidence_test.rs && git commit -m "feat: classify structural weekly radar evidence".
 
 ### Task 2: Add backward-compatible structural and SEC health metrics
 
@@ -62,17 +62,17 @@
 - Consumes: existing ResearchMetrics::new(source_available, document_candidates, validated_evidence, pending_leads, unavailable_sources).
 - Produces: with_structural_evidence, with_sec_health, and getters for structural evidence, SEC stage expected/available, and SEC fact expected/available. The old constructor and old snapshots remain valid.
 
-- [ ] Write a failing test constructing ResearchMetrics::new(9, 10, 5, 71, 32).with_structural_evidence(2).with_sec_health(20, 18, 80, 74), then assert all five new getters.
-- [ ] Add a legacy JSON fixture that omits all new fields and asserts all new counters deserialize as zero.
-- [ ] Run the focused tests and verify RED because the methods do not exist.
-- [ ] Add serde-default, skip-zero fields; keep the existing five-argument new constructor; add const builder/getter methods. Preserve RuntimeReportInput legacy deserialization.
-- [ ] Run:
+- [x] Write a failing test constructing ResearchMetrics::new(9, 10, 5, 71, 32).with_structural_evidence(2).with_sec_health(20, 18, 80, 74), then assert all five new getters.
+- [x] Add a legacy JSON fixture that omits all new fields and asserts all new counters deserialize as zero.
+- [x] Run the focused tests and verify RED because the methods do not exist.
+- [x] Add serde-default, skip-zero fields; keep the existing five-argument new constructor; add const builder/getter methods. Preserve RuntimeReportInput legacy deserialization.
+- [x] Run:
   
   ~~~bash
   cargo test --test weekly_radar_evidence_quality research_metrics_retain_structural_and_sec_health_counts legacy_runtime_input_defaults_research_metrics_to_zero -- --exact
   cargo test --test weekly_radar_runtime task5_input_snapshot_round_trips_and_is_idempotent -- --exact
   ~~~
-- [ ] Commit with git add src/features/weekly_radar/runtime/model.rs tests/weekly_radar_evidence_quality.rs tests/weekly_radar_runtime.rs && git commit -m "feat: expose weekly radar evidence health metrics".
+- [x] Commit with git add src/features/weekly_radar/runtime/model.rs tests/weekly_radar_evidence_quality.rs tests/weekly_radar_runtime.rs && git commit -m "feat: expose weekly radar evidence health metrics".
 
 ### Task 3: Bind classification and SEC health during acquisition
 
@@ -84,17 +84,17 @@
 - Consumes: ValidatedEvidence::evidence_class(), SecClient::collect(), normalized SEC facts, and the current acquisition loop.
 - Produces: ResearchMetrics with structural count and distinct SEC stage/fact counters; has_primary_evidence behavior remains unchanged.
 
-- [ ] Extend the validated-document integration fixture with assertions for validated_evidence() == 1 and structural_evidence() == 1.
-- [ ] Add a partial SEC fixture assertion for SEC stage expected/available and fact expected/available, including a fact-level unavailable result when the filing document is absent.
-- [ ] Run the new acquisition tests and verify RED because acquisition does not populate new counters.
-- [ ] In acquire_runtime_input, track structural_evidence separately, count two SEC stages per configured CIK, count a stage once based on distinct submissions/company_facts failure stages, count SEC fact expected from evidence.facts().len(), and count SEC fact available from FactStatus::Known. Preserve existing source coverage, source failures, fact insertion, and primary-evidence behavior.
-- [ ] Run:
+- [x] Extend the validated-document integration fixture with assertions for validated_evidence() == 1 and structural_evidence() == 1.
+- [x] Add a partial SEC fixture assertion for SEC stage expected/available and fact expected/available, including a fact-level unavailable result when the filing document is absent.
+- [x] Run the new acquisition tests and verify RED because acquisition does not populate new counters.
+- [x] In acquire_runtime_input, track structural_evidence separately, count two SEC stages per configured CIK, count a stage once based on distinct submissions/company_facts failure stages, count SEC fact expected from evidence.facts().len(), and count SEC fact available from FactStatus::Known. Preserve existing source coverage, source failures, fact insertion, and primary-evidence behavior.
+- [x] Run:
   
   ~~~bash
   cargo test --test weekly_radar_evidence_quality validated_document_claim_is_counted_and_can_feed_judgment sec_health_distinguishes_reachable_stages_from_usable_facts -- --exact
   cargo test --test weekly_radar_judgment_chain insufficient_evidence_is_undetermined_and_has_no_machine_ranking -- --exact
   ~~~
-- [ ] Commit with git add src/main.rs tests/weekly_radar_evidence_quality.rs && git commit -m "feat: bind structural and SEC health metrics".
+- [x] Commit with git add src/main.rs tests/weekly_radar_evidence_quality.rs && git commit -m "feat: bind structural and SEC health metrics".
 
 ### Task 4: Separate validated facts and structural evidence in reports
 
@@ -107,7 +107,7 @@
 - Consumes: fact-kind prefixes, ResearchMetrics, FactStatus, and localized report inputs.
 - Produces: distinct validated-fact and structural-evidence sections, equal zh-CN/ja/en metric values, explicit SEC stage/fact health lines, and calibrated no-change/degraded wording.
 
-- [ ] Update the report fixture with one evidence_official_material_001 and one evidence_structural_change_002. First assert the new headings and metric labels:
+- [x] Update the report fixture with one evidence_official_material_001 and one evidence_structural_change_002. First assert the new headings and metric labels:
   
   ~~~rust
   assert!(report.markdown().contains("## 已验证事实"));
@@ -118,17 +118,17 @@
   ~~~
   
   Also assert the structural claim is absent from the ordinary validated-fact section.
-- [ ] Add Japanese and English metric assertions plus a degraded report assertion preserving the sentence that absence is not proof of no change.
-- [ ] Run the report tests and verify RED because the old headings/labels are still rendered.
-- [ ] Add helpers separating regular evidence_official_material_ facts from evidence_structural_change_ facts. Render regular validated facts under localized Validated Facts headings and structural facts under localized Structural Evidence headings. Keep SEC and source observations out of both sections.
-- [ ] Add structural count and SEC stage/fact lines to all three language branches. Change the executive summary wording from confirmed information to validated facts and from confirmed organizational changes to structural change evidence. Keep existing domain structural_change and Ranking reference rendering unchanged.
-- [ ] Run:
+- [x] Add Japanese and English metric assertions plus a degraded report assertion preserving the sentence that absence is not proof of no change.
+- [x] Run the report tests and verify RED because the old headings/labels were still rendered.
+- [x] Add helpers separating regular evidence_official_material_ facts from evidence_structural_change_ facts. Render regular validated facts under localized Validated Facts headings and structural facts under localized Structural Evidence headings. Keep SEC and source observations out of both sections.
+- [x] Add structural count and SEC stage/fact lines to all three language branches. Change the executive summary wording from confirmed information to validated facts and from confirmed organizational changes to structural change evidence. Keep existing domain structural_change and Ranking reference rendering unchanged.
+- [x] Run:
   
   ~~~bash
   cargo test --test weekly_radar_evidence_quality confirmed_information_contains_only_validated_evidence localized_reports_keep_validated_evidence_separate_from_known_facts degraded_report_separates_evidence_and_source_availability_counts -- --exact
   cargo test --test weekly_radar_runtime task7_default_report_is_chinese_and_hides_runtime_diagnostics_from_readers task8_report_does_not_turn_unavailable_structural_evidence_into_no_change -- --exact
   ~~~
-- [ ] Commit with git add src/features/weekly_radar/runtime/report.rs tests/weekly_radar_evidence_quality.rs tests/weekly_radar_runtime.rs && git commit -m "feat: separate validated facts from structural evidence".
+- [x] Commit with git add src/features/weekly_radar/runtime/report.rs tests/weekly_radar_evidence_quality.rs tests/weekly_radar_runtime.rs && git commit -m "feat: separate validated facts from structural evidence".
 
 ### Task 5: Preserve semantic Telegram splitting for new and legacy headings
 
@@ -141,11 +141,11 @@
 - Consumes: localized report headings produced by Task 4.
 - Produces: complete semantic chunks for new validated-fact and structural-evidence headings, plus compatibility for previous confirmed-information aliases.
 
-- [ ] Write a failing fixture containing ## 已验证事实 and ## 结构性证据. Assert the first chunk remains ExecutiveSummary, the structural section is ImportantTransition, and source Markdown is unchanged. Repeat with Japanese and English aliases.
-- [ ] Run cargo test --test weekly_radar_semantic_message_splitter --test semantic_message_splitter_test and verify UnknownSection for new headings.
-- [ ] Map Validated Facts/已验证事实/検証済み事実 to ExecutiveSummary; map Structural Evidence/结构性证据/構造的証拠 to ImportantTransition; retain every existing Confirmed Information alias. Do not parse or rewrite fact content.
-- [ ] Run the two splitter integration tests and verify GREEN.
-- [ ] Commit with git add src/features/weekly_radar/interface/semantic_message_splitter.rs tests/weekly_radar_semantic_message_splitter.rs tests/semantic_message_splitter_test.rs && git commit -m "feat: accept structural evidence report sections".
+- [x] Write a failing fixture containing ## 已验证事实 and ## 结构性证据. Assert the first chunk remains ExecutiveSummary, the structural section is ImportantTransition, and source Markdown is unchanged. Repeat with Japanese and English aliases.
+- [x] Run cargo test --test weekly_radar_semantic_message_splitter --test semantic_message_splitter_test and verify UnknownSection for new headings.
+- [x] Map Validated Facts/已验证事实/検証済み事实 to ExecutiveSummary; map Structural Evidence/结构性证据/構造的証拠 to ImportantTransition; retain every existing Confirmed Information alias. Do not parse or rewrite fact content.
+- [x] Run the two splitter integration tests and verify GREEN.
+- [x] Commit with git add src/features/weekly_radar/interface/semantic_message_splitter.rs tests/weekly_radar_semantic_message_splitter.rs tests/semantic_message_splitter_test.rs && git commit -m "feat: accept structural evidence report sections".
 
 ### Task 6: Update operations documentation and governance evidence
 
@@ -159,7 +159,7 @@
 - Consumes: implemented evidence/report/SEC behavior and focused test evidence.
 - Produces: operator documentation stating the four evidence layers, structural gate, SEC stage/fact semantics, exact verification results, and residual risks.
 
-- [ ] Add the new terms StructuralEvidence, evidence_structural_change_, SEC stage, usable facts, 待验证线索, and 不等于 to the operations guide.
+- [x] Add the new terms StructuralEvidence, evidence_structural_change_, SEC stage, usable facts, 待验证线索, and 不等于 to the operations guide.
 - [ ] Update the active Summary with changed files, exact checks, guideline compliance, risks, unknowns, and evidence-bound limitations. Do not claim the post-merge dry-run until it actually runs.
 - [ ] Run cargo fmt --all -- --check, the focused suites, and make quality.
 - [ ] Run make ai-checkpoint CONTRACT=.ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json STAGE=before_finish.
@@ -181,4 +181,3 @@
 - [ ] Wait for required hosted checks and merge the PR without provider-side branch deletion.
 - [ ] Run make ai-close-work-item TASK=wi-weekly-radar-structural-evidence-gate and verify clean branch/worktree/remote state.
 - [ ] From synchronized main, dispatch Weekly Radar with language=zh-CN and dry_run=true; record the workflow URL, conclusion, report metrics, SEC stage/fact metrics, structural evidence count, and Ranking behavior in the final handoff.
-

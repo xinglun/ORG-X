@@ -312,6 +312,50 @@ fn explicit_independent_research_document_keeps_cross_origin_role_and_bounds_url
 }
 
 #[test]
+fn explicit_atos_press_document_is_collected_without_guessing_urls() {
+    let independent_url = "https://www.atosgroup.com/en/press/atos-group-and-microsoft-expand-strategic-collaboration-scale-secure-agentic-ai-across-atos";
+    let company = CompanyConfig::new(
+        "msft",
+        "Microsoft Corporation",
+        "MSFT",
+        None,
+        Some("https://supplier.example/investors".to_owned()),
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("base company should be valid")
+    .with_independent_research_sources(vec![independent_url.to_owned()])
+    .expect("Atos source should validate");
+    let client = FixtureHttpClient::new();
+    client.insert(
+        independent_url,
+        HttpResponse::ok(
+            r#"<html><head><title>Atos Group and Microsoft expand strategic collaboration</title><meta property="article:published_time" content="2026-06-09T00:00:00Z"></head><body><p>Atos is rolling out Microsoft 365 Copilot to all employees across 54 countries.</p></body></html>"#,
+        ),
+    );
+
+    let observations = collect_configured_sources(&company, &client, Utc::now());
+    let document = observations
+        .iter()
+        .find(|observation| {
+            observation.kind() == SourceKind::IndependentResearch
+                && observation.material_kind()
+                    == org_x::features::weekly_radar::runtime::sources::SourceMaterialKind::Document
+                && observation.url() == Some(independent_url)
+        })
+        .expect("explicit Atos press source should become a document");
+
+    assert_eq!(document.tier(), SourceTier::IndependentPrimary);
+    assert!(extract_evidence_candidate(document).is_some());
+    assert!(!client
+        .requests()
+        .iter()
+        .any(|request| request.url().contains("/press/guess")));
+}
+
+#[test]
 fn configured_source_urls_reject_unsafe_destinations_without_leaking_values() {
     let invalid_urls = [
         "https://",
@@ -411,7 +455,7 @@ fn calibration_registry_contains_only_configured_prd_companies() {
         registry.company("msft").unwrap().independent_research_source_urls(),
         [
             "https://www.pwc.com/us/en/library/case-studies/pwc-microsoft-copilot-enterprise-ai.html",
-            "https://investors.nielseniq.com/news/news-details/2026/NIQ-Announces-First-Quarter-2026-Results-That-Exceed-Expectations/default.aspx"
+        "https://www.atosgroup.com/en/press/atos-group-and-microsoft-expand-strategic-collaboration-scale-secure-agentic-ai-across-atos"
         ]
     );
 }

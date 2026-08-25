@@ -406,6 +406,39 @@ fn independent_customer_document_promotes_with_independent_source_role() {
 }
 
 #[test]
+fn independent_customer_title_and_body_promote_named_adopter() {
+    let observation = document_observation(DocumentObservationInput {
+        company_id: "msft".to_owned(),
+        kind: SourceKind::IndependentResearch,
+        tier: SourceTier::IndependentPrimary,
+        url: "https://customer.example/library/case-studies/pwc-microsoft-copilot".to_owned(),
+        title: "PwC deploys Microsoft Copilot at enterprise scale".to_owned(),
+        text: "PwC is reimagining how work gets done by integrating Microsoft Copilot across its global network. The deployment reached 285000 users across more than 100 countries.".to_owned(),
+        status: SourceStatus::Known,
+        status_reason: "fixture document".to_owned(),
+        document_kind: DocumentKind::ProductPlatform,
+        source_field_or_passage: "customer disclosure".to_owned(),
+        observed_at: Utc::now(),
+        effective_date: Some(NaiveDate::from_ymd_opt(2026, 1, 16).unwrap()),
+    });
+
+    let candidate = extract_evidence_candidate(&observation)
+        .expect("customer title and body should produce an independent diffusion claim");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("independent diffusion claim should validate");
+    assert_eq!(
+        validated.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::IndustryDiffusion)
+    );
+    assert_eq!(validated.reference_model_named_peer(), Some("PwC"));
+    assert_eq!(
+        validated.reference_model_source_role(),
+        Some(ReferenceModelSourceRole::IndependentCustomerDisclosure)
+    );
+}
+
+#[test]
 fn official_customer_story_usage_is_diffusion_evidence() {
     let observation = document_observation_from_html(
         r#"<html><head><title>NIQ scales product coding with Foundry</title></head>
@@ -744,6 +777,19 @@ fn document_metadata_prefers_published_metadata_over_modified_date() {
     );
 
     assert_eq!(date, NaiveDate::from_ymd_opt(2026, 8, 19));
+}
+
+#[test]
+fn document_metadata_reads_bounded_site_specific_release_date_before_modified_date() {
+    let (_, date, _) = document_metadata(
+        r#"<html><head>
+            <meta name="pwcReleaseDate" content="2026-01-16T10:35:00.000-03:00">
+            <meta name="pwcLastModifiedDate" content="2026-06-23T13:20:19.535Z">
+        </head><body><p>PwC deploys Microsoft Copilot at enterprise scale.</p></body></html>"#,
+        "fallback",
+    );
+
+    assert_eq!(date, NaiveDate::from_ymd_opt(2026, 1, 16));
 }
 
 #[test]

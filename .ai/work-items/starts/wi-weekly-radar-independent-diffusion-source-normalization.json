@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-independent-diffusion-source-normalization",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-independent-diffusion-source-normalization.json",
+  "baseCommit": "037f39e28a64a88eb3426bc92c629bd388b33b7b",
+  "baseBranch": "codex/wi-weekly-radar-independent-diffusion-source-normalization",
+  "startTimestamp": "2026-08-25T22:13:09.751848+00:00",
+  "initialScopeDigest": "375629b1d8ab867ca62314607139553cd93369b680eb99ccf4f41fe07a138cc6",
+  "contractSkeletonDigest": "9fd60442f1af9c5bc7e444636fe63f7cc1dbdd44d208d09a7a9e50f92afa84a9"
+}

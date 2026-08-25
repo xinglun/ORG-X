@@ -264,9 +264,19 @@ pub fn document_metadata(html: &str, fallback_title: &str) -> (String, Option<Na
         })
         .filter(|value| !value.is_empty())
         .unwrap_or_else(|| fallback_title.to_owned());
-    let date = first_valid_date(["article:published_time", "date"], |name| {
-        meta_date(html, name)
-    })
+    let date = first_valid_date(
+        [
+            "article:published_time",
+            "date",
+            "datePublished",
+            "publishDate",
+            "publishedDate",
+            "publicationDate",
+            "releaseDate",
+            "pwcReleaseDate",
+        ],
+        |name| meta_date(html, name),
+    )
     .or_else(|| json_ld_date(html, "datePublished"))
     .or_else(|| time_date(html))
     .or_else(|| visible_us_date(html))
@@ -418,6 +428,7 @@ fn classify_document(value: &str) -> Option<DocumentKind> {
             "automation",
             "agent-first",
             "agent first",
+            "agentic-ai",
             "artificial intelligence",
             " ai ",
         ],

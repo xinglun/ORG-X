@@ -17,7 +17,8 @@ use org_x::features::weekly_radar::runtime::normalize_source_observation;
 use org_x::features::weekly_radar::runtime::report::{render_report_in_language, ReportLanguage};
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{
-    collect_configured_sources, SourceKind, SourceMaterialKind,
+    collect_configured_sources, document_observation, DocumentObservationInput, SourceKind,
+    SourceMaterialKind, SourceStatus, SourceTier,
 };
 use std::collections::BTreeMap;
 use url::Url;
@@ -374,6 +375,33 @@ fn official_customer_story_rollout_is_diffusion_evidence() {
             .unwrap()
             .reference_model_source_role(),
         Some(ReferenceModelSourceRole::SupplierAttribution)
+    );
+}
+
+#[test]
+fn independent_customer_document_promotes_with_independent_source_role() {
+    let observation = document_observation(DocumentObservationInput {
+        company_id: "acme".to_owned(),
+        kind: SourceKind::IndependentResearch,
+        tier: SourceTier::IndependentPrimary,
+        url: "https://customer.example/library/case-studies/acme-ai".to_owned(),
+        title: "Acme AI operations disclosure".to_owned(),
+        text: "Acme rolled out an agent workflow across production operations.".to_owned(),
+        status: SourceStatus::Known,
+        status_reason: "fixture document".to_owned(),
+        document_kind: DocumentKind::ProductPlatform,
+        source_field_or_passage: "customer disclosure".to_owned(),
+        observed_at: Utc::now(),
+        effective_date: Some(NaiveDate::from_ymd_opt(2026, 2, 25).unwrap()),
+    });
+    let candidate = extract_evidence_candidate(&observation).expect("independent claim expected");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("independent claim should validate");
+
+    assert_eq!(
+        validated.reference_model_source_role(),
+        Some(ReferenceModelSourceRole::IndependentCustomerDisclosure)
     );
 }
 

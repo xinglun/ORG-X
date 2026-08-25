@@ -176,7 +176,10 @@ fn supplier_attribution_does_not_satisfy_independent_diffusion() {
 
     let assessment = bundle.assess();
 
-    assert_eq!(assessment.eligibility(), ReferenceModelEligibility::Candidate);
+    assert_eq!(
+        assessment.eligibility(),
+        ReferenceModelEligibility::Candidate
+    );
     assert_eq!(assessment.independent_diffusion_sources(), 0);
     assert_eq!(assessment.supplier_attribution_sources(), 2);
     assert!(assessment

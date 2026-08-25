@@ -95,7 +95,7 @@ pub fn normalize_source_observation(
         FactStatus::Unconfirmed => match observation.tier() {
             SourceTier::StructuredHiring => Confidence::Medium,
             SourceTier::DiscoveryOnly => Confidence::Low,
-            SourceTier::OfficialPrimary => Confidence::Unknown,
+            SourceTier::OfficialPrimary | SourceTier::IndependentPrimary => Confidence::Unknown,
         },
         FactStatus::Unknown | FactStatus::Unavailable => Confidence::Unknown,
     };

@@ -538,6 +538,7 @@ fn sec_document_observation(
     document_observation(DocumentObservationInput {
         company_id: company_id.to_owned(),
         kind: SourceKind::Sec,
+        tier: SourceTier::OfficialPrimary,
         url: document.source_uri().to_owned(),
         title: document.title().to_owned(),
         text: document.text().to_owned(),

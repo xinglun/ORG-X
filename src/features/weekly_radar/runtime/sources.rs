@@ -41,6 +41,8 @@ pub enum SourceKind {
     EngineeringAiBlog,
     /// Additional explicitly configured official research material.
     OfficialResearch,
+    /// Explicitly configured adopter-owned research material.
+    IndependentResearch,
     /// Public Greenhouse job-board material.
     Greenhouse,
     /// Public Lever job-board material.
@@ -58,6 +60,7 @@ impl SourceKind {
             Self::Careers => "careers",
             Self::EngineeringAiBlog => "engineering_ai_blog",
             Self::OfficialResearch => "official_research",
+            Self::IndependentResearch => "independent_research",
             Self::Greenhouse => "greenhouse",
             Self::Lever => "lever",
             Self::Gdelt => "gdelt",
@@ -103,6 +106,8 @@ impl SourceStatus {
 pub enum SourceTier {
     /// Official company material used as primary evidence.
     OfficialPrimary,
+    /// Explicitly configured adopter-owned material used as independent primary evidence.
+    IndependentPrimary,
     /// Structured public hiring material.
     StructuredHiring,
     /// Secondary discovery material that cannot be authoritative here.
@@ -130,6 +135,7 @@ impl SourceTier {
     pub const fn as_str(self) -> &'static str {
         match self {
             Self::OfficialPrimary => "OFFICIAL_PRIMARY",
+            Self::IndependentPrimary => "INDEPENDENT_PRIMARY",
             Self::StructuredHiring => "STRUCTURED_HIRING",
             Self::DiscoveryOnly => "DISCOVERY_ONLY",
         }
@@ -138,7 +144,7 @@ impl SourceTier {
     /// Returns whether this tier can be used as primary authority by this
     /// adapter boundary.
     pub const fn is_authoritative(self) -> bool {
-        matches!(self, Self::OfficialPrimary)
+        matches!(self, Self::OfficialPrimary | Self::IndependentPrimary)
     }
 }
 
@@ -298,6 +304,8 @@ pub struct DocumentObservationInput {
     pub company_id: String,
     /// Source family that exposed the document.
     pub kind: SourceKind,
+    /// Authority tier assigned by the configured source boundary.
+    pub tier: SourceTier,
     /// Canonical document URI.
     pub url: String,
     /// Document title or safe fallback label.
@@ -328,7 +336,7 @@ pub fn document_observation(input: DocumentObservationInput) -> SourceObservatio
         kind: input.kind,
         material_kind: SourceMaterialKind::Document,
         status: input.status,
-        tier: SourceTier::OfficialPrimary,
+        tier: input.tier,
         url: Some(input.url.clone()),
         title: Some(input.title),
         text: input.text,
@@ -361,6 +369,7 @@ pub fn collect_configured_sources(
         http,
         observed_at,
         SourceKind::OfficialIr,
+        SourceTier::OfficialPrimary,
         company.official_ir_url(),
         &mut observations,
     );
@@ -369,6 +378,7 @@ pub fn collect_configured_sources(
         http,
         observed_at,
         SourceKind::Careers,
+        SourceTier::OfficialPrimary,
         company.careers_url(),
         &mut observations,
     );
@@ -377,6 +387,7 @@ pub fn collect_configured_sources(
         http,
         observed_at,
         SourceKind::EngineeringAiBlog,
+        SourceTier::OfficialPrimary,
         company.engineering_ai_blog_url(),
         &mut observations,
     );
@@ -386,6 +397,18 @@ pub fn collect_configured_sources(
             http,
             observed_at,
             SourceKind::OfficialResearch,
+            SourceTier::OfficialPrimary,
+            Some(url.as_str()),
+            &mut observations,
+        );
+    }
+    for url in company.independent_research_source_urls() {
+        collect_official(
+            company,
+            http,
+            observed_at,
+            SourceKind::IndependentResearch,
+            SourceTier::IndependentPrimary,
             Some(url.as_str()),
             &mut observations,
         );
@@ -413,6 +436,7 @@ fn has_configured_source_endpoint(company: &CompanyConfig) -> bool {
         || company.careers_url().is_some()
         || company.engineering_ai_blog_url().is_some()
         || !company.official_research_source_urls().is_empty()
+        || !company.independent_research_source_urls().is_empty()
         || company.greenhouse_board().is_some()
         || company.lever_site().is_some()
 }
@@ -422,6 +446,7 @@ fn collect_official(
     http: &dyn HttpClient,
     observed_at: DateTime<Utc>,
     kind: SourceKind,
+    tier: SourceTier,
     configured_url: Option<&str>,
     observations: &mut Vec<SourceObservation>,
 ) {
@@ -429,7 +454,7 @@ fn collect_official(
         observations.push(not_configured_observation(
             company,
             kind,
-            SourceTier::OfficialPrimary,
+            tier,
             None,
             observed_at,
             "optional official source is not configured",
@@ -452,7 +477,7 @@ fn collect_official(
                     observations.push(unavailable_observation(
                         company,
                         kind,
-                        SourceTier::OfficialPrimary,
+                        tier,
                         Some(url),
                         observed_at,
                         "official page response exceeds size limit",
@@ -483,7 +508,7 @@ fn collect_official(
                 kind,
                 material_kind: SourceMaterialKind::EntryPoint,
                 status,
-                tier: SourceTier::OfficialPrimary,
+                tier,
                 url: Some(url.to_owned()),
                 title: None,
                 text,
@@ -499,13 +524,14 @@ fn collect_official(
                 http,
                 observed_at,
                 document_candidates,
+                tier,
                 observations,
             );
         }
         Ok(_) | Err(_) => observations.push(unavailable_observation(
             company,
             kind,
-            SourceTier::OfficialPrimary,
+            tier,
             Some(url),
             observed_at,
             "official page request unavailable",
@@ -518,6 +544,7 @@ fn collect_discovered_documents(
     http: &dyn HttpClient,
     observed_at: DateTime<Utc>,
     candidates: Vec<DocumentCandidate>,
+    tier: SourceTier,
     observations: &mut Vec<SourceObservation>,
 ) {
     let mut seen_urls = candidates
@@ -527,7 +554,9 @@ fn collect_discovered_documents(
     let mut nested_candidates = Vec::new();
 
     for candidate in candidates {
-        if let Some(body) = collect_document(company, http, observed_at, &candidate, observations) {
+        if let Some(body) =
+            collect_document(company, http, observed_at, tier, &candidate, observations)
+        {
             nested_candidates.extend(discover_documents(
                 company.id(),
                 candidate.source_kind(),
@@ -545,7 +574,7 @@ fn collect_discovered_documents(
         if !seen_urls.insert(candidate.url().to_owned()) {
             continue;
         }
-        collect_document(company, http, observed_at, &candidate, observations);
+        collect_document(company, http, observed_at, tier, &candidate, observations);
     }
 }
 
@@ -553,6 +582,7 @@ fn collect_document(
     company: &CompanyConfig,
     http: &dyn HttpClient,
     observed_at: DateTime<Utc>,
+    tier: SourceTier,
     candidate: &DocumentCandidate,
     observations: &mut Vec<SourceObservation>,
 ) -> Option<String> {
@@ -568,6 +598,7 @@ fn collect_document(
             company,
             candidate,
             observed_at,
+            tier,
             "discovered document request unavailable",
         ));
         return None;
@@ -579,6 +610,7 @@ fn collect_document(
                 company,
                 candidate,
                 observed_at,
+                tier,
                 "discovered document response exceeds size limit",
             ));
             return None;
@@ -594,6 +626,7 @@ fn collect_document(
     observations.push(document_observation(DocumentObservationInput {
         company_id: company.id().to_owned(),
         kind: candidate.source_kind(),
+        tier,
         url: candidate.url().to_owned(),
         title,
         text,
@@ -615,6 +648,7 @@ fn discovered_document_status(
     company: &CompanyConfig,
     candidate: &DocumentCandidate,
     observed_at: DateTime<Utc>,
+    tier: SourceTier,
     reason: &str,
 ) -> SourceObservation {
     SourceObservation::new(SourceObservationInput {
@@ -622,7 +656,7 @@ fn discovered_document_status(
         kind: candidate.source_kind(),
         material_kind: SourceMaterialKind::Document,
         status: SourceStatus::Unavailable,
-        tier: SourceTier::OfficialPrimary,
+        tier,
         url: Some(candidate.url().to_owned()),
         title: Some(candidate.title().to_owned()),
         text: String::new(),

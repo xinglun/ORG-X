@@ -265,6 +265,53 @@ fn explicit_official_research_document_is_collected_for_claim_extraction() {
 }
 
 #[test]
+fn explicit_independent_research_document_keeps_cross_origin_role_and_bounds_urls() {
+    let independent_url = "https://customer.example/library/case-studies/ai-operations";
+    let company = CompanyConfig::new(
+        "acme",
+        "Acme Corporation",
+        "ACME",
+        None,
+        Some("https://supplier.example/investors".to_owned()),
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("base company should be valid")
+    .with_independent_research_sources(vec![independent_url.to_owned()])
+    .expect("independent source should validate");
+    let client = FixtureHttpClient::new();
+    client.insert(
+        independent_url,
+        HttpResponse::ok(
+            r#"<title>AI operations disclosure</title><time datetime="2026-02-25"></time><p>Acme rolled out an agent workflow across production operations.</p>"#,
+        ),
+    );
+
+    let observations = collect_configured_sources(&company, &client, Utc::now());
+    let document = observations
+        .iter()
+        .find(|observation| {
+            observation.kind() == SourceKind::IndependentResearch
+                && observation.material_kind()
+                    == org_x::features::weekly_radar::runtime::sources::SourceMaterialKind::Document
+                && observation.url() == Some(independent_url)
+        })
+        .expect("explicit independent document should be collected");
+
+    assert_eq!(document.tier(), SourceTier::IndependentPrimary);
+    assert!(client
+        .requests()
+        .iter()
+        .any(|request| request.url() == independent_url));
+    assert!(!client
+        .requests()
+        .iter()
+        .any(|request| request.url().contains("guessed")));
+}
+
+#[test]
 fn configured_source_urls_reject_unsafe_destinations_without_leaking_values() {
     let invalid_urls = [
         "https://",

@@ -498,7 +498,7 @@ impl ValidatedEvidence {
 pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<EvidenceCandidate> {
     if observation.material_kind() != SourceMaterialKind::Document
         || observation.status() != SourceStatus::Known
-        || observation.tier() != SourceTier::OfficialPrimary
+        || !observation.tier().is_authoritative()
         || observation.provenance().effective_date().is_none()
     {
         return None;
@@ -519,6 +519,7 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
         | SourceKind::Careers
         | SourceKind::EngineeringAiBlog
         | SourceKind::OfficialResearch => EvidenceSourceKind::OfficialMaterial,
+        SourceKind::IndependentResearch => EvidenceSourceKind::IndependentMaterial,
     };
     let mut candidate = EvidenceCandidate::new(
         observation.company_id(),
@@ -561,11 +562,17 @@ fn reference_model_source_role_for_observation(
 ) -> Option<ReferenceModelSourceRole> {
     match source_kind {
         SourceKind::OfficialResearch => Some(ReferenceModelSourceRole::SupplierAttribution),
+        SourceKind::IndependentResearch => {
+            Some(ReferenceModelSourceRole::IndependentCustomerDisclosure)
+        }
         SourceKind::Sec | SourceKind::OfficialIr => {
             Some(ReferenceModelSourceRole::RegulatoryOrFiling)
         }
         SourceKind::Gdelt => Some(ReferenceModelSourceRole::DiscoveryOnly),
-        SourceKind::Careers | SourceKind::EngineeringAiBlog | SourceKind::Greenhouse | SourceKind::Lever => None,
+        SourceKind::Careers
+        | SourceKind::EngineeringAiBlog
+        | SourceKind::Greenhouse
+        | SourceKind::Lever => None,
     }
 }
 

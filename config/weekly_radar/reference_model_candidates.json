@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "companies": [
+    {
+      "id": "msft",
+      "name": "Microsoft Corporation",
+      "ticker": "MSFT",
+      "sec_cik": "0000789019",
+      "official_ir": "https://www.microsoft.com/en-us/Investor/",
+      "careers": "https://jobs.careers.microsoft.com/",
+      "official_research_sources": [
+        "https://www.microsoft.com/insidetrack/blog/category/frontier-firm/",
+        "https://www.microsoft.com/en-us/ai/frontier-transformation",
+        "https://www.microsoft.com/en/customers/story/26160-pwc-microsoft-365-enterprise",
+        "https://www.microsoft.com/en/customers/story/26047-air-india-azure-openai-in-foundry-models",
+        "https://www.microsoft.com/en/customers/story/25893-niq-microsoft-foundry"
+      ]
+    }
+  ]
+}

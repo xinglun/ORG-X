@@ -16,6 +16,9 @@ use super::model::{
     CompanyIdentity, Confidence, FactStatus, NormalizedFact, ResearchMetrics, RuntimeReportInput,
     SourceCoverage, SourceFailure, StructuralDimension,
 };
+use crate::features::transformation::domain::{
+    ReferenceModelEligibility, ReferenceModelEvidenceFamily,
+};
 
 const MAX_CHANGE_CARDS: usize = 3;
 const MAX_COMPANY_CARDS: usize = 5;
@@ -227,6 +230,7 @@ struct Labels {
     source_label_official_ir: &'static str,
     source_label_careers: &'static str,
     source_label_engineering: &'static str,
+    source_label_official_research: &'static str,
     source_label_greenhouse: &'static str,
     source_label_lever: &'static str,
     source_label_gdelt: &'static str,
@@ -294,6 +298,7 @@ fn labels(language: ReportLanguage) -> Labels {
             source_label_official_ir: "投资者关系资料",
             source_label_careers: "职业与招聘页面",
             source_label_engineering: "工程与 AI 资料",
+            source_label_official_research: "官方研究资料",
             source_label_greenhouse: "Greenhouse 招聘接口",
             source_label_lever: "Lever 招聘接口",
             source_label_gdelt: "新闻发现",
@@ -358,6 +363,7 @@ fn labels(language: ReportLanguage) -> Labels {
             source_label_official_ir: "IR 資料",
             source_label_careers: "採用ページ",
             source_label_engineering: "Engineering / AI 資料",
+            source_label_official_research: "公式研究資料",
             source_label_greenhouse: "Greenhouse 採用 API",
             source_label_lever: "Lever 採用 API",
             source_label_gdelt: "ニュース探索",
@@ -424,6 +430,7 @@ fn labels(language: ReportLanguage) -> Labels {
             source_label_official_ir: "Investor-relations material",
             source_label_careers: "Careers and hiring pages",
             source_label_engineering: "Engineering and AI material",
+            source_label_official_research: "Official research material",
             source_label_greenhouse: "Greenhouse hiring API",
             source_label_lever: "Lever hiring API",
             source_label_gdelt: "News discovery",
@@ -454,6 +461,10 @@ struct SnapshotFact {
     value: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     structural_dimension: Option<StructuralDimension>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    reference_model_family: Option<ReferenceModelEvidenceFamily>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    reference_model_named_peer: Option<String>,
     status: FactStatus,
     confidence: Confidence,
     source_uri: String,
@@ -564,6 +575,8 @@ fn source_kind_for_fact(kind: &str) -> Option<&'static str> {
         Some("careers")
     } else if lower.starts_with("source_engineering_ai_blog") {
         Some("engineering_ai_blog")
+    } else if lower.starts_with("source_official_research") {
+        Some("official_research")
     } else if lower.starts_with("source_greenhouse") {
         Some("greenhouse")
     } else if lower.starts_with("source_lever") {
@@ -580,6 +593,7 @@ fn source_label(source: &str, labels: Labels) -> String {
         "official_ir" => labels.source_label_official_ir.to_owned(),
         "careers" => labels.source_label_careers.to_owned(),
         "engineering_ai_blog" => labels.source_label_engineering.to_owned(),
+        "official_research" => labels.source_label_official_research.to_owned(),
         "greenhouse" => labels.source_label_greenhouse.to_owned(),
         "lever" => labels.source_label_lever.to_owned(),
         "gdelt" | "gdelt-discovery" => labels.source_label_gdelt.to_owned(),
@@ -1167,7 +1181,7 @@ fn render_top5(
     for fact in facts
         .iter()
         .copied()
-        .filter(|fact| fact.status() == &FactStatus::Known)
+        .filter(|fact| fact.status() == &FactStatus::Known && !fact.kind().starts_with("judgment."))
     {
         companies.entry(fact.company_id()).or_default().push(fact);
     }
@@ -1307,6 +1321,181 @@ fn render_judgment_reference(
         }
     }
     Some(section)
+}
+
+fn render_reference_model_validation(
+    input: &RuntimeReportInput,
+    language: ReportLanguage,
+) -> Option<String> {
+    let judgment = input.judgment()?;
+    let (
+        heading,
+        status_label,
+        matrix_label,
+        missing_label,
+        counter_claims_label,
+        counter_review_label,
+        periods_label,
+        sources_label,
+    ) = match language {
+        ReportLanguage::Chinese => (
+            "AI 时代范本验证",
+            "资格状态",
+            "四类证据矩阵",
+            "尚缺条件",
+            "反证数量",
+            "反证复核状态",
+            "结果周期数",
+            "独立扩散来源数",
+        ),
+        ReportLanguage::Japanese => (
+            "AI 時代の参照モデル検証",
+            "適格性",
+            "4 系統の根拠マトリクス",
+            "不足条件",
+            "反証件数",
+            "反証レビュー状態",
+            "結果の期間数",
+            "独立した普及ソース数",
+        ),
+        ReportLanguage::English => (
+            "AI-era Reference Model Validation",
+            "Eligibility",
+            "Four-family evidence matrix",
+            "Missing conditions",
+            "Counter-evidence claims",
+            "Counter-evidence review",
+            "Outcome periods",
+            "Independent diffusion sources",
+        ),
+    };
+    let separator = if language == ReportLanguage::English {
+        ":"
+    } else {
+        "："
+    };
+    let (present_label, absent_label) = match language {
+        ReportLanguage::Chinese => ("已具备", "未具备"),
+        ReportLanguage::Japanese => ("確認済み", "未確認"),
+        ReportLanguage::English => ("present", "not present"),
+    };
+    let mut section = format!("## {heading}");
+    for machine in judgment.companies() {
+        let assessment = machine.reference_model_assessment();
+        section.push_str(&format!(
+            "\n### {}\n- {status_label}{separator}{}",
+            company_label(input, machine.company_id()),
+            reference_model_eligibility_label(assessment.eligibility(), language),
+        ));
+        section.push_str(&format!("\n- {matrix_label}{separator}"));
+        for family in [
+            ReferenceModelEvidenceFamily::OrganizationRewrite,
+            ReferenceModelEvidenceFamily::ProductionSystemRewrite,
+            ReferenceModelEvidenceFamily::SustainedOutcome,
+            ReferenceModelEvidenceFamily::IndustryDiffusion,
+        ] {
+            let state = if assessment.supporting_families().contains(&family) {
+                present_label
+            } else {
+                absent_label
+            };
+            section.push_str(&format!(
+                "\n  - {}{}{}",
+                reference_model_family_label(family, language),
+                separator,
+                state
+            ));
+        }
+        section.push_str(&format!(
+            "\n- {periods_label}{separator}{}\n- {sources_label}{separator}{}\n- {counter_claims_label}{separator}{}",
+            assessment.distinct_outcome_periods(),
+            assessment.independent_diffusion_sources(),
+            assessment.counter_evidence_count(),
+        ));
+        let review_status = if assessment.counter_reviewed() {
+            match language {
+                ReportLanguage::Chinese => "已完成",
+                ReportLanguage::Japanese => "完了",
+                ReportLanguage::English => "completed",
+            }
+        } else {
+            match language {
+                ReportLanguage::Chinese => "未完成",
+                ReportLanguage::Japanese => "未完了",
+                ReportLanguage::English => "not completed",
+            }
+        };
+        section.push_str(&format!(
+            "\n- {counter_review_label}{separator}{review_status}"
+        ));
+        if assessment.missing().is_empty() {
+            let complete_label = match language {
+                ReportLanguage::Chinese => "无开放条件",
+                ReportLanguage::Japanese => "未解決の条件なし",
+                ReportLanguage::English => "No open conditions",
+            };
+            section.push_str(&format!("\n- {missing_label}{separator}{complete_label}"));
+        } else {
+            section.push_str(&format!("\n- {missing_label}{separator}"));
+            for missing in assessment.missing() {
+                section.push_str(&format!("\n  - {}", safe_text(missing)));
+            }
+        }
+    }
+    Some(section)
+}
+
+fn reference_model_eligibility_label(
+    eligibility: ReferenceModelEligibility,
+    language: ReportLanguage,
+) -> &'static str {
+    match (eligibility, language) {
+        (ReferenceModelEligibility::Candidate, ReportLanguage::Chinese) => "候选（证据未齐）",
+        (ReferenceModelEligibility::Confirmed, ReportLanguage::Chinese) => "已确认",
+        (ReferenceModelEligibility::NotEligible, ReportLanguage::Chinese) => "不具备资格",
+        (ReferenceModelEligibility::Candidate, ReportLanguage::Japanese) => "候補（根拠不足）",
+        (ReferenceModelEligibility::Confirmed, ReportLanguage::Japanese) => "確認済み",
+        (ReferenceModelEligibility::NotEligible, ReportLanguage::Japanese) => "対象外",
+        (ReferenceModelEligibility::Candidate, ReportLanguage::English) => {
+            "Candidate (incomplete evidence)"
+        }
+        (ReferenceModelEligibility::Confirmed, ReportLanguage::English) => "Confirmed",
+        (ReferenceModelEligibility::NotEligible, ReportLanguage::English) => "Not eligible",
+    }
+}
+
+fn reference_model_family_label(
+    family: ReferenceModelEvidenceFamily,
+    language: ReportLanguage,
+) -> &'static str {
+    match (family, language) {
+        (ReferenceModelEvidenceFamily::OrganizationRewrite, ReportLanguage::Chinese) => "组织重写",
+        (ReferenceModelEvidenceFamily::ProductionSystemRewrite, ReportLanguage::Chinese) => {
+            "生产系统重写"
+        }
+        (ReferenceModelEvidenceFamily::SustainedOutcome, ReportLanguage::Chinese) => "持续结果",
+        (ReferenceModelEvidenceFamily::IndustryDiffusion, ReportLanguage::Chinese) => "行业扩散",
+        (ReferenceModelEvidenceFamily::OrganizationRewrite, ReportLanguage::Japanese) => {
+            "組織再設計"
+        }
+        (ReferenceModelEvidenceFamily::ProductionSystemRewrite, ReportLanguage::Japanese) => {
+            "生産システム再設計"
+        }
+        (ReferenceModelEvidenceFamily::SustainedOutcome, ReportLanguage::Japanese) => "持続的成果",
+        (ReferenceModelEvidenceFamily::IndustryDiffusion, ReportLanguage::Japanese) => "業界普及",
+        (ReferenceModelEvidenceFamily::OrganizationRewrite, ReportLanguage::English) => {
+            "Organization rewrite"
+        }
+        (ReferenceModelEvidenceFamily::ProductionSystemRewrite, ReportLanguage::English) => {
+            "Production-system rewrite"
+        }
+        (ReferenceModelEvidenceFamily::SustainedOutcome, ReportLanguage::English) => {
+            "Sustained outcome"
+        }
+        (ReferenceModelEvidenceFamily::IndustryDiffusion, ReportLanguage::English) => {
+            "Industry diffusion"
+        }
+    }
 }
 
 fn friendly_failure_reason(reason: &str, language: ReportLanguage) -> &'static str {
@@ -1580,6 +1769,8 @@ fn snapshot_fact(fact: &NormalizedFact) -> SnapshotFact {
         kind: safe_text(fact.kind()),
         value: fact.value().map(safe_text),
         structural_dimension: fact.structural_dimension(),
+        reference_model_family: fact.reference_model_family(),
+        reference_model_named_peer: fact.reference_model_named_peer().map(safe_text),
         status: *fact.status(),
         confidence: *fact.confidence(),
         source_uri: safe_uri(fact.provenance().source_uri()),
@@ -1655,6 +1846,9 @@ pub fn render_report_in_language(
         sections.push(section);
     }
     if let Some(section) = render_judgment_reference(input, language) {
+        sections.push(section);
+    }
+    if let Some(section) = render_reference_model_validation(input, language) {
         sections.push(section);
     }
     if let Some(section) = render_top5(input, &facts, language) {

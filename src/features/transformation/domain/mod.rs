@@ -2,6 +2,8 @@
 
 use std::fmt;
 
+use serde::{Deserialize, Serialize};
+
 #[cfg(test)]
 mod mod_test;
 
@@ -156,6 +158,396 @@ impl Stage {
             Self::ProductivityBreakout => "PRODUCTIVITY_BREAKOUT",
             Self::ReferenceModel => "REFERENCE_MODEL",
         }
+    }
+}
+
+/// The four independent evidence families required for a reference model.
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ReferenceModelEvidenceFamily {
+    /// Organization, responsibility, reporting, or decision-rights rewrite.
+    OrganizationRewrite,
+    /// Core production workflow, AI execution, supervision, or control rewrite.
+    ProductionSystemRewrite,
+    /// Persistent operating or economic outcome over distinct periods.
+    SustainedOutcome,
+    /// Independent peer adoption, imitation, or industry diffusion.
+    IndustryDiffusion,
+}
+
+impl ReferenceModelEvidenceFamily {
+    /// Returns the stable machine and report label for this family.
+    pub const fn label(self) -> &'static str {
+        match self {
+            Self::OrganizationRewrite => "ORGANIZATION_REWRITE",
+            Self::ProductionSystemRewrite => "PRODUCTION_SYSTEM_REWRITE",
+            Self::SustainedOutcome => "SUSTAINED_OUTCOME",
+            Self::IndustryDiffusion => "INDUSTRY_DIFFUSION",
+        }
+    }
+}
+
+/// The fail-closed outcome of the reference-model evidence gate.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ReferenceModelEligibility {
+    /// The core rewrite exists but one or more hard conditions remain open.
+    Candidate,
+    /// All four evidence families and the counter-review gate passed.
+    Confirmed,
+    /// The core rewrite needed to make a reference-model claim is absent.
+    NotEligible,
+}
+
+impl ReferenceModelEligibility {
+    /// Returns the stable machine and report label for this outcome.
+    pub const fn label(self) -> &'static str {
+        match self {
+            Self::Candidate => "CANDIDATE",
+            Self::Confirmed => "CONFIRMED",
+            Self::NotEligible => "NOT_ELIGIBLE",
+        }
+    }
+}
+
+/// One source-bound claim in a reference-model evidence packet.
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+pub struct ReferenceModelEvidence {
+    id: String,
+    family: ReferenceModelEvidenceFamily,
+    description: String,
+    source_uri: String,
+    period: Option<String>,
+    named_peer: Option<String>,
+    authoritative: bool,
+}
+
+impl ReferenceModelEvidence {
+    /// Creates a source-bound claim without inferring its family or authority.
+    pub fn new(
+        id: impl Into<String>,
+        family: ReferenceModelEvidenceFamily,
+        description: impl Into<String>,
+        source_uri: impl Into<String>,
+        period: Option<String>,
+        named_peer: Option<String>,
+        authoritative: bool,
+    ) -> Result<Self, TransformationDomainError> {
+        let evidence = Self {
+            id: id.into(),
+            family,
+            description: description.into(),
+            source_uri: source_uri.into(),
+            period,
+            named_peer,
+            authoritative,
+        };
+        evidence.validate()?;
+        Ok(evidence)
+    }
+
+    fn validate(&self) -> Result<(), TransformationDomainError> {
+        for (field, value) in [
+            ("reference-model evidence id", &self.id),
+            ("reference-model evidence description", &self.description),
+            ("reference-model evidence source URI", &self.source_uri),
+        ] {
+            if value.trim().is_empty() {
+                return Err(TransformationDomainError::EmptyValue { field });
+            }
+        }
+        for (field, value) in [
+            ("reference-model evidence period", self.period.as_ref()),
+            (
+                "reference-model evidence named peer",
+                self.named_peer.as_ref(),
+            ),
+        ] {
+            if value.is_some_and(|value| value.trim().is_empty()) {
+                return Err(TransformationDomainError::EmptyValue { field });
+            }
+        }
+        Ok(())
+    }
+
+    /// Returns the stable evidence identity.
+    pub fn id(&self) -> &str {
+        &self.id
+    }
+
+    /// Returns the required evidence family.
+    pub const fn family(&self) -> ReferenceModelEvidenceFamily {
+        self.family
+    }
+
+    /// Returns the bounded claim description.
+    pub fn description(&self) -> &str {
+        &self.description
+    }
+
+    /// Returns the source URI used for independence checks.
+    pub fn source_uri(&self) -> &str {
+        &self.source_uri
+    }
+
+    /// Returns the effective period when the claim carries one.
+    pub fn period(&self) -> Option<&str> {
+        self.period.as_deref()
+    }
+
+    /// Returns the named peer or adopter when the claim carries one.
+    pub fn named_peer(&self) -> Option<&str> {
+        self.named_peer.as_deref()
+    }
+
+    /// Returns whether the source is allowed to satisfy a hard evidence gate.
+    pub const fn authoritative(&self) -> bool {
+        self.authoritative
+    }
+}
+
+/// Explicit supporting, counter, and missing proof for one reference-model claim.
+#[derive(Clone, Debug, Default, Eq, PartialEq, Serialize, Deserialize)]
+pub struct ReferenceModelEvidenceBundle {
+    supporting: Vec<ReferenceModelEvidence>,
+    counter: Vec<ReferenceModelEvidence>,
+    missing: Vec<String>,
+    counter_reviewed: bool,
+}
+
+impl ReferenceModelEvidenceBundle {
+    /// Creates an empty evidence packet.
+    pub const fn new() -> Self {
+        Self {
+            supporting: Vec::new(),
+            counter: Vec::new(),
+            missing: Vec::new(),
+            counter_reviewed: false,
+        }
+    }
+
+    /// Adds authoritative or non-authoritative supporting evidence once.
+    pub fn add_supporting(
+        &mut self,
+        evidence: ReferenceModelEvidence,
+    ) -> Result<(), TransformationDomainError> {
+        self.add_unique(&evidence)?;
+        self.supporting.push(evidence);
+        Ok(())
+    }
+
+    /// Adds counter evidence once without treating it as missing proof.
+    pub fn add_counter(
+        &mut self,
+        evidence: ReferenceModelEvidence,
+    ) -> Result<(), TransformationDomainError> {
+        self.add_unique(&evidence)?;
+        self.counter.push(evidence);
+        Ok(())
+    }
+
+    /// Adds a stable missing-proof requirement once.
+    pub fn add_missing(
+        &mut self,
+        requirement: impl Into<String>,
+    ) -> Result<(), TransformationDomainError> {
+        let requirement = requirement.into();
+        if requirement.trim().is_empty() {
+            return Err(TransformationDomainError::EmptyValue {
+                field: "reference-model missing proof",
+            });
+        }
+        if self.missing.iter().any(|existing| existing == &requirement) {
+            return Err(duplicate_identity(
+                "reference-model missing proof",
+                requirement,
+            ));
+        }
+        self.missing.push(requirement);
+        Ok(())
+    }
+
+    /// Records that a counter-evidence search was actually performed.
+    pub const fn set_counter_reviewed(&mut self, reviewed: bool) {
+        self.counter_reviewed = reviewed;
+    }
+
+    /// Returns supporting claims in insertion order.
+    pub fn supporting(&self) -> &[ReferenceModelEvidence] {
+        &self.supporting
+    }
+
+    /// Returns counter claims in insertion order.
+    pub fn counter(&self) -> &[ReferenceModelEvidence] {
+        &self.counter
+    }
+
+    /// Returns explicit missing-proof requirements in insertion order.
+    pub fn missing(&self) -> &[String] {
+        &self.missing
+    }
+
+    /// Returns whether the counter-evidence review was represented.
+    pub const fn counter_reviewed(&self) -> bool {
+        self.counter_reviewed
+    }
+
+    /// Evaluates the packet without scoring, ranking, or inferring causality.
+    pub fn assess(&self) -> ReferenceModelAssessment {
+        let authoritative = self
+            .supporting
+            .iter()
+            .filter(|evidence| evidence.authoritative());
+        let mut families = std::collections::BTreeSet::new();
+        let mut outcome_periods = std::collections::BTreeSet::new();
+        let mut diffusion_sources = std::collections::BTreeSet::new();
+        let mut diffusion_peers = std::collections::BTreeSet::new();
+        for evidence in authoritative {
+            families.insert(evidence.family());
+            if evidence.family() == ReferenceModelEvidenceFamily::SustainedOutcome {
+                if let Some(period) = evidence.period() {
+                    outcome_periods.insert(period.to_owned());
+                }
+            }
+            if evidence.family() == ReferenceModelEvidenceFamily::IndustryDiffusion {
+                diffusion_sources.insert(evidence.source_uri().to_owned());
+                if let Some(peer) = evidence.named_peer() {
+                    diffusion_peers.insert(peer.to_owned());
+                }
+            }
+        }
+
+        let mut missing = self.missing.clone();
+        for (family, requirement) in [
+            (
+                ReferenceModelEvidenceFamily::OrganizationRewrite,
+                "organization_rewrite",
+            ),
+            (
+                ReferenceModelEvidenceFamily::ProductionSystemRewrite,
+                "production_system_rewrite",
+            ),
+            (
+                ReferenceModelEvidenceFamily::SustainedOutcome,
+                "sustained_outcome",
+            ),
+            (
+                ReferenceModelEvidenceFamily::IndustryDiffusion,
+                "industry_diffusion",
+            ),
+        ] {
+            if !families.contains(&family) && !missing.iter().any(|item| item == requirement) {
+                missing.push(requirement.to_owned());
+            }
+        }
+        if families.contains(&ReferenceModelEvidenceFamily::SustainedOutcome)
+            && outcome_periods.len() < 2
+        {
+            missing.push("distinct_outcome_periods".to_owned());
+        }
+        if families.contains(&ReferenceModelEvidenceFamily::IndustryDiffusion)
+            && (diffusion_sources.len() < 2 || diffusion_peers.len() < 2)
+        {
+            missing.push("independent_diffusion_sources".to_owned());
+        }
+        if !self.counter_reviewed {
+            missing.push("counter_evidence_review".to_owned());
+        }
+        missing.sort();
+        missing.dedup();
+
+        let core_rewrite = families.contains(&ReferenceModelEvidenceFamily::OrganizationRewrite)
+            && families.contains(&ReferenceModelEvidenceFamily::ProductionSystemRewrite);
+        let eligibility = if !core_rewrite {
+            ReferenceModelEligibility::NotEligible
+        } else if missing.is_empty() {
+            ReferenceModelEligibility::Confirmed
+        } else {
+            ReferenceModelEligibility::Candidate
+        };
+        ReferenceModelAssessment {
+            eligibility,
+            supporting_families: families.into_iter().collect(),
+            missing,
+            counter_evidence_count: self.counter.len(),
+            counter_reviewed: self.counter_reviewed,
+            distinct_outcome_periods: outcome_periods.len(),
+            independent_diffusion_sources: diffusion_sources.len(),
+        }
+    }
+
+    fn add_unique(
+        &self,
+        evidence: &ReferenceModelEvidence,
+    ) -> Result<(), TransformationDomainError> {
+        if self
+            .supporting
+            .iter()
+            .chain(self.counter.iter())
+            .any(|existing| existing.id() == evidence.id())
+        {
+            return Err(duplicate_identity(
+                "reference-model evidence",
+                evidence.id(),
+            ));
+        }
+        Ok(())
+    }
+}
+
+/// The immutable read model produced by the reference-model gate.
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+pub struct ReferenceModelAssessment {
+    eligibility: ReferenceModelEligibility,
+    supporting_families: Vec<ReferenceModelEvidenceFamily>,
+    missing: Vec<String>,
+    counter_evidence_count: usize,
+    #[serde(default)]
+    counter_reviewed: bool,
+    distinct_outcome_periods: usize,
+    independent_diffusion_sources: usize,
+}
+
+impl Default for ReferenceModelAssessment {
+    fn default() -> Self {
+        ReferenceModelEvidenceBundle::new().assess()
+    }
+}
+
+impl ReferenceModelAssessment {
+    /// Returns the fail-closed eligibility result.
+    pub const fn eligibility(&self) -> ReferenceModelEligibility {
+        self.eligibility
+    }
+
+    /// Returns the authoritative families present in the packet.
+    pub fn supporting_families(&self) -> &[ReferenceModelEvidenceFamily] {
+        &self.supporting_families
+    }
+
+    /// Returns missing hard conditions in stable order.
+    pub fn missing(&self) -> &[String] {
+        &self.missing
+    }
+
+    /// Returns the number of counter claims retained.
+    pub const fn counter_evidence_count(&self) -> usize {
+        self.counter_evidence_count
+    }
+
+    /// Returns whether the bounded counter-evidence review was represented.
+    pub const fn counter_reviewed(&self) -> bool {
+        self.counter_reviewed
+    }
+
+    /// Returns the number of distinct outcome periods.
+    pub const fn distinct_outcome_periods(&self) -> usize {
+        self.distinct_outcome_periods
+    }
+
+    /// Returns the number of independent diffusion source URIs.
+    pub const fn independent_diffusion_sources(&self) -> usize {
+        self.independent_diffusion_sources
     }
 }
 

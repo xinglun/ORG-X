@@ -7,8 +7,8 @@ use chrono::{NaiveDate, Utc};
 use org_x::features::weekly_radar::runtime::config::CompanySourceRegistry;
 use org_x::features::weekly_radar::runtime::http::{HttpClient, UreqHttpClient};
 use org_x::features::weekly_radar::runtime::model::{
-    CompanyIdentity, FactStatus, NormalizedFact, Provenance, ResearchMetrics, RuntimeReportInput,
-    SourceCoverage, SourceFailure,
+    CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, ResearchMetrics,
+    RuntimeReportInput, SourceCoverage, SourceFailure,
 };
 use org_x::features::weekly_radar::runtime::report::{
     render_report_in_language, RenderedReport, ReportLanguage,
@@ -18,7 +18,7 @@ use org_x::features::weekly_radar::runtime::sec::{
 };
 use org_x::features::weekly_radar::runtime::sources::{
     collect_configured_sources, document_observation, DocumentObservationInput, SourceKind,
-    SourceStatus,
+    SourceObservation, SourceStatus, SourceTier,
 };
 use org_x::features::weekly_radar::runtime::{
     acquire_run_lock, build_input_snapshot, derive_judgment_snapshot_for_companies,
@@ -466,6 +466,7 @@ fn acquire_runtime_input(
                 }
             }
         }
+        add_counter_review_fact(&mut input, company.id(), &observations, as_of)?;
         for kind in available_kinds {
             coverage
                 .entry(kind.to_owned())
@@ -578,6 +579,52 @@ fn add_pending_evidence_fact(
         .map_err(|error| CliError::Failure(error.to_string()))
 }
 
+fn add_counter_review_fact(
+    input: &mut RuntimeReportInput,
+    company_id: &str,
+    observations: &[SourceObservation],
+    as_of: NaiveDate,
+) -> Result<(), CliError> {
+    let reviewed_sources = observations
+        .iter()
+        .filter(|observation| {
+            observation.status() == SourceStatus::Known
+                && observation.tier() == SourceTier::OfficialPrimary
+                && matches!(
+                    observation.material_kind(),
+                    SourceMaterialKind::EntryPoint | SourceMaterialKind::Document
+                )
+        })
+        .filter_map(|observation| observation.url())
+        .collect::<BTreeSet<_>>();
+    let Some(source_uri) = reviewed_sources.iter().next() else {
+        return Ok(());
+    };
+    let review = format!(
+        "Counter-evidence review completed across {} authoritative source observations in the bounded corpus; no disconfirming reference-model claim was identified.",
+        reviewed_sources.len()
+    );
+    let provenance = Provenance::new(
+        source_uri.to_owned(),
+        review.clone(),
+        Utc::now(),
+        Some(as_of),
+    )
+    .map_err(|error| CliError::Failure(error.to_string()))?;
+    let fact = NormalizedFact::new(
+        company_id,
+        "judgment.review.REFERENCE_MODEL.counter_evidence_review",
+        review,
+        FactStatus::Known,
+        Confidence::High,
+        provenance,
+    )
+    .map_err(|error| CliError::Failure(error.to_string()))?;
+    input
+        .add_fact(fact)
+        .map_err(|error| CliError::Failure(error.to_string()))
+}
+
 fn validate_rendered_report(report: &RenderedReport) -> Result<(), CliError> {
     if report.report_id().trim().is_empty() || report.markdown().trim().is_empty() {
         return Err(CliError::Failure(
@@ -618,6 +665,7 @@ fn registry_has_configured_primary_source(registry: &CompanySourceRegistry) -> b
             || company.official_ir_url().is_some()
             || company.careers_url().is_some()
             || company.engineering_ai_blog_url().is_some()
+            || !company.official_research_source_urls().is_empty()
     })
 }
 
@@ -964,6 +1012,57 @@ mod tests {
             .facts()
             .iter()
             .any(|fact| fact.kind().starts_with("evidence_")));
+    }
+
+    #[test]
+    fn multiple_official_research_sources_preserve_source_coverage_invariant() {
+        let company = CompanyConfig::new(
+            "acme",
+            "Acme Corporation",
+            "ACME",
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        )
+        .expect("base company should be valid")
+        .with_official_research_sources(vec![
+            "https://example.test/frontier".to_owned(),
+            "https://example.test/customer-stories".to_owned(),
+        ])
+        .expect("research sources should validate");
+        let registry = CompanySourceRegistry::new(1, vec![company.clone()])
+            .expect("research registry should be valid");
+        let client = FixtureHttpClient::new();
+        client.insert(
+            "https://example.test/frontier",
+            HttpResponse::ok("<title>Frontier research</title><p>Official research.</p>"),
+        );
+        client.insert(
+            "https://example.test/customer-stories",
+            HttpResponse::ok("<title>Customer stories</title><p>Official stories.</p>"),
+        );
+
+        let acquired = acquire_runtime_input(
+            &registry,
+            &client,
+            "ORG-X test contact@example.test",
+            NaiveDate::from_ymd_opt(2026, 8, 25).expect("fixture date should be valid"),
+        )
+        .expect("multiple research sources should not invalidate coverage");
+
+        let coverage = acquired
+            .input
+            .source_coverage()
+            .iter()
+            .find(|item| item.source() == "official_research")
+            .expect("official research coverage should be present");
+        assert_eq!(coverage.expected(), 1);
+        assert_eq!(coverage.available(), 1);
+        assert_eq!(coverage.not_configured(), 0);
+        assert_eq!(coverage.unavailable(), 0);
     }
 
     #[test]

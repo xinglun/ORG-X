@@ -13,8 +13,8 @@ use std::marker::PhantomData;
 
 use super::config::{is_safe_source_identifier, CompanyConfig};
 use super::discovery::{
-    discover_documents, document_metadata, DocumentCandidate, DocumentKind,
-    MAX_DOCUMENT_OBSERVATIONS_PER_ENTRY,
+    direct_document_candidate, discover_documents, document_metadata, DocumentCandidate,
+    DocumentKind, MAX_DOCUMENT_OBSERVATIONS_PER_ENTRY,
 };
 use super::http::{HttpClient, HttpResponse, MAX_HTTP_RESPONSE_BODY_BYTES};
 use super::model::Provenance;
@@ -39,6 +39,8 @@ pub enum SourceKind {
     Careers,
     /// Configured official engineering or AI material.
     EngineeringAiBlog,
+    /// Additional explicitly configured official research material.
+    OfficialResearch,
     /// Public Greenhouse job-board material.
     Greenhouse,
     /// Public Lever job-board material.
@@ -55,6 +57,7 @@ impl SourceKind {
             Self::OfficialIr => "official_ir",
             Self::Careers => "careers",
             Self::EngineeringAiBlog => "engineering_ai_blog",
+            Self::OfficialResearch => "official_research",
             Self::Greenhouse => "greenhouse",
             Self::Lever => "lever",
             Self::Gdelt => "gdelt",
@@ -377,6 +380,16 @@ pub fn collect_configured_sources(
         company.engineering_ai_blog_url(),
         &mut observations,
     );
+    for url in company.official_research_source_urls() {
+        collect_official(
+            company,
+            http,
+            observed_at,
+            SourceKind::OfficialResearch,
+            Some(url.as_str()),
+            &mut observations,
+        );
+    }
     collect_greenhouse(company, http, observed_at, &mut observations);
     collect_lever(company, http, observed_at, &mut observations);
     if has_configured_source_endpoint(company) {
@@ -399,6 +412,7 @@ fn has_configured_source_endpoint(company: &CompanyConfig) -> bool {
     company.official_ir_url().is_some()
         || company.careers_url().is_some()
         || company.engineering_ai_blog_url().is_some()
+        || !company.official_research_source_urls().is_empty()
         || company.greenhouse_board().is_some()
         || company.lever_site().is_some()
 }
@@ -447,8 +461,12 @@ fn collect_official(
                 }
                 Err(FetchFailure::InvalidPayload) => unreachable!("body bounds do not decode"),
             };
-            let document_candidates =
+            let mut document_candidates =
                 discover_documents(company.id(), kind, url, body, observed_at);
+            if let Some(candidate) = direct_document_candidate(company.id(), kind, url, observed_at)
+            {
+                document_candidates.push(candidate);
+            }
             let text = normalize_html_text(body);
             let status = if text.is_empty() {
                 SourceStatus::Unknown

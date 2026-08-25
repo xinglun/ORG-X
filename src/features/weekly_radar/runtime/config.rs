@@ -128,6 +128,14 @@ pub struct CompanyConfig {
         alias = "engineering_ai_blog_url"
     )]
     pub engineering_ai_blog: Option<String>,
+    /// Additional explicitly configured official research entrypoints.
+    ///
+    /// These are bounded source indexes, not guessed document URLs. They are
+    /// retained as a list so a candidate can expose separate organization,
+    /// production-system, and diffusion material without replacing its IR or
+    /// engineering source.
+    #[serde(default, alias = "official_research_urls")]
+    pub official_research_sources: Vec<String>,
     /// Optional Greenhouse board identifier.
     #[serde(default, alias = "greenhouse_board_id")]
     pub greenhouse_board: Option<String>,
@@ -158,6 +166,7 @@ impl CompanyConfig {
             official_ir,
             careers,
             engineering_ai_blog,
+            official_research_sources: Vec::new(),
             greenhouse_board,
             lever_site,
         };
@@ -182,6 +191,15 @@ impl CompanyConfig {
         validate_optional_url("official IR URL", &self.official_ir)?;
         validate_optional_url("careers URL", &self.careers)?;
         validate_optional_url("engineering/AI blog URL", &self.engineering_ai_blog)?;
+        let mut research_sources = HashSet::new();
+        for source in &self.official_research_sources {
+            validate_optional_url("official research source URL", &Some(source.clone()))?;
+            if !research_sources.insert(source) {
+                return Err(RuntimeError::invalid_configuration(
+                    "duplicate official research source URL",
+                ));
+            }
+        }
         validate_optional_identifier("Greenhouse board", &self.greenhouse_board)?;
         validate_optional_identifier("Lever site", &self.lever_site)?;
         Ok(())
@@ -220,6 +238,21 @@ impl CompanyConfig {
     /// Returns the optional official engineering or AI blog URL.
     pub fn engineering_ai_blog_url(&self) -> Option<&str> {
         self.engineering_ai_blog.as_deref()
+    }
+
+    /// Adds bounded official research entrypoints and revalidates the config.
+    pub fn with_official_research_sources(
+        mut self,
+        sources: Vec<String>,
+    ) -> Result<Self, RuntimeError> {
+        self.official_research_sources = sources;
+        self.validate()?;
+        Ok(self)
+    }
+
+    /// Returns the explicitly configured official research entrypoints.
+    pub fn official_research_source_urls(&self) -> &[String] {
+        &self.official_research_sources
     }
 
     /// Returns the optional Greenhouse board identifier.

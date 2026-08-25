@@ -1,0 +1,42 @@
+{
+  "contractVersion": 2,
+  "workItemId": "documentation-alignment-summary-schema-20260728",
+  "title": "Historical documentation-alignment Summary schema fixture",
+  "mode": "review",
+  "baseCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+  "baselineDirtyPaths": [],
+  "rollbackNote": "Fixture only; no repository rollback is applicable.",
+  "scope": ["tests/fixtures/**"],
+  "outOfScope": ["implementation", "hosted delivery"],
+  "sources": [
+    {"path": "tests/test_ai_check_summary.py", "reason": "Historical regression fixture consumer."}
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "low",
+    "riskTypes": [],
+    "reason": "Historical regression fixture; it grants no implementation authority.",
+    "unknownsReviewComplete": true
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": ["Fixture-only regression coverage."],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": false,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": "fixture_only"
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "Retain the historical fixture as test data only."
+  },
+  "checkpointPolicy": {"requiredBeforeFinish": false, "requiredStages": [], "reason": "Fixture only."},
+  "acceptance": ["Fixture remains parseable by the summary regression test."],
+  "verification": ["pytest -q tests/test_ai_check_summary.py"],
+  "guidelines": []
+}

@@ -51,17 +51,17 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_evidence_quality.rs",
-      "digest": "99baaf44b791cfd21300123cac8abecce2fb72e03cb165c85d18002ffa31bddf"
+      "digest": "3ea80b8d3f4b6792a3407c29addd4c146a1c418d966680d74e5b5af067b6ec7b"
     },
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/discovery.rs",
-      "digest": "5556da348f2c8e277909bb5d0b8c548c07d7b413c59e6baa04eee873fb0cbbe2"
+      "digest": "5735f3ce89f7feb13f5f1f719b8ea1ac9e29a7044ff353260ecac0a2459df592"
     },
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/evidence.rs",
-      "digest": "08086dda74c32a80ca4502009090883ddca1315fe2712b6bfd3c7638d59b7e1b"
+      "digest": "766f52d2b0d315d4a9cfadb2def064379e83550ac1c455552e017a0cfdf10a8c"
     },
     {
       "type": "code",

@@ -16,8 +16,11 @@ use org_x::features::weekly_radar::runtime::archive::{
     write_run_with_input_snapshot, ArchiveError,
 };
 use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
-use org_x::features::weekly_radar::runtime::discovery::document_metadata;
+use org_x::features::weekly_radar::runtime::discovery::{
+    discover_documents, document_metadata, DocumentKind,
+};
 use org_x::features::weekly_radar::runtime::error::RuntimeError;
+use org_x::features::weekly_radar::runtime::evidence::extract_evidence_candidate;
 use org_x::features::weekly_radar::runtime::http::{
     FixtureHttpClient, HttpClient, HttpResponse, UreqHttpClient,
 };
@@ -61,6 +64,56 @@ fn runtime_association_covers_claim_body_metadata_boundary() {
 }
 
 #[test]
+fn document_metadata_extracts_visible_us_publication_date() {
+    let (_, date, _) = document_metadata(
+        r#"<title>Customer story</title><p>2/25/2026</p><p>Acme rolled out an agent workflow.</p>"#,
+        "fallback",
+    );
+
+    assert_eq!(date, Some(NaiveDate::from_ymd_opt(2026, 2, 25).unwrap()));
+}
+
+#[test]
+fn document_discovery_classifies_standalone_ai_title_tokens() {
+    let documents = discover_documents(
+        "msft",
+        SourceKind::OfficialResearch,
+        "https://www.microsoft.com/insidetrack/blog/category/frontier-firm/",
+        r#"<a href="/insidetrack/blog/becoming-a-frontier-firm/">Becoming a Frontier Firm: Our playbook for the AI era</a>"#,
+        Utc::now(),
+    );
+
+    assert_eq!(documents.len(), 1);
+    assert_eq!(documents[0].document_kind(), DocumentKind::AiAutomation);
+}
+
+#[test]
+fn document_discovery_prioritizes_content_paths_over_generic_navigation() {
+    let html = r#"
+        <a href="/en-us/ai/nav-1">AI navigation one</a>
+        <a href="/en-us/ai/nav-2">AI navigation two</a>
+        <a href="/en-us/ai/nav-3">AI navigation three</a>
+        <a href="/en-us/ai/nav-4">AI navigation four</a>
+        <a href="/en-us/ai/nav-5">AI navigation five</a>
+        <a href="/en-us/ai/nav-6">AI navigation six</a>
+        <a href="/en-us/ai/nav-7">AI navigation seven</a>
+        <a href="/en-us/ai/nav-8">AI navigation eight</a>
+        <a href="/insidetrack/blog/becoming-a-frontier-firm/">Becoming a Frontier Firm: Our playbook for the AI era</a>
+    "#;
+    let documents = discover_documents(
+        "msft",
+        SourceKind::OfficialResearch,
+        "https://www.microsoft.com/insidetrack/blog/category/frontier-firm/",
+        html,
+        Utc::now(),
+    );
+
+    assert!(documents
+        .iter()
+        .any(|document| document.url().contains("becoming-a-frontier-firm")));
+}
+
+#[test]
 fn registry_validation_preserves_optional_source_semantics() {
     let registry = CompanySourceRegistry::from_json(
         r#"
@@ -75,6 +128,10 @@ fn registry_validation_preserves_optional_source_semantics() {
               "official_ir": "https://example.test/investors",
               "careers": "https://example.test/careers",
               "engineering_ai_blog": "https://example.test/engineering",
+              "official_research_sources": [
+                "https://example.test/frontier",
+                "https://example.test/customer-stories"
+              ],
               "greenhouse_board": "acme",
               "lever_site": "acme"
             },
@@ -96,6 +153,16 @@ fn registry_validation_preserves_optional_source_semantics() {
         registry.company("acme").unwrap().official_ir_url(),
         Some("https://example.test/investors")
     );
+    assert_eq!(
+        registry
+            .company("acme")
+            .unwrap()
+            .official_research_source_urls(),
+        [
+            "https://example.test/frontier",
+            "https://example.test/customer-stories"
+        ]
+    );
     assert_eq!(registry.company("beta").unwrap().sec_cik(), None);
     assert_eq!(registry.company("beta").unwrap().greenhouse_board(), None);
 
@@ -109,6 +176,92 @@ fn registry_validation_preserves_optional_source_semantics() {
         }"#,
     );
     assert!(invalid.is_err(), "duplicate identities must be rejected");
+}
+
+#[test]
+fn bounded_official_research_sources_are_collected_without_guessing_urls() {
+    let company = CompanyConfig::new(
+        "acme",
+        "Acme Corporation",
+        "ACME",
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("base company should be valid")
+    .with_official_research_sources(vec![
+        "https://example.test/frontier".to_owned(),
+        "https://example.test/customer-stories".to_owned(),
+    ])
+    .expect("research sources should validate");
+    let client = FixtureHttpClient::new();
+    client.insert(
+        "https://example.test/frontier",
+        HttpResponse::ok("<title>Frontier research</title><p>Official research entrypoint.</p>"),
+    );
+    client.insert(
+        "https://example.test/customer-stories",
+        HttpResponse::ok("<title>Customer stories</title><p>Official customer stories.</p>"),
+    );
+
+    let observations = collect_configured_sources(&company, &client, Utc::now());
+    let entry_urls = observations
+        .iter()
+        .filter(|observation| {
+            observation.kind() == SourceKind::OfficialResearch
+                && observation.material_kind()
+                    == org_x::features::weekly_radar::runtime::sources::SourceMaterialKind::EntryPoint
+        })
+        .filter_map(|observation| observation.url())
+        .collect::<Vec<_>>();
+    assert_eq!(
+        entry_urls,
+        vec![
+            "https://example.test/frontier",
+            "https://example.test/customer-stories"
+        ]
+    );
+}
+
+#[test]
+fn explicit_official_research_document_is_collected_for_claim_extraction() {
+    let company = CompanyConfig::new(
+        "acme",
+        "Acme Corporation",
+        "ACME",
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("base company should be valid")
+    .with_official_research_sources(vec![
+        "https://example.test/customers/story/acme-ai-rollout".to_owned()
+    ])
+    .expect("research source should validate");
+    let client = FixtureHttpClient::new();
+    client.insert(
+        "https://example.test/customers/story/acme-ai-rollout",
+        HttpResponse::ok(
+            r#"<title>Acme AI rollout</title><time datetime="2026-02-25"></time><p>Acme rolled out an agent workflow across production operations.</p>"#,
+        ),
+    );
+
+    let observations = collect_configured_sources(&company, &client, Utc::now());
+    let document = observations
+        .iter()
+        .find(|observation| {
+            observation.material_kind()
+                == org_x::features::weekly_radar::runtime::sources::SourceMaterialKind::Document
+                && observation.url() == Some("https://example.test/customers/story/acme-ai-rollout")
+        })
+        .expect("explicit content URL should become a document");
+    assert!(extract_evidence_candidate(document).is_some());
 }
 
 #[test]

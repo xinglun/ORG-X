@@ -1,0 +1,30 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "realign_ai_cockpit_v2",
+  "contractPath": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
+  "changedFiles": [
+    {"path": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json", "reason": "Historical Contract fixture."}
+  ],
+  "sourcesUsed": ["tests/test_ai_check_summary.py"],
+  "verification": [
+    {"check": "fixture", "result": "passed", "evidence": "tests/test_ai_check_summary.py"}
+  ],
+  "unknownsRemaining": [],
+  "risk": {"level": "low", "items": []},
+  "generatedFiles": [],
+  "destructiveChanges": [],
+  "observedIssues": [],
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "aligned",
+    "checkedAt": "2026-08-26T00:00:00+09:00",
+    "checks": [
+      {"area": "plan", "status": "not_applicable", "evidence": ["tests/test_ai_check_summary.py"], "reason": "Fixture only."},
+      {"area": "contractSummaryEvidence", "status": "aligned", "evidence": ["tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json"], "reason": "Fixture pair is explicit."},
+      {"area": "documentationCommandsCapability", "status": "not_applicable", "evidence": ["tests/test_ai_check_summary.py"], "reason": "Fixture only."},
+      {"area": "multilingualSemantics", "status": "not_applicable", "evidence": ["tests/test_ai_check_summary.py"], "reason": "Fixture only."},
+      {"area": "limitationsUnknownsHistory", "status": "aligned", "evidence": ["tests/test_ai_check_summary.py"], "reason": "Historical fixture purpose is explicit."}
+    ]
+  },
+  "acceptanceEvidence": []
+}

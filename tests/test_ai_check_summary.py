@@ -6,7 +6,7 @@ import ai_finish
 from ai_common import PROJECT_ROOT
 
 ARCHIVE_SUMMARY = (
-    PROJECT_ROOT / ".ai" / "work-items" / "archive" / "2026" / "realign_ai_cockpit_v2.summary.json"
+    PROJECT_ROOT / "tests" / "fixtures" / "realign_ai_cockpit_v2.summary.json"
 )
 ALIGNMENT_AREAS = {
     "plan",

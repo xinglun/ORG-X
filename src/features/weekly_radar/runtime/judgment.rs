@@ -22,6 +22,10 @@ use crate::features::ranking::domain::{
     RankingCandidateId, RankingReadModel, Stage as RankingStage, TransformationScore,
 };
 use crate::features::transformation::domain::Stage as TransformationStage;
+use crate::features::transformation::domain::{
+    ReferenceModelAssessment, ReferenceModelEligibility, ReferenceModelEvidence,
+    ReferenceModelEvidenceBundle, ReferenceModelEvidenceFamily,
+};
 
 use super::error::RuntimeError;
 use super::model::{Confidence, FactStatus, NormalizedFact};
@@ -31,6 +35,7 @@ pub const MACHINE_RULE_VERSION: &str = "weekly-radar-machine-reference/v1";
 
 const SUPPORTING_PREFIX: &str = "judgment.supporting.";
 const COUNTER_PREFIX: &str = "judgment.counter.";
+const COUNTER_REVIEW_KIND: &str = "judgment.review.REFERENCE_MODEL.counter_evidence_review";
 const MISSING_PREFIX: &str = "judgment.missing.";
 
 /// Machine Stage result. `Undetermined` is a valid result and is not treated
@@ -242,6 +247,8 @@ pub struct MachineJudgment {
     machine_stage: MachineStage,
     stage_reason: String,
     evidence_cutoff: NaiveDate,
+    #[serde(default)]
+    reference_model_assessment: ReferenceModelAssessment,
     supporting_proof: Vec<ProofView>,
     counter_proof: Vec<ProofView>,
     missing_proof: Vec<ProofView>,
@@ -267,6 +274,11 @@ impl MachineJudgment {
     /// Returns the evidence cutoff used by the machine reference.
     pub const fn evidence_cutoff(&self) -> NaiveDate {
         self.evidence_cutoff
+    }
+
+    /// Returns the precomputed reference-model evidence assessment.
+    pub const fn reference_model_assessment(&self) -> &ReferenceModelAssessment {
+        &self.reference_model_assessment
     }
 
     /// Returns supporting proof with source links retained.
@@ -546,8 +558,12 @@ where
             .filter(|fact| fact_is_on_or_before_cutoff(fact, evidence_cutoff))
             .collect::<Vec<_>>();
         let evidence = build_evidence_set(&company_id, &eligible_facts, evidence_cutoff)?;
-        let (machine_stage, stage_reason, selected_stage) =
-            evaluate_stage(&eligible_facts, evidence_cutoff);
+        let reference_model_assessment = derive_reference_model_assessment(&eligible_facts);
+        let (machine_stage, stage_reason, selected_stage) = evaluate_stage(
+            &eligible_facts,
+            evidence_cutoff,
+            reference_model_assessment.eligibility() == ReferenceModelEligibility::Confirmed,
+        );
         let supporting_proof = proof_views_for_evidence(evidence.supporting());
         let counter_proof = proof_views_for_evidence(evidence.counter());
         let missing_proof = missing_proof_views(evidence.missing());
@@ -572,6 +588,7 @@ where
             machine_stage,
             stage_reason,
             evidence_cutoff,
+            reference_model_assessment,
             supporting_proof,
             counter_proof,
             missing_proof,
@@ -600,6 +617,60 @@ where
     };
     snapshot.validate()?;
     Ok(snapshot)
+}
+
+fn derive_reference_model_assessment(facts: &[&NormalizedFact]) -> ReferenceModelAssessment {
+    let mut bundle = ReferenceModelEvidenceBundle::new();
+    let mut counter_reviewed = false;
+    for (index, fact) in facts.iter().enumerate() {
+        if fact.status() != &FactStatus::Known {
+            continue;
+        }
+        let is_counter = fact.kind().starts_with(COUNTER_PREFIX);
+        if is_counter || fact.kind() == COUNTER_REVIEW_KIND {
+            counter_reviewed = true;
+        }
+        let Some(family) = fact.reference_model_family().or_else(|| {
+            is_counter.then_some(ReferenceModelEvidenceFamily::ProductionSystemRewrite)
+        }) else {
+            continue;
+        };
+        let description = fact
+            .value()
+            .unwrap_or_else(|| fact.provenance().source_field_or_passage())
+            .to_owned();
+        let periods = if fact.reference_model_periods().is_empty() {
+            vec![fact.provenance().effective_date().map(ToString::to_string)]
+        } else {
+            fact.reference_model_periods()
+                .iter()
+                .cloned()
+                .map(Some)
+                .collect()
+        };
+        for (period_index, period) in periods.into_iter().enumerate() {
+            let id = format!("reference-model:{index}:{period_index}:{}", fact.kind());
+            let evidence = match ReferenceModelEvidence::new(
+                id,
+                family,
+                description.clone(),
+                fact.provenance().source_uri(),
+                period,
+                fact.reference_model_named_peer().map(str::to_owned),
+                true,
+            ) {
+                Ok(evidence) => evidence,
+                Err(_) => continue,
+            };
+            if is_counter {
+                let _ = bundle.add_counter(evidence);
+            } else {
+                let _ = bundle.add_supporting(evidence);
+            }
+        }
+    }
+    bundle.set_counter_reviewed(counter_reviewed);
+    bundle.assess()
 }
 
 fn build_evidence_set(
@@ -646,7 +717,15 @@ fn build_evidence_set(
 fn evaluate_stage(
     facts: &[&NormalizedFact],
     cutoff: NaiveDate,
+    reference_model_confirmed: bool,
 ) -> (MachineStage, String, Option<TransformationStage>) {
+    if reference_model_confirmed {
+        return (
+            MachineStage::assigned(TransformationStage::ReferenceModel.label()),
+            "reference-model evidence bundle confirmed; highest Stage gate passed".to_owned(),
+            Some(TransformationStage::ReferenceModel),
+        );
+    }
     let mut by_stage =
         BTreeMap::<TransformationStage, (usize, usize, usize, BTreeSet<String>)>::new();
     for fact in facts {
@@ -675,8 +754,12 @@ fn evaluate_stage(
 
     let selected = by_stage
         .into_iter()
-        .filter(|(_, (support, counter, missing, sources))| {
-            *support >= 2 && *counter >= 1 && *missing >= 1 && sources.len() >= 2
+        .filter(|(stage, (support, counter, missing, sources))| {
+            *support >= 2
+                && *counter >= 1
+                && *missing >= 1
+                && sources.len() >= 2
+                && stage_is_not_reference_model_or_confirmed(stage, reference_model_confirmed)
         })
         .max_by_key(|(stage, _)| stage.rank());
 
@@ -701,6 +784,13 @@ fn evaluate_stage(
             None,
         ),
     }
+}
+
+fn stage_is_not_reference_model_or_confirmed(
+    stage: &TransformationStage,
+    reference_model_confirmed: bool,
+) -> bool {
+    *stage != TransformationStage::ReferenceModel || reference_model_confirmed
 }
 
 fn build_ranking_candidate(

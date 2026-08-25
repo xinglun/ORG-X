@@ -33,7 +33,7 @@
         "scripts/ai_close_work_item.py",
         "scripts/ai_critical_domain_guards.py"
       ],
-      "scriptInventoryDigest": "7457385f2aa4c27844b5a37e1ab154069475bb80fd8cd4c208467fa3f9c24d6d",
+    "scriptInventoryDigest": "30e3569750f94de75d163197f52a59abee655f44a810d27503b87fb11875a090",
       "preservedAdopterCustomizations": [
         {
           "path": "scripts/ai_check_summary.py",
@@ -48,7 +48,7 @@
         {
           "path": "scripts/ai_close_work_item.py",
           "reason": "Preserved adopter adoption-branch identity compatibility in the close-work-item guard.",
-          "installedSha256": "670c969cf56c41486d6eff6d2e8b4b3402514ea8fb74c6e47d151cbc0544a50f",
+        "installedSha256": "e10dfe4365560f2e414c3e90688d970a89fc864a881128577a2772d4150f6f19",
           "publishedSha256": "7daa8f22bd6082dac9ea38d601a065b640a4e9b479f92b29c9f0840c78eb70bd",
           "evidence": [
             "scripts/ai_close_work_item.py",

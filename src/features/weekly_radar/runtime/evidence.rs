@@ -1,12 +1,14 @@
 //! Deterministic claim extraction and validation for Weekly Radar evidence.
 
 use chrono::{NaiveDate, Utc};
+use regex::Regex;
 use std::fmt;
 
 use super::discovery::DocumentKind;
 use super::model::{Confidence, FactStatus, NormalizedFact, Provenance, StructuralDimension};
 use super::sources::{SourceKind, SourceMaterialKind, SourceObservation, SourceStatus, SourceTier};
 use super::RuntimeError;
+use crate::features::transformation::domain::ReferenceModelEvidenceFamily;
 
 const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v4";
 const MAX_FIELD_BYTES: usize = 512;
@@ -22,7 +24,9 @@ const CHANGE_SIGNALS: &[&str] = &[
     "shift",
     "launch",
     "adopt",
+    "roll",
     "automat",
+    "deploy",
     "replaced",
     "moderniz",
     "doubled",
@@ -119,6 +123,50 @@ const OPERATING_METRIC_DIMENSION_SIGNALS: &[&str] = &[
     "productivity",
 ];
 
+const REFERENCE_MODEL_ORGANIZATION_SIGNALS: &[&str] = &[
+    "reorganiz",
+    "restructur",
+    "reporting line",
+    "responsibil",
+    "decision right",
+    "operating model",
+    "organization",
+];
+
+const REFERENCE_MODEL_PRODUCTION_SIGNALS: &[&str] = &[
+    "production system",
+    "ai platform",
+    "agentic workflow",
+    "agent workflow",
+    "automation",
+    "engineering workflow",
+    "operating model",
+    "deployment platform",
+];
+
+const REFERENCE_MODEL_OUTCOME_SIGNALS: &[&str] = &[
+    "revenue",
+    "operating income",
+    "operating margin",
+    "free cash flow",
+    "cash flow",
+    "productivity",
+    "cost per",
+];
+
+const REFERENCE_MODEL_DIFFUSION_SIGNALS: &[&str] = &[
+    "adopted by",
+    "adopted ",
+    "rolled out",
+    "implemented by",
+    "implemented ",
+    "used by",
+    " used ",
+    "industry standard",
+    "peer company",
+    "customer adoption",
+];
+
 /// Source classification used by the evidence gate.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum EvidenceSourceKind {
@@ -160,6 +208,8 @@ pub struct EvidenceCandidate {
     source_title: String,
     passage: String,
     document_kind: Option<DocumentKind>,
+    reference_model_family: Option<ReferenceModelEvidenceFamily>,
+    reference_model_named_peer: Option<String>,
     provenance: Provenance,
 }
 
@@ -210,6 +260,8 @@ impl EvidenceCandidate {
             source_title: String::new(),
             passage: concrete_change,
             document_kind: None,
+            reference_model_family: None,
+            reference_model_named_peer: None,
             provenance,
         })
     }
@@ -230,6 +282,25 @@ impl EvidenceCandidate {
         )
         .expect("candidate source details preserve valid provenance");
         self
+    }
+
+    /// Adds explicit reference-model metadata after a claim has been bounded.
+    pub fn with_reference_model_metadata(
+        mut self,
+        family: ReferenceModelEvidenceFamily,
+        named_peer: Option<String>,
+    ) -> Result<Self, RuntimeError> {
+        if named_peer
+            .as_deref()
+            .is_some_and(|peer| peer.trim().is_empty())
+        {
+            return Err(RuntimeError::invalid_model(
+                "reference-model named peer cannot be blank",
+            ));
+        }
+        self.reference_model_family = Some(family);
+        self.reference_model_named_peer = named_peer;
+        Ok(self)
     }
 
     /// Returns the company identity.
@@ -328,6 +399,16 @@ impl ValidatedEvidence {
         structural_dimension_for_text(&self.candidate.passage)
     }
 
+    /// Returns the deterministic reference-model family assigned to the claim.
+    pub const fn reference_model_family(&self) -> Option<ReferenceModelEvidenceFamily> {
+        self.candidate.reference_model_family
+    }
+
+    /// Returns the named peer retained for an industry-diffusion claim.
+    pub fn reference_model_named_peer(&self) -> Option<&str> {
+        self.candidate.reference_model_named_peer.as_deref()
+    }
+
     /// Returns the validated effective date.
     pub const fn effective_date(&self) -> Option<&NaiveDate> {
         self.candidate.effective_date()
@@ -379,11 +460,13 @@ impl ValidatedEvidence {
             EvidenceClass::ValidatedFact => "evidence_official_material",
             EvidenceClass::StructuralEvidence => "evidence_structural_change",
         };
-        NormalizedFact::new_with_structural_dimension(
+        NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
             self.candidate.company_id.clone(),
             format!("{kind_prefix}_{index:03}"),
             self.candidate.concrete_change.clone(),
             self.structural_dimension(),
+            self.reference_model_family(),
+            self.candidate.reference_model_named_peer.clone(),
             FactStatus::Known,
             Confidence::High,
             provenance,
@@ -414,7 +497,8 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
         SourceKind::Sec
         | SourceKind::OfficialIr
         | SourceKind::Careers
-        | SourceKind::EngineeringAiBlog => EvidenceSourceKind::OfficialMaterial,
+        | SourceKind::EngineeringAiBlog
+        | SourceKind::OfficialResearch => EvidenceSourceKind::OfficialMaterial,
     };
     let mut candidate = EvidenceCandidate::new(
         observation.company_id(),
@@ -431,6 +515,14 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     candidate.source_title = bounded(title.to_owned());
     candidate.passage = passage.clone();
     candidate.document_kind = Some(document_kind);
+    if let Some(family) = reference_model_family_for_text(document_kind, &passage) {
+        let named_peer = (family == ReferenceModelEvidenceFamily::IndustryDiffusion)
+            .then(|| reference_model_named_peer_for_text(&passage))
+            .flatten();
+        candidate = candidate
+            .with_reference_model_metadata(family, named_peer)
+            .ok()?;
+    }
     candidate.provenance = Provenance::new(
         observation.provenance().source_uri(),
         passage,
@@ -578,6 +670,97 @@ fn structural_dimension_for_text(text: &str) -> Option<StructuralDimension> {
         .any(|signal| lower.contains(signal))
     {
         return Some(StructuralDimension::Organization);
+    }
+    None
+}
+
+fn reference_model_family_for_text(
+    document_kind: DocumentKind,
+    text: &str,
+) -> Option<ReferenceModelEvidenceFamily> {
+    if document_kind == DocumentKind::Careers {
+        return None;
+    }
+    let lower = text.to_ascii_lowercase();
+    if REFERENCE_MODEL_DIFFUSION_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal))
+    {
+        return Some(ReferenceModelEvidenceFamily::IndustryDiffusion);
+    }
+    if REFERENCE_MODEL_ORGANIZATION_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal))
+    {
+        return Some(ReferenceModelEvidenceFamily::OrganizationRewrite);
+    }
+    if matches!(document_kind, DocumentKind::Filing | DocumentKind::Earnings)
+        && REFERENCE_MODEL_OUTCOME_SIGNALS
+            .iter()
+            .any(|signal| lower.contains(signal))
+    {
+        return Some(ReferenceModelEvidenceFamily::SustainedOutcome);
+    }
+    if REFERENCE_MODEL_PRODUCTION_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal))
+    {
+        return Some(ReferenceModelEvidenceFamily::ProductionSystemRewrite);
+    }
+    None
+}
+
+fn reference_model_named_peer_for_text(text: &str) -> Option<String> {
+    const PEER_MARKERS: &[&str] = &[
+        "adopted by ",
+        "implemented by ",
+        "used by ",
+        "customers include ",
+    ];
+    let lower = text.to_ascii_lowercase();
+    for marker in PEER_MARKERS {
+        let Some(start) = lower.find(marker) else {
+            continue;
+        };
+        let remainder = text.get(start + marker.len()..)?;
+        let peer = remainder
+            .split(['.', ',', ';', ':', '。', '，', '；'])
+            .next()
+            .map(str::trim)
+            .and_then(|value| {
+                value
+                    .split_once(" and ")
+                    .map_or(Some(value), |(first, _)| Some(first.trim()))
+            })
+            .map(|value| value.trim_start_matches("the ").trim())
+            .filter(|value| {
+                let words = value.split_whitespace().count();
+                (1..=8).contains(&words)
+                    && !matches!(
+                        value.to_ascii_lowercase().as_str(),
+                        "customers" | "the industry"
+                    )
+            })?;
+        if !peer.is_empty() {
+            return Some(peer.to_owned());
+        }
+    }
+    let adoption_regex = Regex::new(
+        r"(?i)^\s*([A-Z][A-Za-z0-9&.'-]*(?:\s+[A-Z][A-Za-z0-9&.'-]*){0,4})\s+(?:has\s+adopted|has\s+implemented|is\s+using|adopted|implemented|used|uses|deployed|rolled\s+out|built|launched)\b",
+    )
+    .ok()?;
+    let peer = adoption_regex
+        .captures(text)
+        .and_then(|captures| captures.get(1))
+        .map(|value| value.as_str().trim())
+        .filter(|value| {
+            !matches!(
+                value.to_ascii_lowercase().as_str(),
+                "the company" | "the firm" | "our team" | "our company"
+            )
+        })?;
+    if !peer.is_empty() {
+        return Some(peer.to_owned());
     }
     None
 }

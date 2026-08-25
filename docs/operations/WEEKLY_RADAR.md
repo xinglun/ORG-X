@@ -1,11 +1,11 @@
 # Weekly Radar 使用说明
 
-Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，从入口页发现有限的实际文档，再把具体主张通过 EvidenceCandidate → ValidatedEvidence 门槛。通过门槛的内容还会继续区分为“已验证事实”和“结构性证据”；入口页可访问性本身不会被写成企业变化。SEC 指标、来源可用性和其他 `Known` facts 仍会保留在输入快照、系统状态和判断上下文中，但不会因为状态是 `Known` 就自动变成企业变化证据。生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram；只有发送成功后，才把输入快照以及可追溯的 report、snapshot、receipt 和 manifest 一起写入受保护的 `data` 分支。
+Weekly Radar 是确定性的 evidence-first 周报：获取 SEC 和明确配置的公司来源，从入口页发现有限的实际文档，再把具体主张通过 EvidenceCandidate → ValidatedEvidence 门槛，并进一步通过组织重写、生产系统重写、持续结果、行业扩散四族证据门。通过门槛的内容还会继续区分为“已验证事实”和“结构性证据”；入口页可访问性本身不会被写成企业变化。SEC 指标、来源可用性和其他 `Known` facts 仍会保留在输入快照、系统状态和判断上下文中，但不会因为状态是 `Known` 就自动变成企业变化证据。生成默认中文、也可切换日语或英语的面向人的报告，发送到 Telegram；只有发送成功后，才把输入快照以及可追溯的 report、snapshot、receipt 和 manifest 一起写入受保护的 `data` 分支。
 
 ## 运行流程
 
 ```text
-来源入口 → 有限文档发现 → 主张抽取/日期验证 → ValidatedEvidence → 系统自动给出参考判断 → 准备输入快照
+来源入口 → 有限文档发现 → 主张抽取/日期验证 → ValidatedEvidence → 四族范本证据门 → 系统自动给出参考判断 → 准备输入快照
                               ↓
           报告并列呈现系统参考与人的独立判断 → Telegram → 成功后提交 archive → data branch → retention
 ```
@@ -135,6 +135,8 @@ SEC 申报候选在保留元数据后，还会逐个读取最多 3 个最近的�
 
 官方 IR 入口先发现最多 8 个直接同源文档，再从成功读取的直接文档执行一次额外同源发现；两层合计最多保留 12 个文档。URL 会去掉 fragment、去重并拒绝跨 origin 链接，目录页、archive/index 页和入口页仍只是线索，不能因为被抓到或可访问就成为企业变化证据。超过深度、重复或总量上限的链接不会继续请求。
 
+对 `official_research_sources` 明确配置的内容 URL，系统只在 URL 路径表现为文章、博客、新闻、press 或 customer story 时把该入口同时作为一个有界文档读取；普通首页和分类页仍只保留为 `EntryPoint`。这允许研究配置绑定实际发布内容，同时不把“页面可访问”升级为证据。内容路径优先于通用导航链接，避免有限 discovery budget 被菜单耗尽。
+
 研究状态必须按以下层次解释：
 
 - `SourceObservation`：入口页或接口是否可访问；入口页的可访问性不是企业变化证据。
@@ -143,6 +145,7 @@ SEC 申报候选在保留元数据后，还会逐个读取最多 3 个最近的�
 - `ValidatedEvidence`：通过确定性 gate 的主张，才会成为 `evidence_*` normalized fact；它随后按主张段落中的结构性信号分为普通已验证事实或 StructuralEvidence。GDELT、新闻、招聘记录和页面级 observation 不会绕过该 gate。
 - `StructuralDimension`：StructuralEvidence 的维度只描述主张涉及的变化域，不改变其 evidence kind 前缀、Stage、Ranking、Counter Evidence、Telegram 或 archive 行为。固定优先级为 `OperatingMetric`（利用率、延迟、吞吐、产能、成本、利润/现金流、GPU 等）→ `ProductionSystem`（部署、发布、平台、基础设施、存储、云、自动化、agent 等）→ `Workflow`（工作流、流程、审批、排程、交接等）→ `Organization`（组织、职责、汇报关系、团队、部门、人员规模等）。
 - `NormalizedFact.structural_dimension`：新事实会保存可选的 `organization`、`workflow`、`production_system` 或 `operating_metric`；旧快照缺少该字段时按 `None` 读取，旧的 `evidence_structural_change_<index>` kind 保持可读，并在报告中使用通用“结构性证据”标签。
+- `NormalizedFact.reference_model_family`：只有文档级 Claim 经过 ValidatedEvidence，或 SEC 适配器保留了明确的历史经营周期，才会携带 `organization_rewrite`、`production_system_rewrite`、`sustained_outcome` 或 `industry_diffusion`。SEC 结果周期最多保留有限的不同日期，不复制同一事实 identity；旧快照缺少这些字段时按空值读取。
 - `ValidatedFact`：已验证但未满足结构性变化信号的事实，使用 `evidence_official_material_<index>`，进入报告的“已验证事实”。
 - `StructuralEvidence`：已验证且明确涉及组织、责任、生产系统、工作流、部署、利用率、延迟、产能、成本、人员或经营指标变化的事实，使用 `evidence_structural_change_<index>`，进入报告单独的“结构性证据”；报告会按维度显示中/日/英标签，但它不会绕过既有 Stage 或 Ranking gate。
 - Careers 文档默认仍是招聘线索：通用雇主介绍、能力描述或“AI/数据/云/基础设施”宣传文案不能生成 `EvidenceCandidate`。只有正文明确说明招聘、招募、headcount、员工规模或新增岗位等变化时，才允许形成普通 `ValidatedFact`；Careers 来源不会因为这些生产词汇被分类为 `StructuralEvidence`。
@@ -162,6 +165,8 @@ SEC 申报候选在保留元数据后，还会逐个读取最多 3 个最近的�
 你会在“已验证事实”和“结构性证据”中逐条看到经过 ValidatedEvidence gate 的事实：公司、信息类型、事实内容、事实日期（资料没有日期时不补写）和直接证据链接。报告不会用一个总入口链接代替每家公司或每条事实的依据。SEC 指标等“已知事实”会在快照和系统状态中保留，用于审计和判断上下文，但不应被解读为结构性变化结论。
 
 “系统参考判断”会逐家公司说明系统参考是什么、为什么得到这个状态、哪些资料支持它、哪些反向资料需要注意、还缺少什么证据以及对应链接。系统参考只是给人的一个可复核参考；人的判断仍然独立，可以同意、保留不同意见或继续补证，二者不会合并、投票或协作生成一个答案。
+
+“AI 时代范本验证”会逐家公司显示 `Candidate`、`Confirmed` 或 `NotEligible`，并列出组织重写、生产系统重写、持续结果、行业扩散四类证据矩阵、结果周期数、独立扩散来源数、反证复核数量和开放条件。只有四类证据、跨周期结果、独立同行扩散和反证复核全部通过时，才允许最高 `REFERENCE_MODEL` Stage；`Candidate` 不是行业范本，也不会进入该 Stage 的 Ranking。
 
 “没有确认到组织变化”“证据不足”和“来源暂不可用”含义不同：前者表示当前可用资料中没有确认事实，后两者表示不能据此判断没有变化。没有明确选择重点公司时，不显示排名，也不生成交易或资本行动结论。报告正文不显示 `source_*`、内部状态枚举、覆盖率分数或逐项采集诊断；完整事实、来源、状态、`research_metrics`、系统参考依据和逐项 review 明细仍在 snapshot。Publisher 有限重试、保留消息顺序和 message IDs，并在失败时记录已接受的部分 ID。
 

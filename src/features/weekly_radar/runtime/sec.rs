@@ -1,6 +1,6 @@
 //! SEC EDGAR/Company Facts acquisition with provider-private payload models.
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use chrono::{Duration, NaiveDate, Utc};
 use serde::Deserialize;
@@ -12,6 +12,7 @@ use super::error::RuntimeError;
 use super::http::HttpClient;
 use super::model::{Confidence, FactStatus, NormalizedFact, Provenance};
 use super::rules::extract_employee_candidate;
+use crate::features::transformation::domain::ReferenceModelEvidenceFamily;
 
 const SEC_SUBMISSIONS_ROOT: &str = "https://data.sec.gov/submissions";
 const SEC_FACTS_ROOT: &str = "https://data.sec.gov/api/xbrl/companyfacts";
@@ -30,6 +31,8 @@ pub const SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES: usize = 16 * 1024 * 1024;
 
 /// Finite response limit for individual SEC filing documents.
 pub const SEC_FILING_DOCUMENT_MAX_RESPONSE_BODY_BYTES: usize = 8 * 1024 * 1024;
+
+const MAX_REFERENCE_MODEL_OUTCOME_PERIODS: usize = 4;
 
 // SEC submissions uses the same finite JSON envelope as Company Facts. Keep
 // this adapter-specific alias separate from the generic transport limit so
@@ -398,14 +401,26 @@ impl SecClient {
                         retrieved_at,
                         effective_date,
                     )?;
-                    normalized.push(NormalizedFact::new(
-                        company.id(),
-                        spec.kind,
-                        value,
-                        FactStatus::Known,
-                        Confidence::High,
-                        provenance,
-                    )?);
+                    let periods = select_annual_observations(facts, spec)
+                        .into_iter()
+                        .filter_map(|selected| {
+                            parse_date(selected.observation.end.as_deref())
+                                .map(|date| date.to_string())
+                        })
+                        .collect::<Vec<_>>();
+                    let fact =
+                        NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
+                            company.id(),
+                            spec.kind,
+                            value,
+                            None,
+                            Some(ReferenceModelEvidenceFamily::SustainedOutcome),
+                            None,
+                            FactStatus::Known,
+                            Confidence::High,
+                            provenance,
+                        )?;
+                    normalized.push(fact.with_reference_model_periods(periods)?);
                     continue;
                 }
             }
@@ -473,10 +488,14 @@ impl SecClient {
                             retrieved_at,
                             candidate.effective_date,
                         )?;
-                        normalized.push(NormalizedFact::new(
+                        normalized.push(
+                            NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
                             company.id(),
                             spec.kind,
                             candidate.value,
+                            None,
+                            Some(ReferenceModelEvidenceFamily::SustainedOutcome),
+                            None,
                             FactStatus::Known,
                             if candidate.approximate {
                                 Confidence::Approximate
@@ -484,7 +503,8 @@ impl SecClient {
                                 Confidence::High
                             },
                             provenance,
-                        )?);
+                        )?,
+                        );
                         continue;
                     }
                     normalized.push(unknown_fact(
@@ -667,6 +687,15 @@ fn select_annual_observation<'a>(
     document: &'a CompanyFactsDocument,
     spec: &FactSpec,
 ) -> Option<SelectedObservation<'a>> {
+    select_annual_observations(document, spec)
+        .into_iter()
+        .next()
+}
+
+fn select_annual_observations<'a>(
+    document: &'a CompanyFactsDocument,
+    spec: &FactSpec,
+) -> Vec<SelectedObservation<'a>> {
     let mut candidates = Vec::new();
     for (namespace, concepts) in &document.facts {
         for alias in spec.aliases {
@@ -693,28 +722,42 @@ fn select_annual_observation<'a>(
         }
     }
 
-    let latest_end = candidates
+    let ends = candidates
         .iter()
         .filter_map(|candidate| parse_date(candidate.observation.end.as_deref()))
-        .max()?;
-    let latest_filed = candidates
-        .iter()
-        .filter(|candidate| parse_date(candidate.observation.end.as_deref()) == Some(latest_end))
-        .filter_map(|candidate| parse_date(candidate.observation.filed.as_deref()))
-        .max();
-    let latest_candidates: Vec<_> = candidates
-        .into_iter()
-        .filter(|candidate| {
-            parse_date(candidate.observation.end.as_deref()) == Some(latest_end)
-                && parse_date(candidate.observation.filed.as_deref()) == latest_filed
-        })
-        .collect();
-
-    if latest_candidates.len() == 1 {
-        latest_candidates.into_iter().next()
-    } else {
-        None
+        .collect::<BTreeSet<_>>();
+    let mut selected = Vec::new();
+    for end in ends.into_iter().rev() {
+        let latest_filed = candidates
+            .iter()
+            .filter(|candidate| parse_date(candidate.observation.end.as_deref()) == Some(end))
+            .filter_map(|candidate| parse_date(candidate.observation.filed.as_deref()))
+            .max();
+        let latest_candidates: Vec<_> = candidates
+            .iter()
+            .filter(|candidate| {
+                parse_date(candidate.observation.end.as_deref()) == Some(end)
+                    && parse_date(candidate.observation.filed.as_deref()) == latest_filed
+            })
+            .collect();
+        if latest_candidates.len() != 1 {
+            if selected.is_empty() {
+                return Vec::new();
+            }
+            continue;
+        }
+        let candidate = latest_candidates[0];
+        selected.push(SelectedObservation {
+            namespace: candidate.namespace,
+            concept: candidate.concept,
+            unit: candidate.unit,
+            observation: candidate.observation,
+        });
+        if selected.len() == MAX_REFERENCE_MODEL_OUTCOME_PERIODS {
+            break;
+        }
     }
+    selected
 }
 
 fn unit_matches(unit: &str, kind: UnitKind) -> bool {

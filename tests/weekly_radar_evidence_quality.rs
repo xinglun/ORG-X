@@ -5,8 +5,11 @@ use org_x::features::weekly_radar::runtime::evidence::{
     EvidenceSourceKind, EvidenceValidationError,
 };
 use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpResponse};
-use org_x::features::weekly_radar::runtime::model::{FactStatus, RuntimeReportInput};
+use org_x::features::weekly_radar::runtime::model::{
+    FactStatus, ResearchMetrics, RuntimeReportInput,
+};
 use org_x::features::weekly_radar::runtime::normalize_source_observation;
+use org_x::features::weekly_radar::runtime::report::{render_report_in_language, ReportLanguage};
 use org_x::features::weekly_radar::runtime::sec::SecClient;
 use org_x::features::weekly_radar::runtime::sources::{
     collect_configured_sources, SourceKind, SourceMaterialKind,
@@ -319,4 +322,40 @@ fn page_level_observation_cannot_create_an_evidence_candidate() {
         .expect("IR entry point should exist");
 
     assert!(extract_evidence_candidate(&entry).is_none());
+}
+
+fn input_with_metrics(metrics: ResearchMetrics) -> RuntimeReportInput {
+    let mut input = RuntimeReportInput::new("2026-08-25").expect("report date should be valid");
+    input.set_research_metrics(metrics);
+    input
+}
+
+#[test]
+fn degraded_report_separates_evidence_and_source_availability_counts() {
+    let input = input_with_metrics(ResearchMetrics::new(9, 10, 0, 10, 50));
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+
+    assert!(report.markdown().contains("本周新增有效证据：0"));
+    assert!(report.markdown().contains("来源可用性确认：9"));
+    assert!(report.markdown().contains("待验证线索：10"));
+    assert!(report.markdown().contains("关键数据源不可用：50"));
+    assert!(report.markdown().contains("数据不足"));
+    assert!(!report.markdown().contains("Investor Relations"));
+    assert!(report.snapshot_json().contains("research_metrics"));
+}
+
+#[test]
+fn localized_reports_keep_the_same_metric_values() {
+    let input = input_with_metrics(ResearchMetrics::new(9, 10, 1, 9, 50));
+
+    for language in [
+        ReportLanguage::Chinese,
+        ReportLanguage::Japanese,
+        ReportLanguage::English,
+    ] {
+        let report = render_report_in_language(&input, language);
+        assert!(report.markdown().contains("9"));
+        assert!(report.markdown().contains("10"));
+        assert!(report.markdown().contains("50"));
+    }
 }

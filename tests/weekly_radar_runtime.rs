@@ -1750,7 +1750,7 @@ fn task4_report_exposes_explicit_statuses_and_discovery_health_review_items() {
     assert!(report.snapshot_json().contains("UNKNOWN"));
     assert!(report.snapshot_json().contains("UNAVAILABLE"));
     assert!(report.snapshot_json().contains("UNCONFIRMED"));
-    assert!(markdown.contains("待核实线索"));
+    assert!(markdown.contains("待验证线索"));
     assert!(markdown.contains("来源情况"));
     assert!(markdown.contains("新闻和其他发现材料"));
     assert!(!markdown.contains("source_"));

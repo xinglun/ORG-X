@@ -1,0 +1,193 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-reference-model-evidence",
+  "mode": "code",
+  "title": "Validate AI-era reference-model companies",
+  "rawUserRequest": "目标不是继续优化 Ranking，而是找出 AI 时代改变组织结构、重写生产系统、产生持续结果并被行业模仿的公司，成为类似电力时代通用电气的行业范本。用户确认以组织重写、生产系统重写、持续结果、行业扩散四类证据作为每个阶段的硬性验收标准，并要求本轮收掉目标链路上的历史债务；发现问题就在当前 WI 内修复，直到没有问题为止。Python 和 Shell 只用于可复现采集、调用、测试和 CI，不承载领域判断。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "conversation:user-message",
+    "digest": "not-generated",
+    "capturedAt": "2026-08-25T21:30:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "documentation", "ai_governance"],
+    "prohibitedCapabilities": ["production_operation", "external_publication", "secret_readback", "unbounded_crawl", "manual_data_mutation", "investment_decision"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "User explicitly authorized iterative implementation, hard acceptance gates, and local resolution of all in-scope problems."
+  },
+  "baseCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
+  "baselineDirtyPaths": [],
+  "problemStatement": "ORG-X currently distinguishes source availability, document discovery, validated facts, and structural evidence, but it has no governed evidence bundle that can prove or reject the stronger research claim that one company became an AI-era industry reference model. Organization announcements can therefore stop at a production-system candidate without explicitly binding sustained operating outcomes, independent diffusion, counter evidence, and missing proof into one fail-closed decision. The preceding SEC/IR discovery Work Item is archived on this base; this Work Item consumes that bounded acquisition capability and adds the reference-model decision boundary.",
+  "scope": [
+    "config/weekly_radar/companies.json",
+    "config/weekly_radar/reference_model_candidates.json",
+    ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+    ".ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json",
+    ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.md",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md",
+    "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+    "docs/validation/VALIDATION_STRATEGY.md",
+    "docs/operations/WEEKLY_RADAR.md",
+    "src/features/transformation/domain/mod.rs",
+    "src/features/transformation/domain/mod_test.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/config.rs",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/judgment.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/features/weekly_radar/runtime/sec.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/main.rs",
+    "tests/transformation_domain.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_judgment_chain.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/semantic_message_splitter_test.rs",
+    "tests/test_ai_check_summary.py",
+    "tests/fixtures/**"
+  ],
+  "outOfScope": [
+    "Adding new external providers, paid search, unbounded crawling, guessed URLs, LLM judgment, probabilistic scoring, or news promotion to authoritative evidence",
+    "Optimizing Ranking scores, Top5 selection, investment or trading decisions, or replacing Stage-before-Ranking with a score",
+    "Changing SEC/IR response limits or the bounded source acquisition behavior already archived on the base",
+    "Retroactively inventing historical outcomes, calculating causal productivity from incomplete public data, or treating stock price as production-system evidence",
+    "Telegram delivery, data-branch publication, external production operation, secret or credential access, and manual external data mutation",
+    "Hosted CI, PR creation, merge, release, and Work Item closure; the requested stopping condition is local problem resolution and evidence-backed handoff"
+  ],
+  "sources": [
+    {
+      "path": "config/weekly_radar/companies.json",
+      "reason": "Explicitly configured official research entrypoints used for bounded candidate discovery; no guessed URLs or unbounded crawling."
+    },
+    {
+      "path": "config/weekly_radar/reference_model_candidates.json",
+      "reason": "Bounded one-company research slice used to inspect a promising candidate without waiting on unrelated sources."
+    },
+    {
+      "path": ".ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json",
+      "reason": "Reference-impact evidence for the new repository-local candidate registry; it has no dynamic, external-consumer, or monitoring migration surface."
+    },
+    { "path": "AGENTS.md", "reason": "Repository Work Item governance, scope, evidence, and fail-closed lifecycle rules." },
+    { "path": ".ai/glossary.md", "reason": "Canonical domain terminology and Evidence over Self-Declaration rule." },
+    { "path": "docs/product/PRD.md", "reason": "ORG-X judgment chain and REFERENCE_MODEL meaning." },
+    { "path": "docs/domain/PRODUCTION_SYSTEM_MODEL.md", "reason": "Organization and production-system rewrite boundary." },
+    { "path": "docs/validation/VALIDATION_STRATEGY.md", "reason": "Persistence, economic capture, and diffusion follow-up semantics." },
+    { "path": "docs/adr/ADR-003-production-system-core-domain.md", "reason": "Production system is the core domain for organization and diffusion judgments." },
+    { "path": "docs/adr/ADR-004-organization-as-evidence.md", "reason": "Organization evidence cannot stand alone as the research North Star." },
+    { "path": "docs/adr/ADR-007-counter-evidence-mandatory.md", "reason": "Positive judgment requires counter evidence and missing proof review." },
+    { "path": "docs/adr/ADR-008-primary-sources-authoritative.md", "reason": "Primary-source authority and provenance rules." },
+    { "path": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json", "reason": "Archived bounded SEC/IR document-discovery capability consumed by this Work Item." },
+    { "path": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json", "reason": "Evidence that SEC/IR acquisition and local verification completed on the base." },
+    { "path": "src/features/transformation/domain/mod.rs", "reason": "Existing Stage, persistence, proof, and missing-proof domain boundary." },
+    { "path": "src/features/weekly_radar/runtime/evidence.rs", "reason": "ValidatedEvidence extraction and deterministic structural classification boundary." },
+    { "path": "src/features/weekly_radar/runtime/discovery.rs", "reason": "Bounded same-origin document classification, content-path priority, and publication-date extraction boundary." },
+    { "path": "src/features/weekly_radar/runtime/model.rs", "reason": "Backward-compatible NormalizedFact, metrics, and report-input serialization boundary." },
+    { "path": "src/features/weekly_radar/runtime/judgment.rs", "reason": "Fail-closed Stage and Ranking judgment boundary." },
+    { "path": "src/features/weekly_radar/runtime/report.rs", "reason": "Localized user-facing report and snapshot rendering boundary." },
+    { "path": "src/main.rs", "reason": "Acquisition integration and live runtime assembly." },
+    { "path": "tests/weekly_radar_evidence_quality.rs", "reason": "Existing claim extraction, structural evidence, and source-quality fixtures." },
+    { "path": "tests/weekly_radar_judgment_chain.rs", "reason": "Existing Stage, counter evidence, missing proof, and no-ranking fixtures." },
+    { "path": "tests/weekly_radar_runtime.rs", "reason": "Existing runtime, serialization, report, and SEC regression coverage." }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": ["false_positive_reference_model", "false_negative_reference_model", "source_authority_misclassification", "longitudinal_outcome_gap", "industry_diffusion_gap", "serialized_snapshot_compatibility", "localized_report_contract"],
+    "reason": "This Work Item adds the strongest research claim in the product. A false positive would label a company an industry exemplar without production results or imitation; a false negative could hide a valid candidate. The gate must therefore require four distinct evidence families, explicit source authority, multiple outcome periods, independent diffusion, counter evidence, missing-proof accounting, cutoff dates, deterministic ordering, and legacy-compatible serialization. Unknown external research results are verification outcomes, not implementation permission gaps.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "User approved the four-family hard acceptance boundary and requested iteration until in-scope problems are resolved."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": ["The Work Item changes the highest transformation-stage gate, the judgment read model, serialized report output, and evidence-family semantics."],
+    "override": null
+  },
+  "agentCapability": { "canImplement": true, "canVerify": true, "needsHumanDecision": false, "blockedReason": "" },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The four evidence families, fail-closed promotion gate, user-visible output, TDD scenarios, and local verification boundary are explicit. No unresolved design unknown blocks implementation."
+  },
+  "preReviewWarnings": [
+    "Do not promote a company from organization rewrite to reference model without a distinct production-system claim, two dated outcome observations, and independent diffusion evidence.",
+    "Do not infer diffusion from the candidate company describing its own framework; diffusion requires independent peer or industry adoption evidence with named adopters and source provenance.",
+    "Do not treat missing data or an unavailable source as counter evidence; preserve UNKNOWN, UNAVAILABLE, MissingProof, and CounterEvidence separately.",
+    "Do not implement the gate in Python or Shell. Those tools may invoke fixtures and the Rust binary, while domain classification and eligibility remain in Rust."
+  ],
+  "checkpointPolicy": { "requiredBeforeFinish": true, "requiredStages": ["before_edit", "before_finish"], "reason": "Each hard-gate phase must leave an auditable RED/GREEN checkpoint and cannot be declared complete from self-report." },
+  "acceptance": [
+    "A provider-neutral ReferenceModelEvidenceFamily enum distinguishes OrganizationRewrite, ProductionSystemRewrite, SustainedOutcome, and IndustryDiffusion without allowing a source observation or page-level fact to satisfy a family.",
+    "Validated evidence carries an optional family classification and provenance; legacy NormalizedFact and RuntimeReportInput JSON without the field remain readable with a safe default.",
+    "A reference-model assessment is Candidate only when organization rewrite and production-system rewrite evidence exist but one or more outcome, diffusion, counter-review, or missing-proof conditions remain open.",
+    "A reference-model assessment is Confirmed only when all four evidence families are present, sustained outcome evidence contains at least two distinct effective periods, diffusion contains at least two independent source URIs and named adopters or peers, all critical sources are authoritative, and counter evidence review has been represented.",
+    "A missing or degraded source never satisfies a required family and never becomes a negative claim; the assessment exposes MissingProof and data-degraded state explicitly.",
+    "A generic engineering article, product launch, hiring page, layoff, or self-described AI strategy cannot become a Confirmed reference model without the complete four-family bundle.",
+    "The highest REFERENCE_MODEL Stage gate uses the reference-model eligibility decision and cannot be satisfied by generic judgment facts alone; lower Stage and existing Ranking ordering remain unchanged.",
+    "The report adds a localized AI-era reference-model validation section showing Candidate, Confirmed, or NotEligible status plus supporting families, counter evidence, and missing proof; it never labels Candidate as an industry exemplar.",
+    "The report preserves the prior separation between validated facts, structural evidence, source availability, pending leads, and unavailable facts, including calibrated no-change wording.",
+    "TDD fixtures cover complete confirmed bundle, missing outcome, missing diffusion, self-description-only, duplicate source identity, future cutoff, degraded source, counter evidence, legacy deserialization, and localized rendering.",
+    "A live or deterministic registry run emits an evidence matrix for every configured company and identifies the strongest candidate without fabricating a Confirmed exemplar when the gate is incomplete.",
+    "The configured candidate research entrypoints include bounded official sources for organization/production-system claims and independent named-peer diffusion cases, while preserving the existing SEC/IR and source-status boundaries.",
+    "Python/Shell entrypoints remain orchestration-only; Rust owns family classification, gate evaluation, Stage suppression, serialization, and report values.",
+    "Before Finish, `make check-ai-knowledge`, `make check-ai-status-consistency`, `make check-ai-scope CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json`, `git diff --check`, and the declared quality commands pass; `make check-ai-knowledge` reports a valid index, status consistency reports no unowned paths, and the final report has separate labels for validated facts, structural evidence, source availability, pending leads, unavailable facts, and reference-model status."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep provider-specific parsing outside the domain and keep the reference-model gate provider-neutral and deterministic.",
+    "Use typed evidence families and explicit provenance instead of inferring eligibility from arbitrary text or scores.",
+    "Prefer false negatives to promoting an organization announcement, marketing claim, or page-level observation as a reference model.",
+    "Require at least two distinct dated outcome periods and independent diffusion sources; a single source or single period is insufficient.",
+    "Preserve UNKNOWN, UNAVAILABLE, CounterEvidence, and MissingProof as different states.",
+    "Use Python and Shell only for bounded orchestration, fixtures, and verification; do not place business judgment in scripts.",
+    "Preserve legacy snapshot deserialization and localized semantic-splitter compatibility.",
+    "Resolve in-scope defects in this Work Item; do not create another Work Item merely to avoid a failing hard gate."
+  ],
+  "scenarioCoverage": [
+    { "scenario": "Complete four-family bundle becomes a confirmed reference-model assessment.", "required": true, "status": "unverified", "evidence": ["src/features/transformation/domain/mod.rs", "src/features/weekly_radar/runtime/judgment.rs", "tests/weekly_radar_judgment_chain.rs"], "expected": "Organization, production-system, two-period outcome, and two-source independent diffusion evidence with counter review produce Confirmed and permit only the explicitly supported REFERENCE_MODEL Stage.", "verificationPlan": "Write the pure domain test first, observe RED, implement the smallest gate, then run the focused judgment integration test." },
+    { "scenario": "Organization and production-system claims without outcome or diffusion remain candidates.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/evidence.rs", "src/features/weekly_radar/runtime/judgment.rs", "tests/weekly_radar_evidence_quality.rs"], "expected": "The report shows Candidate with explicit missing proof and no Confirmed reference-model label or ranking bypass.", "verificationPlan": "Add a Microsoft-CoreAI-shaped fixture with organization and production claims only; assert Candidate and missing outcome/diffusion." },
+    { "scenario": "Self-description or page-level availability cannot satisfy the gate.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/evidence.rs", "tests/weekly_radar_evidence_quality.rs"], "expected": "A homepage, strategy article, or company marketing claim remains source availability, pending lead, or incomplete evidence and is never Confirmed.", "verificationPlan": "Add negative fixtures for homepage, self-described AI operating model, and one-company diffusion claims." },
+    { "scenario": "Two distinct outcome periods and independent diffusion sources are required.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/model.rs", "src/features/weekly_radar/runtime/judgment.rs", "tests/weekly_radar_judgment_chain.rs"], "expected": "Duplicate periods, one period, or one source URI leave the assessment incomplete and expose the exact missing proof.", "verificationPlan": "Add table-driven boundary tests for period identity, source identity, and named peer/adopter requirements." },
+    { "scenario": "Legacy snapshots, localized reports, and Python/Shell orchestration remain compatible.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/model.rs", "src/features/weekly_radar/runtime/report.rs", "tests/weekly_radar_runtime.rs", "tests/semantic_message_splitter_test.rs"], "expected": "Old JSON defaults safely, all three report languages expose identical decision values, and scripts only invoke/verify the Rust path.", "verificationPlan": "Run serialization fixtures, localized renderer assertions, semantic splitter tests, and repository Python tests after implementation." },
+    { "scenario": "A live bounded run produces an evidence matrix and does not fabricate a confirmed exemplar.", "required": true, "status": "unverified", "evidence": ["src/main.rs", "docs/operations/WEEKLY_RADAR.md"], "expected": "Each company has four-family status, missing proof, counter review state, and source health; a candidate is named only when its evidence packet passes candidate gates.", "verificationPlan": "Trigger one bounded dry-run, preserve its report/snapshot evidence, inspect the matrix, and iterate in this Work Item for every discovered defect." }
+  ],
+  "verification": [
+    { "check": "aiWorkItem", "required": true }, { "check": "aiScope", "required": true }, { "check": "aiGuards", "required": true }, { "check": "aiCheckpoint", "required": true }, { "check": "aiAgentRisk", "required": true }, { "check": "aiReviewPolicy", "required": true }, { "check": "aiBacktrack", "required": true }, { "check": "aiCoverage", "required": true }, { "check": "aiScenarioCoverage", "required": true }, { "check": "aiGuidelines", "required": true }, { "check": "aiSummary", "required": true }, { "check": "aiStatus", "required": true }, { "check": "aiStatusCheck", "required": true }, { "check": "aiStatusConsistency", "required": true }, { "check": "aiDiffOwnership", "required": true }, { "check": "quality", "required": true }
+  ],
+  "destructiveChangePolicy": { "allowed": false, "requiresHumanApproval": true, "allowPatterns": [] },
+  "restrictedWriteApproval": { "approved": true, "approvedBy": "user-authorized", "reason": "The user explicitly authorized completion and directed that historical debt be closed in this Work Item; approval is limited to refreshing source-bound Cockpit evidence and derived knowledge projections for the changed paths." },
+  "rollbackNote": "Revert this Work Item commit set; preserve archived predecessor evidence and restore legacy snapshot/report behavior.",
+  "budgetImpact": { "expectedMetrics": { "archiveGrowth": 140 } },
+  "intent": {
+    "problem": "The current evidence chain can identify organization or production-system signals, but it cannot answer the product's actual question: which company changed its organization and production system, achieved persistent operating results, and became a model others adopted. Without a typed four-family bundle, a company can be described as an AI transformation candidate but cannot be rigorously promoted or rejected as a reference model.",
+    "constraints": ["The reference-model decision must be deterministic, fail-closed, provider-neutral, cutoff-aware, and independent of Ranking scores.", "Organization rewrite is necessary but insufficient; outcome persistence and independent diffusion are mandatory.", "Counter evidence and missing proof must remain explicit and cannot be collapsed into a confidence score.", "Python and Shell may orchestrate bounded runs and verification but may not own domain judgment.", "The prior bounded SEC/IR acquisition implementation and its archived evidence are immutable inputs to this Work Item."],
+    "rationale": "The highest-value remaining gap is not another provider or another ranking heuristic. It is a single auditable decision boundary that joins the four evidence families and prevents a compelling organization story from being mistaken for a proven industry paradigm."
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-reference-model-evidence.json",
+    "baseCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
+    "initialScopeDigest": "162c62e92a09544ef814807470f07dc46f887ae2ed7f7986e2722f47bd6408f8",
+    "contractSkeletonDigest": "0c2d79c3a06eda5cd0536bcb53843cd4560d24e81de6f12ce1696ee37bb72f8f"
+  }
+}

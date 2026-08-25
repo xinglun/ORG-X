@@ -1,4 +1,5 @@
 use chrono::{NaiveDate, Utc};
+use org_x::features::transformation::domain::ReferenceModelEvidenceFamily;
 use org_x::features::weekly_radar::runtime::config::CompanyConfig;
 use org_x::features::weekly_radar::runtime::discovery::{document_metadata, DocumentKind};
 use org_x::features::weekly_radar::runtime::evidence::{
@@ -17,6 +18,7 @@ use org_x::features::weekly_radar::runtime::sources::{
     collect_configured_sources, SourceKind, SourceMaterialKind,
 };
 use std::collections::BTreeMap;
+use url::Url;
 
 fn company() -> CompanyConfig {
     CompanyConfig::new(
@@ -53,11 +55,13 @@ fn document_observation_from_html(
     document_url: &str,
 ) -> org_x::features::weekly_radar::runtime::SourceObservation {
     let mut company = company();
-    company.official_ir = Some("https://ir.example.test/investors".to_owned());
+    let mut entry_url = Url::parse(document_url).expect("document fixture URL should parse");
+    entry_url.set_path("/");
+    entry_url.set_query(None);
+    entry_url.set_fragment(None);
+    let entry_url = entry_url.to_string();
+    company.official_ir = Some(entry_url.clone());
     let client = FixtureHttpClient::new();
-    let href = document_url
-        .strip_prefix("https://ir.example.test")
-        .expect("fixture document should use the test IR origin");
     let label = if document_url.contains("/careers/") {
         "Careers areas"
     } else {
@@ -65,7 +69,7 @@ fn document_observation_from_html(
     };
     client.insert(
         company.official_ir_url().expect("IR URL exists"),
-        HttpResponse::ok(format!("<a href=\"{href}\">{label}</a>")),
+        HttpResponse::ok(format!("<a href=\"{document_url}\">{label}</a>")),
     );
     client.insert(document_url, HttpResponse::ok(html));
 
@@ -189,6 +193,191 @@ fn structural_dimension_is_retained_and_legacy_fact_json_defaults_to_none() {
     });
     let legacy_fact: NormalizedFact = serde_json::from_value(legacy).unwrap();
     assert_eq!(legacy_fact.structural_dimension(), None);
+    assert_eq!(legacy_fact.reference_model_family(), None);
+}
+
+#[test]
+fn reference_model_family_metadata_is_typed_and_legacy_json_defaults_to_none() {
+    let provenance = Provenance::from_rfc3339(
+        "https://ir.example.test/ai-platform",
+        "The company reorganized engineering responsibilities around an AI platform.",
+        "2026-08-25T00:00:00Z",
+        Some("2026-08-20"),
+    )
+    .unwrap();
+    let fact = NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
+        "acme",
+        "evidence_structural_change_001",
+        "The company reorganized engineering responsibilities around an AI platform.",
+        Some(StructuralDimension::Organization),
+        Some(ReferenceModelEvidenceFamily::OrganizationRewrite),
+        None,
+        FactStatus::Known,
+        Confidence::High,
+        provenance,
+    )
+    .unwrap();
+
+    assert_eq!(
+        fact.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::OrganizationRewrite)
+    );
+    assert_eq!(fact.reference_model_named_peer(), None);
+    let serialized = serde_json::to_value(&fact).unwrap();
+    assert_eq!(
+        serialized["reference_model_family"],
+        serde_json::json!("organization_rewrite")
+    );
+
+    let legacy = serde_json::json!({
+        "company_id": "acme",
+        "kind": "evidence_structural_change_003",
+        "value": "Legacy structural evidence",
+        "status": "KNOWN",
+        "confidence": "HIGH",
+        "provenance": {
+            "source_uri": "https://ir.example.test/legacy",
+            "source_field_or_passage": "Legacy passage",
+            "retrieved_at": "2026-08-25T00:00:00Z",
+            "effective_date": "2026-08-20"
+        }
+    });
+    let legacy_fact: NormalizedFact = serde_json::from_value(legacy).unwrap();
+    assert_eq!(legacy_fact.reference_model_family(), None);
+    assert_eq!(legacy_fact.reference_model_named_peer(), None);
+}
+
+#[test]
+fn document_claim_extraction_assigns_reference_model_family_only_after_validation() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>AI Organization Update</title></head>
+        <body><time datetime="2026-08-20"></time>
+        <p>The company reorganized engineering responsibilities and reporting lines around an AI platform.</p>
+        </body></html>"#,
+        "https://ir.example.test/organization/ai-update",
+    );
+    let candidate = extract_evidence_candidate(&observation).expect("document claim expected");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("official document claim should validate");
+
+    assert_eq!(
+        validated.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::OrganizationRewrite)
+    );
+    let fact = validated.to_normalized_fact(1).unwrap();
+    assert_eq!(
+        fact.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::OrganizationRewrite)
+    );
+}
+
+#[test]
+fn microsoft_frontier_claim_prose_is_promotable_after_document_discovery() {
+    let observation = document_observation_from_html(
+        r#"<html><head>
+        <title>Becoming a Frontier Firm</title>
+        <meta property="article:published_time" content="2025-12-04T17:00:00+00:00" />
+        </head><body>
+        <p>Microsoft Digital, the company’s IT team, is rapidly transforming into a Frontier IT Firm—an organization fundamentally restructured for the AI era, where AI-agents are digital colleagues rather than peripheral tools.</p>
+        </body></html>"#,
+        "https://ir.example.test/frontier/becoming-a-frontier-firm",
+    );
+    let candidate = extract_evidence_candidate(&observation).expect("frontier claim expected");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("frontier claim should validate");
+
+    assert_eq!(
+        validated.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::OrganizationRewrite)
+    );
+}
+
+#[test]
+fn diffusion_claim_extraction_retains_an_explicit_named_peer() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Platform Adoption</title></head>
+        <body><time datetime="2026-08-20"></time>
+        <p>The agent workflow was adopted by Peer Alpha and Peer Beta across production operations.</p>
+        </body></html>"#,
+        "https://ir.example.test/engineering/platform-adoption",
+    );
+    let candidate = extract_evidence_candidate(&observation).expect("diffusion claim expected");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("official diffusion claim should validate");
+
+    assert_eq!(
+        validated.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::IndustryDiffusion)
+    );
+    assert_eq!(validated.reference_model_named_peer(), Some("Peer Alpha"));
+    let fact = validated.to_normalized_fact(1).unwrap();
+    assert_eq!(fact.reference_model_named_peer(), Some("Peer Alpha"));
+}
+
+#[test]
+fn diffusion_claim_extraction_handles_named_peer_before_adoption_verb() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Frontier adoption</title></head>
+        <body><time datetime="2026-08-20"></time>
+        <p>PwC adopted the agent workflow across production operations and reported faster delivery.</p>
+        </body></html>"#,
+        "https://ir.example.test/engineering/frontier-adoption",
+    );
+    let candidate = extract_evidence_candidate(&observation).expect("diffusion claim expected");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("official diffusion claim should validate");
+
+    assert_eq!(
+        validated.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::IndustryDiffusion)
+    );
+    assert_eq!(validated.reference_model_named_peer(), Some("PwC"));
+}
+
+#[test]
+fn official_customer_story_rollout_is_diffusion_evidence() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>PwC modernizes with Copilot</title></head>
+        <body><time datetime="2026-02-25"></time>
+        <p>PwC rolled out Microsoft 365 with Copilot across the entire firm, providing secure tools powered by AI to every employee.</p>
+        </body></html>"#,
+        "https://www.microsoft.com/en/customers/story/26160-pwc-microsoft-365-enterprise",
+    );
+    let candidate = extract_evidence_candidate(&observation).expect("rollout claim expected");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("official rollout claim should validate");
+
+    assert_eq!(
+        validated.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::IndustryDiffusion)
+    );
+    assert_eq!(validated.reference_model_named_peer(), Some("PwC"));
+}
+
+#[test]
+fn official_customer_story_usage_is_diffusion_evidence() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>NIQ scales product coding with Foundry</title></head>
+        <body><time datetime="2025-12-16"></time>
+        <p>NIQ used Microsoft Foundry to build Capture as a Service, automating item coding for faster and more scalable product data.</p>
+        </body></html>"#,
+        "https://www.microsoft.com/en/customers/story/25893-niq-microsoft-foundry",
+    );
+    let candidate = extract_evidence_candidate(&observation).expect("usage claim expected");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("official usage claim should validate");
+
+    assert_eq!(
+        validated.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::IndustryDiffusion)
+    );
+    assert_eq!(validated.reference_model_named_peer(), Some("NIQ"));
 }
 
 #[test]
@@ -233,10 +422,46 @@ fn sec_keeps_company_facts_when_submissions_request_fails() {
         evidence.fact("revenue").unwrap().status(),
         &FactStatus::Known
     );
+    assert_eq!(
+        evidence.fact("revenue").unwrap().reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::SustainedOutcome)
+    );
     assert!(evidence
         .failures()
         .iter()
         .any(|failure| failure.stage() == "submissions"));
+}
+
+#[test]
+fn sec_retains_bounded_distinct_outcome_periods_without_duplicate_fact_identity() {
+    let client = FixtureHttpClient::new();
+    client.insert(
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json",
+        HttpResponse::ok(
+            r#"{
+              "facts": {
+                "us-gaap": {
+                  "RevenueFromContractWithCustomerExcludingAssessedTax": {
+                    "units": {"USD": [
+                      {"start":"2023-01-01","end":"2023-12-31","val":90,"accn":"000123456724000001","fp":"FY","form":"10-K","filed":"2024-02-15"},
+                      {"start":"2024-01-01","end":"2024-12-31","val":100,"accn":"000123456725000001","fp":"FY","form":"10-K","filed":"2025-02-15"}
+                    ]}
+                  }
+                }
+              }
+            }"#,
+        ),
+    );
+
+    let evidence = SecClient::collect(&sec_company(), &client, "ORG-X test contact@example.test")
+        .expect("bounded SEC period fixture should collect");
+    let revenue = evidence.fact("revenue").unwrap();
+
+    assert_eq!(revenue.value(), Some("100"));
+    assert_eq!(
+        revenue.reference_model_periods(),
+        &["2024-12-31".to_owned(), "2023-12-31".to_owned()]
+    );
 }
 
 #[test]

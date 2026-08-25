@@ -1,4 +1,7 @@
 use chrono::{NaiveDate, Utc};
+use org_x::features::transformation::domain::{
+    ReferenceModelEligibility, ReferenceModelEvidenceFamily,
+};
 use org_x::features::weekly_radar::runtime::judgment::{
     derive_judgment_snapshot, derive_judgment_snapshot_for_companies, HumanReference, MachineStage,
 };
@@ -40,6 +43,101 @@ fn missing_fact(company_id: &str, stage: &str, requirement: &str) -> NormalizedF
         .unwrap(),
     )
     .unwrap()
+}
+
+fn reference_fact(
+    company_id: &str,
+    kind: &str,
+    value: &str,
+    source_uri: &str,
+    effective_date: &str,
+    family: ReferenceModelEvidenceFamily,
+    named_peer: Option<&str>,
+) -> NormalizedFact {
+    NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
+        company_id,
+        kind,
+        value,
+        None,
+        Some(family),
+        named_peer.map(str::to_owned),
+        FactStatus::Known,
+        Confidence::High,
+        Provenance::new(
+            source_uri,
+            "reference-model claim",
+            Utc::now(),
+            Some(NaiveDate::parse_from_str(effective_date, "%Y-%m-%d").unwrap()),
+        )
+        .unwrap(),
+    )
+    .unwrap()
+}
+
+fn confirmed_reference_model_facts(company_id: &str) -> Vec<NormalizedFact> {
+    vec![
+        reference_fact(
+            company_id,
+            "judgment.supporting.REFERENCE_MODEL.organization_rewrite",
+            "The company moved decision rights into an AI operating organization.",
+            "https://ir.example.test/organization",
+            "2026-08-10",
+            ReferenceModelEvidenceFamily::OrganizationRewrite,
+            None,
+        ),
+        reference_fact(
+            company_id,
+            "judgment.supporting.REFERENCE_MODEL.production_system_rewrite",
+            "The company rebuilt its engineering production system around agents.",
+            "https://engineering.example.test/agents",
+            "2026-08-11",
+            ReferenceModelEvidenceFamily::ProductionSystemRewrite,
+            None,
+        ),
+        reference_fact(
+            company_id,
+            "judgment.supporting.REFERENCE_MODEL.outcome_2025",
+            "Operating margin improved during the 2025 reporting period.",
+            "https://www.sec.gov/Archives/2025/acme-10k",
+            "2025-12-31",
+            ReferenceModelEvidenceFamily::SustainedOutcome,
+            None,
+        ),
+        reference_fact(
+            company_id,
+            "judgment.supporting.REFERENCE_MODEL.outcome_2026",
+            "Operating margin remained improved during the 2026 reporting period.",
+            "https://www.sec.gov/Archives/2026/acme-10k",
+            "2026-06-30",
+            ReferenceModelEvidenceFamily::SustainedOutcome,
+            None,
+        ),
+        reference_fact(
+            company_id,
+            "judgment.supporting.REFERENCE_MODEL.diffusion_peer_a",
+            "Peer Alpha adopted the operating model.",
+            "https://peer-alpha.example/adoption",
+            "2026-08-12",
+            ReferenceModelEvidenceFamily::IndustryDiffusion,
+            Some("Peer Alpha"),
+        ),
+        reference_fact(
+            company_id,
+            "judgment.supporting.REFERENCE_MODEL.diffusion_peer_b",
+            "Peer Beta implemented the production system.",
+            "https://peer-beta.example/adoption",
+            "2026-08-13",
+            ReferenceModelEvidenceFamily::IndustryDiffusion,
+            Some("Peer Beta"),
+        ),
+        fact(
+            company_id,
+            "judgment.counter.REFERENCE_MODEL.counter_signal",
+            "Legacy production remains in one region.",
+            "https://risk.example.test/legacy",
+        ),
+        missing_fact(company_id, "REFERENCE_MODEL", "counter_review_inventory"),
+    ]
 }
 
 fn workflow_facts(company_id: &str) -> Vec<NormalizedFact> {
@@ -99,6 +197,219 @@ fn automatic_machine_reference_flows_through_evidence_stage_ranking_and_snapshot
     assert!(!machine.supporting_proof().is_empty());
     assert!(!machine.counter_proof().is_empty());
     assert!(!machine.missing_proof().is_empty());
+}
+
+#[test]
+fn reference_model_core_rewrite_is_candidate_but_cannot_enter_reference_stage() {
+    let facts = vec![
+        reference_fact(
+            "candidate",
+            "judgment.supporting.REFERENCE_MODEL.organization_rewrite",
+            "The company changed reporting lines around AI.",
+            "https://ir.example.test/organization",
+            "2026-08-10",
+            ReferenceModelEvidenceFamily::OrganizationRewrite,
+            None,
+        ),
+        reference_fact(
+            "candidate",
+            "judgment.supporting.REFERENCE_MODEL.production_system_rewrite",
+            "The company changed its engineering production system.",
+            "https://engineering.example.test/system",
+            "2026-08-11",
+            ReferenceModelEvidenceFamily::ProductionSystemRewrite,
+            None,
+        ),
+        fact(
+            "candidate",
+            "judgment.counter.REFERENCE_MODEL.counter_signal",
+            "Legacy production remains in one region.",
+            "https://risk.example.test/legacy",
+        ),
+        missing_fact("candidate", "REFERENCE_MODEL", "outcome_and_diffusion"),
+    ];
+    let snapshot = derive_judgment_snapshot_for_companies(
+        NaiveDate::from_ymd_opt(2026, 8, 20).unwrap(),
+        ["candidate"],
+        &facts,
+        Vec::new(),
+    )
+    .unwrap();
+    let machine = snapshot.company("candidate").unwrap();
+
+    assert_eq!(
+        machine.reference_model_assessment().eligibility(),
+        ReferenceModelEligibility::Candidate
+    );
+    assert!(machine
+        .reference_model_assessment()
+        .missing()
+        .iter()
+        .any(|missing| missing == "sustained_outcome"));
+    assert_eq!(machine.machine_stage().label(), "UNDETERMINED");
+    assert!(machine.ranked_candidates().is_empty());
+}
+
+#[test]
+fn confirmed_reference_model_assessment_is_the_only_reference_stage_gate() {
+    let facts = confirmed_reference_model_facts("reference");
+    let snapshot = derive_judgment_snapshot_for_companies(
+        NaiveDate::from_ymd_opt(2026, 8, 20).unwrap(),
+        ["reference"],
+        &facts,
+        Vec::new(),
+    )
+    .unwrap();
+    let machine = snapshot.company("reference").unwrap();
+
+    assert_eq!(
+        machine.reference_model_assessment().eligibility(),
+        ReferenceModelEligibility::Confirmed
+    );
+    assert_eq!(machine.machine_stage().label(), "REFERENCE_MODEL");
+    assert_eq!(machine.ranked_candidates().len(), 1);
+    assert_eq!(machine.ranked_candidates()[0].stage(), "REFERENCE_MODEL");
+}
+
+#[test]
+fn explicit_counter_review_marker_confirms_without_fabricating_counter_claim() {
+    let mut facts = confirmed_reference_model_facts("reviewed");
+    facts.retain(|fact| !fact.kind().starts_with("judgment.counter."));
+    facts.push(fact(
+        "reviewed",
+        "judgment.review.REFERENCE_MODEL.counter_evidence_review",
+        "Counter-evidence review completed across the bounded authoritative corpus; no disconfirming reference-model claim was identified.",
+        "https://www.microsoft.com/en-us/ai/frontier-transformation",
+    ));
+
+    let snapshot = derive_judgment_snapshot_for_companies(
+        NaiveDate::from_ymd_opt(2026, 8, 25).unwrap(),
+        ["reviewed"],
+        &facts,
+        Vec::new(),
+    )
+    .unwrap();
+    let assessment = snapshot
+        .company("reviewed")
+        .unwrap()
+        .reference_model_assessment();
+
+    assert_eq!(
+        assessment.eligibility(),
+        ReferenceModelEligibility::Confirmed
+    );
+    assert_eq!(assessment.counter_evidence_count(), 0);
+    assert!(assessment.counter_reviewed());
+    assert!(!assessment
+        .missing()
+        .iter()
+        .any(|item| item == "counter_evidence_review"));
+}
+
+#[test]
+fn confirmed_reference_packet_assigns_stage_without_generic_reference_signal() {
+    let mut facts = confirmed_reference_model_facts("metadata-only");
+    for fact in &mut facts {
+        if fact.kind().starts_with("judgment.supporting.") {
+            let replacement = fact.kind().replace(
+                "judgment.supporting.REFERENCE_MODEL",
+                "evidence_structural_change",
+            );
+            *fact = NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
+                fact.company_id(),
+                replacement,
+                fact.value().unwrap_or("reference packet claim"),
+                None,
+                fact.reference_model_family(),
+                fact.reference_model_named_peer().map(str::to_owned),
+                FactStatus::Known,
+                Confidence::High,
+                fact.provenance().clone(),
+            )
+            .unwrap();
+        }
+    }
+    let snapshot = derive_judgment_snapshot_for_companies(
+        NaiveDate::from_ymd_opt(2026, 8, 20).unwrap(),
+        ["metadata-only"],
+        &facts,
+        Vec::new(),
+    )
+    .unwrap();
+    let machine = snapshot.company("metadata-only").unwrap();
+
+    assert_eq!(
+        machine.reference_model_assessment().eligibility(),
+        ReferenceModelEligibility::Confirmed
+    );
+    assert_eq!(machine.machine_stage().label(), "REFERENCE_MODEL");
+}
+
+#[test]
+fn report_renders_localized_reference_model_matrix_without_calling_candidate_an_exemplar() {
+    let facts = confirmed_reference_model_facts("reference");
+    let judgment = derive_judgment_snapshot_for_companies(
+        NaiveDate::from_ymd_opt(2026, 8, 20).unwrap(),
+        ["reference"],
+        &facts,
+        Vec::new(),
+    )
+    .unwrap();
+    let mut input = RuntimeReportInput::from_date(NaiveDate::from_ymd_opt(2026, 8, 20).unwrap());
+    for fact in facts {
+        input.add_fact(fact).unwrap();
+    }
+    input.set_judgment(judgment).unwrap();
+
+    let chinese = render_report(&input).markdown().to_owned();
+    assert!(chinese.contains("AI 时代范本验证"));
+    assert!(chinese.contains("资格状态：已确认"));
+    assert!(chinese.contains("组织重写：已具备"));
+    assert!(chinese.contains("行业扩散：已具备"));
+    assert!(!chinese.contains("候选范本"));
+
+    let english = org_x::features::weekly_radar::runtime::report::render_report_in_language(
+        &input,
+        org_x::features::weekly_radar::runtime::report::ReportLanguage::English,
+    );
+    assert!(english
+        .markdown()
+        .contains("AI-era Reference Model Validation"));
+    assert!(english.markdown().contains("Eligibility:Confirmed"));
+    assert!(english
+        .snapshot_json()
+        .contains("reference_model_assessment"));
+}
+
+#[test]
+fn report_does_not_render_internal_counter_review_as_company_observation() {
+    let mut facts = confirmed_reference_model_facts("reference");
+    facts.push(fact(
+        "reference",
+        "judgment.review.REFERENCE_MODEL.counter_evidence_review",
+        "Counter-evidence review completed.",
+        "https://example.test/review",
+    ));
+    let judgment = derive_judgment_snapshot_for_companies(
+        NaiveDate::from_ymd_opt(2026, 8, 20).unwrap(),
+        ["reference"],
+        &facts,
+        Vec::new(),
+    )
+    .unwrap();
+    let mut input = RuntimeReportInput::from_date(NaiveDate::from_ymd_opt(2026, 8, 20).unwrap());
+    for fact in facts {
+        input.add_fact(fact).unwrap();
+    }
+    input.set_judgment(judgment).unwrap();
+
+    let report = org_x::features::weekly_radar::runtime::report::render_report_in_language(
+        &input,
+        org_x::features::weekly_radar::runtime::report::ReportLanguage::English,
+    );
+    assert!(!report.markdown().contains(
+        "Companies to Watch\n### reference\n- Other material:Counter-evidence review completed."
+    ));
 }
 
 #[test]

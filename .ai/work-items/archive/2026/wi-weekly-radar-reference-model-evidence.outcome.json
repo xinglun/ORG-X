@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-reference-model-evidence",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "005e909a14fd19c5cffe24ea14a5a8291aad435ea08bc37b98d3715687f80e3f"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-reference-model-evidence",
+    "contractDigest": "204413ed649d320b3c1832e9e0b048518191ae330f16a7e44ea322b6928e9346",
+    "summaryDigest": "466198602567ff6f7890fbfbb7de23abc32bf462cba368202420e60398b750d1",
+    "verificationDigest": "ed02c1b1114391795109f740bae53586fc968b97a540ae2e2989eb5b8bb8fd85",
+    "baseCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
+    "headCommit": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "f12ec0460c71fff2c7a34aed30ff3baac2b245365e6332a1d93149794993dbb1",
+      "binding": {
+        "baseCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
+        "candidateHead": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+        "candidateTreeDigest": "1077aa8288abe19ceb58b5bb1d3c5dd4eb0ceda2204db3de0aa916c28cd69bfb",
+        "candidateDiffDigest": "265e9bdd93d3324ea10973c161be69eb1264cf4b30fa4450adab6e5280b94a55"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-reference-model-evidence generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-reference-model-evidence generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-reference-model-evidence",
     "deliveredChanges": [
       "config/weekly_radar/companies.json",
       "config/weekly_radar/reference_model_candidates.json",
@@ -66,265 +89,326 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.archive-manifest.json",
       ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
       ".ai/knowledge/index.json"
-    ]
-  },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiSummary",
-      "action": "blocked",
-      "resolution": "Retry aiSummary after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "verificationHistory[0] aiGuidelines failed",
-          "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "aiSummary failed before the retry.",
-      "policyOrGuard": "required verification: aiSummary",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiSummary after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "verificationHistory[1] aiSummary failed",
-          "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "verification[aiSummary] retry passed",
-          "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "Do not optimize Ranking before Evidence Candidate quality; target an AI-era organization and production-system exemplar; close historical debt in this Work Item; Python and Shell are orchestration only."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "The CLI renders after acquisition, so long multi-company waits do not show progress; no claim is made from the terminated run.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "Microsoft now has two named-peer diffusion URIs in the machine-confirmed packet, but both are Microsoft-published customer stories; independent publisher corroboration remains outside this bounded source set.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Added a typed four-family reference-model evidence gate, then iterated live discovery and extraction until a bounded Microsoft packet passed the gate.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/transformation/domain/mod.rs",
-          "subject": "four-family eligibility gate"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "The gate requires authoritative organization and production rewrites, multi-period sustained outcomes, independent named-peer diffusion, and an explicit bounded counter review before Confirmed eligibility can expose REFERENCE_MODEL Stage.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "tests/weekly_radar_judgment_chain.rs",
-          "subject": "Candidate suppression and Confirmed Stage gate"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Weekly Radar evidence and runtime models",
-        "detail": "Typed family, named-peer, and bounded-period metadata is backward-compatible with legacy JSON.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/model.rs",
-            "subject": "legacy-compatible NormalizedFact metadata"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
           },
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "metadata and legacy deserialization fixtures"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
           }
         ]
       },
       {
-        "component": "SEC annual facts",
-        "detail": "Distinct historical outcome periods are retained without duplicating fact identity, while latest-period ambiguity remains UNKNOWN.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiSummary failed before the retry.",
+        "policyOrGuard": "required verification: aiSummary",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiSummary after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/sec.rs",
-            "subject": "bounded annual-period retention"
-          }
-        ]
-      },
-      {
-        "component": "Weekly Radar report",
-        "detail": "Localized reports expose the four-family matrix, eligibility, missing proof, counter review, and source distinctions.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/report.rs",
-            "subject": "localized reference-model matrix"
-          }
-        ]
-      },
-      {
-        "component": "Official research discovery",
-        "detail": "Configured Microsoft Inside Track and customer-story URLs are fetched as documents, with content-path priority and visible publication-date parsing preventing page-level and undated false negatives.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/discovery.rs",
-            "subject": "bounded content discovery and date extraction"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
           },
           {
-            "source": "tests/weekly_radar_runtime.rs",
-            "subject": "direct official document and publication-date regressions"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "resolutions": [
       {
-        "decision": "Keep Candidate distinct from Confirmed and never call Candidate an exemplar.",
-        "reason": "The product target is an AI-era industry model, so incomplete organization stories must remain visibly incomplete.",
-        "status": "verified",
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
-            "subject": "reference-model hard boundary"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "verificationHistory[0] aiGuidelines failed",
+            "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
           }
         ]
       },
       {
-        "decision": "Keep Ranking unchanged and gate only the highest REFERENCE_MODEL Stage.",
-        "reason": "Evidence quality is the bottleneck; ranking must not compensate for missing proof.",
-        "status": "verified",
+        "problem": "aiSummary failed before the retry.",
+        "action": "Re-ran aiSummary after the correction; the latest attempt passed.",
+        "verification": "aiSummary latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "tests/weekly_radar_judgment_chain.rs",
-            "subject": "ranking isolation and reference Stage gate"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "verificationHistory[1] aiSummary failed",
+            "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "verification[aiSummary] retry passed",
+            "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
           }
         ]
       }
     ],
-    "technicalDetails": [
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
       {
-        "topic": "Verification",
-        "detail": "Rust, Python, clippy, formatting, knowledge projection, strict Cockpit quality, and a bounded Microsoft live run pass; the live packet is Confirmed only under the explicit four-family policy.",
-        "status": "verified",
+        "claim": "live network observability",
+        "severity": "medium",
+        "title": "live network observability",
+        "detail": "The CLI renders after acquisition, so long multi-company waits do not show progress; no claim is made from the terminated run.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "docs/operations/WEEKLY_RADAR.md",
-            "subject": "runtime and degraded-report semantics"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
+      },
+      {
+        "claim": "diffusion evidence",
+        "severity": "medium",
+        "title": "diffusion evidence",
+        "detail": "Microsoft now has two named-peer diffusion URIs in the machine-confirmed packet, but both are Microsoft-published customer stories; independent publisher corroboration remains outside this bounded source set.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
+        "inference": false
       }
+    ],
+    "humanDecisions": [
+      "Do not optimize Ranking before Evidence Candidate quality; target an AI-era organization and production-system exemplar; close historical debt in this Work Item; Python and Shell are orchestration only."
     ],
     "evidence": [
       {
-        "claim": "Evidence extraction preserves typed family metadata and provenance.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_evidence_quality.rs",
         "subject": "evidence extraction and metadata tests"
       },
       {
-        "claim": "Judgment suppresses incomplete reference-model Stage and localized reports preserve the matrix.",
-        "status": "verified",
         "source": "tests/weekly_radar_judgment_chain.rs",
         "subject": "judgment and localized report tests"
       },
       {
-        "claim": "The bounded Microsoft run produced organization rewrite, production-system rewrite, four outcome periods, two named-peer diffusion URIs, and completed counter review.",
-        "status": "verified",
         "source": "config/weekly_radar/reference_model_candidates.json",
         "subject": "2026-08-25 bounded Microsoft reference-model validation run"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+        "subject": "verificationHistory[0] aiGuidelines failed",
+        "digest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+        "subject": "verificationHistory[1] aiSummary failed",
+        "digest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+        "subject": "verification[aiSummary] retry passed",
+        "digest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Added a typed four-family reference-model evidence gate, then iterated live discovery and extraction until a bounded Microsoft packet passed the gate.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/transformation/domain/mod.rs",
+            "subject": "four-family eligibility gate"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "The gate requires authoritative organization and production rewrites, multi-period sustained outcomes, independent named-peer diffusion, and an explicit bounded counter review before Confirmed eligibility can expose REFERENCE_MODEL Stage.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_judgment_chain.rs",
+            "subject": "Candidate suppression and Confirmed Stage gate"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Weekly Radar evidence and runtime models",
+          "detail": "Typed family, named-peer, and bounded-period metadata is backward-compatible with legacy JSON.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/model.rs",
+              "subject": "legacy-compatible NormalizedFact metadata"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "metadata and legacy deserialization fixtures"
+            }
+          ]
+        },
+        {
+          "component": "SEC annual facts",
+          "detail": "Distinct historical outcome periods are retained without duplicating fact identity, while latest-period ambiguity remains UNKNOWN.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/sec.rs",
+              "subject": "bounded annual-period retention"
+            }
+          ]
+        },
+        {
+          "component": "Weekly Radar report",
+          "detail": "Localized reports expose the four-family matrix, eligibility, missing proof, counter review, and source distinctions.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/report.rs",
+              "subject": "localized reference-model matrix"
+            }
+          ]
+        },
+        {
+          "component": "Official research discovery",
+          "detail": "Configured Microsoft Inside Track and customer-story URLs are fetched as documents, with content-path priority and visible publication-date parsing preventing page-level and undated false negatives.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/discovery.rs",
+              "subject": "bounded content discovery and date extraction"
+            },
+            {
+              "source": "tests/weekly_radar_runtime.rs",
+              "subject": "direct official document and publication-date regressions"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Keep Candidate distinct from Confirmed and never call Candidate an exemplar.",
+          "reason": "The product target is an AI-era industry model, so incomplete organization stories must remain visibly incomplete.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+              "subject": "reference-model hard boundary"
+            }
+          ]
+        },
+        {
+          "decision": "Keep Ranking unchanged and gate only the highest REFERENCE_MODEL Stage.",
+          "reason": "Evidence quality is the bottleneck; ranking must not compensate for missing proof.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_judgment_chain.rs",
+              "subject": "ranking isolation and reference Stage gate"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Verification",
+          "detail": "Rust, Python, clippy, formatting, knowledge projection, strict Cockpit quality, and a bounded Microsoft live run pass; the live packet is Confirmed only under the explicit four-family policy.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/operations/WEEKLY_RADAR.md",
+              "subject": "runtime and degraded-report semantics"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "Evidence extraction preserves typed family metadata and provenance.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "evidence extraction and metadata tests"
+        },
+        {
+          "claim": "Judgment suppresses incomplete reference-model Stage and localized reports preserve the matrix.",
+          "status": "verified",
+          "source": "tests/weekly_radar_judgment_chain.rs",
+          "subject": "judgment and localized report tests"
+        },
+        {
+          "claim": "The bounded Microsoft run produced organization rewrite, production-system rewrite, four outcome periods, two named-peer diffusion URIs, and completed counter review.",
+          "status": "verified",
+          "source": "config/weekly_radar/reference_model_candidates.json",
+          "subject": "2026-08-25 bounded Microsoft reference-model validation run"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1748,6 +1832,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

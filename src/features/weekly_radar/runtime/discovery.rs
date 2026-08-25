@@ -54,6 +54,62 @@ pub struct DocumentCandidate {
     provenance: String,
 }
 
+/// Treats an explicitly configured content URL as a document while leaving
+/// generic homepages and category/index pages as entry points only.
+pub fn direct_document_candidate(
+    company_id: &str,
+    source_kind: SourceKind,
+    entry_url: &str,
+    observed_at: DateTime<Utc>,
+) -> Option<DocumentCandidate> {
+    let base = Url::parse(entry_url).ok()?;
+    let path = base.path().to_ascii_lowercase();
+    let content_path = [
+        "/blog/",
+        "/insidetrack/",
+        "/news/",
+        "/story/",
+        "/stories/",
+        "/article/",
+        "/articles/",
+        "/press/",
+    ]
+    .iter()
+    .any(|marker| path.contains(marker));
+    if !content_path {
+        return None;
+    }
+    let classification_text = format!("{} {}", base, path);
+    let document_kind = classify_document(&classification_text).or_else(|| {
+        if path.contains("/insidetrack/") || path.contains("/blog/") {
+            Some(DocumentKind::AiAutomation)
+        } else if path.contains("/story/") || path.contains("/stories/") {
+            Some(DocumentKind::ProductPlatform)
+        } else {
+            None
+        }
+    })?;
+    let title = path
+        .trim_end_matches('/')
+        .rsplit('/')
+        .next()
+        .filter(|value| !value.is_empty())
+        .unwrap_or("document")
+        .replace('-', " ");
+    Some(DocumentCandidate {
+        company_id: company_id.to_owned(),
+        source_kind,
+        url: base.to_string(),
+        title,
+        document_kind,
+        published_or_effective_date: None,
+        provenance: format!(
+            "explicitly configured document; observed_at={}",
+            observed_at.to_rfc3339()
+        ),
+    })
+}
+
 impl DocumentCandidate {
     /// Returns the company identity.
     pub fn company_id(&self) -> &str {
@@ -149,10 +205,44 @@ pub fn discover_documents(
             ),
         });
     }
-    candidates.sort_by(|left, right| left.url.cmp(&right.url));
+    candidates.sort_by(|left, right| {
+        discovery_priority(left)
+            .cmp(&discovery_priority(right))
+            .then_with(|| left.url.cmp(&right.url))
+    });
     candidates.dedup_by(|left, right| left.url == right.url);
     candidates.truncate(MAX_DOCUMENT_CANDIDATES_PER_ENTRY);
     candidates
+}
+
+fn discovery_priority(candidate: &DocumentCandidate) -> (u8, u8) {
+    let path = Url::parse(candidate.url())
+        .ok()
+        .map(|url| url.path().to_ascii_lowercase())
+        .unwrap_or_default();
+    let content_path = [
+        "/blog/",
+        "/insidetrack/",
+        "/news/",
+        "/story/",
+        "/stories/",
+        "/article/",
+        "/articles/",
+        "/press/",
+    ]
+    .iter()
+    .any(|marker| path.contains(marker));
+    let kind_priority = match candidate.document_kind() {
+        DocumentKind::Organization => 0,
+        DocumentKind::AiAutomation => 1,
+        DocumentKind::Engineering => 2,
+        DocumentKind::Earnings => 3,
+        DocumentKind::InvestorDay => 4,
+        DocumentKind::Filing => 5,
+        DocumentKind::ProductPlatform => 6,
+        DocumentKind::Careers => 7,
+    };
+    (if content_path { 0 } else { 1 }, kind_priority)
 }
 
 /// Extracts a bounded title, publication/effective date, and normalized body.
@@ -172,6 +262,7 @@ pub fn document_metadata(html: &str, fallback_title: &str) -> (String, Option<Na
     })
     .or_else(|| json_ld_date(html, "datePublished"))
     .or_else(|| time_date(html))
+    .or_else(|| visible_us_date(html))
     .or_else(|| json_ld_date(html, "dateModified"));
     (title, date, normalize_document_body(html))
 }
@@ -262,6 +353,17 @@ fn time_date(html: &str) -> Option<NaiveDate> {
     date
 }
 
+fn visible_us_date(html: &str) -> Option<NaiveDate> {
+    let regex = Regex::new(r"\b(\d{1,2})/(\d{1,2})/(\d{4})\b").ok()?;
+    let date = regex.captures_iter(html).find_map(|captures| {
+        let month = captures.get(1)?.as_str().parse::<u32>().ok()?;
+        let day = captures.get(2)?.as_str().parse::<u32>().ok()?;
+        let year = captures.get(3)?.as_str().parse::<i32>().ok()?;
+        NaiveDate::from_ymd_opt(year, month, day)
+    });
+    date
+}
+
 fn parse_iso_date_prefix(value: &str) -> Option<NaiveDate> {
     let bytes = value.as_bytes();
     if bytes.len() < 10
@@ -319,7 +421,7 @@ fn classify_document(value: &str) -> Option<DocumentKind> {
         &["organization", "reorganiz", "restructur", "responsibility"],
     ) {
         Some(DocumentKind::Organization)
-    } else if contains_any(value, &["product", "platform", "launch"]) {
+    } else if contains_any(value, &["product", "platform", "launch", "customer story"]) {
         Some(DocumentKind::ProductPlatform)
     } else if contains_any(value, &["career", "careers", "job", "hiring"]) {
         Some(DocumentKind::Careers)

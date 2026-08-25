@@ -7,45 +7,76 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Bounded SEC filing bodies and one-hop official IR discovery now share the existing source-observation and evidence-validation path.
-Mechanism (verified): Fetch validated SEC candidates once under a finite limit, expand each official IR entry by one same-origin nested pass, and process all document observations exactly once in main.rs.
+Customer summary (verified): Added a typed four-family reference-model evidence gate, then iterated live discovery and extraction until a bounded Microsoft packet passed the gate.
+Mechanism (verified): The gate requires authoritative organization and production rewrites, multi-period sustained outcomes, independent named-peer diffusion, and an explicit bounded counter review before Confirmed eligibility can expose REFERENCE_MODEL Stage.
 
 Affected components
-- SEC adapter: Known, Unknown, and Unavailable filing body states with safe independent failures. (verified)
-- Official source adapter: Direct plus one nested IR discovery under same-origin and global caps. (verified)
-- Evidence runtime: SEC and IR documents use one claim extraction and validation path. (verified)
+- Weekly Radar evidence and runtime models: Typed family, named-peer, and bounded-period metadata is backward-compatible with legacy JSON. (verified)
+- SEC annual facts: Distinct historical outcome periods are retained without duplicating fact identity, while latest-period ambiguity remains UNKNOWN. (verified)
+- Weekly Radar report: Localized reports expose the four-family matrix, eligibility, missing proof, counter review, and source distinctions. (verified)
+- Official research discovery: Configured Microsoft Inside Track and customer-story URLs are fetched as documents, with content-path priority and visible publication-date parsing preventing page-level and undated false negatives. (verified)
 
 Design decisions
-- Keep SEC stage health separate from filing document availability.: A filing document failure must not make Company Facts disappear or make stage coverage negative. (verified)
-- Use one public input struct for document observation construction.: The shared boundary remains explicit without violating strict Clippy argument limits. (verified)
+- Keep Candidate distinct from Confirmed and never call Candidate an exemplar.: The product target is an AI-era industry model, so incomplete organization stories must remain visibly incomplete. (verified)
+- Keep Ranking unchanged and gate only the highest REFERENCE_MODEL Stage.: Evidence quality is the bottleneck; ranking must not compensate for missing proof. (verified)
 
 ### Technical details
-- TDD: New SEC, IR, and runtime tests were observed failing before their implementation slices and pass in the final local suite. (verified)
-- bounded retrieval: SEC filing body limit is 8 MiB and the official IR combined document cap is 12. (verified)
+- Verification: Rust, Python, clippy, formatting, knowledge projection, strict Cockpit quality, and a bounded Microsoft live run pass; the live packet is Confirmed only under the explicit four-family policy. (verified)
 
 ### Evidence
-- All local Rust tests pass.: tests/weekly_radar_runtime.rs#cargo test --all (verified)
-- Strict lint and AI quality pass.: Makefile.ai#cargo clippy and make ai-cockpit-quality GOVERNANCE_PROFILE=strict (verified)
+- Evidence extraction preserves typed family metadata and provenance.: tests/weekly_radar_evidence_quality.rs#evidence extraction and metadata tests (verified)
+- Judgment suppresses incomplete reference-model Stage and localized reports preserve the matrix.: tests/weekly_radar_judgment_chain.rs#judgment and localized report tests (verified)
+- The bounded Microsoft run produced organization rewrite, production-system rewrite, four outcome periods, two named-peer diffusion URIs, and completed counter review.: config/weekly_radar/reference_model_candidates.json#2026-08-25 bounded Microsoft reference-model validation run (verified)
 
-- Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
-- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json]
-- Changed .ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json [evidence: .ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json]
-- Changed docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md [evidence: docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md]
-- Changed docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md]
-- Changed src/features/weekly_radar/runtime/sec.rs [evidence: src/features/weekly_radar/runtime/sec.rs]
+- Changed config/weekly_radar/companies.json [evidence: config/weekly_radar/companies.json]
+- Changed config/weekly_radar/reference_model_candidates.json [evidence: config/weekly_radar/reference_model_candidates.json]
+- Changed .ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json [evidence: .ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json]
+- Changed src/features/weekly_radar/runtime/config.rs [evidence: src/features/weekly_radar/runtime/config.rs]
 - Changed src/features/weekly_radar/runtime/discovery.rs [evidence: src/features/weekly_radar/runtime/discovery.rs]
 - Changed src/features/weekly_radar/runtime/sources.rs [evidence: src/features/weekly_radar/runtime/sources.rs]
-- Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
-- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
 - Changed src/main.rs [evidence: src/main.rs]
 - Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
+- Changed src/features/transformation/domain/mod.rs [evidence: src/features/transformation/domain/mod.rs]
+- Changed src/features/transformation/domain/mod_test.rs [evidence: src/features/transformation/domain/mod_test.rs]
+- Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
+- Changed src/features/weekly_radar/runtime/model.rs [evidence: src/features/weekly_radar/runtime/model.rs]
+- Changed src/features/weekly_radar/runtime/sec.rs [evidence: src/features/weekly_radar/runtime/sec.rs]
+- Changed src/features/weekly_radar/runtime/judgment.rs [evidence: src/features/weekly_radar/runtime/judgment.rs]
+- Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
 - Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
+- Changed tests/weekly_radar_judgment_chain.rs [evidence: tests/weekly_radar_judgment_chain.rs]
+- Changed docs/domain/PRODUCTION_SYSTEM_MODEL.md [evidence: docs/domain/PRODUCTION_SYSTEM_MODEL.md]
+- Changed docs/validation/VALIDATION_STRATEGY.md [evidence: docs/validation/VALIDATION_STRATEGY.md]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.md]
+- Changed docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md [evidence: docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md]
+- Changed docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md]
+- Changed .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json]
+- Changed .ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
+- Changed .ai/evidence/ai-cockpit-upgrade-feature-checklist.json [evidence: .ai/evidence/ai-cockpit-upgrade-feature-checklist.json]
+- Changed tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json [evidence: tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json]
+- Changed tests/fixtures/realign_ai_cockpit_v2.summary.json [evidence: tests/fixtures/realign_ai_cockpit_v2.summary.json]
+- Changed .ai/knowledge/work-items/upgrade_ai_cockpit.json [evidence: .ai/knowledge/work-items/upgrade_ai_cockpit.json]
+- Changed .ai/knowledge/work-items/wi-sec-submissions-response-limit.json [evidence: .ai/knowledge/work-items/wi-sec-submissions-response-limit.json]
+- Changed .ai/knowledge/work-items/wi-telegram-delivery-verification.json [evidence: .ai/knowledge/work-items/wi-telegram-delivery-verification.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-content-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-content-quality.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json]
+- Changed .ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json [evidence: .ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json]
 
 Problems found
 - Total: 7
@@ -53,44 +84,36 @@ Problems found
 - Warning: 0
 
 Stops triggered
-- None recorded.
+- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Reason: aiSummary failed before the retry. | Stage: verification | Resolution: Retry aiSummary after correcting the recorded failure. [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 
 Problems resolved
-- Problem: Initial ai-start skeleton was not_ready because Contract evidence was incomplete.
-  Solution: Filled intent, sources, acceptance, scenarios, capabilities, requested operation, and execution decision; Preflight became ready.
-  Evidence: [evidence: preflight contract evidence]
-- Problem: The first Contract declared an unregistered source_acquisition capability and a non-policy requested-operation target.
-  Solution: Aligned declared capabilities with repository capabilities and changed target to repository_governance; Preflight became ready.
-  Evidence: [evidence: declared capabilities and requested operation]
-- Problem: The first multi-filter Cargo test command was invalid and did not exercise the intended RED tests.
-  Solution: Re-ran with the single sec_ filter and observed the expected missing-interface compile failure before implementation.
-  Evidence: [evidence: RED/GREEN test sequence, SEC TDD fixtures]
-- Problem: Adding SourceKind::Sec exposed the existing evidence source-kind match in runtime/evidence.rs, which was not in the initial scope.
-  Solution: Amended the current Contract and plan before editing the file; the source mapping is now explicit and the amendment is recorded for revalidation.
-  Evidence: [evidence: amended scope and revalidation, explicit SEC source mapping]
-- Problem: Clippy rejected the first 11-argument document factory.
-  Solution: Replaced it with the documented DocumentObservationInput boundary; strict Clippy now passes.
-  Evidence: [evidence: DocumentObservationInput, strict quality route]
-- Problem: A filing body that succeeds without usable text was initially treated as unavailable for employee fallback.
-  Solution: Split Unknown from Unavailable in the fallback path; only request failure or finite-limit failure is unavailable.
-  Evidence: [evidence: Known/Unknown/Unavailable fallback semantics, SEC status regression]
-- Problem: The full live-registry dry-run produced no output for about 100 seconds and was interrupted; a 10-second curl probe showed SEC and IR endpoints respond, while GDELT timed out at 5 seconds.
-  Solution: Accepted as an out-of-scope external dependency; retained as residual risk; deterministic fixture and full local tests remain the acceptance evidence and no archive or Telegram side effect occurred.
-  Evidence: [evidence: news discovery and hosted lifecycle are out of scope, degraded-data and source availability semantics]
+- Problem: aiGuidelines failed before the retry.
+  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
+- Problem: aiSummary failed before the retry.
+  Solution: Re-ran aiSummary after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
 
 Risks avoided
-- None recorded.
+- If not detected, could have led to a stale completion claim. (inference)
+- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- Fixture tests cannot prove every live IR or SEC filing uses the same HTML body structure or lexical claim vocabulary. [evidence: residualRisks]
-- The full-registry dry-run can wait on GDELT when that endpoint is unreachable; this Work Item does not change news discovery or provider timeout policy. [evidence: residualRisks]
-- Deterministic claim extraction intentionally favors precision and may leave valid but unusual wording as pending evidence. [evidence: residualRisks]
+- observed issue (inference)
+- observed issue (inference)
+- observed issue (inference)
+- observed issue (inference)
+- observed issue (inference)
+- The CLI renders after acquisition, so long multi-company waits do not show progress; no claim is made from the terminated run. [evidence: residualRisks]
+- Microsoft now has two named-peer diffusion URIs in the machine-confirmed packet, but both are Microsoft-published customer stories; independent publisher corroboration remains outside this bounded source set. [evidence: residualRisks]
 
 Unknowns
-- None recorded.
+- A ten-company live public-network run was not completed because acquisition waited beyond the bounded observation window; deterministic and single-company runs completed. (inference)
+- The confirmed diffusion packet is based on Microsoft-published customer stories naming PwC and NIQ; independent non-Microsoft publisher corroboration was not assessed by this bounded run. (inference)
 
 Human decisions
-- Stopping condition is local problem resolution; CI, PR, merge, and Work Item closure are not mandatory endpoints. (inference)
+- Do not optimize Ranking before Evidence Candidate quality; target an AI-era organization and production-system exemplar; close historical debt in this Work Item; Python and Shell are orchestration only. (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]
@@ -111,9 +134,9 @@ Verification
 - aiSummary [evidence: aiSummary]
 
 Impact
-- Rework avoided: None recorded.
+- Rework avoided: If not detected, could have led to a stale completion claim. (inference)
 - Repeat correction prevented: unknown: no direct recurrence probability evidence was recorded. (inference)
-- Major risk prevented: None recorded.
+- Major risk prevented: If not detected, could have led to a stale completion claim. (inference)
 
 Next action
 - Bind conversation locale and preserve evidence details before the next Work Item starts. (inference)

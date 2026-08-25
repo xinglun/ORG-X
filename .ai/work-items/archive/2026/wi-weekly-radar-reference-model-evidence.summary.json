@@ -1,0 +1,1181 @@
+{
+  "summaryVersion": 2,
+  "workItemId": "wi-weekly-radar-reference-model-evidence",
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
+  "changedFiles": [
+    {
+      "path": "config/weekly_radar/companies.json",
+      "reason": "Configured bounded Microsoft organization, production-system, and named-peer customer-story entrypoints for live research."
+    },
+    {
+      "path": "config/weekly_radar/reference_model_candidates.json",
+      "reason": "Added the one-company Microsoft research slice used for repeatable bounded live validation."
+    },
+    {
+      "path": ".ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json",
+      "reason": "Added the required reference-impact evidence for the new repository-local candidate registry after the strict coverage gate identified the missing target."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/config.rs",
+      "reason": "Added validated optional official-research source lists without guessing URLs or changing existing constructor compatibility."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "reason": "Prioritized content paths, promoted explicit content URLs to documents, and extracted visible US publication dates."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/sources.rs",
+      "reason": "Collected explicitly configured official research documents while retaining bounded same-origin discovery."
+    },
+    {
+      "path": "src/main.rs",
+      "reason": "Added explicit bounded counter-review records and wired confirmed reference-model eligibility to the highest Stage."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Added regressions for direct official documents, visible publication dates, and content-path discovery priority."
+    },
+    {
+      "path": "src/features/transformation/domain/mod.rs",
+      "reason": "Added typed four-family evidence bundle and fail-closed eligibility assessment."
+    },
+    {
+      "path": "src/features/transformation/domain/mod_test.rs",
+      "reason": "Added domain gate tests for Candidate, Confirmed, NotEligible, periods, authority, and counter review."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "Attached conservative reference-model family and named-peer metadata only after document Claim validation."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "reason": "Added backward-compatible family, named-peer, and bounded outcome-period metadata to NormalizedFact."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/sec.rs",
+      "reason": "Retained up to four distinct annual outcome periods without duplicating fact identity; latest-period ambiguity remains UNKNOWN."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/judgment.rs",
+      "reason": "Precomputed reference-model assessment and made confirmed eligibility mandatory for REFERENCE_MODEL Stage."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "reason": "Rendered localized four-family matrix, eligibility, period/source counts, counter review, and missing conditions."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "Added family, named-peer, legacy JSON, and SEC multi-period fixtures."
+    },
+    {
+      "path": "tests/weekly_radar_judgment_chain.rs",
+      "reason": "Added Candidate suppression, Confirmed Stage gate, and localized report matrix fixtures."
+    },
+    {
+      "path": "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+      "reason": "Documented the four-family ReferenceModel hard boundary."
+    },
+    {
+      "path": "docs/validation/VALIDATION_STRATEGY.md",
+      "reason": "Documented fail-closed multi-period and independent-diffusion validation."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Documented the four-family runtime pipeline and report semantics."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md",
+      "reason": "Approved design for the reference-model evidence gate."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md",
+      "reason": "Implementation and hard-acceptance plan."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
+      "reason": "Bound Work Item scope, acceptance, sources, risk, and execution decision."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+      "reason": "Recorded evidence-bound implementation and verification handoff."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json",
+      "reason": "Mandatory Task Outcome evidence generated by ai-finish."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.md",
+      "reason": "Mandatory Task Outcome evidence generated by ai-finish."
+    },
+    {
+      "path": ".ai/cockpit/task_report.json",
+      "reason": "Generated machine-readable Human Benefit Review Report."
+    },
+    {
+      "path": ".ai/cockpit/task_report.md",
+      "reason": "Generated human-readable Human Benefit Review Report."
+    },
+    {
+      "path": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+      "reason": "Refreshed the stale installed script digest and preserved customization hash identified by the full Python governance suite."
+    },
+    {
+      "path": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
+      "reason": "Moved the historical Contract fixture out of the archive namespace so it remains test data rather than a false Work Item archive."
+    },
+    {
+      "path": "tests/fixtures/realign_ai_cockpit_v2.summary.json",
+      "reason": "Moved the historical Summary fixture out of the archive namespace so it remains test data rather than a false Work Item archive."
+    },
+    {
+      "path": "tests/test_ai_check_summary.py",
+      "reason": "Updated the regression consumer to load historical schema fixtures from the explicit test-fixture namespace."
+    },
+    {
+      "path": ".ai/knowledge/work-items/upgrade_ai_cockpit.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after refreshing installer evidence."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after SEC runtime changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared report changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared evidence changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared evidence changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared report changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared report changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared discovery changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared CLI/report changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared evidence-model changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared extraction changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared evidence changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared report changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared runtime changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared report changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after SEC/IR runtime changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared runtime changes."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json",
+      "reason": "Rebuilt the evidence-bound knowledge projection after shared evidence and report changes."
+    },
+    {
+      "path": ".ai/cockpit/current_status.md",
+      "reason": "Generated no-active cockpit status after archival."
+    },
+    {
+      "path": ".ai/work-items/archive/index.json",
+      "reason": "Generated archive discovery index."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.archive-manifest.json",
+      "reason": "Immutable archive evidence root."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
+      "reason": "Generated evidence-bound Implementation Knowledge Record."
+    },
+    {
+      "path": ".ai/knowledge/index.json",
+      "reason": "Rebuilt deterministic Implementation Knowledge index."
+    }
+  ],
+  "sourcesUsed": [
+    "AGENTS.md",
+    ".ai/glossary.md",
+    "docs/product/PRD.md",
+    "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+    "docs/validation/VALIDATION_STRATEGY.md",
+    "docs/adr/ADR-003-production-system-core-domain.md",
+    "docs/adr/ADR-004-organization-as-evidence.md",
+    "docs/adr/ADR-007-counter-evidence-mandatory.md",
+    "docs/adr/ADR-008-primary-sources-authoritative.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md"
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "command": "make check-ai-contract CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:14.273219+00:00",
+      "exitCode": 0,
+      "durationMs": 98,
+      "outputDigest": "419dab111007841b8ffd35563a9b1bb37bdbed3280a072a91f6c97b24685fba7",
+      "commandHash": "fc06e3900abf82a207e6fb967c7826c3257285887eb1c5f5cfab4203a52722ca",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "efbcd7d2876fbbd937ea4daa5e2f700469d9aa71713ce1a9b3a340daf875a907",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "outputBytes": 312
+    },
+    {
+      "check": "aiScope",
+      "command": "make check-ai-scope CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:14.540993+00:00",
+      "exitCode": 0,
+      "durationMs": 177,
+      "outputDigest": "3af3a1c73a9aa28335a873f70a4830bda4106e459b1725143e106a1fed9e28c0",
+      "commandHash": "cb06cad7aa1b9a22a12ad3c76491860d5557d1ded60057d6a5b564c911673ff8",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "c710692e6dd70878a596ee746ad32f07ab0cb575c65a4d636c972c2e93f7d8ed",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json scope guard passed: 51 changed path(s) covered",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json scope guard passed: 51 changed path(s) covered",
+      "outputBytes": 245
+    },
+    {
+      "check": "aiGuards",
+      "command": "make check-ai-guards",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:14.906254+00:00",
+      "exitCode": 0,
+      "durationMs": 269,
+      "outputDigest": "cc66009fd0f55219c6159bbb6fc989d864a80f4c0b1f15c20c788ae36436746e",
+      "commandHash": "769f935b899dad1a2abcf23ef3cd08c6904b7f7d03a988b5ce6aa573d18b1e83",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "8f1561d1e45b1504d228b69796b557e83f792d7f7a2aa81d8c4004a3b243f723",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json [warning] restricted_write: .ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/evidence/ai-cockpit-upgrade-feature-checklist.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/upgrade_ai_cockpit.",
+      "outputTail": "ance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-content-quality.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json (.ai/**) - AI governance configuration. [warning] restricted_write: .ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json (.ai/**) - AI governance configuration. guard check completed: 20 warning(s) report: target/ai_guard_report.json",
+      "outputBytes": 2986
+    },
+    {
+      "check": "aiCheckpoint",
+      "command": "make ai-checkpoint CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json STAGE=before_finish",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:15.991445+00:00",
+      "exitCode": 0,
+      "durationMs": 986,
+      "outputDigest": "428acbd0b342d58b948daedf07bc751f4902dabc695bbc8a4cfb7beb071abb9c",
+      "commandHash": "9a6e1be1b8764820fbda7105ea5d8d7cbf8f531350949b400dcb665141f0bab2",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "ea4dafdac85a54df87e2aa5c009c9d0c89948d71c4b9c90b7d54871cf8603112",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-reference-model-evidence` - Contract Hash: `445b2ce63040f971` - Mode: `code` - notCodable: `False` - Execution Decision: `continue` - Acceptance Count: `14` ",
+      "outputTail": "— covered by Contract scope - [active_owned] `config/weekly_radar/companies.json` — covered by Contract scope - [active_owned] `config/weekly_radar/reference_model_candidates.json` — covered by Contract scope - [active_owned] `docs/domain/PRODUCTION_SYSTEM_MODEL.md` — covered by Contract scope - [active_owned] `docs/operations/WEEKLY_RADAR.md` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md` — covered by Contract scope - [active_owned] `docs/validation/VALIDATION_STRATEGY.md` — covered by Contract scope - [active_owned] `src/features/transformation/domain/mod.rs` — covered by Contract scope - [active_owned] `src/features/transformation/domain/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/config.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/discovery.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/evidence.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/judgment.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/model.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/report.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/sec.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/sources.rs` — covered by Contract scope - [active_owned] `src/main.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_evidence_quality.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_judgment_chain.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_runtime.rs` — covered by Contract scope ## Next Action - Ready for final status generation and human review.",
+      "outputBytes": 13932
+    },
+    {
+      "check": "aiReviewPolicy",
+      "command": "make check-ai-review-policy SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:16.297352+00:00",
+      "exitCode": 0,
+      "durationMs": 203,
+      "outputDigest": "06a50814485686443457ee81edcafab2b43375f78f314ace0274a558a9c2a080",
+      "commandHash": "a70b9c1f83211e00ef9c928d0cb89ecdca6033bd7930f013596db787af904833",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "c957c05af43ad168111744b4e3801f20598a04f55d1dc8adcdffb68cbad98388",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json review policy matched 28 path(s) [review] .ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json [review] .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json [review] .ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json [review] .ai/work-items/active/wi-weekly-rada",
+      "outputTail": "erence-model-evidence.contract.json [review] .ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json [review] .ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.md [review] .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json [review] .ai/work-items/starts/wi-weekly-radar-reference-model-evidence.json [review] .ai/cockpit/current_status.md [review] .ai/cockpit/task_report.json [review] .ai/cockpit/task_report.md [review] .ai/evidence/ai-cockpit-upgrade-feature-checklist.json [review] .ai/knowledge/work-items/upgrade_ai_cockpit.json [review] .ai/knowledge/work-items/wi-sec-submissions-response-limit.json [review] .ai/knowledge/work-items/wi-telegram-delivery-verification.json [review] .ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json [review] .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json [review] .ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json [review] .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json [review] .ai/knowledge/work-items/wi-weekly-radar-content-quality.json [review] .ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json [review] .ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json [review] .ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json [review] .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json [review] .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json [review] .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json [review] .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json [review] .ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json [review] .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json [review] .ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json review focus recorded: 5 item(s) report: target/ai_review_policy_report.json",
+      "outputBytes": 2391
+    },
+    {
+      "check": "aiBacktrack",
+      "command": "make check-ai-backtrack",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:16.533854+00:00",
+      "exitCode": 0,
+      "durationMs": 148,
+      "outputDigest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2",
+      "commandHash": "3ae95e96677b5ecabc3d873ff9cda8d7d3c807724cd86bda76ebb00cef4e4f88",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "c7e82a968b1cd7326be22a342416db58b8948b03402252f4c88fcd7102882947",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
+      "outputBytes": 192
+    },
+    {
+      "check": "aiCoverage",
+      "command": "make check-ai-coverage-guard",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:16.788115+00:00",
+      "exitCode": 0,
+      "durationMs": 165,
+      "outputDigest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7",
+      "commandHash": "296a9883f8b9ad27f3d57afdee3ebdea5c75869c899a00e55d80563bc889328a",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "aebaf4376d299144c6ee241b9db348556255cec16cf1ae9416b0e2cd8f7825d7",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
+      "outputBytes": 201
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "command": "make check-ai-scenario-coverage CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:16.973983+00:00",
+      "exitCode": 0,
+      "durationMs": 95,
+      "outputDigest": "76b8d64dc6c0d322db167af9610507007bd1b403580c23b0a73c78552dd4b65d",
+      "commandHash": "8b2957c9721af4a3c8043658d811693ac3d33edd724ec72aeb8ee18ebf2fb773",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "d17ae085e302347186df387d1ccfc128f761ecf7b0a0089ec02d4c2cfdab5796",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json report: target/ai_scenario_coverage_report.json",
+      "outputBytes": 355
+    },
+    {
+      "check": "aiGuidelines",
+      "command": "make check-ai-guidelines CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:17.138369+00:00",
+      "exitCode": 0,
+      "durationMs": 68,
+      "outputDigest": "d9bcabc161c898f3b852593da6433f1e7f4e07a35d23e1a6326e2f72e436ec6c",
+      "commandHash": "701dd97d46503c5faa228b672287da0cbd59c727dfd28de1f48ed64b50e49f62",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "15303b29b77bfbb17678fa4b0710f1795e0a20fb50d41ad8ec4bc98a961d30b2",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json guidelines compliance check passed: 10 guideline(s) verified",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json guidelines compliance check passed: 10 guideline(s) verified",
+      "outputBytes": 361
+    },
+    {
+      "check": "aiDiffOwnership",
+      "command": "make check-ai-diff-ownership CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:13:18.082506+00:00",
+      "exitCode": 0,
+      "durationMs": 839,
+      "outputDigest": "680c6e7d1ab2545709e2a84f1bd94d5d42b296eb8758e56d37de0454553b7d28",
+      "commandHash": "47dc8d57c063b0f5bea5d966b9b59616e15d34abde1ea633b24b64f2b49eb83b",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "2c0c5320ce1dc4ebf4df6c0d359162a59b90409df3bd0dccdc79d0311c759e2b",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json ## Diff Ownership Preview - active_owned: `49`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates against active Tas",
+      "outputTail": ".ai/work-items/starts/wi-weekly-radar-reference-model-evidence.json` — covered by Contract scope - [active_owned] `config/weekly_radar/companies.json` — covered by Contract scope - [active_owned] `config/weekly_radar/reference_model_candidates.json` — covered by Contract scope - [active_owned] `docs/domain/PRODUCTION_SYSTEM_MODEL.md` — covered by Contract scope - [active_owned] `docs/operations/WEEKLY_RADAR.md` — covered by Contract scope - [active_owned] `docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md` — covered by Contract scope - [active_owned] `docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md` — covered by Contract scope - [active_owned] `docs/validation/VALIDATION_STRATEGY.md` — covered by Contract scope - [active_owned] `src/features/transformation/domain/mod.rs` — covered by Contract scope - [active_owned] `src/features/transformation/domain/mod_test.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/config.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/discovery.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/evidence.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/judgment.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/model.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/report.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/sec.rs` — covered by Contract scope - [active_owned] `src/features/weekly_radar/runtime/sources.rs` — covered by Contract scope - [active_owned] `src/main.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_evidence_quality.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_judgment_chain.rs` — covered by Contract scope - [active_owned] `tests/weekly_radar_runtime.rs` — covered by Contract scope",
+      "outputBytes": 5586
+    },
+    {
+      "check": "quality",
+      "command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:15:18.552701+00:00",
+      "exitCode": 0,
+      "durationMs": 120235,
+      "outputDigest": "ac5cda6a7c332377753ccf760465a7440456bc48b0a2011484cb2a5e0ab944dc",
+      "commandHash": "e9589e6d07367af0027719354a354539e4f4ff284dd5a2d2bd35631b228fcf51",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "35ef8ee30352e4c571ad3d6255361202a4007b4a545984bf061ab51a9cbdae88",
+      "outputSummary": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"trust\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"high-risk strict paths require full quality: .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json, .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"qual",
+      "outputTail": "stage_comparison ... ok test threshold_distance_retains_supplied_values_and_order ... ok test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Running tests/weekly_radar_top5.rs (target/debug/deps/weekly_radar_top5-d74b0faa16cd0578) running 7 tests test blank_values_are_rejected_before_an_entry_is_created ... ok test top5_weekly_read_model::module_tests::blank_candidate_is_rejected ... ok test entry_retains_all_supplied_facts_without_normalizing_them ... ok test duplicate_candidate_is_rejected_before_capacity_and_does_not_mutate_model ... ok test read_model_accepts_empty_input_and_preserves_supplied_order ... ok test top5_weekly_read_model::module_tests::from_entries_keeps_input_order ... ok test read_model_accepts_five_entries_and_rejects_a_sixth_without_mutation ... ok test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s Doc-tests org_x running 1 test test src/features/weekly_radar/runtime/sources.rs - features::weekly_radar::runtime::sources::SourceObservation (line 151) - compile fail ... ok test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.93s \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-reference-impact \"/Applications/Xcode 26.2.app/Contents/Developer/usr/bin/make\" -f \"Makefile\" --no-print-directory check-ai-test-weakening PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_test_weakening.py --root . --mode full --policy .ai/guards/test_weakening_policy.yaml {\"baseRef\": \"2161d3f645805bb6f5ab212f782bb979f196e93f\", \"decision\": \"continue\", \"limitations\": [\"Static signals do not prove semantic equivalence or complete test coverage.\"], \"mode\": \"full\", \"recoveryCondition\": \"No recovery action is required for the analyzed diff.\", \"requiredExplanation\": false, \"signals\": [], \"version\": 1} Strict project-specific checks: not configured; AI lifecycle gates remain independently enforced.",
+      "outputBytes": 66995
+    },
+    {
+      "check": "aiStatus",
+      "command": "make generate-cockpit-status CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:15:21.326084+00:00",
+      "exitCode": 0,
+      "durationMs": 1455,
+      "outputDigest": "3c1783febc15072c0d3f0bfc726fb4be43ae75af1cc065f41c9451a1f2a670ae",
+      "commandHash": "9e54cb669c8ce064d7729365cfd15b3ba4297f72cf0359f297f4eeaf2f440a39",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "8de09a19dea1b76f6dd4a45cbaa1ee653f1b9c6cd20c70d7c8698232fa3af270",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
+      "outputBytes": 438
+    },
+    {
+      "check": "aiStatusCheck",
+      "command": "make check-ai-status CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:15:23.758132+00:00",
+      "exitCode": 0,
+      "durationMs": 1130,
+      "outputDigest": "a2782ff4a49908ba509b986865853e24e000353dae756163f6051022dc04f918",
+      "commandHash": "51829f7d7073ddd177f36443c4de01cc23d7235e08deebe1150094050274922d",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "1cc76a48ce1793bd5309dd4cbfa522e31f99ad5e188a16a2a7e1867e3aa70a6d",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
+      "outputBytes": 385
+    },
+    {
+      "check": "aiStatusConsistency",
+      "command": "make check-ai-status-consistency",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:15:24.962996+00:00",
+      "exitCode": 0,
+      "durationMs": 69,
+      "outputDigest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46",
+      "commandHash": "ddd5a0e5fa9b289b1ab3ba23cf37c1a7f01d48f31e2ad99e85762ba20f93c2a6",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "b8a4b5b068d0da84ae788cc069b4527cbf9e0f4c274d6feeff20b23b8326dd6f",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
+      "outputBytes": 169
+    },
+    {
+      "check": "aiAgentRisk",
+      "command": "make check-ai-agent-risk CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:15:25.112250+00:00",
+      "exitCode": 0,
+      "durationMs": 59,
+      "outputDigest": "ceb3c2a8abc4dad68b7172a774b748b03da7a332b3bac14175d64c3793df30a8",
+      "commandHash": "43e1c1bbe0e940e24f8b147bf98ab521d1baf745823a3f5a1fda446df0f0e3ee",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "c5c74d3eb770e32c8ef79d8d448d86527d4febe421e576b9308268128f3966a5",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
+      "outputBytes": 365
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "result": "passed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T20:15:28.550100+00:00",
+      "exitCode": 0,
+      "durationMs": 553,
+      "outputDigest": "2e794eb593c0285a558a793df0637240ab3e28de49ff5a66985dfdbb7cf7c9f0",
+      "commandHash": "7a2cdfaebf7216568e7c898bcebda2526c17ee79dbc89f9ff0cc7c9930e27321",
+      "contractHash": "445b2ce63040f971f265e0e3d8fbcdf27f1912de5cc1d113785f7f228b5dc50f",
+      "commitSha": "b8965f6ad03d4672b8da93a00599be6ee220806a",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "c16535b227f91f2744dfea30cb187bdfc00714e292a9f5e4b00ebb15dbe5f679",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "outputBytes": 389,
+      "outcomeInputDigest": "94c9e4ad1d2698bd59b2b144c9c3476c326c71e5603339b884cf42fe49a8f9ad"
+    }
+  ],
+  "guidelinesCompliance": [
+    {
+      "guideline": "New public APIs must be documented.",
+      "compliant": true,
+      "evidence": "Rust doc comments cover the new reference-model types, constructors, and getters in src/features/transformation/domain/mod.rs and src/features/weekly_radar/runtime/model.rs."
+    },
+    {
+      "guideline": "Do not import internal modules from other features.",
+      "compliant": true,
+      "evidence": "The runtime uses public transformation-domain types and the architecture/dependency tests pass."
+    },
+    {
+      "guideline": "Keep provider-specific parsing outside the domain and keep the reference-model gate provider-neutral and deterministic.",
+      "compliant": true,
+      "evidence": "Provider adapters attach typed metadata; eligibility is evaluated by the pure bundle gate in src/features/transformation/domain/mod.rs."
+    },
+    {
+      "guideline": "Use typed evidence families and explicit provenance instead of inferring eligibility from arbitrary text or scores.",
+      "compliant": true,
+      "evidence": "ReferenceModelEvidenceFamily, provenance, named peers, and bounded periods are carried through EvidenceCandidate, ValidatedEvidence, and NormalizedFact."
+    },
+    {
+      "guideline": "Prefer false negatives to promoting an organization announcement, marketing claim, or page-level observation as a reference model.",
+      "compliant": true,
+      "evidence": "Page-level observations and incomplete Candidate packets are excluded from Confirmed eligibility and REFERENCE_MODEL Stage; negative fixtures pass."
+    },
+    {
+      "guideline": "Require at least two distinct dated outcome periods and independent diffusion sources; a single source or single period is insufficient.",
+      "compliant": true,
+      "evidence": "The domain gate enforces two distinct periods and two independent diffusion URIs with named peers; boundary tests pass."
+    },
+    {
+      "guideline": "Preserve UNKNOWN, UNAVAILABLE, CounterEvidence, and MissingProof as different states.",
+      "compliant": true,
+      "evidence": "SEC ambiguity remains UNKNOWN, source health remains separate, counter review is explicit, and missing family requirements render as MissingProof."
+    },
+    {
+      "guideline": "Use Python and Shell only for bounded orchestration, fixtures, and verification; do not place business judgment in scripts.",
+      "compliant": true,
+      "evidence": "Python/Shell were used only for bounded runs and checks; Rust owns classification, gate evaluation, Stage suppression, serialization, and report values."
+    },
+    {
+      "guideline": "Preserve legacy snapshot deserialization and localized semantic-splitter compatibility.",
+      "compliant": true,
+      "evidence": "Legacy JSON defaults and Chinese/Japanese/English report and splitter tests pass."
+    },
+    {
+      "guideline": "Resolve in-scope defects in this Work Item; do not create another Work Item merely to avoid a failing hard gate.",
+      "compliant": true,
+      "evidence": "SEC ambiguity, historical fixtures, stale installer hashes, and all affected knowledge projections were repaired in this Work Item and rechecked."
+    }
+  ],
+  "implementationApproach": {
+    "approachType": "implementation",
+    "status": "complete",
+    "summary": {
+      "text": "Added a typed four-family reference-model evidence gate, then iterated live discovery and extraction until a bounded Microsoft packet passed the gate.",
+      "status": "verified",
+      "evidence": [
+        {
+          "source": "src/features/transformation/domain/mod.rs",
+          "subject": "four-family eligibility gate"
+        }
+      ]
+    },
+    "mechanism": {
+      "text": "The gate requires authoritative organization and production rewrites, multi-period sustained outcomes, independent named-peer diffusion, and an explicit bounded counter review before Confirmed eligibility can expose REFERENCE_MODEL Stage.",
+      "status": "verified",
+      "evidence": [
+        {
+          "source": "tests/weekly_radar_judgment_chain.rs",
+          "subject": "Candidate suppression and Confirmed Stage gate"
+        }
+      ]
+    },
+    "affectedComponents": [
+      {
+        "component": "Weekly Radar evidence and runtime models",
+        "detail": "Typed family, named-peer, and bounded-period metadata is backward-compatible with legacy JSON.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "legacy-compatible NormalizedFact metadata"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "metadata and legacy deserialization fixtures"
+          }
+        ]
+      },
+      {
+        "component": "SEC annual facts",
+        "detail": "Distinct historical outcome periods are retained without duplicating fact identity, while latest-period ambiguity remains UNKNOWN.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/sec.rs",
+            "subject": "bounded annual-period retention"
+          }
+        ]
+      },
+      {
+        "component": "Weekly Radar report",
+        "detail": "Localized reports expose the four-family matrix, eligibility, missing proof, counter review, and source distinctions.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "localized reference-model matrix"
+          }
+        ]
+      },
+      {
+        "component": "Official research discovery",
+        "detail": "Configured Microsoft Inside Track and customer-story URLs are fetched as documents, with content-path priority and visible publication-date parsing preventing page-level and undated false negatives.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/discovery.rs",
+            "subject": "bounded content discovery and date extraction"
+          },
+          {
+            "source": "tests/weekly_radar_runtime.rs",
+            "subject": "direct official document and publication-date regressions"
+          }
+        ]
+      }
+    ],
+    "designDecisions": [
+      {
+        "decision": "Keep Candidate distinct from Confirmed and never call Candidate an exemplar.",
+        "reason": "The product target is an AI-era industry model, so incomplete organization stories must remain visibly incomplete.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+            "subject": "reference-model hard boundary"
+          }
+        ]
+      },
+      {
+        "decision": "Keep Ranking unchanged and gate only the highest REFERENCE_MODEL Stage.",
+        "reason": "Evidence quality is the bottleneck; ranking must not compensate for missing proof.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_judgment_chain.rs",
+            "subject": "ranking isolation and reference Stage gate"
+          }
+        ]
+      }
+    ],
+    "technicalDetails": [
+      {
+        "topic": "Verification",
+        "detail": "Rust, Python, clippy, formatting, knowledge projection, strict Cockpit quality, and a bounded Microsoft live run pass; the live packet is Confirmed only under the explicit four-family policy.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "docs/operations/WEEKLY_RADAR.md",
+            "subject": "runtime and degraded-report semantics"
+          }
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "claim": "Evidence extraction preserves typed family metadata and provenance.",
+        "status": "verified",
+        "source": "tests/weekly_radar_evidence_quality.rs",
+        "subject": "evidence extraction and metadata tests"
+      },
+      {
+        "claim": "Judgment suppresses incomplete reference-model Stage and localized reports preserve the matrix.",
+        "status": "verified",
+        "source": "tests/weekly_radar_judgment_chain.rs",
+        "subject": "judgment and localized report tests"
+      },
+      {
+        "claim": "The bounded Microsoft run produced organization rewrite, production-system rewrite, four outcome periods, two named-peer diffusion URIs, and completed counter review.",
+        "status": "verified",
+        "source": "config/weekly_radar/reference_model_candidates.json",
+        "subject": "2026-08-25 bounded Microsoft reference-model validation run"
+      }
+    ]
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "Complete four-family bundle becomes a confirmed reference-model assessment.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/transformation/domain/mod.rs",
+        "tests/weekly_radar_judgment_chain.rs"
+      ]
+    },
+    {
+      "scenario": "Organization and production-system claims without outcome or diffusion remain candidates.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_judgment_chain.rs"
+      ]
+    },
+    {
+      "scenario": "Self-description or page-level availability cannot satisfy the gate.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "docs/operations/WEEKLY_RADAR.md"
+      ]
+    },
+    {
+      "scenario": "Two distinct outcome periods and independent diffusion sources are required.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/model.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ]
+    },
+    {
+      "scenario": "Legacy snapshots, localized reports, and Python/Shell orchestration remain compatible.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/model.rs",
+        "tests/weekly_radar_runtime.rs",
+        "tests/semantic_message_splitter_test.rs"
+      ]
+    },
+    {
+      "scenario": "A live bounded run produces an evidence matrix and does not fabricate a confirmed exemplar.",
+      "required": true,
+      "status": "verified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/report.rs",
+        "docs/operations/WEEKLY_RADAR.md"
+      ]
+    }
+  ],
+  "unknownsRemaining": [
+    "A ten-company live public-network run was not completed because acquisition waited beyond the bounded observation window; deterministic and single-company runs completed.",
+    "The confirmed diffusion packet is based on Microsoft-published customer stories naming PwC and NIQ; independent non-Microsoft publisher corroboration was not assessed by this bounded run."
+  ],
+  "risk": {
+    "level": "high",
+    "detail": "ReferenceModel is the strongest product claim; false promotion is prevented by four evidence families, two outcome periods, two independent diffusion URIs with named peers, authority, cutoff, counter review, and missing-proof gates."
+  },
+  "generatedFiles": [
+    ".ai/cockpit/current_status.md"
+  ],
+  "destructiveChanges": [],
+  "observedIssues": [
+    {
+      "issue": "SEC latest-period ambiguity regressed during multi-period implementation",
+      "resolution": "Latest ambiguity now returns no selected annual periods, preserving UNKNOWN; older periods are considered only after a unique latest period.",
+      "evidence": "cargo test --test weekly_radar_runtime sec_marks"
+    },
+    {
+      "issue": "Ten-company live run had no incremental output during public-network waits",
+      "resolution": "Run was terminated after bounded observation; single-company runs verified report rendering. Remaining operational risk is recorded rather than hidden.",
+      "evidence": "singleCompanyLiveDryRun and tenCompanyLiveDryRun verification entries"
+    },
+    {
+      "issue": "Discovery budget was consumed by generic navigation before relevant Microsoft articles",
+      "resolution": "Content paths and document kinds now receive deterministic priority before the bounded candidate cap; regression coverage prevents navigation starvation.",
+      "evidence": "tests/weekly_radar_runtime.rs document_discovery_prioritizes_content_paths_over_generic_navigation"
+    },
+    {
+      "issue": "Explicit customer-story URLs remained entrypoints and undated pages could not promote claims",
+      "resolution": "Explicit content URLs are promoted to documents and visible M/D/YYYY dates are parsed without guessing other date formats.",
+      "evidence": "tests/weekly_radar_runtime.rs explicit_official_research_document_is_collected_for_claim_extraction and document_metadata_extracts_visible_us_publication_date"
+    },
+    {
+      "issue": "The runtime had no distinct counter-review record and leaked its marker into Companies to Watch",
+      "resolution": "A bounded review marker is separate from counter claims, the assessment exposes review status, and internal judgment facts are excluded from user-facing company observations.",
+      "evidence": "tests/weekly_radar_judgment_chain.rs explicit_counter_review_marker_confirms_without_fabricating_counter_claim and report_does_not_render_internal_counter_review_as_company_observation"
+    }
+  ],
+  "residualRisks": [
+    {
+      "level": "medium",
+      "area": "live network observability",
+      "detail": "The CLI renders after acquisition, so long multi-company waits do not show progress; no claim is made from the terminated run.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    },
+    {
+      "level": "medium",
+      "area": "diffusion evidence",
+      "detail": "Microsoft now has two named-peer diffusion URIs in the machine-confirmed packet, but both are Microsoft-published customer stories; independent publisher corroboration remains outside this bounded source set.",
+      "reviewRecommended": true,
+      "followUpCandidate": true
+    }
+  ],
+  "reviewReadiness": {
+    "status": "not_ready",
+    "reason": "Required verification or known-unknown evidence is incomplete.",
+    "expectedReviewFocus": [
+      "four-family fail-closed gate",
+      "SEC latest ambiguity preservation",
+      "legacy snapshot compatibility",
+      "localized matrix semantics",
+      "live-run limitation"
+    ]
+  },
+  "boundaryChecks": {
+    "runtimeEntrypoints": "passed",
+    "userVisibleOutput": "passed",
+    "persistence": "passed",
+    "localization": "passed",
+    "generatedArtifacts": "pending_finish",
+    "makeEntrypoints": "pending_finish"
+  },
+  "userCorrectionsCaptured": [
+    "Do not optimize Ranking before Evidence Candidate quality; target an AI-era organization and production-system exemplar; close historical debt in this Work Item; Python and Shell are orchestration only."
+  ],
+  "userCorrectionSolidification": [
+    "Four evidence families are hard acceptance criteria for every phase and Candidate is never called an exemplar."
+  ],
+  "checkpointEvidence": [
+    {
+      "stage": "before_edit",
+      "recorded": true,
+      "contractHash": "ac3faef6ad203511",
+      "acceptanceCount": 13,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "ac3faef6ad203511",
+      "previousContractHash": "ac3faef6ad203511",
+      "contractHash": "a548149f7a0c2b8a",
+      "acceptanceCount": 13,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Expand the active Contract to cover the historical installer evidence repair, affected SEC/domain test paths, and the derived knowledge projection refresh.",
+      "verificationStarted": false,
+      "invalidatedRequiredChecks": [],
+      "requiredChecksPassedAtAmendment": 0,
+      "recordedAt": "2026-08-25T13:29:07.311913+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "ac3faef6ad203511",
+      "previousContractHash": "a548149f7a0c2b8a",
+      "contractHash": "7be989a31ec54e20",
+      "acceptanceCount": 14,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Expand the same reference-model evidence scope to bounded official research entrypoints needed to discover Microsoft organization, production-system, and named-peer diffusion documents.",
+      "verificationStarted": true,
+      "invalidatedRequiredChecks": [
+        "aiWorkItem",
+        "aiScope",
+        "aiGuards",
+        "aiCheckpoint",
+        "aiAgentRisk",
+        "aiReviewPolicy",
+        "aiBacktrack",
+        "aiCoverage",
+        "aiScenarioCoverage",
+        "aiGuidelines",
+        "aiSummary",
+        "aiStatus",
+        "aiStatusCheck",
+        "aiStatusConsistency",
+        "aiDiffOwnership",
+        "quality"
+      ],
+      "requiredChecksPassedAtAmendment": 16,
+      "recordedAt": "2026-08-25T13:45:13.984249+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "ac3faef6ad203511",
+      "previousContractHash": "7be989a31ec54e20",
+      "contractHash": "2cf96c3d0c1f9a76",
+      "acceptanceCount": 14,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Add a one-company Microsoft registry slice for bounded live candidate inspection while retaining the production registry entrypoints.",
+      "verificationStarted": true,
+      "invalidatedRequiredChecks": [
+        "aiWorkItem",
+        "aiScope",
+        "aiGuards",
+        "aiCheckpoint",
+        "aiAgentRisk",
+        "aiReviewPolicy",
+        "aiBacktrack",
+        "aiCoverage",
+        "aiScenarioCoverage",
+        "aiGuidelines",
+        "aiSummary",
+        "aiStatus",
+        "aiStatusCheck",
+        "aiStatusConsistency",
+        "aiDiffOwnership",
+        "quality"
+      ],
+      "requiredChecksPassedAtAmendment": 16,
+      "recordedAt": "2026-08-25T13:49:14.820349+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "ac3faef6ad203511",
+      "previousContractHash": "2cf96c3d0c1f9a76",
+      "contractHash": "085ec6ec3ca6423e",
+      "acceptanceCount": 14,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Cover the runtime config and source-adapter paths required by the bounded official research entrypoint implementation.",
+      "verificationStarted": true,
+      "invalidatedRequiredChecks": [
+        "aiWorkItem",
+        "aiScope",
+        "aiGuards",
+        "aiCheckpoint",
+        "aiAgentRisk",
+        "aiReviewPolicy",
+        "aiBacktrack",
+        "aiCoverage",
+        "aiScenarioCoverage",
+        "aiGuidelines",
+        "aiSummary",
+        "aiStatus",
+        "aiStatusCheck",
+        "aiStatusConsistency",
+        "aiDiffOwnership",
+        "quality"
+      ],
+      "requiredChecksPassedAtAmendment": 16,
+      "recordedAt": "2026-08-25T13:49:35.744899+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "ac3faef6ad203511",
+      "previousContractHash": "085ec6ec3ca6423e",
+      "contractHash": "9b8596ed2e74ed9f",
+      "acceptanceCount": 14,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Add the discovery module to the active Contract after fixing direct official document collection and live publication-date extraction.",
+      "verificationStarted": true,
+      "invalidatedRequiredChecks": [
+        "aiWorkItem",
+        "aiScope",
+        "aiGuards",
+        "aiCheckpoint",
+        "aiAgentRisk",
+        "aiReviewPolicy",
+        "aiBacktrack",
+        "aiCoverage",
+        "aiScenarioCoverage",
+        "aiGuidelines",
+        "aiSummary",
+        "aiStatus",
+        "aiStatusCheck",
+        "aiStatusConsistency",
+        "aiDiffOwnership",
+        "quality"
+      ],
+      "requiredChecksPassedAtAmendment": 16,
+      "recordedAt": "2026-08-25T14:25:39.404059+00:00"
+    },
+    {
+      "stage": "contract_amendment_revalidation",
+      "recorded": true,
+      "originalBeforeEditContractHash": "ac3faef6ad203511",
+      "previousContractHash": "9b8596ed2e74ed9f",
+      "contractHash": "445b2ce63040f971",
+      "acceptanceCount": 14,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 0,
+      "reason": "Add reference-impact evidence for the new repository-local candidate registry after strict quality reported missing coverage for config/weekly_radar/reference_model_candidates.json.",
+      "verificationStarted": true,
+      "invalidatedRequiredChecks": [
+        "aiWorkItem",
+        "aiScope",
+        "aiGuards",
+        "aiCheckpoint",
+        "aiAgentRisk",
+        "aiReviewPolicy",
+        "aiBacktrack",
+        "aiCoverage",
+        "aiScenarioCoverage",
+        "aiGuidelines",
+        "aiSummary",
+        "aiStatus",
+        "aiStatusCheck",
+        "aiStatusConsistency",
+        "aiDiffOwnership",
+        "quality"
+      ],
+      "requiredChecksPassedAtAmendment": 10,
+      "recordedAt": "2026-08-25T14:37:48.517146+00:00"
+    },
+    {
+      "stage": "before_finish",
+      "recorded": true,
+      "contractHash": "445b2ce63040f971",
+      "acceptanceCount": 14,
+      "unknownCount": 0,
+      "requiredChecks": 16,
+      "requiredChecksPassed": 16
+    }
+  ],
+  "knownGaps": [],
+  "overclaimPrevention": "Do not report a company as an AI-era industry exemplar until the serialized assessment is Confirmed; a live source wait is not a research conclusion.",
+  "documentationAlignment": {
+    "schemaVersion": 1,
+    "status": "aligned",
+    "checkedAt": "2026-08-25T23:59:00+09:00",
+    "checks": [
+      {
+        "area": "plan",
+        "status": "aligned",
+        "evidence": [
+          "docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md",
+          "docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md"
+        ],
+        "reason": "Phases 1–5 implemented; Phase 6 is the remaining governance sweep."
+      },
+      {
+        "area": "contractSummaryEvidence",
+        "status": "aligned",
+        "evidence": [
+          ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
+          ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json"
+        ],
+        "reason": "Contract and Summary are directly bound to the Work Item."
+      },
+      {
+        "area": "documentationCommandsCapability",
+        "status": "aligned",
+        "evidence": [
+          "docs/operations/WEEKLY_RADAR.md",
+          "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+          "docs/validation/VALIDATION_STRATEGY.md",
+          ".ai/cockpit/task_report.md",
+          ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.md"
+        ],
+        "reason": "Four-family report semantics and bounded dry-run are documented."
+      },
+      {
+        "area": "multilingualSemantics",
+        "status": "aligned",
+        "evidence": [
+          "tests/weekly_radar_judgment_chain.rs",
+          "src/features/weekly_radar/runtime/report.rs"
+        ],
+        "reason": "Typed assessment values are rendered through Chinese, Japanese, and English branches."
+      },
+      {
+        "area": "limitationsUnknownsHistory",
+        "status": "aligned",
+        "evidence": [
+          "docs/operations/WEEKLY_RADAR.md",
+          ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json"
+        ],
+        "reason": "Terminated live wait and no-confirmation result are explicitly recorded."
+      }
+    ]
+  },
+  "taskOutcome": {
+    "status": "completed",
+    "jsonPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.json",
+    "markdownPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.outcome.md",
+    "rawEvidencePath": "derived:pre_merge",
+    "evidenceCount": 9,
+    "humanStatusColor": "green",
+    "completionFact": "All declared finish checks passed.",
+    "recoveryCondition": ""
+  },
+  "verificationHistory": [
+    {
+      "check": "aiGuidelines",
+      "command": "make check-ai-guidelines CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T13:29:20.632681+00:00",
+      "exitCode": 2,
+      "durationMs": 54,
+      "outputDigest": "0c6503d41f132f838d35ebdca01f81ce0e40e9184f2094046a886e414ac9f034",
+      "commandHash": "701dd97d46503c5faa228b672287da0cbd59c727dfd28de1f48ed64b50e49f62",
+      "contractHash": "a548149f7a0c2b8aad21a6ca8c827ae5a95165b203c6a8aaa87982ec13a6bd5e",
+      "commitSha": "2161d3f645805bb6f5ab212f782bb979f196e93f",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "d5fbb96f81ceb52bbbbbc7aa8074e1ff3171a9109f4171b62eb3fa80cb6a8084",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json [ERROR] Missing compliance details in Summary for guideline: \"Keep provider-specific parsing outside the domain and keep the reference-model gate provider-neutral and deterministic.\" [ERROR] Missing compliance details in Summary for guideline: \"Use typed e",
+      "outputTail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json --summary .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json [ERROR] Missing compliance details in Summary for guideline: \"Keep provider-specific parsing outside the domain and keep the reference-model gate provider-neutral and deterministic.\" [ERROR] Missing compliance details in Summary for guideline: \"Use typed evidence families and explicit provenance instead of inferring eligibility from arbitrary text or scores.\" [ERROR] Missing compliance details in Summary for guideline: \"Prefer false negatives to promoting an organization announcement, marketing claim, or page-level observation as a reference model.\" [ERROR] Missing compliance details in Summary for guideline: \"Require at least two distinct dated outcome periods and independent diffusion sources; a single source or single period is insufficient.\" [ERROR] Missing compliance details in Summary for guideline: \"Preserve UNKNOWN, UNAVAILABLE, CounterEvidence, and MissingProof as different states.\" [ERROR] Missing compliance details in Summary for guideline: \"Use Python and Shell only for bounded orchestration, fixtures, and verification; do not place business judgment in scripts.\" [ERROR] Missing compliance details in Summary for guideline: \"Preserve legacy snapshot deserialization and localized semantic-splitter compatibility.\" [ERROR] Missing compliance details in Summary for guideline: \"Resolve in-scope defects in this Work Item; do not create another Work Item merely to avoid a failing hard gate.\" make: *** [check-ai-guidelines] Error 1",
+      "outputBytes": 1759
+    },
+    {
+      "check": "aiSummary",
+      "command": "make check-ai-change-summary SUMMARY=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json CONTRACT=.ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "result": "failed",
+      "runner": "ai_finish",
+      "executedAt": "2026-08-25T13:33:02.020173+00:00",
+      "exitCode": 2,
+      "durationMs": 590,
+      "outputDigest": "db4621cbeeef3b3d39d267fe6e41206149b0d31e46e971d15eca6b2e96d93ed1",
+      "commandHash": "7a2cdfaebf7216568e7c898bcebda2526c17ee79dbc89f9ff0cc7c9930e27321",
+      "contractHash": "a548149f7a0c2b8aad21a6ca8c827ae5a95165b203c6a8aaa87982ec13a6bd5e",
+      "commitSha": "2161d3f645805bb6f5ab212f782bb979f196e93f",
+      "executionContractPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "executionSummaryPath": ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json",
+      "worktreeDigest": "181de4321bdebf88ace6dfea1e1139538c0142957622b421ab2f713a7061f24d",
+      "outputSummary": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-reference-model-evidence.summary.json --contract .ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json [ERROR] changedFiles is missing actual changed path: .ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json [ERROR] changedFiles is missing actual changed path: .ai/work-items/archive/2026/realign_ai_cockpit_v2.summary.json [ERROR] ch",
+      "outputTail": "ai_cockpit.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-sec-submissions-response-limit.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-telegram-delivery-verification.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-content-quality.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json [ERROR] changedFiles is missing actual changed path: .ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json make: *** [check-ai-change-summary] Error 1",
+      "outputBytes": 2742
+    }
+  ],
+  "archiveSequence": 75
+}

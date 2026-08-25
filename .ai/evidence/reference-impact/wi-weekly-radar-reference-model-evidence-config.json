@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "requestedText": "Add the bounded official-research candidate registry used by the reference-model live run.",
+  "target": {
+    "type": "file",
+    "name": "reference_model_candidate_registry",
+    "path": "config/weekly_radar/reference_model_candidates.json",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The candidate registry is static repository-local JSON consumed by the existing configuration loader; it does not resolve code, credentials, plugins, or dynamic dispatch."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "The registry is a bounded Weekly Radar research input and introduces no external consumer migration surface."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The registry contains source configuration only and introduces no monitoring, scheduler, webhook, or alerting integration."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-weekly-radar-reference-model-evidence.contract.json",
+      "The Contract bounds this registry to explicit official sources, forbids guessed URLs and unbounded crawling, and requires the live evidence matrix to remain fail-closed."
+    ]
+  },
+  "approval": null
+}

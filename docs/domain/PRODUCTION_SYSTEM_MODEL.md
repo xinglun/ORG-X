@@ -22,3 +22,14 @@
 ## 组织证据的关系
 
 Organization Rewrite 是 Production System Rewrite 的证据，而不是 North Star 本身。每个组织变化都必须解释它如何服务核心生产方式的变化。
+
+## AI 时代行业范本的更高门槛
+
+`ReferenceModel` 不是组织公告或单次生产系统改造的同义词。要进入这一层，必须分别保留四类来源绑定的主张：
+
+1. `OrganizationRewrite`：职责、汇报关系、决策权或组织边界发生了具体重写；
+2. `ProductionSystemRewrite`：核心生产工作流、Agent 执行、人类监督或控制点发生了具体重写；
+3. `SustainedOutcome`：至少两个不同有效周期的经营或生产结果；
+4. `IndustryDiffusion`：至少两个独立来源、带有明确同行/采用者的模仿或扩散证据。
+
+这四类证据通过 `ReferenceModelEvidenceBundle` 进入 `Candidate / Confirmed / NotEligible` 门禁。来源可访问、公司自述、单次发布、招聘页面或新闻线索都不能单独满足任何范本结论；反证复核和缺失证明必须分别保留。`Candidate` 只表示核心重写已出现但完整证据仍未闭合，不表示行业范本。

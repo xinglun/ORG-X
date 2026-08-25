@@ -53,17 +53,17 @@
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/report.rs",
-      "digest": "ff93c3489bc229075def2163b3cb0c33bef1d1078b9c0be85802f86b7861e65e"
+      "digest": "581a93b7606b3a4ec13f8b39ac2d6bbab01c95f9fa61a16773a2e33e2037bb04"
     },
     {
       "type": "test",
       "path": "tests/weekly_radar_judgment_chain.rs",
-      "digest": "21b4c2e20b98682d5649a9e0ba3e825f9bfe72f99190c272e5406a60962c31e9"
+      "digest": "b5c59cd89802594071cf3b543cb6e1ff727aab20174b3484341093e03e74e25e"
     },
     {
       "type": "test",
       "path": "tests/weekly_radar_runtime.rs",
-      "digest": "9f3777110b55934e65b6c0b018e3fbe3cc98b37176f9e45aefd64df99cc38124"
+      "digest": "fbe40f239ec627f6a9a76273013bd23d4617afc0b525432dcffd1458dcf43477"
     },
     {
       "type": "code",
@@ -78,7 +78,7 @@
     {
       "type": "code",
       "path": "docs/operations/WEEKLY_RADAR.md",
-      "digest": "88383ad3dc828e71db9a3bbe451e1585109fc9f096a9bc30f377cec628229458"
+      "digest": "826f73123dad760e0fba533bbcfc41c1a45af6f6dc6dc54bc6c02d0e0c712941"
     },
     {
       "type": "test",

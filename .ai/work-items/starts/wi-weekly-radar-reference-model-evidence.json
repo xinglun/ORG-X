@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-reference-model-evidence",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-reference-model-evidence.json",
+  "baseCommit": "2161d3f645805bb6f5ab212f782bb979f196e93f",
+  "baseBranch": "codex/wi-weekly-radar-reference-model-evidence",
+  "startTimestamp": "2026-08-25T12:38:18.397486+00:00",
+  "initialScopeDigest": "162c62e92a09544ef814807470f07dc46f887ae2ed7f7986e2722f47bd6408f8",
+  "contractSkeletonDigest": "0c2d79c3a06eda5cd0536bcb53843cd4560d24e81de6f12ce1696ee37bb72f8f"
+}

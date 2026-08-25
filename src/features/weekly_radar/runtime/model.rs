@@ -4,6 +4,8 @@ use chrono::{DateTime, NaiveDate, Utc};
 use serde::{de::Error as _, Deserialize, Deserializer, Serialize};
 use std::collections::BTreeMap;
 
+use crate::features::transformation::domain::ReferenceModelEvidenceFamily;
+
 use super::error::RuntimeError;
 
 /// Availability state for one normalized runtime fact.
@@ -172,6 +174,12 @@ pub struct NormalizedFact {
     value: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     structural_dimension: Option<StructuralDimension>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    reference_model_family: Option<ReferenceModelEvidenceFamily>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    reference_model_named_peer: Option<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    reference_model_periods: Vec<String>,
     status: FactStatus,
     confidence: Confidence,
     provenance: Provenance,
@@ -189,22 +197,32 @@ impl<'de> Deserialize<'de> for NormalizedFact {
             value: Option<String>,
             #[serde(default)]
             structural_dimension: Option<StructuralDimension>,
+            #[serde(default)]
+            reference_model_family: Option<ReferenceModelEvidenceFamily>,
+            #[serde(default)]
+            reference_model_named_peer: Option<String>,
+            #[serde(default)]
+            reference_model_periods: Vec<String>,
             status: FactStatus,
             confidence: Confidence,
             provenance: Provenance,
         }
 
         let wire = NormalizedFactWire::deserialize(deserializer)?;
-        Self::build_with_dimension(
+        let fact = Self::build_with_metadata(
             wire.company_id,
             wire.kind,
             wire.value,
             wire.structural_dimension,
+            wire.reference_model_family,
+            wire.reference_model_named_peer,
             wire.status,
             wire.confidence,
             wire.provenance,
         )
-        .map_err(|error| D::Error::custom(error.to_string()))
+        .map_err(|error| D::Error::custom(error.to_string()))?;
+        fact.with_reference_model_periods(wire.reference_model_periods)
+            .map_err(|error| D::Error::custom(error.to_string()))
     }
 }
 
@@ -262,11 +280,62 @@ impl NormalizedFact {
         Self::build_with_dimension(company_id, kind, None, None, status, confidence, provenance)
     }
 
+    /// Creates a fact with structural and reference-model metadata.
+    #[allow(clippy::too_many_arguments)]
+    pub fn new_with_structural_dimension_and_reference_model_metadata(
+        company_id: impl Into<String>,
+        kind: impl Into<String>,
+        value: impl Into<String>,
+        structural_dimension: Option<StructuralDimension>,
+        reference_model_family: Option<ReferenceModelEvidenceFamily>,
+        reference_model_named_peer: Option<String>,
+        status: FactStatus,
+        confidence: Confidence,
+        provenance: Provenance,
+    ) -> Result<Self, RuntimeError> {
+        Self::build_with_metadata(
+            company_id,
+            kind,
+            Some(value.into()),
+            structural_dimension,
+            reference_model_family,
+            reference_model_named_peer,
+            status,
+            confidence,
+            provenance,
+        )
+    }
+
     fn build_with_dimension(
         company_id: impl Into<String>,
         kind: impl Into<String>,
         value: Option<String>,
         structural_dimension: Option<StructuralDimension>,
+        status: FactStatus,
+        confidence: Confidence,
+        provenance: Provenance,
+    ) -> Result<Self, RuntimeError> {
+        Self::build_with_metadata(
+            company_id,
+            kind,
+            value,
+            structural_dimension,
+            None,
+            None,
+            status,
+            confidence,
+            provenance,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn build_with_metadata(
+        company_id: impl Into<String>,
+        kind: impl Into<String>,
+        value: Option<String>,
+        structural_dimension: Option<StructuralDimension>,
+        reference_model_family: Option<ReferenceModelEvidenceFamily>,
+        reference_model_named_peer: Option<String>,
         status: FactStatus,
         confidence: Confidence,
         provenance: Provenance,
@@ -282,6 +351,9 @@ impl NormalizedFact {
             kind: kind.into(),
             value,
             structural_dimension,
+            reference_model_family,
+            reference_model_named_peer,
+            reference_model_periods: Vec::new(),
             status,
             confidence,
             provenance,
@@ -321,6 +393,45 @@ impl NormalizedFact {
     /// Returns the optional structural domain of this fact.
     pub const fn structural_dimension(&self) -> Option<StructuralDimension> {
         self.structural_dimension
+    }
+
+    /// Returns the optional reference-model evidence family.
+    pub const fn reference_model_family(&self) -> Option<ReferenceModelEvidenceFamily> {
+        self.reference_model_family
+    }
+
+    /// Returns the optional named peer retained for diffusion evidence.
+    pub fn reference_model_named_peer(&self) -> Option<&str> {
+        self.reference_model_named_peer.as_deref()
+    }
+
+    /// Adds a bounded, explicit list of periods supporting a sustained-outcome
+    /// claim without creating duplicate fact identities.
+    pub fn with_reference_model_periods(
+        mut self,
+        periods: Vec<String>,
+    ) -> Result<Self, RuntimeError> {
+        let mut unique = std::collections::BTreeSet::new();
+        for period in &periods {
+            if period.trim().is_empty() {
+                return Err(RuntimeError::invalid_model(
+                    "reference-model period cannot be blank",
+                ));
+            }
+            if !unique.insert(period.as_str()) {
+                return Err(RuntimeError::invalid_model(
+                    "reference-model periods cannot be duplicated",
+                ));
+            }
+        }
+        self.reference_model_periods = periods;
+        self.validate()?;
+        Ok(self)
+    }
+
+    /// Returns explicit periods retained for a sustained-outcome claim.
+    pub fn reference_model_periods(&self) -> &[String] {
+        &self.reference_model_periods
     }
 
     /// Returns the retained availability status.

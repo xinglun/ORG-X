@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-reference-model-evidence",
+  "title": "Validate AI-era reference-model companies",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Added a typed four-family reference-model evidence gate, then iterated live discovery and extraction until a bounded Microsoft packet passed the gate.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    "config/weekly_radar/companies.json",
+    "config/weekly_radar/reference_model_candidates.json",
+    ".ai/evidence/reference-impact/wi-weekly-radar-reference-model-evidence-config.json",
+    "src/features/weekly_radar/runtime/config.rs",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/main.rs",
+    "tests/weekly_radar_runtime.rs",
+    "src/features/transformation/domain/mod.rs",
+    "src/features/transformation/domain/mod_test.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/sec.rs",
+    "src/features/weekly_radar/runtime/judgment.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_judgment_chain.rs",
+    "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+    "docs/validation/VALIDATION_STRATEGY.md",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-reference-model-evidence-design.md",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-reference-model-evidence.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+    "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
+    "tests/fixtures/realign_ai_cockpit_v2.summary.json",
+    "tests/test_ai_check_summary.py",
+    ".ai/knowledge/work-items/upgrade_ai_cockpit.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Keep Candidate distinct from Confirmed and never call Candidate an exemplar.",
+      "reason": "The product target is an AI-era industry model, so incomplete organization stories must remain visibly incomplete.",
+      "status": "verified"
+    },
+    {
+      "decision": "Keep Ranking unchanged and gate only the highest REFERENCE_MODEL Stage.",
+      "reason": "Evidence quality is the bottleneck; ranking must not compensate for missing proof.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "digest": "3ea80b8d3f4b6792a3407c29addd4c146a1c418d966680d74e5b5af067b6ec7b"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_judgment_chain.rs",
+      "digest": "b5c59cd89802594071cf3b543cb6e1ff727aab20174b3484341093e03e74e25e"
+    },
+    {
+      "type": "code",
+      "path": "config/weekly_radar/reference_model_candidates.json",
+      "digest": "5688db046a297db8278366060e27a387b2049502da445146a0dcb83d23e9e95a"
+    },
+    {
+      "type": "code",
+      "path": "src/features/transformation/domain/mod.rs",
+      "digest": "caf0ae402dc511730d023e612af113ee576c0ecdce5061f8a3ee12322ce2937d"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "digest": "6293e14c39969bebd5202c905fc82dc8637eabc5f2d43434fa9f2de187cca554"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/sec.rs",
+      "digest": "ca75dad9c95d86fbd997e2a850ccb97ce1ffbe89dd687fdfbf8260fe6093a0cb"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "digest": "581a93b7606b3a4ec13f8b39ac2d6bbab01c95f9fa61a16773a2e33e2037bb04"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "digest": "5735f3ce89f7feb13f5f1f719b8ea1ac9e29a7044ff353260ecac0a2459df592"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "fbe40f239ec627f6a9a76273013bd23d4617afc0b525432dcffd1458dcf43477"
+    },
+    {
+      "type": "code",
+      "path": "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+      "digest": "c83febedd73db0d02f214ce9d2420363f1bcfe6142dd9ca5ed90ef000e788549"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "826f73123dad760e0fba533bbcfc41c1a45af6f6dc6dc54bc6c02d0e0c712941"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json",
+    "contractDigest": "204413ed649d320b3c1832e9e0b048518191ae330f16a7e44ea322b6928e9346",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.summary.json",
+    "summaryDigest": "466198602567ff6f7890fbfbb7de23abc32bf462cba368202420e60398b750d1",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json",
+    "outcomeDigest": "3f73238566c2d8bbd5e10af927f2d818f48098be2979f59a4f4b1845150766b0"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

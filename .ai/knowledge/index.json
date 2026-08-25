@@ -122,6 +122,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json"
     },
     {
+      "workItemId": "wi-weekly-radar-reference-model-evidence",
+      "title": "Validate AI-era reference-model companies",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-same-day-canonical-update",
       "title": "Weekly Radar same-day latest successful update is canonical",
       "topics": [],

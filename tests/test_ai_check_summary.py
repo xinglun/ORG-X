@@ -6,7 +6,7 @@ import ai_finish
 from ai_common import PROJECT_ROOT
 
 ARCHIVE_SUMMARY = (
-    PROJECT_ROOT / ".ai" / "work-items" / "archive" / "2026" / "realign_ai_cockpit_v2.summary.json"
+    PROJECT_ROOT / "tests" / "fixtures" / "realign_ai_cockpit_v2.summary.json"
 )
 ALIGNMENT_AREAS = {
     "plan",
@@ -131,7 +131,7 @@ def test_documentation_alignment_accepts_complete_source_bound_record():
 def test_generated_documentation_alignment_completes_bounded_installer_record():
     changed = [
         {
-            "path": ".ai/work-items/archive/2026/documentation-alignment-summary-schema-20260728.contract.json",
+            "path": "tests/fixtures/documentation-alignment-summary-schema-20260728.contract.json",
             "reason": "durable contract fixture",
         },
         {"path": "docs/contract-fields.md", "reason": "Japanese field guide"},

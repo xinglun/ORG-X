@@ -10,8 +10,8 @@ Task wi-weekly-radar-independent-diffusion-source-normalization generated an evi
 Governed Work Item: wi-weekly-radar-independent-diffusion-source-normalization
 
 ## Delivered Changes
-- .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json
-- .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json
+- .ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json
+- .ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json
 - .ai/cockpit/current_status.md
 - .ai/work-items/starts/wi-weekly-radar-independent-diffusion-source-normalization.json
 - config/weekly_radar/companies.json
@@ -23,8 +23,8 @@ Governed Work Item: wi-weekly-radar-independent-diffusion-source-normalization
 - src/features/weekly_radar/runtime/evidence.rs
 - tests/weekly_radar_evidence_quality.rs
 - tests/weekly_radar_runtime.rs
-- .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json
-- .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md
+- .ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json
+- .ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md
 - .ai/cockpit/task_report.json
 - .ai/cockpit/task_report.md
 
@@ -138,7 +138,7 @@ Locale: `zh-CN`
 - aiCoverage: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json
 - aiScenarioCoverage: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json [warning] required_scenario_unverified: Full governed lifecycle - required scenario remains unverified report: target/ai_scenario_coverage_report.json
 - aiGuidelines: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json guidelines compliance check passed: 6 guideline(s) verified
-- aiDiffOwnership: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json ## Diff Ownership Preview - active_owned: `17`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — covered by Contract scope - [active_owned] `.ai/cock
+- aiDiffOwnership: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json ## Diff Ownership Preview - active_owned: `17`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates
 - quality: {"finishQualityRoute": {"command": "make ai-cockpit-quality GOVERNANCE_PROFILE=strict", "policy": {"domains": ["docs", "project_code", "tests", "unknown"], "level": "strict", "qualityRouting": {"reason": "explicit strict governance requires the complete quality graph", "requiredGroups": ["quality-full"], "target": "quality-full"}, "qualityTarget": "quality-full", "requiredGroups": ["quality-full"], "scope": "full", "stage": "task"}}} { "automaticProfile": "standard", "base": "037f39e28a64a88eb34
 - aiStatus: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md
 - aiStatusCheck: PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json cockpit status check passed: .ai/cockpit/current_status.md

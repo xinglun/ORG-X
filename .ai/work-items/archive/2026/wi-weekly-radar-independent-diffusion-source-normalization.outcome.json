@@ -9,10 +9,10 @@
   "bindings": {
     "taskId": "wi-weekly-radar-independent-diffusion-source-normalization",
     "contractDigest": "2eac13c1636eb2e7fcb3b12faae95c099363927acecf418c8cee4c9c997fbdf3",
-    "summaryDigest": "7e04a8ea9e2ab8eb04fb6cc406d18b128addb2d0c97a533b74a7b88315dce3ea",
-    "verificationDigest": "8617d39f5dacbd144ce42bb8c389b095ab0cb97c37dad0143f416963c5f017a4",
+    "summaryDigest": "353daac427d7eeb49f13da7c424d2cc87b51ac28aacb2f81aac4e92a7f89c46a",
+    "verificationDigest": "7b7580dc378acf2f40ecc63f664842b4557f2bb0e2d12dd59d2cfc23bb0a4bd5",
     "baseCommit": "037f39e28a64a88eb3426bc92c629bd388b33b7b",
-    "headCommit": "037f39e28a64a88eb3426bc92c629bd388b33b7b",
+    "headCommit": "10871b5ca3e7a63cbbe94a20563671c54cf230df",
     "lifecycleStage": "pre_merge",
     "pullRequest": {
       "state": "not_created"
@@ -21,12 +21,12 @@
     "generatorVersion": "1.2",
     "locale": "zh-CN",
     "preArchiveCandidateCoverage": {
-      "reportSha256": "6a4e19c2a871b0ac42160e2bc53d5c7e93619a10a78c96a2d22aa93a5c9f80d4",
+      "reportSha256": "50aafc4e1bbb8fea293ec012b15e5d24095abfa0d3fa4782c160d7233134b077",
       "binding": {
         "baseCommit": "037f39e28a64a88eb3426bc92c629bd388b33b7b",
-        "candidateHead": "037f39e28a64a88eb3426bc92c629bd388b33b7b",
-        "candidateTreeDigest": "a21a09da3fd7a000ed3509f668ca2bedcfd86d76852ed54254c6e891c763b433",
-        "candidateDiffDigest": "8cbed4d8a2ea3f995bf7f54ba9269c9678456b7b8386280372b6e4ceec0b8414"
+        "candidateHead": "10871b5ca3e7a63cbbe94a20563671c54cf230df",
+        "candidateTreeDigest": "302e94ef3ba52ab5f15b68ab0fffc8ff31dc22158d2c1617939e391864a51faf",
+        "candidateDiffDigest": "2f67fdaca5dca8212bd83260326cf2433aacdc3c5431635456a3e3cfe3a438d5"
       }
     }
   },
@@ -34,8 +34,8 @@
     "outcomeSummary": "Task wi-weekly-radar-independent-diffusion-source-normalization generated an evidence-derived outcome with status completed.",
     "taskOverview": "Governed Work Item: wi-weekly-radar-independent-diffusion-source-normalization",
     "deliveredChanges": [
-      ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
-      ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
       ".ai/cockpit/current_status.md",
       ".ai/work-items/starts/wi-weekly-radar-independent-diffusion-source-normalization.json",
       "config/weekly_radar/companies.json",
@@ -47,8 +47,8 @@
       "src/features/weekly_radar/runtime/evidence.rs",
       "tests/weekly_radar_evidence_quality.rs",
       "tests/weekly_radar_runtime.rs",
-      ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json",
-      ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md",
+      ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json",
+      ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
     ],
@@ -72,12 +72,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
           }
@@ -95,14 +95,14 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "verificationHistory[1] quality failed",
             "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "verification[quality] retry passed",
-            "digest": "3bc89512cab56d3df610c4b5bc9d88ac27cf85bd976c50fcf619eb10b3d535ba"
+            "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
           }
         ]
       }
@@ -166,12 +166,12 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "verificationHistory[0] aiGuidelines failed",
             "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "verification[aiGuidelines] retry passed",
             "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
           }
@@ -184,14 +184,14 @@
         "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "verificationHistory[1] quality failed",
             "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
           },
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "verification[quality] retry passed",
-            "digest": "3bc89512cab56d3df610c4b5bc9d88ac27cf85bd976c50fcf619eb10b3d535ba"
+            "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
           }
         ]
       }
@@ -209,13 +209,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -234,11 +234,11 @@
     ],
     "evidence": [
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
         "subject": "Contract"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
         "subject": "Summary"
       },
       {
@@ -254,24 +254,24 @@
         "subject": "post-merge trigger requirement"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
         "subject": "verificationHistory[0] aiGuidelines failed",
         "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
         "subject": "verification[aiGuidelines] retry passed",
         "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
         "subject": "verificationHistory[1] quality failed",
         "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
       },
       {
-        "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
         "subject": "verification[quality] retry passed",
-        "digest": "3bc89512cab56d3df610c4b5bc9d88ac27cf85bd976c50fcf619eb10b3d535ba"
+        "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
       }
     ],
     "implementationApproach": {
@@ -473,14 +473,14 @@
         "detail": "Defines the live defect, bounded source/date fix, acceptance, scenarios, and lifecycle authority.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json"
           }
         ],
         "inference": false
@@ -491,14 +491,14 @@
         "detail": "Tracks implementation and evidence for the governed Work Item.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json"
           }
         ],
         "inference": false
@@ -509,13 +509,13 @@
         "detail": "Generated AI Cockpit status for the active Work Item.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": ".ai/cockpit/current_status.md"
           }
         ],
@@ -527,13 +527,13 @@
         "detail": "Retains the immutable Work Item start receipt.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": ".ai/work-items/starts/wi-weekly-radar-independent-diffusion-source-normalization.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": ".ai/work-items/starts/wi-weekly-radar-independent-diffusion-source-normalization.json"
           }
         ],
@@ -545,13 +545,13 @@
         "detail": "Replaces the inaccessible NIQ independent source with the explicit Atos customer disclosure.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "config/weekly_radar/companies.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "config/weekly_radar/companies.json"
           }
         ],
@@ -563,13 +563,13 @@
         "detail": "Keeps reference-model calibration aligned with the production company registry.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "config/weekly_radar/reference_model_candidates.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "config/weekly_radar/reference_model_candidates.json"
           }
         ],
@@ -581,13 +581,13 @@
         "detail": "Documents bounded site-specific publication metadata and independent-source configuration.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "docs/operations/WEEKLY_RADAR.md"
           }
         ],
@@ -599,13 +599,13 @@
         "detail": "Records the bounded evidence-promotion decision and evidence boundary.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "docs/superpowers/specs/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "docs/superpowers/specs/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md"
           }
         ],
@@ -617,13 +617,13 @@
         "detail": "Records the TDD and full-lifecycle execution plan.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md"
           }
         ],
@@ -635,13 +635,13 @@
         "detail": "Recognizes bounded release metadata and explicit AI press-document classification.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "src/features/weekly_radar/runtime/discovery.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "src/features/weekly_radar/runtime/discovery.rs"
           }
         ],
@@ -653,13 +653,13 @@
         "detail": "Promotes substantive independent title/body claims with bounded adoption verbs and named adopters.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "src/features/weekly_radar/runtime/evidence.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "src/features/weekly_radar/runtime/evidence.rs"
           }
         ],
@@ -671,13 +671,13 @@
         "detail": "Adds RED-to-GREEN coverage for PwC dates and independent named-adopter evidence.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "tests/weekly_radar_evidence_quality.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "tests/weekly_radar_evidence_quality.rs"
           }
         ],
@@ -689,13 +689,13 @@
         "detail": "Adds explicit Atos press-document collection coverage and updates the calibration source assertion.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "tests/weekly_radar_runtime.rs"
           }
         ],
@@ -707,14 +707,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json"
           }
         ],
         "inference": false
@@ -725,14 +725,14 @@
         "detail": "Mandatory Task Outcome evidence generated by ai-finish.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-            "subject": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "subject": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md"
           }
         ],
         "inference": false
@@ -743,13 +743,13 @@
         "detail": "Generated machine-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": ".ai/cockpit/task_report.json"
           }
         ],
@@ -761,13 +761,13 @@
         "detail": "Generated human-readable Human Benefit Review Report.",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": ".ai/cockpit/task_report.md"
           }
         ],
@@ -781,14 +781,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_work_item.py .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json work item contract check passed: .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiWorkItem",
             "digest": "7574c03d9f2b3b70502577f94fbf16acdd3cb7951c7afcad2ef5dfc33a2add33"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiWorkItem",
             "digest": "7574c03d9f2b3b70502577f94fbf16acdd3cb7951c7afcad2ef5dfc33a2add33"
           }
@@ -801,14 +801,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scope.py .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json scope guard passed: 17 changed path(s) covered",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiScope",
             "digest": "7d4d93c89a4469be3aea7305a00338c98c892bf248c44956b8c6508f0d62fc38"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiScope",
             "digest": "7d4d93c89a4469be3aea7305a00338c98c892bf248c44956b8c6508f0d62fc38"
           }
@@ -821,14 +821,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guards.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json guard check completed: 0 warning(s) report: target/ai_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiGuards",
             "digest": "c0a02438c8f256a6e55509d6081fbe842aebc7f048b8cabf256272767cd1414b"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiGuards",
             "digest": "c0a02438c8f256a6e55509d6081fbe842aebc7f048b8cabf256272767cd1414b"
           }
@@ -841,16 +841,16 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_checkpoint.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json --stage \"before_finish\" # AI Work Item Checkpoint - Stage: `before_finish` - Work Item: `wi-weekly-radar-independent-diffusion-source-normalization` - Contract Hash: `2eac13c1636eb2e7` - Mode: `code` - notCodable: `False` - Ex",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "612fa9940fede77ff8ce8a7108eececc2979edd63582075efbbca9c74e95517d"
+            "digest": "858008097f5bc0bff1fed13f61ae8bada4233d8a85ee52568327915fec149ec7"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiCheckpoint",
-            "digest": "612fa9940fede77ff8ce8a7108eececc2979edd63582075efbbca9c74e95517d"
+            "digest": "858008097f5bc0bff1fed13f61ae8bada4233d8a85ee52568327915fec149ec7"
           }
         ],
         "inference": false
@@ -861,14 +861,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_review_policy.py --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json review policy matched 7 path(s) [review] .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json [review] .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json [review] .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normaliz",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "e4d17b0c282c5a0bb3b7714c47ffee6c5ce1566cef6459b3f1c4b31504bb3f91"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiReviewPolicy",
             "digest": "e4d17b0c282c5a0bb3b7714c47ffee6c5ce1566cef6459b3f1c4b31504bb3f91"
           }
@@ -881,14 +881,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_backtrack.py backtrack guard: no issues report: target/ai_backtrack_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiBacktrack",
             "digest": "9b72ab3b7799ec1618124373aa5ab384a509458d3ed94eeda3ae4fb44d3293e2"
           }
@@ -901,14 +901,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_coverage_guard.py coverage guard: no issues report: target/ai_coverage_guard_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiCoverage",
             "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
@@ -921,14 +921,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_scenario_coverage.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json [warning] required_scenario_unverified: Full governed lifecycle - required scenario remains unverified report: target/ai_scenario_coverage_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "2f2677f3afb35a518a1be65c2658d083023365d3e47a30915ef334329a82652f"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiScenarioCoverage",
             "digest": "2f2677f3afb35a518a1be65c2658d083023365d3e47a30915ef334329a82652f"
           }
@@ -941,14 +941,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_guidelines.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json guidelines compliance check passed: 6 guideline(s) verified",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiGuidelines",
             "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiGuidelines",
             "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
           }
@@ -958,19 +958,19 @@
       {
         "claim": "aiDiffOwnership",
         "title": "aiDiffOwnership",
-        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json ## Diff Ownership Preview - active_owned: `17`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — covered by Contract scope - [active_owned] `.ai/cock",
+        "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_diff_ownership.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json ## Diff Ownership Preview - active_owned: `17`, ambiguous: `0`, approval_required: `0`, archived_owned: `0`, out_of_scope: `0`, unowned: `0` - [active_owned] `.ai/cockpit/current_status.md` — covered by Contract scope - [active_owned] `.ai/cockpit/task_report.json` — exact generated Human Benefit Report pair validates",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiDiffOwnership",
-            "digest": "3988f3872c8d52bcd93d1c7b91e396b9704b597ef959d54106f983bed6ab1eb6"
+            "digest": "adbd35bbc179084ed3205a39d139e5b1bd1b655f80b74914228d993f6f62d7f9"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiDiffOwnership",
-            "digest": "3988f3872c8d52bcd93d1c7b91e396b9704b597ef959d54106f983bed6ab1eb6"
+            "digest": "adbd35bbc179084ed3205a39d139e5b1bd1b655f80b74914228d993f6f62d7f9"
           }
         ],
         "inference": false
@@ -981,16 +981,16 @@
         "detail": "{\"finishQualityRoute\": {\"command\": \"make ai-cockpit-quality GOVERNANCE_PROFILE=strict\", \"policy\": {\"domains\": [\"docs\", \"project_code\", \"tests\", \"unknown\"], \"level\": \"strict\", \"qualityRouting\": {\"reason\": \"explicit strict governance requires the complete quality graph\", \"requiredGroups\": [\"quality-full\"], \"target\": \"quality-full\"}, \"qualityTarget\": \"quality-full\", \"requiredGroups\": [\"quality-full\"], \"scope\": \"full\", \"stage\": \"task\"}}} { \"automaticProfile\": \"standard\", \"base\": \"037f39e28a64a88eb34",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "quality",
-            "digest": "3bc89512cab56d3df610c4b5bc9d88ac27cf85bd976c50fcf619eb10b3d535ba"
+            "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "quality",
-            "digest": "3bc89512cab56d3df610c4b5bc9d88ac27cf85bd976c50fcf619eb10b3d535ba"
+            "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
           }
         ],
         "inference": false
@@ -1001,14 +1001,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_generate_status.py .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json cockpit status generated: <PROJECT_ROOT>/.ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiStatus",
             "digest": "820bd5339cd8355d7878ed9d9160fbeab1432a58e4cf48f87e1e0224c20b1a47"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiStatus",
             "digest": "820bd5339cd8355d7878ed9d9160fbeab1432a58e4cf48f87e1e0224c20b1a47"
           }
@@ -1021,14 +1021,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status.py .ai/cockpit/current_status.md --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json cockpit status check passed: .ai/cockpit/current_status.md",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiStatusCheck",
             "digest": "c7734628051cc2d94894fc2791c5caa9eb71efcb37cff9bd665aaa6b37c325b0"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiStatusCheck",
             "digest": "c7734628051cc2d94894fc2791c5caa9eb71efcb37cff9bd665aaa6b37c325b0"
           }
@@ -1041,14 +1041,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_status_consistency.py ai status consistency check passed",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiStatusConsistency",
             "digest": "bf310242eaa14b862a5791c46e58fbbdfb368dd2ad15c2b3c3158e46a391ed46"
           }
@@ -1061,14 +1061,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_agent_risk.py --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json --summary .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json agent risk check passed report: target/ai_agent_risk_report.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiAgentRisk",
             "digest": "49f2353754a5e08dc74ad46414c6d128c5aa760680d7bc401ccaba5d3f798c5a"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiAgentRisk",
             "digest": "49f2353754a5e08dc74ad46414c6d128c5aa760680d7bc401ccaba5d3f798c5a"
           }
@@ -1081,14 +1081,14 @@
         "detail": "PYTHONDONTWRITEBYTECODE=1 <LOCAL_PATH> scripts/ai_check_summary.py .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json --contract .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json ai summary check passed: .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiSummary",
             "digest": "c307ea9a11af23a93728599a8427e18e9e0456e786f09d859e1be2ebcad5c302"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
             "subject": "aiSummary",
             "digest": "c307ea9a11af23a93728599a8427e18e9e0456e786f09d859e1be2ebcad5c302"
           }
@@ -1106,13 +1106,13 @@
         "state": "unresolved",
         "evidenceRefs": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "residualRisks"
           }
         ],
         "evidence": [
           {
-            "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
             "subject": "residualRisks"
           }
         ],
@@ -1131,11 +1131,11 @@
       "problemCount": 3,
       "problemCountEvidenceRefs": [
         {
-          "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
           "subject": "observedIssues"
         },
         {
-          "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
           "subject": "verification and verificationHistory"
         }
       ],
@@ -1171,12 +1171,12 @@
           "claim": "aiGuidelines failed before the retry.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
             }
@@ -1187,14 +1187,14 @@
           "claim": "quality failed before the retry.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
               "subject": "verificationHistory[1] quality failed",
               "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
               "subject": "verification[quality] retry passed",
-              "digest": "3bc89512cab56d3df610c4b5bc9d88ac27cf85bd976c50fcf619eb10b3d535ba"
+              "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
             }
           ],
           "inference": false
@@ -1231,12 +1231,12 @@
           "claim": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
               "subject": "verificationHistory[0] aiGuidelines failed",
               "digest": "b3139c381b06f7076d465c8194648c939c345b4e251cd2af3cb32fbe45639312"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
               "subject": "verification[aiGuidelines] retry passed",
               "digest": "b9d11e11577ff94a71c3b821564b21c36cbc320126c4d42462cac3631a64104a"
             }
@@ -1247,14 +1247,14 @@
           "claim": "Re-ran quality after the correction; the latest attempt passed.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
               "subject": "verificationHistory[1] quality failed",
               "digest": "02825ca4f13df42e85ddb1ce088b982fe90b4903181bb9bcaf3978782dc9c28e"
             },
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
               "subject": "verification[quality] retry passed",
-              "digest": "3bc89512cab56d3df610c4b5bc9d88ac27cf85bd976c50fcf619eb10b3d535ba"
+              "digest": "f726f979b8c9a5166aeecabc3852ca171120d7153d7776d6a0994c3f552229e3"
             }
           ],
           "inference": false
@@ -1277,7 +1277,7 @@
           "claim": "No company has yet been confirmed as an AI-era reference model in the live report; this WI only addresses the observed source-promotion defect.",
           "evidenceRefs": [
             {
-              "source": ".ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
               "subject": "residualRisks"
             }
           ],

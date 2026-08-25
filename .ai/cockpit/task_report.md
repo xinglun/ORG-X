@@ -30,8 +30,8 @@ Design decisions
 - Formatting, Clippy, and Python tests pass with the repository quality commands.: src/features/weekly_radar/runtime/evidence.rs#cargo fmt, cargo clippy, and pytest (verified)
 - The post-merge trigger is a required lifecycle step and is not represented as implementation evidence.: docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md#post-merge trigger requirement (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json [evidence: .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json [evidence: .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json]
+- Changed .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/work-items/starts/wi-weekly-radar-independent-diffusion-source-normalization.json [evidence: .ai/work-items/starts/wi-weekly-radar-independent-diffusion-source-normalization.json]
 - Changed config/weekly_radar/companies.json [evidence: config/weekly_radar/companies.json]
@@ -43,8 +43,8 @@ Design decisions
 - Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
 - Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
 - Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
-- Changed .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json [evidence: .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md [evidence: .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 

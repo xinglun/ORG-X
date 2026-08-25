@@ -207,6 +207,21 @@
         "tests/weekly_radar_runtime.rs"
       ]
     },
+    "wi-weekly-radar-independent-diffusion-source-normalization": {
+      "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion-source-normalization.json",
+      "dependencies": [
+        ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        "config/weekly_radar/companies.json",
+        "config/weekly_radar/reference_model_candidates.json",
+        "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md",
+        "src/features/weekly_radar/runtime/discovery.rs",
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs",
+        "tests/weekly_radar_runtime.rs"
+      ]
+    },
     "wi-weekly-radar-input-snapshot-compatibility": {
       "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
       "dependencies": [
@@ -439,6 +454,15 @@
     ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json": [
       "wi-weekly-radar-idempotent-completion"
     ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json": [
+      "wi-weekly-radar-independent-diffusion-source-normalization"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.outcome.json": [
+      "wi-weekly-radar-independent-diffusion-source-normalization"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json": [
+      "wi-weekly-radar-independent-diffusion-source-normalization"
+    ],
     ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.contract.json": [
       "wi-weekly-radar-independent-diffusion"
     ],
@@ -525,7 +549,11 @@
     "Makefile.ai": [
       "wi-weekly-radar-sec-ir-deep-discovery"
     ],
+    "config/weekly_radar/companies.json": [
+      "wi-weekly-radar-independent-diffusion-source-normalization"
+    ],
     "config/weekly_radar/reference_model_candidates.json": [
+      "wi-weekly-radar-independent-diffusion-source-normalization",
       "wi-weekly-radar-reference-model-evidence"
     ],
     "docs/domain/PRODUCTION_SYSTEM_MODEL.md": [
@@ -552,6 +580,9 @@
     ],
     "docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md": [
       "wi-weekly-radar-structural-evidence-gate"
+    ],
+    "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion-source-normalization.md": [
+      "wi-weekly-radar-independent-diffusion-source-normalization"
     ],
     "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion.md": [
       "wi-weekly-radar-independent-diffusion"
@@ -589,6 +620,7 @@
       "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-evidence-extraction-quality",
       "wi-weekly-radar-evidence-quality",
+      "wi-weekly-radar-independent-diffusion-source-normalization",
       "wi-weekly-radar-reference-model-evidence",
       "wi-weekly-radar-sec-ir-deep-discovery"
     ],
@@ -600,6 +632,7 @@
       "wi-weekly-radar-evidence-extraction-quality",
       "wi-weekly-radar-evidence-quality",
       "wi-weekly-radar-independent-diffusion",
+      "wi-weekly-radar-independent-diffusion-source-normalization",
       "wi-weekly-radar-structural-evidence-gate"
     ],
     "src/features/weekly_radar/runtime/http.rs": [
@@ -670,6 +703,7 @@
       "wi-weekly-radar-evidence-extraction-quality",
       "wi-weekly-radar-evidence-quality",
       "wi-weekly-radar-independent-diffusion",
+      "wi-weekly-radar-independent-diffusion-source-normalization",
       "wi-weekly-radar-reference-model-evidence",
       "wi-weekly-radar-sec-ir-deep-discovery",
       "wi-weekly-radar-structural-evidence-gate"
@@ -690,6 +724,7 @@
       "wi-weekly-radar-document-discovery-quality",
       "wi-weekly-radar-idempotent-completion",
       "wi-weekly-radar-independent-diffusion",
+      "wi-weekly-radar-independent-diffusion-source-normalization",
       "wi-weekly-radar-input-snapshot-compatibility",
       "wi-weekly-radar-reference-model-evidence",
       "wi-weekly-radar-same-day-canonical-update",

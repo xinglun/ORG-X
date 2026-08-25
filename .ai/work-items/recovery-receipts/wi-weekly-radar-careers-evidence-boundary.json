@@ -1,0 +1,55 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.archive-manifest.json",
+      "sha256": "6e9a753cd69300eb3abdf5dc71ff4a5f6fed9726175c18189a1fc966e98aad75"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.contract.json",
+      "sha256": "ab481d24590c99a8dba21995324bba8a09e88c17af7cfdf36373c1a22dec0443"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.outcome.json",
+      "sha256": "f05261b897353ca84857f2ffee1d7c24c845c34115d1afe33961254e32d2fffa"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-careers-evidence-boundary.summary.json",
+      "sha256": "e681ce7cd90e960409dae571fcef1b4937ac9ff152b8615851284ed9231d06e0"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=8dfb3aab0f62bc2a48d1e3b9a6498776b287e9c7"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "e5237ac246b70d9f7d88c4dfc55b1fac890c66e7d29aed4d4438b17fe33a4232"
+  },
+  "humanAuthorization": {
+    "reference": "user authorized complete Work Item lifecycle and same-Work-Item post-archive PR recovery on 2026-08-25",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/82",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-25T09:08:10.822159+00:00",
+  "prBaseCommit": "8dfb3aab0f62bc2a48d1e3b9a6498776b287e9c7",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
+  ],
+  "workItemId": "wi-weekly-radar-careers-evidence-boundary"
+}

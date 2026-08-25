@@ -16,6 +16,7 @@ use org_x::features::weekly_radar::runtime::archive::{
     write_run_with_input_snapshot, ArchiveError,
 };
 use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
+use org_x::features::weekly_radar::runtime::discovery::document_metadata;
 use org_x::features::weekly_radar::runtime::error::RuntimeError;
 use org_x::features::weekly_radar::runtime::http::{
     FixtureHttpClient, HttpClient, HttpResponse, UreqHttpClient,
@@ -42,6 +43,21 @@ use org_x::features::weekly_radar::runtime::telegram::{
     send_rendered_report_with_transport, TelegramError, TelegramRetryPolicy,
 };
 use serde_json::Value;
+
+#[test]
+fn runtime_association_covers_claim_body_metadata_boundary() {
+    let (title, date, body) = document_metadata(
+        r#"<title>Engineering update</title><meta name="description" content="ignored"><script>const claim = 'ignored';</script><time datetime="2026-08-19"></time><p>Acme reorganized its engineering workflow and consolidated production scheduling under one platform.</p>"#,
+        "fallback",
+    );
+
+    assert_eq!(title, "Engineering update");
+    assert_eq!(date, Some(NaiveDate::from_ymd_opt(2026, 8, 19).unwrap()));
+    assert_eq!(
+        body,
+        "Acme reorganized its engineering workflow and consolidated production scheduling under one platform."
+    );
+}
 
 #[test]
 fn registry_validation_preserves_optional_source_semantics() {

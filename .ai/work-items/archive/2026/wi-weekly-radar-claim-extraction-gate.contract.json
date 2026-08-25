@@ -1,0 +1,216 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-claim-extraction-gate",
+  "mode": "code",
+  "title": "Weekly Radar claim extraction gate",
+  "baseCommit": "ad641e0d9f1fad1d7f13d9676f8800cfd6abb14c",
+  "baselineDirtyPaths": [],
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish, merge, close, and archive this Work Item, including the approved Weekly Radar claim-extraction behavior change.",
+    "reference": "User authorization: 执行到WI全部流程结束，并且触发一次CI；follow-up approval: 确认 the bounded Claim extraction gate design.",
+    "capturedAt": "2026-08-25T10:35:00+09:00"
+  },
+  "rawUserRequest": "继续把 Weekly Radar 的文档级 Evidence 收紧为 Claim-level Evidence；用户确认设计并授权执行完整 Work Item 流程。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "User messages: 继续; 确认",
+    "digest": "claim-extraction-gate-user-approval-2026-08-25",
+    "capturedAt": "2026-08-25T10:35:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "software_design", "documentation", "test_automation"],
+    "prohibitedCapabilities": ["llm_fact_extraction", "production_operation", "trading_decision", "capital_action"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": true,
+    "authorityReason": "The user approved the bounded design and explicitly authorized the complete Work Item lifecycle."
+  },
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-claim-extraction-gate.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-claim-extraction-gate.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-claim-extraction-gate.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-claim-extraction-gate.outcome.md",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/main.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-claim-extraction-gate.md"
+  ],
+  "outOfScope": [
+    "SEC acquisition, Company Facts parsing, filing discovery, and financial fact normalization",
+    "Source registry URLs, source coverage policy, request budgets, workflow scheduling, Telegram delivery, data-branch persistence, or archive retention",
+    "Stage transitions, structural-change judgment, Counter Evidence, Ranking selection, or the fail-closed Ranking gate",
+    "Unbounded crawling, probabilistic/LLM extraction, external provider SDKs, paid APIs, credentials, or production operation",
+    "Changing the report metric vocabulary except where existing claim candidates must remain distinguishable from source observations"
+  ],
+  "sources": [
+    { "path": "AGENTS.md", "reason": "Repository Work Item scope, checkpoints, Finish, PR, merge, and closure rules." },
+    { "path": ".ai/cockpit/README.md", "reason": "Contract, Preflight, Summary, Finish, archive, and lifecycle evidence requirements." },
+    { "path": ".ai/glossary.md", "reason": "Canonical governance and architecture terminology." },
+    { "path": "docs/superpowers/plans/2026-08-25-weekly-radar-evidence-acquisition-quality.md", "reason": "Predecessor implementation plan and the evidence-quality boundary already merged to main." },
+    { "path": "docs/operations/WEEKLY_RADAR.md", "reason": "Current operator-facing source, dry-run, and evidence semantics." },
+    { "path": "src/features/weekly_radar/runtime/discovery.rs", "reason": "Current HTML metadata extraction that must separate document titles/metadata from body passages." },
+    { "path": "src/features/weekly_radar/runtime/evidence.rs", "reason": "Current EvidenceCandidate extraction and ValidatedEvidence promotion gate." },
+    { "path": "src/main.rs", "reason": "Existing runtime integration fixture that must express a sentence-level document claim after the gate is tightened." },
+    { "path": "src/features/weekly_radar/runtime/sources.rs", "reason": "SourceObservation material/status/tier contract consumed by claim extraction." },
+    { "path": "tests/weekly_radar_evidence_quality.rs", "reason": "Existing regression tests for entry points, document discovery, evidence promotion, metrics, and SEC isolation." },
+    { "path": "tests/weekly_radar_runtime.rs", "reason": "Configured Weekly Radar runtime association test path used by the coverage guard; receives a direct document-body regression assertion." },
+    { "path": "src/features/weekly_radar/runtime/report.rs", "reason": "Existing rendering boundary that consumes validated evidence without changing Ranking behavior." },
+    { "path": "Makefile", "reason": "Project quality and governance entrypoints." }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": ["false_positive_promotion", "false_negative_extraction", "html_content_boundary"],
+    "reason": "The change tightens a deterministic promotion boundary and HTML body extraction. A false positive can mislabel document material as evidence; a false negative can hide a real claim, so both paths need explicit fixtures and fail-closed behavior.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "Codex under explicit user approval",
+    "reviewNotes": "The live dry-run showed eight Meta Engineering documents promoted from title/body material. The implementation must require a sentence-level body passage and preserve SEC facts independently."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item changes an evidence promotion boundary and restricted governance evidence is required.",
+      "The behavior affects user-visible Weekly Radar evidence counts and must be verified with deterministic fixtures and the full lifecycle."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The approved bounded design, implementation surface, acceptance, scenarios, and deterministic verification are explicit; no unresolved unknowns remain."
+  },
+  "preReviewWarnings": [
+    "Do not let title text, script/JSON metadata, or an entry-point page become a claim passage.",
+    "Keep SEC Company Facts and filing-derived values on their existing path; this gate applies only to discovered document observations.",
+    "A real sentence-level claim may be promoted even when it does not imply a structural organization change; Ranking and judgment remain separate."
+  ],
+  "scenarioCoverage": [
+    {
+      "scenario": "A discovered official document with an explicit body sentence becomes a claim candidate.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/evidence.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "The candidate concrete_change and passage contain one bounded sentence with a change action, a production-system area, source title, effective date, and official provenance.",
+      "verificationPlan": "Use an HTML fixture with title, metadata, and a body paragraph such as 'Acme moved its engineering workflow to an agent-assisted scheduler.'; assert extraction returns the sentence rather than the full page."
+    },
+    {
+      "scenario": "Title-only or metadata-only documents do not promote.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/discovery.rs", "src/features/weekly_radar/runtime/evidence.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "A document containing only a title, script JSON, meta tags, or headings yields no claim candidate and remains a document/source observation.",
+      "verificationPlan": "Run title-only, script-only, and heading-only HTML fixtures through document_metadata and extract_evidence_candidate; assert no candidate is returned."
+    },
+    {
+      "scenario": "SEC financial facts remain unaffected by claim extraction tightening.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/sec.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "A valid Company Facts response still produces a Known revenue fact even when document claim extraction rejects material.",
+      "verificationPlan": "Run the existing partial SEC fixture test and the new combined regression assertion without any external HTTP request."
+    },
+    {
+      "scenario": "The report keeps document discovery separate from validated evidence.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["src/features/weekly_radar/runtime/report.rs", "tests/weekly_radar_evidence_quality.rs"],
+      "expected": "Rejected article material increments document/pending-lead paths but does not increment the validated-evidence metric or create a Ranking input.",
+      "verificationPlan": "Render a fixture report with rejected document candidates and zero validated evidence; assert the separate metrics and no machine Ranking output."
+    }
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": ["before_edit", "before_finish"],
+    "reason": "Record the approved claim boundary before edits and final evidence/CI verification before Finish."
+  },
+  "acceptance": [
+    "Document metadata extraction removes title, script, style, and meta-only content from the body passage while retaining a separate bounded source title and explicit date.",
+    "EvidenceCandidate extraction uses a bounded sentence-level body passage containing a concrete change action and production-system signal; title/page-level text alone cannot promote.",
+    "ValidatedEvidence retains company identity, source title, effective date, authoritative tier, source URI, bounded passage, and deterministic provenance without full-page JSON payloads.",
+    "SEC financial facts, source availability observations, document candidate counts, and fail-closed Ranking behavior remain compatible with existing tests.",
+    "Focused, module, integration, architecture, and project quality checks pass with no external network or secret values.",
+    "The full AI Cockpit lifecycle completes with localized Finish evidence, PR CI, merge, closure, and clean branch/worktree state."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Use deterministic rule-only extraction; never add LLM or probabilistic claim extraction.",
+    "Prefer false negatives to promoting title, metadata, homepage, or ambiguous document material.",
+    "Keep SEC, source acquisition, judgment, Ranking, Telegram, and archive behavior outside this Work Item.",
+    "Never claim a structural organization change merely because a technical document contains a production-system claim."
+  ],
+  "intent": {
+    "problem": "The live Weekly Radar dry-run discovered 76 document candidates and promoted eight Meta Engineering pages as new valid evidence, but their rendered facts still contained article-level/title-and-page material rather than a bounded claim passage. This blurs document discovery with evidence and can overstate Research Value.",
+    "constraints": [
+      "Only official discovered Document observations may enter this claim gate; EntryPoint, HiringRecord, DiscoveryArticle, and status observations remain outside it.",
+      "The extractor must be deterministic, bounded, local, and rule-only; no LLM, paid API, or unbounded crawl is allowed.",
+      "SEC financial facts and existing source-availability semantics must remain unchanged.",
+      "A candidate needs company identity, what changed, effective date, production-system area, authoritative source, and a bounded original body passage before promotion.",
+      "The change must preserve the existing Ranking fail-closed behavior and distinguish rejected document material from validated evidence in reports."
+    ],
+    "rationale": "Separating clean body content from metadata and requiring a sentence-level claim makes the EvidenceCandidate boundary match ORG-X's evidence-first design. It improves calibration without manufacturing organization changes or hiding unavailable coverage."
+  },
+  "verification": [
+    { "check": "aiWorkItem", "required": true },
+    { "check": "aiScope", "required": true },
+    { "check": "aiGuards", "required": true },
+    { "check": "aiCheckpoint", "required": true },
+    { "check": "aiAgentRisk", "required": true },
+    { "check": "aiReviewPolicy", "required": true },
+    { "check": "aiBacktrack", "required": true },
+    { "check": "aiCoverage", "required": true },
+    { "check": "aiScenarioCoverage", "required": true },
+    { "check": "aiGuidelines", "required": true },
+    { "check": "aiSummary", "required": true },
+    { "check": "aiStatus", "required": true },
+    { "check": "aiStatusCheck", "required": true },
+    { "check": "aiStatusConsistency", "required": true },
+    { "check": "aiDiffOwnership", "required": true },
+    { "check": "quality", "required": true }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-confirmed",
+    "reason": "The user explicitly confirmed the bounded Claim extraction gate design and authorized the complete Work Item lifecycle."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore the prior document metadata and evidence extraction behavior; no data branch or external provider state is changed by this Work Item.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 35
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-claim-extraction-gate.json",
+    "baseCommit": "ad641e0d9f1fad1d7f13d9676f8800cfd6abb14c",
+    "initialScopeDigest": "4c0de8a8f35dcae4816ac435de0fac88df7875232b1be6472f90669e60a4fc97",
+    "contractSkeletonDigest": "6c7b24188898f95b81e708b38f5db6cd45c6458dbd43bd71efb0395c19a1ad56"
+  }
+}

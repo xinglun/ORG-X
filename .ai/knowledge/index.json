@@ -26,6 +26,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json"
     },
     {
+      "workItemId": "wi-weekly-radar-claim-extraction-gate",
+      "title": "Weekly Radar claim extraction gate",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-cli-output-guard",
       "title": "修复 Weekly Radar CLI 成功输出边界并恢复手动发布",
       "topics": [],

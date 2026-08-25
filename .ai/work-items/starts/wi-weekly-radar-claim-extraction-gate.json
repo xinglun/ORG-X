@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-claim-extraction-gate",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-claim-extraction-gate.json",
+  "baseCommit": "ad641e0d9f1fad1d7f13d9676f8800cfd6abb14c",
+  "baseBranch": "codex/weekly-radar-claim-gate",
+  "startTimestamp": "2026-08-25T01:34:54.015371+00:00",
+  "initialScopeDigest": "4c0de8a8f35dcae4816ac435de0fac88df7875232b1be6472f90669e60a4fc97",
+  "contractSkeletonDigest": "6c7b24188898f95b81e708b38f5db6cd45c6458dbd43bd71efb0395c19a1ad56"
+}

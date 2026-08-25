@@ -793,6 +793,18 @@
       "summarySha256": "500662c92239628096479ee7dc041a195b8d2809e856061742313778b240c04f",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-quality.archive-manifest.json",
       "manifestSha256": "0caba42f8379da3ea067090a8cc37497359a9357f8eff3f24d96d5873b05de0e"
+    },
+    {
+      "workItemId": "wi-weekly-radar-claim-extraction-gate",
+      "archiveSequence": 67,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.contract.json",
+      "contractSha256": "fa5c33719dbfe4369bb6e4f09a3dec34a12dc4f5c0c010b42f9ab74418f425bd",
+      "archivedAt": "2026-08-25T10:59:36.023368+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.summary.json",
+      "summarySha256": "3812671d63bdf0533dd52d981bad77e5c740d513c841edd777355eda5aa67bb9",
+      "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.archive-manifest.json",
+      "manifestSha256": "8d54ba35734dc886393f05cf2d435d3cef2239c16af91e6bcc7146526a985f0d"
     }
   ]
 }

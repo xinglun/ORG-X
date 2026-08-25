@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-claim-extraction-gate",
+  "title": "Weekly Radar claim extraction gate",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Separate document identity from body content and require one bounded sentence with both change and production-system signals before evidence promotion.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.summary.json",
+    ".ai/work-items/starts/wi-weekly-radar-claim-extraction-gate.json",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-claim-extraction-gate.md",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/main.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Prefer false negatives to title/page-level promotion.",
+      "reason": "Homepage, metadata, and ambiguous material are not enterprise-change claims.",
+      "status": "verified"
+    },
+    {
+      "decision": "Keep extraction deterministic and provider-neutral.",
+      "reason": "The Work Item does not add LLM, paid API, or provider-specific behavior.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "digest": "b4a6730df6955ec3b584a81d73fe7f3e1b4be732d833fecb761a30116144e308"
+    },
+    {
+      "type": "code",
+      "path": "Makefile",
+      "digest": "ed2d7675c8d51503ac3e1bf178357508d4fee04bbefd3eaa7c00f6c809a1b659"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "digest": "414a47efb6040fd1549a36fce600652fcbe50a29870378d7ddb0eaaab958ba05"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "digest": "7008a5cdb833e970765667ad77573dbaa8e09d5d3bc1a464d4a7402a85befec7"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "f9e713f14bbf1ff88ff6130284fee1f251ac67f17871849ec19590faf99acad2"
+    },
+    {
+      "type": "code",
+      "path": "src/main.rs",
+      "digest": "66160dd638d08bc697f2571d8ee657002a9afbe123d455f32cd9079bd5d9d602"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.contract.json",
+    "contractDigest": "fa5c33719dbfe4369bb6e4f09a3dec34a12dc4f5c0c010b42f9ab74418f425bd",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.summary.json",
+    "summaryDigest": "3812671d63bdf0533dd52d981bad77e5c740d513c841edd777355eda5aa67bb9",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-claim-extraction-gate.outcome.json",
+    "outcomeDigest": "4da17f017db1fbbdf295827fe9ed260c740e770470534414807852d9afedbe55"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

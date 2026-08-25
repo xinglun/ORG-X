@@ -851,7 +851,7 @@ mod tests {
         client.insert(
             "https://ir.example.test/organization/update",
             HttpResponse::ok(
-                "<title>Organization update</title><time datetime=\"2026-08-19\">Acme reorganized its engineering workflow.</time>",
+                "<title>Organization update</title><time datetime=\"2026-08-19\"></time><p>Acme reorganized its engineering workflow and consolidated production scheduling under one platform.</p>",
             ),
         );
 

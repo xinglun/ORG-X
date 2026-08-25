@@ -9,6 +9,45 @@ use super::RuntimeError;
 
 const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v1";
 const MAX_FIELD_BYTES: usize = 512;
+const MIN_CLAIM_WORDS: usize = 8;
+
+const CHANGE_SIGNALS: &[&str] = &[
+    "announc",
+    "reorganiz",
+    "restructur",
+    "consolidat",
+    "appoint",
+    "moved",
+    "shift",
+    "launch",
+    "adopt",
+    "automat",
+    "replaced",
+    "moderniz",
+    "built",
+    "doubled",
+    "reduced",
+    "increased",
+];
+
+const PRODUCTION_SIGNALS: &[&str] = &[
+    "engineering",
+    "platform",
+    "product",
+    "operations",
+    "workflow",
+    "automation",
+    "ai",
+    "agent",
+    "data",
+    "cloud",
+    "research",
+    "development",
+    "scheduler",
+    "model",
+    "storage",
+    "infrastructure",
+];
 
 /// Source classification used by the evidence gate.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -263,40 +302,10 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     {
         return None;
     }
-    let title = observation.title().unwrap_or("official document");
-    let combined = format!("{} {}", title, observation.text());
-    let lower = combined.to_ascii_lowercase();
-    let change_signal = [
-        "reorgan",
-        "restructur",
-        "consolidat",
-        "appoint",
-        "shift",
-        "launch",
-        "adopt",
-        "automat",
-        "agent",
-        "responsibility",
-        "operating model",
-    ]
-    .iter()
-    .find(|signal| lower.contains(**signal))?;
-    let production_signal = [
-        "engineering",
-        "platform",
-        "product",
-        "operations",
-        "workflow",
-        "automation",
-        "ai",
-        "agent",
-        "data",
-        "cloud",
-        "research",
-        "development",
-    ]
-    .iter()
-    .find(|signal| lower.contains(**signal))?;
+    let title = observation
+        .title()
+        .filter(|title| !title.trim().is_empty())?;
+    let (passage, production_signal) = extract_claim_sentence(observation.text())?;
     let source_kind = match observation.kind() {
         SourceKind::Gdelt => EvidenceSourceKind::DiscoveryArticle,
         SourceKind::Greenhouse | SourceKind::Lever => EvidenceSourceKind::StructuredHiring,
@@ -307,13 +316,9 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     let mut candidate = EvidenceCandidate::new(
         observation.company_id(),
         observation.company_id(),
-        format!(
-            "{}: {}",
-            bounded(title.to_owned()),
-            bounded(observation.text().to_owned())
-        ),
+        passage.clone(),
         observation.provenance().effective_date().copied(),
-        *production_signal,
+        production_signal,
         source_kind,
         observation.tier(),
         EvidencePolarity::Supporting,
@@ -321,9 +326,46 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     )
     .ok()?;
     candidate.source_title = bounded(title.to_owned());
-    candidate.passage = bounded(format!("signal={change_signal}; {}", observation.text()));
-    candidate.provenance = observation.provenance().clone();
+    candidate.passage = passage.clone();
+    candidate.provenance = Provenance::new(
+        observation.provenance().source_uri(),
+        passage,
+        *observation.provenance().retrieved_at(),
+        observation.provenance().effective_date().copied(),
+    )
+    .ok()?;
     Some(candidate)
+}
+
+fn extract_claim_sentence(text: &str) -> Option<(String, String)> {
+    let normalized = text.split_whitespace().collect::<Vec<_>>().join(" ");
+    let mut sentence_start = 0;
+    for (index, character) in normalized.char_indices() {
+        if !matches!(character, '.' | '!' | '?' | '。' | '！' | '？') {
+            continue;
+        }
+        let end = index + character.len_utf8();
+        let sentence = normalized[sentence_start..end].trim();
+        sentence_start = end;
+        if sentence.split_whitespace().count() < MIN_CLAIM_WORDS {
+            continue;
+        }
+        let lower = sentence.to_ascii_lowercase();
+        if !CHANGE_SIGNALS.iter().any(|signal| lower.contains(signal)) {
+            continue;
+        }
+        let Some(production_signal) = PRODUCTION_SIGNALS
+            .iter()
+            .find(|signal| lower.contains(**signal))
+        else {
+            continue;
+        };
+        return Some((
+            bounded(sentence.to_owned()),
+            (*production_signal).to_owned(),
+        ));
+    }
+    None
 }
 
 /// Validates the complete promotion boundary using a fixed evidence cutoff.

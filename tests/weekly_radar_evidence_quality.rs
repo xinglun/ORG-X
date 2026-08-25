@@ -1,5 +1,6 @@
 use chrono::Utc;
 use org_x::features::weekly_radar::runtime::config::CompanyConfig;
+use org_x::features::weekly_radar::runtime::discovery::document_metadata;
 use org_x::features::weekly_radar::runtime::evidence::{
     extract_evidence_candidate, validate_evidence_candidate, EvidenceCandidate, EvidencePolarity,
     EvidenceSourceKind, EvidenceValidationError,
@@ -43,6 +44,28 @@ fn sec_company() -> CompanyConfig {
         None,
     )
     .expect("SEC fixture company should be valid")
+}
+
+fn document_observation_from_html(
+    html: &str,
+    document_url: &str,
+) -> org_x::features::weekly_radar::runtime::SourceObservation {
+    let mut company = company();
+    company.official_ir = Some("https://ir.example.test/investors".to_owned());
+    let client = FixtureHttpClient::new();
+    client.insert(
+        company.official_ir_url().expect("IR URL exists"),
+        HttpResponse::ok("<a href=\"/engineering/update\">Engineering update</a>"),
+    );
+    client.insert(document_url, HttpResponse::ok(html));
+
+    collect_configured_sources(&company, &client, Utc::now())
+        .into_iter()
+        .find(|observation| {
+            observation.material_kind() == SourceMaterialKind::Document
+                && observation.url() == Some(document_url)
+        })
+        .expect("document fixture should be discovered")
 }
 
 fn company_facts_with_revenue() -> &'static str {
@@ -245,6 +268,110 @@ fn document_discovery_deduplicates_and_caps_followed_links() {
         .iter()
         .all(|url| url.starts_with("https://ir.example.test/")));
     assert!(urls.iter().all(|url| !url.contains('#')));
+}
+
+#[test]
+fn document_body_excludes_title_script_and_metadata_before_claim_extraction() {
+    let (title, date, body) = document_metadata(
+        r#"<html><head><title>Acme engineering update</title>
+        <meta name="description" content="Acme adopted an agent workflow.">
+        <script>window.claim = "Acme adopted an agent workflow.";</script></head>
+        <body><p>Acme moved its engineering workflow to an agent-assisted scheduler.</p></body></html>"#,
+        "fallback",
+    );
+
+    assert_eq!(title, "Acme engineering update");
+    assert_eq!(date, None);
+    assert_eq!(
+        body,
+        "Acme moved its engineering workflow to an agent-assisted scheduler."
+    );
+}
+
+#[test]
+fn title_only_document_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Acme adopted an agent-assisted engineering workflow.</title>
+        <time datetime="2026-08-19"></time></head></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
+#[test]
+fn body_sentence_with_change_and_production_signals_creates_a_bounded_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p>
+        <p>The page also contains implementation details.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    let candidate = extract_evidence_candidate(&observation).expect("body claim should qualify");
+
+    assert_eq!(
+        candidate.concrete_change(),
+        "Acme adopted an agent-assisted engineering workflow for production scheduling."
+    );
+    assert!(!candidate
+        .concrete_change()
+        .contains("implementation details"));
+}
+
+#[test]
+fn heading_only_document_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><h1>Acme adopted an agent-assisted engineering workflow for production scheduling.</h1></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
+#[test]
+fn production_sentence_without_a_change_action_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>The engineering platform serves customer requests.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
+}
+
+#[test]
+fn claim_extraction_skips_nonproduction_change_sentences_until_a_valid_claim() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title>
+        <time datetime="2026-08-19"></time></head>
+        <body><p>Acme adopted a new legal review policy.</p>
+        <p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    let candidate =
+        extract_evidence_candidate(&observation).expect("second body claim should qualify");
+
+    assert_eq!(
+        candidate.concrete_change(),
+        "Acme adopted an agent-assisted engineering workflow for production scheduling."
+    );
+}
+
+#[test]
+fn document_without_effective_date_does_not_create_a_claim_candidate() {
+    let observation = document_observation_from_html(
+        r#"<html><head><title>Engineering update</title></head>
+        <body><p>Acme adopted an agent-assisted engineering workflow for production scheduling.</p></body></html>"#,
+        "https://ir.example.test/engineering/update",
+    );
+
+    assert!(extract_evidence_candidate(&observation).is_none());
 }
 
 fn cutoff() -> chrono::NaiveDate {

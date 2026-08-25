@@ -7,87 +7,69 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Keep the existing SourceObservation to EvidenceCandidate to ValidatedEvidence pipeline, then add a deterministic second classification that separates ordinary validated facts from structural evidence without changing Stage or Ranking gates.
-Mechanism (verified): Classify only validated bounded passage text using fixed structural signals; aggregate SEC submissions/Company Facts stage reachability separately from normalized FactStatus::Known facts; render both dimensions read-only in localized reports.
+Customer summary (verified): Add an optional provider-neutral structural dimension to validated evidence while preserving existing evidence class and kind-prefix compatibility.
+Mechanism (verified): Classify complete authoritative claims with bounded fixed signal tables using OperatingMetric > ProductionSystem > Workflow > Organization precedence, then render dimension-specific labels without feeding Stage or Ranking.
 
 Affected components
-- Evidence classification: Validated document claims receive regular or structural evidence prefixes while preserving provenance. (verified)
-- SEC health reporting: Stage availability and usable normalized facts are counted independently. (verified)
-- Reader-facing report: Validated Facts and Structural Evidence are separate localized sections; old splitter aliases remain accepted. (verified)
+- Normalized fact model: Stores optional StructuralDimension and defaults absent legacy JSON to None. (verified)
+- Evidence validation: Requires complete company/claim/date/area/source/passage data and attaches a dimension only to structural evidence. (verified)
+- Localized report: Shows Organization, Workflow, ProductionSystem, and OperatingMetric labels in zh-CN, ja, and en; legacy structural facts use a generic fallback. (verified)
 
 Design decisions
-- Prefer false negatives over promoting generic engineering prose.: A validated technical article is not evidence of enterprise production-system change without an explicit structural signal. (verified)
-- Do not equate SEC stage reachability with usable SEC facts.: A reachable endpoint can return unavailable or empty normalized facts; readers need both counters. (verified)
+- Keep the existing evidence_structural_change_<index> kind prefix.: Downstream report, snapshot, Stage, Ranking, and archive compatibility must remain stable. (verified)
+- Prefer false negatives and fixed precedence over broad semantic inference.: Technical prose must not be promoted as enterprise structural change without a bounded signal and complete Claim fields. (verified)
 
 ### Technical details
-- Compatibility: New ResearchMetrics fields default to zero during legacy RuntimeReportInput deserialization. (verified)
-- Verification: Focused evidence/runtime/splitter suites and make quality pass; hosted CI and post-merge dry-run remain lifecycle steps. (verified)
+- TDD: Model, classifier, and localized report tests were written RED before their production implementations and then passed GREEN. (verified)
+- Compatibility: Optional serde field is skipped when absent and legacy NormalizedFact JSON deserializes with None. (verified)
 
 ### Evidence
-- The implementation preserves the approved four-layer evidence boundary and does not promote page availability into structural evidence.: docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md#approved design boundary (verified)
-- The operator guide explains validated facts, structural evidence, SEC stage health, and usable SEC facts without claiming a live run.: docs/operations/WEEKLY_RADAR.md#operator-facing four-layer semantics (verified)
+- All four structural dimensions are classified and localized.: tests/weekly_radar_evidence_quality.rs#validated_structural_claims_receive_specific_dimensions and localized_reports_render_structural_dimensions_and_legacy_fallback (verified)
+- Project quality and regression tests pass.: Makefile#make check (verified)
 
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json]
-- Changed .ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json [evidence: .ai/work-items/starts/wi-weekly-radar-structural-evidence-gate.json]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-dimension.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-dimension.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json]
+- Changed .ai/work-items/starts/wi-weekly-radar-evidence-dimension.json [evidence: .ai/work-items/starts/wi-weekly-radar-evidence-dimension.json]
 - Changed .ai/cockpit/current_status.md [evidence: .ai/cockpit/current_status.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md]
-- Changed docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md [evidence: docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md]
-- Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-dimension.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-evidence-dimension.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.outcome.md]
+- Changed docs/superpowers/specs/2026-08-25-weekly-radar-evidence-dimension-design.md [evidence: docs/superpowers/specs/2026-08-25-weekly-radar-evidence-dimension-design.md]
+- Changed docs/superpowers/plans/2026-08-25-weekly-radar-evidence-dimension.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-evidence-dimension.md]
 - Changed src/features/weekly_radar/runtime/model.rs [evidence: src/features/weekly_radar/runtime/model.rs]
+- Changed src/features/weekly_radar/runtime.rs [evidence: src/features/weekly_radar/runtime.rs]
+- Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
 - Changed src/features/weekly_radar/runtime/report.rs [evidence: src/features/weekly_radar/runtime/report.rs]
-- Changed src/features/weekly_radar/interface/semantic_message_splitter.rs [evidence: src/features/weekly_radar/interface/semantic_message_splitter.rs]
-- Changed src/main.rs [evidence: src/main.rs]
 - Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
 - Changed tests/weekly_radar_runtime.rs [evidence: tests/weekly_radar_runtime.rs]
-- Changed tests/weekly_radar_semantic_message_splitter.rs [evidence: tests/weekly_radar_semantic_message_splitter.rs]
-- Changed tests/semantic_message_splitter_test.rs [evidence: tests/semantic_message_splitter_test.rs]
 - Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
-- Changed docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md [evidence: docs/superpowers/plans/2026-08-25-weekly-radar-structural-evidence-gate.md]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.contract.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.summary.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.json]
-- Changed .ai/work-items/active/wi-weekly-radar-structural-evidence-gate.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-structural-evidence-gate.outcome.md]
-- Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
-- Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 
 Problems found
-- Total: 3
+- Total: 2
 - Blocking: 0
 - Warning: 0
 
 Stops triggered
-- Reason: aiGuidelines failed before the retry. | Stage: verification | Resolution: Retry aiGuidelines after correcting the recorded failure. [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
-- Reason: aiSummary failed before the retry. | Stage: verification | Resolution: Retry aiSummary after correcting the recorded failure. [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
+- Reason: aiCoverage failed before the retry. | Stage: verification | Resolution: Retry aiCoverage after correcting the recorded failure. [evidence: verificationHistory[0] aiCoverage failed, verification[aiCoverage] retry passed]
 
 Problems resolved
-- Problem: aiGuidelines failed before the retry.
-  Solution: Re-ran aiGuidelines after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[0] aiGuidelines failed, verification[aiGuidelines] retry passed]
-- Problem: aiSummary failed before the retry.
-  Solution: Re-ran aiSummary after the correction; the latest attempt passed.
-  Evidence: [evidence: verificationHistory[1] aiSummary failed, verification[aiSummary] retry passed]
+- Problem: aiCoverage failed before the retry.
+  Solution: Re-ran aiCoverage after the correction; the latest attempt passed.
+  Evidence: [evidence: verificationHistory[0] aiCoverage failed, verification[aiCoverage] retry passed]
 
 Risks avoided
 - If not detected, could have led to a stale completion claim. (inference)
-- If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- Reader-facing headings changed from confirmed-information wording to validated-fact and structural-evidence wording; legacy splitter aliases remain accepted. (inference)
-- The classifier is deterministic and intentionally conservative; real provider wording may remain a regular validated fact until the signal vocabulary is amended in a governed follow-up. [evidence: residualRisks]
-- No post-merge dry-run has been executed for this Work Item yet; live SEC/source availability and the resulting structural count remain unverified until the authorized dispatch. [evidence: residualRisks]
+- Fixed signal tables may produce a false negative for an unseen synonym or a false positive when a structural term is used in a non-change context; focused negative fixtures and fail-closed Claim validation limit promotion risk. [evidence: residualRisks]
+- SEC ingestion, broader document discovery, and provider availability remain outside this Work Item, so this change improves semantic honesty without claiming complete enterprise-change coverage. [evidence: residualRisks]
 
 Unknowns
 - None recorded.
 
 Human decisions
-- Keep fail-closed Ranking behavior. (inference)
-- Separate source availability, leads, validated facts, and structural evidence. (inference)
-- Prioritize truthful SEC stage/fact health. (inference)
-- Execute the governed Work Item through CI and one authorized dry-run. (inference)
+- The user approved dimension-specific structural evidence and explicitly authorized continuation through TDD, CI, and one safe dry-run. (inference)
 
 Verification
 - aiWorkItem [evidence: aiWorkItem]

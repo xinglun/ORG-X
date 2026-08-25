@@ -66,6 +66,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json"
     },
     {
+      "workItemId": "wi-weekly-radar-evidence-dimension",
+      "title": "Separate structural evidence dimensions and require complete claims",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-evidence-extraction-quality",
       "title": "Weekly Radar evidence extraction quality",
       "topics": [],

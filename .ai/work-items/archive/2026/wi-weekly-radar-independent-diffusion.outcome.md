@@ -40,6 +40,25 @@ Governed Work Item: wi-weekly-radar-independent-diffusion
 - tests/weekly_radar_evidence_quality.rs
 - tests/weekly_radar_judgment_chain.rs
 - tests/weekly_radar_runtime.rs
+- .ai/knowledge/dependencies.json
+- .ai/knowledge/work-items/wi-sec-submissions-response-limit.json
+- .ai/knowledge/work-items/wi-telegram-delivery-verification.json
+- .ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json
+- .ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json
+- .ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json
+- .ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json
+- .ai/knowledge/work-items/wi-weekly-radar-content-quality.json
+- .ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json
+- .ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json
+- .ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json
+- .ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json
+- .ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json
+- .ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json
+- .ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json
+- .ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json
+- .ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json
+- .ai/knowledge/work-items/wi-weekly-radar-source-coverage.json
+- .ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json
 
 ## Findings
 None

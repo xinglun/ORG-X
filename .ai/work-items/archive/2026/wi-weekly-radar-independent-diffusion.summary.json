@@ -138,6 +138,82 @@
     {
       "path": ".ai/knowledge/index.json",
       "reason": "Rebuilt deterministic Implementation Knowledge index."
+    },
+    {
+      "path": ".ai/knowledge/dependencies.json",
+      "reason": "Refreshed generated knowledge dependency projection after the source-role implementation changed shared evidence files."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
+    },
+    {
+      "path": ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json",
+      "reason": "Refreshed the evidence-bound historical knowledge projection after shared source files changed."
     }
   ],
   "sourcesUsed": [
@@ -657,6 +733,11 @@
       "stage": "governance",
       "issue": "The repository does not currently expose the documented ai-revalidate-contract-amendment Make target.",
       "resolution": "Used the canonical scripts/ai_checkpoint.py contract-amendment revalidation path with the recorded previous Contract hash; no lifecycle evidence was bypassed."
+    },
+    {
+      "stage": "archive",
+      "issue": "Archive knowledge projection detected stale digests in historical records that depend on shared Weekly Radar files changed by this Work Item.",
+      "resolution": "Refreshed all affected knowledge projections, validated the index, and declared the generated historical projection updates in this Summary for complete PR ownership."
     }
   ],
   "residualRisks": [

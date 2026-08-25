@@ -43,7 +43,26 @@
     ".ai/work-items/archive/index.json",
     ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.archive-manifest.json",
     ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion.json",
-    ".ai/knowledge/index.json"
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
   ],
   "designDecisions": [
     {
@@ -123,9 +142,9 @@
     "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.contract.json",
     "contractDigest": "efaed166f0872c34de07410f2f1b0daa2f44a68ad90efd5cadf43668ddbab19d",
     "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
-    "summaryDigest": "914f8740ddaf38a1fe04eab2c50b334f52b82a67414e45696723f94c44fe40d3",
+    "summaryDigest": "4b95b1e8a25562e3fda6d232d0c371ed9f8a510df7f9bdf7305d77e7f064ef1a",
     "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.outcome.json",
-    "outcomeDigest": "3d80fe897dd3d5f4e7f2372ead7c5548f0221a590a3bbc0147502ccb7cdfa578"
+    "outcomeDigest": "0760e05ce3ae16a8eaa21bb6e664cda969f919e289cf431fa31297207919773a"
   },
   "knowledgeState": "verified",
   "unknowns": []

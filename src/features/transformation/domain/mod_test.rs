@@ -22,7 +22,20 @@ fn reference_evidence(
     period: Option<&str>,
     peer: Option<&str>,
 ) -> ReferenceModelEvidence {
-    ReferenceModelEvidence::new(
+    let source_role = (family == ReferenceModelEvidenceFamily::IndustryDiffusion)
+        .then_some(ReferenceModelSourceRole::IndependentCustomerDisclosure);
+    reference_evidence_with_role(id, family, uri, period, peer, source_role)
+}
+
+fn reference_evidence_with_role(
+    id: &str,
+    family: ReferenceModelEvidenceFamily,
+    uri: &str,
+    period: Option<&str>,
+    peer: Option<&str>,
+    source_role: Option<ReferenceModelSourceRole>,
+) -> ReferenceModelEvidence {
+    ReferenceModelEvidence::new_with_source_role(
         id,
         family,
         format!("{id} claim"),
@@ -30,6 +43,7 @@ fn reference_evidence(
         period.map(str::to_owned),
         peer.map(str::to_owned),
         true,
+        source_role,
     )
     .unwrap()
 }
@@ -105,6 +119,95 @@ fn complete_reference_model_bundle_is_confirmed() {
     assert_eq!(assessment.distinct_outcome_periods(), 2);
     assert_eq!(assessment.independent_diffusion_sources(), 2);
     assert!(assessment.missing().is_empty());
+}
+
+#[test]
+fn supplier_attribution_does_not_satisfy_independent_diffusion() {
+    let mut bundle = ReferenceModelEvidenceBundle::new();
+    for evidence in [
+        reference_evidence(
+            "org",
+            ReferenceModelEvidenceFamily::OrganizationRewrite,
+            "https://example.test/org",
+            Some("2025-01-13"),
+            None,
+        ),
+        reference_evidence(
+            "production",
+            ReferenceModelEvidenceFamily::ProductionSystemRewrite,
+            "https://example.test/production",
+            Some("2025-02-18"),
+            None,
+        ),
+        reference_evidence(
+            "outcome-1",
+            ReferenceModelEvidenceFamily::SustainedOutcome,
+            "https://example.test/10q-1",
+            Some("2025-06-30"),
+            None,
+        ),
+        reference_evidence(
+            "outcome-2",
+            ReferenceModelEvidenceFamily::SustainedOutcome,
+            "https://example.test/10q-2",
+            Some("2025-12-31"),
+            None,
+        ),
+        reference_evidence_with_role(
+            "supplier-diffusion-1",
+            ReferenceModelEvidenceFamily::IndustryDiffusion,
+            "https://supplier.example/pwc",
+            Some("2026-01-10"),
+            Some("PwC"),
+            Some(ReferenceModelSourceRole::SupplierAttribution),
+        ),
+        reference_evidence_with_role(
+            "supplier-diffusion-2",
+            ReferenceModelEvidenceFamily::IndustryDiffusion,
+            "https://supplier.example/niq",
+            Some("2026-02-10"),
+            Some("NIQ"),
+            Some(ReferenceModelSourceRole::SupplierAttribution),
+        ),
+    ] {
+        bundle.add_supporting(evidence).unwrap();
+    }
+    bundle.set_counter_reviewed(true);
+
+    let assessment = bundle.assess();
+
+    assert_eq!(
+        assessment.eligibility(),
+        ReferenceModelEligibility::Candidate
+    );
+    assert_eq!(assessment.independent_diffusion_sources(), 0);
+    assert_eq!(assessment.supplier_attribution_sources(), 2);
+    assert!(assessment
+        .missing()
+        .iter()
+        .any(|item| item == "independent_diffusion_sources"));
+}
+
+#[test]
+fn source_role_is_serialized_and_exposed() {
+    let evidence = reference_evidence_with_role(
+        "independent",
+        ReferenceModelEvidenceFamily::IndustryDiffusion,
+        "https://pwc.example/disclosure",
+        Some("2026-01-10"),
+        Some("PwC"),
+        Some(ReferenceModelSourceRole::IndependentCustomerDisclosure),
+    );
+
+    assert_eq!(
+        evidence.source_role(),
+        Some(ReferenceModelSourceRole::IndependentCustomerDisclosure)
+    );
+    let serialized = serde_json::to_value(evidence).unwrap();
+    assert_eq!(
+        serialized["source_role"],
+        serde_json::json!("independent_customer_disclosure")
+    );
 }
 
 #[test]

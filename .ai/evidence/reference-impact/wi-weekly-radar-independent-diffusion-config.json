@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "requestedText": "Separate supplier attribution from independent customer/IR corroboration in the bounded Weekly Radar reference-model source registry.",
+  "target": {
+    "type": "file",
+    "name": "wi_weekly_radar_independent_diffusion_registry",
+    "path": "config/weekly_radar/reference_model_candidates.json",
+    "operation": "change_signature"
+  },
+  "referenceAnalysis": {
+    "staticReferences": [
+      "config/weekly_radar/companies.json",
+      "src/features/weekly_radar/runtime/config.rs",
+      "src/features/weekly_radar/runtime/sources.rs",
+      "src/features/weekly_radar/runtime/evidence.rs",
+      "tests/weekly_radar_runtime.rs",
+      "docs/superpowers/specs/2026-08-26-weekly-radar-independent-diffusion.md",
+      "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion.md"
+    ],
+    "testReferences": [
+      "tests/weekly_radar_evidence_quality.rs",
+      "tests/weekly_radar_judgment_chain.rs",
+      "tests/weekly_radar_runtime.rs"
+    ],
+    "documentationReferences": [
+      "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+      "docs/validation/VALIDATION_STRATEGY.md",
+      "docs/operations/WEEKLY_RADAR.md"
+    ],
+    "dynamicReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The registry is statically decoded by the existing CompanySourceRegistry boundary; the new list is explicit and does not resolve guessed URLs or dynamic code."
+      ]
+    },
+    "externalConsumers": {
+      "status": "proven_absent",
+      "evidence": [
+        "Only the repository-local Weekly Radar runtime consumes this registry; no external provider or paid API contract is added."
+      ]
+    },
+    "monitoringReferences": {
+      "status": "proven_absent",
+      "evidence": [
+        "The configuration adds bounded source provenance only and introduces no telemetry, polling, webhook, or monitoring reference."
+      ]
+    }
+  },
+  "governanceEvidence": {
+    "contractDeclared": true,
+    "acceptanceDeclared": true,
+    "destructiveChangeAllowed": true,
+    "evidence": [
+      ".ai/work-items/active/wi-weekly-radar-independent-diffusion.contract.json",
+      "The Contract explicitly scopes both registry files, requires declared cross-origin URLs, and prohibits unbounded crawling and supplier-only independent claims."
+    ]
+  },
+  "approval": null
+}

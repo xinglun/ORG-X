@@ -1,6 +1,6 @@
 use chrono::{NaiveDate, Utc};
 use org_x::features::transformation::domain::{
-    ReferenceModelEligibility, ReferenceModelEvidenceFamily,
+    ReferenceModelEligibility, ReferenceModelEvidenceFamily, ReferenceModelSourceRole,
 };
 use org_x::features::weekly_radar::runtime::judgment::{
     derive_judgment_snapshot, derive_judgment_snapshot_for_companies, HumanReference, MachineStage,
@@ -54,23 +54,51 @@ fn reference_fact(
     family: ReferenceModelEvidenceFamily,
     named_peer: Option<&str>,
 ) -> NormalizedFact {
-    NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
+    let source_role = (family == ReferenceModelEvidenceFamily::IndustryDiffusion)
+        .then_some(ReferenceModelSourceRole::IndependentCustomerDisclosure);
+    reference_fact_with_role(ReferenceFactSpec {
         company_id,
         kind,
         value,
+        source_uri,
+        effective_date,
+        family,
+        named_peer,
+        source_role,
+    })
+}
+
+struct ReferenceFactSpec<'a> {
+    company_id: &'a str,
+    kind: &'a str,
+    value: &'a str,
+    source_uri: &'a str,
+    effective_date: &'a str,
+    family: ReferenceModelEvidenceFamily,
+    named_peer: Option<&'a str>,
+    source_role: Option<ReferenceModelSourceRole>,
+}
+
+fn reference_fact_with_role(spec: ReferenceFactSpec<'_>) -> NormalizedFact {
+    NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
+        spec.company_id,
+        spec.kind,
+        spec.value,
         None,
-        Some(family),
-        named_peer.map(str::to_owned),
+        Some(spec.family),
+        spec.named_peer.map(str::to_owned),
         FactStatus::Known,
         Confidence::High,
         Provenance::new(
-            source_uri,
+            spec.source_uri,
             "reference-model claim",
             Utc::now(),
-            Some(NaiveDate::parse_from_str(effective_date, "%Y-%m-%d").unwrap()),
+            Some(NaiveDate::parse_from_str(spec.effective_date, "%Y-%m-%d").unwrap()),
         )
         .unwrap(),
     )
+    .unwrap()
+    .with_reference_model_source_role(spec.source_role)
     .unwrap()
 }
 
@@ -272,6 +300,42 @@ fn confirmed_reference_model_assessment_is_the_only_reference_stage_gate() {
 }
 
 #[test]
+fn supplier_only_diffusion_remains_candidate_and_has_no_reference_stage() {
+    let mut facts = confirmed_reference_model_facts("supplier-only");
+    for fact in &mut facts {
+        if fact.reference_model_family() == Some(ReferenceModelEvidenceFamily::IndustryDiffusion) {
+            let effective_date = fact.provenance().effective_date().unwrap().to_string();
+            *fact = reference_fact_with_role(ReferenceFactSpec {
+                company_id: fact.company_id(),
+                kind: fact.kind(),
+                value: fact.value().unwrap(),
+                source_uri: fact.provenance().source_uri(),
+                effective_date: &effective_date,
+                family: ReferenceModelEvidenceFamily::IndustryDiffusion,
+                named_peer: fact.reference_model_named_peer(),
+                source_role: Some(ReferenceModelSourceRole::SupplierAttribution),
+            });
+        }
+    }
+
+    let snapshot = derive_judgment_snapshot_for_companies(
+        NaiveDate::from_ymd_opt(2026, 8, 20).unwrap(),
+        ["supplier-only"],
+        &facts,
+        Vec::new(),
+    )
+    .unwrap();
+    let machine = snapshot.company("supplier-only").unwrap();
+
+    assert_eq!(
+        machine.reference_model_assessment().eligibility(),
+        ReferenceModelEligibility::Candidate
+    );
+    assert_eq!(machine.machine_stage().label(), "UNDETERMINED");
+    assert!(machine.ranked_candidates().is_empty());
+}
+
+#[test]
 fn explicit_counter_review_marker_confirms_without_fabricating_counter_claim() {
     let mut facts = confirmed_reference_model_facts("reviewed");
     facts.retain(|fact| !fact.kind().starts_with("judgment.counter."));
@@ -326,6 +390,8 @@ fn confirmed_reference_packet_assigns_stage_without_generic_reference_signal() {
                 Confidence::High,
                 fact.provenance().clone(),
             )
+            .unwrap()
+            .with_reference_model_source_role(fact.reference_model_source_role())
             .unwrap();
         }
     }
@@ -366,6 +432,9 @@ fn report_renders_localized_reference_model_matrix_without_calling_candidate_an_
     assert!(chinese.contains("资格状态：已确认"));
     assert!(chinese.contains("组织重写：已具备"));
     assert!(chinese.contains("行业扩散：已具备"));
+    assert!(chinese.contains("独立扩散来源数：2"));
+    assert!(chinese.contains("供应商归因来源数：0"));
+    assert!(chinese.contains("来源角色：独立客户披露=2；供应商归因=0"));
     assert!(!chinese.contains("候选范本"));
 
     let english = org_x::features::weekly_radar::runtime::report::render_report_in_language(

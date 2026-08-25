@@ -136,6 +136,9 @@ pub struct CompanyConfig {
     /// engineering source.
     #[serde(default, alias = "official_research_urls")]
     pub official_research_sources: Vec<String>,
+    /// Additional explicitly configured adopter-owned research documents.
+    #[serde(default, alias = "independent_research_urls")]
+    pub independent_research_sources: Vec<String>,
     /// Optional Greenhouse board identifier.
     #[serde(default, alias = "greenhouse_board_id")]
     pub greenhouse_board: Option<String>,
@@ -167,6 +170,7 @@ impl CompanyConfig {
             careers,
             engineering_ai_blog,
             official_research_sources: Vec::new(),
+            independent_research_sources: Vec::new(),
             greenhouse_board,
             lever_site,
         };
@@ -197,6 +201,15 @@ impl CompanyConfig {
             if !research_sources.insert(source) {
                 return Err(RuntimeError::invalid_configuration(
                     "duplicate official research source URL",
+                ));
+            }
+        }
+        let mut independent_sources = HashSet::new();
+        for source in &self.independent_research_sources {
+            validate_optional_url("independent research source URL", &Some(source.clone()))?;
+            if !independent_sources.insert(source) {
+                return Err(RuntimeError::invalid_configuration(
+                    "duplicate independent research source URL",
                 ));
             }
         }
@@ -253,6 +266,21 @@ impl CompanyConfig {
     /// Returns the explicitly configured official research entrypoints.
     pub fn official_research_source_urls(&self) -> &[String] {
         &self.official_research_sources
+    }
+
+    /// Adds bounded adopter-owned research documents and revalidates the config.
+    pub fn with_independent_research_sources(
+        mut self,
+        sources: Vec<String>,
+    ) -> Result<Self, RuntimeError> {
+        self.independent_research_sources = sources;
+        self.validate()?;
+        Ok(self)
+    }
+
+    /// Returns explicitly configured adopter-owned research documents.
+    pub fn independent_research_source_urls(&self) -> &[String] {
+        &self.independent_research_sources
     }
 
     /// Returns the optional Greenhouse board identifier.

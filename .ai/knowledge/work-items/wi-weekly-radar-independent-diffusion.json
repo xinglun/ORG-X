@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-independent-diffusion",
+  "title": "Independently corroborate AI-era diffusion evidence",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Separate supplier attribution from independent adopter disclosure, carry the typed role through bounded document discovery and validated facts, and require independent corroboration before the reference-model diffusion gate can confirm.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/evidence/reference-impact/wi-weekly-radar-independent-diffusion-config.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.outcome.md",
+    ".ai/work-items/starts/wi-weekly-radar-independent-diffusion.json",
+    "config/weekly_radar/companies.json",
+    "config/weekly_radar/reference_model_candidates.json",
+    "docs/superpowers/specs/2026-08-26-weekly-radar-independent-diffusion.md",
+    "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion.md",
+    "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+    "docs/validation/VALIDATION_STRATEGY.md",
+    "docs/operations/WEEKLY_RADAR.md",
+    "src/features/transformation/domain/mod.rs",
+    "src/features/transformation/domain/mod_test.rs",
+    "src/features/weekly_radar/runtime/config.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/judgment.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/main.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_judgment_chain.rs",
+    "tests/weekly_radar_runtime.rs",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion.json",
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Supplier case studies remain attribution, not independent corroboration.",
+      "reason": "The target claim is industry diffusion, so supplier-controlled material cannot prove adopter-side imitation.",
+      "status": "verified"
+    },
+    {
+      "decision": "Use explicit bounded URLs for cross-origin research.",
+      "reason": "This preserves fail-closed acquisition and prevents guessed or unbounded crawling.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_judgment_chain.rs",
+      "digest": "0e1dfd1608e2e51ad34b9cc0efbabfbd123143556cbae40e139c9267de2297c6"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_runtime.rs",
+      "digest": "1db7727694c17ce8a18bbc863762bd09b06cefb2a8e181955d9ae795e6076310"
+    },
+    {
+      "type": "code",
+      "path": "src/features/transformation/domain/mod.rs",
+      "digest": "89831b7d15af34bb4dceb9768ae48379f26d49da525e291f7b1195e43f46277d"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "digest": "90859d4d0432ed6a6929a3403c642e5d4efe7311f05c2a2d7bcbf8ca042f03df"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/sources.rs",
+      "digest": "50858c4000e785a78025d91ffa9c4399262a012a4708e621c2bfb85f65c6d574"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/config.rs",
+      "digest": "68097b12f70480ceffb476b601bc96b9e76866bee09999f59c6151220b9a6d52"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/judgment.rs",
+      "digest": "97e6a34e6956a5b679b74069cb87415f985f22377720cc9fd8d24f9f95d19035"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "digest": "2c9fd8760edac4e1a777dc3721f35c90416e615ab5acf3082e9389f1d06a11c0"
+    },
+    {
+      "type": "code",
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "digest": "0df97f84bf2c263470f2bf54a5588ad31c8b491eba0780fbe006c2ef4e98fb67"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "digest": "c91743cfa234bf58813ffad9f04dd61c6fc7bbb2781c5df41f21e5e07e543d99"
+    },
+    {
+      "type": "code",
+      "path": "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion.md",
+      "digest": "1f4cbad2e811ecc796606e1b70d980252a1be79583995520cfb93c9c21d3537c"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.contract.json",
+    "contractDigest": "b2f06de3e57441804190deecb538f4857f2bbe44ed8b8d912ed1cfd237de1df4",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.summary.json",
+    "summaryDigest": "05b860d472adb308c1d09909fe5f12f6eac6af9f23b152bbc66de64d759330a0",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.outcome.json",
+    "outcomeDigest": "a24942a01a5fa4e8fafd1aa82474df4d4584710e88bc6664d351d55f16283bea"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

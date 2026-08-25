@@ -650,7 +650,7 @@ fn derive_reference_model_assessment(facts: &[&NormalizedFact]) -> ReferenceMode
         };
         for (period_index, period) in periods.into_iter().enumerate() {
             let id = format!("reference-model:{index}:{period_index}:{}", fact.kind());
-            let evidence = match ReferenceModelEvidence::new(
+            let evidence = match ReferenceModelEvidence::new_with_source_role(
                 id,
                 family,
                 description.clone(),
@@ -658,6 +658,7 @@ fn derive_reference_model_assessment(facts: &[&NormalizedFact]) -> ReferenceMode
                 period,
                 fact.reference_model_named_peer().map(str::to_owned),
                 true,
+                fact.reference_model_source_role(),
             ) {
                 Ok(evidence) => evidence,
                 Err(_) => continue,

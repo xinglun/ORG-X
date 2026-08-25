@@ -33,3 +33,14 @@ Organization Rewrite 是 Production System Rewrite 的证据，而不是 North S
 4. `IndustryDiffusion`：至少两个独立来源、带有明确同行/采用者的模仿或扩散证据。
 
 这四类证据通过 `ReferenceModelEvidenceBundle` 进入 `Candidate / Confirmed / NotEligible` 门禁。来源可访问、公司自述、单次发布、招聘页面或新闻线索都不能单独满足任何范本结论；反证复核和缺失证明必须分别保留。`Candidate` 只表示核心重写已出现但完整证据仍未闭合，不表示行业范本。
+
+### 扩散来源的独立性边界
+
+`IndustryDiffusion` 还必须保留来源角色，不能把“供应商发布了客户案例”当成独立验证：
+
+- `SupplierAttribution`：供应商控制的客户案例或技术归因，只能证明供应商叙述了某个采用案例；
+- `IndependentCustomerDisclosure`：采用者自己的案例、IR 或经营披露，可用于独立扩散的命名采用者与采用行为；
+- `RegulatoryOrFiling`：SEC/IR 的申报或经营结果，主要服务 `SustainedOutcome`，不自动变成扩散证据；
+- `DiscoveryOnly`：新闻或二手发现材料，只是线索。
+
+独立扩散门只计入 authoritative 的 `IndependentCustomerDisclosure` 主张，并要求至少两个不同来源 URI 与两个命名采用者/同行。供应商来源数量与独立来源数量必须在评估和报告中分开；旧快照缺少来源角色时按未知处理，不能追溯性地升级为独立证据。

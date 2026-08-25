@@ -4,7 +4,9 @@ use chrono::{DateTime, NaiveDate, Utc};
 use serde::{de::Error as _, Deserialize, Deserializer, Serialize};
 use std::collections::BTreeMap;
 
-use crate::features::transformation::domain::ReferenceModelEvidenceFamily;
+use crate::features::transformation::domain::{
+    ReferenceModelEvidenceFamily, ReferenceModelSourceRole,
+};
 
 use super::error::RuntimeError;
 
@@ -178,6 +180,8 @@ pub struct NormalizedFact {
     reference_model_family: Option<ReferenceModelEvidenceFamily>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     reference_model_named_peer: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    reference_model_source_role: Option<ReferenceModelSourceRole>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     reference_model_periods: Vec<String>,
     status: FactStatus,
@@ -202,6 +206,8 @@ impl<'de> Deserialize<'de> for NormalizedFact {
             #[serde(default)]
             reference_model_named_peer: Option<String>,
             #[serde(default)]
+            reference_model_source_role: Option<ReferenceModelSourceRole>,
+            #[serde(default)]
             reference_model_periods: Vec<String>,
             status: FactStatus,
             confidence: Confidence,
@@ -216,6 +222,7 @@ impl<'de> Deserialize<'de> for NormalizedFact {
             wire.structural_dimension,
             wire.reference_model_family,
             wire.reference_model_named_peer,
+            wire.reference_model_source_role,
             wire.status,
             wire.confidence,
             wire.provenance,
@@ -300,6 +307,7 @@ impl NormalizedFact {
             structural_dimension,
             reference_model_family,
             reference_model_named_peer,
+            None,
             status,
             confidence,
             provenance,
@@ -322,6 +330,7 @@ impl NormalizedFact {
             structural_dimension,
             None,
             None,
+            None,
             status,
             confidence,
             provenance,
@@ -336,6 +345,7 @@ impl NormalizedFact {
         structural_dimension: Option<StructuralDimension>,
         reference_model_family: Option<ReferenceModelEvidenceFamily>,
         reference_model_named_peer: Option<String>,
+        reference_model_source_role: Option<ReferenceModelSourceRole>,
         status: FactStatus,
         confidence: Confidence,
         provenance: Provenance,
@@ -353,6 +363,7 @@ impl NormalizedFact {
             structural_dimension,
             reference_model_family,
             reference_model_named_peer,
+            reference_model_source_role,
             reference_model_periods: Vec::new(),
             status,
             confidence,
@@ -403,6 +414,21 @@ impl NormalizedFact {
     /// Returns the optional named peer retained for diffusion evidence.
     pub fn reference_model_named_peer(&self) -> Option<&str> {
         self.reference_model_named_peer.as_deref()
+    }
+
+    /// Returns the optional source provenance role retained for reference-model claims.
+    pub const fn reference_model_source_role(&self) -> Option<ReferenceModelSourceRole> {
+        self.reference_model_source_role
+    }
+
+    /// Attaches an explicit provenance role without changing the fact identity.
+    pub fn with_reference_model_source_role(
+        mut self,
+        source_role: Option<ReferenceModelSourceRole>,
+    ) -> Result<Self, RuntimeError> {
+        self.reference_model_source_role = source_role;
+        self.validate()?;
+        Ok(self)
     }
 
     /// Adds a bounded, explicit list of periods supporting a sustained-outcome

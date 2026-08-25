@@ -1,0 +1,279 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-independent-diffusion",
+  "mode": "code",
+  "title": "Independently corroborate AI-era diffusion evidence",
+  "rawUserRequest": "继续推进独立来源核验，并走完本 Work Item 的完整本地、CI、PR、合并和关闭流程；如果有问题继续修复。将供应商案例、客户自有披露和 SEC/IR 结果分离，不能把供应商宣传直接作为独立验证。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "conversation:user-message",
+    "digest": "not-generated",
+    "capturedAt": "2026-08-26T00:00:00+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "documentation", "ai_governance"],
+    "prohibitedCapabilities": ["production_operation", "external_publication", "secret_readback", "unbounded_crawl", "manual_data_mutation", "investment_decision"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": true,
+    "authorityReason": "The user explicitly accepted independent corroboration and authorized the complete governed lifecycle, including CI, PR, merge, closure, and in-scope repair on failure."
+  },
+  "authorityEvidence": {
+    "type": "human_authorization",
+    "granted": true,
+    "scope": "Execute, verify, publish the PR, run hosted CI, merge, close, and archive this Work Item, including in-scope repair when a lifecycle check fails.",
+    "reference": "User authorization: 执行到WI全部流程结束，并且触发一次CI；follow-up approval: 接受独立来源核验并要求有问题继续。",
+    "capturedAt": "2026-08-26T00:00:00+09:00"
+  },
+  "baseCommit": "d37885c6d0a08240d8fc6f12335a47c2ddc536e2",
+  "baselineDirtyPaths": [],
+  "problemStatement": "The previous reference-model packet correctly found Microsoft Confirmed under the four-family gate, but its two diffusion documents were both Microsoft-published customer stories. The system therefore proves named adoption claims only through a supplier-controlled publication surface, while customer self-disclosures and SEC/IR operating results are not represented as distinct source roles. This Work Item adds an explicit independent-source boundary and updates the diffusion gate so vendor attribution, adopter self-disclosure, and financial/operating corroboration remain separate and auditable.",
+  "scope": [
+    "config/weekly_radar/reference_model_candidates.json",
+    "config/weekly_radar/companies.json",
+    ".ai/work-items/active/wi-weekly-radar-independent-diffusion.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-independent-diffusion.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/evidence/reference-impact/wi-weekly-radar-independent-diffusion-config.json",
+    ".ai/work-items/active/wi-weekly-radar-independent-diffusion.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-independent-diffusion.outcome.md",
+    "docs/superpowers/specs/2026-08-26-weekly-radar-independent-diffusion.md",
+    "docs/superpowers/plans/2026-08-26-weekly-radar-independent-diffusion.md",
+    "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+    "docs/validation/VALIDATION_STRATEGY.md",
+    "docs/operations/WEEKLY_RADAR.md",
+    "src/features/transformation/domain/mod.rs",
+    "src/features/transformation/domain/mod_test.rs",
+    "src/features/weekly_radar/runtime/config.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/judgment.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/main.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_judgment_chain.rs",
+    "tests/weekly_radar_runtime.rs"
+  ],
+  "outOfScope": [
+    "Adding new providers, paid search, unbounded crawling, guessed URLs, LLM judgment, ranking changes, or investment decisions",
+    "Changing SEC response limits or rewriting the existing four-family organization, production-system, outcome, or counter-review gate outside the diffusion-source boundary",
+    "Treating social posts, supplier marketing, or discovery-only articles as authoritative independent evidence",
+    "External production operation, secret access, manual data mutation, Telegram delivery, release, or data-branch publication"
+  ],
+  "sources": [
+    {
+      "path": ".ai/work-items/active/wi-weekly-radar-independent-diffusion.contract.json",
+      "reason": "Governed scope, authority, acceptance, and fail-closed lifecycle boundary."
+    },
+    { "path": "AGENTS.md", "reason": "Repository Work Item governance, evidence, scope, and full lifecycle rules." },
+    { "path": ".ai/glossary.md", "reason": "Canonical source, evidence, and judgment terminology." },
+    { "path": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json", "reason": "Archived predecessor Contract and its four-family gate consumed as the immutable implementation baseline." },
+    { "path": ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.outcome.json", "reason": "Archived predecessor verification and explicit residual risk about supplier-published diffusion sources." },
+    { "path": "src/features/transformation/domain/mod.rs", "reason": "Provider-neutral reference-model evidence and eligibility boundary." },
+    { "path": "src/features/weekly_radar/runtime/config.rs", "reason": "Static bounded source registry and URL validation boundary." },
+    { "path": "src/features/weekly_radar/runtime/sources.rs", "reason": "Source kind, tier, observation status, and bounded HTTP collection boundary." },
+    { "path": "src/features/weekly_radar/runtime/evidence.rs", "reason": "Claim extraction, source authority, and normalized evidence metadata boundary." },
+    { "path": "src/features/weekly_radar/runtime/model.rs", "reason": "Backward-compatible NormalizedFact serialization boundary." },
+    { "path": "src/features/weekly_radar/runtime/judgment.rs", "reason": "Reference-model gate and Stage assignment boundary." },
+    { "path": "src/features/weekly_radar/runtime/report.rs", "reason": "User-visible source-role and diffusion evidence rendering boundary." },
+    { "path": "src/main.rs", "reason": "Runtime assembly and bounded source integration." },
+    { "path": "tests/weekly_radar_evidence_quality.rs", "reason": "Extraction and source-quality regression coverage." },
+    { "path": "tests/weekly_radar_judgment_chain.rs", "reason": "Reference-model gate and Stage regression coverage." },
+    { "path": "tests/weekly_radar_runtime.rs", "reason": "Source collection, serialization, and report regression coverage." },
+    { "path": "https://www.pwc.com/us/en/library/case-studies/pwc-microsoft-copilot-enterprise-ai.html", "reason": "PwC self-disclosure for independent adoption and operating-use corroboration." },
+    { "path": "https://investors.nielseniq.com/news/news-details/2026/NIQ-Announces-First-Quarter-2026-Results-That-Exceed-Expectations/default.aspx", "reason": "NIQ investor disclosure for AI-powered coding, automation, restructuring, and operating results." },
+    { "path": "https://www.microsoft.com/en/customers/story/26160-pwc-microsoft-365-enterprise", "reason": "Microsoft supplier case retained only for technical attribution and discovery comparison." },
+    { "path": "https://www.microsoft.com/en/customers/story/25893-niq-microsoft-foundry", "reason": "Microsoft supplier case retained only for technical attribution and discovery comparison." }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "high",
+    "riskTypes": ["false_positive_diffusion", "source_role_misclassification", "legacy_serialization", "cross_origin_fetch", "hosted_lifecycle"],
+    "reason": "Independent diffusion is a hard condition for the product claim. Misclassifying supplier-controlled material as independent could produce a false reference model, while rejecting valid customer disclosures could hide a real industry pattern. The implementation must preserve legacy snapshots, bound cross-origin URLs explicitly, keep provenance classification in Rust, and pass the full hosted lifecycle.",
+    "unknownsReviewComplete": true
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item changes source authority semantics, serialized evidence metadata, the highest reference-model gate, and hosted lifecycle evidence."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The source-role distinction, independent diffusion acceptance boundary, explicit URLs, TDD scenarios, and complete lifecycle verification are defined."
+  },
+  "preReviewWarnings": [
+    "Supplier-published customer stories must not silently count as independent corroboration; customer self-disclosure and technical attribution remain separate."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "The runtime distinguishes supplier attribution, independent customer self-disclosure, and discovery-only material with typed source roles; legacy JSON remains readable.",
+    "Independent diffusion evidence requires at least two authoritative independent source URIs and named adopters/peers; supplier-only sources do not satisfy the hard condition.",
+    "PwC and NIQ customer/IR URLs are collected as explicit bounded independent sources without guessed cross-origin URLs or unbounded crawling.",
+    "The report exposes independent diffusion count, supplier attribution count, source-role provenance, and missing proof separately.",
+    "TDD covers independent-source promotion, supplier-only suppression, cross-origin URL validation, legacy deserialization, localized rendering, and full gate behavior.",
+    "Python and Shell remain orchestration-only; Rust owns provenance classification, evidence metadata, the gate, Stage assignment, and report values.",
+    "SEC/IR and customer disclosures remain distinct evidence classes; no causal productivity claim is inferred from a single customer case.",
+    "The Contract-bound local checks, strict quality gate, PR checks, hosted CI, merge, and Work Item closure each produce passing evidence before the next lifecycle stage begins."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep source-role classification and reference-model gate semantics provider-neutral and deterministic in Rust.",
+    "Treat supplier attribution, customer self-disclosure, regulatory/IR results, and discovery-only material as different evidence states.",
+    "Never infer independent corroboration from a different URL on the same supplier domain.",
+    "Preserve legacy snapshot deserialization and localized report semantics.",
+    "Use Python and Shell only for bounded orchestration, fixtures, and verification."
+  ],
+  "scenarioCoverage": [
+    { "scenario": "Supplier-only diffusion remains insufficient.", "required": true, "status": "unverified", "evidence": ["src/features/transformation/domain/mod.rs", "tests/weekly_radar_judgment_chain.rs"], "expected": "Two Microsoft customer-story URIs do not satisfy independent diffusion once the policy requires independent source role.", "verificationPlan": "Write a RED domain test, then implement the smallest source-role-aware gate." },
+    { "scenario": "PwC and NIQ self-disclosures become independent primary evidence.", "required": true, "status": "unverified", "evidence": ["config/weekly_radar/reference_model_candidates.json", "src/features/weekly_radar/runtime/sources.rs", "tests/weekly_radar_runtime.rs"], "expected": "Explicit cross-origin URLs are collected only as configured independent sources and retain authoritative provenance.", "verificationPlan": "Add fixture responses and assert source kind/tier/URI and no guessed URL collection." },
+    { "scenario": "Independent diffusion metadata reaches the normalized fact and reference-model gate.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/evidence.rs", "src/features/weekly_radar/runtime/model.rs", "src/features/weekly_radar/runtime/judgment.rs", "tests/weekly_radar_evidence_quality.rs"], "expected": "Legacy facts default to false; independent claims are explicit; the gate counts only independent authoritative diffusion sources.", "verificationPlan": "Add serialization and gate tests before implementation." },
+    { "scenario": "Localized report separates source roles and missing proof.", "required": true, "status": "unverified", "evidence": ["src/features/weekly_radar/runtime/report.rs", "tests/weekly_radar_judgment_chain.rs"], "expected": "Chinese, English, and Japanese reports expose supplier versus independent source counts without overclaiming.", "verificationPlan": "Add localized rendering assertions." },
+    { "scenario": "Full lifecycle remains fail-closed.", "required": true, "status": "unverified", "evidence": ["AGENTS.md", "Makefile.ai"], "expected": "Local gates, PR checks, hosted CI, merge, and closure are each identity-bound; any failure blocks progression.", "verificationPlan": "Run canonical finish, archive, check-ai-pr, push/PR, hosted checks, merge, and ai-close-work-item." }
+  ],
+  "intent": {
+    "problem": "The prior Microsoft packet's diffusion evidence came from Microsoft-published customer stories. The product needs to distinguish technical attribution from independent customer adoption and operating-result corroboration before calling an AI-era organization a durable industry model.",
+    "constraints": [
+      "Do not weaken the existing four-family gate or convert source quality into a score.",
+      "Only explicitly configured bounded URLs may be fetched; cross-origin sources must be declared and validated.",
+      "Supplier material may explain technical attribution but cannot satisfy independent diffusion by itself.",
+      "Customer self-disclosures and SEC/IR results remain primary for their own claims, not proof of Microsoft's technical implementation.",
+    "Python and Shell may orchestrate and verify but may not own provenance classification or reference-model judgment.",
+      "The complete repository lifecycle is required: local checks, PR checks, hosted CI, merge, and closure."
+    ],
+    "rationale": "The remaining research risk is not discovery volume; it is provenance semantics. A typed independent-source boundary lets ORG-X retain supplier case studies as attribution while requiring corroboration from the adopters' own disclosures."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user-authorized",
+    "reason": "The user explicitly accepted the independent-corroboration recommendation and directed the complete governed lifecycle, including iterative fixes."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore the predecessor's supplier-only diffusion semantics; preserve the archived predecessor evidence and source URLs as audit inputs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 77
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-independent-diffusion.json",
+    "baseCommit": "f26b9504b8b6fd6ebc72fce34edac71f4b023825",
+    "initialScopeDigest": "fc25020e57fa3512b31621e2a697e0f59962232a5e5262fd81f13b837d452c0d",
+    "contractSkeletonDigest": "9965dc177cbba55ec3ff71812c2044c2a5ea3657716423d1439d8be6a995132f"
+  },
+  "synchronizationHistory": [
+    {
+      "synchronizationVersion": 1,
+      "fromBaseCommit": "f26b9504b8b6fd6ebc72fce34edac71f4b023825",
+      "toBaseCommit": "d37885c6d0a08240d8fc6f12335a47c2ddc536e2",
+      "baseRemote": "origin",
+      "baseBranch": "main",
+      "workBranch": "codex/wi-weekly-radar-independent-diffusion",
+      "recordedAt": "2026-08-26T06:45:48+09:00",
+      "priorContractDigest": "efaed166f0872c34de07410f2f1b0daa2f44a68ad90efd5cadf43668ddbab19d",
+      "priorSummaryDigest": "4b95b1e8a25562e3fda6d232d0c371ed9f8a510df7f9bdf7305d77e7f064ef1a",
+      "rebaseHeadBefore": "e6bffa631b8ca3c6ac7e99ae7e798778bc0201ea",
+      "rebaseHeadAfter": "99d75f6e05c9c3e05bce63c8a68281d4c22eb54d"
+    }
+  ]
+}

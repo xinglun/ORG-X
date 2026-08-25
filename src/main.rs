@@ -538,6 +538,7 @@ fn sec_document_observation(
     document_observation(DocumentObservationInput {
         company_id: company_id.to_owned(),
         kind: SourceKind::Sec,
+        tier: SourceTier::OfficialPrimary,
         url: document.source_uri().to_owned(),
         title: document.title().to_owned(),
         text: document.text().to_owned(),
@@ -589,7 +590,7 @@ fn add_counter_review_fact(
         .iter()
         .filter(|observation| {
             observation.status() == SourceStatus::Known
-                && observation.tier() == SourceTier::OfficialPrimary
+                && observation.is_authoritative()
                 && matches!(
                     observation.material_kind(),
                     SourceMaterialKind::EntryPoint | SourceMaterialKind::Document
@@ -666,6 +667,7 @@ fn registry_has_configured_primary_source(registry: &CompanySourceRegistry) -> b
             || company.careers_url().is_some()
             || company.engineering_ai_blog_url().is_some()
             || !company.official_research_source_urls().is_empty()
+            || !company.independent_research_source_urls().is_empty()
     })
 }
 

@@ -73,6 +73,9 @@ pub fn direct_document_candidate(
         "/article/",
         "/articles/",
         "/press/",
+        "/case-studies/",
+        "/library/",
+        "/news-details/",
     ]
     .iter()
     .any(|marker| path.contains(marker));
@@ -83,7 +86,11 @@ pub fn direct_document_candidate(
     let document_kind = classify_document(&classification_text).or_else(|| {
         if path.contains("/insidetrack/") || path.contains("/blog/") {
             Some(DocumentKind::AiAutomation)
-        } else if path.contains("/story/") || path.contains("/stories/") {
+        } else if path.contains("/story/")
+            || path.contains("/stories/")
+            || path.contains("/case-studies/")
+            || path.contains("/library/")
+        {
             Some(DocumentKind::ProductPlatform)
         } else {
             None

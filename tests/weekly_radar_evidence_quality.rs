@@ -832,6 +832,88 @@ fn localized_reports_keep_validated_evidence_separate_from_known_facts() {
 }
 
 #[test]
+fn localized_reports_render_structural_dimensions_and_legacy_fallback() {
+    let dimensions = [
+        (StructuralDimension::Organization, "Organization claim"),
+        (StructuralDimension::Workflow, "Workflow claim"),
+        (
+            StructuralDimension::ProductionSystem,
+            "Production system claim",
+        ),
+        (
+            StructuralDimension::OperatingMetric,
+            "Operating metric claim",
+        ),
+    ];
+    let mut input = RuntimeReportInput::new("2026-08-25").unwrap();
+    for (index, (dimension, value)) in dimensions.into_iter().enumerate() {
+        input
+            .add_fact(
+                NormalizedFact::new_with_structural_dimension(
+                    "acme",
+                    format!("evidence_structural_change_{:03}", index + 1),
+                    value,
+                    Some(dimension),
+                    FactStatus::Known,
+                    Confidence::High,
+                    Provenance::new(
+                        format!("https://ir.example.test/dimension/{index}"),
+                        value,
+                        Utc::now(),
+                        Some(NaiveDate::from_ymd_opt(2026, 8, 19).unwrap()),
+                    )
+                    .unwrap(),
+                )
+                .unwrap(),
+            )
+            .unwrap();
+    }
+    input
+        .add_fact(
+            NormalizedFact::new(
+                "acme",
+                "evidence_structural_change_005",
+                "Legacy structural claim",
+                FactStatus::Known,
+                Confidence::High,
+                Provenance::new(
+                    "https://ir.example.test/legacy",
+                    "Legacy structural claim",
+                    Utc::now(),
+                    Some(NaiveDate::from_ymd_opt(2026, 8, 19).unwrap()),
+                )
+                .unwrap(),
+            )
+            .unwrap(),
+        )
+        .unwrap();
+
+    let chinese = render_report_in_language(&input, ReportLanguage::Chinese);
+    assert!(chinese.markdown().contains("组织变化"));
+    assert!(chinese.markdown().contains("工作流变化"));
+    assert!(chinese.markdown().contains("生产系统变化"));
+    assert!(chinese.markdown().contains("运营指标变化"));
+    assert!(chinese.markdown().contains("结构性证据"));
+    assert!(chinese
+        .snapshot_json()
+        .contains("\"structural_dimension\": \"operating_metric\""));
+
+    let japanese = render_report_in_language(&input, ReportLanguage::Japanese);
+    assert!(japanese.markdown().contains("組織変化"));
+    assert!(japanese.markdown().contains("ワークフロー変化"));
+    assert!(japanese.markdown().contains("生産システム変化"));
+    assert!(japanese.markdown().contains("運用指標変化"));
+    assert!(japanese.markdown().contains("構造的証拠"));
+
+    let english = render_report_in_language(&input, ReportLanguage::English);
+    assert!(english.markdown().contains("Organizational change"));
+    assert!(english.markdown().contains("Workflow change"));
+    assert!(english.markdown().contains("Production-system change"));
+    assert!(english.markdown().contains("Operating-metric change"));
+    assert!(english.markdown().contains("Structural evidence"));
+}
+
+#[test]
 fn localized_reports_keep_the_same_metric_values() {
     let input = input_with_metrics(ResearchMetrics::new(9, 10, 1, 9, 50));
 

@@ -130,6 +130,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json"
     },
     {
+      "workItemId": "wi-weekly-radar-sec-ir-deep-discovery",
+      "title": "Deep SEC and IR document discovery",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-source-coverage",
       "title": "Weekly Radar数据来源覆盖改善",
       "topics": [],

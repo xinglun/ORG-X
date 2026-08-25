@@ -8,6 +8,9 @@ use super::sources::SourceKind;
 
 /// Maximum number of document links followed from one official entry point.
 pub const MAX_DOCUMENT_CANDIDATES_PER_ENTRY: usize = 8;
+/// Maximum number of discovered documents retained from one entry point after
+/// the direct set and one nested discovery pass are combined.
+pub const MAX_DOCUMENT_OBSERVATIONS_PER_ENTRY: usize = 12;
 
 /// Coarse document class used to route deterministic claim extraction rules.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, serde::Deserialize, serde::Serialize)]

@@ -7,8 +7,9 @@ use serde::Deserialize;
 use serde_json::Value;
 
 use super::config::CompanyConfig;
+use super::discovery::document_metadata;
 use super::error::RuntimeError;
-use super::http::{HttpClient, MAX_HTTP_RESPONSE_BODY_BYTES};
+use super::http::HttpClient;
 use super::model::{Confidence, FactStatus, NormalizedFact, Provenance};
 use super::rules::extract_employee_candidate;
 
@@ -26,6 +27,9 @@ pub const MAX_SEC_DOCUMENT_CANDIDATES: usize = 3;
 /// pages. The limit remains bounded so an unexpectedly large response still
 /// fails closed before it can cause an unbounded allocation.
 pub const SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES: usize = 16 * 1024 * 1024;
+
+/// Finite response limit for individual SEC filing documents.
+pub const SEC_FILING_DOCUMENT_MAX_RESPONSE_BODY_BYTES: usize = 8 * 1024 * 1024;
 
 // SEC submissions uses the same finite JSON envelope as Company Facts. Keep
 // this adapter-specific alias separate from the generic transport limit so
@@ -119,6 +123,17 @@ pub struct SecStageFailure {
     reason: String,
 }
 
+/// Safe retrieval status for one SEC filing document.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum SecDocumentStatus {
+    /// The filing body contained usable normalized text.
+    Known,
+    /// The filing response succeeded but did not contain usable text.
+    Unknown,
+    /// The filing could not be retrieved or exceeded its finite limit.
+    Unavailable,
+}
+
 impl SecStageFailure {
     fn new(stage: &'static str, error: &RuntimeError) -> Self {
         let reason = match error {
@@ -158,6 +173,10 @@ pub struct SecDocumentCandidate {
     report_date: Option<NaiveDate>,
     primary_document: String,
     source_uri: String,
+    title: String,
+    text: String,
+    status: SecDocumentStatus,
+    status_reason: String,
 }
 
 impl SecDocumentCandidate {
@@ -189,6 +208,49 @@ impl SecDocumentCandidate {
     /// Returns the SEC archive URI constructed from validated metadata.
     pub fn source_uri(&self) -> &str {
         &self.source_uri
+    }
+
+    /// Returns the normalized filing title, or the SEC primary-document name.
+    pub fn title(&self) -> &str {
+        &self.title
+    }
+
+    /// Returns bounded normalized filing text.
+    pub fn text(&self) -> &str {
+        &self.text
+    }
+
+    /// Returns the safe filing-body retrieval status.
+    pub const fn status(&self) -> SecDocumentStatus {
+        self.status
+    }
+
+    /// Returns the safe reason associated with the filing-body status.
+    pub fn status_reason(&self) -> &str {
+        &self.status_reason
+    }
+
+    fn record_body(&mut self, body: &str) {
+        let (title, _body_date, text) = document_metadata(body, self.primary_document());
+        self.title = title;
+        self.text = text;
+        self.status = if self.text.is_empty() {
+            SecDocumentStatus::Unknown
+        } else {
+            SecDocumentStatus::Known
+        };
+        self.status_reason = if self.status == SecDocumentStatus::Known {
+            "SEC filing returned usable text".to_owned()
+        } else {
+            "SEC filing contained no usable text".to_owned()
+        };
+    }
+
+    fn record_failure(&mut self, reason: &str) {
+        self.title = self.primary_document.clone();
+        self.text.clear();
+        self.status = SecDocumentStatus::Unavailable;
+        self.status_reason = reason.to_owned();
     }
 }
 
@@ -286,10 +348,25 @@ impl SecClient {
                 None
             }
         };
-        let documents = submissions
+        let mut documents = submissions
             .as_ref()
             .map(|value| value.filing_documents(cik_path))
             .unwrap_or_default();
+        for document in &mut documents {
+            match get_response_body(
+                http,
+                document.source_uri(),
+                user_agent,
+                SEC_FILING_DOCUMENT_MAX_RESPONSE_BODY_BYTES,
+            ) {
+                Ok(body) => document.record_body(&body),
+                Err(error) => {
+                    let failure = SecStageFailure::new("filing_document", &error);
+                    document.record_failure(failure.reason());
+                    failures.push(failure);
+                }
+            }
+        }
         let latest_filing = submissions
             .as_ref()
             .and_then(SubmissionsDocument::latest_10k);
@@ -336,24 +413,55 @@ impl SecClient {
             if spec.kind == "employee_count" {
                 if let Some(filing) = latest_filing.as_ref() {
                     let filing_url = filing.url(cik_path);
-                    let body = match get_response_body(
-                        http,
-                        &filing_url,
-                        user_agent,
-                        MAX_HTTP_RESPONSE_BODY_BYTES,
-                    ) {
-                        Ok(body) => body,
-                        Err(error) => {
-                            failures.push(SecStageFailure::new("filing_document", &error));
-                            normalized.push(unavailable_fact(
-                                company,
-                                spec.kind,
-                                filing_url,
-                                "SEC filing document unavailable",
-                                filing.report_date(),
-                                retrieved_at,
-                            )?);
-                            continue;
+                    let body = if let Some(document) = documents
+                        .iter()
+                        .find(|document| document.accession_number() == filing.accession_number)
+                    {
+                        match document.status() {
+                            SecDocumentStatus::Known => document.text().to_owned(),
+                            SecDocumentStatus::Unknown => {
+                                normalized.push(unknown_fact(
+                                    company,
+                                    spec.kind,
+                                    filing_url,
+                                    "SEC filing document contained no usable text",
+                                    filing.report_date(),
+                                    retrieved_at,
+                                )?);
+                                continue;
+                            }
+                            SecDocumentStatus::Unavailable => {
+                                normalized.push(unavailable_fact(
+                                    company,
+                                    spec.kind,
+                                    filing_url,
+                                    "SEC filing document unavailable",
+                                    filing.report_date(),
+                                    retrieved_at,
+                                )?);
+                                continue;
+                            }
+                        }
+                    } else {
+                        match get_response_body(
+                            http,
+                            &filing_url,
+                            user_agent,
+                            SEC_FILING_DOCUMENT_MAX_RESPONSE_BODY_BYTES,
+                        ) {
+                            Ok(body) => document_metadata(&body, &filing.primary_document).2,
+                            Err(error) => {
+                                failures.push(SecStageFailure::new("filing_document", &error));
+                                normalized.push(unavailable_fact(
+                                    company,
+                                    spec.kind,
+                                    filing_url,
+                                    "SEC filing document unavailable",
+                                    filing.report_date(),
+                                    retrieved_at,
+                                )?);
+                                continue;
+                            }
                         }
                     };
                     if let Some(candidate) =
@@ -776,6 +884,10 @@ impl FilingMetadata {
             report_date: self.report_date(),
             primary_document: self.primary_document.clone(),
             source_uri: self.url(cik_path),
+            title: self.primary_document.clone(),
+            text: String::new(),
+            status: SecDocumentStatus::Unknown,
+            status_reason: "SEC filing body not yet retrieved".to_owned(),
         })
     }
 }

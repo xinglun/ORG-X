@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-sec-ir-deep-discovery",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json",
+  "baseCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+  "baseBranch": "codex/wi-weekly-radar-sec-ir-deep-discovery",
+  "startTimestamp": "2026-08-25T11:45:31.814317+00:00",
+  "initialScopeDigest": "db6e6be8ea2c6e964f48c5f398ec178c5c0621d8119ba2540669febea69cf71e",
+  "contractSkeletonDigest": "de2715e130c3587ddc0954937bf03ab70194ba1baa6c8e4fb456af7ab4c72a9e"
+}

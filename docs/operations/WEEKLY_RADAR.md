@@ -131,10 +131,14 @@ SEC submissions 和 SEC Company Facts 都是包含完整申报历史的 JSON，�
 
 来源状态会分别说明：资料可用、已配置但暂时不可用、尚未配置、不适用、资料可读但没有可确认内容，以及仅用于发现线索。尚未配置不等于请求失败；不适用也不计入暂不可用；新闻发现即使可用，仍只表示有线索，不能单独证明事实。SEC submissions、Company Facts 和可选 filing document 是独立阶段：一阶段失败不会丢弃另一阶段成功结果，阶段名与安全原因会进入 source failure；申报候选来自有限的最近 `10-K`、`10-Q`、`8-K` 元数据，URL 只能由校验后的 accession 和 primary document 拼接。
 
+SEC 申报候选在保留元数据后，还会逐个读取最多 3 个最近的校验后 primary document；每个 filing body 使用独立的有限上限（8 MiB），并保留标题、正文、accession、form、filing date、report date 和 archive URI。`KNOWN` 表示正文可用于现有 claim gate，`UNKNOWN` 表示响应成功但没有可用正文，`UNAVAILABLE` 表示请求失败或超过上限。文档失败不会抹掉 Company Facts 或其他 filing；employee fallback 会复用已经读取的最新 10-K，只有最新 10-K 不在这组有限候选中时才单独读取它。
+
+官方 IR 入口先发现最多 8 个直接同源文档，再从成功读取的直接文档执行一次额外同源发现；两层合计最多保留 12 个文档。URL 会去掉 fragment、去重并拒绝跨 origin 链接，目录页、archive/index 页和入口页仍只是线索，不能因为被抓到或可访问就成为企业变化证据。超过深度、重复或总量上限的链接不会继续请求。
+
 研究状态必须按以下层次解释：
 
 - `SourceObservation`：入口页或接口是否可访问；入口页的可访问性不是企业变化证据。
-- `DocumentCandidate`：从同源入口发现的有限文档，保留 URL、标题、`filing`/`earnings`/`engineering`/`organization` 等文档类型、日期和发现 provenance；不会猜测 URL，也不会无限爬取。入口页仍是 `SourceMaterialKind::EntryPoint`，不会继承文档类型或被晋升为证据。
+- `DocumentCandidate`：从同源入口发现的有限文档，保留 URL、标题、`filing`/`earnings`/`engineering`/`organization` 等文档类型、日期和发现 provenance；IR 只增加一次嵌套发现，SEC filing 只使用有限 submissions 元数据构造 archive URI；不会猜测 URL，也不会无限爬取。入口页仍是 `SourceMaterialKind::EntryPoint`，不会继承文档类型或被晋升为证据。
 - `EvidenceCandidate`：必须有公司 ID、公司名称、具体变化/事实、有效日期、生产环节、来源 URI、来源标题、权威级别、正文段落和 cutoff 关系；任一字段缺失都保持待验证，不进入 confirmed 或 StructuralEvidence。
 - `ValidatedEvidence`：通过确定性 gate 的主张，才会成为 `evidence_*` normalized fact；它随后按主张段落中的结构性信号分为普通已验证事实或 StructuralEvidence。GDELT、新闻、招聘记录和页面级 observation 不会绕过该 gate。
 - `StructuralDimension`：StructuralEvidence 的维度只描述主张涉及的变化域，不改变其 evidence kind 前缀、Stage、Ranking、Counter Evidence、Telegram 或 archive 行为。固定优先级为 `OperatingMetric`（利用率、延迟、吞吐、产能、成本、利润/现金流、GPU 等）→ `ProductionSystem`（部署、发布、平台、基础设施、存储、云、自动化、agent 等）→ `Workflow`（工作流、流程、审批、排程、交接等）→ `Organization`（组织、职责、汇报关系、团队、部门、人员规模等）。

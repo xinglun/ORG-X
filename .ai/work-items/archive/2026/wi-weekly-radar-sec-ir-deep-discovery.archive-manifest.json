@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-weekly-radar-sec-ir-deep-discovery",
+  "archiveSequence": 74,
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+  "contractSha256": "bd6e2933117c20ac360c8f0bde45f412d2059f9cc80052f58f481b63fa9b44fe",
+  "summarySha256": "1d8e736eb99a8801ffa83363e3af04b05e1fd1c9e3022546fc1fecbce5fcc473",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.json",
+      "sha256": "cad6e408184b1b1f6633c0b570b5434060750f17641c98d05ce2a86956f0780b"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-sec-ir-deep-discovery.outcome.md",
+      "sha256": "93bcfac44ccf79f8abe7127775adf55d192567efd40ff3305dffc1f80aab94a9"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "8b9ac47c16161299c4cfea6719660481d49139587af3abace5b66fefb1826980",
+    "binding": {
+      "baseCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+      "candidateHead": "0bf0b97ab8f8fcd5bd443ebfab528ffab76a42ac",
+      "candidateTreeDigest": "50fe16d1c0fba0675ac7a55f9f64766c158f62053b53edc95e63afdcb85e5782",
+      "candidateDiffDigest": "8f587647031bfea27123dd6bb3f0ee275a0ba2881efbc9cf1b34f04a63868a5c"
+    }
+  }
+}

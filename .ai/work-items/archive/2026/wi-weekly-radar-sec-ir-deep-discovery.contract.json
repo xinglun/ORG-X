@@ -1,0 +1,351 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-sec-ir-deep-discovery",
+  "mode": "code",
+  "title": "Deep SEC and IR document discovery",
+  "rawUserRequest": "创建 WI 优先推进 SEC/IR 深层文档发现；按我们走过好几轮的流程修改、确认，发现问题就在当前 WI 内继续修改，循环到没有问题为止；不要求必须完成 CI、PR、合并和关闭。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "conversation:user-message",
+    "digest": "not-generated",
+    "capturedAt": "2026-08-25T20:48:11+09:00"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "software_design",
+      "test_automation",
+      "documentation",
+      "ai_governance"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "external_publication",
+      "secret_readback",
+      "unbounded_crawl",
+      "manual_data_mutation"
+    ]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "User explicitly authorized iterative implementation and local problem resolution on 2026-08-25."
+  },
+  "baseCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-sec-ir-deep-discovery.outcome.md",
+    ".ai/evidence/reference-impact/wi-weekly-radar-sec-ir-deep-discovery*.json",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md",
+    "src/features/weekly_radar/runtime/sec.rs",
+    "src/features/weekly_radar/runtime/discovery.rs",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "src/main.rs",
+    "tests/weekly_radar_runtime.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "Stage, Ranking, Top5, Counter Evidence, Missing Proof, or judgment-policy changes",
+    "Telegram delivery, archive persistence, data branches, workflow publication, or production deployment",
+    "Adding new providers, web search, news promotion, LLM or probabilistic inference, guessed claims, or unbounded crawling",
+    "SEC financial derivation beyond existing Company Facts and employee-count fallback behavior",
+    "Historical snapshot migration or breaking deserialization changes",
+    "Hosted CI, PR creation, merge, release, and Work Item closure; the requested stopping point is local problem resolution"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository AI Cockpit rules and Work Item boundaries."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Governance terminology and evidence semantics."
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "Local governance commands and evidence requirements."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-25-weekly-radar-sec-ir-deep-discovery-design.md",
+      "reason": "Approved design boundary for bounded SEC and IR discovery."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-25-weekly-radar-sec-ir-deep-discovery.md",
+      "reason": "TDD implementation sequence and verification plan."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/sec.rs",
+      "reason": "Existing SEC submissions, Company Facts, filing metadata, and failure semantics."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/discovery.rs",
+      "reason": "Existing same-origin document classification and bounded candidate discovery."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/sources.rs",
+      "reason": "Existing source observations and configured official-source acquisition."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "Existing source-kind to evidence-kind mapping that must classify SEC filings explicitly."
+    },
+    {
+      "path": "src/main.rs",
+      "reason": "Runtime acquisition loop, metrics, and evidence promotion integration."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "SEC and runtime regression fixtures."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "Document discovery and claim-promotion quality fixtures."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "User-facing evidence and degraded-data semantics."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "external_http_boundary",
+      "false_positive_or_negative",
+      "metrics_double_counting",
+      "legacy_behavior"
+    ],
+    "reason": "The change adds bounded public-source body retrieval and one-hop traversal. It must preserve independent partial failures, prevent entry pages from becoming evidence, avoid duplicate metrics, and keep the existing fail-closed judgment behavior.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "User authorized the bounded SEC/IR discovery work and iterative local problem resolution on 2026-08-25."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item changes source acquisition and evidence observation boundaries and requires focused regression coverage plus full local quality checks."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly approved implementation. The scope, acceptance, scenarios, and local verification are bounded; hosted lifecycle actions are explicitly out of scope."
+  },
+  "preReviewWarnings": [
+    "SEC filing bodies must be fetched only from validated bounded submissions metadata, with finite response limits and independent failure status.",
+    "IR traversal must remain same-origin, one-hop, deduplicated, and globally capped; entry/index pages remain leads unless their body passes the existing claim gate.",
+    "SEC and IR observations must enter the shared candidate-to-evidence loop exactly once; no duplicate pending or unavailable metrics.",
+    "No source failure may be converted into a negative claim, guessed date, or ranking signal."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "SEC filing candidates obtain bounded document bodies from validated submissions metadata and retain accession, form, filing date, report date, primary document, and source URI provenance.",
+    "SEC filing body status is explicit as known, unknown, or unavailable, and a single document failure does not discard Company Facts or other filing candidates.",
+    "SEC document requests use a finite response-body limit, the existing SEC User-Agent, and no credentials or response body in failure messages.",
+    "Official IR discovery follows at most one same-origin nested hop under a finite global cap, deduplicates canonical URLs, excludes cross-origin links, and preserves bounded behavior.",
+    "Homepage, index, and entry observations remain leads and do not become validated evidence without a body-level claim satisfying the existing extraction gate.",
+    "SEC and IR document observations use the shared runtime promotion path without double-counting document candidates, pending leads, or unavailable sources.",
+    "The existing Stage and Ranking inputs are unchanged by the new acquisition path, and a fixture with no structural proof still emits no machine Ranking.",
+    "Company Facts remains available when only a filing-document request fails, existing non-SEC source behavior remains unchanged, and localized reports keep identical metric values.",
+    "TDD fixtures cover success, partial failure, finite-body safety, nested IR discovery, deduplication, cross-origin exclusion, cap enforcement, and no index promotion.",
+    "Operations documentation explains source availability, document leads, evidence candidates, validated evidence, and degraded-data interpretation.",
+    "Local format, lint, tests, AI Cockpit checks, checkpoints, and a deterministic dry-run pass with no unresolved discovered problem; hosted CI/PR/merge/closure are not required."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep provider-specific parsing and failure semantics in the provider adapter; use the existing source-observation boundary for runtime integration.",
+    "Use deterministic bounded fixtures; do not depend on live external HTTP in tests.",
+    "Represent unavailable or pending material explicitly rather than silently dropping it or inferring a negative claim.",
+    "Preserve existing judgment and legacy behavior unless a test demonstrates the scoped acquisition defect."
+  ],
+  "intent": {
+    "problem": "The current Weekly Radar pipeline treats SEC submissions mostly as metadata and only discovers one level of official IR links. As a result, homepage availability and filing metadata can become pending material without discovering the actual document body needed for claim-level evidence, while SEC coverage can be entirely unavailable.",
+    "constraints": [
+      "Keep source availability, document leads, EvidenceCandidate, and ValidatedEvidence distinct.",
+      "Keep retrieval bounded and fail-closed: same-origin only for IR, finite SEC body limits, independent partial failures, no guesses, and no live-network tests.",
+      "Do not modify Stage, Ranking, Top5, persistence, delivery, or external production state."
+    ],
+    "rationale": "The highest-value scoped repair is to make the existing SEC and IR adapters discover bounded document content and feed it into the already-governed shared evidence path. This improves acquisition quality without weakening the judgment gate or creating a second promotion pipeline."
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "A recent SEC filing body is available from validated submissions metadata.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/sec.rs",
+        "tests/weekly_radar_runtime.rs"
+      ],
+      "expected": "The bounded filing document becomes a document observation with provenance and a body eligible for the existing claim gate.",
+      "verificationPlan": "Add a failing fixture asserting one bounded filing request and body metadata, then implement and run the focused SEC tests."
+    },
+    {
+      "scenario": "One SEC filing request fails while submissions, Company Facts, or other candidates remain usable.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/sec.rs",
+        "src/main.rs",
+        "tests/weekly_radar_runtime.rs"
+      ],
+      "expected": "The failed document is explicitly unavailable, independent facts and other observations remain, and no negative claim is emitted.",
+      "verificationPlan": "Use a deterministic HTTP fixture with one failed filing body and assert independent status, facts, and metrics."
+    },
+    {
+      "scenario": "An official IR document links to a same-origin document one level deeper.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/discovery.rs",
+        "src/features/weekly_radar/runtime/sources.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The nested document is discovered under the finite global cap, canonical duplicates collapse, and cross-origin links are excluded.",
+      "verificationPlan": "Add nested, duplicate, cross-origin, and cap fixtures; observe RED before implementing the one-hop traversal and GREEN afterward."
+    },
+    {
+      "scenario": "Homepage or index content has no body-level production-system claim.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "src/features/weekly_radar/runtime/sources.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The page remains a source observation or pending lead and is not promoted to validated evidence.",
+      "verificationPlan": "Run existing and new title/index-only fixtures through the common candidate extraction and validation path."
+    },
+    {
+      "scenario": "The new observations enter the existing runtime without changing judgment semantics.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/main.rs",
+        "src/features/weekly_radar/runtime.rs",
+        "tests/weekly_radar_runtime.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "Evidence and source-availability metrics are distinct and counted once; Stage and Ranking remain fail-closed when structural proof is insufficient.",
+      "verificationPlan": "Add integration assertions for observation conversion and metric counts, then run the full local quality and dry-run checks."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 74
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-sec-ir-deep-discovery.json",
+    "baseCommit": "2400abb359b5f2bb36ed90cb64db746074da8d68",
+    "initialScopeDigest": "db6e6be8ea2c6e964f48c5f398ec178c5c0621d8119ba2540669febea69cf71e",
+    "contractSkeletonDigest": "de2715e130c3587ddc0954937bf03ab70194ba1baa6c8e4fb456af7ab4c72a9e"
+  }
+}

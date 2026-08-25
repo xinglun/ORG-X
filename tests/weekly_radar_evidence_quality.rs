@@ -296,6 +296,108 @@ fn official_entry_point_discovers_relevant_same_origin_documents_only() {
 }
 
 #[test]
+fn ir_deep_discovery_reaches_one_same_origin_nested_document() {
+    let mut company = company();
+    company.official_ir = Some("https://ir.example.test/investors".to_owned());
+    let client = FixtureHttpClient::new();
+    client.insert(
+        company.official_ir_url().expect("IR URL exists"),
+        HttpResponse::ok(r#"<a href="/earnings/archive">Earnings archive</a>"#),
+    );
+    client.insert(
+        "https://ir.example.test/earnings/archive",
+        HttpResponse::ok(
+            r#"<title>Earnings archive</title><a href="/earnings/q3-2026">Q3 earnings release</a><a href="https://evil.example.test/earnings/q3-2026">Cross-origin release</a>"#,
+        ),
+    );
+    client.insert(
+        "https://ir.example.test/earnings/q3-2026",
+        HttpResponse::ok(
+            r#"<title>Q3 earnings release</title><time datetime="2026-08-20"><p>Acme consolidated production scheduling under one platform.</p>"#,
+        ),
+    );
+
+    let observations = collect_configured_sources(&company, &client, Utc::now());
+
+    let nested = observations
+        .iter()
+        .find(|observation| observation.url() == Some("https://ir.example.test/earnings/q3-2026"))
+        .expect("one-hop nested release should be discovered");
+    assert_eq!(nested.material_kind(), SourceMaterialKind::Document);
+    assert_eq!(
+        nested.text(),
+        "Acme consolidated production scheduling under one platform."
+    );
+    let index = observations
+        .iter()
+        .find(|observation| observation.url() == Some("https://ir.example.test/earnings/archive"))
+        .expect("the archive index should remain a document lead");
+    assert!(extract_evidence_candidate(index).is_none());
+    assert!(
+        observations
+            .iter()
+            .all(|observation| observation.url()
+                != Some("https://evil.example.test/earnings/q3-2026"))
+    );
+}
+
+#[test]
+fn ir_deep_discovery_deduplicates_nested_links_and_enforces_global_cap() {
+    let mut company = company();
+    company.official_ir = Some("https://ir.example.test/investors".to_owned());
+    let client = FixtureHttpClient::new();
+    let direct_links = (0..8)
+        .map(|index| format!("<a href=\"/earnings/archive-{index}\">Earnings archive {index}</a>"))
+        .collect::<String>();
+    client.insert(
+        company.official_ir_url().expect("IR URL exists"),
+        HttpResponse::ok(direct_links),
+    );
+    for index in 0..8 {
+        client.insert(
+            format!("https://ir.example.test/earnings/archive-{index}"),
+            HttpResponse::ok(format!(
+                "<a href=\"/earnings/q3-{index}\">Q3 release {index}</a><a href=\"/earnings/shared\">Shared release</a><a href=\"https://evil.example.test/q3-{index}\">Cross origin</a>"
+            )),
+        );
+        client.insert(
+            format!("https://ir.example.test/earnings/q3-{index}"),
+            HttpResponse::ok(format!(
+                "<title>Q3 release {index}</title><time datetime=\"2026-08-20\"><p>Acme reorganized production scheduling in release {index}.</p>"
+            )),
+        );
+    }
+    client.insert(
+        "https://ir.example.test/earnings/shared",
+        HttpResponse::ok(
+            "<title>Shared release</title><time datetime=\"2026-08-20\"><p>Acme expanded production automation.</p>",
+        ),
+    );
+
+    let observations = collect_configured_sources(&company, &client, Utc::now());
+    let documents = observations
+        .iter()
+        .filter(|observation| observation.material_kind() == SourceMaterialKind::Document)
+        .collect::<Vec<_>>();
+    let urls = documents
+        .iter()
+        .filter_map(|observation| observation.url())
+        .collect::<std::collections::BTreeSet<_>>();
+
+    assert_eq!(documents.len(), 12);
+    assert_eq!(urls.len(), 12);
+    assert_eq!(
+        urls.iter()
+            .filter(|url| url.ends_with("/earnings/shared"))
+            .count(),
+        1
+    );
+    assert!(urls
+        .iter()
+        .all(|url| url.starts_with("https://ir.example.test/")));
+}
+
+#[test]
 fn homepage_only_is_available_but_never_a_document_or_confirmed_fact() {
     let company = company();
     let client = FixtureHttpClient::with_response(

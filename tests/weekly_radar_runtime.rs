@@ -34,7 +34,8 @@ use org_x::features::weekly_radar::runtime::report::{
 };
 use org_x::features::weekly_radar::runtime::rules::extract_employee_count;
 use org_x::features::weekly_radar::runtime::sec::{
-    SecClient, SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES,
+    SecClient, SecDocumentStatus, SEC_COMPANY_FACTS_MAX_RESPONSE_BODY_BYTES,
+    SEC_FILING_DOCUMENT_MAX_RESPONSE_BODY_BYTES,
 };
 use org_x::features::weekly_radar::runtime::sources::{
     collect_configured_sources, SourceKind, SourceStatus, SourceTier,
@@ -1024,7 +1025,7 @@ fn sec_selects_latest_10k_metadata_and_preserves_employee_passage() {
         employee.provenance().effective_date(),
         NaiveDate::from_ymd_opt(2024, 12, 31).as_ref()
     );
-    assert_eq!(client.requests().len(), 3);
+    assert_eq!(client.requests().len(), 5);
     for request in client.requests() {
         assert_eq!(
             request.headers(),
@@ -1035,6 +1036,131 @@ fn sec_selects_latest_10k_metadata_and_preserves_employee_passage() {
         .requests()
         .iter()
         .any(|request| request.url() == filing_url));
+}
+
+#[test]
+fn sec_fetches_recent_filing_bodies_with_provenance_and_status() {
+    let company = sec_test_company();
+    let submissions_url = "https://data.sec.gov/submissions/CIK0001234567.json";
+    let facts_url = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json";
+    let user_agent = "ORG-X weekly-radar test contact@example.test";
+    let client = FixtureHttpClient::new();
+    client.insert(
+        submissions_url,
+        HttpResponse::ok(
+            r#"
+            {"filings":{"recent":{
+              "accessionNumber":["0001234567-25-000003","0001234567-25-000002","0001234567-25-000001"],
+              "filingDate":["2025-03-01","2025-02-15","2025-01-31"],
+              "reportDate":["2024-12-31","2024-12-31","2024-09-30"],
+              "form":["8-K","10-K","10-Q"],
+              "primaryDocument":["acme-8k.htm","acme-2024.htm","acme-q3.htm"]
+            }}}
+            "#,
+        ),
+    );
+    client.insert(facts_url, HttpResponse::ok(r#"{"facts":{}}"#));
+    client.insert(
+        "https://www.sec.gov/Archives/edgar/data/1234567/000123456725000003/acme-8k.htm",
+        HttpResponse::ok(
+            "<title>Acme organization update</title><time datetime=\"2025-03-01\"><p>Acme consolidated production scheduling under one platform.</p>",
+        ),
+    );
+    client.insert(
+        "https://www.sec.gov/Archives/edgar/data/1234567/000123456725000002/acme-2024.htm",
+        HttpResponse::ok(
+            "<title>Acme annual report</title><time datetime=\"2025-02-15\"><p>Acme expanded its production automation program.</p>",
+        ),
+    );
+    client.insert(
+        "https://www.sec.gov/Archives/edgar/data/1234567/000123456725000001/acme-q3.htm",
+        HttpResponse::ok(
+            "<title>Acme quarterly report</title><time datetime=\"2025-01-31\"><p>Acme increased engineering investment.</p>",
+        ),
+    );
+
+    let evidence =
+        SecClient::collect(&company, &client, user_agent).expect("SEC fixture should collect");
+
+    assert_eq!(evidence.documents().len(), 3);
+    assert!(evidence.documents().iter().all(|document| {
+        document.status() == SecDocumentStatus::Known && !document.text().is_empty()
+    }));
+    let annual = evidence
+        .documents()
+        .iter()
+        .find(|document| document.form() == "10-K")
+        .expect("annual filing document should exist");
+    assert_eq!(annual.title(), "Acme annual report");
+    assert!(annual.text().contains("production automation"));
+    assert_eq!(
+        annual.filing_date(),
+        NaiveDate::from_ymd_opt(2025, 2, 15).unwrap()
+    );
+    assert_eq!(annual.report_date(), NaiveDate::from_ymd_opt(2024, 12, 31));
+    assert!(client.requests().iter().any(|request| {
+        request.url() == annual.source_uri()
+            && request.headers() == [("User-Agent".to_owned(), user_agent.to_owned())]
+    }));
+}
+
+#[test]
+fn sec_filing_failure_is_independent_and_body_limit_is_finite() {
+    let company = sec_test_company();
+    let submissions_url = "https://data.sec.gov/submissions/CIK0001234567.json";
+    let facts_url = "https://data.sec.gov/api/xbrl/companyfacts/CIK0001234567.json";
+    let client = FixtureHttpClient::new();
+    client.insert(
+        submissions_url,
+        HttpResponse::ok(
+            r#"
+            {"filings":{"recent":{
+              "accessionNumber":["0001234567-25-000003","0001234567-25-000002","0001234567-25-000001"],
+              "filingDate":["2025-03-01","2025-02-15","2025-01-31"],
+              "reportDate":["2024-12-31","2024-12-31","2024-09-30"],
+              "form":["8-K","10-K","10-Q"],
+              "primaryDocument":["acme-8k.htm","acme-2024.htm","acme-q3.htm"]
+            }}}
+            "#,
+        ),
+    );
+    client.insert(
+        facts_url,
+        HttpResponse::ok(
+            r#"{"facts":{"us-gaap":{"RevenueFromContractWithCustomerExcludingAssessedTax":{"units":{"USD":[{"start":"2024-01-01","end":"2024-12-31","val":100,"accn":"000123456725000001","fp":"FY","form":"10-K","filed":"2025-02-15"}]}}}}}"#,
+        ),
+    );
+    client.insert(
+        "https://www.sec.gov/Archives/edgar/data/1234567/000123456725000002/acme-2024.htm",
+        HttpResponse::ok(format!(
+            "<p>{}</p>",
+            "x".repeat(SEC_FILING_DOCUMENT_MAX_RESPONSE_BODY_BYTES + 1)
+        )),
+    );
+    client.insert(
+        "https://www.sec.gov/Archives/edgar/data/1234567/000123456725000001/acme-q3.htm",
+        HttpResponse::ok("<p>Acme increased engineering investment.</p>"),
+    );
+
+    let evidence = SecClient::collect(&company, &client, "ORG-X test contact@example.test")
+        .expect("partial SEC fixture should be retained");
+
+    assert_eq!(
+        evidence.fact("revenue").unwrap().status(),
+        &FactStatus::Known
+    );
+    assert_eq!(evidence.documents().len(), 3);
+    assert!(evidence.documents().iter().any(|document| {
+        document.form() == "10-K" && document.status() == SecDocumentStatus::Unavailable
+    }));
+    assert!(evidence
+        .failures()
+        .iter()
+        .any(|failure| failure.stage() == "filing_document"));
+    assert!(evidence
+        .failures()
+        .iter()
+        .all(|failure| !failure.reason().contains("xxxxxxxx")));
 }
 
 #[test]

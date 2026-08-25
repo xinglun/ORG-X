@@ -42,7 +42,7 @@ pub use judgment::{
 };
 pub use model::{
     CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, ResearchMetrics,
-    RuntimeReportInput, SourceCoverage, SourceFailure,
+    RuntimeReportInput, SourceCoverage, SourceFailure, StructuralDimension,
 };
 pub use report::{
     render_report, render_report_in_language, RenderedReport, ReportLanguage, SnapshotMetadata,

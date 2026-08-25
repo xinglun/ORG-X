@@ -146,12 +146,31 @@ impl Provenance {
     }
 }
 
+/// Structural domain represented by a validated enterprise-change claim.
+///
+/// This dimension refines `StructuralEvidence`; it does not alter judgment,
+/// stage, or ranking semantics.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum StructuralDimension {
+    /// Reporting lines, responsibilities, teams, divisions, or organization.
+    Organization,
+    /// A changed business or engineering workflow, process, or operating model.
+    Workflow,
+    /// A changed platform, deployment, infrastructure, storage, or production system.
+    ProductionSystem,
+    /// A changed utilization, latency, throughput, capacity, cost, margin, or cash-flow metric.
+    OperatingMetric,
+}
+
 /// One provider-neutral fact ready for deterministic report assembly.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 pub struct NormalizedFact {
     company_id: String,
     kind: String,
     value: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    structural_dimension: Option<StructuralDimension>,
     status: FactStatus,
     confidence: Confidence,
     provenance: Provenance,
@@ -167,16 +186,19 @@ impl<'de> Deserialize<'de> for NormalizedFact {
             company_id: String,
             kind: String,
             value: Option<String>,
+            #[serde(default)]
+            structural_dimension: Option<StructuralDimension>,
             status: FactStatus,
             confidence: Confidence,
             provenance: Provenance,
         }
 
         let wire = NormalizedFactWire::deserialize(deserializer)?;
-        Self::build(
+        Self::build_with_dimension(
             wire.company_id,
             wire.kind,
             wire.value,
+            wire.structural_dimension,
             wire.status,
             wire.confidence,
             wire.provenance,
@@ -195,10 +217,32 @@ impl NormalizedFact {
         confidence: Confidence,
         provenance: Provenance,
     ) -> Result<Self, RuntimeError> {
-        Self::build(
+        Self::build_with_dimension(
             company_id,
             kind,
             Some(value.into()),
+            None,
+            status,
+            confidence,
+            provenance,
+        )
+    }
+
+    /// Creates a fact with a retained value and an optional structural domain.
+    pub fn new_with_structural_dimension(
+        company_id: impl Into<String>,
+        kind: impl Into<String>,
+        value: impl Into<String>,
+        structural_dimension: Option<StructuralDimension>,
+        status: FactStatus,
+        confidence: Confidence,
+        provenance: Provenance,
+    ) -> Result<Self, RuntimeError> {
+        Self::build_with_dimension(
+            company_id,
+            kind,
+            Some(value.into()),
+            structural_dimension,
             status,
             confidence,
             provenance,
@@ -214,13 +258,14 @@ impl NormalizedFact {
         confidence: Confidence,
         provenance: Provenance,
     ) -> Result<Self, RuntimeError> {
-        Self::build(company_id, kind, None, status, confidence, provenance)
+        Self::build_with_dimension(company_id, kind, None, None, status, confidence, provenance)
     }
 
-    fn build(
+    fn build_with_dimension(
         company_id: impl Into<String>,
         kind: impl Into<String>,
         value: Option<String>,
+        structural_dimension: Option<StructuralDimension>,
         status: FactStatus,
         confidence: Confidence,
         provenance: Provenance,
@@ -235,6 +280,7 @@ impl NormalizedFact {
             company_id: company_id.into(),
             kind: kind.into(),
             value,
+            structural_dimension,
             status,
             confidence,
             provenance,
@@ -269,6 +315,11 @@ impl NormalizedFact {
     /// Returns the optional normalized value.
     pub fn value(&self) -> Option<&str> {
         self.value.as_deref()
+    }
+
+    /// Returns the optional structural domain of this fact.
+    pub const fn structural_dimension(&self) -> Option<StructuralDimension> {
+        self.structural_dimension
     }
 
     /// Returns the retained availability status.

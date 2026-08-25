@@ -8,6 +8,7 @@ use org_x::features::weekly_radar::runtime::evidence::{
 use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpResponse};
 use org_x::features::weekly_radar::runtime::model::{
     Confidence, FactStatus, NormalizedFact, Provenance, ResearchMetrics, RuntimeReportInput,
+    StructuralDimension,
 };
 use org_x::features::weekly_radar::runtime::normalize_source_observation;
 use org_x::features::weekly_radar::runtime::report::{render_report_in_language, ReportLanguage};
@@ -131,6 +132,53 @@ fn legacy_runtime_input_defaults_research_metrics_to_zero() {
     assert_eq!(input.research_metrics().sec_stage_available(), 0);
     assert_eq!(input.research_metrics().sec_fact_expected(), 0);
     assert_eq!(input.research_metrics().sec_fact_available(), 0);
+}
+
+#[test]
+fn structural_dimension_is_retained_and_legacy_fact_json_defaults_to_none() {
+    let provenance = Provenance::from_rfc3339(
+        "https://ir.example.test/metrics/update",
+        "GPU utilization increased to 80%",
+        "2026-08-25T00:00:00Z",
+        Some("2026-08-20"),
+    )
+    .unwrap();
+    let fact = NormalizedFact::new_with_structural_dimension(
+        "acme",
+        "evidence_structural_change_001",
+        "Acme reported higher GPU utilization.",
+        Some(StructuralDimension::OperatingMetric),
+        FactStatus::Known,
+        Confidence::High,
+        provenance,
+    )
+    .unwrap();
+
+    assert_eq!(
+        fact.structural_dimension(),
+        Some(StructuralDimension::OperatingMetric)
+    );
+    let serialized = serde_json::to_value(&fact).unwrap();
+    assert_eq!(
+        serialized["structural_dimension"],
+        serde_json::json!("operating_metric")
+    );
+
+    let legacy = serde_json::json!({
+        "company_id": "acme",
+        "kind": "evidence_structural_change_002",
+        "value": "Legacy structural evidence",
+        "status": "KNOWN",
+        "confidence": "HIGH",
+        "provenance": {
+            "source_uri": "https://ir.example.test/legacy",
+            "source_field_or_passage": "Legacy passage",
+            "retrieved_at": "2026-08-25T00:00:00Z",
+            "effective_date": "2026-08-20"
+        }
+    });
+    let legacy_fact: NormalizedFact = serde_json::from_value(legacy).unwrap();
+    assert_eq!(legacy_fact.structural_dimension(), None);
 }
 
 #[test]

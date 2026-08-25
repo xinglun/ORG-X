@@ -14,7 +14,7 @@ use serde::Serialize;
 use super::judgment::MachineStage;
 use super::model::{
     CompanyIdentity, Confidence, FactStatus, NormalizedFact, ResearchMetrics, RuntimeReportInput,
-    SourceCoverage, SourceFailure,
+    SourceCoverage, SourceFailure, StructuralDimension,
 };
 
 const MAX_CHANGE_CARDS: usize = 3;
@@ -239,6 +239,12 @@ struct Labels {
     field_sbc: &'static str,
     field_employee_count: &'static str,
     field_structural_change: &'static str,
+    field_structural_generic: &'static str,
+    field_structural_organization: &'static str,
+    field_structural_workflow: &'static str,
+    field_structural_production_system: &'static str,
+    field_structural_operating_metric: &'static str,
+    other_material: &'static str,
 }
 
 fn labels(language: ReportLanguage) -> Labels {
@@ -299,6 +305,12 @@ fn labels(language: ReportLanguage) -> Labels {
             field_sbc: "股权激励费用",
             field_employee_count: "员工人数",
             field_structural_change: "组织变化",
+            field_structural_generic: "结构性证据",
+            field_structural_organization: "组织变化",
+            field_structural_workflow: "工作流变化",
+            field_structural_production_system: "生产系统变化",
+            field_structural_operating_metric: "运营指标变化",
+            other_material: "其他资料",
         },
         ReportLanguage::Japanese => Labels {
             summary: "週次サマリー",
@@ -356,6 +368,12 @@ fn labels(language: ReportLanguage) -> Labels {
             field_sbc: "株式報酬費用",
             field_employee_count: "従業員数",
             field_structural_change: "組織変化",
+            field_structural_generic: "構造的証拠",
+            field_structural_organization: "組織変化",
+            field_structural_workflow: "ワークフロー変化",
+            field_structural_production_system: "生産システム変化",
+            field_structural_operating_metric: "運用指標変化",
+            other_material: "その他の資料",
         },
         ReportLanguage::English => Labels {
             summary: "Executive Summary",
@@ -415,6 +433,12 @@ fn labels(language: ReportLanguage) -> Labels {
             field_sbc: "Stock-based compensation",
             field_employee_count: "Employees",
             field_structural_change: "Organizational change",
+            field_structural_generic: "Structural evidence",
+            field_structural_organization: "Organizational change",
+            field_structural_workflow: "Workflow change",
+            field_structural_production_system: "Production-system change",
+            field_structural_operating_metric: "Operating-metric change",
+            other_material: "Other material",
         },
     }
 }
@@ -424,6 +448,8 @@ struct SnapshotFact {
     company_id: String,
     kind: String,
     value: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    structural_dimension: Option<StructuralDimension>,
     status: FactStatus,
     confidence: Confidence,
     source_uri: String,
@@ -558,10 +584,20 @@ fn source_label(source: &str, labels: Labels) -> String {
     }
 }
 
-fn fact_label(kind: &str, labels: Labels) -> String {
+fn fact_label(fact: &NormalizedFact, labels: Labels) -> String {
+    let kind = fact.kind();
     let lower = kind.to_ascii_lowercase();
     if lower.starts_with("evidence_structural_change_") {
-        return labels.field_structural_change.to_owned();
+        return match fact.structural_dimension() {
+            Some(StructuralDimension::Organization) => labels.field_structural_organization,
+            Some(StructuralDimension::Workflow) => labels.field_structural_workflow,
+            Some(StructuralDimension::ProductionSystem) => {
+                labels.field_structural_production_system
+            }
+            Some(StructuralDimension::OperatingMetric) => labels.field_structural_operating_metric,
+            None => labels.field_structural_generic,
+        }
+        .to_owned();
     }
     if let Some(source) = source_kind_for_fact(kind) {
         return source_label(source, labels);
@@ -578,11 +614,7 @@ fn fact_label(kind: &str, labels: Labels) -> String {
         "structural_change" | "important_structural_change" => {
             labels.field_structural_change.to_owned()
         }
-        _ => match labels.field_structural_change {
-            "组织变化" => "其他资料".to_owned(),
-            "組織変化" => "その他の資料".to_owned(),
-            _ => "Other material".to_owned(),
-        },
+        _ => labels.other_material.to_owned(),
     }
 }
 
@@ -932,7 +964,7 @@ fn render_confirmed_facts(
         section.push_str(&format!(
             "\n- {}{separator}{}",
             labels.information_type,
-            fact_label(fact.kind(), labels)
+            fact_label(fact, labels)
         ));
         section.push_str(&format!(
             "\n- {}{separator}{}",
@@ -980,7 +1012,7 @@ fn render_structural_evidence(
         section.push_str(&format!(
             "\n- {}{separator}{}",
             labels.information_type,
-            fact_label(fact.kind(), labels)
+            fact_label(fact, labels)
         ));
         section.push_str(&format!(
             "\n- {}{separator}{}",
@@ -1080,7 +1112,7 @@ fn render_top5(
             };
             section.push_str(&format!(
                 "\n- {}{}{}\n  {}",
-                fact_label(fact.kind(), labels),
+                fact_label(fact, labels),
                 separator,
                 fact_value(fact),
                 evidence_line(fact, labels)
@@ -1470,6 +1502,7 @@ fn snapshot_fact(fact: &NormalizedFact) -> SnapshotFact {
         company_id: safe_text(fact.company_id()),
         kind: safe_text(fact.kind()),
         value: fact.value().map(safe_text),
+        structural_dimension: fact.structural_dimension(),
         status: *fact.status(),
         confidence: *fact.confidence(),
         source_uri: safe_uri(fact.provenance().source_uri()),

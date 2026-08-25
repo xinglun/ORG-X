@@ -8,6 +8,7 @@ use org_x::features::weekly_radar::runtime::evidence::{
 use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpResponse};
 use org_x::features::weekly_radar::runtime::model::{
     Confidence, FactStatus, NormalizedFact, Provenance, ResearchMetrics, RuntimeReportInput,
+    StructuralDimension,
 };
 use org_x::features::weekly_radar::runtime::normalize_source_observation;
 use org_x::features::weekly_radar::runtime::report::{render_report_in_language, ReportLanguage};
@@ -131,6 +132,53 @@ fn legacy_runtime_input_defaults_research_metrics_to_zero() {
     assert_eq!(input.research_metrics().sec_stage_available(), 0);
     assert_eq!(input.research_metrics().sec_fact_expected(), 0);
     assert_eq!(input.research_metrics().sec_fact_available(), 0);
+}
+
+#[test]
+fn structural_dimension_is_retained_and_legacy_fact_json_defaults_to_none() {
+    let provenance = Provenance::from_rfc3339(
+        "https://ir.example.test/metrics/update",
+        "GPU utilization increased to 80%",
+        "2026-08-25T00:00:00Z",
+        Some("2026-08-20"),
+    )
+    .unwrap();
+    let fact = NormalizedFact::new_with_structural_dimension(
+        "acme",
+        "evidence_structural_change_001",
+        "Acme reported higher GPU utilization.",
+        Some(StructuralDimension::OperatingMetric),
+        FactStatus::Known,
+        Confidence::High,
+        provenance,
+    )
+    .unwrap();
+
+    assert_eq!(
+        fact.structural_dimension(),
+        Some(StructuralDimension::OperatingMetric)
+    );
+    let serialized = serde_json::to_value(&fact).unwrap();
+    assert_eq!(
+        serialized["structural_dimension"],
+        serde_json::json!("operating_metric")
+    );
+
+    let legacy = serde_json::json!({
+        "company_id": "acme",
+        "kind": "evidence_structural_change_002",
+        "value": "Legacy structural evidence",
+        "status": "KNOWN",
+        "confidence": "HIGH",
+        "provenance": {
+            "source_uri": "https://ir.example.test/legacy",
+            "source_field_or_passage": "Legacy passage",
+            "retrieved_at": "2026-08-25T00:00:00Z",
+            "effective_date": "2026-08-20"
+        }
+    });
+    let legacy_fact: NormalizedFact = serde_json::from_value(legacy).unwrap();
+    assert_eq!(legacy_fact.structural_dimension(), None);
 }
 
 #[test]
@@ -490,6 +538,78 @@ fn complete_authoritative_candidate_becomes_validated_evidence() {
     );
 }
 
+fn validated_claim(
+    passage: &str,
+) -> org_x::features::weekly_radar::runtime::evidence::ValidatedEvidence {
+    let candidate = complete_candidate("2026-08-19", "engineering systems")
+        .with_source_details("Enterprise change update", passage);
+    validate_evidence_candidate(&candidate, cutoff()).unwrap()
+}
+
+#[test]
+fn validated_structural_claims_receive_specific_dimensions() {
+    let cases = [
+        (
+            "Acme reorganized its engineering teams and moved responsibility to one division.",
+            StructuralDimension::Organization,
+        ),
+        (
+            "Acme changed its engineering workflow and approval process for production scheduling.",
+            StructuralDimension::Workflow,
+        ),
+        (
+            "Acme deployed a production platform and consolidated storage infrastructure.",
+            StructuralDimension::ProductionSystem,
+        ),
+        (
+            "Acme increased GPU utilization and reduced serving latency for production workloads.",
+            StructuralDimension::OperatingMetric,
+        ),
+    ];
+
+    for (passage, expected_dimension) in cases {
+        let validated = validated_claim(passage);
+        assert_eq!(
+            validated.evidence_class(),
+            EvidenceClass::StructuralEvidence
+        );
+        assert_eq!(validated.structural_dimension(), Some(expected_dimension));
+        assert_eq!(
+            validated
+                .to_normalized_fact(1)
+                .unwrap()
+                .structural_dimension(),
+            Some(expected_dimension)
+        );
+    }
+}
+
+#[test]
+fn metric_and_production_system_claims_are_not_organization_evidence() {
+    for passage in [
+        "Acme increased GPU utilization and reduced serving latency for production workloads.",
+        "Acme deployed a production platform and consolidated storage infrastructure.",
+    ] {
+        assert_ne!(
+            validated_claim(passage).structural_dimension(),
+            Some(StructuralDimension::Organization)
+        );
+    }
+}
+
+#[test]
+fn incomplete_structural_claim_cannot_pass_the_promotion_gate() {
+    let candidate = complete_candidate("2026-08-19", "engineering workflow")
+        .with_source_details("", "Acme reorganized its engineering teams and division.");
+
+    assert_eq!(
+        validate_evidence_candidate(&candidate, cutoff()).unwrap_err(),
+        EvidenceValidationError::MissingRequiredField {
+            field: "source_title"
+        }
+    );
+}
+
 #[test]
 fn explicit_production_system_change_becomes_structural_evidence() {
     let candidate = complete_candidate("2026-08-19", "production scheduling").with_source_details(
@@ -709,6 +829,88 @@ fn localized_reports_keep_validated_evidence_separate_from_known_facts() {
     assert!(!english_confirmed_section.contains("123000000"));
     assert!(english.markdown().contains("1 validated facts"));
     assert!(english.markdown().contains("Known facts: 2"));
+}
+
+#[test]
+fn localized_reports_render_structural_dimensions_and_legacy_fallback() {
+    let dimensions = [
+        (StructuralDimension::Organization, "Organization claim"),
+        (StructuralDimension::Workflow, "Workflow claim"),
+        (
+            StructuralDimension::ProductionSystem,
+            "Production system claim",
+        ),
+        (
+            StructuralDimension::OperatingMetric,
+            "Operating metric claim",
+        ),
+    ];
+    let mut input = RuntimeReportInput::new("2026-08-25").unwrap();
+    for (index, (dimension, value)) in dimensions.into_iter().enumerate() {
+        input
+            .add_fact(
+                NormalizedFact::new_with_structural_dimension(
+                    "acme",
+                    format!("evidence_structural_change_{:03}", index + 1),
+                    value,
+                    Some(dimension),
+                    FactStatus::Known,
+                    Confidence::High,
+                    Provenance::new(
+                        format!("https://ir.example.test/dimension/{index}"),
+                        value,
+                        Utc::now(),
+                        Some(NaiveDate::from_ymd_opt(2026, 8, 19).unwrap()),
+                    )
+                    .unwrap(),
+                )
+                .unwrap(),
+            )
+            .unwrap();
+    }
+    input
+        .add_fact(
+            NormalizedFact::new(
+                "acme",
+                "evidence_structural_change_005",
+                "Legacy structural claim",
+                FactStatus::Known,
+                Confidence::High,
+                Provenance::new(
+                    "https://ir.example.test/legacy",
+                    "Legacy structural claim",
+                    Utc::now(),
+                    Some(NaiveDate::from_ymd_opt(2026, 8, 19).unwrap()),
+                )
+                .unwrap(),
+            )
+            .unwrap(),
+        )
+        .unwrap();
+
+    let chinese = render_report_in_language(&input, ReportLanguage::Chinese);
+    assert!(chinese.markdown().contains("组织变化"));
+    assert!(chinese.markdown().contains("工作流变化"));
+    assert!(chinese.markdown().contains("生产系统变化"));
+    assert!(chinese.markdown().contains("运营指标变化"));
+    assert!(chinese.markdown().contains("结构性证据"));
+    assert!(chinese
+        .snapshot_json()
+        .contains("\"structural_dimension\": \"operating_metric\""));
+
+    let japanese = render_report_in_language(&input, ReportLanguage::Japanese);
+    assert!(japanese.markdown().contains("組織変化"));
+    assert!(japanese.markdown().contains("ワークフロー変化"));
+    assert!(japanese.markdown().contains("生産システム変化"));
+    assert!(japanese.markdown().contains("運用指標変化"));
+    assert!(japanese.markdown().contains("構造的証拠"));
+
+    let english = render_report_in_language(&input, ReportLanguage::English);
+    assert!(english.markdown().contains("Organizational change"));
+    assert!(english.markdown().contains("Workflow change"));
+    assert!(english.markdown().contains("Production-system change"));
+    assert!(english.markdown().contains("Operating-metric change"));
+    assert!(english.markdown().contains("Structural evidence"));
 }
 
 #[test]

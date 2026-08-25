@@ -1,0 +1,334 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-evidence-dimension",
+  "mode": "code",
+  "title": "Separate structural evidence dimensions and require complete claims",
+  "baseRemote": "origin",
+  "baseBranch": "main",
+  "baseCommit": "8d0d38137cd2c0fc04e19767bf298bdc6a5bd212",
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/work-items/active/wi-weekly-radar-evidence-dimension.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-evidence-dimension.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-evidence-dimension.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-evidence-dimension.outcome.md",
+    "docs/superpowers/specs/2026-08-25-weekly-radar-evidence-dimension-design.md",
+    "docs/superpowers/plans/2026-08-25-weekly-radar-evidence-dimension.md",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "src/features/weekly_radar/runtime/report.rs",
+    "src/features/weekly_radar/runtime.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "tests/weekly_radar_runtime.rs",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "outOfScope": [
+    "SEC HTTP parsing, CIK registry, response-size limits, and provider URL construction",
+    "new source providers, broader document crawling, Greenhouse/Lever configuration, and LLM or probabilistic extraction",
+    "judgment rules, Transformation Stage definitions, Ranking thresholds, Counter Evidence, Telegram delivery, archive persistence, and data-branch publication",
+    "changes to the Weekly Radar workflow or production publication behavior",
+    "secrets, credentials, provider accounts, and external state mutation"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository Work Item, scope, evidence, and lifecycle governance."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Canonical domain and governance terminology."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-25-weekly-radar-structural-evidence-gate-design.md",
+      "reason": "Existing validated-evidence and structural-evidence boundary."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "Current deterministic claim extraction, validation, and structural classifier."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/model.rs",
+      "reason": "Provider-neutral normalized fact envelope and serialized compatibility boundary."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime.rs",
+      "reason": "Public runtime re-exports for the new provider-neutral evidence dimension."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "reason": "Localized reader-facing evidence labels and report assembly."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "Existing evidence-classification, serialization, and report fixtures."
+    },
+    {
+      "path": "tests/weekly_radar_runtime.rs",
+      "reason": "Existing report and runtime regression coverage."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Operator-facing evidence semantics and compatibility documentation."
+    }
+  ],
+  "unknowns": [
+  ],
+  "rawUserRequest": "同意，继续执行结构性证据维度化与 Claim 完整性 Work Item，并按既定治理流程完成 TDD、CI 和一次安全 dry-run。",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "The user explicitly approved the dimensioned structural-evidence design and requested continuation through TDD, CI, and one safe dry-run.",
+    "capturedAt": "2026-08-25T15:30:00+09:00",
+    "digest": "not-generated"
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "software_design",
+      "test_automation",
+      "documentation",
+      "ai_governance"
+    ],
+    "prohibitedCapabilities": [
+      "production_operation",
+      "external_delivery_without_explicit_dry_run_authorization"
+    ],
+    "requestedOutcome": "Separate organization, workflow, production-system, and operating-metric structural evidence dimensions while requiring complete, traceable claims and preserving fail-closed judgment behavior.",
+    "decisionBoundary": "Only structural evidence classification, normalized fact compatibility fields, localized report labels, tests, and operations documentation change; source acquisition, SEC parsing, judgment, Ranking, Telegram, archive, and workflow publication remain unchanged."
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly approved the design and authorized the governed implementation and one post-merge dry-run."
+  },
+  "notCodable": false,
+  "scenarioCoverage": [
+    {
+      "scenario": "An organization claim receives the Organization dimension",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "A dated authoritative claim about reporting lines, responsibilities, teams, or divisions is StructuralEvidence with StructuralDimension::Organization.",
+      "verificationPlan": "Add the failing organization fixture and assert the wished-for dimension API before implementing the signal table."
+    },
+    {
+      "scenario": "Workflow and production-system claims receive specific non-organization dimensions",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "Workflow/process claims become Workflow and deployment/platform/storage claims become ProductionSystem; neither is rendered as Organization.",
+      "verificationPlan": "Run RED tests for workflow and production-system phrases, then implement deterministic dimension precedence and rerun focused tests GREEN."
+    },
+    {
+      "scenario": "Utilization and latency claims receive the OperatingMetric dimension",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "A dated authoritative claim about utilization, latency, throughput, capacity, cost, margin, or cash flow is StructuralEvidence with StructuralDimension::OperatingMetric.",
+      "verificationPlan": "Add fixtures based on the observed Meta GPU-utilization and latency claims, observe RED, then add the metric signal mapping."
+    },
+    {
+      "scenario": "Incomplete or generic claims do not become structural evidence",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "A missing date, production area, source title, passage, or explicit structural signal remains rejected, a regular validated fact, or a pending lead.",
+      "verificationPlan": "Add one incomplete candidate and one generic research fixture first; confirm both fail the desired structural assertion before changing production code."
+    },
+    {
+      "scenario": "Legacy normalized facts and localized reports remain compatible",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/model.rs",
+        "src/features/weekly_radar/runtime/report.rs",
+        "tests/weekly_radar_evidence_quality.rs",
+        "tests/weekly_radar_runtime.rs"
+      ],
+      "expected": "Old NormalizedFact JSON without structural_dimension deserializes, and Chinese, Japanese, and English reports use dimension labels without changing Stage or Ranking output.",
+      "verificationPlan": "Add legacy JSON and localized report assertions before implementing the optional field and label mapping; run focused tests after each GREEN cycle."
+    }
+  ],
+  "riskAssessment": {
+    "level": "medium",
+    "riskTypes": [
+      "false_positive_structural_promotion",
+      "false_negative_structural_classification",
+      "serialized_fact_compatibility",
+      "localized_report_contract"
+    ],
+    "reason": "The Work Item changes structural evidence labels and adds an optional serialized dimension. False positives can overstate enterprise change; false negatives can hide useful evidence; legacy snapshots and localized reports must remain compatible.",
+    "unknownsReviewComplete": true,
+    "reviewedBy": "user-authorized",
+    "reviewNote": "The 2026-08-25 dry-run produced five validated Meta engineering claims, including production-system and operating-metric signals that were rendered as organization change. The user approved a dimensioned evidence contract and complete Claim boundary."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The user explicitly approved the dimensioned structural-evidence design; scope, acceptance, scenarios, and local verification are deterministic and no unknowns remain open."
+  },
+  "preReviewWarnings": [
+    "Do not label production-system or operating-metric evidence as organization change.",
+    "Require complete company, claim, date, production-area, source, and passage provenance before structural promotion.",
+    "Keep structural dimensions visible in reporting but outside Stage and Ranking computation."
+  ],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "Validated evidence can be classified as Organization, Workflow, ProductionSystem, or OperatingMetric without changing the existing ValidatedFact versus StructuralEvidence boundary.",
+    "A production-system claim such as GPU utilization or deployment remains StructuralEvidence but is reported as ProductionSystem or OperatingMetric, never Organization unless an organization signal is present.",
+    "A dated authoritative claim without a complete company, change, effective-date, production-area, source-title, source-URI, and passage boundary remains a regular fact or pending lead and cannot become StructuralEvidence.",
+    "NormalizedFact persists the optional structural dimension with backward-compatible defaults; legacy snapshots deserialize unchanged.",
+    "Chinese, Japanese, and English reports render the dimension-specific labels while legacy structural-change and confirmed-information inputs remain readable.",
+    "Generic research or architecture prose without an explicit structural signal remains a regular validated fact or pending lead.",
+    "The existing Stage, Ranking, Counter Evidence, Telegram, archive, and workflow behavior is unchanged.",
+    "TDD fixtures cover all four dimensions, a generic negative, incomplete claim data, legacy serialization, and localized report rendering.",
+    "Weekly Radar operations documentation explains the dimension taxonomy and Claim completeness boundary.",
+    "All Contract governance, focused tests, project quality, and hosted CI checks pass before Finish."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Do not import internal modules from other features.",
+    "Keep evidence classification deterministic, provider-neutral, bounded, and rule-only.",
+    "Prefer false negatives to promoting technical prose as structural enterprise change.",
+    "Preserve legacy snapshot deserialization by defaulting new fields to zero or None.",
+    "Do not change judgment, Ranking, Telegram, archive, or workflow behavior outside the structural evidence dimension boundary."
+  ],
+  "intent": {
+    "problem": "The post-merge dry-run produced five validated Meta engineering claims, but two production-system or operating-metric claims were rendered as organization change. The existing structural evidence class has no explicit dimension, so readers cannot distinguish organization, workflow, production-system, and operating-metric change. The Claim gate also needs an explicit completeness contract so a partially populated record cannot be promoted by a lexical signal alone.",
+    "constraints": [
+      "Preserve the existing SourceObservation to EvidenceCandidate to ValidatedEvidence pipeline and the current evidence kind prefixes.",
+      "Use deterministic lexical rules and bounded fields only; do not add an LLM, probabilistic model, provider, dependency, or broader crawl.",
+      "Keep legacy NormalizedFact and RuntimeReportInput JSON deserializable with optional dimension defaults.",
+      "Do not change Stage, Ranking, Counter Evidence, Telegram, archive, data-branch, or workflow behavior."
+    ],
+    "rationale": "An explicit optional dimension is the smallest compatible change that makes structural evidence semantically honest. It fixes the reader-facing mislabel without discarding validated technical evidence or expanding the judgment layer."
+  },
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 71
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-evidence-dimension.json",
+    "baseCommit": "8d0d38137cd2c0fc04e19767bf298bdc6a5bd212",
+    "initialScopeDigest": "f72fbc966d8642c730103c114ef73a9787bda522c298ed142cf63df9e6d282b3",
+    "contractSkeletonDigest": "0da1705661150927d923fa634fcb6ec1885d8108c9c26854651289b79970319c"
+  }
+}

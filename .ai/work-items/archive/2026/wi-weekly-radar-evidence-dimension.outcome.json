@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-evidence-dimension",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "41827b97efecb29e3601ceb9003f98a907f82748abba73ad205d4ae595077179"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-evidence-dimension",
+    "contractDigest": "79bb02d78992fa20bc3c767acace7f314a2ba4b4d0ebcef8314f01090e2dcd80",
+    "summaryDigest": "57ffb3b74b5c74d2e14ab3eb6bf85e00caddc653e6df36aff25fcbdf7d93c4fc",
+    "verificationDigest": "c9f625b5fc519bacfc15ce9daeac91930e6bea0e3e469f95632ea8ebeff267b1",
+    "baseCommit": "8d0d38137cd2c0fc04e19767bf298bdc6a5bd212",
+    "headCommit": "c86b52c99f7c60e1e24133258e9bd1e18d82dc3d",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "5ea747569f89d57358d8ba595258a97ee663821a0681225db4ac841a5205bb72",
+      "binding": {
+        "baseCommit": "8d0d38137cd2c0fc04e19767bf298bdc6a5bd212",
+        "candidateHead": "c86b52c99f7c60e1e24133258e9bd1e18d82dc3d",
+        "candidateTreeDigest": "046a82636a004838446e3733c97c980cb370fda4c3e5c0368be4f5696626ae4f",
+        "candidateDiffDigest": "5decebd1f212ad35e506f8e2c07146e7e963240d1d2fd7a2522c731aa1d4d768"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-evidence-dimension generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-evidence-dimension generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-evidence-dimension",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
@@ -28,217 +51,265 @@
       "tests/weekly_radar_evidence_quality.rs",
       "tests/weekly_radar_runtime.rs",
       "docs/operations/WEEKLY_RADAR.md"
-    ]
-  },
-  "issues": {
-    "detected": 1,
-    "hardStops": 1,
-    "warnings": 0,
-    "resolved": 1,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiCoverage",
-      "action": "blocked",
-      "resolution": "Retry aiCoverage after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
-          "subject": "verificationHistory[0] aiCoverage failed",
-          "digest": "c17c42d0da4c5187d1c3a4338df3897b95b90184f6a503a890ed01f00c714af7"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
-          "subject": "verification[aiCoverage] retry passed",
-          "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiCoverage failed before the retry.",
-      "policyOrGuard": "required verification: aiCoverage",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiCoverage after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
-          "subject": "verificationHistory[0] aiCoverage failed",
-          "digest": "c17c42d0da4c5187d1c3a4338df3897b95b90184f6a503a890ed01f00c714af7"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
-          "subject": "verification[aiCoverage] retry passed",
-          "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [
-    "The user approved dimension-specific structural evidence and explicitly authorized continuation through TDD, CI, and one safe dry-run."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "medium",
-      "detail": "Fixed signal tables may produce a false negative for an unseen synonym or a false positive when a structural term is used in a non-change context; focused negative fixtures and fail-closed Claim validation limit promotion risk.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    },
-    {
-      "severity": "medium",
-      "detail": "SEC ingestion, broader document discovery, and provider availability remain outside this Work Item, so this change improves semantic honesty without claiming complete enterprise-change coverage.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Add an optional provider-neutral structural dimension to validated evidence while preserving existing evidence class and kind-prefix compatibility.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/model.rs",
-          "subject": "StructuralDimension and NormalizedFact compatibility model"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Classify complete authoritative claims with bounded fixed signal tables using OperatingMetric > ProductionSystem > Workflow > Organization precedence, then render dimension-specific labels without feeding Stage or Ranking.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "deterministic structural_dimension_for_text and completeness gate"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/report.rs",
-          "subject": "localized fact_label and snapshot projection"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Normalized fact model",
-        "detail": "Stores optional StructuralDimension and defaults absent legacy JSON to None.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiCoverage failed before the retry.",
+        "policyOrGuard": "required verification: aiCoverage",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiCoverage after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/model.rs",
-            "subject": "custom wire deserialization and public getter"
-          }
-        ]
-      },
-      {
-        "component": "Evidence validation",
-        "detail": "Requires complete company/claim/date/area/source/passage data and attaches a dimension only to structural evidence.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "ValidatedEvidence structural classification"
-          }
-        ]
-      },
-      {
-        "component": "Localized report",
-        "detail": "Shows Organization, Workflow, ProductionSystem, and OperatingMetric labels in zh-CN, ja, and en; legacy structural facts use a generic fallback.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/report.rs",
-            "subject": "dimension-specific labels"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+            "subject": "verificationHistory[0] aiCoverage failed",
+            "digest": "c17c42d0da4c5187d1c3a4338df3897b95b90184f6a503a890ed01f00c714af7"
           },
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "localized report fixture"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+            "subject": "verification[aiCoverage] retry passed",
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "resolutions": [
       {
-        "decision": "Keep the existing evidence_structural_change_<index> kind prefix.",
-        "reason": "Downstream report, snapshot, Stage, Ranking, and archive compatibility must remain stable.",
-        "status": "verified",
+        "problem": "aiCoverage failed before the retry.",
+        "action": "Re-ran aiCoverage after the correction; the latest attempt passed.",
+        "verification": "aiCoverage latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "validated structural kind prefix assertion"
-          }
-        ]
-      },
-      {
-        "decision": "Prefer false negatives and fixed precedence over broad semantic inference.",
-        "reason": "Technical prose must not be promoted as enterprise structural change without a bounded signal and complete Claim fields.",
-        "status": "verified",
-        "evidence": [
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+            "subject": "verificationHistory[0] aiCoverage failed",
+            "digest": "c17c42d0da4c5187d1c3a4338df3897b95b90184f6a503a890ed01f00c714af7"
+          },
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "generic and incomplete negative fixtures"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+            "subject": "verification[aiCoverage] retry passed",
+            "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
           }
         ]
       }
     ],
-    "technicalDetails": [
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
       {
-        "topic": "TDD",
-        "detail": "Model, classifier, and localized report tests were written RED before their production implementations and then passed GREEN.",
-        "status": "verified",
+        "claim": "lexical classification",
+        "severity": "medium",
+        "title": "lexical classification",
+        "detail": "Fixed signal tables may produce a false negative for an unseen synonym or a false positive when a structural term is used in a non-change context; focused negative fixtures and fail-closed Claim validation limit promotion risk.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "docs/superpowers/plans/2026-08-25-weekly-radar-evidence-dimension.md",
-            "subject": "TDD task sequence"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
       },
       {
-        "topic": "Compatibility",
-        "detail": "Optional serde field is skipped when absent and legacy NormalizedFact JSON deserializes with None.",
-        "status": "verified",
+        "claim": "source coverage",
+        "severity": "medium",
+        "title": "source coverage",
+        "detail": "SEC ingestion, broader document discovery, and provider availability remain outside this Work Item, so this change improves semantic honesty without claiming complete enterprise-change coverage.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "legacy serialization fixture"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
       }
+    ],
+    "humanDecisions": [
+      "The user approved dimension-specific structural evidence and explicitly authorized continuation through TDD, CI, and one safe dry-run."
     ],
     "evidence": [
       {
-        "claim": "All four structural dimensions are classified and localized.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_evidence_quality.rs",
         "subject": "validated_structural_claims_receive_specific_dimensions and localized_reports_render_structural_dimensions_and_legacy_fallback"
       },
       {
-        "claim": "Project quality and regression tests pass.",
-        "status": "verified",
         "source": "Makefile",
         "subject": "make check"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+        "subject": "verificationHistory[0] aiCoverage failed",
+        "digest": "c17c42d0da4c5187d1c3a4338df3897b95b90184f6a503a890ed01f00c714af7"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+        "subject": "verification[aiCoverage] retry passed",
+        "digest": "f4dc17493e3dcb1acc1e56fe685bad1508a69853efce072a47ee021516d6d0a7"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Add an optional provider-neutral structural dimension to validated evidence while preserving existing evidence class and kind-prefix compatibility.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/model.rs",
+            "subject": "StructuralDimension and NormalizedFact compatibility model"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Classify complete authoritative claims with bounded fixed signal tables using OperatingMetric > ProductionSystem > Workflow > Organization precedence, then render dimension-specific labels without feeding Stage or Ranking.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "deterministic structural_dimension_for_text and completeness gate"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/report.rs",
+            "subject": "localized fact_label and snapshot projection"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Normalized fact model",
+          "detail": "Stores optional StructuralDimension and defaults absent legacy JSON to None.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/model.rs",
+              "subject": "custom wire deserialization and public getter"
+            }
+          ]
+        },
+        {
+          "component": "Evidence validation",
+          "detail": "Requires complete company/claim/date/area/source/passage data and attaches a dimension only to structural evidence.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "ValidatedEvidence structural classification"
+            }
+          ]
+        },
+        {
+          "component": "Localized report",
+          "detail": "Shows Organization, Workflow, ProductionSystem, and OperatingMetric labels in zh-CN, ja, and en; legacy structural facts use a generic fallback.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/report.rs",
+              "subject": "dimension-specific labels"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "localized report fixture"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Keep the existing evidence_structural_change_<index> kind prefix.",
+          "reason": "Downstream report, snapshot, Stage, Ranking, and archive compatibility must remain stable.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "validated structural kind prefix assertion"
+            }
+          ]
+        },
+        {
+          "decision": "Prefer false negatives and fixed precedence over broad semantic inference.",
+          "reason": "Technical prose must not be promoted as enterprise structural change without a bounded signal and complete Claim fields.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "generic and incomplete negative fixtures"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "TDD",
+          "detail": "Model, classifier, and localized report tests were written RED before their production implementations and then passed GREEN.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "docs/superpowers/plans/2026-08-25-weekly-radar-evidence-dimension.md",
+              "subject": "TDD task sequence"
+            }
+          ]
+        },
+        {
+          "topic": "Compatibility",
+          "detail": "Optional serde field is skipped when absent and legacy NormalizedFact JSON deserializes with None.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "legacy serialization fixture"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "All four structural dimensions are classified and localized.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "validated_structural_claims_receive_specific_dimensions and localized_reports_render_structural_dimensions_and_legacy_fallback"
+        },
+        {
+          "claim": "Project quality and regression tests pass.",
+          "status": "verified",
+          "source": "Makefile",
+          "subject": "make check"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -1013,6 +1084,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

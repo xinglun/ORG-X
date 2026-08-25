@@ -26,7 +26,7 @@ use org_x::features::weekly_radar::runtime::judgment::{
 };
 use org_x::features::weekly_radar::runtime::model::{
     CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, RuntimeReportInput,
-    SourceCoverage, SourceFailure,
+    SourceCoverage, SourceFailure, StructuralDimension,
 };
 use org_x::features::weekly_radar::runtime::normalize_source_observation;
 use org_x::features::weekly_radar::runtime::report::{
@@ -1175,6 +1175,33 @@ fn normalized_fact_retains_status_confidence_and_full_provenance() {
         .expect("coverage should be retained");
     assert_eq!(input.facts().len(), 1);
     assert_eq!(input.source_coverage().len(), 1);
+}
+
+#[test]
+fn runtime_public_api_retains_structural_dimension_without_changing_fact_identity() {
+    let provenance = Provenance::from_rfc3339(
+        "https://example.test/evidence/workflow",
+        "Acme changed its engineering workflow.",
+        "2026-08-17T00:00:00Z",
+        Some("2026-08-15"),
+    )
+    .expect("fixture provenance should be valid");
+    let fact = NormalizedFact::new_with_structural_dimension(
+        "acme",
+        "evidence_structural_change_001",
+        "Acme changed its engineering workflow.",
+        Some(StructuralDimension::Workflow),
+        FactStatus::Known,
+        Confidence::High,
+        provenance,
+    )
+    .expect("dimensioned fact should be valid");
+
+    assert_eq!(
+        fact.structural_dimension(),
+        Some(StructuralDimension::Workflow)
+    );
+    assert_eq!(fact.kind(), "evidence_structural_change_001");
 }
 
 #[test]

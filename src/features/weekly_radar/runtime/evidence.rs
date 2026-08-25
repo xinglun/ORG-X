@@ -3,7 +3,7 @@
 use chrono::{NaiveDate, Utc};
 use std::fmt;
 
-use super::model::{Confidence, FactStatus, NormalizedFact, Provenance};
+use super::model::{Confidence, FactStatus, NormalizedFact, Provenance, StructuralDimension};
 use super::sources::{SourceKind, SourceMaterialKind, SourceObservation, SourceStatus, SourceTier};
 use super::RuntimeError;
 
@@ -48,32 +48,53 @@ const PRODUCTION_SIGNALS: &[&str] = &[
     "infrastructure",
 ];
 
-const STRUCTURAL_SIGNALS: &[&str] = &[
+const ORGANIZATION_DIMENSION_SIGNALS: &[&str] = &[
     "organization",
     "organiz",
     "responsibil",
     "reporting",
     "team",
     "division",
-    "operating model",
+    "headcount",
+];
+
+const WORKFLOW_DIMENSION_SIGNALS: &[&str] = &[
     "workflow",
     "process",
+    "operating model",
     "operation",
-    "production",
+    "approval",
+    "scheduling",
+    "handoff",
+];
+
+const PRODUCTION_SYSTEM_DIMENSION_SIGNALS: &[&str] = &[
+    "production system",
+    "production platform",
     "deploy",
     "rollout",
     "automation",
     "agent",
     "platform",
     "infrastructure",
+    "storage",
+    "cloud",
+    "scheduler",
+    "pipeline",
+];
+
+const OPERATING_METRIC_DIMENSION_SIGNALS: &[&str] = &[
+    "gpu",
     "utilization",
     "latency",
     "throughput",
     "capacity",
     "cost",
-    "headcount",
     "margin",
     "cash flow",
+    "revenue",
+    "free cash flow",
+    "productivity",
 ];
 
 /// Source classification used by the evidence gate.
@@ -91,7 +112,7 @@ pub enum EvidenceSourceKind {
 pub enum EvidenceClass {
     /// A dated authoritative claim that is verified but not structurally relevant.
     ValidatedFact,
-    /// A verified claim with an explicit organization, production-system, or operating-impact signal.
+    /// A verified claim with an explicit structural-domain signal.
     StructuralEvidence,
 }
 
@@ -269,6 +290,11 @@ impl ValidatedEvidence {
         self.candidate.production_area()
     }
 
+    /// Returns the deterministic structural domain, when the claim is structural.
+    pub fn structural_dimension(&self) -> Option<StructuralDimension> {
+        structural_dimension_for_text(&self.candidate.passage)
+    }
+
     /// Returns the validated effective date.
     pub const fn effective_date(&self) -> Option<&NaiveDate> {
         self.candidate.effective_date()
@@ -281,10 +307,7 @@ impl ValidatedEvidence {
 
     /// Returns the deterministic semantic class of the validated claim.
     pub fn evidence_class(&self) -> EvidenceClass {
-        if STRUCTURAL_SIGNALS
-            .iter()
-            .any(|signal| self.candidate.passage.to_ascii_lowercase().contains(signal))
-        {
+        if self.structural_dimension().is_some() {
             EvidenceClass::StructuralEvidence
         } else {
             EvidenceClass::ValidatedFact
@@ -319,10 +342,11 @@ impl ValidatedEvidence {
             EvidenceClass::ValidatedFact => "evidence_official_material",
             EvidenceClass::StructuralEvidence => "evidence_structural_change",
         };
-        NormalizedFact::new(
+        NormalizedFact::new_with_structural_dimension(
             self.candidate.company_id.clone(),
             format!("{kind_prefix}_{index:03}"),
             self.candidate.concrete_change.clone(),
+            self.structural_dimension(),
             FactStatus::Known,
             Confidence::High,
             provenance,
@@ -421,6 +445,16 @@ pub fn validate_evidence_candidate(
             cutoff,
         });
     }
+    for (field, value) in [
+        ("company_id", candidate.company_id()),
+        ("company_name", candidate.company_name()),
+        ("concrete_change", candidate.concrete_change()),
+        ("source_uri", candidate.source_uri()),
+    ] {
+        if value.trim().is_empty() {
+            return Err(EvidenceValidationError::MissingRequiredField { field });
+        }
+    }
     if candidate.production_area.trim().is_empty() {
         return Err(EvidenceValidationError::MissingRequiredField {
             field: "production_area",
@@ -455,6 +489,35 @@ fn bounded(mut value: String) -> String {
         value.truncate(MAX_FIELD_BYTES);
     }
     value
+}
+
+fn structural_dimension_for_text(text: &str) -> Option<StructuralDimension> {
+    let lower = text.to_ascii_lowercase();
+    if OPERATING_METRIC_DIMENSION_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal))
+    {
+        return Some(StructuralDimension::OperatingMetric);
+    }
+    if PRODUCTION_SYSTEM_DIMENSION_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal))
+    {
+        return Some(StructuralDimension::ProductionSystem);
+    }
+    if WORKFLOW_DIMENSION_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal))
+    {
+        return Some(StructuralDimension::Workflow);
+    }
+    if ORGANIZATION_DIMENSION_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal))
+    {
+        return Some(StructuralDimension::Organization);
+    }
+    None
 }
 
 fn content_hash(value: &str) -> String {

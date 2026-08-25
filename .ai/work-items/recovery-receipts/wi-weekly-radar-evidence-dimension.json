@@ -1,0 +1,55 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.archive-manifest.json",
+      "sha256": "b542daf3dac3d60d2d718937417101475927ecdc8206be75f381151e7f733f49"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.contract.json",
+      "sha256": "79bb02d78992fa20bc3c767acace7f314a2ba4b4d0ebcef8314f01090e2dcd80"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.outcome.json",
+      "sha256": "d94a163efe21bcdb9197642e49d52c7d0270aa03cd4177350ebf00e50ad59162"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-evidence-dimension.summary.json",
+      "sha256": "57ffb3b74b5c74d2e14ab3eb6bf85e00caddc653e6df36aff25fcbdf7d93c4fc"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=8d0d38137cd2c0fc04e19767bf298bdc6a5bd212"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "2ee186efa290542a27b33e088fe6a8ef5014c6eb049d08db0372d82e3769b21c"
+  },
+  "humanAuthorization": {
+    "reference": "User authorization in conversation: execute the Work Item through CI, merge, closure, and one safe dry-run.",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/79",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-25T07:02:49.031834+00:00",
+  "prBaseCommit": "8d0d38137cd2c0fc04e19767bf298bdc6a5bd212",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-cli-output-guard.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
+  ],
+  "workItemId": "wi-weekly-radar-evidence-dimension"
+}

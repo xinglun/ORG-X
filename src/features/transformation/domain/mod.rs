@@ -187,6 +187,21 @@ impl ReferenceModelEvidenceFamily {
     }
 }
 
+/// Provenance role used to keep supplier attribution separate from
+/// independent diffusion corroboration.
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ReferenceModelSourceRole {
+    /// Supplier-controlled material that attributes a technical implementation.
+    SupplierAttribution,
+    /// Adopter-owned disclosure that corroborates adoption or imitation.
+    IndependentCustomerDisclosure,
+    /// Regulatory filing or investor-relations result material.
+    RegulatoryOrFiling,
+    /// Secondary or discovery material that cannot satisfy a hard gate.
+    DiscoveryOnly,
+}
+
 /// The fail-closed outcome of the reference-model evidence gate.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -220,6 +235,8 @@ pub struct ReferenceModelEvidence {
     period: Option<String>,
     named_peer: Option<String>,
     authoritative: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    source_role: Option<ReferenceModelSourceRole>,
 }
 
 impl ReferenceModelEvidence {
@@ -233,6 +250,30 @@ impl ReferenceModelEvidence {
         named_peer: Option<String>,
         authoritative: bool,
     ) -> Result<Self, TransformationDomainError> {
+        Self::new_with_source_role(
+            id,
+            family,
+            description,
+            source_uri,
+            period,
+            named_peer,
+            authoritative,
+            None,
+        )
+    }
+
+    /// Creates a source-bound claim with an explicit provenance role.
+    #[allow(clippy::too_many_arguments)]
+    pub fn new_with_source_role(
+        id: impl Into<String>,
+        family: ReferenceModelEvidenceFamily,
+        description: impl Into<String>,
+        source_uri: impl Into<String>,
+        period: Option<String>,
+        named_peer: Option<String>,
+        authoritative: bool,
+        source_role: Option<ReferenceModelSourceRole>,
+    ) -> Result<Self, TransformationDomainError> {
         let evidence = Self {
             id: id.into(),
             family,
@@ -241,6 +282,7 @@ impl ReferenceModelEvidence {
             period,
             named_peer,
             authoritative,
+            source_role,
         };
         evidence.validate()?;
         Ok(evidence)
@@ -303,6 +345,11 @@ impl ReferenceModelEvidence {
     /// Returns whether the source is allowed to satisfy a hard evidence gate.
     pub const fn authoritative(&self) -> bool {
         self.authoritative
+    }
+
+    /// Returns the optional provenance role used by the diffusion gate.
+    pub const fn source_role(&self) -> Option<ReferenceModelSourceRole> {
+        self.source_role
     }
 }
 
@@ -402,6 +449,7 @@ impl ReferenceModelEvidenceBundle {
         let mut outcome_periods = std::collections::BTreeSet::new();
         let mut diffusion_sources = std::collections::BTreeSet::new();
         let mut diffusion_peers = std::collections::BTreeSet::new();
+        let mut supplier_attribution_sources = std::collections::BTreeSet::new();
         for evidence in authoritative {
             families.insert(evidence.family());
             if evidence.family() == ReferenceModelEvidenceFamily::SustainedOutcome {
@@ -410,9 +458,19 @@ impl ReferenceModelEvidenceBundle {
                 }
             }
             if evidence.family() == ReferenceModelEvidenceFamily::IndustryDiffusion {
-                diffusion_sources.insert(evidence.source_uri().to_owned());
-                if let Some(peer) = evidence.named_peer() {
-                    diffusion_peers.insert(peer.to_owned());
+                match evidence.source_role() {
+                    Some(ReferenceModelSourceRole::IndependentCustomerDisclosure) => {
+                        diffusion_sources.insert(evidence.source_uri().to_owned());
+                        if let Some(peer) = evidence.named_peer() {
+                            diffusion_peers.insert(peer.to_owned());
+                        }
+                    }
+                    Some(ReferenceModelSourceRole::SupplierAttribution) => {
+                        supplier_attribution_sources.insert(evidence.source_uri().to_owned());
+                    }
+                    Some(ReferenceModelSourceRole::RegulatoryOrFiling)
+                    | Some(ReferenceModelSourceRole::DiscoveryOnly)
+                    | None => {}
                 }
             }
         }
@@ -473,6 +531,7 @@ impl ReferenceModelEvidenceBundle {
             counter_reviewed: self.counter_reviewed,
             distinct_outcome_periods: outcome_periods.len(),
             independent_diffusion_sources: diffusion_sources.len(),
+            supplier_attribution_sources: supplier_attribution_sources.len(),
         }
     }
 
@@ -506,6 +565,8 @@ pub struct ReferenceModelAssessment {
     counter_reviewed: bool,
     distinct_outcome_periods: usize,
     independent_diffusion_sources: usize,
+    #[serde(default)]
+    supplier_attribution_sources: usize,
 }
 
 impl Default for ReferenceModelAssessment {
@@ -548,6 +609,11 @@ impl ReferenceModelAssessment {
     /// Returns the number of independent diffusion source URIs.
     pub const fn independent_diffusion_sources(&self) -> usize {
         self.independent_diffusion_sources
+    }
+
+    /// Returns the number of authoritative supplier-attribution source URIs.
+    pub const fn supplier_attribution_sources(&self) -> usize {
+        self.supplier_attribution_sources
     }
 }
 

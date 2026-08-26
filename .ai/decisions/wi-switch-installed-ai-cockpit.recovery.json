@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "decisionId": "work-item-recovery",
+  "decision": "retry",
+  "workItemId": "wi-switch-installed-ai-cockpit",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "predecessorWorkItemId": "wi-switch-installed-ai-cockpit",
+  "predecessorContractDigest": "sha256:073550102ca0a3c6e147ef799807f3217fab87915f7e85e876c8650578baf057",
+  "predecessorSummaryDigest": "sha256:90d2a0168121bc8be2f6e5880c22d8fb6e5275fc5e0090d4a5a5a01ff3b18e94",
+  "runtimeVersion": "0.2.33",
+  "runtimeDigest": "sha256:eceed75ef74079e7ede420b42f8223fc76be82ec0211ddc6b8fdf7cb3c3b9de4",
+  "actor": "user-authorized-agent",
+  "authoritySource": "Current user request and explicit permission to proceed",
+  "reason": "Retry the same Work Item after restoring the existing Python test assets and correcting the Runtime-native Contract bindings; preserve the prior checkpoint and verification evidence.",
+  "evidenceRefs": [
+    ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json",
+    ".ai/work-items/active/wi-switch-installed-ai-cockpit.contract.json",
+    ".ai/work-items/active/wi-switch-installed-ai-cockpit.summary.json"
+  ],
+  "policyRefs": [
+    ".ai/README.md",
+    ".ai/glossary.md"
+  ],
+  "decidedAt": "2026-08-26T21:47:53Z",
+  "resumeCondition": "A corrected Contract, fresh Runtime preflight, fresh verification, and visible Work Item outcome bind to the current repository snapshot."
+}

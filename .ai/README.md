@@ -1,28 +1,41 @@
----
-author: Ray
-title: "AI Governance Workspace"
-description: Stable entrypoint for repository AI governance files and required workflow documentation.
----
+# AI Cockpit repository usage
 
-# AI Governance Workspace
+This repository uses one externally installed `ai-cockpit` Runtime. The binary
+is shared; this `.ai/` directory is private to this repository. Never infer
+current repository or Work Item state from process state, the working directory,
+or Agent prose.
 
-AI Cockpit is a Repository Governance Layer for AI-assisted Software Development. This workspace contains governance contracts, policies, and generated status.
+## Agent route
 
-Read these files before changing the repository:
+1. Inspect the repository with `ai-cockpit inspect --repo <repository>` and
+   `ai-cockpit status --repo <repository>`.
+2. Confirm readiness with `ai-cockpit doctor --repo <repository>` and
+   `ai-cockpit agent doctor --repo <repository> --json`.
+3. For a new repository, use `ai-cockpit attach --repo <repository>`.
+4. Agent discovery is explicit and repository-local:
+   `ai-cockpit agent list/install/repair/detach --repo <repository> --provider <provider>`.
+5. Create a Work Item with `ai-cockpit work-item new --repo <repository> --id
+   <id> --mode code`, then provide human-owned intent, scope, acceptance, and
+   authority before implementation.
+6. For an authorized Work Item, use `start → preflight → checkpoint → verify →
+   finish → archive → close`. Every command carries `--repo`.
 
-1. `.ai/cockpit/README.md` for the Work Item lifecycle and required commands.
-2. [`.ai/cockpit/README.ja.md`](cockpit/README.ja.md) for the Japanese runtime workflow guide.
-3. `.ai/glossary.md` for canonical product and governance terminology.
-4. The active Contract and Summary under `.ai/work-items/active/`.
-5. `.ai/cockpit/adoption.md` when installing AI Cockpit into another repository.
+The Runtime has no global active Work Item, current repository, or project
+profile. Repository protocol, Contract, evidence, knowledge, and adapter
+ownership records remain isolated under this repository's `.ai/`.
 
-## Key Concepts
+## Evidence discipline
 
-- **Intent**: Why work exists — problem, constraints, rationale (optional but recommended; leave blank or mark `not provided` when context is missing)
-- **Contract**: What should change — scope, acceptance, verification
-- **Implementation**: What actually changed
-- **Verification**: Does it meet requirements?
-- **Summary**: Did we achieve the intended goal? Intent alignment validation is optional and should only be filled when evidence exists
-- **Preflight Review**: A before-code readiness view derived from Contract evidence. `make ai-start ... MODE=code` and `make ai-preflight` surface it before implementation; if it is `needs_human_confirmation` or `not_ready`, the agent must pause and report it to the user before coding continues.
+Do not claim `green`, `passed`, `approved`, `verified`, or `completed` from this
+file. Query the Runtime and read current repository evidence. Missing, stale,
+contradictory, or unknown evidence requires a rerun, human decision, or stop.
 
-Guard policies live under `.ai/guards/`. Generated Cockpit Status must be updated through the Make targets documented in `.ai/cockpit/README.md`, not edited manually.
+Generated status, receipt, and archive files are written by Runtime commands;
+do not hand-edit them. Do not copy V1 Python runtime code, Make commands,
+installers, or schemas into this repository. Do not edit global Agent or MCP
+configuration.
+
+The visible human Outcome is a terminal handoff. It must retain its
+`Outcome: 🟢`, `Outcome: 🟡`, or `Outcome: 🔴` marker, unknowns, evidence,
+decision, and next action. A missing, stale, contradictory, or malformed
+Outcome does not authorize finish, archive, merge, close, or release.

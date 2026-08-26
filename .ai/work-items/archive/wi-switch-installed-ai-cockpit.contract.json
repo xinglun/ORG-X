@@ -1,0 +1,256 @@
+{
+  "acceptance": [
+    "A1: The repository is attached to installed ai-cockpit 0.2.33, reports compatible/calibrated state, and uses the explicit --repo interface.",
+    "A2: The live repository no longer contains the project-bound Python AI Cockpit runtime, its Makefile entrypoints, or its Python build binding; the existing Python governance tests remain unchanged as historical verification assets.",
+    "A3: Runtime-native agent adapters and repository instructions point to the installed ai-cockpit lifecycle; no global agent configuration is changed.",
+    "A4: The Rust project source, Cargo manifests, Rust tests, historical Work Item archives, recovery receipts, and install evidence remain preserved.",
+    "A5: Runtime-native preflight, checkpoint, verification, finish, and human-visible outcome validation succeed for this Work Item.",
+    "A6: cargo fmt --all -- --check, cargo clippy --all-targets --all-features -- -D warnings, and cargo test --all pass.",
+    "A7: The legacy controlled uninstaller's stale-manifest block and the bounded replacement cleanup are recorded in the Work Item evidence and handoff."
+  ],
+  "acceptanceCriteria": [
+    "A1: The repository is attached to installed ai-cockpit 0.2.33, reports compatible/calibrated state, and uses the explicit --repo interface.",
+    "A2: The live repository no longer contains the project-bound Python AI Cockpit runtime, its Makefile entrypoints, or its Python build binding; the existing Python governance tests remain unchanged as historical verification assets.",
+    "A3: Runtime-native agent adapters and repository instructions point to the installed ai-cockpit lifecycle; no global agent configuration is changed.",
+    "A4: The Rust project source, Cargo manifests, Rust tests, historical Work Item archives, recovery receipts, and install evidence remain preserved.",
+    "A5: Runtime-native preflight, checkpoint, verification, finish, and human-visible outcome validation succeed for this Work Item.",
+    "A6: cargo fmt --all -- --check, cargo clippy --all-targets --all-features -- -D warnings, and cargo test --all pass.",
+    "A7: The legacy controlled uninstaller's stale-manifest block and the bounded replacement cleanup are recorded in the Work Item evidence and handoff."
+  ],
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false
+  },
+  "authority": "authorized",
+  "baseRevision": "4d36b13c437db4cfaac9181ac2ce8f4ad3d63c5c",
+  "contractVersion": 2,
+  "createdAt": "2026-08-26T21:26:28Z",
+  "destructiveChangePolicy": {
+    "allowPatterns": [
+      "scripts/**",
+      "Makefile.ai",
+      "Makefile.ai.stack",
+      "pyproject.toml",
+      ".ai/calibration/**",
+      ".ai/project_profile.yaml",
+      ".ai/quality/**",
+      ".ai/cockpit/adoption.md",
+      ".ai/cockpit/adoption.ja.md",
+      ".ai/cockpit/checks.yaml",
+      ".ai/cockpit/current_status.md",
+      ".ai/cockpit/task_report.json",
+      ".ai/cockpit/task_report.md",
+      ".ai/cockpit/upgrade-conflict-report.json",
+      ".ai/cockpit/version.json"
+    ],
+    "allowed": true,
+    "approvalEvidence": {
+      "approved": true,
+      "approvedBy": "user",
+      "identityEvidence": {
+        "actor": "user",
+        "approvalType": "destructive_change",
+        "evidence": {
+          "authorizedAt": "2026-08-26T21:47:53Z",
+          "directUserInstructionDigest": "sha256:96c6954c2250780a41608bc364e5cb88cfc842bb0cf77e3832b515441ce61f39",
+          "directUserInstructionRef": "current conversation user request"
+        },
+        "identityLevel": "direct_user_authorized",
+        "schemaVersion": 1,
+        "scope": [
+          "scripts/**",
+          "Makefile.ai",
+          "Makefile.ai.stack",
+          "pyproject.toml",
+          ".ai/calibration/**",
+          ".ai/project_profile.yaml",
+          ".ai/quality/**",
+          ".ai/cockpit/adoption.md",
+          ".ai/cockpit/adoption.ja.md",
+          ".ai/cockpit/checks.yaml",
+          ".ai/cockpit/current_status.md",
+          ".ai/cockpit/task_report.json",
+          ".ai/cockpit/task_report.md",
+          ".ai/cockpit/upgrade-conflict-report.json",
+          ".ai/cockpit/version.json"
+        ]
+      },
+      "reason": "The user explicitly requested removal of the project-bound Python AI Cockpit and the bounded switch to installed ai-cockpit."
+    },
+    "requiresHumanApproval": true
+  },
+  "executionDecision": {
+    "reason": "The user requested the Runtime switch and authorized the bounded repository change; the scope and verification plan are explicit.",
+    "status": "continue"
+  },
+  "goal": "Remove the project-bound Python AI Cockpit runtime from ORG-X and switch the repository to the attached installed ai-cockpit 0.2.33 Runtime while preserving the Rust project and historical governance evidence.",
+  "intent": {
+    "constraints": [
+      "Use the installed external ai-cockpit Runtime with explicit --repo binding.",
+      "Do not change global agent or machine-wide ai-cockpit configuration.",
+      "Preserve Rust source, Rust tests, and historical governance/install evidence."
+    ],
+    "nonGoals": [
+      "Removing or upgrading the machine-wide ai-cockpit binary",
+      "Deleting or rewriting the existing Python governance tests"
+    ],
+    "problem": "The repository still carries a Python/Make-based AI Cockpit runtime, while the installed ai-cockpit 0.2.33 CLI exposes the Runtime-native repository protocol.",
+    "rationale": "Remove only the live project-bound Python Runtime and its lifecycle/build bindings, then attach and verify the installed Runtime without erasing historical records."
+  },
+  "mode": "code",
+  "notCodable": false,
+  "outOfScope": [
+    "Installing, upgrading, or removing the machine-wide ai-cockpit binary itself",
+    "Changing global shell, Python, Codex, Claude, Gemini, or other agent configuration",
+    "Changing Rust source code, Cargo manifests, Cargo.lock, rust-toolchain.toml, or Rust tests",
+    "Deleting or rewriting historical .ai/work-items/archive, recovery-receipts, conflict-successor-receipts, external-handoffs, evidence, knowledge, or .ai/install records",
+    "Rewriting historical specifications and plans except for the current migration plan",
+    "Removing or rewriting the existing Python governance tests; they remain unchanged as historical verification assets",
+    "Pushing a remote branch, opening or merging a pull request, or closing the Work Item after merge"
+  ],
+  "problemStatement": "Replace the repository-bound Python/Make AI Cockpit implementation with the installed external ai-cockpit 0.2.33 Runtime while preserving project code and historical evidence.",
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:7be948f3183d55d02ef01ebdc58c8a77861e24b532bd8271dea313b3663d3654",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-switch-installed-ai-cockpit",
+    "provider": "local",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-switch-installed-ai-cockpit"
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "user",
+    "reason": "The requested Runtime switch authorizes the bounded adapter, documentation, Makefile, and CI updates in this Work Item."
+  },
+  "risk": "high",
+  "riskAssessment": {
+    "level": "high",
+    "reason": "The migration removes repository-managed lifecycle code and changes CI/runtime ownership, but does not modify Rust product code or historical evidence.",
+    "riskTypes": [
+      "runtime_boundary_change",
+      "governance_artifact_change",
+      "legacy_entrypoint_removal"
+    ]
+  },
+  "scenarioCoverage": [
+    {
+      "evidence": [
+        "ai-cockpit inspect/status/compatibility/doctor output"
+      ],
+      "expected": "The repository reports installed Runtime 0.2.33, attached and compatible state, with no runtime code stored in the repository.",
+      "required": true,
+      "scenario": "installed Runtime attachment and identity",
+      "status": "unverified",
+      "verificationPlan": "Run the Runtime read-only identity and diagnostics commands after cleanup."
+    },
+    {
+      "evidence": [
+        "git diff and live-reference scan"
+      ],
+      "expected": "The live tree has no project-bound Python AI Cockpit runtime or obsolete Make lifecycle references, while historical evidence and Rust files remain preserved.",
+      "required": true,
+      "scenario": "legacy runtime removal with historical preservation",
+      "status": "unverified",
+      "verificationPlan": "Inspect the bounded diff, scan live paths for legacy references, and compare preserved paths against the base revision."
+    },
+    {
+      "evidence": [
+        "cargo fmt, cargo clippy, cargo test output"
+      ],
+      "expected": "The Rust project remains quality-clean after the runtime switch.",
+      "required": true,
+      "scenario": "Rust project quality after migration",
+      "status": "unverified",
+      "verificationPlan": "Run the declared Cargo formatting, lint, and test commands."
+    },
+    {
+      "evidence": [
+        "Runtime-native lifecycle receipts"
+      ],
+      "expected": "Preflight, checkpoint, verification, finish, and human-visible outcome are bound to this Work Item and current snapshot.",
+      "required": true,
+      "scenario": "Runtime-native Work Item lifecycle",
+      "status": "unverified",
+      "verificationPlan": "Run the ordered lifecycle commands and surface work-item outcome in the conversation."
+    }
+  ],
+  "scope": [
+    ".ai/cockpit.toml",
+    ".ai/project.json",
+    ".ai/agent-interface.json",
+    ".ai/adapters/**",
+    ".ai/decisions/profile-v1.json",
+    ".ai/decisions/profile-v2.json",
+    ".ai/decisions/profile-v3.json",
+    ".ai/decisions/wi-switch-installed-ai-cockpit.recovery.json",
+    ".ai/README.md",
+    ".ai/cockpit/README.md",
+    ".ai/cockpit/README.ja.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/version.json",
+    ".ai/cockpit/upgrade-conflict-report.json",
+    ".ai/cockpit/adoption.md",
+    ".ai/cockpit/adoption.ja.md",
+    ".ai/cockpit/checks.yaml",
+    ".ai/quality/gates.yaml",
+    ".ai/quality/governance-routing.yaml",
+    ".ai/calibration/profiles.yaml",
+    ".ai/project_profile.yaml",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    "Makefile",
+    "Makefile.ai",
+    "Makefile.ai.stack",
+    "pyproject.toml",
+    ".github/workflows/ai-cockpit.yml",
+    "scripts/**",
+    "docs/CAPABILITIES.md",
+    "docs/README.md",
+    "docs/contract-fields.md",
+    "docs/trust-layer.md",
+    "docs/reference/ai-cockpit-work-item-lifecycle.md",
+    "docs/superpowers/plans/2026-08-27-switch-installed-ai-cockpit.md",
+    ".ai/work-items/active/wi-switch-installed-ai-cockpit.contract.json",
+    ".ai/work-items/active/wi-switch-installed-ai-cockpit.summary.json",
+    ".ai/evidence/**"
+  ],
+  "sources": [
+    "User request in the current conversation",
+    "Installed ai-cockpit 0.2.33 --version and --help output",
+    "Installed Runtime attach, profile confirm, inspect, status, compatibility, and doctor output",
+    ".ai/glossary.md",
+    ".ai/README.md",
+    ".ai/install/release-identity.json",
+    ".ai/install/manifest.json",
+    "scripts/ai_uninstall_facts.py"
+  ],
+  "state": "implementation_active",
+  "title": "Switch ORG-X to the installed AI Cockpit Runtime",
+  "verification": [
+    "ai-cockpit inspect --repo <repo>",
+    "ai-cockpit status --repo <repo>",
+    "ai-cockpit compatibility --repo <repo>",
+    "ai-cockpit doctor --repo <repo>",
+    "ai-cockpit preflight --repo <repo> --contract .ai/work-items/active/wi-switch-installed-ai-cockpit.contract.json",
+    "ai-cockpit checkpoint --repo <repo> --id wi-switch-installed-ai-cockpit",
+    "ai-cockpit verify --repo <repo> --command cargo --args test,--all --workers 1",
+    "cargo fmt --all -- --check",
+    "cargo clippy --all-targets --all-features -- -D warnings",
+    "cargo test --all",
+    "git diff --check",
+    "ai-cockpit finish --repo <repo> --id wi-switch-installed-ai-cockpit",
+    "ai-cockpit work-item outcome --repo <repo> --id wi-switch-installed-ai-cockpit"
+  ],
+  "workItemId": "wi-switch-installed-ai-cockpit"
+}

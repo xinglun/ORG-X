@@ -1,0 +1,30 @@
+{
+  "buildSystems": [
+    "Cargo",
+    "Make",
+    "Poetry"
+  ],
+  "profileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "profileVersion": 3,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySchemaVersion": 2,
+  "state": "calibrated",
+  "tests": [
+    {
+      "args": [
+        "test",
+        "--workspace"
+      ],
+      "program": "cargo",
+      "state": "detected"
+    },
+    {
+      "args": [
+        "test",
+        "--workspace"
+      ],
+      "program": "cargo",
+      "state": "verified"
+    }
+  ]
+}

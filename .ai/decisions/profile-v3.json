@@ -1,0 +1,14 @@
+{
+  "candidate": {
+    "args": [
+      "test",
+      "--workspace"
+    ],
+    "program": "cargo"
+  },
+  "createdAt": "2026-08-26T21:34:41Z",
+  "kind": "project_profile_confirmation",
+  "profileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "profileVersion": 3,
+  "state": "confirmed"
+}

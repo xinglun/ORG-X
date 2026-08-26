@@ -33,7 +33,7 @@
         "scripts/ai_close_work_item.py",
         "scripts/ai_critical_domain_guards.py"
       ],
-    "scriptInventoryDigest": "30e3569750f94de75d163197f52a59abee655f44a810d27503b87fb11875a090",
+    "scriptInventoryDigest": "9730f66ff9fa5158a07e6f461479f69bd5c20acef518184fbed7e43544e0caf3",
       "preservedAdopterCustomizations": [
         {
           "path": "scripts/ai_check_summary.py",

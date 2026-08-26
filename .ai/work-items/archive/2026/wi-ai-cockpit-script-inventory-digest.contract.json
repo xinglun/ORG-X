@@ -1,0 +1,244 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-ai-cockpit-script-inventory-digest",
+  "mode": "code",
+  "title": "Refresh stale AI Cockpit script inventory digest",
+  "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+  "rawUserRequest": "Close the historical Python/Shell/governance debt discovered during the Weekly Radar acceptance run, then continue the original Work Item lifecycle.",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Conversation instruction that historical debt must be closed in this round",
+    "digest": "sha256:ai-cockpit-script-inventory-digest-request",
+    "capturedAt": "2026-08-26T10:20:00+09:00"
+  },
+  "baselineDirtyPaths": [],
+  "scope": [
+    ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+    "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+    "docs/superpowers/specs/2026-08-26-wi-ai-cockpit-script-inventory-digest.md",
+    "docs/superpowers/plans/2026-08-26-wi-ai-cockpit-script-inventory-digest.md",
+    ".ai/work-items/active/wi-ai-cockpit-script-inventory-digest.contract.json",
+    ".ai/work-items/active/wi-ai-cockpit-script-inventory-digest.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-ai-cockpit-script-inventory-digest.outcome.json",
+    ".ai/work-items/active/wi-ai-cockpit-script-inventory-digest.outcome.md"
+  ],
+  "outOfScope": [
+    "scripts/**",
+    "src/**",
+    "config/**",
+    "Changing the installer catalog inventory, script contents, test expectations, or any runtime behavior.",
+    "Changing AI Cockpit policy semantics or weakening the checklist assertion."
+  ],
+  "sources": [
+    {
+      "path": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+      "reason": "Contains the installed scriptInventoryDigest that is stale against the current catalog."
+    },
+    {
+      "path": "scripts/ai_installer_catalog.json",
+      "reason": "Authoritative catalog used by the failing Python test to compute the expected digest."
+    },
+    {
+      "path": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+      "reason": "Executable regression gate proving the catalog and installed checklist remain synchronized."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-26-wi-ai-cockpit-script-inventory-digest.md",
+      "reason": "Bounded corrective design and acceptance."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-26-wi-ai-cockpit-script-inventory-digest.md",
+      "reason": "Implementation and verification plan."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "low",
+    "riskTypes": [
+      "generated_evidence_staleness"
+    ],
+    "reason": "The change updates one generated governance digest to the value computed from the unchanged authoritative catalog; no code or policy semantics change."
+  },
+  "governanceProfile": {
+    "selected": "strict",
+    "source": "automatic",
+    "reasons": [
+      "The Work Item changes an AI Cockpit governance evidence projection under .ai/evidence/.",
+      "Automatic routing requires the strict quality profile for restricted governance evidence."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The baseline failure is deterministic, reproducible on main, and bounded to one stale installed digest; updating the projection and rerunning the executable gate is codable."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "The installed checklist digest exactly equals the deterministic digest computed from scripts/ai_installer_catalog.json and the 115 on-disk scripts.",
+    "The existing upgrade feature checklist test passes on this branch and on the merged main baseline after delivery.",
+    "No script, catalog, test assertion, or AI Cockpit policy semantics are changed; the diff contains only the stale generated digest and governed records.",
+    "`PYTHONDONTWRITEBYTECODE=1 pytest -q tests/ai_cockpit/upgrade_feature_checklist_test.py` passes with 2 tests and `PYTHONDONTWRITEBYTECODE=1 pytest -q` passes with zero failures.",
+    "`make quality` and the Contract-declared AI Cockpit checks pass without changing scripts, the catalog, tests, or policy semantics.",
+    "`make ai-finish TASK=wi-ai-cockpit-script-inventory-digest REPORT_LANGUAGE=zh-CN`, hosted CI, PR merge, and `make ai-close-work-item TASK=wi-ai-cockpit-script-inventory-digest` produce passing evidence, a merged PR, and clean local/remote state."
+  ],
+  "guidelines": [
+    "Treat scripts/ai_installer_catalog.json as the authoritative source for the digest.",
+    "Do not hand-edit or weaken the executable test; update only the generated installed projection.",
+    "Use Python and Shell for deterministic verification and governance orchestration.",
+    "Do not change runtime code, scripts, catalog membership, or policy semantics."
+  ],
+  "intent": {
+    "problem": "The required Python suite fails on a clean main baseline because the installed AI Cockpit upgrade checklist stores scriptInventoryDigest 30e356... while the deterministic digest computed from the unchanged 115-script catalog is 9730f6.... This stale generated projection blocks the Weekly Radar Work Item's hard Python/Shell acceptance.",
+    "constraints": [
+      "Update only the installed generated digest in .ai/evidence/ai-cockpit-upgrade-feature-checklist.json and governed records.",
+      "Do not alter scripts, catalog contents, test assertions, policy semantics, or product runtime code.",
+      "Prove the expected digest by running the existing Python test and the repository quality/governance gates."
+    ],
+    "rationale": "The failing test itself computes the expected value from the authoritative catalog and on-disk files. Refreshing the stale projection is the smallest corrective change and preserves the executable integrity check."
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["ai_governance", "test_automation"],
+    "prohibitedCapabilities": ["secret_readback", "policy_bypass", "runtime_change"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly required historical Python/Shell/governance debt to be closed before continuing the Weekly Radar lifecycle.",
+    "authorizedExternalEffects": [
+      "Create and update the dedicated corrective Work Item branch and pull request.",
+      "Run repository and hosted quality checks without reading secret values.",
+      "Merge the corrective pull request and close the Work Item after evidence passes."
+    ]
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "The installed checklist digest matches the catalog-derived digest.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [".ai/evidence/ai-cockpit-upgrade-feature-checklist.json", "tests/ai_cockpit/upgrade_feature_checklist_test.py"],
+      "expected": "The exact existing test passes without changing the test or catalog.",
+      "verificationPlan": "Run the focused Python test before and after the one-field projection update."
+    },
+    {
+      "scenario": "The full Python/Shell/governance acceptance remains clean.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["Makefile.ai", "Makefile.ai.stack", "tests/ai_cockpit"],
+      "expected": "pytest, make quality, and all AI Cockpit checks pass.",
+      "verificationPlan": "Run the full Python suite, project quality, Contract checks, finish, CI, and closure."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": true,
+    "approvedBy": "human user in current conversation",
+    "reason": "User explicitly authorized closing historical Python/Shell/governance debt in this round; the write is limited to refreshing the stale generated digest proven by the existing executable test."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 79
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-ai-cockpit-script-inventory-digest.json",
+    "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+    "initialScopeDigest": "1ad74d212d4679d40e51313a3f46a207d344e0945974b4670d48e2b76d0c179b",
+    "contractSkeletonDigest": "74a3e773d0135ca8914fc7abe44a49d8789824c560d686c97d30593363eddfde"
+  }
+}

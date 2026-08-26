@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-ai-cockpit-script-inventory-digest",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "8ac5a77f7201ed97d8c786fde0217e2cc5c5cad41435f38ce42c8a015ce2846e"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-ai-cockpit-script-inventory-digest",
+    "contractDigest": "195e3595b28535a4fef6e56dd8ba8639c6aa5ff1b83284ced909ea0c40ad75f0",
+    "summaryDigest": "778a7f6fdb6a74b73fcc08d9657c87a804f414ea07057c2dd6bb349aa6f82ff0",
+    "verificationDigest": "26f53c7d1281005e99ac3f353b2a144a521af70b3ec00c2bac85d6bf1029df59",
+    "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+    "headCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "faab952b18ad81798da38b7aa00ae5b3a9dd9bcf19e9bbe97ecbaf23c510dabf",
+      "binding": {
+        "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+        "candidateHead": "13a445579389a9cd530a7c97037671f92e5aae73",
+        "candidateTreeDigest": "f86b1e839247edae8a372fc4c23acf808db1ee78d5fe93a70cb4b13f894e262c",
+        "candidateDiffDigest": "85d6add3b63075d422050618543984a8c6b5d30375916df86beb90ad14d59e11"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-ai-cockpit-script-inventory-digest generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-ai-cockpit-script-inventory-digest generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-ai-cockpit-script-inventory-digest",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.contract.json",
       ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
@@ -20,204 +43,241 @@
       ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiScenarioCoverage",
-      "action": "blocked",
-      "resolution": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "7be78b5f5da4909622f59cb321d3eccc64679ecb759c05393045683aca145bb0"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "ff9fe1a9c83aa262325670ae57b986d6ed407eee88d00f08c43cfd524a0e51d2"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
-          "subject": "verificationHistory[1] aiGuidelines failed",
-          "digest": "c96cd41d5415d14ab6f906a06aae505b4848000fc1984a16c50d424122587bfd"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "98ea9964a9f25929b353153cc55dddfb8d24ed63e554b7d7c59f041bacee43a0"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiScenarioCoverage failed before the retry.",
-      "policyOrGuard": "required verification: aiScenarioCoverage",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "7be78b5f5da4909622f59cb321d3eccc64679ecb759c05393045683aca145bb0"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "ff9fe1a9c83aa262325670ae57b986d6ed407eee88d00f08c43cfd524a0e51d2"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
-          "subject": "verificationHistory[1] aiGuidelines failed",
-          "digest": "c96cd41d5415d14ab6f906a06aae505b4848000fc1984a16c50d424122587bfd"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "98ea9964a9f25929b353153cc55dddfb8d24ed63e554b7d7c59f041bacee43a0"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [],
-  "implementationApproach": {
-    "approachType": "configuration",
-    "status": "complete",
-    "summary": {
-      "text": "Reproduced the clean-main digest mismatch, changed only installerCatalog.installed.scriptInventoryDigest to the deterministic value emitted by the existing test, and left the catalog, scripts, test, and policies unchanged.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
-          "subject": "2 focused tests passed"
-        },
-        {
-          "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
-          "subject": "419 tests passed"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Use the existing executable digest calculation as the authority for the generated installed projection.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
-          "subject": "installed scriptInventoryDigest"
-        },
-        {
-          "source": "scripts/ai_installer_catalog.json",
-          "subject": "unchanged catalog"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Installed AI Cockpit checklist projection",
-        "detail": "The installed scriptInventoryDigest now matches the deterministic catalog-derived value.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiScenarioCoverage failed before the retry.",
+        "policyOrGuard": "required verification: aiScenarioCoverage",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
-            "subject": "installerCatalog.installed.scriptInventoryDigest"
+            "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "7be78b5f5da4909622f59cb321d3eccc64679ecb759c05393045683aca145bb0"
           },
           {
-            "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
-            "subject": "digest equality assertion"
+            "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "ff9fe1a9c83aa262325670ae57b986d6ed407eee88d00f08c43cfd524a0e51d2"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+            "subject": "verificationHistory[1] aiGuidelines failed",
+            "digest": "c96cd41d5415d14ab6f906a06aae505b4848000fc1984a16c50d424122587bfd"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "98ea9964a9f25929b353153cc55dddfb8d24ed63e554b7d7c59f041bacee43a0"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "resolutions": [
       {
-        "decision": "Refresh only the installed projection.",
-        "reason": "The existing test computes the expected value from the authoritative catalog and scripts; changing source or test bytes would hide the debt.",
-        "status": "verified",
+        "problem": "aiScenarioCoverage failed before the retry.",
+        "action": "Re-ran aiScenarioCoverage after the correction; the latest attempt passed.",
+        "verification": "aiScenarioCoverage latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "scripts/ai_installer_catalog.json",
-            "subject": "unchanged source catalog"
+            "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "7be78b5f5da4909622f59cb321d3eccc64679ecb759c05393045683aca145bb0"
           },
           {
-            "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
-            "subject": "executable expected digest"
+            "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "ff9fe1a9c83aa262325670ae57b986d6ed407eee88d00f08c43cfd524a0e51d2"
+          }
+        ]
+      },
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+            "subject": "verificationHistory[1] aiGuidelines failed",
+            "digest": "c96cd41d5415d14ab6f906a06aae505b4848000fc1984a16c50d424122587bfd"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "98ea9964a9f25929b353153cc55dddfb8d24ed63e554b7d7c59f041bacee43a0"
           }
         ]
       }
     ],
-    "technicalDetails": [
-      {
-        "topic": "Digest binding",
-        "detail": "The installed projection records the digest computed from the 115 catalog scripts.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
-            "subject": "installed digest"
-          },
-          {
-            "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
-            "subject": "runtime digest calculation"
-          }
-        ]
-      }
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
     ],
+    "residualRisks": [],
+    "humanDecisions": [],
     "evidence": [
       {
-        "claim": "The focused upgrade checklist test passes after the projection refresh.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
         "subject": "2 passed"
       },
       {
-        "claim": "The full Python suite passes after the projection refresh.",
-        "status": "verified",
         "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
         "subject": "419 passed"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+        "subject": "verificationHistory[0] aiScenarioCoverage failed",
+        "digest": "7be78b5f5da4909622f59cb321d3eccc64679ecb759c05393045683aca145bb0"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+        "subject": "verification[aiScenarioCoverage] retry passed",
+        "digest": "ff9fe1a9c83aa262325670ae57b986d6ed407eee88d00f08c43cfd524a0e51d2"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+        "subject": "verificationHistory[1] aiGuidelines failed",
+        "digest": "c96cd41d5415d14ab6f906a06aae505b4848000fc1984a16c50d424122587bfd"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "98ea9964a9f25929b353153cc55dddfb8d24ed63e554b7d7c59f041bacee43a0"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "configuration",
+      "status": "complete",
+      "summary": {
+        "text": "Reproduced the clean-main digest mismatch, changed only installerCatalog.installed.scriptInventoryDigest to the deterministic value emitted by the existing test, and left the catalog, scripts, test, and policies unchanged.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+            "subject": "2 focused tests passed"
+          },
+          {
+            "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+            "subject": "419 tests passed"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Use the existing executable digest calculation as the authority for the generated installed projection.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+            "subject": "installed scriptInventoryDigest"
+          },
+          {
+            "source": "scripts/ai_installer_catalog.json",
+            "subject": "unchanged catalog"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Installed AI Cockpit checklist projection",
+          "detail": "The installed scriptInventoryDigest now matches the deterministic catalog-derived value.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+              "subject": "installerCatalog.installed.scriptInventoryDigest"
+            },
+            {
+              "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+              "subject": "digest equality assertion"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Refresh only the installed projection.",
+          "reason": "The existing test computes the expected value from the authoritative catalog and scripts; changing source or test bytes would hide the debt.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "scripts/ai_installer_catalog.json",
+              "subject": "unchanged source catalog"
+            },
+            {
+              "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+              "subject": "executable expected digest"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Digest binding",
+          "detail": "The installed projection records the digest computed from the 115 catalog scripts.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+              "subject": "installed digest"
+            },
+            {
+              "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+              "subject": "runtime digest calculation"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The focused upgrade checklist test passes after the projection refresh.",
+          "status": "verified",
+          "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+          "subject": "2 passed"
+        },
+        {
+          "claim": "The full Python suite passes after the projection refresh.",
+          "status": "verified",
+          "source": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+          "subject": "419 passed"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -813,6 +873,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the pull request and provider checks before merge."
+  }
 }

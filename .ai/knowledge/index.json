@@ -10,6 +10,14 @@
       "knowledgePath": ".ai/knowledge/work-items/upgrade_ai_cockpit.json"
     },
     {
+      "workItemId": "wi-ai-cockpit-script-inventory-digest",
+      "title": "Refresh stale AI Cockpit script inventory digest",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-ai-cockpit-script-inventory-digest.json"
+    },
+    {
       "workItemId": "wi-sec-submissions-response-limit",
       "title": "修复 SEC submissions 响应体上限导致的生产采集降级",
       "topics": [],

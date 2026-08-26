@@ -1,0 +1,49 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.archive-manifest.json",
+      "sha256": "3f7b079a9a74e1352f81aa8b1769d24edae198a47f35d38fd1466d04ee9699ac"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.contract.json",
+      "sha256": "195e3595b28535a4fef6e56dd8ba8639c6aa5ff1b83284ced909ea0c40ad75f0"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.outcome.json",
+      "sha256": "4d35f4b41e432907cb586b63d78bcff0a5ddfe13c9b49266b319a579a153027e"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+      "sha256": "778a7f6fdb6a74b73fcc08d9657c87a804f414ea07057c2dd6bb349aa6f82ff0"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=13a445579389a9cd530a7c97037671f92e5aae73"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "8b18f08096980f8e1e7ad2f0d600623001dd764c14f3ade22662948cb41de205"
+  },
+  "humanAuthorization": {
+    "reference": "xinglun authorized complete lifecycle execution and same-Work-Item post-archive recovery in the current conversation on 2026-08-26",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/91",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-26T01:11:00.039591+00:00",
+  "prBaseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    "scripts/ai_post_archive_recovery.py",
+    "scripts/ai_generate_knowledge_record.py",
+    "tests/ai_cockpit/post_archive_recovery_test.py",
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/work-items/upgrade_ai_cockpit.json",
+    ".ai/knowledge/work-items/wi-ai-cockpit-script-inventory-digest.json"
+  ],
+  "workItemId": "wi-ai-cockpit-script-inventory-digest"
+}

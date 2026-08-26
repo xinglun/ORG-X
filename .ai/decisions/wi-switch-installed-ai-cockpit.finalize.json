@@ -1,0 +1,58 @@
+{
+  "actor": "user-authorized-agent",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "Current user request and explicit permission to proceed",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "114bbcc2b2cafb8bc5957935568f410b1709d52e",
+    "name": "codex/wi-switch-installed-ai-cockpit",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:c117f8044c4d212225dd54927c443edd3694e92807ea7ba765a9338aec9d529a",
+  "operationId": "wi-switch-installed-ai-cockpit-cleanup-20260826",
+  "provider": "local",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "4d36b13c437db4cfaac9181ac2ce8f4ad3d63c5c",
+    "headRevision": "114bbcc2b2cafb8bc5957935568f410b1709d52e",
+    "mergeCommit": "201bf00e33a2f3719aac685ebde3b6594333ab03",
+    "number": 96,
+    "url": "not_applicable"
+  },
+  "reason": "PR #95 and correction PR #96 were merged after all applicable checks passed; the exact remote branch, local branch, and dedicated worktree were then removed.",
+  "receiptId": "wi-switch-installed-ai-cockpit-finalization-20260826",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-switch-installed-ai-cockpit",
+    "provider": "local",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-switch-installed-ai-cockpit"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:eceed75ef74079e7ede420b42f8223fc76be82ec0211ddc6b8fdf7cb3c3b9de4",
+  "runtimeVersion": "0.2.33",
+  "schemaVersion": 1,
+  "timestamp": "2026-08-26T22:29:00Z",
+  "workItemId": "wi-switch-installed-ai-cockpit",
+  "worktree": {
+    "branch": "codex/wi-switch-installed-ai-cockpit",
+    "headRevision": "114bbcc2b2cafb8bc5957935568f410b1709d52e",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-switch-installed-ai-cockpit",
+    "worktreeId": "wi-switch-installed-ai-cockpit"
+  }
+}

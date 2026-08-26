@@ -139,6 +139,8 @@ SEC 申报候选在保留元数据后，还会逐个读取最多 3 个最近的�
 
 站点如果使用受限的发布元数据（例如 PwC 的 `pwcReleaseDate`），适配器只允许显式登记的发布日期字段，并优先于修改日期；未知或格式错误的字段不会被猜测。当前 Microsoft 独立扩散配置绑定 PwC 自有案例和 Atos Group 自有 press disclosure；Microsoft 域名上的客户案例仍然只属于供应商归因。
 
+行业扩散 Claim 的确定性动作词覆盖 `adopted`、`deployed`、`deploys`、`rolled out`、`rolling out` 和 `rolls out` 等已出现的词形；采用者名称可以出现在文档标题前缀之后。该词法补全只影响已配置、已验证的独立文档 Claim，不改变来源角色、四族证据门或 Ranking 的 fail-closed 条件。
+
 研究状态必须按以下层次解释：
 
 - `SourceObservation`：入口页或接口是否可访问；入口页的可访问性不是企业变化证据。

@@ -1,0 +1,30 @@
+{
+  "format": "ai-cockpit-archive-manifest",
+  "manifestVersion": 1,
+  "workItemId": "wi-weekly-radar-past-tense-diffusion-signal",
+  "archiveSequence": 78,
+  "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
+  "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
+  "contractSha256": "613c0a7aa0609d24e6614e30e5a46c5f5eb360ce484fb5c5ff67f7eac0f52544",
+  "summarySha256": "061eb36eb8c7323617442c2edc7d1728b9e53e892a598cf5ea04d11578735abe",
+  "generatedStatusExcluded": true,
+  "outcomeArtifacts": [
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.outcome.json",
+      "sha256": "da272dec6a568baff905d7c5457408b62064a6cd9fff33c47f5c8a314e42ab19"
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.outcome.md",
+      "sha256": "4edd2a2e52e0af839386c1d8fba8254f07a7ce290a1c99b5ff4b4e20914893f7"
+    }
+  ],
+  "preArchiveCandidateCoverage": {
+    "reportSha256": "1a1a2ec02b4f284512a1b9ea876722d2dcece656a37285023a433e29a4101bf3",
+    "binding": {
+      "baseCommit": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+      "candidateHead": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+      "candidateTreeDigest": "07ca0e6629c2f7ea6abd0927aa0d1d623af7a2d20af9a779f8ebac8651874827",
+      "candidateDiffDigest": "cee24f5f1fcbe6bd8a60283453b34a8900230200700e1ace2d2a3fc088fd81da"
+    }
+  }
+}

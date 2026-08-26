@@ -925,6 +925,18 @@
       "summarySha256": "353daac427d7eeb49f13da7c424d2cc87b51ac28aacb2f81aac4e92a7f89c46a",
       "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.archive-manifest.json",
       "manifestSha256": "cb07bfdfb2f67f40da90696991fc472bbd2a708fc3d50243abb07e972bb27994"
+    },
+    {
+      "workItemId": "wi-weekly-radar-past-tense-diffusion-signal",
+      "archiveSequence": 78,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
+      "contractSha256": "613c0a7aa0609d24e6614e30e5a46c5f5eb360ce484fb5c5ff67f7eac0f52544",
+      "archivedAt": "2026-08-26T09:00:21.696212+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
+      "summarySha256": "061eb36eb8c7323617442c2edc7d1728b9e53e892a598cf5ea04d11578735abe",
+      "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.archive-manifest.json",
+      "manifestSha256": "ff125def1a8fe557365025ad49e481a1e92db817a0f0849c2e158cb0fd0a90b8"
     }
   ]
 }

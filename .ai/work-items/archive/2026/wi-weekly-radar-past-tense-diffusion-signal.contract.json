@@ -1,0 +1,274 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-past-tense-diffusion-signal",
+  "mode": "code",
+  "title": "Recognize past-tense independent diffusion disclosures",
+  "baseCommit": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+  "rawUserRequest": "Continue the governed iteration after the merged-main Weekly Radar trigger; fix the remaining evidence-classification defect and repeat the full lifecycle until the result is correct.",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Conversation continuation request after merged-main live trigger",
+    "digest": "sha256:weekly-radar-past-tense-diffusion-signal-request",
+    "capturedAt": "2026-08-26T00:00:00+09:00"
+  },
+  "baselineDirtyPaths": [],
+  "scope": [
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    ".ai/work-items/active/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-past-tense-diffusion-signal.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-past-tense-diffusion-signal.outcome.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/runtime/judgment.rs",
+    "src/features/transformation/domain/mod.rs",
+    "config/weekly_radar/companies.json",
+    "config/weekly_radar/reference_model_candidates.json",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "Changing the four-family reference-model gate, counter-evidence rule, source-role taxonomy, or Ranking behavior.",
+    "Adding guessed URLs, crawling new domains, or weakening bounded HTTP/fail-closed behavior.",
+    "Changing SEC acquisition, Telegram delivery, scheduling, credentials, or published historical artifacts.",
+    "Claiming Microsoft or any other company is a confirmed industry model without the existing complete gate."
+  ],
+  "sources": [
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "Current diffusion-family signal list and named-adopter extraction define the defect boundary."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "Existing independent-customer promotion tests define the regression seam."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Operational documentation is the bounded behavior contract for source roles and evidence gates."
+    },
+    {
+      "path": "config/weekly_radar/companies.json",
+      "reason": "Merged-main live trigger evidence shows PwC and Atos are already explicitly configured; URL configuration is unchanged in this WI."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+      "reason": "Predecessor Work Item evidence records the Atos source normalization and its merged-main trigger requirement."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "low",
+    "riskTypes": [
+      "evidence_classification"
+    ],
+    "reason": "A single additive lexical signal changes only classification of already-authoritative independent documents; the domain gate and source classification remain unchanged."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The merged-main trigger, exact PwC page text, source configuration, and existing regression seam establish a deterministic one-signal bugfix."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "A regression test using an authoritative independent-customer passage with 'deployed' fails before the implementation change because it has no IndustryDiffusion family.",
+    "The minimal signal-list change promotes that passage to IndustryDiffusion with IndependentCustomerDisclosure and retains the named adopter.",
+    "Existing Atos 'is rolling out' behavior and supplier-attribution behavior remain unchanged.",
+    "The four-family gate remains fail-closed and no Ranking is emitted unless its existing complete evidence contract is satisfied.",
+    "Rust, Python, Shell/governance, and merged-main live trigger verification complete through PR merge and Work Item closure."
+  ],
+  "guidelines": [
+    "New public APIs must be documented.",
+    "Keep source-role classification and evidence promotion deterministic in Rust.",
+    "Use only explicitly configured bounded URLs for cross-origin sources.",
+    "Preserve supplier attribution, independent customer disclosure, regulatory/IR, and discovery-only roles as distinct evidence states.",
+    "Do not weaken fail-closed gates or infer confirmation from source availability alone.",
+    "Use Python and Shell only for bounded orchestration, fixtures, and verification."
+  ],
+  "intent": {
+    "problem": "The merged-main Weekly Radar trigger found 46 validated facts and 26 structural evidence records, but Microsoft remained a candidate with one independent diffusion source despite two explicitly configured independent disclosures. The Atos disclosure uses 'is rolling out' and is recognized; the PwC disclosure uses 'deployed Microsoft Copilot' and is currently retained only as a regular validated fact because the IndustryDiffusion signal list lacks the past-tense verb.",
+    "constraints": [
+      "Keep the change limited to the existing evidence extraction signal list and its regression tests/documentation.",
+      "Do not change the four-family gate, independent-source counting, source classification, URL configuration, SEC behavior, or Ranking fail-closed policy.",
+      "Use the exact configured PwC source passage as the regression fixture; do not introduce guessed URLs or live-network dependence into unit tests.",
+      "Run Python and Shell only for orchestration and governance verification; keep evidence semantics in Rust."
+    ],
+    "rationale": "The live result proves source acquisition is working and isolates the remaining defect to a missing inflectional form in the deterministic diffusion lexicon. Adding 'deployed ' is the smallest root-cause fix and preserves the existing evidence boundary."
+  },
+  "declaredIntent": {
+    "requestedCapabilities": [
+      "software_design",
+      "test_automation",
+      "ai_governance"
+    ],
+    "prohibitedCapabilities": [
+      "secret_readback",
+      "manual_data_branch_repair",
+      "provider_scope_expansion",
+      "production_release"
+    ]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly requested continued governed iteration after the merged-main trigger exposed the classification defect.",
+    "authorizedExternalEffects": [
+      "Create and update the dedicated Work Item branch and pull request.",
+      "Run repository and hosted quality checks without reading Secret values."
+    ]
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "A PwC independent customer disclosure saying 'PwC deployed Microsoft Copilot' is promoted to IndustryDiffusion.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/evidence.rs"
+      ],
+      "expected": "The validated evidence retains the PwC named adopter, independent-customer source role, and source URI.",
+      "verificationPlan": "Add the exact passage test, run it before the code change to observe the expected missing-family failure, then run it after the minimal signal-list change."
+    },
+    {
+      "scenario": "An Atos independent disclosure saying 'Atos is rolling out Microsoft 365 Copilot' remains promoted.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "tests/weekly_radar_runtime.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "Existing rolling-out behavior remains green and keeps the independent-customer role.",
+      "verificationPlan": "Run the focused evidence/runtime tests and the full Rust suite."
+    },
+    {
+      "scenario": "Supplier-attribution and incomplete-gate behavior remain unchanged.",
+      "required": true,
+      "status": "unverified",
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "src/features/transformation/domain/mod.rs",
+        "tests/weekly_radar_judgment_chain.rs"
+      ],
+      "expected": "Supplier sources do not count as independent diffusion, and incomplete evidence still emits no Ranking.",
+      "verificationPlan": "Run the existing judgment-chain and evidence-quality regression tests plus all project checks."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 78
+    }
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-past-tense-diffusion-signal.json",
+    "baseCommit": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+    "initialScopeDigest": "4bf9aaa1da99e1d4e5882bd9d7b96dde13599d50081350ca013e60281b1c2822",
+    "contractSkeletonDigest": "8c9b353eb52c5bf7968cb96cf3a718d0a8f8a1844c682f11ad4d8200f304d7af"
+  }
+}

@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-past-tense-diffusion-signal",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "18ead0ad455cd801aeac827b69e9b2099ec9bfa39f4954d6a3b8b99bcba3586a"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-past-tense-diffusion-signal",
+    "contractDigest": "613c0a7aa0609d24e6614e30e5a46c5f5eb360ce484fb5c5ff67f7eac0f52544",
+    "summaryDigest": "061eb36eb8c7323617442c2edc7d1728b9e53e892a598cf5ea04d11578735abe",
+    "verificationDigest": "08f8fc15c4dbe801a6db046eaecd27da6a429bcae375303590438684f6e6ea7f",
+    "baseCommit": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+    "headCommit": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "1a1a2ec02b4f284512a1b9ea876722d2dcece656a37285023a433e29a4101bf3",
+      "binding": {
+        "baseCommit": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+        "candidateHead": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+        "candidateTreeDigest": "07ca0e6629c2f7ea6abd0927aa0d1d623af7a2d20af9a779f8ebac8651874827",
+        "candidateDiffDigest": "cee24f5f1fcbe6bd8a60283453b34a8900230200700e1ace2d2a3fc088fd81da"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-past-tense-diffusion-signal generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-past-tense-diffusion-signal generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-past-tense-diffusion-signal",
     "deliveredChanges": [
       "src/features/weekly_radar/runtime/evidence.rs",
       "tests/weekly_radar_evidence_quality.rs",
@@ -22,223 +45,293 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 0,
-    "hardStops": 0,
-    "warnings": 0,
-    "resolved": 0,
-    "unresolved": 0
-  },
-  "preventedRisks": [],
-  "interventions": [],
-  "forcedStops": [],
-  "humanDecisions": [
-    "The target is research value: identify AI-era organizational and production-system changes that diffuse into an industry model; do not treat pipeline completion as success.",
-    "Run the complete local, CI, PR, merge, and closure lifecycle, then continue iterating if the live result has problems.",
-    "Python and Shell are hard acceptance requirements for bounded orchestration and verification."
-  ],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "high",
-      "detail": "No company has yet been confirmed as an AI-era reference model in the live report; this Work Item only addresses the observed source-promotion defect.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Used a RED fixture from the configured PwC independent customer disclosure, then applied the smallest deterministic evidence-extraction changes: recognize deployed as an IndustryDiffusion action and match the named adopter after a document-title prefix.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "tests/weekly_radar_evidence_quality.rs",
-          "subject": "independent_customer_deployed_past_tense_promotes_named_adopter"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "REFERENCE_MODEL_DIFFUSION_SIGNALS and reference_model_named_peer_for_text"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Keep diffusion promotion and source-role classification deterministic in Rust; extend only the bounded action-verb lexicon and preserve the existing independent-customer title/body boundary.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "fixed signal table, bounded regex, and source-kind role mapping"
-        },
-        {
-          "source": "tests/weekly_radar_evidence_quality.rs",
-          "subject": "PwC independent-customer promotion and supplier-role regressions"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [],
+    "resolutions": [
       {
-        "component": "Reference-model diffusion extraction",
-        "detail": "Configured independent documents using deployed now produce an IndustryDiffusion candidate instead of remaining only a generic validated fact.",
-        "status": "verified",
-        "evidence": [
+        "problem": "The configured PwC document used the past-tense phrase deployed, which was absent from the diffusion signal list; its title also placed a descriptive prefix before the named adopter.",
+        "action": "Added deployed to the bounded signal list and allowed the existing explicit adopter pattern to match after a title prefix; added a deterministic RED/GREEN regression fixture.",
+        "verification": "Evidence review",
+        "result": "resolved",
+        "evidenceRefs": [
           {
             "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "past-tense diffusion signal list"
+            "subject": "observedIssues[0] independent diffusion source promotion"
           },
           {
             "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "PwC deployed regression"
+            "subject": "observedIssues[0] independent diffusion source promotion"
+          },
+          {
+            "source": "cargo test --test weekly_radar_evidence_quality independent_customer_deployed_past_tense_promotes_named_adopter -- --exact",
+            "subject": "observedIssues[0] independent diffusion source promotion"
           }
-        ]
-      },
-      {
-        "component": "Named-adopter extraction",
-        "detail": "Independent substantive documents can identify the named adopter after a descriptive title prefix without making title-only homepage content evidence.",
-        "status": "verified",
+        ],
         "evidence": [
           {
             "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "unanchored bounded named-adopter regex"
+            "subject": "observedIssues[0] independent diffusion source promotion"
           },
           {
             "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "PwC title-prefix fixture"
-          }
-        ]
-      },
-      {
-        "component": "Fail-closed judgment boundary",
-        "detail": "No gate, source-role count, counter-evidence rule, or Ranking behavior is changed; complete judgment verification remains a required lifecycle check and post-merge trigger.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
-            "subject": "outOfScope and acceptance"
+            "subject": "observedIssues[0] independent diffusion source promotion"
           },
           {
-            "source": "tests/weekly_radar_judgment_chain.rs",
-            "subject": "planned existing gate regression suite"
+            "source": "cargo test --test weekly_radar_evidence_quality independent_customer_deployed_past_tense_promotes_named_adopter -- --exact",
+            "subject": "observedIssues[0] independent diffusion source promotion"
           }
-        ]
+        ],
+        "inference": false
       }
     ],
-    "designDecisions": [
+    "recurrencePrevention": [],
+    "avoidedImpact": [],
+    "residualRisks": [
       {
-        "decision": "Add deployed as a discrete diffusion signal rather than changing the evidence gate.",
-        "reason": "The merged-main trigger identified a reachable configured PwC disclosure whose claim is semantically equivalent to the existing adoption signals; the defect is lexical classification, not insufficient governance evidence.",
-        "status": "verified",
+        "claim": "research_value",
+        "severity": "high",
+        "title": "research_value",
+        "detail": "No company has yet been confirmed as an AI-era reference model in the live report; this Work Item only addresses the observed source-promotion defect.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "RED/GREEN PwC deployed regression"
-          },
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "additive signal-list change"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
+            "subject": "residualRisks"
           }
-        ]
-      },
-      {
-        "decision": "Remove only the start anchor from named-adopter matching while retaining the explicit bounded action-verb vocabulary.",
-        "reason": "The live PwC document places a descriptive phrase before 'PwC deployed'; matching the configured claim in title/body context is required, while broad free-form entity extraction would exceed scope.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "bounded regex with explicit verbs"
-          },
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "title-prefix named-adopter assertion"
-          }
-        ]
-      },
-      {
-        "decision": "Keep live-network access out of the regression test.",
-        "reason": "The exact configured page passage is represented as a deterministic fixture; production collection remains bounded by the existing company registry and HTTP policies.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "inline PwC fixture"
-          },
-          {
-            "source": "config/weekly_radar/companies.json",
-            "subject": "existing explicit PwC URL"
-          }
-        ]
+        ],
+        "inference": false,
+        "requiredEvidence": [
+          "merged-main post-fix dry-run report",
+          "source-bound four-family evidence for a Confirmed company"
+        ],
+        "decisionOwner": "human product reviewer",
+        "mitigation": "Run the required post-merge dry-run, inspect source roles and missing proof, and open or continue an in-scope corrective Work Item if the live result exposes another bounded defect.",
+        "acceptanceStatus": "pending_live_trigger"
       }
     ],
-    "technicalDetails": [
-      {
-        "topic": "Evidence promotion",
-        "detail": "The new fixture promotes the passage to IndustryDiffusion only after source kind, substantive text, date, and explicit action signal checks pass.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "extract_evidence_candidate"
-          },
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "validated.reference_model_family assertion"
-          }
-        ]
-      },
-      {
-        "topic": "Source-role separation",
-        "detail": "The independent-customer role remains distinct from supplier attribution; this change does not reclassify Microsoft-controlled sources or alter the source-role taxonomy.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "source-kind role mapping unchanged"
-          },
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "existing supplier regression"
-          }
-        ]
-      },
-      {
-        "topic": "Research-value boundary",
-        "detail": "A recognized diffusion source is not itself a confirmed industry model; the existing four-family, outcome-period, counter-review, and independent-source gates remain the decision boundary.",
-        "status": "verified",
-        "evidence": [
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
-            "subject": "claim and Ranking constraints"
-          },
-          {
-            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
-            "subject": "post-merge live-trigger requirement"
-          }
-        ]
-      }
+    "humanDecisions": [
+      "The target is research value: identify AI-era organizational and production-system changes that diffuse into an industry model; do not treat pipeline completion as success.",
+      "Run the complete local, CI, PR, merge, and closure lifecycle, then continue iterating if the live result has problems.",
+      "Python and Shell are hard acceptance requirements for bounded orchestration and verification."
     ],
     "evidence": [
       {
-        "claim": "The exact PwC deployed-language regression passes after the minimal implementation change.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_evidence_quality.rs",
         "subject": "cargo test --test weekly_radar_evidence_quality independent_customer_deployed_past_tense_promotes_named_adopter -- --exact"
       },
       {
-        "claim": "The complete Weekly Radar evidence-quality suite passes with 59 tests.",
-        "status": "verified",
         "source": "tests/weekly_radar_evidence_quality.rs",
         "subject": "cargo test --test weekly_radar_evidence_quality --quiet"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Used a RED fixture from the configured PwC independent customer disclosure, then applied the smallest deterministic evidence-extraction changes: recognize deployed as an IndustryDiffusion action and match the named adopter after a document-title prefix.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "independent_customer_deployed_past_tense_promotes_named_adopter"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "REFERENCE_MODEL_DIFFUSION_SIGNALS and reference_model_named_peer_for_text"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Keep diffusion promotion and source-role classification deterministic in Rust; extend only the bounded action-verb lexicon and preserve the existing independent-customer title/body boundary.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "fixed signal table, bounded regex, and source-kind role mapping"
+          },
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "PwC independent-customer promotion and supplier-role regressions"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Reference-model diffusion extraction",
+          "detail": "Configured independent documents using deployed now produce an IndustryDiffusion candidate instead of remaining only a generic validated fact.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "past-tense diffusion signal list"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "PwC deployed regression"
+            }
+          ]
+        },
+        {
+          "component": "Named-adopter extraction",
+          "detail": "Independent substantive documents can identify the named adopter after a descriptive title prefix without making title-only homepage content evidence.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "unanchored bounded named-adopter regex"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "PwC title-prefix fixture"
+            }
+          ]
+        },
+        {
+          "component": "Fail-closed judgment boundary",
+          "detail": "No gate, source-role count, counter-evidence rule, or Ranking behavior is changed; complete judgment verification remains a required lifecycle check and post-merge trigger.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
+              "subject": "outOfScope and acceptance"
+            },
+            {
+              "source": "tests/weekly_radar_judgment_chain.rs",
+              "subject": "planned existing gate regression suite"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Add deployed as a discrete diffusion signal rather than changing the evidence gate.",
+          "reason": "The merged-main trigger identified a reachable configured PwC disclosure whose claim is semantically equivalent to the existing adoption signals; the defect is lexical classification, not insufficient governance evidence.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "RED/GREEN PwC deployed regression"
+            },
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "additive signal-list change"
+            }
+          ]
+        },
+        {
+          "decision": "Remove only the start anchor from named-adopter matching while retaining the explicit bounded action-verb vocabulary.",
+          "reason": "The live PwC document places a descriptive phrase before 'PwC deployed'; matching the configured claim in title/body context is required, while broad free-form entity extraction would exceed scope.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "bounded regex with explicit verbs"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "title-prefix named-adopter assertion"
+            }
+          ]
+        },
+        {
+          "decision": "Keep live-network access out of the regression test.",
+          "reason": "The exact configured page passage is represented as a deterministic fixture; production collection remains bounded by the existing company registry and HTTP policies.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "inline PwC fixture"
+            },
+            {
+              "source": "config/weekly_radar/companies.json",
+              "subject": "existing explicit PwC URL"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Evidence promotion",
+          "detail": "The new fixture promotes the passage to IndustryDiffusion only after source kind, substantive text, date, and explicit action signal checks pass.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "extract_evidence_candidate"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "validated.reference_model_family assertion"
+            }
+          ]
+        },
+        {
+          "topic": "Source-role separation",
+          "detail": "The independent-customer role remains distinct from supplier attribution; this change does not reclassify Microsoft-controlled sources or alter the source-role taxonomy.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "source-kind role mapping unchanged"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "existing supplier regression"
+            }
+          ]
+        },
+        {
+          "topic": "Research-value boundary",
+          "detail": "A recognized diffusion source is not itself a confirmed industry model; the existing four-family, outcome-period, counter-review, and independent-source gates remain the decision boundary.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
+              "subject": "claim and Ranking constraints"
+            },
+            {
+              "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+              "subject": "post-merge live-trigger requirement"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The exact PwC deployed-language regression passes after the minimal implementation change.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "cargo test --test weekly_radar_evidence_quality independent_customer_deployed_past_tense_promotes_named_adopter -- --exact"
+        },
+        {
+          "claim": "The complete Weekly Radar evidence-quality suite passes with 59 tests.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "cargo test --test weekly_radar_evidence_quality --quiet"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -886,6 +979,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

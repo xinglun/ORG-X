@@ -474,6 +474,38 @@ fn independent_customer_deployed_past_tense_promotes_named_adopter() {
 }
 
 #[test]
+fn independent_customer_infinitive_deployment_promotes_named_adopter() {
+    let observation = document_observation(DocumentObservationInput {
+        company_id: "msft".to_owned(),
+        kind: SourceKind::IndependentResearch,
+        tier: SourceTier::IndependentPrimary,
+        url: "https://www.atosgroup.com/en/press/atos-group-and-microsoft-expand-strategic-collaboration-scale-secure-agentic-ai-across-atos".to_owned(),
+        title: "Atos Group and Microsoft Expand Strategic Collaboration to Scale Secure Agentic AI Across Atos Group Workforce and Clients".to_owned(),
+        text: "Atos Group becomes the first French Global System Integrator to deploy Microsoft 365 Copilot and one of the largest to roll out secure agentic AI across its workforce.".to_owned(),
+        status: SourceStatus::Known,
+        status_reason: "fixture document".to_owned(),
+        document_kind: DocumentKind::ProductPlatform,
+        source_field_or_passage: "customer disclosure".to_owned(),
+        observed_at: Utc::now(),
+        effective_date: Some(NaiveDate::from_ymd_opt(2026, 6, 9).unwrap()),
+    });
+    let candidate = extract_evidence_candidate(&observation)
+        .expect("infinitive deployment should produce an evidence candidate");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("infinitive deployment claim should validate");
+    assert_eq!(
+        validated.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::IndustryDiffusion)
+    );
+    assert_eq!(validated.reference_model_named_peer(), Some("Atos Group"));
+    assert_eq!(
+        validated.reference_model_source_role(),
+        Some(ReferenceModelSourceRole::IndependentCustomerDisclosure)
+    );
+}
+
+#[test]
 fn official_customer_story_usage_is_diffusion_evidence() {
     let observation = document_observation_from_html(
         r#"<html><head><title>NIQ scales product coding with Foundry</title></head>

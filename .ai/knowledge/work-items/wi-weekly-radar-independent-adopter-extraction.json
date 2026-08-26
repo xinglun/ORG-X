@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-weekly-radar-independent-adopter-extraction",
+  "title": "Promote independent adopter claims from bounded deployment prose",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Used a RED fixture mirroring the configured Atos independent disclosure, then added only the missing 'to deploy' diffusion signal and a sentence-local infinitive deployment matcher. The direct-verb branch now falls through to the bounded fallback when it has no match.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.contract.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/specs/2026-08-26-weekly-radar-independent-adopter-extraction.md",
+    "docs/superpowers/plans/2026-08-26-weekly-radar-independent-adopter-extraction.md",
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.outcome.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-independent-adopter-extraction.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Extend only the bounded infinitive deployment boundary.",
+      "reason": "The live defect was an extractor boundary, so the source-role taxonomy, four-family gate, counter-evidence review, and Ranking policy remain unchanged.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "digest": "166fd5116e10d4e575c552b514cfaa3bb46bb0a7a4dce802207ce9d1c5b194ea"
+    },
+    {
+      "type": "code",
+      "path": "Makefile.ai",
+      "digest": "30e2a8ce0a65f91a0e30bb69bc4933e4d707fd54d1c8b22e4459655842ecfdb3"
+    },
+    {
+      "type": "code",
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "digest": "59b5e90dcba8b430422e9012e98281ab73bedb25ba8c563446a91fb12b0c6fa5"
+    },
+    {
+      "type": "test",
+      "path": "tests/weekly_radar_judgment_chain.rs",
+      "digest": "0e1dfd1608e2e51ad34b9cc0efbabfbd123143556cbae40e139c9267de2297c6"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.contract.json",
+    "contractDigest": "21a8793b082278c4bf66c97d0f49405478db970d39b320455ab67a496eec3b2b",
+    "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+    "summaryDigest": "28b2876446068c6940d9e9effa7e1fef671578068d478313ccc5afffc4912c17",
+    "outcomePath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.outcome.json",
+    "outcomeDigest": "26c9207bda929938f7c7ef9d2b0cbaa8c21af21018427f1cdf2ed5f312c2bbc5"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

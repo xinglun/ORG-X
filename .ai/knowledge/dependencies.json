@@ -199,6 +199,18 @@
         "tests/weekly_radar_runtime.rs"
       ]
     },
+    "wi-weekly-radar-independent-adopter-extraction": {
+      "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-independent-adopter-extraction.json",
+      "dependencies": [
+        ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.contract.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.outcome.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+        "Makefile.ai",
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs",
+        "tests/weekly_radar_judgment_chain.rs"
+      ]
+    },
     "wi-weekly-radar-independent-diffusion": {
       "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion.json",
       "dependencies": [
@@ -488,6 +500,15 @@
     ".ai/work-items/archive/2026/wi-weekly-radar-idempotent-completion.summary.json": [
       "wi-weekly-radar-idempotent-completion"
     ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.contract.json": [
+      "wi-weekly-radar-independent-adopter-extraction"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.outcome.json": [
+      "wi-weekly-radar-independent-adopter-extraction"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json": [
+      "wi-weekly-radar-independent-adopter-extraction"
+    ],
     ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.contract.json": [
       "wi-weekly-radar-independent-diffusion-source-normalization"
     ],
@@ -591,6 +612,7 @@
       "wi-weekly-radar-structural-evidence-gate"
     ],
     "Makefile.ai": [
+      "wi-weekly-radar-independent-adopter-extraction",
       "wi-weekly-radar-sec-ir-deep-discovery"
     ],
     "config/weekly_radar/companies.json": [
@@ -679,6 +701,7 @@
       "wi-weekly-radar-evidence-dimension",
       "wi-weekly-radar-evidence-extraction-quality",
       "wi-weekly-radar-evidence-quality",
+      "wi-weekly-radar-independent-adopter-extraction",
       "wi-weekly-radar-independent-diffusion",
       "wi-weekly-radar-independent-diffusion-source-normalization",
       "wi-weekly-radar-past-tense-diffusion-signal",
@@ -754,6 +777,7 @@
       "wi-weekly-radar-evidence-dimension",
       "wi-weekly-radar-evidence-extraction-quality",
       "wi-weekly-radar-evidence-quality",
+      "wi-weekly-radar-independent-adopter-extraction",
       "wi-weekly-radar-independent-diffusion",
       "wi-weekly-radar-independent-diffusion-source-normalization",
       "wi-weekly-radar-past-tense-diffusion-signal",
@@ -764,6 +788,7 @@
     "tests/weekly_radar_judgment_chain.rs": [
       "wi-weekly-radar-content-quality",
       "wi-weekly-radar-evidence-quality",
+      "wi-weekly-radar-independent-adopter-extraction",
       "wi-weekly-radar-independent-diffusion",
       "wi-weekly-radar-past-tense-diffusion-signal",
       "wi-weekly-radar-reference-model-evidence"

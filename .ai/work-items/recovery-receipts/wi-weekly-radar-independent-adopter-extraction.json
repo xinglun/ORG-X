@@ -1,0 +1,48 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.archive-manifest.json",
+      "sha256": "b789d8f578810a787e3e32a470207e023564b8503708d6b8dc9a62f8aa11c4fb"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.contract.json",
+      "sha256": "21a8793b082278c4bf66c97d0f49405478db970d39b320455ab67a496eec3b2b"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.outcome.json",
+      "sha256": "26c9207bda929938f7c7ef9d2b0cbaa8c21af21018427f1cdf2ed5f312c2bbc5"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+      "sha256": "28b2876446068c6940d9e9effa7e1fef671578068d478313ccc5afffc4912c17"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=528905f3b8785903d903b663b179909ec186469c"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "d10dec87d73aafac77a8759a38dd57d9e942f723ae29e4c01888a5d57ddc05fa"
+  },
+  "humanAuthorization": {
+    "reference": "xinglun authorized complete lifecycle execution and same-Work-Item post-archive recovery in the current conversation on 2026-08-26",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/93",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-26T01:59:08.612372+00:00",
+  "prBaseCommit": "528905f3b8785903d903b663b179909ec186469c",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    "scripts/ai_post_archive_recovery.py",
+    "scripts/ai_generate_knowledge_record.py",
+    "tests/ai_cockpit/post_archive_recovery_test.py",
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-independent-adopter-extraction.json"
+  ],
+  "workItemId": "wi-weekly-radar-independent-adopter-extraction"
+}

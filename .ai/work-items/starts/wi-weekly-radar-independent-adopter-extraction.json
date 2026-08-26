@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-independent-adopter-extraction",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-independent-adopter-extraction.json",
+  "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+  "baseBranch": "codex/wi-weekly-radar-independent-adopter-extraction",
+  "startTimestamp": "2026-08-26T00:39:37.882004+00:00",
+  "initialScopeDigest": "ef1fd1dd11645d23502b2a260635f2ba22061f363f41bd9178664005fdca31b2",
+  "contractSkeletonDigest": "c01e443174f73dd0d391aed9bc6a1929f957727552eff17848f8b4da3044e784"
+}

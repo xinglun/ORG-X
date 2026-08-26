@@ -122,6 +122,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json"
     },
     {
+      "workItemId": "wi-weekly-radar-independent-adopter-extraction",
+      "title": "Promote independent adopter claims from bounded deployment prose",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-independent-adopter-extraction.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-independent-diffusion",
       "title": "Independently corroborate AI-era diffusion evidence",
       "topics": [],

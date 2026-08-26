@@ -1,15 +1,38 @@
 {
-  "reportVersion": 1,
+  "format": "ai-cockpit-task-outcome",
+  "schemaVersion": 1,
   "workItemId": "wi-weekly-radar-independent-adopter-extraction",
-  "phase": "review",
-  "result": "completed",
-  "sourceOutcome": {
-    "format": "ai-cockpit-task-outcome",
-    "schemaVersion": 1,
-    "digest": "0ff41d24487d71ef3186f6ec265a28f4252a7118d5c7b1e83a213b526ad6fad5"
+  "status": "completed",
+  "humanStatusColor": "green",
+  "failedGate": "",
+  "recoveryCondition": "",
+  "bindings": {
+    "taskId": "wi-weekly-radar-independent-adopter-extraction",
+    "contractDigest": "21a8793b082278c4bf66c97d0f49405478db970d39b320455ab67a496eec3b2b",
+    "summaryDigest": "28b2876446068c6940d9e9effa7e1fef671578068d478313ccc5afffc4912c17",
+    "verificationDigest": "517ec84e51645fa37c77f0d254f52802c9fde2c48c9b5b1f133c6ec45940c464",
+    "baseCommit": "528905f3b8785903d903b663b179909ec186469c",
+    "headCommit": "80ba384a7eec928430a03dced6e7c94c29aa05d7",
+    "lifecycleStage": "pre_merge",
+    "pullRequest": {
+      "state": "not_created"
+    },
+    "aiCockpitVersion": "repository-governance",
+    "generatorVersion": "1.2",
+    "locale": "zh-CN",
+    "preArchiveCandidateCoverage": {
+      "reportSha256": "5f29f83025926bae9c64690af45bddb7747ca75f29201240b0e170010e1f6dba",
+      "binding": {
+        "baseCommit": "528905f3b8785903d903b663b179909ec186469c",
+        "candidateHead": "80ba384a7eec928430a03dced6e7c94c29aa05d7",
+        "candidateTreeDigest": "3f1c85260bf631bbadcb8ae69ecea244a3090b52b28580193b26d9dc63f441b7",
+        "candidateDiffDigest": "b403a3c63c5991d028cf1128b2ab0d78c47a0ee298b3c00e6fd31335c77ab56b"
+      }
+    }
   },
-  "task": {
-    "summary": "Task wi-weekly-radar-independent-adopter-extraction generated an evidence-derived outcome with status completed.",
+  "sections": {
+    "outcomeSummary": "Task wi-weekly-radar-independent-adopter-extraction generated an evidence-derived outcome with status completed.",
+    "taskOverview": "Governed Work Item: wi-weekly-radar-independent-adopter-extraction",
     "deliveredChanges": [
       ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.contract.json",
       ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
@@ -22,215 +45,262 @@
       ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.outcome.md",
       ".ai/cockpit/task_report.json",
       ".ai/cockpit/task_report.md"
-    ]
-  },
-  "issues": {
-    "detected": 2,
-    "hardStops": 2,
-    "warnings": 0,
-    "resolved": 2,
-    "unresolved": 0
-  },
-  "preventedRisks": [
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiScenarioCoverage",
-      "action": "blocked",
-      "resolution": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "91ee92d996ccf76dc890103dd2b6218e9c80299a710a2ff3bc5829038c4ca813"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "50af13c0f39e1f61227a1e054c5c219bf61a44f7d7ede40f0473439a78b23c20"
-        }
-      ]
-    },
-    {
-      "risk": "If not detected, could have led to a stale completion claim.",
-      "severity": "medium",
-      "detectedBy": "required verification: aiGuidelines",
-      "action": "blocked",
-      "resolution": "Retry aiGuidelines after correcting the recorded failure.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
-          "subject": "verificationHistory[1] aiGuidelines failed",
-          "digest": "b49784f8757dd4a892d821d7fb5869edc19f4c06ec471c383c4f56ecf4fa2a3b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "e294b731a807b77945e619f1f3143ddbe974fb5bb45a357b07bc2cc6c0a59474"
-        }
-      ]
-    }
-  ],
-  "interventions": [],
-  "forcedStops": [
-    {
-      "stage": "verification",
-      "reason": "aiScenarioCoverage failed before the retry.",
-      "policyOrGuard": "required verification: aiScenarioCoverage",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
-          "subject": "verificationHistory[0] aiScenarioCoverage failed",
-          "digest": "91ee92d996ccf76dc890103dd2b6218e9c80299a710a2ff3bc5829038c4ca813"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
-          "subject": "verification[aiScenarioCoverage] retry passed",
-          "digest": "50af13c0f39e1f61227a1e054c5c219bf61a44f7d7ede40f0473439a78b23c20"
-        }
-      ]
-    },
-    {
-      "stage": "verification",
-      "reason": "aiGuidelines failed before the retry.",
-      "policyOrGuard": "required verification: aiGuidelines",
-      "attemptedAction": "complete the Work Item",
-      "conditionalImpact": "If not detected, could have led to a stale completion claim.",
-      "handoff": "",
-      "humanDecision": "",
-      "recovery": "Retry aiGuidelines after correcting the recorded failure.",
-      "result": "resolved",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
-          "subject": "verificationHistory[1] aiGuidelines failed",
-          "digest": "b49784f8757dd4a892d821d7fb5869edc19f4c06ec471c383c4f56ecf4fa2a3b"
-        },
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
-          "subject": "verification[aiGuidelines] retry passed",
-          "digest": "e294b731a807b77945e619f1f3143ddbe974fb5bb45a357b07bc2cc6c0a59474"
-        }
-      ]
-    }
-  ],
-  "humanDecisions": [],
-  "limitations": [],
-  "forbiddenClaims": [],
-  "remainingRisks": [
-    {
-      "severity": "low",
-      "detail": "Even with two independent diffusion sources, a Confirmed industry-model result still depends on the existing outcome, organization, production-system, and counter-evidence gates; the live trigger must verify the final status.",
-      "evidence": [
-        {
-          "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
-          "subject": "residualRisks"
-        }
-      ]
-    }
-  ],
-  "implementationApproach": {
-    "approachType": "implementation",
-    "status": "complete",
-    "summary": {
-      "text": "Used a RED fixture mirroring the configured Atos independent disclosure, then added only the missing 'to deploy' diffusion signal and a sentence-local infinitive deployment matcher. The direct-verb branch now falls through to the bounded fallback when it has no match.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "tests/weekly_radar_evidence_quality.rs",
-          "subject": "independent_customer_infinitive_deployment_promotes_named_adopter"
-        },
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "reference_model_named_peer_for_text"
-        }
-      ]
-    },
-    "mechanism": {
-      "text": "Keep document admission, source roles, and judgment unchanged; extend deterministic lexical classification only after the existing authoritative/date/substance gate.",
-      "status": "verified",
-      "evidence": [
-        {
-          "source": "src/features/weekly_radar/runtime/evidence.rs",
-          "subject": "reference-model diffusion signal list and bounded regex"
-        },
-        {
-          "source": "tests/weekly_radar_judgment_chain.rs",
-          "subject": "existing fail-closed reference-model gate tests"
-        }
-      ]
-    },
-    "affectedComponents": [
+    ],
+    "findings": [],
+    "risks": [],
+    "warnings": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "forbiddenClaims": [],
+    "interventions": [],
+    "forcedStops": [
       {
-        "component": "Reference-model independent diffusion extraction",
-        "detail": "The bounded extractor recognizes the configured Atos Group infinitive deployment disclosure as IndustryDiffusion with the named adopter and independent customer role.",
-        "status": "verified",
+        "stage": "verification",
+        "reason": "aiScenarioCoverage failed before the retry.",
+        "policyOrGuard": "required verification: aiScenarioCoverage",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiScenarioCoverage after correcting the recorded failure.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "to deploy signal and sentence-local named-peer matcher"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "91ee92d996ccf76dc890103dd2b6218e9c80299a710a2ff3bc5829038c4ca813"
           },
           {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "Atos independent disclosure regression"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "50af13c0f39e1f61227a1e054c5c219bf61a44f7d7ede40f0473439a78b23c20"
+          }
+        ]
+      },
+      {
+        "stage": "verification",
+        "reason": "aiGuidelines failed before the retry.",
+        "policyOrGuard": "required verification: aiGuidelines",
+        "attemptedAction": "complete the Work Item",
+        "conditionalImpact": "If not detected, could have led to a stale completion claim.",
+        "handoff": "",
+        "humanDecision": "",
+        "recovery": "Retry aiGuidelines after correcting the recorded failure.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "verificationHistory[1] aiGuidelines failed",
+            "digest": "b49784f8757dd4a892d821d7fb5869edc19f4c06ec471c383c4f56ecf4fa2a3b"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "e294b731a807b77945e619f1f3143ddbe974fb5bb45a357b07bc2cc6c0a59474"
           }
         ]
       }
     ],
-    "designDecisions": [
+    "resolutions": [
       {
-        "decision": "Extend only the bounded infinitive deployment boundary.",
-        "reason": "The live defect was an extractor boundary, so the source-role taxonomy, four-family gate, counter-evidence review, and Ranking policy remain unchanged.",
-        "status": "verified",
+        "problem": "aiScenarioCoverage failed before the retry.",
+        "action": "Re-ran aiScenarioCoverage after the correction; the latest attempt passed.",
+        "verification": "aiScenarioCoverage latest verification result is passed.",
+        "result": "resolved",
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "diffusion matcher only"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "verificationHistory[0] aiScenarioCoverage failed",
+            "digest": "91ee92d996ccf76dc890103dd2b6218e9c80299a710a2ff3bc5829038c4ca813"
           },
           {
-            "source": "tests/weekly_radar_judgment_chain.rs",
-            "subject": "fail-closed gate regressions"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "verification[aiScenarioCoverage] retry passed",
+            "digest": "50af13c0f39e1f61227a1e054c5c219bf61a44f7d7ede40f0473439a78b23c20"
+          }
+        ]
+      },
+      {
+        "problem": "aiGuidelines failed before the retry.",
+        "action": "Re-ran aiGuidelines after the correction; the latest attempt passed.",
+        "verification": "aiGuidelines latest verification result is passed.",
+        "result": "resolved",
+        "evidence": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "verificationHistory[1] aiGuidelines failed",
+            "digest": "b49784f8757dd4a892d821d7fb5869edc19f4c06ec471c383c4f56ecf4fa2a3b"
+          },
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "verification[aiGuidelines] retry passed",
+            "digest": "e294b731a807b77945e619f1f3143ddbe974fb5bb45a357b07bc2cc6c0a59474"
           }
         ]
       }
     ],
-    "technicalDetails": [
+    "recurrencePrevention": [],
+    "avoidedImpact": [
+      "If not detected, could have led to a stale completion claim."
+    ],
+    "residualRisks": [
       {
-        "topic": "Sentence-local extraction",
-        "detail": "The fallback accepts a capitalized adopter followed within a bounded sentence window by an explicit infinitive deployment or adoption verb, and only runs after the direct-verb matcher has no result.",
-        "status": "verified",
+        "claim": "research_value",
+        "severity": "low",
+        "title": "research_value",
+        "detail": "Even with two independent diffusion sources, a Confirmed industry-model result still depends on the existing outcome, organization, production-system, and counter-evidence gates; the live trigger must verify the final status.",
+        "state": "unresolved",
+        "evidenceRefs": [
+          {
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "residualRisks"
+          }
+        ],
         "evidence": [
           {
-            "source": "src/features/weekly_radar/runtime/evidence.rs",
-            "subject": "bounded infinitive regex"
-          },
-          {
-            "source": "tests/weekly_radar_evidence_quality.rs",
-            "subject": "60 evidence-quality tests passed"
+            "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+            "subject": "residualRisks"
           }
-        ]
+        ],
+        "inference": false
       }
     ],
+    "humanDecisions": [],
     "evidence": [
       {
-        "claim": "The bounded Atos fixture promotes the independent deployment disclosure with its named adopter and source role.",
-        "status": "verified",
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.contract.json",
+        "subject": "Contract"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+        "subject": "Summary"
+      },
+      {
         "source": "tests/weekly_radar_evidence_quality.rs",
         "subject": "independent_customer_infinitive_deployment_promotes_named_adopter"
       },
       {
-        "claim": "The full Python suite and repository quality gate pass on the synchronized base.",
-        "status": "verified",
         "source": "Makefile.ai",
         "subject": "419 Python tests and quality gate"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+        "subject": "verificationHistory[0] aiScenarioCoverage failed",
+        "digest": "91ee92d996ccf76dc890103dd2b6218e9c80299a710a2ff3bc5829038c4ca813"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+        "subject": "verification[aiScenarioCoverage] retry passed",
+        "digest": "50af13c0f39e1f61227a1e054c5c219bf61a44f7d7ede40f0473439a78b23c20"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+        "subject": "verificationHistory[1] aiGuidelines failed",
+        "digest": "b49784f8757dd4a892d821d7fb5869edc19f4c06ec471c383c4f56ecf4fa2a3b"
+      },
+      {
+        "source": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+        "subject": "verification[aiGuidelines] retry passed",
+        "digest": "e294b731a807b77945e619f1f3143ddbe974fb5bb45a357b07bc2cc6c0a59474"
       }
-    ]
+    ],
+    "implementationApproach": {
+      "approachType": "implementation",
+      "status": "complete",
+      "summary": {
+        "text": "Used a RED fixture mirroring the configured Atos independent disclosure, then added only the missing 'to deploy' diffusion signal and a sentence-local infinitive deployment matcher. The direct-verb branch now falls through to the bounded fallback when it has no match.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "tests/weekly_radar_evidence_quality.rs",
+            "subject": "independent_customer_infinitive_deployment_promotes_named_adopter"
+          },
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "reference_model_named_peer_for_text"
+          }
+        ]
+      },
+      "mechanism": {
+        "text": "Keep document admission, source roles, and judgment unchanged; extend deterministic lexical classification only after the existing authoritative/date/substance gate.",
+        "status": "verified",
+        "evidence": [
+          {
+            "source": "src/features/weekly_radar/runtime/evidence.rs",
+            "subject": "reference-model diffusion signal list and bounded regex"
+          },
+          {
+            "source": "tests/weekly_radar_judgment_chain.rs",
+            "subject": "existing fail-closed reference-model gate tests"
+          }
+        ]
+      },
+      "affectedComponents": [
+        {
+          "component": "Reference-model independent diffusion extraction",
+          "detail": "The bounded extractor recognizes the configured Atos Group infinitive deployment disclosure as IndustryDiffusion with the named adopter and independent customer role.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "to deploy signal and sentence-local named-peer matcher"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "Atos independent disclosure regression"
+            }
+          ]
+        }
+      ],
+      "designDecisions": [
+        {
+          "decision": "Extend only the bounded infinitive deployment boundary.",
+          "reason": "The live defect was an extractor boundary, so the source-role taxonomy, four-family gate, counter-evidence review, and Ranking policy remain unchanged.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "diffusion matcher only"
+            },
+            {
+              "source": "tests/weekly_radar_judgment_chain.rs",
+              "subject": "fail-closed gate regressions"
+            }
+          ]
+        }
+      ],
+      "technicalDetails": [
+        {
+          "topic": "Sentence-local extraction",
+          "detail": "The fallback accepts a capitalized adopter followed within a bounded sentence window by an explicit infinitive deployment or adoption verb, and only runs after the direct-verb matcher has no result.",
+          "status": "verified",
+          "evidence": [
+            {
+              "source": "src/features/weekly_radar/runtime/evidence.rs",
+              "subject": "bounded infinitive regex"
+            },
+            {
+              "source": "tests/weekly_radar_evidence_quality.rs",
+              "subject": "60 evidence-quality tests passed"
+            }
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "claim": "The bounded Atos fixture promotes the independent deployment disclosure with its named adopter and source role.",
+          "status": "verified",
+          "source": "tests/weekly_radar_evidence_quality.rs",
+          "subject": "independent_customer_infinitive_deployment_promotes_named_adopter"
+        },
+        {
+          "claim": "The full Python suite and repository quality gate pass on the synchronized base.",
+          "status": "verified",
+          "source": "Makefile.ai",
+          "subject": "419 Python tests and quality gate"
+        }
+      ]
+    }
   },
   "humanHandoff": {
     "locale": "zh-CN",
@@ -894,6 +964,5 @@
         "inference": true
       }
     }
-  },
-  "nextSafeAction": "Review the remaining risks and obtain the named evidence before proceeding."
+  }
 }

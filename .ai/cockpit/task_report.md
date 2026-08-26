@@ -7,29 +7,31 @@ What was completed
 
 Implementation Approach
 Status: `complete`
-Customer summary (verified): Reproduced the clean-main digest mismatch, changed only installerCatalog.installed.scriptInventoryDigest to the deterministic value emitted by the existing test, and left the catalog, scripts, test, and policies unchanged.
-Mechanism (verified): Use the existing executable digest calculation as the authority for the generated installed projection.
+Customer summary (verified): Used a RED fixture mirroring the configured Atos independent disclosure, then added only the missing 'to deploy' diffusion signal and a sentence-local infinitive deployment matcher. The direct-verb branch now falls through to the bounded fallback when it has no match.
+Mechanism (verified): Keep document admission, source roles, and judgment unchanged; extend deterministic lexical classification only after the existing authoritative/date/substance gate.
 
 Affected components
-- Installed AI Cockpit checklist projection: The installed scriptInventoryDigest now matches the deterministic catalog-derived value. (verified)
+- Reference-model independent diffusion extraction: The bounded extractor recognizes the configured Atos Group infinitive deployment disclosure as IndustryDiffusion with the named adopter and independent customer role. (verified)
 
 Design decisions
-- Refresh only the installed projection.: The existing test computes the expected value from the authoritative catalog and scripts; changing source or test bytes would hide the debt. (verified)
+- Extend only the bounded infinitive deployment boundary.: The live defect was an extractor boundary, so the source-role taxonomy, four-family gate, counter-evidence review, and Ranking policy remain unchanged. (verified)
 
 ### Technical details
-- Digest binding: The installed projection records the digest computed from the 115 catalog scripts. (verified)
+- Sentence-local extraction: The fallback accepts a capitalized adopter followed within a bounded sentence window by an explicit infinitive deployment or adoption verb, and only runs after the direct-verb matcher has no result. (verified)
 
 ### Evidence
-- The focused upgrade checklist test passes after the projection refresh.: tests/ai_cockpit/upgrade_feature_checklist_test.py#2 passed (verified)
-- The full Python suite passes after the projection refresh.: tests/ai_cockpit/upgrade_feature_checklist_test.py#419 passed (verified)
+- The bounded Atos fixture promotes the independent deployment disclosure with its named adopter and source role.: tests/weekly_radar_evidence_quality.rs#independent_customer_infinitive_deployment_promotes_named_adopter (verified)
+- The full Python suite and repository quality gate pass on the synchronized base.: Makefile.ai#419 Python tests and quality gate (verified)
 
-- Changed .ai/work-items/active/wi-ai-cockpit-script-inventory-digest.contract.json [evidence: .ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.contract.json]
-- Changed .ai/work-items/active/wi-ai-cockpit-script-inventory-digest.summary.json [evidence: .ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json]
-- Changed .ai/evidence/ai-cockpit-upgrade-feature-checklist.json [evidence: .ai/evidence/ai-cockpit-upgrade-feature-checklist.json]
-- Changed docs/superpowers/specs/2026-08-26-wi-ai-cockpit-script-inventory-digest.md [evidence: docs/superpowers/specs/2026-08-26-wi-ai-cockpit-script-inventory-digest.md]
-- Changed docs/superpowers/plans/2026-08-26-wi-ai-cockpit-script-inventory-digest.md [evidence: docs/superpowers/plans/2026-08-26-wi-ai-cockpit-script-inventory-digest.md]
-- Changed .ai/work-items/active/wi-ai-cockpit-script-inventory-digest.outcome.json [evidence: .ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.outcome.json]
-- Changed .ai/work-items/active/wi-ai-cockpit-script-inventory-digest.outcome.md [evidence: .ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.outcome.md]
+- Changed .ai/work-items/active/wi-weekly-radar-independent-adopter-extraction.contract.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.contract.json]
+- Changed .ai/work-items/active/wi-weekly-radar-independent-adopter-extraction.summary.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json]
+- Changed src/features/weekly_radar/runtime/evidence.rs [evidence: src/features/weekly_radar/runtime/evidence.rs]
+- Changed tests/weekly_radar_evidence_quality.rs [evidence: tests/weekly_radar_evidence_quality.rs]
+- Changed docs/operations/WEEKLY_RADAR.md [evidence: docs/operations/WEEKLY_RADAR.md]
+- Changed docs/superpowers/specs/2026-08-26-weekly-radar-independent-adopter-extraction.md [evidence: docs/superpowers/specs/2026-08-26-weekly-radar-independent-adopter-extraction.md]
+- Changed docs/superpowers/plans/2026-08-26-weekly-radar-independent-adopter-extraction.md [evidence: docs/superpowers/plans/2026-08-26-weekly-radar-independent-adopter-extraction.md]
+- Changed .ai/work-items/active/wi-weekly-radar-independent-adopter-extraction.outcome.json [evidence: .ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.outcome.json]
+- Changed .ai/work-items/active/wi-weekly-radar-independent-adopter-extraction.outcome.md [evidence: .ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.outcome.md]
 - Changed .ai/cockpit/task_report.json [evidence: .ai/cockpit/task_report.json]
 - Changed .ai/cockpit/task_report.md [evidence: .ai/cockpit/task_report.md]
 
@@ -55,7 +57,7 @@ Risks avoided
 - If not detected, could have led to a stale completion claim. (inference)
 
 Remaining risks
-- None recorded.
+- Even with two independent diffusion sources, a Confirmed industry-model result still depends on the existing outcome, organization, production-system, and counter-evidence gates; the live trigger must verify the final status. [evidence: residualRisks]
 
 Unknowns
 - None recorded.

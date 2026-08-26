@@ -3,7 +3,7 @@
   "workItemId": "wi-weekly-radar-independent-adopter-extraction",
   "mode": "code",
   "title": "Promote independent adopter claims from bounded deployment prose",
-  "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+  "baseCommit": "528905f3b8785903d903b663b179909ec186469c",
   "rawUserRequest": "Continue the merged-main trigger investigation. When a problem is found, keep iterating through a new governed Work Item and complete the full local, CI, PR, merge, and closure lifecycle until the result has no remaining in-scope defect.",
   "rawRequestSource": {
     "type": "human",
@@ -129,8 +129,17 @@
     "rationale": "The live result isolates a parser boundary defect: the source is available and independently typed, and the domain gate already refuses to count it without a named adopter. Extending the existing matcher with a bounded infinitive-deployment construction is the smallest change that can make the source count honestly reflect the evidence already present."
   },
   "declaredIntent": {
-    "requestedCapabilities": ["software_design", "test_automation", "ai_governance"],
-    "prohibitedCapabilities": ["secret_readback", "manual_data_branch_repair", "provider_scope_expansion", "production_release"]
+    "requestedCapabilities": [
+      "software_design",
+      "test_automation",
+      "ai_governance"
+    ],
+    "prohibitedCapabilities": [
+      "secret_readback",
+      "manual_data_branch_repair",
+      "provider_scope_expansion",
+      "production_release"
+    ]
   },
   "requestedOperation": {
     "type": "repository_governance",
@@ -151,7 +160,10 @@
       "scenario": "An independent Atos disclosure with 'Atos Group becomes ... to deploy Microsoft 365 Copilot' retains Atos Group as the named adopter.",
       "required": true,
       "status": "unverified",
-      "evidence": ["tests/weekly_radar_evidence_quality.rs", "src/features/weekly_radar/runtime/evidence.rs"],
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "src/features/weekly_radar/runtime/evidence.rs"
+      ],
       "expected": "Validated evidence has IndustryDiffusion, named peer Atos Group, IndependentCustomerDisclosure, the configured URL, and the explicit effective date.",
       "verificationPlan": "Add the exact fixture, run the focused test before the production change and observe the missing named-peer failure, then run it after the minimal matcher change."
     },
@@ -159,7 +171,10 @@
       "scenario": "Existing independent and supplier evidence boundaries remain unchanged.",
       "required": true,
       "status": "unverified",
-      "evidence": ["tests/weekly_radar_evidence_quality.rs", "tests/weekly_radar_judgment_chain.rs"],
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "tests/weekly_radar_judgment_chain.rs"
+      ],
       "expected": "PwC and Atos independent sources retain their roles, supplier stories remain SupplierAttribution, and a supplier-only or incomplete packet remains Candidate with no Ranking.",
       "verificationPlan": "Run focused evidence and judgment tests, then the complete Rust quality suite."
     },
@@ -167,7 +182,11 @@
       "scenario": "Merged-main research result reports the independent-source count honestly.",
       "required": true,
       "status": "unverified",
-      "evidence": ["config/weekly_radar/companies.json", "docs/operations/WEEKLY_RADAR.md", "target/weekly-radar-trigger-report.txt"],
+      "evidence": [
+        "config/weekly_radar/companies.json",
+        "docs/operations/WEEKLY_RADAR.md",
+        "target/weekly-radar-trigger-report.txt"
+      ],
       "expected": "The Microsoft candidate has independent diffusion sources equal to two and no independent_diffusion_sources missing-proof item; confirmation and Ranking remain governed by all other existing gates.",
       "verificationPlan": "Run the documented dry-run from merged main with as-of 2026-08-25, inspect the Microsoft qualification block, and verify dry-run does not contact Telegram or write an archive."
     }
@@ -263,5 +282,20 @@
     "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
     "initialScopeDigest": "ef1fd1dd11645d23502b2a260635f2ba22061f363f41bd9178664005fdca31b2",
     "contractSkeletonDigest": "c01e443174f73dd0d391aed9bc6a1929f957727552eff17848f8b4da3044e784"
-  }
+  },
+  "synchronizationHistory": [
+    {
+      "synchronizationVersion": 1,
+      "fromBaseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+      "toBaseCommit": "528905f3b8785903d903b663b179909ec186469c",
+      "baseRemote": "origin",
+      "baseBranch": "main",
+      "workBranch": "codex/wi-weekly-radar-independent-adopter-extraction",
+      "recordedAt": "2026-08-26T01:28:40.290829+00:00",
+      "priorContractDigest": "8a5d55e036b7a4cb82182e45f86c02c87a928861559f491e062f39ef51ce627c",
+      "priorSummaryDigest": "059f59983dc0e28f1e1292e1bd700844656f1a5ad757147fcce74846d90d2054",
+      "rebaseHeadBefore": "80ba384a7eec928430a03dced6e7c94c29aa05d7",
+      "rebaseHeadAfter": "80ba384a7eec928430a03dced6e7c94c29aa05d7"
+    }
+  ]
 }

@@ -949,6 +949,18 @@
       "summarySha256": "778a7f6fdb6a74b73fcc08d9657c87a804f414ea07057c2dd6bb349aa6f82ff0",
       "manifestPath": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.archive-manifest.json",
       "manifestSha256": "3f7b079a9a74e1352f81aa8b1769d24edae198a47f35d38fd1466d04ee9699ac"
+    },
+    {
+      "workItemId": "wi-weekly-radar-independent-adopter-extraction",
+      "archiveSequence": 80,
+      "archiveYear": "2026",
+      "contractPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.contract.json",
+      "contractSha256": "21a8793b082278c4bf66c97d0f49405478db970d39b320455ab67a496eec3b2b",
+      "archivedAt": "2026-08-26T10:55:00.131812+09:00",
+      "summaryPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.summary.json",
+      "summarySha256": "28b2876446068c6940d9e9effa7e1fef671578068d478313ccc5afffc4912c17",
+      "manifestPath": ".ai/work-items/archive/2026/wi-weekly-radar-independent-adopter-extraction.archive-manifest.json",
+      "manifestSha256": "b789d8f578810a787e3e32a470207e023564b8503708d6b8dc9a62f8aa11c4fb"
     }
   ]
 }

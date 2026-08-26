@@ -163,6 +163,7 @@ const REFERENCE_MODEL_DIFFUSION_SIGNALS: &[&str] = &[
     "adopted ",
     "deploys ",
     "deployed ",
+    "to deploy ",
     "rolled out",
     "rolling out",
     "rolls out",
@@ -805,7 +806,27 @@ fn reference_model_named_peer_for_text(text: &str) -> Option<String> {
         r"(?i)([A-Z][A-Za-z0-9&.'-]*(?:\s+[A-Z][A-Za-z0-9&.'-]*){0,4})\s+(?:has\s+adopted|has\s+implemented|is\s+using|is\s+rolling\s+out|adopted|implemented|used|uses|deployed|deploys|rolled\s+out|rolls\s+out|built|launched)\b",
     )
     .ok()?;
-    let peer = adoption_regex
+    if let Some(peer) = adoption_regex
+        .captures(text)
+        .and_then(|captures| captures.get(1))
+        .map(|value| value.as_str().trim())
+        .filter(|value| {
+            !matches!(
+                value.to_ascii_lowercase().as_str(),
+                "the company" | "the firm" | "our team" | "our company"
+            )
+        })
+    {
+        if !peer.is_empty() {
+            return Some(peer.to_owned());
+        }
+    }
+
+    let infinitive_deployment_regex = Regex::new(
+        r"\b([A-Z][A-Za-z0-9&.'-]*(?:\s+[A-Z][A-Za-z0-9&.'-]*){0,4})\s+(?:is|are|was|were|becomes|became)\b[^.!?\n]{0,160}\bto\s+(?:deploy|roll\s+out|adopt|implement|use)\b",
+    )
+    .ok()?;
+    let peer = infinitive_deployment_regex
         .captures(text)
         .and_then(|captures| captures.get(1))
         .map(|value| value.as_str().trim())

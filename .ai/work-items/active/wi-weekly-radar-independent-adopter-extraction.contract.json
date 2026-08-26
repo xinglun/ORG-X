@@ -1,0 +1,267 @@
+{
+  "contractVersion": 2,
+  "workItemId": "wi-weekly-radar-independent-adopter-extraction",
+  "mode": "code",
+  "title": "Promote independent adopter claims from bounded deployment prose",
+  "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+  "rawUserRequest": "Continue the merged-main trigger investigation. When a problem is found, keep iterating through a new governed Work Item and complete the full local, CI, PR, merge, and closure lifecycle until the result has no remaining in-scope defect.",
+  "rawRequestSource": {
+    "type": "human",
+    "reference": "Conversation continuation request after merged-main live trigger",
+    "digest": "sha256:weekly-radar-independent-adopter-extraction-request",
+    "capturedAt": "2026-08-26T09:35:00+09:00"
+  },
+  "baselineDirtyPaths": [],
+  "scope": [
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "docs/operations/WEEKLY_RADAR.md",
+    "docs/superpowers/specs/2026-08-26-weekly-radar-independent-adopter-extraction.md",
+    "docs/superpowers/plans/2026-08-26-weekly-radar-independent-adopter-extraction.md",
+    ".ai/work-items/active/wi-weekly-radar-independent-adopter-extraction.contract.json",
+    ".ai/work-items/active/wi-weekly-radar-independent-adopter-extraction.summary.json",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/work-items/active/wi-weekly-radar-independent-adopter-extraction.outcome.json",
+    ".ai/work-items/active/wi-weekly-radar-independent-adopter-extraction.outcome.md"
+  ],
+  "outOfScope": [
+    "src/features/weekly_radar/runtime/judgment.rs",
+    "src/features/transformation/domain/mod.rs",
+    "config/weekly_radar/companies.json",
+    "config/weekly_radar/reference_model_candidates.json",
+    "src/features/weekly_radar/runtime/sources.rs",
+    "Changing the four-family reference-model gate, independent-source threshold, source-role taxonomy, counter-evidence rule, or Ranking behavior.",
+    "Adding guessed URLs, crawling new domains, or weakening bounded HTTP/fail-closed behavior.",
+    "Changing SEC acquisition, Telegram delivery, scheduling, credentials, or published historical artifacts.",
+    "Claiming Microsoft or any other company is a confirmed industry model without the existing complete gate."
+  ],
+  "sources": [
+    {
+      "path": "src/features/weekly_radar/runtime/evidence.rs",
+      "reason": "The bounded named-adopter regex fails on the observed Atos prose where the adopter appears before an infinitive deployment verb."
+    },
+    {
+      "path": "tests/weekly_radar_evidence_quality.rs",
+      "reason": "Existing independent-customer and supplier-attribution tests define the deterministic extraction and provenance regression seam."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "The operational contract must document the supported deployment-prose boundary without weakening source roles or gates."
+    },
+    {
+      "path": "config/weekly_radar/companies.json",
+      "reason": "The merged-main trigger shows the explicit Atos Group independent disclosure is already configured and reachable; this WI does not change configuration."
+    },
+    {
+      "path": "docs/superpowers/specs/2026-08-26-weekly-radar-independent-adopter-extraction.md",
+      "reason": "This WI's bounded design and acceptance specification."
+    },
+    {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
+      "reason": "Predecessor evidence establishes that the remaining live defect is independent named-adopter extraction, not source acquisition or the judgment gate."
+    }
+  ],
+  "unknowns": [],
+  "notCodable": false,
+  "riskAssessment": {
+    "level": "low",
+    "riskTypes": [
+      "evidence_classification",
+      "false_positive_extraction"
+    ],
+    "reason": "The change is limited to a bounded, case-preserving extraction pattern for already-authoritative independent documents; the pattern must not promote generic title text, supplier material, or unbounded entities."
+  },
+  "governanceProfile": {
+    "selected": "standard",
+    "source": "automatic",
+    "reasons": [
+      "Initial Work Item skeleton defaults to Standard until scope is classified."
+    ],
+    "override": null
+  },
+  "agentCapability": {
+    "canImplement": true,
+    "canVerify": true,
+    "needsHumanDecision": false,
+    "blockedReason": ""
+  },
+  "executionDecision": {
+    "status": "continue",
+    "reason": "The merged-main report identifies one exact missing proof: Atos is independently configured and substantively extracted, but the named-adopter matcher does not recognize the bounded 'Atos Group ... to deploy' construction. A deterministic fixture can reproduce the defect and guide a minimal fix."
+  },
+  "preReviewWarnings": [],
+  "checkpointPolicy": {
+    "requiredBeforeFinish": true,
+    "requiredStages": [
+      "before_edit",
+      "before_finish"
+    ],
+    "reason": "Record at least one checkpoint before finishing to reduce mid-task drift."
+  },
+  "acceptance": [
+    "A regression fixture representing the Atos independent disclosure with 'Atos Group becomes ... to deploy Microsoft 365 Copilot' fails before the implementation change because the validated candidate has no named adopter.",
+    "The minimal bounded extraction change promotes the same validated candidate to IndustryDiffusion with named adopter 'Atos Group' and IndependentCustomerDisclosure, without changing its source URI or date.",
+    "Existing PwC deployed, Atos rolling-out, supplier-attribution, title-only, and incomplete-gate behavior remains unchanged and covered by tests.",
+    "The merged-main dry-run reports Microsoft with two independent diffusion sources and no independent_diffusion_sources gap; if another gate remains open, the report must state that gate and emit no Ranking unless the existing complete contract is satisfied.",
+    "Rust, Python, Shell/governance checks, hosted CI, PR merge, and Work Item closure complete with clean local and remote state."
+  ],
+  "guidelines": [
+    "New public APIs must be documented; prefer a private bounded helper when no public API is needed.",
+    "Keep source-role classification and evidence promotion deterministic in Rust.",
+    "Use only explicitly configured bounded URLs; do not infer or add sources in this WI.",
+    "Preserve SupplierAttribution, IndependentCustomerDisclosure, RegulatoryOrFiling, and DiscoveryOnly as distinct evidence states.",
+    "Do not weaken fail-closed gates or infer confirmation from source availability alone.",
+    "Use Python and Shell only for bounded orchestration, fixtures, and governance verification; keep research semantics in Rust."
+  ],
+  "intent": {
+    "problem": "The merged-main trigger produced 46 validated facts and 26 structural evidence records. Microsoft had all four evidence families, four result periods, and three supplier-attribution sources, but the report counted only one independent diffusion source even though both PwC and Atos independent documents were configured and reachable. The Atos document was retained as structural evidence, but the named-adopter extractor missed the 'Atos Group becomes ... to deploy' construction, so the independent diffusion gate correctly remained closed.",
+    "constraints": [
+      "Fix only the bounded named-adopter extraction seam and its tests/documentation.",
+      "Do not change the independent-source threshold, provenance mapping, four-family gate, counter-evidence review, SEC behavior, or Ranking policy.",
+      "Use a deterministic fixture mirroring the observed Atos title/body shape; no live-network dependence in unit tests.",
+      "Keep the extractor bounded to explicit adoption/deployment verbs and sentence boundaries so generic prose cannot become evidence."
+    ],
+    "rationale": "The live result isolates a parser boundary defect: the source is available and independently typed, and the domain gate already refuses to count it without a named adopter. Extending the existing matcher with a bounded infinitive-deployment construction is the smallest change that can make the source count honestly reflect the evidence already present."
+  },
+  "declaredIntent": {
+    "requestedCapabilities": ["software_design", "test_automation", "ai_governance"],
+    "prohibitedCapabilities": ["secret_readback", "manual_data_branch_repair", "provider_scope_expansion", "production_release"]
+  },
+  "requestedOperation": {
+    "type": "repository_governance",
+    "action": "modify",
+    "target": "repository_governance",
+    "environment": "repository",
+    "effect": "enforce",
+    "authorityRequired": false,
+    "authorityReason": "The user explicitly authorized continued iteration through the full governed lifecycle when the merged-main trigger finds a problem.",
+    "authorizedExternalEffects": [
+      "Create and update the dedicated Work Item branch and pull request.",
+      "Run repository and hosted quality checks without reading secret values.",
+      "Merge the pull request and close the Work Item after all required evidence passes."
+    ]
+  },
+  "scenarioCoverage": [
+    {
+      "scenario": "An independent Atos disclosure with 'Atos Group becomes ... to deploy Microsoft 365 Copilot' retains Atos Group as the named adopter.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_evidence_quality.rs", "src/features/weekly_radar/runtime/evidence.rs"],
+      "expected": "Validated evidence has IndustryDiffusion, named peer Atos Group, IndependentCustomerDisclosure, the configured URL, and the explicit effective date.",
+      "verificationPlan": "Add the exact fixture, run the focused test before the production change and observe the missing named-peer failure, then run it after the minimal matcher change."
+    },
+    {
+      "scenario": "Existing independent and supplier evidence boundaries remain unchanged.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["tests/weekly_radar_evidence_quality.rs", "tests/weekly_radar_judgment_chain.rs"],
+      "expected": "PwC and Atos independent sources retain their roles, supplier stories remain SupplierAttribution, and a supplier-only or incomplete packet remains Candidate with no Ranking.",
+      "verificationPlan": "Run focused evidence and judgment tests, then the complete Rust quality suite."
+    },
+    {
+      "scenario": "Merged-main research result reports the independent-source count honestly.",
+      "required": true,
+      "status": "unverified",
+      "evidence": ["config/weekly_radar/companies.json", "docs/operations/WEEKLY_RADAR.md", "target/weekly-radar-trigger-report.txt"],
+      "expected": "The Microsoft candidate has independent diffusion sources equal to two and no independent_diffusion_sources missing-proof item; confirmation and Ranking remain governed by all other existing gates.",
+      "verificationPlan": "Run the documented dry-run from merged main with as-of 2026-08-25, inspect the Microsoft qualification block, and verify dry-run does not contact Telegram or write an archive."
+    }
+  ],
+  "verification": [
+    {
+      "check": "aiWorkItem",
+      "required": true
+    },
+    {
+      "check": "aiScope",
+      "required": true
+    },
+    {
+      "check": "aiGuards",
+      "required": true
+    },
+    {
+      "check": "aiCheckpoint",
+      "required": true
+    },
+    {
+      "check": "aiAgentRisk",
+      "required": true
+    },
+    {
+      "check": "aiReviewPolicy",
+      "required": true
+    },
+    {
+      "check": "aiBacktrack",
+      "required": true
+    },
+    {
+      "check": "aiCoverage",
+      "required": true
+    },
+    {
+      "check": "aiScenarioCoverage",
+      "required": true
+    },
+    {
+      "check": "aiGuidelines",
+      "required": true
+    },
+    {
+      "check": "aiSummary",
+      "required": true
+    },
+    {
+      "check": "aiStatus",
+      "required": true
+    },
+    {
+      "check": "aiStatusCheck",
+      "required": true
+    },
+    {
+      "check": "aiStatusConsistency",
+      "required": true
+    },
+    {
+      "check": "aiDiffOwnership",
+      "required": true
+    },
+    {
+      "check": "quality",
+      "required": true
+    }
+  ],
+  "destructiveChangePolicy": {
+    "allowed": false,
+    "requiresHumanApproval": true,
+    "allowPatterns": []
+  },
+  "restrictedWriteApproval": {
+    "approved": false,
+    "approvedBy": "",
+    "reason": "Set only when a human explicitly approves restricted governance paths."
+  },
+  "rollbackNote": "Revert this Work Item diff and restore related tests and docs.",
+  "budgetImpact": {
+    "expectedMetrics": {
+      "archiveGrowth": 79
+    }
+  },
+  "synchronizationCheckpoint": {
+    "authorized": true,
+    "reason": "Resume the same active Work Item after corrective governance WI wi-ai-cockpit-script-inventory-digest merged into origin/main; checkpoint only Contract-owned implementation, test, documentation, and generated governance evidence before fast-forward synchronization."
+  },
+  "startReceipt": {
+    "path": ".ai/work-items/starts/wi-weekly-radar-independent-adopter-extraction.json",
+    "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+    "initialScopeDigest": "ef1fd1dd11645d23502b2a260635f2ba22061f363f41bd9178664005fdca31b2",
+    "contractSkeletonDigest": "c01e443174f73dd0d391aed9bc6a1929f957727552eff17848f8b4da3044e784"
+  }
+}

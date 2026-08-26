@@ -51,7 +51,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_evidence_quality.rs",
-      "digest": "21edecec2408884422b1ab16a733a6a094d1857da4792313ee32273382d07676"
+      "digest": "2095bdfddd184fa95b4920d7be5ec62d0480c40886f388d9009e0ec7dc35d1d8"
     },
     {
       "type": "code",
@@ -61,7 +61,7 @@
     {
       "type": "code",
       "path": "src/features/weekly_radar/runtime/evidence.rs",
-      "digest": "d895419fc00b9b07ae5d7b07942547931de0c5611a359c45d21f515b2537fae8"
+      "digest": "3f8df172eb1d93a4ad5316173ed8d98370c56f184824a97678a922f8ca012ab0"
     },
     {
       "type": "code",

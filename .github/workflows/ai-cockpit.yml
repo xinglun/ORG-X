@@ -24,7 +24,7 @@ jobs:
           set -euo pipefail
           workdir="$RUNNER_TEMP/ai-cockpit"
           mkdir -p "$workdir/bin" "$workdir/extracted"
-          archive="ai-cockpit-${AI_COCKPIT_VERSION#v}-${AI_COCKPIT_TARGET}.tar.gz"
+          archive="ai-cockpit-${AI_COCKPIT_VERSION}-${AI_COCKPIT_TARGET}.tar.gz"
           gh release download "$AI_COCKPIT_VERSION" \
             --repo xinglun/ai-cockpit \
             --pattern "$archive" \
@@ -61,7 +61,7 @@ jobs:
           set -euo pipefail
           workdir="$RUNNER_TEMP/ai-cockpit"
           mkdir -p "$workdir/bin" "$workdir/extracted"
-          archive="ai-cockpit-${AI_COCKPIT_VERSION#v}-${AI_COCKPIT_TARGET}.tar.gz"
+          archive="ai-cockpit-${AI_COCKPIT_VERSION}-${AI_COCKPIT_TARGET}.tar.gz"
           gh release download "$AI_COCKPIT_VERSION" \
             --repo xinglun/ai-cockpit \
             --pattern "$archive" \

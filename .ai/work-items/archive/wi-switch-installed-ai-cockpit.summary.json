@@ -1,0 +1,157 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "runtimeVersion=0.2.33; passed=true",
+          "path": ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json",
+          "type": "runtime",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "project-command-0; passed=true",
+          "path": ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json",
+          "type": "repository",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "installed Runtime adapter",
+          "path": ".ai/adapters/codex.json",
+          "type": "runtime",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "repositoryId binding",
+          "path": ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json",
+          "type": "repository",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A5",
+      "evidence": [
+        {
+          "locator": "runtimeDigest binding",
+          "path": ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json",
+          "type": "runtime",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A6",
+      "evidence": [
+        {
+          "locator": "cargo test --all; passed=true",
+          "path": ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json",
+          "type": "command",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A7",
+      "evidence": [
+        {
+          "locator": "project-command-0; passed=true",
+          "path": ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json",
+          "type": "repository",
+          "verification": "passed"
+        }
+      ]
+    }
+  ],
+  "changedPaths": [
+    ".ai/agent-interface.json",
+    ".ai/cockpit.toml",
+    ".ai/cockpit/current_status.md",
+    ".ai/decisions/profile-v1.json",
+    ".ai/decisions/profile-v2.json",
+    ".ai/project.json",
+    ".ai/work-items/archive/wi-switch-installed-ai-cockpit.contract.json",
+    ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json",
+    "docs/superpowers/plans/2026-08-27-switch-installed-ai-cockpit.md"
+  ],
+  "checkpointAt": "2026-08-26T21:29:28Z",
+  "checkpointContractDigest": "sha256:93f331e8e17eab0aa1a9504b7abcee7f9e7b0937fd1790dba1e4555ee9cb55cb",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:f204b41dcbcad0a80f488b76648f4428b178403757f751fb11a37b5544f18b90",
+  "createdAt": "2026-08-26T21:26:28Z",
+  "failedGate": "finish.governance",
+  "intentAlignment": {
+    "evidence": [
+      ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+    ],
+    "state": "resolved"
+  },
+  "mode": "code",
+  "outcomeState": "blocked",
+  "preflightAt": "2026-08-26T21:54:57Z",
+  "preflightContractDigest": "sha256:93f331e8e17eab0aa1a9504b7abcee7f9e7b0937fd1790dba1e4555ee9cb55cb",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:f204b41dcbcad0a80f488b76648f4428b178403757f751fb11a37b5544f18b90",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "scenarioCoverage": [
+    {
+      "evidence": [
+        ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+      ],
+      "required": true,
+      "scenario": "installed Runtime attachment and identity",
+      "status": "verified"
+    },
+    {
+      "evidence": [
+        ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+      ],
+      "required": true,
+      "scenario": "legacy runtime removal with historical preservation",
+      "status": "verified"
+    },
+    {
+      "evidence": [
+        ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+      ],
+      "required": true,
+      "scenario": "Rust project quality after migration",
+      "status": "verified"
+    },
+    {
+      "evidence": [
+        ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+      ],
+      "required": true,
+      "scenario": "Runtime-native Work Item lifecycle",
+      "status": "verified"
+    }
+  ],
+  "state": "finish_ready",
+  "updatedAt": "2026-08-26T21:55:01Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-switch-installed-ai-cockpit"
+}

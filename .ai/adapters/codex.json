@@ -1,0 +1,8 @@
+{
+  "provider": "codex",
+  "adapterVersion": 1,
+  "target": "AGENTS.md",
+  "mode": "managed-section",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "installedDigest": "sha256:0a8b1ee1041608a8c245720086f00dbd6a42f9bf22933fd8eb0915bf5d7bb298"
+}

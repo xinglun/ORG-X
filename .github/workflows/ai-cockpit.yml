@@ -9,21 +9,74 @@ permissions:
   contents: read
 
 jobs:
-  ai-cockpit-quality:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - uses: dtolnay/rust-toolchain@stable
-      - run: make ai-cockpit-quality GOVERNANCE_PROFILE=strict
+      - name: Install pinned AI Cockpit Runtime
+        env:
+          AI_COCKPIT_VERSION: v0.2.33
+          AI_COCKPIT_TARGET: x86_64-unknown-linux-gnu
+        run: |
+          set -euo pipefail
+          workdir="$RUNNER_TEMP/ai-cockpit"
+          mkdir -p "$workdir/bin" "$workdir/extracted"
+          archive="ai-cockpit-${AI_COCKPIT_VERSION}-${AI_COCKPIT_TARGET}.tar.gz"
+          gh release download "$AI_COCKPIT_VERSION" \
+            --repo xinglun/ai-cockpit \
+            --pattern "$archive" \
+            --pattern SHA256SUMS \
+            --dir "$workdir"
+          expected="$(awk -v name="$archive" '$2 == name {print $1}' "$workdir/SHA256SUMS")"
+          test -n "$expected"
+          printf '%s  %s\n' "$expected" "$archive" | (cd "$workdir" && sha256sum --check -)
+          tar -xzf "$workdir/$archive" -C "$workdir/extracted"
+          install -m 0755 "$workdir/extracted/ai-cockpit" "$workdir/bin/ai-cockpit"
+          echo "$workdir/bin" >> "$GITHUB_PATH"
+          "$workdir/bin/ai-cockpit" --version
+      - name: Check attached Runtime state
+        run: |
+          ai-cockpit inspect --repo "$GITHUB_WORKSPACE"
+          ai-cockpit compatibility --repo "$GITHUB_WORKSPACE"
+          ai-cockpit doctor --repo "$GITHUB_WORKSPACE"
+      - run: cargo fmt --all -- --check
+      - run: cargo clippy --all-targets --all-features -- -D warnings
+      - run: cargo test --all
 
-  check-ai-pr:
+  runtime-pr-audit:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - uses: dtolnay/rust-toolchain@stable
-      - run: make check-ai-pr AI_BASE_COMMIT="${{ github.event.pull_request.base.sha }}"
+      - name: Install pinned AI Cockpit Runtime
+        env:
+          AI_COCKPIT_VERSION: v0.2.33
+          AI_COCKPIT_TARGET: x86_64-unknown-linux-gnu
+        run: |
+          set -euo pipefail
+          workdir="$RUNNER_TEMP/ai-cockpit"
+          mkdir -p "$workdir/bin" "$workdir/extracted"
+          archive="ai-cockpit-${AI_COCKPIT_VERSION}-${AI_COCKPIT_TARGET}.tar.gz"
+          gh release download "$AI_COCKPIT_VERSION" \
+            --repo xinglun/ai-cockpit \
+            --pattern "$archive" \
+            --pattern SHA256SUMS \
+            --dir "$workdir"
+          expected="$(awk -v name="$archive" '$2 == name {print $1}' "$workdir/SHA256SUMS")"
+          test -n "$expected"
+          printf '%s  %s\n' "$expected" "$archive" | (cd "$workdir" && sha256sum --check -)
+          tar -xzf "$workdir/$archive" -C "$workdir/extracted"
+          install -m 0755 "$workdir/extracted/ai-cockpit" "$workdir/bin/ai-cockpit"
+          echo "$workdir/bin" >> "$GITHUB_PATH"
+          "$workdir/bin/ai-cockpit" --version
+      - name: Check Runtime compatibility and diff hygiene
+        run: |
+          ai-cockpit inspect --repo "$GITHUB_WORKSPACE"
+          ai-cockpit compatibility --repo "$GITHUB_WORKSPACE"
+          ai-cockpit doctor --repo "$GITHUB_WORKSPACE"
+          git diff --check

@@ -1,0 +1,22 @@
+{
+  "createdAt": "2026-08-26T22:07:59Z",
+  "files": {
+    "approachDigest": "sha256:bc46b6611d5e49df578c86e526d1f45d862edcad6257096641baec2d41cbe4a6",
+    "approachPath": ".ai/work-items/archive/wi-switch-installed-ai-cockpit.approach.json",
+    "contractDigest": "sha256:c117f8044c4d212225dd54927c443edd3694e92807ea7ba765a9338aec9d529a",
+    "contractPath": ".ai/work-items/archive/wi-switch-installed-ai-cockpit.contract.json",
+    "eventsDigest": "sha256:0c96cec597a1d112c9898d028f2a570b111b1d1b078ab6dffe80c50960ec14bf",
+    "eventsPath": ".ai/work-items/archive/wi-switch-installed-ai-cockpit.events.jsonl",
+    "outcomeDigest": "sha256:7656b80c88302748677af40a3b19de36599d28a5f6ef413b70e45be45d7555ab",
+    "outcomePath": ".ai/work-items/archive/wi-switch-installed-ai-cockpit.outcome.json",
+    "summaryDigest": "sha256:327de9da24ccad75920b9d9484acda90d0979296720d17c9714f31b9bbd79808",
+    "summaryPath": ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json",
+    "taskReportDigest": "sha256:b427a4d1f1badbe8974321c893eaa2df613bd3a6aef874c17125d1231742ff57",
+    "taskReportMarkdownDigest": "sha256:039b3e85f9bf73e40cb6c31bdda4fbaa2c009b4ca0d340f9cbd2b3a5c2fc05c1",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-switch-installed-ai-cockpit.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-switch-installed-ai-cockpit.task-report.json"
+  },
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-switch-installed-ai-cockpit"
+}

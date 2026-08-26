@@ -1,0 +1,195 @@
+{
+  "acceptanceResults": [
+    "A1: The repository is attached to installed ai-cockpit 0.2.33, reports compatible/calibrated state, and uses the explicit --repo interface.",
+    "A2: The live repository no longer contains the project-bound Python AI Cockpit runtime, its Makefile entrypoints, or its Python build binding; the existing Python governance tests remain unchanged as historical verification assets.",
+    "A3: Runtime-native agent adapters and repository instructions point to the installed ai-cockpit lifecycle; no global agent configuration is changed.",
+    "A4: The Rust project source, Cargo manifests, Rust tests, historical Work Item archives, recovery receipts, and install evidence remain preserved.",
+    "A5: Runtime-native preflight, checkpoint, verification, finish, and human-visible outcome validation succeed for this Work Item.",
+    "A6: cargo fmt --all -- --check, cargo clippy --all-targets --all-features -- -D warnings, and cargo test --all pass.",
+    "A7: The legacy controlled uninstaller's stale-manifest block and the bounded replacement cleanup are recorded in the Work Item evidence and handoff."
+  ],
+  "createdAt": "2026-08-26T21:55:01Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:8a84fa5c2b861d4fede1d60594bcd11b8097bf1330b1c58bdf77346bd55c7884",
+  "evidenceRefs": [
+    ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+  ],
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+    ],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:f204b41dcbcad0a80f488b76648f4428b178403757f751fb11a37b5544f18b90",
+      "workItemId": "wi-switch-installed-ai-cockpit"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/agent-interface.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/cockpit.toml"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/cockpit/current_status.md"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/decisions/profile-v1.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/decisions/profile-v2.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/project.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-switch-installed-ai-cockpit.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: docs/superpowers/plans/2026-08-27-switch-installed-ai-cockpit.md"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.contract.json"
+          ],
+          "inference": false,
+          "text": "Remove the project-bound Python AI Cockpit runtime from ORG-X and switch the repository to the attached installed ai-cockpit 0.2.33 Runtime while preserving the Rust project and historical governance evidence."
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-switch-installed-ai-cockpit.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-switch-installed-ai-cockpit"
+  },
+  "taskReportDigest": "sha256:b427a4d1f1badbe8974321c893eaa2df613bd3a6aef874c17125d1231742ff57",
+  "taskReportMarkdownDigest": "sha256:039b3e85f9bf73e40cb6c31bdda4fbaa2c009b4ca0d340f9cbd2b3a5c2fc05c1",
+  "unknowns": [
+    "user_visible_benefit_not_declared"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-switch-installed-ai-cockpit.verification.json",
+    "required": true,
+    "status": "verified"
+  },
+  "workItemId": "wi-switch-installed-ai-cockpit"
+}

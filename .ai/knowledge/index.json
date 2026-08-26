@@ -138,6 +138,14 @@
       "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json"
     },
     {
+      "workItemId": "wi-weekly-radar-past-tense-diffusion-signal",
+      "title": "Recognize past-tense independent diffusion disclosures",
+      "topics": [],
+      "components": [],
+      "state": "verified",
+      "knowledgePath": ".ai/knowledge/work-items/wi-weekly-radar-past-tense-diffusion-signal.json"
+    },
+    {
       "workItemId": "wi-weekly-radar-reference-model-evidence",
       "title": "Validate AI-era reference-model companies",
       "topics": [],

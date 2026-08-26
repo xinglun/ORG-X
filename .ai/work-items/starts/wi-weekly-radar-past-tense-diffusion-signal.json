@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-weekly-radar-past-tense-diffusion-signal",
+  "receiptPath": ".ai/work-items/starts/wi-weekly-radar-past-tense-diffusion-signal.json",
+  "baseCommit": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+  "baseBranch": "codex/wi-weekly-radar-past-tense-diffusion-signal",
+  "startTimestamp": "2026-08-25T23:38:26.531760+00:00",
+  "initialScopeDigest": "4bf9aaa1da99e1d4e5882bd9d7b96dde13599d50081350ca013e60281b1c2822",
+  "contractSkeletonDigest": "8c9b353eb52c5bf7968cb96cf3a718d0a8f8a1844c682f11ad4d8200f304d7af"
+}

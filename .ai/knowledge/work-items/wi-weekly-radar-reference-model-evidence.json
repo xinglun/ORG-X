@@ -83,7 +83,7 @@
     {
       "type": "test",
       "path": "tests/weekly_radar_evidence_quality.rs",
-      "digest": "21edecec2408884422b1ab16a733a6a094d1857da4792313ee32273382d07676"
+      "digest": "2095bdfddd184fa95b4920d7be5ec62d0480c40886f388d9009e0ec7dc35d1d8"
     },
     {
       "type": "test",
@@ -133,7 +133,7 @@
     {
       "type": "code",
       "path": "docs/operations/WEEKLY_RADAR.md",
-      "digest": "99abaa012106e2ca3a04ea9752b74c17f2bbc04e027c6eb049d289feec2886c1"
+      "digest": "3f7d04483e40df478e198bda3b813f2e4ce32211d7d49d20a919e58715beaefb"
     }
   ],
   "mergedCommit": null,

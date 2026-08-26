@@ -439,6 +439,41 @@ fn independent_customer_title_and_body_promote_named_adopter() {
 }
 
 #[test]
+fn independent_customer_deployed_past_tense_promotes_named_adopter() {
+    let observation = document_observation(DocumentObservationInput {
+        company_id: "msft".to_owned(),
+        kind: SourceKind::IndependentResearch,
+        tier: SourceTier::IndependentPrimary,
+        url: "https://www.pwc.com/us/en/library/case-studies/pwc-microsoft-copilot-enterprise-ai.html"
+            .to_owned(),
+        title: "How PwC scaled Microsoft Copilot securely for 285,000+ users".to_owned(),
+        text: "PwC deployed Microsoft Copilot to 285000 users worldwide, scaling secure Responsible AI to help boost productivity, collaboration, and trust.".to_owned(),
+        status: SourceStatus::Known,
+        status_reason: "fixture document".to_owned(),
+        document_kind: DocumentKind::ProductPlatform,
+        source_field_or_passage: "customer disclosure".to_owned(),
+        observed_at: Utc::now(),
+        effective_date: Some(NaiveDate::from_ymd_opt(2026, 1, 16).unwrap()),
+    });
+
+    let candidate = extract_evidence_candidate(&observation)
+        .expect("past-tense customer deployment should produce a claim");
+    let validated =
+        validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+            .expect("past-tense customer deployment should validate");
+
+    assert_eq!(
+        validated.reference_model_family(),
+        Some(ReferenceModelEvidenceFamily::IndustryDiffusion)
+    );
+    assert_eq!(validated.reference_model_named_peer(), Some("PwC"));
+    assert_eq!(
+        validated.reference_model_source_role(),
+        Some(ReferenceModelSourceRole::IndependentCustomerDisclosure)
+    );
+}
+
+#[test]
 fn official_customer_story_usage_is_diffusion_evidence() {
     let observation = document_observation_from_html(
         r#"<html><head><title>NIQ scales product coding with Foundry</title></head>

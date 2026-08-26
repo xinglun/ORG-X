@@ -162,6 +162,7 @@ const REFERENCE_MODEL_DIFFUSION_SIGNALS: &[&str] = &[
     "adopted by",
     "adopted ",
     "deploys ",
+    "deployed ",
     "rolled out",
     "rolling out",
     "rolls out",
@@ -801,7 +802,7 @@ fn reference_model_named_peer_for_text(text: &str) -> Option<String> {
         }
     }
     let adoption_regex = Regex::new(
-        r"(?i)^\s*([A-Z][A-Za-z0-9&.'-]*(?:\s+[A-Z][A-Za-z0-9&.'-]*){0,4})\s+(?:has\s+adopted|has\s+implemented|is\s+using|is\s+rolling\s+out|adopted|implemented|used|uses|deployed|deploys|rolled\s+out|rolls\s+out|built|launched)\b",
+        r"(?i)([A-Z][A-Za-z0-9&.'-]*(?:\s+[A-Z][A-Za-z0-9&.'-]*){0,4})\s+(?:has\s+adopted|has\s+implemented|is\s+using|is\s+rolling\s+out|adopted|implemented|used|uses|deployed|deploys|rolled\s+out|rolls\s+out|built|launched)\b",
     )
     .ok()?;
     let peer = adoption_regex

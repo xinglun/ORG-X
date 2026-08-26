@@ -234,6 +234,19 @@
         "tests/weekly_radar_runtime.rs"
       ]
     },
+    "wi-weekly-radar-past-tense-diffusion-signal": {
+      "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-past-tense-diffusion-signal.json",
+      "dependencies": [
+        ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.outcome.json",
+        ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
+        "config/weekly_radar/companies.json",
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs",
+        "tests/weekly_radar_judgment_chain.rs"
+      ]
+    },
     "wi-weekly-radar-reference-model-evidence": {
       "recordPath": ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
       "dependencies": [
@@ -461,7 +474,8 @@
       "wi-weekly-radar-independent-diffusion-source-normalization"
     ],
     ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion-source-normalization.summary.json": [
-      "wi-weekly-radar-independent-diffusion-source-normalization"
+      "wi-weekly-radar-independent-diffusion-source-normalization",
+      "wi-weekly-radar-past-tense-diffusion-signal"
     ],
     ".ai/work-items/archive/2026/wi-weekly-radar-independent-diffusion.contract.json": [
       "wi-weekly-radar-independent-diffusion"
@@ -480,6 +494,15 @@
     ],
     ".ai/work-items/archive/2026/wi-weekly-radar-input-snapshot-compatibility.summary.json": [
       "wi-weekly-radar-input-snapshot-compatibility"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json": [
+      "wi-weekly-radar-past-tense-diffusion-signal"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.outcome.json": [
+      "wi-weekly-radar-past-tense-diffusion-signal"
+    ],
+    ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json": [
+      "wi-weekly-radar-past-tense-diffusion-signal"
     ],
     ".ai/work-items/archive/2026/wi-weekly-radar-reference-model-evidence.contract.json": [
       "wi-weekly-radar-reference-model-evidence"
@@ -550,7 +573,8 @@
       "wi-weekly-radar-sec-ir-deep-discovery"
     ],
     "config/weekly_radar/companies.json": [
-      "wi-weekly-radar-independent-diffusion-source-normalization"
+      "wi-weekly-radar-independent-diffusion-source-normalization",
+      "wi-weekly-radar-past-tense-diffusion-signal"
     ],
     "config/weekly_radar/reference_model_candidates.json": [
       "wi-weekly-radar-independent-diffusion-source-normalization",
@@ -633,6 +657,7 @@
       "wi-weekly-radar-evidence-quality",
       "wi-weekly-radar-independent-diffusion",
       "wi-weekly-radar-independent-diffusion-source-normalization",
+      "wi-weekly-radar-past-tense-diffusion-signal",
       "wi-weekly-radar-structural-evidence-gate"
     ],
     "src/features/weekly_radar/runtime/http.rs": [
@@ -704,6 +729,7 @@
       "wi-weekly-radar-evidence-quality",
       "wi-weekly-radar-independent-diffusion",
       "wi-weekly-radar-independent-diffusion-source-normalization",
+      "wi-weekly-radar-past-tense-diffusion-signal",
       "wi-weekly-radar-reference-model-evidence",
       "wi-weekly-radar-sec-ir-deep-discovery",
       "wi-weekly-radar-structural-evidence-gate"
@@ -712,6 +738,7 @@
       "wi-weekly-radar-content-quality",
       "wi-weekly-radar-evidence-quality",
       "wi-weekly-radar-independent-diffusion",
+      "wi-weekly-radar-past-tense-diffusion-signal",
       "wi-weekly-radar-reference-model-evidence"
     ],
     "tests/weekly_radar_runtime.rs": [

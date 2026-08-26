@@ -157,7 +157,13 @@ def classify_failure(output: str) -> str:
     lowered = output.lower()
     if "changed-critical coverage" in lowered or "below" in lowered and "coverage" in lowered:
         return "changedCriticalCoverage"
-    if "archive" in lowered or "paired ownership" in lowered or "human benefit report" in lowered:
+    if (
+        "archive" in lowered
+        or "paired ownership" in lowered
+        or "human benefit report" in lowered
+        or "digest is stale" in lowered
+        and "verified record is not currently valid" in lowered
+    ):
         return "archiveEvidence"
     raise ValueError(
         "PR audit failure is not an allowed coverage or archive-evidence recovery gate"

@@ -1,0 +1,65 @@
+{
+  "archive": {
+    "archive-manifest": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.archive-manifest.json",
+      "sha256": "ff125def1a8fe557365025ad49e481a1e92db817a0f0849c2e158cb0fd0a90b8"
+    },
+    "contract": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.contract.json",
+      "sha256": "613c0a7aa0609d24e6614e30e5a46c5f5eb360ce484fb5c5ff67f7eac0f52544"
+    },
+    "outcome": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.outcome.json",
+      "sha256": "da272dec6a568baff905d7c5457408b62064a6cd9fff33c47f5c8a314e42ab19"
+    },
+    "summary": {
+      "path": ".ai/work-items/archive/2026/wi-weekly-radar-past-tense-diffusion-signal.summary.json",
+      "sha256": "061eb36eb8c7323617442c2edc7d1728b9e53e892a598cf5ea04d11578735abe"
+    }
+  },
+  "failure": {
+    "command": [
+      "make",
+      "check-ai-pr",
+      "AI_BASE_COMMIT=dc42f6f4966f67fe6174aa1a51c323136197e9a5"
+    ],
+    "exitCode": 2,
+    "gate": "archiveEvidence",
+    "outputDigest": "3fea48c4d9cdc9aafb5c73c64293d9aa5b5b624c47e779150168510d66ed1a00"
+  },
+  "humanAuthorization": {
+    "reference": "User authorized full lifecycle execution and same-Work-Item post-archive recovery.",
+    "type": "human"
+  },
+  "issue": "https://github.com/xinglun/ORG-X/issues/89",
+  "kind": "same_work_item_post_archive_recovery",
+  "openedAt": "2026-08-26T00:16:09.429824+00:00",
+  "prBaseCommit": "dc42f6f4966f67fe6174aa1a51c323136197e9a5",
+  "receiptVersion": 1,
+  "recoveryPaths": [
+    "scripts/ai_post_archive_recovery.py",
+    "tests/ai_cockpit/post_archive_recovery_test.py",
+    ".ai/knowledge/dependencies.json",
+    ".ai/knowledge/index.json",
+    ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
+    ".ai/knowledge/work-items/wi-telegram-delivery-verification.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-careers-evidence-boundary.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-claim-extraction-gate.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-confirmed-evidence-report.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-content-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-document-discovery-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-dimension.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-extraction-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-evidence-quality.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-idempotent-completion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion-source-normalization.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-independent-diffusion.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-input-snapshot-compatibility.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-reference-model-evidence.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-same-day-canonical-update.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-sec-ir-deep-discovery.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-source-coverage.json",
+    ".ai/knowledge/work-items/wi-weekly-radar-structural-evidence-gate.json"
+  ],
+  "workItemId": "wi-weekly-radar-past-tense-diffusion-signal"
+}

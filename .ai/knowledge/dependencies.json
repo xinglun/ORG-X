@@ -13,6 +13,17 @@
         "tests/ai_cockpit/production_validation_policy_test.py"
       ]
     },
+    "wi-ai-cockpit-script-inventory-digest": {
+      "recordPath": ".ai/knowledge/work-items/wi-ai-cockpit-script-inventory-digest.json",
+      "dependencies": [
+        ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+        ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.contract.json",
+        ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.outcome.json",
+        ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+        "scripts/ai_installer_catalog.json",
+        "tests/ai_cockpit/upgrade_feature_checklist_test.py"
+      ]
+    },
     "wi-sec-submissions-response-limit": {
       "recordPath": ".ai/knowledge/work-items/wi-sec-submissions-response-limit.json",
       "dependencies": [
@@ -336,7 +347,8 @@
       "upgrade_ai_cockpit"
     ],
     ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json": [
-      "upgrade_ai_cockpit"
+      "upgrade_ai_cockpit",
+      "wi-ai-cockpit-script-inventory-digest"
     ],
     ".ai/work-items/archive/2026/upgrade_ai_cockpit.contract.json": [
       "upgrade_ai_cockpit"
@@ -346,6 +358,15 @@
     ],
     ".ai/work-items/archive/2026/upgrade_ai_cockpit.summary.json": [
       "upgrade_ai_cockpit"
+    ],
+    ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.contract.json": [
+      "wi-ai-cockpit-script-inventory-digest"
+    ],
+    ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.outcome.json": [
+      "wi-ai-cockpit-script-inventory-digest"
+    ],
+    ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json": [
+      "wi-ai-cockpit-script-inventory-digest"
     ],
     ".ai/work-items/archive/2026/wi-sec-company-facts-response-limit.contract.json": [
       "wi-sec-submissions-response-limit"
@@ -620,6 +641,9 @@
     "scripts/ai_close_work_item.py": [
       "wi-weekly-radar-cli-output-guard-closure"
     ],
+    "scripts/ai_installer_catalog.json": [
+      "wi-ai-cockpit-script-inventory-digest"
+    ],
     "scripts/check_docs_metadata.py": [
       "wi-weekly-radar-source-coverage"
     ],
@@ -715,6 +739,9 @@
     ],
     "tests/ai_cockpit/production_validation_policy_test.py": [
       "upgrade_ai_cockpit"
+    ],
+    "tests/ai_cockpit/upgrade_feature_checklist_test.py": [
+      "wi-ai-cockpit-script-inventory-digest"
     ],
     "tests/weekly_radar_end_to_end.rs": [
       "wi-weekly-radar-content-quality"

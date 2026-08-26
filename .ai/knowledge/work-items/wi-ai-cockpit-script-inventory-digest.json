@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "workItemId": "wi-ai-cockpit-script-inventory-digest",
+  "title": "Refresh stale AI Cockpit script inventory digest",
+  "topics": [],
+  "components": [],
+  "implementation": {
+    "summary": "Reproduced the clean-main digest mismatch, changed only installerCatalog.installed.scriptInventoryDigest to the deterministic value emitted by the existing test, and left the catalog, scripts, test, and policies unchanged.",
+    "status": "verified"
+  },
+  "configuration": null,
+  "changes": [
+    ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.contract.json",
+    ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+    ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+    "docs/superpowers/specs/2026-08-26-wi-ai-cockpit-script-inventory-digest.md",
+    "docs/superpowers/plans/2026-08-26-wi-ai-cockpit-script-inventory-digest.md",
+    ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.outcome.json",
+    ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.outcome.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/work-items/archive/index.json",
+    ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.archive-manifest.json",
+    ".ai/knowledge/work-items/wi-ai-cockpit-script-inventory-digest.json",
+    ".ai/knowledge/index.json"
+  ],
+  "designDecisions": [
+    {
+      "decision": "Refresh only the installed projection.",
+      "reason": "The existing test computes the expected value from the authoritative catalog and scripts; changing source or test bytes would hide the debt.",
+      "status": "verified"
+    }
+  ],
+  "effects": [],
+  "evidence": [
+    {
+      "type": "test",
+      "path": "tests/ai_cockpit/upgrade_feature_checklist_test.py",
+      "digest": "50fc2897c9338a32c12904e312f8f8683b439f12a3862dc20bfaaa96a77c9e56"
+    },
+    {
+      "type": "code",
+      "path": ".ai/evidence/ai-cockpit-upgrade-feature-checklist.json",
+      "digest": "892f28479fb4f66a4b746652e3e7ab3bbec88f68ee7b4ad294609c9720ff7f08"
+    },
+    {
+      "type": "code",
+      "path": "scripts/ai_installer_catalog.json",
+      "digest": "0f4ce5fe48a2473ddda09aafec9607c430a326147cbb592af4e6e0879ca64236"
+    }
+  ],
+  "mergedCommit": null,
+  "effectiveState": "historical_or_current_unknown",
+  "currentValidity": "unknown",
+  "supersedes": [],
+  "generatedFrom": {
+    "contractPath": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.contract.json",
+    "contractDigest": "195e3595b28535a4fef6e56dd8ba8639c6aa5ff1b83284ced909ea0c40ad75f0",
+    "summaryPath": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.summary.json",
+    "summaryDigest": "778a7f6fdb6a74b73fcc08d9657c87a804f414ea07057c2dd6bb349aa6f82ff0",
+    "outcomePath": ".ai/work-items/archive/2026/wi-ai-cockpit-script-inventory-digest.outcome.json",
+    "outcomeDigest": "4d35f4b41e432907cb586b63d78bcff0a5ddfe13c9b49266b319a579a153027e"
+  },
+  "knowledgeState": "verified",
+  "unknowns": []
+}

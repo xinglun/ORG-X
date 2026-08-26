@@ -1,0 +1,10 @@
+{
+  "receiptVersion": 1,
+  "workItemId": "wi-ai-cockpit-script-inventory-digest",
+  "receiptPath": ".ai/work-items/starts/wi-ai-cockpit-script-inventory-digest.json",
+  "baseCommit": "13a445579389a9cd530a7c97037671f92e5aae73",
+  "baseBranch": "codex/wi-ai-cockpit-script-inventory-digest",
+  "startTimestamp": "2026-08-26T00:52:53.042589+00:00",
+  "initialScopeDigest": "1ad74d212d4679d40e51313a3f46a207d344e0945974b4670d48e2b76d0c179b",
+  "contractSkeletonDigest": "74a3e773d0135ca8914fc7abe44a49d8789824c560d686c97d30593363eddfde"
+}

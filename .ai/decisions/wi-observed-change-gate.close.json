@@ -1,0 +1,136 @@
+{
+  "decisionState": "confirmed",
+  "finalReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-observed-change-gate.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:5a319a05f7cb9e1c7a0871aca413269c40cd5eed742f96b319e5f70e6ffd6845",
+      "workItemId": "wi-observed-change-gate"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-observed-change-gate.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-observed-change-gate.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-observed-change-gate.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-observed-change-gate.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-observed-change-gate.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-observed-change-gate.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-observed-change-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "Human decision 'approved' by xinglun via user confirmation: 授权 at 2026-08-31T10:42:00Z."
+        }
+      ],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-observed-change-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-observed-change-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-observed-change-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-observed-change-gate.contract.json"
+          ],
+          "inference": false,
+          "text": "只允许描述 assessed company 自身已观察且已完成/当前运行的 before-to-after 生产变化进入 Structural Evidence；intent、分类页摘要、客户/供应商平台部署只能保留为 ValidatedFact。"
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-observed-change-gate.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-observed-change-gate"
+  },
+  "finalReportDigest": "sha256:98391fa99844d514d6ebe9387fb60fe83ecfb39582000f555a2b04a00bc2304d",
+  "humanDecision": "approved",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceFinalizationHeadDigest": "sha256:12b554e3f617ba8ffb4f4a30ab848b46a81fde13ddd7c926c093d130dccc2e01",
+  "resourceFinalizationHeadPath": ".ai/decisions/wi-observed-change-gate.finalize.json",
+  "resourceFinalizationSequence": 0,
+  "state": "closed",
+  "structuredDecision": {
+    "actor": "xinglun",
+    "authoritySource": "user confirmation: 授权",
+    "decidedAt": "2026-08-31T10:42:00Z",
+    "decision": "approved",
+    "evidenceRefs": [
+      ".ai/evidence/wi-observed-change-gate.verification.json"
+    ],
+    "policyRefs": [
+      "AGENTS.md"
+    ],
+    "reason": "WI implementation and verification passed; PR #116 merged by xinglun, exact branch/worktree cleanup verified, and main synchronized.",
+    "resumeCondition": null
+  },
+  "timestamp": "2026-08-31T10:39:28Z",
+  "workItemId": "wi-observed-change-gate"
+}

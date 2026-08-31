@@ -1,0 +1,58 @@
+{
+  "actor": "xinglun",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "user confirmation: 授权",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "4b5b758d6f9196b8b3c923d807105067ae0c4b05",
+    "name": "codex/wi-observed-change-gate",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:4d4538e9679952b8e2437157da2e302125d9f13c147ea0fdd4f62f06924bd3c6",
+  "operationId": "github-pr-116-cleanup-20260831",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "d9000b3a903744593e69f0527865102910d2182f",
+    "headRevision": "4b5b758d6f9196b8b3c923d807105067ae0c4b05",
+    "mergeCommit": "1e9acad24faab35b5addc2affb0b33d4b82ee856",
+    "number": 116,
+    "url": "not_applicable"
+  },
+  "reason": "PR #116 merged by xinglun; exact remote/local branch and worktree removed after merge.",
+  "receiptId": "wi-observed-change-gate-cleanup-20260831",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-observed-change-gate",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-observed-change-gate"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:b0e4183bee2da252a0522ead3e1b5d9e20dd1577e3ce62b08f3e198c542e1176",
+  "runtimeVersion": "0.2.48",
+  "schemaVersion": 1,
+  "timestamp": "2026-08-31T10:40:00Z",
+  "workItemId": "wi-observed-change-gate",
+  "worktree": {
+    "branch": "codex/wi-observed-change-gate",
+    "headRevision": "4b5b758d6f9196b8b3c923d807105067ae0c4b05",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-observed-change-gate",
+    "worktreeId": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-observed-change-gate"
+  }
+}

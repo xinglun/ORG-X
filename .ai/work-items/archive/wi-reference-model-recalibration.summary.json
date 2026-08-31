@@ -1,0 +1,31 @@
+{
+  "changedPaths": [
+    ".ai/work-items/archive/wi-reference-model-recalibration.contract.json",
+    ".ai/work-items/archive/wi-reference-model-recalibration.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T06:09:20Z",
+  "checkpointContractDigest": "sha256:8daf192c3f269cc6af6a31eeb57c0b6153b6d684c13551013c41d040889ee141",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:0aba090ed4808c6ede22288af153bd25efefbc4e63f810f9f18d9453b28dde83",
+  "createdAt": "2026-08-31T04:49:11Z",
+  "failedGate": "finish.verification",
+  "mode": "code",
+  "outcomeState": "blocked",
+  "preflightAt": "2026-08-31T06:10:09Z",
+  "preflightContractDigest": "sha256:8daf192c3f269cc6af6a31eeb57c0b6153b6d684c13551013c41d040889ee141",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:0aba090ed4808c6ede22288af153bd25efefbc4e63f810f9f18d9453b28dde83",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "recoveryCondition": "Record valid current verification evidence, rerun preflight, and retry finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T06:10:09Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-reference-model-recalibration"
+}

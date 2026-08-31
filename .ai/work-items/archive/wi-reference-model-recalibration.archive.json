@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-08-31T06:10:17Z",
+  "files": {
+    "contractDigest": "sha256:b3e70f7f0d9b1e563586a686f694644f51a5f553d6490c1ad7ecc5385f170247",
+    "contractPath": ".ai/work-items/archive/wi-reference-model-recalibration.contract.json",
+    "eventsDigest": "sha256:a76adfdc0f46165cf9090348932d4c1c12d518aa28e01cccb3f3e349cc1c5c74",
+    "eventsPath": ".ai/work-items/archive/wi-reference-model-recalibration.events.jsonl",
+    "outcomeDigest": "sha256:1dd884fba0e2466139fb675819529afddc1d1d19f9178a779a7826aba9ac24a4",
+    "outcomePath": ".ai/work-items/archive/wi-reference-model-recalibration.outcome.json",
+    "summaryDigest": "sha256:acfb177ef397abf991c819caf87bfdbe2425355c61e279bbe3472fcb410c2b94",
+    "summaryPath": ".ai/work-items/archive/wi-reference-model-recalibration.summary.json",
+    "taskReportDigest": "sha256:28d3d15f06f7bad05aedb466e259226e239b7e86d7ebb50d504a0ecf4d62336d",
+    "taskReportMarkdownDigest": "sha256:fd22b92337cf1ae13b2e28abd2437dffa23fffb2ea5fc52a630a62a8228b588e",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-reference-model-recalibration.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-reference-model-recalibration.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-reference-model-recalibration"
+}

@@ -1,0 +1,160 @@
+{
+  "changedPaths": [
+    ".ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json",
+    ".ai/work-items/archive/wi-telegram-reference-model-splitter.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T02:28:56Z",
+  "checkpointContractDigest": "sha256:f93821ac234cf58c2be727e3da9cb633116848e2d79a277cff8035dadd857b84",
+  "checkpointCount": 1,
+  "checkpointEvidence": [
+    {
+      "acceptanceCount": 3,
+      "contractHash": "sha256:8be3564fe614cc4ed851b6f07b6d0f6d5328c7cf22d392ea20a58c0c1c07a569",
+      "recorded": true,
+      "recordedAt": "2026-08-31T02:28:56Z",
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:673204cf702524a515895c0e28b8e003a9b3427a234e2ec1ffa2847034af2f75",
+      "requiredChecks": 0,
+      "requiredChecksPassed": 0,
+      "schemaVersion": 1,
+      "stage": "before_edit",
+      "unknownCount": 0,
+      "workItemId": "wi-telegram-reference-model-splitter"
+    },
+    {
+      "acceptanceCount": 3,
+      "contractHash": "sha256:06c09b2d0c7e337d4187f5110048e07041ea448cb8e63ecef7f5a493f18f7277",
+      "invalidatedRequiredChecks": [
+        "aiAgentRisk",
+        "aiBacktrack",
+        "aiCheckpoint",
+        "aiCoverage",
+        "aiDiffOwnership",
+        "aiGuards",
+        "aiGuidelines",
+        "aiReviewPolicy",
+        "aiScenarioCoverage",
+        "aiScope",
+        "aiStatus",
+        "aiStatusCheck",
+        "aiStatusConsistency",
+        "aiSummary",
+        "aiWorkItem",
+        "quality",
+        "verification"
+      ],
+      "originalBeforeEditContractHash": "sha256:8be3564fe614cc4ed851b6f07b6d0f6d5328c7cf22d392ea20a58c0c1c07a569",
+      "previousContractHash": "sha256:8be3564fe614cc4ed851b6f07b6d0f6d5328c7cf22d392ea20a58c0c1c07a569",
+      "reason": "Align the Contract with Runtime 0.2.47 generic verification evidence binding while preserving the existing 16 governance checks and code scope.",
+      "recorded": true,
+      "recordedAt": "2026-08-31T02:39:37Z",
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:673204cf702524a515895c0e28b8e003a9b3427a234e2ec1ffa2847034af2f75",
+      "requiredChecks": 17,
+      "requiredChecksPassed": 0,
+      "requiredChecksPassedAtAmendment": 0,
+      "schemaVersion": 1,
+      "stage": "contract_amendment_revalidation",
+      "unknownCount": 0,
+      "verificationStarted": true,
+      "workItemId": "wi-telegram-reference-model-splitter"
+    },
+    {
+      "acceptanceCount": 3,
+      "contractHash": "sha256:d719a5e12eca539c7801e56e8a55f8e9833a96748934ba042ff10129ef3f7017",
+      "invalidatedRequiredChecks": [
+        "verification"
+      ],
+      "originalBeforeEditContractHash": "sha256:8be3564fe614cc4ed851b6f07b6d0f6d5328c7cf22d392ea20a58c0c1c07a569",
+      "previousContractHash": "sha256:06c09b2d0c7e337d4187f5110048e07041ea448cb8e63ecef7f5a493f18f7277",
+      "reason": "Use the current Runtime 0.2.47 verification evidence class instead of legacy ai* check names that its receipt model cannot satisfy; code scope and acceptance criteria are unchanged.",
+      "recorded": true,
+      "recordedAt": "2026-08-31T02:41:18Z",
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:673204cf702524a515895c0e28b8e003a9b3427a234e2ec1ffa2847034af2f75",
+      "requiredChecks": 1,
+      "requiredChecksPassed": 0,
+      "requiredChecksPassedAtAmendment": 0,
+      "schemaVersion": 1,
+      "stage": "contract_amendment_revalidation",
+      "unknownCount": 0,
+      "verificationStarted": true,
+      "workItemId": "wi-telegram-reference-model-splitter"
+    }
+  ],
+  "checkpointRepositorySnapshotDigest": "sha256:673204cf702524a515895c0e28b8e003a9b3427a234e2ec1ffa2847034af2f75",
+  "createdAt": "2026-08-31T02:25:24Z",
+  "failedGate": "finish.verification",
+  "intentAlignment": {
+    "constraintsRespected": true,
+    "evidence": [
+      "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "tests/weekly_radar_semantic_message_splitter.rs",
+      "cargo test --locked --test weekly_radar_semantic_message_splitter",
+      "cargo test --locked --all"
+    ],
+    "nonGoalsAvoided": true,
+    "problemResolved": true,
+    "rationaleValidated": "The production failure is resolved at the exact heading-recognition seam by adding only the three renderer-emitted localized aliases to the existing JudgmentReference boundary.",
+    "reason": "The focused regression and full Rust suite provide direct evidence for the alias mapping, source preservation, and unchanged fail-closed behavior.",
+    "state": "resolved"
+  },
+  "mode": "code",
+  "outcomeState": "blocked",
+  "preflightAt": "2026-08-31T02:43:03Z",
+  "preflightContractDigest": "sha256:f93821ac234cf58c2be727e3da9cb633116848e2d79a277cff8035dadd857b84",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:673204cf702524a515895c0e28b8e003a9b3427a234e2ec1ffa2847034af2f75",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "recoveryCondition": "Record valid current verification evidence, rerun preflight, and retry finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "scenarioCoverage": [
+    {
+      "evidence": [
+        "tests/weekly_radar_semantic_message_splitter.rs::splitter_accepts_ai_era_reference_model_validation_heading_for_each_report_language",
+        "cargo test --locked --test weekly_radar_semantic_message_splitter"
+      ],
+      "expected": "Chinese, Japanese, and English headings produce a JudgmentReference chunk and remain byte-visible in the chunk.",
+      "required": true,
+      "scenario": "All three renderer-emitted AI-era reference model validation headings are accepted as JudgmentReference sections.",
+      "status": "verified",
+      "verificationPlan": "Run the focused integration test and inspect the source-preserving boundary assertions."
+    },
+    {
+      "evidence": [
+        "tests/weekly_radar_semantic_message_splitter.rs::splitter_rejects_zero_limits_unknown_sections_and_unclosed_fences",
+        "cargo test --locked --all"
+      ],
+      "expected": "Unknown headings still return UnknownSection, unclosed fences still return UnclosedCodeFence, and the full Rust suite passes.",
+      "required": true,
+      "scenario": "Unknown section headings remain fail-closed and existing splitter behavior remains unchanged.",
+      "status": "verified",
+      "verificationPlan": "Run the focused and full Rust suites after the alias-only change."
+    },
+    {
+      "evidence": [
+        "AGENTS.md",
+        ".ai/cockpit/README.md"
+      ],
+      "expected": "A reviewed PR is merged into main, the Work Item is archived and closed, and local/remote branch and worktree state is clean.",
+      "required": true,
+      "scenario": "The authorized Work Item completes its reviewed PR, merge, closure, and cleanup lifecycle.",
+      "status": "unverified",
+      "verificationPlan": "Run Runtime finish/archive, push and review the PR, merge it, synchronize main, close the Work Item, remove the dedicated worktree and branch, then re-audit exact state."
+    }
+  ],
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T02:43:03Z",
+  "verification": [
+    {
+      "check": "verification",
+      "result": "passed"
+    },
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-telegram-reference-model-splitter"
+}

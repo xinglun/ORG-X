@@ -111,6 +111,30 @@ fn splitter_accepts_judgment_reference_heading_for_each_report_language() {
 }
 
 #[test]
+fn splitter_accepts_ai_era_reference_model_validation_heading_for_each_report_language() {
+    for heading in [
+        "AI 时代范本验证",
+        "AI 時代の参照モデル検証",
+        "AI-era Reference Model Validation",
+    ] {
+        let rendered = format!(
+            "## 本周摘要\n- 本周无变化\n\n## {heading}\n### Acme\n- complete reference\n\n## 系统状态\n- 数据正常\n"
+        );
+        let split =
+            SemanticMessageSplitter::split(&rendered, SemanticSplitLimits::new(1_000, 20).unwrap())
+                .expect("AI-era reference model validation heading should be supported");
+        assert_eq!(split.chunks().len(), 3);
+        assert_eq!(
+            split.chunks()[1].boundary(),
+            SemanticBoundary::JudgmentReference
+        );
+        assert!(split.chunks()[1]
+            .markdown()
+            .contains(&format!("## {heading}")));
+    }
+}
+
+#[test]
 fn splitter_rejects_zero_limits_unknown_sections_and_unclosed_fences() {
     assert_eq!(
         SemanticSplitLimits::new(0, 10),

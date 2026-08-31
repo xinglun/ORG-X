@@ -1,0 +1,144 @@
+{
+  "acceptanceResults": [
+    "A1: 已发布历史 input snapshot 的 snapshot_id 若绑定旧版 input JSON wire 字节布局，当前 Runtime 仍可读取、校验并参与同日 replacement，且不改写历史 snapshot bytes。",
+    "A2: 当前版本新建 input snapshot 继续使用当前 canonical identity algorithm 并可 round-trip。",
+    "A3: 历史 snapshot 的 input 内容或 snapshot_id 被篡改时仍 fail-closed，不能产生 archive side effect。",
+    "A4: 合法历史 snapshot 存在时，同日 replacement 能完成 archive replacement 流程。",
+    "A5: 聚焦回归、完整 locked workspace tests、fmt、Clippy 和 AI Cockpit verification 全部有新鲜证据；生产补跑在代码 WI 归档后作为操作验收。"
+  ],
+  "createdAt": "2026-08-31T08:47:09Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:f842ff412333510db26ba3cb75aec73dc98eb745bbdfb17dad474632378c070c",
+  "evidenceRefs": [
+    ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json"
+  ],
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json"
+    ],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:031946c428554ca2bbb017b41a64633afa13b56ad467a8575fd410c265edb54c",
+      "workItemId": "wi-production-input-snapshot-wire-compatibility"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.contract.json"
+          ],
+          "inference": false,
+          "text": "恢复 Weekly Radar 对实际历史 input JSON wire 快照的生产补跑能力。"
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-production-input-snapshot-wire-compatibility"
+  },
+  "taskReportDigest": "sha256:6c925f06bebc0290bdad864ddac50f8abba8a297ec344d6bafa1bf59f1c172e1",
+  "taskReportMarkdownDigest": "sha256:a0d8341a63f1ac6aafcba4ce0cf8c02a728aa542b17a2161ab6e923f4a7e73e2",
+  "unknowns": [
+    "user_visible_benefit_not_declared"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json",
+    "required": true,
+    "status": "verified"
+  },
+  "workItemId": "wi-production-input-snapshot-wire-compatibility"
+}

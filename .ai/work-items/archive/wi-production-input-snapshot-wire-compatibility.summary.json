@@ -1,0 +1,135 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "task5_historical_input_snapshot_wire_identity_survives_model_reordering loads a historical input wire identity and preserves the exact snapshot bytes",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        },
+        {
+          "locator": "historical_input_wire_id validates the compact original input JSON wire without rewriting the stored snapshot",
+          "path": "src/features/weekly_radar/runtime/archive.rs",
+          "type": "implementation",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "task5_input_snapshot_round_trips_and_is_idempotent and task5_new_not_applicable_input_snapshot_round_trips_with_bound_identity",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "task5_tampered_input_snapshot_is_rejected_before_archive_side_effects and task5_cli_rejects_tampered_legacy_archive_without_creating_lock_metadata",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "task5_historical_input_snapshot_identity_allows_same_day_replacement exercises ensure_run_replace_available and replace_run_with_input_snapshot",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A5",
+      "evidence": [
+        {
+          "locator": "AI Cockpit verification ran cargo fmt --all -- --check, cargo clippy --all-targets --all-features -- -D warnings, and cargo test --locked --workspace against the current branch snapshot",
+          "path": ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json",
+          "type": "runtime",
+          "verification": "passed"
+        }
+      ]
+    }
+  ],
+  "changedPaths": [
+    ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.contract.json",
+    ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T08:28:59Z",
+  "checkpointContractDigest": "sha256:0a81055146d1961e634d1eb64e93d310015d8881409d2c06b9821f4cf3e237a4",
+  "checkpointCount": 1,
+  "checkpointEvidence": [
+    {
+      "acceptanceCount": 5,
+      "contractHash": "sha256:35186b131aec733aaab8dda62405d0d423194ae21f8761e1fda6c7cc5d372980",
+      "recorded": true,
+      "recordedAt": "2026-08-31T08:28:59Z",
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:c1c31ae77de9c66fdc2401a304e3ae77eb93b04723c3420094d0784848e457ce",
+      "requiredChecks": 0,
+      "requiredChecksPassed": 0,
+      "schemaVersion": 1,
+      "stage": "before_edit",
+      "unknownCount": 0,
+      "workItemId": "wi-production-input-snapshot-wire-compatibility"
+    },
+    {
+      "acceptanceCount": 5,
+      "contractHash": "sha256:0a81055146d1961e634d1eb64e93d310015d8881409d2c06b9821f4cf3e237a4",
+      "invalidatedRequiredChecks": [],
+      "originalBeforeEditContractHash": "sha256:35186b131aec733aaab8dda62405d0d423194ae21f8761e1fda6c7cc5d372980",
+      "previousContractHash": "sha256:35186b131aec733aaab8dda62405d0d423194ae21f8761e1fda6c7cc5d372980",
+      "reason": "Production rerun exposed a broader historical input JSON wire-layout compatibility case; the current Contract now binds the actual raw input wire identity and its regression evidence.",
+      "recorded": true,
+      "recordedAt": "2026-08-31T08:35:41Z",
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:c538f47eb63e4f24f59e21d1e773e323eaaa7dfb0ab8dd8355355f66f225a0a3",
+      "requiredChecks": 0,
+      "requiredChecksPassed": 0,
+      "requiredChecksPassedAtAmendment": null,
+      "schemaVersion": 1,
+      "stage": "contract_amendment_revalidation",
+      "unknownCount": 0,
+      "verificationStarted": false,
+      "workItemId": "wi-production-input-snapshot-wire-compatibility"
+    }
+  ],
+  "checkpointRepositorySnapshotDigest": "sha256:031946c428554ca2bbb017b41a64633afa13b56ad467a8575fd410c265edb54c",
+  "createdAt": "2026-08-31T08:27:32Z",
+  "intentAlignment": {
+    "evidence": [
+      "src/features/weekly_radar/runtime/archive.rs",
+      "tests/weekly_radar_runtime.rs"
+    ],
+    "reason": "The implementation validates the original historical input wire identity, keeps current canonical identity generation and fail-closed checks, and preserves historical snapshot bytes.",
+    "state": "resolved"
+  },
+  "mode": "code",
+  "preflightAt": "2026-08-31T08:46:23Z",
+  "preflightContractDigest": "sha256:0a81055146d1961e634d1eb64e93d310015d8881409d2c06b9821f4cf3e237a4",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:031946c428554ca2bbb017b41a64633afa13b56ad467a8575fd410c265edb54c",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T08:47:09Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-production-input-snapshot-wire-compatibility"
+}

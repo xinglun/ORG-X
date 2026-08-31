@@ -683,7 +683,157 @@ fn legacy_input_snapshot_id(input: &RuntimeReportInput) -> String {
     digest_bytes(legacy_bytes)
 }
 
-fn validate_input_snapshot(snapshot: &InputSnapshot) -> Result<(), ArchiveError> {
+fn json_value_end(bytes: &[u8], start: usize) -> Option<usize> {
+    match bytes.get(start)? {
+        b'"' => {
+            let mut escaped = false;
+            for (offset, byte) in bytes.iter().enumerate().skip(start + 1) {
+                if escaped {
+                    escaped = false;
+                } else if *byte == b'\\' {
+                    escaped = true;
+                } else if *byte == b'"' {
+                    return Some(offset + 1);
+                }
+            }
+            None
+        }
+        b'{' | b'[' => {
+            let mut stack = Vec::new();
+            let mut in_string = false;
+            let mut escaped = false;
+            for (offset, byte) in bytes.iter().enumerate().skip(start) {
+                if in_string {
+                    if escaped {
+                        escaped = false;
+                    } else if *byte == b'\\' {
+                        escaped = true;
+                    } else if *byte == b'"' {
+                        in_string = false;
+                    }
+                    continue;
+                }
+                match *byte {
+                    b'"' => in_string = true,
+                    b'{' | b'[' => stack.push(*byte),
+                    b'}' => {
+                        if stack.pop() != Some(b'{') {
+                            return None;
+                        }
+                        if stack.is_empty() {
+                            return Some(offset + 1);
+                        }
+                    }
+                    b']' => {
+                        if stack.pop() != Some(b'[') {
+                            return None;
+                        }
+                        if stack.is_empty() {
+                            return Some(offset + 1);
+                        }
+                    }
+                    _ => {}
+                }
+            }
+            None
+        }
+        _ => bytes
+            .iter()
+            .enumerate()
+            .skip(start)
+            .find_map(|(offset, byte)| {
+                if matches!(*byte, b',' | b'}' | b']') || byte.is_ascii_whitespace() {
+                    Some(offset)
+                } else {
+                    None
+                }
+            })
+            .or(Some(bytes.len())),
+    }
+}
+
+fn compact_json_wire(bytes: &[u8]) -> Vec<u8> {
+    let mut compact = Vec::with_capacity(bytes.len());
+    let mut in_string = false;
+    let mut escaped = false;
+    for byte in bytes {
+        if in_string {
+            compact.push(*byte);
+            if escaped {
+                escaped = false;
+            } else if *byte == b'\\' {
+                escaped = true;
+            } else if *byte == b'"' {
+                in_string = false;
+            }
+        } else if *byte == b'"' {
+            in_string = true;
+            compact.push(*byte);
+        } else if !byte.is_ascii_whitespace() {
+            compact.push(*byte);
+        }
+    }
+    compact
+}
+
+fn historical_input_wire_id(content: &str) -> Option<String> {
+    let bytes = content.as_bytes();
+    let mut cursor = 0;
+    let mut input_wire = None;
+    while bytes.get(cursor).is_some_and(u8::is_ascii_whitespace) {
+        cursor += 1;
+    }
+    if bytes.get(cursor) != Some(&b'{') {
+        return None;
+    }
+    cursor += 1;
+    loop {
+        while bytes.get(cursor).is_some_and(u8::is_ascii_whitespace) {
+            cursor += 1;
+        }
+        if bytes.get(cursor) == Some(&b'}') {
+            return None;
+        }
+        let key_start = cursor;
+        let key_end = json_value_end(bytes, key_start)?;
+        let key = serde_json::from_slice::<String>(&bytes[key_start..key_end]).ok()?;
+        cursor = key_end;
+        while bytes.get(cursor).is_some_and(u8::is_ascii_whitespace) {
+            cursor += 1;
+        }
+        if bytes.get(cursor) != Some(&b':') {
+            return None;
+        }
+        cursor += 1;
+        while bytes.get(cursor).is_some_and(u8::is_ascii_whitespace) {
+            cursor += 1;
+        }
+        let value_start = cursor;
+        let value_end = json_value_end(bytes, value_start)?;
+        if key == "input"
+            && input_wire
+                .replace(bytes.get(value_start..value_end)?)
+                .is_some()
+        {
+            return None;
+        }
+        cursor = value_end;
+        while bytes.get(cursor).is_some_and(u8::is_ascii_whitespace) {
+            cursor += 1;
+        }
+        match bytes.get(cursor) {
+            Some(b',') => cursor += 1,
+            Some(b'}') => break,
+            _ => return None,
+        }
+    }
+    Some(digest_bytes(compact_json_wire(input_wire?)))
+}
+
+fn validate_input_snapshot_with_wire(
+    snapshot: &InputSnapshot,
+    content: Option<&str>,
+) -> Result<(), ArchiveError> {
     if snapshot.schema_version != INPUT_SNAPSHOT_SCHEMA_VERSION {
         return Err(ArchiveError::InvalidInputSnapshot {
             reason: "unsupported schema version",
@@ -707,12 +857,20 @@ fn validate_input_snapshot(snapshot: &InputSnapshot) -> Result<(), ArchiveError>
     }
     let current_id = input_snapshot_id(&snapshot.input);
     let legacy_id = legacy_input_snapshot_id(&snapshot.input);
-    if snapshot.snapshot_id != current_id && snapshot.snapshot_id != legacy_id {
+    let historical_wire_id = content.and_then(historical_input_wire_id);
+    if snapshot.snapshot_id != current_id
+        && snapshot.snapshot_id != legacy_id
+        && historical_wire_id.as_deref() != Some(snapshot.snapshot_id.as_str())
+    {
         return Err(ArchiveError::InvalidInputSnapshot {
             reason: "input identity does not match content",
         });
     }
     Ok(())
+}
+
+fn validate_input_snapshot(snapshot: &InputSnapshot) -> Result<(), ArchiveError> {
+    validate_input_snapshot_with_wire(snapshot, None)
 }
 
 fn temporary_path(path: &Path) -> Result<PathBuf, ArchiveError> {
@@ -848,7 +1006,7 @@ pub fn load_input_snapshot(
             reason: "JSON decoding failed",
         }
     })?;
-    validate_input_snapshot(&snapshot)?;
+    validate_input_snapshot_with_wire(&snapshot, Some(&content))?;
     if snapshot.as_of != as_of {
         return Err(ArchiveError::InvalidInputSnapshot {
             reason: "requested date does not match envelope date",

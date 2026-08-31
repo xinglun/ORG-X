@@ -1,0 +1,8 @@
+{
+  "baseBranch": "main",
+  "baseRemote": "origin",
+  "branch": "codex/wi-production-input-snapshot-wire-compatibility",
+  "provider": "local",
+  "pullRequest": "not_applicable",
+  "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-production-input-snapshot-wire-compatibility"
+}

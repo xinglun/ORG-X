@@ -1,0 +1,132 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "StructuralEvidenceContract::validate and NormalizedFact::is_structural_evidence",
+          "path": "src/features/weekly_radar/runtime/model.rs",
+          "type": "runtime-boundary",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "production_customer_and_partner_subjects_are_not_promoted_as_microsoft_structure",
+          "path": "tests/weekly_radar_evidence_quality.rs",
+          "type": "production-regression",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "structural_promotion_retains_a_complete_semantic_contract",
+          "path": "src/features/weekly_radar/runtime/evidence.rs",
+          "type": "positive-regression",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "cargo test --locked --workspace",
+          "path": ".ai/evidence/wi-cross-subject-attribution.verification.json",
+          "type": "runtime-verification",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A5",
+      "evidence": [
+        {
+          "locator": "current Work Item verification and subsequent reviewed PR cleanup",
+          "path": ".ai/evidence/wi-cross-subject-attribution.verification.json",
+          "type": "lifecycle-verification",
+          "verification": "passed"
+        }
+      ]
+    }
+  ],
+  "changedPaths": [
+    ".ai/work-items/archive/wi-cross-subject-attribution.contract.json",
+    ".ai/work-items/archive/wi-cross-subject-attribution.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T09:40:17Z",
+  "checkpointContractDigest": "sha256:ddd61761249db5cfa890c82e5f5c615219d5035a661808d910da193745a673a1",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:4caf475d768fb0fa65e8ff9ce146ec71bcbb2b85b98f83cc6229de0a52f98ffb",
+  "createdAt": "2026-08-31T09:38:41Z",
+  "intentAlignment": {
+    "evidence": [
+      "src/features/weekly_radar/runtime/evidence.rs",
+      "src/features/weekly_radar/runtime/model.rs",
+      "tests/weekly_radar_evidence_quality.rs"
+    ],
+    "reason": "The implementation extracts explicit customer/partner subjects independently of reference-model family detection, rejects external-subject structural contracts, and preserves those observations as validated facts.",
+    "state": "resolved"
+  },
+  "mode": "code",
+  "preflightAt": "2026-08-31T09:51:46Z",
+  "preflightContractDigest": "sha256:ddd61761249db5cfa890c82e5f5c615219d5035a661808d910da193745a673a1",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:4caf475d768fb0fa65e8ff9ce146ec71bcbb2b85b98f83cc6229de0a52f98ffb",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "scenarioCoverage": [
+    {
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs: production_customer_and_partner_subjects_are_not_promoted_as_microsoft_structure",
+        "https://www.microsoft.com/en/customers/story/25989-hertz-microsoft-power-platform"
+      ],
+      "required": true,
+      "scenario": "Microsoft assessed-company document names Hertz as the customer subject.",
+      "status": "verified"
+    },
+    {
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs: production_customer_and_partner_subjects_are_not_promoted_as_microsoft_structure",
+        "https://www.pwc.com/us/en/services/consulting/engineering-ai.html"
+      ],
+      "required": true,
+      "scenario": "Microsoft assessed-company document names PwC as the customer subject.",
+      "status": "verified"
+    },
+    {
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs: production_customer_and_partner_subjects_are_not_promoted_as_microsoft_structure",
+        "https://www.atosgroup.com/en/press/atos-group-and-microsoft-expand-strategic-collaboration-scale-secure-agentic-ai-across-atos"
+      ],
+      "required": true,
+      "scenario": "Microsoft assessed-company document names Atos Group as the collaboration subject.",
+      "status": "verified"
+    },
+    {
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs: structural_promotion_retains_a_complete_semantic_contract",
+        "tests/weekly_radar_evidence_quality.rs: explicit_production_system_change_becomes_structural_evidence"
+      ],
+      "required": true,
+      "scenario": "Microsoft-owned production-system change remains promotable.",
+      "status": "verified"
+    }
+  ],
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T09:51:58Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-cross-subject-attribution"
+}

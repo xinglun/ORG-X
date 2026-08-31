@@ -1,0 +1,144 @@
+{
+  "acceptanceResults": [
+    "A1: StructuralEvidence 仅允许 subject_company 与 assessed_company 归属一致的 NormalizedFact，任何跨主体事实只能输出 ValidatedFact。",
+    "A2: Hertz、PwC、Atos 的 2026-08-31 生产原句均不进入 Microsoft 的 Structural Evidence，并保留正确主体归属。",
+    "A3: Microsoft 自身真实结构变化仍可晋升，完整保留 before_state、after_state、production_unit、effective_date、source 与 core_value_link。",
+    "A4: 通过主体归属 targeted RED/GREEN 回归、cargo fmt、cargo clippy -D warnings、cargo test --locked --workspace 及 Runtime preflight/verify/finish/archive 证据。",
+    "A5: 合并 PR 后删除精确 branch/worktree、同步 main，并保留剩余结构证据可解释性作为最终 Production Acceptance 验收项。"
+  ],
+  "createdAt": "2026-08-31T09:51:58Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:04e4e8e05041b7733a8574be66371e02c84465179b6360979e3c6f8a85904976",
+  "evidenceRefs": [
+    ".ai/evidence/wi-cross-subject-attribution.verification.json"
+  ],
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-cross-subject-attribution.verification.json"
+    ],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-cross-subject-attribution.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:4caf475d768fb0fa65e8ff9ce146ec71bcbb2b85b98f83cc6229de0a52f98ffb",
+      "workItemId": "wi-cross-subject-attribution"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-cross-subject-attribution.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-cross-subject-attribution.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-cross-subject-attribution.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-cross-subject-attribution.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-cross-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-cross-subject-attribution.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-cross-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-cross-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-cross-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-cross-subject-attribution.contract.json"
+          ],
+          "inference": false,
+          "text": "强制 subject_company == assessed_company 才能进入被评估公司的 Structural Evidence，并用真实生产原句形成回归；外部主体事实仍保留为 ValidatedFact。"
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-cross-subject-attribution.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-cross-subject-attribution"
+  },
+  "taskReportDigest": "sha256:795e0defc597a3f413b3e66b4757336d331dea6d6205f43b152f9f30204b829c",
+  "taskReportMarkdownDigest": "sha256:a4832de42ca82c42cdfc732d737cc37a0570618022fc7bb35b647fcd1a1b1796",
+  "unknowns": [
+    "user_visible_benefit_not_declared"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-cross-subject-attribution.verification.json",
+    "required": true,
+    "status": "verified"
+  },
+  "workItemId": "wi-cross-subject-attribution"
+}

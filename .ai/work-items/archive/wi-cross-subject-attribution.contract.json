@@ -1,0 +1,106 @@
+{
+  "acceptanceCriteria": [
+    "A1: StructuralEvidence 仅允许 subject_company 与 assessed_company 归属一致的 NormalizedFact，任何跨主体事实只能输出 ValidatedFact。",
+    "A2: Hertz、PwC、Atos 的 2026-08-31 生产原句均不进入 Microsoft 的 Structural Evidence，并保留正确主体归属。",
+    "A3: Microsoft 自身真实结构变化仍可晋升，完整保留 before_state、after_state、production_unit、effective_date、source 与 core_value_link。",
+    "A4: 通过主体归属 targeted RED/GREEN 回归、cargo fmt、cargo clippy -D warnings、cargo test --locked --workspace 及 Runtime preflight/verify/finish/archive 证据。",
+    "A5: 合并 PR 后删除精确 branch/worktree、同步 main，并保留剩余结构证据可解释性作为最终 Production Acceptance 验收项。"
+  ],
+  "authority": "authorized",
+  "baseRevision": "346cf3d3fedf00507309b3fb5df78a4591379fcf",
+  "createdAt": "2026-08-31T09:38:41Z",
+  "goal": "强制 subject_company == assessed_company 才能进入被评估公司的 Structural Evidence，并用真实生产原句形成回归；外部主体事实仍保留为 ValidatedFact。",
+  "intent": "2026-08-31 Production Acceptance 发现 Hertz、PwC、Atos 等客户/合作主体内容可能在 Microsoft assessed company 下被提升为 Structural Evidence；需要在主体归属解析和 StructuralEvidence 晋升边界阻断跨主体证据。",
+  "mode": "code",
+  "outOfScope": [
+    "WI-1 Structural Promotion Hard Gate 已合并内容",
+    "Reference Model 整体重构",
+    "Telegram 分页",
+    "生产 provider/workflow/secrets",
+    "data 分支与历史报告",
+    "source acquisition/ranking/报告版式"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:8f42b86c7cedd5004365acfab716675c26033e23c6806475975541ac0ab86031",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-cross-subject-attribution",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-cross-subject-attribution"
+  },
+  "risk": "high",
+  "scenarioCoverage": [
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "https://www.microsoft.com/en/customers/story/25989-hertz-microsoft-power-platform",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact Hertz production sentence retains subject_company Hertz and is ValidatedFact, never Microsoft StructuralEvidence.",
+      "required": true,
+      "scenario": "Microsoft assessed-company document names Hertz as the customer subject.",
+      "status": "unverified",
+      "verificationPlan": "Feed the production sentence through document extraction and assert external subject attribution plus no structural dimension."
+    },
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "https://www.pwc.com/us/en/services/consulting/engineering-ai.html",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact PwC production sentence retains subject_company PwC and is ValidatedFact, never Microsoft StructuralEvidence.",
+      "required": true,
+      "scenario": "Microsoft assessed-company document names PwC as the customer subject.",
+      "status": "unverified",
+      "verificationPlan": "Feed the production sentence through document extraction and assert external subject attribution plus no structural dimension."
+    },
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "https://www.atosgroup.com/en/press/atos-group-and-microsoft-expand-strategic-collaboration-scale-secure-agentic-ai-across-atos",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact Atos Group production sentence retains subject_company Atos Group and is ValidatedFact, never Microsoft StructuralEvidence.",
+      "required": true,
+      "scenario": "Microsoft assessed-company document names Atos Group as the collaboration subject.",
+      "status": "unverified",
+      "verificationPlan": "Feed the production sentence through document extraction and assert external subject attribution plus no structural dimension."
+    },
+    {
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "A same-subject production change retains StructuralEvidence and a complete valid contract.",
+      "required": true,
+      "scenario": "Microsoft-owned production-system change remains promotable.",
+      "status": "unverified",
+      "verificationPlan": "Run the existing positive structural contract regression and assert all contract fields plus same-subject attribution."
+    }
+  ],
+  "scope": [
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "docs/superpowers/plans/2026-08-31-cross-subject-attribution.md"
+  ],
+  "sources": [
+    "/Users/sei-rinn/.codex/attachments/9392e5db-466a-4007-98e5-b55b6458ab50/pasted-text.txt",
+    "weekly-radar/reports/2026-08-31.md on origin/data",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "tests/weekly_radar_evidence_quality.rs"
+  ],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-cross-subject-attribution"
+}

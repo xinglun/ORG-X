@@ -1459,6 +1459,75 @@ fn production_acceptance_structural_false_positives_are_not_promoted() {
 }
 
 #[test]
+fn production_customer_and_partner_subjects_are_not_promoted_as_microsoft_structure() {
+    let cases = [
+        (
+            "Hertz",
+            "https://www.microsoft.com/en/customers/story/25989-hertz-microsoft-power-platform",
+            "Hertz customer story",
+            "As part of its technology modernization strategy, Hertz has begun developing low-code applications and agents with Power Platform.",
+        ),
+        (
+            "PwC",
+            "https://www.pwc.com/us/en/services/consulting/engineering-ai.html",
+            "PwC Engineering and AI",
+            "PwC’s Engineering and AI builders help organizations modernize core platforms and translate AI, cloud, and data innovation into scalable business outcomes.",
+        ),
+        (
+            "Atos Group",
+            "https://www.atosgroup.com/en/press/atos-group-and-microsoft-expand-strategic-collaboration-scale-secure-agentic-ai-across-atos",
+            "Atos Group and Microsoft strategic collaboration",
+            "Atos Group becomes the first French Global System Integrator to deploy Microsoft 365 Copilot and one of the largest to roll out secure agentic AI across its workforce.",
+        ),
+    ];
+
+    for (expected_subject, source_uri, title, passage) in cases {
+        let observation = production_acceptance_document(
+            "msft",
+            SourceKind::OfficialResearch,
+            DocumentKind::ProductPlatform,
+            source_uri,
+            title,
+            passage,
+            "2026-08-31",
+        );
+        let candidate = extract_evidence_candidate(&observation)
+            .expect("customer or partner production sentence should be extracted");
+        let validated = validate_evidence_candidate(
+            &candidate,
+            NaiveDate::from_ymd_opt(2026, 8, 31).expect("cutoff should be valid"),
+        )
+        .expect("customer or partner production sentence should validate");
+
+        assert_eq!(validated.attribution().assessed_company(), "msft");
+        assert_eq!(validated.attribution().subject_company(), expected_subject);
+        assert_eq!(validated.evidence_class(), EvidenceClass::ValidatedFact);
+        assert_eq!(validated.structural_dimension(), None);
+        assert_eq!(validated.structural_evidence_contract(), None);
+    }
+}
+
+#[test]
+fn structural_contract_rejects_external_subject_attribution() {
+    let result = StructuralEvidenceContract::new(
+        "msft",
+        "Microsoft",
+        "Hertz has begun developing low-code applications and agents with Power Platform.",
+        StructuralDimension::ProductionSystem,
+        "low-code applications and agents",
+        "manual application development",
+        "low-code applications and agents with Power Platform",
+        NaiveDate::from_ymd_opt(2026, 8, 31).expect("date should be valid"),
+        "https://www.microsoft.com/en/customers/story/25989-hertz-microsoft-power-platform",
+        "official_company_material",
+        "production_system:low-code applications and agents",
+        true,
+    );
+
+    assert!(result.is_err());
+}
+
+#[test]
 fn structural_report_requires_a_valid_semantic_contract() {
     let passage = "Financial Statements 3 Consolidated Statements of Cash Flows 3 Consolidated Statements of Operations 4 Consolidated Statements of Comprehensive Income 5 Consolidated Balance Sheets 6 Notes to Consolidated Financial Statements 7 Item&#160;2.";
     let fact = NormalizedFact::new_with_structural_dimension(

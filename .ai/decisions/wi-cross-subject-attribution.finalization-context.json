@@ -1,0 +1,8 @@
+{
+  "baseBranch": "main",
+  "baseRemote": "origin",
+  "branch": "codex/wi-cross-subject-attribution",
+  "provider": "github",
+  "pullRequest": "not_applicable",
+  "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-cross-subject-attribution"
+}

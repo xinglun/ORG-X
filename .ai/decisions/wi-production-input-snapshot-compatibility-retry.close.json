@@ -1,0 +1,134 @@
+{
+  "decisionState": "confirmed",
+  "finalReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-production-input-snapshot-compatibility-retry.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:c1c31ae77de9c66fdc2401a304e3ae77eb93b04723c3420094d0784848e457ce",
+      "workItemId": "wi-production-input-snapshot-compatibility-retry"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-production-input-snapshot-compatibility-retry.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-production-input-snapshot-compatibility-retry.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-production-input-snapshot-compatibility-retry.verification.json"
+          ],
+          "inference": false,
+          "text": "Human decision 'approved' by xinglun via user request: 修复 at 2026-08-31T08:20:00Z."
+        }
+      ],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-production-input-snapshot-compatibility-retry.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-production-input-snapshot-compatibility-retry.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-production-input-snapshot-compatibility-retry.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.contract.json"
+          ],
+          "inference": false,
+          "text": "恢复 Weekly Radar 对现有历史输入快照的生产补跑能力。"
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-production-input-snapshot-compatibility-retry"
+  },
+  "finalReportDigest": "sha256:276c1b9e7302cabfdaee95980bccc9f428975e70c39be38117c1e25e1cdf6817",
+  "humanDecision": "approved",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceFinalizationHeadDigest": "sha256:ca217573a18c5dcbb203945fc13b21656db3b5fd9a8543141d537d81bf2afe36",
+  "resourceFinalizationHeadPath": ".ai/decisions/wi-production-input-snapshot-compatibility-retry.finalize.json",
+  "resourceFinalizationSequence": 0,
+  "state": "closed",
+  "structuredDecision": {
+    "actor": "xinglun",
+    "authoritySource": "user request: 修复",
+    "decidedAt": "2026-08-31T08:20:00Z",
+    "decision": "approved",
+    "evidenceRefs": [
+      ".ai/evidence/wi-production-input-snapshot-compatibility-retry.verification.json"
+    ],
+    "policyRefs": [],
+    "reason": "PR #112 已合并，收尾凭证和默认分支同步已验证；执行生产补跑。",
+    "resumeCondition": null
+  },
+  "timestamp": "2026-08-31T08:17:02Z",
+  "workItemId": "wi-production-input-snapshot-compatibility-retry"
+}

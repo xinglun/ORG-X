@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-08-31T06:00:04Z",
+  "files": {
+    "contractDigest": "sha256:8729cb57b2efba4be807504496cb73220d82ee233b2aa620a43516a47d0d7770",
+    "contractPath": ".ai/work-items/archive/wi-structural-evidence-semantic-gate.contract.json",
+    "eventsDigest": "sha256:951be349daa5f71e584a64506dd46a3627e2510d81a7d3ae124f8f4ae1d70dbc",
+    "eventsPath": ".ai/work-items/archive/wi-structural-evidence-semantic-gate.events.jsonl",
+    "outcomeDigest": "sha256:9acbb8b7af1ed5f71669621a09b3373c6cd68716a2726596be635ec0938b9346",
+    "outcomePath": ".ai/work-items/archive/wi-structural-evidence-semantic-gate.outcome.json",
+    "summaryDigest": "sha256:ef5f40868fcc821454b95b7385c78c5e2b4f1fb8b0a2079911cfbc000064fec2",
+    "summaryPath": ".ai/work-items/archive/wi-structural-evidence-semantic-gate.summary.json",
+    "taskReportDigest": "sha256:fcdccbfa01a004c725fe89ac3b067ba0904b204538e490d812323c4aa423ed40",
+    "taskReportMarkdownDigest": "sha256:cd1768dbdd3a3cd372029ea117607205528ca3af51debe2a236cd1a7a00cb673",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-structural-evidence-semantic-gate.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-structural-evidence-semantic-gate.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-structural-evidence-semantic-gate"
+}

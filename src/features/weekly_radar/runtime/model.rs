@@ -168,6 +168,147 @@ pub enum StructuralDimension {
     OperatingMetric,
 }
 
+/// The evidence contract required before a claim can be promoted to a
+/// structural observation.
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+pub struct StructuralEvidenceContract {
+    assessed_company: String,
+    subject_company: String,
+    claim: String,
+    change_type: StructuralDimension,
+    production_unit: String,
+    before_state: String,
+    after_state: String,
+    effective_date: NaiveDate,
+    source: String,
+    source_role: String,
+    core_value_link: String,
+    structural_relevance: bool,
+}
+
+impl StructuralEvidenceContract {
+    /// Creates a contract containing the complete semantic evidence boundary.
+    #[allow(clippy::too_many_arguments)]
+    pub fn new(
+        assessed_company: impl Into<String>,
+        subject_company: impl Into<String>,
+        claim: impl Into<String>,
+        change_type: StructuralDimension,
+        production_unit: impl Into<String>,
+        before_state: impl Into<String>,
+        after_state: impl Into<String>,
+        effective_date: NaiveDate,
+        source: impl Into<String>,
+        source_role: impl Into<String>,
+        core_value_link: impl Into<String>,
+        structural_relevance: bool,
+    ) -> Result<Self, RuntimeError> {
+        let contract = Self {
+            assessed_company: assessed_company.into(),
+            subject_company: subject_company.into(),
+            claim: claim.into(),
+            change_type,
+            production_unit: production_unit.into(),
+            before_state: before_state.into(),
+            after_state: after_state.into(),
+            effective_date,
+            source: source.into(),
+            source_role: source_role.into(),
+            core_value_link: core_value_link.into(),
+            structural_relevance,
+        };
+        contract.validate()?;
+        Ok(contract)
+    }
+
+    /// Validates the required semantic fields and explicit relevance decision.
+    pub fn validate(&self) -> Result<(), RuntimeError> {
+        for (field, value) in [
+            ("assessed_company", self.assessed_company.as_str()),
+            ("subject_company", self.subject_company.as_str()),
+            ("claim", self.claim.as_str()),
+            ("production_unit", self.production_unit.as_str()),
+            ("before_state", self.before_state.as_str()),
+            ("after_state", self.after_state.as_str()),
+            ("source", self.source.as_str()),
+            ("source_role", self.source_role.as_str()),
+            ("core_value_link", self.core_value_link.as_str()),
+        ] {
+            if value.trim().is_empty() {
+                return Err(RuntimeError::invalid_model(format!(
+                    "structural evidence contract {field} cannot be blank"
+                )));
+            }
+        }
+        if !self.structural_relevance {
+            return Err(RuntimeError::invalid_model(
+                "structural evidence contract must be structurally relevant",
+            ));
+        }
+        Ok(())
+    }
+
+    /// Returns the assessed company identity.
+    pub fn assessed_company(&self) -> &str {
+        &self.assessed_company
+    }
+
+    /// Returns the claim bounded by the source passage.
+    pub fn claim(&self) -> &str {
+        &self.claim
+    }
+
+    /// Returns the company the claim is about.
+    pub fn subject_company(&self) -> &str {
+        &self.subject_company
+    }
+
+    /// Returns the typed kind of enterprise change.
+    pub const fn change_type(&self) -> StructuralDimension {
+        self.change_type
+    }
+
+    /// Returns the production unit affected by the change.
+    pub fn production_unit(&self) -> &str {
+        &self.production_unit
+    }
+
+    /// Returns the bounded prior state described by the evidence.
+    pub fn before_state(&self) -> &str {
+        &self.before_state
+    }
+
+    /// Returns the bounded resulting state described by the evidence.
+    pub fn after_state(&self) -> &str {
+        &self.after_state
+    }
+
+    /// Returns the effective date supplied by the source.
+    pub const fn effective_date(&self) -> NaiveDate {
+        self.effective_date
+    }
+
+    /// Returns the source URI or filing identifier.
+    pub fn source(&self) -> &str {
+        &self.source
+    }
+
+    /// Returns the source's role in the evidence chain.
+    pub fn source_role(&self) -> &str {
+        &self.source_role
+    }
+
+    /// Returns the core value or capability linked to the structural change.
+    pub fn core_value_link(&self) -> &str {
+        &self.core_value_link
+    }
+
+    /// Returns the explicit structural-relevance decision.
+    pub const fn structural_relevance(&self) -> bool {
+        self.structural_relevance
+    }
+}
+
 /// One provider-neutral fact ready for deterministic report assembly.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 pub struct NormalizedFact {
@@ -184,6 +325,8 @@ pub struct NormalizedFact {
     reference_model_source_role: Option<ReferenceModelSourceRole>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     reference_model_periods: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    structural_evidence_contract: Option<StructuralEvidenceContract>,
     status: FactStatus,
     confidence: Confidence,
     provenance: Provenance,
@@ -209,6 +352,8 @@ impl<'de> Deserialize<'de> for NormalizedFact {
             reference_model_source_role: Option<ReferenceModelSourceRole>,
             #[serde(default)]
             reference_model_periods: Vec<String>,
+            #[serde(default)]
+            structural_evidence_contract: Option<StructuralEvidenceContract>,
             status: FactStatus,
             confidence: Confidence,
             provenance: Provenance,
@@ -228,7 +373,10 @@ impl<'de> Deserialize<'de> for NormalizedFact {
             wire.provenance,
         )
         .map_err(|error| D::Error::custom(error.to_string()))?;
-        fact.with_reference_model_periods(wire.reference_model_periods)
+        let fact = fact
+            .with_reference_model_periods(wire.reference_model_periods)
+            .map_err(|error| D::Error::custom(error.to_string()))?;
+        fact.with_optional_structural_evidence_contract(wire.structural_evidence_contract)
             .map_err(|error| D::Error::custom(error.to_string()))
     }
 }
@@ -365,6 +513,7 @@ impl NormalizedFact {
             reference_model_named_peer,
             reference_model_source_role,
             reference_model_periods: Vec::new(),
+            structural_evidence_contract: None,
             status,
             confidence,
             provenance,
@@ -382,6 +531,14 @@ impl NormalizedFact {
         }
         if self.kind.trim().is_empty() {
             return Err(RuntimeError::invalid_model("fact kind cannot be blank"));
+        }
+        if let Some(contract) = &self.structural_evidence_contract {
+            contract.validate()?;
+            if self.structural_dimension != Some(contract.change_type()) {
+                return Err(RuntimeError::invalid_model(
+                    "structural evidence contract change type must match fact dimension",
+                ));
+            }
         }
         self.provenance.validate()
     }
@@ -458,6 +615,44 @@ impl NormalizedFact {
     /// Returns explicit periods retained for a sustained-outcome claim.
     pub fn reference_model_periods(&self) -> &[String] {
         &self.reference_model_periods
+    }
+
+    /// Returns the complete contract retained for structural evidence.
+    pub fn structural_evidence_contract(&self) -> Option<&StructuralEvidenceContract> {
+        self.structural_evidence_contract.as_ref()
+    }
+
+    /// Attaches the semantic contract used to promote this fact.
+    pub fn with_structural_evidence_contract(
+        mut self,
+        contract: StructuralEvidenceContract,
+    ) -> Result<Self, RuntimeError> {
+        contract.validate()?;
+        if self.structural_dimension != Some(contract.change_type()) {
+            return Err(RuntimeError::invalid_model(
+                "structural evidence contract change type must match fact dimension",
+            ));
+        }
+        self.structural_evidence_contract = Some(contract);
+        self.validate()?;
+        Ok(self)
+    }
+
+    fn with_optional_structural_evidence_contract(
+        mut self,
+        contract: Option<StructuralEvidenceContract>,
+    ) -> Result<Self, RuntimeError> {
+        if let Some(contract) = contract {
+            contract.validate()?;
+            if self.structural_dimension != Some(contract.change_type()) {
+                return Err(RuntimeError::invalid_model(
+                    "structural evidence contract change type must match fact dimension",
+                ));
+            }
+            self.structural_evidence_contract = Some(contract);
+        }
+        self.validate()?;
+        Ok(self)
     }
 
     /// Returns the retained availability status.

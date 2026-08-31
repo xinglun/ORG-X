@@ -1,0 +1,47 @@
+{
+  "acceptanceCriteria": [
+    "Structural Evidence 逐条校验 subject_company、claim、change_type、production_unit、before_state、after_state、effective_date、source、source_role、core_value_link 和 structural_relevance。",
+    "目录、XBRL context 噪音、泛背景句、财报公告套话和股东投票不能单独升级为 Structural Evidence。",
+    "补充代表性误分类回归测试，并保留真实生产部署证据的正向路径。",
+    "不改变 Telegram、数据分支、凭据和无关 Work Item。"
+  ],
+  "authority": "authorized",
+  "baseRevision": "ca1541140c62dd56b7c1804d5813aede6e9881f6",
+  "createdAt": "2026-08-31T04:48:54Z",
+  "goal": "让每条 Structural Evidence 具备主体、变化类型、生产单元、before/after 状态、来源角色和结构相关性，并仅在自身证据满足 Gate 时升级。",
+  "intent": "建立 Structural Evidence 的逐条语义质量 Gate，阻断目录、XBRL 噪音、一般背景句、财报公告套话和股东投票等不能证明生产系统变化的片段。",
+  "mode": "code",
+  "outOfScope": [
+    "主体归属模型的独立重构",
+    "Reference Model Stage 重新校准",
+    "Telegram 分页、发布和凭据"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:9ad91acffda2453fda94bf7727bb9709b13628b2763a35e21af7301088e66d15",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-structural-evidence-semantic-gate",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-structural-evidence-semantic-gate"
+  },
+  "risk": "normal",
+  "scope": [
+    "src/features/weekly_radar/**",
+    "tests/weekly_radar/**",
+    "docs/domain/**",
+    "docs/superpowers/**"
+  ],
+  "sources": [],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-structural-evidence-semantic-gate"
+}

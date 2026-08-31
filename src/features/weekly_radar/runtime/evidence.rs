@@ -85,6 +85,9 @@ const STRUCTURAL_NOISE_SIGNALS: &[&str] = &[
 ];
 
 const STRUCTURAL_INTENTION_SIGNALS: &[&str] = &[
+    // An infinitive purpose clause describes a goal or intended deployment,
+    // not an observed/completed state transition.
+    "to deploy ",
     "plan to ",
     "plans to ",
     "will deploy",
@@ -936,6 +939,13 @@ fn structural_evidence_contract_for_candidate(
 
 fn passes_structural_semantic_gate(candidate: &EvidenceCandidate) -> bool {
     if candidate.document_kind == Some(DocumentKind::Careers) {
+        return false;
+    }
+    if candidate
+        .source_uri()
+        .to_ascii_lowercase()
+        .contains("/category/")
+    {
         return false;
     }
     let text = format!("{} {}", candidate.source_title, candidate.passage);

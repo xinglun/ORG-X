@@ -1,0 +1,143 @@
+{
+  "acceptanceResults": [
+    "Structural Evidence 逐条校验 subject_company、claim、change_type、production_unit、before_state、after_state、effective_date、source、source_role、core_value_link 和 structural_relevance。",
+    "目录、XBRL context 噪音、泛背景句、财报公告套话和股东投票不能单独升级为 Structural Evidence。",
+    "补充代表性误分类回归测试，并保留真实生产部署证据的正向路径。",
+    "不改变 Telegram、数据分支、凭据和无关 Work Item。"
+  ],
+  "createdAt": "2026-08-31T05:59:54Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:0df84252d08c00bf5c27e69eaa2e096fef8c012ea3311bed87fa71cad789975b",
+  "evidenceRefs": [
+    ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+  ],
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+    ],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:8ff5a34f74823f9bf50d6293f507dc72b84641c5b4122b14b4e65da26e153f79",
+      "workItemId": "wi-structural-evidence-semantic-gate"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-evidence-semantic-gate.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-structural-evidence-semantic-gate.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-evidence-semantic-gate.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-structural-evidence-semantic-gate.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-evidence-semantic-gate.contract.json"
+          ],
+          "inference": false,
+          "text": "让每条 Structural Evidence 具备主体、变化类型、生产单元、before/after 状态、来源角色和结构相关性，并仅在自身证据满足 Gate 时升级。"
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-evidence-semantic-gate.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-structural-evidence-semantic-gate"
+  },
+  "taskReportDigest": "sha256:fcdccbfa01a004c725fe89ac3b067ba0904b204538e490d812323c4aa423ed40",
+  "taskReportMarkdownDigest": "sha256:cd1768dbdd3a3cd372029ea117607205528ca3af51debe2a236cd1a7a00cb673",
+  "unknowns": [
+    "user_visible_benefit_not_declared"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json",
+    "required": true,
+    "status": "verified"
+  },
+  "workItemId": "wi-structural-evidence-semantic-gate"
+}

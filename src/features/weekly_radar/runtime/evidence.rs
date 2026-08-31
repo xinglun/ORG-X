@@ -7,6 +7,7 @@ use std::fmt;
 use super::discovery::DocumentKind;
 use super::model::{
     Confidence, EvidenceAttribution, FactStatus, NormalizedFact, Provenance, StructuralDimension,
+    StructuralEvidenceContract,
 };
 use super::sources::{SourceKind, SourceMaterialKind, SourceObservation, SourceStatus, SourceTier};
 use super::RuntimeError;
@@ -17,6 +18,73 @@ use crate::features::transformation::domain::{
 const EXTRACTOR_VERSION: &str = "weekly-radar-evidence-v4";
 const MAX_FIELD_BYTES: usize = 512;
 const MIN_CLAIM_WORDS: usize = 8;
+
+const STRUCTURAL_CHANGE_ACTION_SIGNALS: &[&str] = &[
+    "changed",
+    "consolidat",
+    "centraliz",
+    "deployed",
+    "deploy ",
+    "integrat",
+    "launched",
+    "migrat",
+    "moderniz",
+    "moved",
+    "reorganiz",
+    "restructur",
+    "replaced",
+    "rolled out",
+    "shifted",
+    "transitioned",
+    "automated",
+    "adopted",
+    "increased",
+    "reduced",
+];
+
+const STRUCTURAL_PRODUCTION_UNIT_SIGNALS: &[&str] = &[
+    "engineering",
+    "production",
+    "platform",
+    "operations",
+    "workflow",
+    "automation",
+    "agent",
+    "cloud",
+    "scheduler",
+    "storage",
+    "infrastructure",
+    "pipeline",
+    "gpu",
+    "latency",
+    "throughput",
+    "capacity",
+];
+
+const STRUCTURAL_NOISE_SIGNALS: &[&str] = &[
+    "table of contents",
+    "xbrl",
+    "contextref",
+    "shareholder vote",
+    "shareholders approved",
+    "proxy statement",
+    "forward-looking statement",
+    "risk factors",
+    "our business strategy",
+    "may adversely",
+];
+
+const STRUCTURAL_INTENTION_SIGNALS: &[&str] = &[
+    "plan to ",
+    "plans to ",
+    "will deploy",
+    "will launch",
+    "will adopt",
+    "expects to ",
+    "intends to ",
+    "proposed ",
+    "aims to ",
+];
 
 const CHANGE_SIGNALS: &[&str] = &[
     "announc",
@@ -223,6 +291,7 @@ pub struct EvidenceCandidate {
     reference_model_family: Option<ReferenceModelEvidenceFamily>,
     reference_model_named_peer: Option<String>,
     reference_model_source_role: Option<ReferenceModelSourceRole>,
+    structural_evidence_contract: Option<StructuralEvidenceContract>,
     attribution: EvidenceAttribution,
     provenance: Provenance,
 }
@@ -278,6 +347,7 @@ impl EvidenceCandidate {
             reference_model_family: None,
             reference_model_named_peer: None,
             reference_model_source_role: None,
+            structural_evidence_contract: None,
             attribution,
             provenance,
         })
@@ -327,6 +397,17 @@ impl EvidenceCandidate {
     ) -> Self {
         self.reference_model_source_role = source_role;
         self
+    }
+
+    /// Adds an explicit structural evidence contract after semantic review.
+    pub fn with_structural_evidence_contract(
+        mut self,
+        contract: StructuralEvidenceContract,
+    ) -> Result<Self, RuntimeError> {
+        contract.validate()?;
+        self.structural_evidence_contract = Some(contract);
+
+        Ok(self)
     }
 
     /// Adds explicit company-role attribution after the claim is bounded.
@@ -379,6 +460,11 @@ impl EvidenceCandidate {
     pub const fn document_kind(&self) -> Option<DocumentKind> {
         self.document_kind
     }
+
+    /// Returns the explicit structural contract, when one was supplied.
+    pub fn structural_evidence_contract(&self) -> Option<&StructuralEvidenceContract> {
+        self.structural_evidence_contract.as_ref()
+    }
 }
 
 /// Stable validation failure for an incomplete or unsupported candidate.
@@ -419,6 +505,7 @@ impl std::error::Error for EvidenceValidationError {}
 pub struct ValidatedEvidence {
     candidate: EvidenceCandidate,
     content_hash: String,
+    structural_evidence_contract: Option<StructuralEvidenceContract>,
 }
 
 impl ValidatedEvidence {
@@ -439,7 +526,14 @@ impl ValidatedEvidence {
         {
             return None;
         }
-        structural_dimension_for_text(&self.candidate.passage)
+        self.structural_evidence_contract
+            .as_ref()
+            .map(StructuralEvidenceContract::change_type)
+    }
+
+    /// Returns the complete contract that authorized structural promotion.
+    pub fn structural_evidence_contract(&self) -> Option<&StructuralEvidenceContract> {
+        self.structural_evidence_contract.as_ref()
     }
 
     /// Returns the deterministic reference-model family assigned to the claim.
@@ -513,7 +607,7 @@ impl ValidatedEvidence {
             EvidenceClass::ValidatedFact => "evidence_official_material",
             EvidenceClass::StructuralEvidence => "evidence_structural_change",
         };
-        NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
+        let fact = NormalizedFact::new_with_structural_dimension_and_reference_model_metadata(
             self.candidate.company_id.clone(),
             format!("{kind_prefix}_{index:03}"),
             self.candidate.concrete_change.clone(),
@@ -524,8 +618,12 @@ impl ValidatedEvidence {
             Confidence::High,
             provenance,
         )?
-        .with_reference_model_source_role(self.reference_model_source_role())?
-        .with_attribution(self.attribution().clone())
+        .with_reference_model_source_role(self.reference_model_source_role())?;
+        let fact = match self.structural_evidence_contract() {
+            Some(contract) => fact.with_structural_evidence_contract(contract.clone())?,
+            None => fact,
+        };
+        fact.with_attribution(self.attribution().clone())
     }
 }
 
@@ -760,6 +858,13 @@ pub fn validate_evidence_candidate(
     if !candidate.source_tier.is_authoritative() {
         return Err(EvidenceValidationError::UnsupportedAuthority);
     }
+    if let Some(contract) = candidate.structural_evidence_contract() {
+        contract
+            .validate()
+            .map_err(|_| EvidenceValidationError::MissingRequiredField {
+                field: "structural_evidence_contract",
+            })?;
+    }
     let content_hash = content_hash(&format!(
         "{}|{}|{}|{}",
         candidate.concrete_change,
@@ -770,6 +875,7 @@ pub fn validate_evidence_candidate(
     Ok(ValidatedEvidence {
         candidate: candidate.clone(),
         content_hash,
+        structural_evidence_contract: structural_evidence_contract_for_candidate(candidate),
     })
 }
 
@@ -778,6 +884,128 @@ fn bounded(mut value: String) -> String {
         value.truncate(MAX_FIELD_BYTES);
     }
     value
+}
+
+fn structural_evidence_contract_for_candidate(
+    candidate: &EvidenceCandidate,
+) -> Option<StructuralEvidenceContract> {
+    if !candidate.attribution.subject_is_assessed_company() {
+        return None;
+    }
+    let dimension = structural_dimension_for_text(&candidate.passage)?;
+    if !passes_structural_semantic_gate(candidate) {
+        return None;
+    }
+    if let Some(contract) = candidate.structural_evidence_contract() {
+        return (contract.change_type() == dimension).then(|| contract.clone());
+    }
+    let effective_date = candidate.effective_date().copied()?;
+    let (before_state, after_state) =
+        derive_structural_states(&candidate.passage, candidate.production_area());
+    StructuralEvidenceContract::new(
+        candidate.company_id(),
+        candidate.company_name(),
+        candidate.passage.as_str(),
+        dimension,
+        candidate.production_area(),
+        before_state,
+        after_state,
+        effective_date,
+        candidate.source_uri(),
+        structural_source_role(&candidate.source_kind),
+        format!(
+            "{}:{}",
+            structural_dimension_label(dimension),
+            candidate.production_area()
+        ),
+        true,
+    )
+    .ok()
+}
+
+fn passes_structural_semantic_gate(candidate: &EvidenceCandidate) -> bool {
+    if candidate.document_kind == Some(DocumentKind::Careers) {
+        return false;
+    }
+    let text = format!("{} {}", candidate.source_title, candidate.passage);
+    let lower = text.to_ascii_lowercase();
+    if STRUCTURAL_NOISE_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal))
+        || STRUCTURAL_INTENTION_SIGNALS
+            .iter()
+            .any(|signal| lower.contains(signal))
+    {
+        return false;
+    }
+    let has_change_action = STRUCTURAL_CHANGE_ACTION_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal));
+    let has_production_unit = STRUCTURAL_PRODUCTION_UNIT_SIGNALS
+        .iter()
+        .any(|signal| lower.contains(signal))
+        || STRUCTURAL_PRODUCTION_UNIT_SIGNALS.iter().any(|signal| {
+            candidate
+                .production_area()
+                .to_ascii_lowercase()
+                .contains(signal)
+        });
+    has_change_action && has_production_unit
+}
+
+fn derive_structural_states(text: &str, production_unit: &str) -> (String, String) {
+    let normalized = text.split_whitespace().collect::<Vec<_>>().join(" ");
+    let lower = normalized.to_ascii_lowercase();
+    if let Some(from_start) = lower.find(" from ") {
+        let after_from = from_start + " from ".len();
+        if let Some(to_relative) = lower[after_from..].find(" to ") {
+            let to_start = after_from + to_relative;
+            let before = normalized[after_from..to_start].trim();
+            let after = normalized[to_start + " to ".len()..].trim();
+            if !before.is_empty() && !after.is_empty() {
+                return (bounded(before.to_owned()), bounded(after.to_owned()));
+            }
+        }
+    }
+    if let Some(under_start) = lower.find(" under ") {
+        let after = normalized[under_start + " under ".len()..].trim();
+        if !after.is_empty() {
+            return (
+                format!("prior state of {production_unit}"),
+                bounded(after.to_owned()),
+            );
+        }
+    }
+    if let Some(into_start) = lower.find(" into production") {
+        return (
+            format!("{production_unit} was not in production"),
+            bounded(normalized[..into_start + " into production".len()].to_owned()),
+        );
+    }
+    (
+        format!("prior state of {production_unit}"),
+        bounded(normalized),
+    )
+}
+
+fn structural_source_role(source_kind: &EvidenceSourceKind) -> &'static str {
+    match source_kind {
+        EvidenceSourceKind::Filing => "regulatory_filing",
+        EvidenceSourceKind::OfficialMaterial => "official_company_material",
+        EvidenceSourceKind::IndependentMaterial => "independent_company_material",
+        EvidenceSourceKind::StructuredHiring => "structured_hiring",
+        EvidenceSourceKind::DiscoveryArticle => "discovery_only",
+        EvidenceSourceKind::Other(_) => "other",
+    }
+}
+
+const fn structural_dimension_label(dimension: StructuralDimension) -> &'static str {
+    match dimension {
+        StructuralDimension::Organization => "organization",
+        StructuralDimension::Workflow => "workflow",
+        StructuralDimension::ProductionSystem => "production_system",
+        StructuralDimension::OperatingMetric => "operating_metric",
+    }
 }
 
 fn structural_dimension_for_text(text: &str) -> Option<StructuralDimension> {
@@ -932,10 +1160,122 @@ fn content_hash(value: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::features::weekly_radar::runtime::discovery::DocumentKind;
     use crate::features::weekly_radar::runtime::sources::{
-        document_observation, DocumentObservationInput, SourceStatus,
+        document_observation, DocumentObservationInput,
     };
+
+    fn observation(
+        title: &str,
+        text: &str,
+        kind: SourceKind,
+        document_kind: DocumentKind,
+    ) -> SourceObservation {
+        document_observation(DocumentObservationInput {
+            company_id: "acme".to_owned(),
+            kind,
+            tier: SourceTier::OfficialPrimary,
+            url: "https://ir.example.test/evidence".to_owned(),
+            title: title.to_owned(),
+            text: text.to_owned(),
+            status: SourceStatus::Known,
+            status_reason: "fixture document".to_owned(),
+            document_kind,
+            source_field_or_passage: "fixture passage".to_owned(),
+            observed_at: Utc::now(),
+            effective_date: Some(NaiveDate::from_ymd_opt(2026, 8, 19).unwrap()),
+        })
+    }
+
+    #[test]
+    fn structural_promotion_retains_a_complete_semantic_contract() {
+        let source = observation(
+            "Engineering operating update",
+            "Acme moved the engineering workflow from manual handoffs to an agent-assisted workflow in production.",
+            SourceKind::OfficialIr,
+            DocumentKind::Engineering,
+        );
+        let candidate = extract_evidence_candidate(&source).expect("structural claim expected");
+        let validated =
+            validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+                .expect("structural claim should validate");
+
+        let contract = validated
+            .structural_evidence_contract()
+            .expect("structural claim requires a semantic contract");
+        assert_eq!(contract.assessed_company(), "acme");
+        assert_eq!(contract.subject_company(), "acme");
+        assert_eq!(contract.claim(), validated.candidate.passage);
+        assert_eq!(
+            contract.change_type(),
+            StructuralDimension::ProductionSystem
+        );
+        assert!(!contract.production_unit().is_empty());
+        assert_eq!(contract.before_state(), "manual handoffs");
+        assert!(contract.after_state().contains("agent-assisted workflow"));
+        assert_eq!(
+            contract.effective_date(),
+            NaiveDate::from_ymd_opt(2026, 8, 19).unwrap()
+        );
+        assert_eq!(contract.source(), "https://ir.example.test/evidence");
+        assert_eq!(contract.source_role(), "official_company_material");
+        assert!(contract.core_value_link().contains("production_system"));
+        assert!(contract.structural_relevance());
+
+        let fact = validated
+            .to_normalized_fact(1)
+            .expect("structural claim should normalize");
+        assert_eq!(fact.structural_evidence_contract(), Some(contract));
+    }
+
+    #[test]
+    fn structural_gate_rejects_representative_false_positive_fragments() {
+        let cases = [
+            (
+                "Table of Contents",
+                "Acme reorganized its engineering platform after section 4.",
+                SourceKind::OfficialIr,
+                DocumentKind::Engineering,
+            ),
+            (
+                "10-K filing",
+                "contextRef indicates Acme reorganized its engineering platform in 2026.",
+                SourceKind::Sec,
+                DocumentKind::Filing,
+            ),
+            (
+                "Proxy statement",
+                "Acme shareholders approved the reorganization of its engineering platform.",
+                SourceKind::OfficialIr,
+                DocumentKind::Filing,
+            ),
+            (
+                "Q4 earnings release",
+                "Acme announced revenue growth while our business strategy supports engineering platform investments.",
+                SourceKind::OfficialIr,
+                DocumentKind::Earnings,
+            ),
+            (
+                "Engineering plan",
+                "Acme plans to deploy an engineering platform in production next year.",
+                SourceKind::OfficialIr,
+                DocumentKind::Engineering,
+            ),
+        ];
+
+        for (title, text, kind, document_kind) in cases {
+            let source = observation(title, text, kind, document_kind);
+            let candidate =
+                extract_evidence_candidate(&source).expect("candidate should remain a fact lead");
+            let validated = validate_evidence_candidate(
+                &candidate,
+                NaiveDate::from_ymd_opt(2026, 8, 25).unwrap(),
+            )
+            .expect("false-positive fragment can remain a validated fact");
+            assert_eq!(validated.evidence_class(), EvidenceClass::ValidatedFact);
+            assert_eq!(validated.structural_evidence_contract(), None);
+            assert_eq!(validated.structural_dimension(), None);
+        }
+    }
 
     #[test]
     fn supplier_customer_story_records_explicit_subject_attribution() {

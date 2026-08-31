@@ -1,0 +1,28 @@
+{
+  "changedPaths": [
+    ".ai/work-items/archive/wi-structural-evidence-semantic-gate.contract.json",
+    ".ai/work-items/archive/wi-structural-evidence-semantic-gate.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T05:56:39Z",
+  "checkpointContractDigest": "sha256:49fbb7bb29770f6a1a15d49a84d8e41bc70d5e90e1ab99e97b89ee8a30c36538",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:8ff5a34f74823f9bf50d6293f507dc72b84641c5b4122b14b4e65da26e153f79",
+  "createdAt": "2026-08-31T04:48:54Z",
+  "mode": "code",
+  "preflightAt": "2026-08-31T05:59:34Z",
+  "preflightContractDigest": "sha256:49fbb7bb29770f6a1a15d49a84d8e41bc70d5e90e1ab99e97b89ee8a30c36538",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:8ff5a34f74823f9bf50d6293f507dc72b84641c5b4122b14b4e65da26e153f79",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T05:59:54Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-structural-evidence-semantic-gate"
+}

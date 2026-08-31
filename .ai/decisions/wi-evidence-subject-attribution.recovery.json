@@ -1,0 +1,30 @@
+{
+  "actor": "human:owner",
+  "authoritySource": "Current user request to implement and deliver the review finding WIs",
+  "decidedAt": "2026-08-31T05:38:00Z",
+  "decision": "retry",
+  "decisionId": "work-item-recovery",
+  "evidenceRefs": [
+    ".ai/work-items/active/wi-evidence-subject-attribution.outcome.json",
+    ".ai/evidence/wi-evidence-subject-attribution.verification.json",
+    ".ai/work-items/active/wi-evidence-subject-attribution.contract.json",
+    ".ai/work-items/active/wi-evidence-subject-attribution.summary.json"
+  ],
+  "policyRefs": [
+    "AGENTS.md",
+    ".ai/README.md",
+    ".ai/glossary.md"
+  ],
+  "predecessorContractDigest": "sha256:8ea0a39e282fc856fa562a5d921d8f03d9e1bd9af53302c271854701bdbe14f7",
+  "predecessorEventsDigest": "sha256:53fbdcca0f045fcea180baf99177a9971b7919e7197bc537819050ef725fddb7",
+  "predecessorOutcomeDigest": "sha256:4eb4e3a59c6da8b8f1e6b7c9a5abe14cbe880a4967d877f91534709d1b8324df",
+  "predecessorSummaryDigest": "sha256:e45dfa7350293d2cb12b8041f8b849639f2955960114742688429221a4bcf5d0",
+  "predecessorWorkItemId": "wi-evidence-subject-attribution",
+  "reason": "Retry the same Work Item after correcting the governance projection; preserve the failed Outcome and rerun fresh preflight, verification, and finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resumeCondition": "Fresh preflight and verification bind to the current Contract/Summary/resource context, then finish produces a visible recoverable Outcome.",
+  "runtimeDigest": "sha256:6b3bd6617c6372a17b1edf6f9dc9dbc016779146f67262265fd12d2a488bbc53",
+  "runtimeVersion": "0.2.47",
+  "schemaVersion": 1,
+  "workItemId": "wi-evidence-subject-attribution"
+}

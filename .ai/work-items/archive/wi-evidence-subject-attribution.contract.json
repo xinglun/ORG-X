@@ -1,0 +1,46 @@
+{
+  "acceptanceCriteria": [
+    "每条结构性证据明确记录并校验 assessed_company、subject_company、source_company、vendor_company、customer_company 的关系。",
+    "vendor/customer evidence 不得作为 assessed company 的 Organization Rewrite 或 Production System Rewrite 证据。",
+    "补充跨主体污染回归测试，并对现有受影响事实完成归属重跑或明确保留原因。",
+    "不修改 Telegram、凭据、数据分支和无关 Work Item。"
+  ],
+  "authority": "authorized",
+  "baseRevision": "ca1541140c62dd56b7c1804d5813aede6e9881f6",
+  "createdAt": "2026-08-31T04:48:36Z",
+  "goal": "建立主体归属边界并重跑相关事实，使每条 Structural Evidence 只服务于其真实 subject_company。",
+  "intent": "修复 Evidence 的主体归属，区分 assessed company、subject company、source company、vendor company 和 customer company，避免客户/供应商事实污染被评估公司的生产系统判断。",
+  "mode": "code",
+  "outOfScope": [
+    "Telegram 分页和发布协议",
+    "Structural Evidence 语义 Gate 的独立规则设计",
+    "Reference Model Stage 重新校准"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:9ad91acffda2453fda94bf7727bb9709b13628b2763a35e21af7301088e66d15",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-evidence-subject-attribution",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-evidence-subject-attribution"
+  },
+  "risk": "normal",
+  "scope": [
+    "src/features/weekly_radar/**",
+    "tests/weekly_radar/**",
+    "docs/superpowers/**"
+  ],
+  "sources": [],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-evidence-subject-attribution"
+}

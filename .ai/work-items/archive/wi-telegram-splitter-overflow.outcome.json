@@ -5,14 +5,17 @@
     "Focused splitter tests, repository formatting, clippy, and the full Rust test suite pass without changing report rendering, Telegram credentials, transport retry semantics, workflow scheduling, or archive policy.",
     "The reviewed pull request is merged into main, the dedicated branch and worktree are removed, main is synchronized and clean, and the authorized non-dry-run Weekly Radar rerun for 2026-08-31 is verified from its workflow result and data-branch publication evidence."
   ],
-  "decisionState": "red",
+  "createdAt": "2026-08-31T04:09:04Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:6e158212af79f078d587101b11bfba8a8cf0f3bde563ac1da1b45b0ebeb4b347",
   "evidenceRefs": [
     ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
   ],
-  "failedGate": "finish.governance",
   "humanBenefitReport": {
     "affectedUsers": [],
-    "evidenceRefs": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
+    ],
     "state": "unknown",
     "unknowns": [
       "user_visible_benefit_not_declared"
@@ -20,48 +23,45 @@
     "userVisibleChanges": []
   },
   "protocolVersion": 1,
-  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
   "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
   "schemaVersion": 2,
-  "state": "blocked",
-  "summary": "A lifecycle gate failed; completion is not claimed and the Work Item remains recoverable.",
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
   "taskOutcomeReport": {
     "bindings": {
       "evidenceRefs": [
         ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
       ],
       "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
-      "repositorySnapshotDigest": "sha256:3d610bfb0d915c4be9c68be890cf760cf8247d25a67ac8aaeba56b3988fe741b",
+      "repositorySnapshotDigest": "sha256:9ad91acffda2453fda94bf7727bb9709b13628b2763a35e21af7301088e66d15",
       "workItemId": "wi-telegram-splitter-overflow"
     },
-    "failedGate": "finish.governance",
     "format": "ai-cockpit.task-outcome",
-    "humanStatusColor": "red",
-    "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+    "humanStatusColor": "green",
     "schemaVersion": 1,
     "sections": {
       "avoidedImpact": [],
       "deliveredChanges": [
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-telegram-splitter-overflow.summary.json"
+            ".ai/work-items/archive/wi-telegram-splitter-overflow.summary.json"
           ],
           "inference": false,
-          "text": "Changed path: .ai/work-items/active/wi-telegram-splitter-overflow.approach.json"
+          "text": "Changed path: .ai/work-items/archive/wi-telegram-splitter-overflow.approach.json"
         },
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-telegram-splitter-overflow.summary.json"
+            ".ai/work-items/archive/wi-telegram-splitter-overflow.summary.json"
           ],
           "inference": false,
-          "text": "Changed path: .ai/work-items/active/wi-telegram-splitter-overflow.contract.json"
+          "text": "Changed path: .ai/work-items/archive/wi-telegram-splitter-overflow.contract.json"
         },
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-telegram-splitter-overflow.summary.json"
+            ".ai/work-items/archive/wi-telegram-splitter-overflow.summary.json"
           ],
           "inference": false,
-          "text": "Changed path: .ai/work-items/active/wi-telegram-splitter-overflow.summary.json"
+          "text": "Changed path: .ai/work-items/archive/wi-telegram-splitter-overflow.summary.json"
         }
       ],
       "evidence": [
@@ -80,15 +80,7 @@
         "provider_or_enterprise_approval_inferred_from_local_records",
         "user_visible_benefit_invented_from_implementation_facts"
       ],
-      "forcedStops": [
-        {
-          "evidenceRefs": [
-            ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
-          ],
-          "inference": false,
-          "text": "A required evidence or identity control failed; remain stopped."
-        }
-      ],
+      "forcedStops": [],
       "humanDecisions": [],
       "interventions": [],
       "limitations": [],
@@ -99,7 +91,7 @@
             ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
           ],
           "inference": false,
-          "text": "A lifecycle gate failed; completion is not claimed and the Work Item remains recoverable."
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
         }
       ],
       "recurrencePrevention": [],
@@ -109,15 +101,23 @@
             ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
           ],
           "inference": false,
-          "text": "Remaining unknown: lifecycle_gate_failed"
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
         }
       ],
-      "resolutions": [],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
       "risks": [],
       "taskOverview": [
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-telegram-splitter-overflow.contract.json"
+            ".ai/work-items/archive/wi-telegram-splitter-overflow.contract.json"
           ],
           "inference": false,
           "text": "Restore production Weekly Radar delivery when a valid rendered report section exceeds the Telegram per-message limits, while preserving semantic boundaries, exact source content, and fail-closed behavior for unsupported input."
@@ -126,23 +126,25 @@
       "warnings": [
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-telegram-splitter-overflow.contract.json"
+            ".ai/work-items/archive/wi-telegram-splitter-overflow.contract.json"
           ],
           "inference": false,
           "text": "User-visible benefit is not declared by the Work Item owner."
         }
       ]
     },
-    "status": "unknown",
+    "status": "verified",
     "workItemId": "wi-telegram-splitter-overflow"
   },
+  "taskReportDigest": "sha256:82c0031ac2a762c9ca898068cb08947a67448a9068cb2918c37d41eb5e510fc9",
+  "taskReportMarkdownDigest": "sha256:9cec8c3f65888a8b0d61a632c02065b829096fc1d1cd554b96968b9f4664e79a",
   "unknowns": [
-    "lifecycle_gate_failed"
+    "user_visible_benefit_not_declared"
   ],
   "verification": {
     "evidencePath": ".ai/evidence/wi-telegram-splitter-overflow.verification.json",
     "required": true,
-    "status": "blocked"
+    "status": "verified"
   },
   "workItemId": "wi-telegram-splitter-overflow"
 }

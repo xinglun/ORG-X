@@ -1,0 +1,24 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-08-31T04:09:11Z",
+  "files": {
+    "approachDigest": "sha256:9a6be5f357efe98a3e2f8b0f7ce264f4b3dcfb25d648070c6412466d3579f479",
+    "approachPath": ".ai/work-items/archive/wi-telegram-splitter-overflow.approach.json",
+    "contractDigest": "sha256:8fc9989752a565453377898f441c28c17052acd3a4ec30e6f250449848c155e4",
+    "contractPath": ".ai/work-items/archive/wi-telegram-splitter-overflow.contract.json",
+    "eventsDigest": "sha256:e662efe443d6975852be57b1aea3b78109f04d7d8818a822eb1f8696ea5885c4",
+    "eventsPath": ".ai/work-items/archive/wi-telegram-splitter-overflow.events.jsonl",
+    "outcomeDigest": "sha256:23dc06dbc903c57e8e22d3c82211830bc1df1be6c975fd73396db4da80b9e7c9",
+    "outcomePath": ".ai/work-items/archive/wi-telegram-splitter-overflow.outcome.json",
+    "summaryDigest": "sha256:9fa29cc4a03c90434b16ddeb947b05dc6acd405db9a031d5087bf466e3c94d21",
+    "summaryPath": ".ai/work-items/archive/wi-telegram-splitter-overflow.summary.json",
+    "taskReportDigest": "sha256:82c0031ac2a762c9ca898068cb08947a67448a9068cb2918c37d41eb5e510fc9",
+    "taskReportMarkdownDigest": "sha256:9cec8c3f65888a8b0d61a632c02065b829096fc1d1cd554b96968b9f4664e79a",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-telegram-splitter-overflow.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-telegram-splitter-overflow.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-telegram-splitter-overflow"
+}

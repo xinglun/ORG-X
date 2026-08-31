@@ -690,10 +690,11 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     let named_peer = (family == Some(ReferenceModelEvidenceFamily::IndustryDiffusion))
         .then(|| reference_model_named_peer_for_text(&passage))
         .flatten();
+    let subject_company = subject_company_for_text(&passage);
     candidate = candidate
         .with_attribution(attribution_for_observation(
             observation,
-            named_peer.as_deref(),
+            subject_company.as_deref().or(named_peer.as_deref()),
         ))
         .ok()?;
     if let Some(family) = family {
@@ -914,7 +915,7 @@ fn structural_evidence_contract_for_candidate(
         derive_structural_states(&candidate.passage, candidate.production_area());
     StructuralEvidenceContract::new(
         candidate.company_id(),
-        candidate.company_name(),
+        candidate.company_id(),
         candidate.passage.as_str(),
         dimension,
         candidate.production_area(),
@@ -1156,6 +1157,42 @@ fn reference_model_named_peer_for_text(text: &str) -> Option<String> {
         return Some(peer.to_owned());
     }
     None
+}
+
+fn subject_company_for_text(text: &str) -> Option<String> {
+    if let Some(peer) = reference_model_named_peer_for_text(text) {
+        return Some(peer);
+    }
+
+    let possessive_subject_regex =
+        Regex::new(r"(?m)^\s*([A-Z][A-Za-z0-9&.'-]*(?:\s+[A-Z][A-Za-z0-9&.'-]*){0,4})[’']s\s+")
+            .ok()?;
+    if let Some(subject) = possessive_subject_regex
+        .captures(text)
+        .and_then(|captures| captures.get(1))
+        .map(|value| value.as_str().trim())
+        .filter(|value| !generic_subject(value))
+    {
+        return Some(subject.to_owned());
+    }
+
+    let lead_subject_regex = Regex::new(
+        r"\b([A-Z][A-Za-z0-9&.'-]*(?:\s+[A-Z][A-Za-z0-9&.'-]*){0,4})\s+(?:has|have|is|are|was|were|becomes|became|began|begun|starts|started|helps|help|provides|provide)\b",
+    )
+    .ok()?;
+    lead_subject_regex
+        .captures(text)
+        .and_then(|captures| captures.get(1))
+        .map(|value| value.as_str().trim())
+        .filter(|value| !generic_subject(value))
+        .map(str::to_owned)
+}
+
+fn generic_subject(value: &str) -> bool {
+    matches!(
+        value.to_ascii_lowercase().as_str(),
+        "the company" | "the firm" | "our team" | "our company"
+    )
 }
 
 fn content_hash(value: &str) -> String {

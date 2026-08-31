@@ -240,6 +240,15 @@ impl StructuralEvidenceContract {
                 )));
             }
         }
+        if !self
+            .assessed_company
+            .trim()
+            .eq_ignore_ascii_case(self.subject_company.trim())
+        {
+            return Err(RuntimeError::invalid_model(
+                "structural evidence contract subject must match assessed company",
+            ));
+        }
         if !self.structural_relevance {
             return Err(RuntimeError::invalid_model(
                 "structural evidence contract must be structurally relevant",
@@ -774,6 +783,10 @@ impl NormalizedFact {
     pub fn is_structural_evidence(&self) -> bool {
         self.status == FactStatus::Known
             && self.structural_dimension.is_some()
+            && self
+                .attribution
+                .as_ref()
+                .is_some_and(EvidenceAttribution::subject_is_assessed_company)
             && self
                 .structural_evidence_contract
                 .as_ref()

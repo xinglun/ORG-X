@@ -1,0 +1,30 @@
+{
+  "actor": "human:owner",
+  "authoritySource": "Current user confirmation: 按此方案执行即可",
+  "decidedAt": "2026-08-31T09:51:12Z",
+  "decision": "retry",
+  "decisionId": "work-item-recovery",
+  "evidenceRefs": [
+    ".ai/work-items/active/wi-cross-subject-attribution.outcome.json",
+    ".ai/evidence/wi-cross-subject-attribution.verification.json",
+    ".ai/work-items/active/wi-cross-subject-attribution.contract.json",
+    ".ai/work-items/active/wi-cross-subject-attribution.summary.json"
+  ],
+  "policyRefs": [
+    "AGENTS.md",
+    ".ai/README.md",
+    ".ai/glossary.md"
+  ],
+  "predecessorContractDigest": "sha256:ddd61761249db5cfa890c82e5f5c615219d5035a661808d910da193745a673a1",
+  "predecessorEventsDigest": "sha256:b0595a784b7ecb1785f7edc44793bc43fd23fc1213289e2c386d90ea12e0c4c2",
+  "predecessorOutcomeDigest": "sha256:a43053f15abc3e41c60c2b450ff46bc972035c65ec106138f75d6f0e9e7dc17f",
+  "predecessorSummaryDigest": "sha256:8c527872742f9c05bdff3c61c7c7ed54c53fd361d819cb4368629345d45fb337",
+  "predecessorWorkItemId": "wi-cross-subject-attribution",
+  "reason": "Retry the same Work Item after the Runtime rejected the stale post-finish lifecycle projection; preserve the existing code, Contract, and verification evidence and rerun the bound finish path.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resumeCondition": "Fresh verification remains bound to the current Contract and repository snapshot, then finish produces a visible recoverable Outcome before archive.",
+  "runtimeDigest": "sha256:b0e4183bee2da252a0522ead3e1b5d9e20dd1577e3ce62b08f3e198c542e1176",
+  "runtimeVersion": "0.2.48",
+  "schemaVersion": 1,
+  "workItemId": "wi-cross-subject-attribution"
+}

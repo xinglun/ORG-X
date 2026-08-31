@@ -4,7 +4,7 @@
   "files": {
     "approachDigest": "sha256:a02d94807dc83ba9f27d98ff0087fab4efd007b29b222b309d0f99d40fdd4e73",
     "approachPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.approach.json",
-    "contractDigest": "sha256:c48cf619a3c049be483cec191214f8855b2ec687b972892b96115580ca0a8620",
+    "contractDigest": "sha256:ad9c072df5da7e9c980896782b2d92c1f779eb535c740db9ff3ca1ebbf4f42fa",
     "contractPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json",
     "eventsDigest": "sha256:bd6a74b684ab228163ced7ac30576bfbc5f83785f18d1783c2a6417c70475e26",
     "eventsPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.events.jsonl",

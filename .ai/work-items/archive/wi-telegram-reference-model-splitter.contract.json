@@ -31,7 +31,7 @@
     "baseRemote": "origin",
     "branch": "codex/wi-telegram-reference-model-splitter",
     "provider": "github",
-    "pullRequest": "pending",
+    "pullRequest": "https://github.com/xinglun/ORG-X/pull/98",
     "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-reference-model-splitter"
   },
   "risk": "normal",

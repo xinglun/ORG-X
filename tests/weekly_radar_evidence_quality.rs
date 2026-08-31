@@ -1459,6 +1459,89 @@ fn production_acceptance_structural_false_positives_are_not_promoted() {
 }
 
 #[test]
+fn observed_change_gate_rejects_intent_category_and_vendor_deployment() {
+    let red_cases = [
+        (
+            "msft",
+            SourceKind::OfficialResearch,
+            DocumentKind::ProductPlatform,
+            "https://www.microsoft.com/insidetrack/blog/fast-train-to-the-ai-frontier-balancing-risk-and-innovation-in-the-era-of-ai-at-microsoft/",
+            "Fast Train to the AI Frontier",
+            "To deploy AI‑powered capabilities, embrace agents, modernize workflows, and compete in an environment where speed and adaptation increasingly define advantage.",
+        ),
+        (
+            "msft",
+            SourceKind::OfficialResearch,
+            DocumentKind::ProductPlatform,
+            "https://www.microsoft.com/insidetrack/blog/category/frontier-firm/",
+            "Frontier Firm",
+            "To deploy AI‑powered capabilities, embrace agents, modernize&hellip; Running an IT operation at a global scale is a daunting task, even for Microsoft.",
+        ),
+        (
+            "nvda",
+            SourceKind::Sec,
+            DocumentKind::Filing,
+            "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+            "NVIDIA Corporation Form 8-K",
+            "25 gigawatts of IT load to deploy NVIDIA&#8217;s full-stack DSX AI factory platform, subject to limited exceptions.",
+        ),
+    ];
+
+    for (company_id, source_kind, document_kind, source_uri, title, passage) in red_cases {
+        let observation = production_acceptance_document(
+            company_id,
+            source_kind,
+            document_kind,
+            source_uri,
+            title,
+            passage,
+            "2026-08-31",
+        );
+        let candidate = extract_evidence_candidate(&observation)
+            .expect("production intent or deployment sentence should be extracted");
+        let validated = validate_evidence_candidate(
+            &candidate,
+            NaiveDate::from_ymd_opt(2026, 8, 31).expect("cutoff should be valid"),
+        )
+        .expect("production sentence should remain a validated fact");
+
+        assert_eq!(validated.evidence_class(), EvidenceClass::ValidatedFact);
+        assert_eq!(validated.structural_dimension(), None);
+        assert_eq!(validated.structural_evidence_contract(), None);
+    }
+
+    let meta_observation = production_acceptance_document(
+        "meta",
+        SourceKind::OfficialResearch,
+        DocumentKind::Engineering,
+        "https://engineering.fb.com/2026/07/01/data-infrastructure/metas-ai-storage-blueprint-at-scale/",
+        "Meta's AI Storage Blueprint at Scale",
+        "The focus for BLOB storage, in recent years, has largely shifted to maximizing GPU utilization.",
+        "2026-07-01",
+    );
+    let meta_candidate = extract_evidence_candidate(&meta_observation)
+        .expect("observed Meta production change should be extracted");
+    let meta_validated = validate_evidence_candidate(
+        &meta_candidate,
+        NaiveDate::from_ymd_opt(2026, 8, 31).expect("cutoff should be valid"),
+    )
+    .expect("observed Meta production change should validate");
+    let contract = meta_validated
+        .structural_evidence_contract()
+        .expect("observed Meta production change should retain a structural contract");
+
+    assert_eq!(
+        meta_validated.evidence_class(),
+        EvidenceClass::StructuralEvidence
+    );
+    assert!(!contract.before_state().is_empty());
+    assert!(!contract.after_state().is_empty());
+    assert!(!contract.production_unit().is_empty());
+    assert!(!contract.source().is_empty());
+    assert!(!contract.core_value_link().is_empty());
+}
+
+#[test]
 fn production_customer_and_partner_subjects_are_not_promoted_as_microsoft_structure() {
     let cases = [
         (

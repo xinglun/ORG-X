@@ -1,0 +1,9 @@
+{
+  "conflictsWith": [],
+  "dependsOn": [],
+  "parallelizable": true,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 1,
+  "unknowns": [],
+  "workItemId": "wi-observed-change-gate"
+}

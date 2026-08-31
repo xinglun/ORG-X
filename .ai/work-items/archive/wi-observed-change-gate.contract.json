@@ -1,0 +1,114 @@
+{
+  "acceptanceCriteria": [
+    "三条真实生产原句均不再进入 Structural Evidence：MSFT To deploy AI-powered capabilities、MSFT /category/frontier-firm/ 摘要、NVDA 25 gigawatts DSX deployment。",
+    "明确 observed/completed/currently operating 的 assessed-company before-to-after 证据仍可进入 Structural Evidence。",
+    "Structural Evidence contract 的 before_state、after_state、production_unit、source 与 core_value_link 均完整且与真实变化对应。",
+    "通过 targeted RED/GREEN 回归、cargo fmt、cargo clippy -D warnings、cargo test --locked --workspace 及 Runtime preflight/verify/finish/archive。",
+    "PR 合并后删除精确 branch/worktree、同步 main，并重新执行 2026-08-31 Production Acceptance。"
+  ],
+  "authority": "authorized",
+  "baseRevision": "d9000b3a903744593e69f0527865102910d2182f",
+  "createdAt": "2026-08-31T10:16:55Z",
+  "goal": "只允许描述 assessed company 自身已观察且已完成/当前运行的 before-to-after 生产变化进入 Structural Evidence；intent、分类页摘要、客户/供应商平台部署只能保留为 ValidatedFact。",
+  "intent": "2026-08-31 Production Acceptance 发现 3 条可疑 Structural Evidence：MSFT intent/category 摘要与 NVIDIA 平台部署；需要在 Runtime promotion 边界阻断非已观察主体生产变化。",
+  "mode": "code",
+  "outOfScope": [
+    "Cross-subject Attribution 已合并内容",
+    "Structural Promotion Hard Gate 已合并内容",
+    "Reference Model 重构",
+    "Telegram 分页",
+    "生产 provider/workflow/secrets",
+    "data 分支与历史报告",
+    "source acquisition/ranking/报告版式"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:9dad28ae6399f1b21323c702623797ab94378e53e7a945caf8f5a93ec9f61d8f",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-observed-change-gate",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-observed-change-gate"
+  },
+  "risk": "high",
+  "scenarioCoverage": [
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "https://www.microsoft.com/insidetrack/blog/fast-train-to-the-ai-frontier-balancing-risk-and-innovation-in-the-era-of-ai-at-microsoft/",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact To deploy AI-powered capabilities passage remains ValidatedFact with no structural dimension or contract.",
+      "required": true,
+      "scenario": "MSFT Fast Train passage is an intent statement, not an observed structural change.",
+      "status": "unverified",
+      "verificationPlan": "Feed the exact production passage through extraction and validation; assert ValidatedFact, no structural dimension, and no StructuralEvidenceContract."
+    },
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "https://www.microsoft.com/insidetrack/blog/category/frontier-firm/",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact category summary remains ValidatedFact with no structural dimension or contract.",
+      "required": true,
+      "scenario": "MSFT /category/frontier-firm/ passage is a category-page summary and intent statement.",
+      "status": "unverified",
+      "verificationPlan": "Feed the exact category-page passage through extraction and validation; assert it cannot enter Structural Evidence."
+    },
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact 25 gigawatts of IT load to deploy NVIDIA DSX passage remains ValidatedFact with no structural dimension or contract.",
+      "required": true,
+      "scenario": "NVDA DSX passage describes planned deployment of a platform, not NVIDIA's own observed production-system transition.",
+      "status": "unverified",
+      "verificationPlan": "Feed the exact SEC passage through extraction and validation; assert platform/customer deployment does not become NVIDIA Structural Evidence."
+    },
+    {
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The existing positive Meta/Acme-style production change remains StructuralEvidence with a complete before_state, after_state, production_unit, source, and core_value_link.",
+      "required": true,
+      "scenario": "A same-subject observed Meta production change remains promotable.",
+      "status": "unverified",
+      "verificationPlan": "Run the existing positive structural-contract regressions and assert same-subject attribution plus all required semantic contract fields."
+    }
+  ],
+  "scope": [
+    ".ai/work-items/**",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "tests/weekly_radar_evidence_quality.rs"
+  ],
+  "sources": [
+    "/Users/sei-rinn/.codex/attachments/9392e5db-466a-4007-98e5-b55b6458ab50/pasted-text.txt",
+    "weekly-radar/reports/2026-08-31.md on origin/data",
+    "src/features/weekly_radar/runtime/evidence.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "tests/weekly_radar_evidence_quality.rs",
+    "https://www.microsoft.com/insidetrack/blog/fast-train-to-the-ai-frontier-balancing-risk-and-innovation-in-the-era-of-ai-at-microsoft/",
+    "https://www.microsoft.com/insidetrack/blog/category/frontier-firm/",
+    "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm"
+  ],
+  "state": "implementation_active",
+  "verification": [
+    "cargo fmt --all -- --check",
+    "cargo clippy --locked --workspace --all-targets -- -D warnings",
+    "cargo test --locked --workspace",
+    "targeted production-sentence regression tests",
+    "ai-cockpit preflight/checkpoint/verify/finish/archive/finalize/close"
+  ],
+  "workItemId": "wi-observed-change-gate"
+}

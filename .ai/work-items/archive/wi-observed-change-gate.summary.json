@@ -1,0 +1,289 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "production_intent_and_vendor_platform_deployment_are_not_structural_evidence",
+          "path": "tests/weekly_radar_evidence_quality.rs",
+          "type": "production-regression",
+          "verification": "passed"
+        },
+        {
+          "locator": "Observed Change Gate semantic promotion boundary",
+          "path": "src/features/weekly_radar/runtime/evidence.rs",
+          "type": "runtime-boundary",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "existing Meta/Acme production-system positive regressions",
+          "path": "tests/weekly_radar_evidence_quality.rs",
+          "type": "positive-regression",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "structural_promotion_retains_a_complete_semantic_contract",
+          "path": "src/features/weekly_radar/runtime/evidence.rs",
+          "type": "contract-regression",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "cargo fmt --all -- --check; cargo clippy --locked --workspace --all-targets -- -D warnings; cargo test --locked --workspace",
+          "path": ".ai/evidence/wi-observed-change-gate.verification.json",
+          "type": "runtime-verification",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A5",
+      "evidence": [
+        {
+          "locator": "reviewed PR merge, exact branch/worktree cleanup, main synchronization, and 2026-08-31 Production Acceptance",
+          "path": ".ai/evidence/wi-observed-change-gate.verification.json",
+          "type": "delivery-verification",
+          "verification": "pending"
+        }
+      ]
+    }
+  ],
+  "changedPaths": [
+    ".ai/work-items/archive/wi-observed-change-gate.contract.json",
+    ".ai/work-items/archive/wi-observed-change-gate.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T10:25:57Z",
+  "checkpointContractDigest": "sha256:ec91fcf3a8e59074673b2b82c1def7d0ba9cb9f1b70fcea21890f4c7f362d6da",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:5a319a05f7cb9e1c7a0871aca413269c40cd5eed742f96b319e5f70e6ffd6845",
+  "createdAt": "2026-08-31T10:16:55Z",
+  "finalDimensions": {
+    "contractDigest": "sha256:ec91fcf3a8e59074673b2b82c1def7d0ba9cb9f1b70fcea21890f4c7f362d6da",
+    "decision": "CONDITIONAL_GO",
+    "dimensions": {
+      "absurd_tests": {
+        "evidence": [
+          "tests/weekly_radar_evidence_quality.rs"
+        ],
+        "status": "verified"
+      },
+      "agent_self_assertion": {
+        "evidence": [
+          "ai-cockpit agent doctor --repo <repo>"
+        ],
+        "status": "verified"
+      },
+      "capability_truth": {
+        "evidence": [
+          "tests/weekly_radar_evidence_quality.rs"
+        ],
+        "status": "verified"
+      },
+      "code_quality": {
+        "evidence": [
+          "cargo fmt --all -- --check",
+          "cargo clippy --locked --workspace --all-targets -- -D warnings",
+          "cargo test --locked --workspace"
+        ],
+        "status": "verified"
+      },
+      "documentation": {
+        "evidence": [
+          "out of scope: no documentation behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "enterprise_boundary": {
+        "evidence": [
+          "src/features/weekly_radar/runtime/evidence.rs",
+          "tests/weekly_radar_evidence_quality.rs"
+        ],
+        "status": "verified"
+      },
+      "injection": {
+        "evidence": [
+          "out of scope: no input-trust behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "installation": {
+        "evidence": [
+          "out of scope: no installation behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "lifecycle": {
+        "evidence": [
+          "ai-cockpit checkpoint and verification evidence"
+        ],
+        "status": "conditional"
+      },
+      "multilingual": {
+        "evidence": [
+          "out of scope: localized report labels are unchanged"
+        ],
+        "status": "conditional"
+      },
+      "north_star": {
+        "evidence": [
+          "The accepted user-visible outcome is a Structural Evidence section that does not present intent, category summaries, or third-party deployments as the assessed company's own production change."
+        ],
+        "status": "verified"
+      },
+      "performance": {
+        "evidence": [
+          "out of scope: no performance-sensitive algorithm changed"
+        ],
+        "status": "conditional"
+      },
+      "provider_evidence": {
+        "evidence": [
+          "out of scope: no provider acquisition behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "real_adopter": {
+        "evidence": [
+          "2026-08-31 Production Acceptance will be rerun after the reviewed PR is merged."
+        ],
+        "status": "conditional"
+      },
+      "recovery": {
+        "evidence": [
+          "ai-cockpit checkpoint and verification evidence"
+        ],
+        "status": "verified"
+      },
+      "stale_assets": {
+        "evidence": [
+          "ai-cockpit preflight --repo <repo> --contract <contract> returned green"
+        ],
+        "status": "verified"
+      },
+      "task_outcome": {
+        "evidence": [
+          ".ai/evidence/wi-observed-change-gate.verification.json"
+        ],
+        "status": "verified"
+      },
+      "uninstall": {
+        "evidence": [
+          "out of scope: no uninstall behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "unknown": {
+        "evidence": [
+          "ai-cockpit work-item validate --repo <repo> --id wi-observed-change-gate --json"
+        ],
+        "status": "verified"
+      },
+      "upgrade": {
+        "evidence": [
+          "out of scope: no upgrade behavior changed"
+        ],
+        "status": "conditional"
+      }
+    },
+    "limitations": [
+      "2026-08-31 Production Acceptance remains pending until the reviewed PR is merged and the production workflow is rerun."
+    ],
+    "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+    "runtimeDigest": "sha256:b0e4183bee2da252a0522ead3e1b5d9e20dd1577e3ce62b08f3e198c542e1176",
+    "runtimeVersion": "0.2.48",
+    "schemaVersion": 1,
+    "summaryDigest": "sha256:e9eec50c09951b18baad5ec7a5b350199978623e8361877a55ef768a99d66f7a",
+    "workItemId": "wi-observed-change-gate"
+  },
+  "intentAlignment": {
+    "evidence": [
+      ".ai/work-items/active/wi-observed-change-gate.contract.json",
+      "src/features/weekly_radar/runtime/evidence.rs",
+      "tests/weekly_radar_evidence_quality.rs",
+      "origin/data:weekly-radar/reports/2026-08-31.md",
+      "/Users/sei-rinn/.codex/attachments/9392e5db-466a-4007-98e5-b55b6458ab50/pasted-text.txt"
+    ],
+    "reason": "The Work Item makes Structural Evidence trustworthy for report readers by retaining only assessed-company changes that are observed as completed/current production transitions; intent statements, category summaries, and third-party platform deployments remain ValidatedFact.",
+    "state": "resolved"
+  },
+  "mode": "code",
+  "preflightAt": "2026-08-31T10:35:10Z",
+  "preflightContractDigest": "sha256:ec91fcf3a8e59074673b2b82c1def7d0ba9cb9f1b70fcea21890f4c7f362d6da",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:5a319a05f7cb9e1c7a0871aca413269c40cd5eed742f96b319e5f70e6ffd6845",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "scenarioCoverage": [
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "https://www.microsoft.com/insidetrack/blog/fast-train-to-the-ai-frontier-balancing-risk-and-innovation-in-the-era-of-ai-at-microsoft/",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact To deploy AI-powered capabilities passage remains ValidatedFact with no structural dimension or contract.",
+      "required": true,
+      "scenario": "MSFT Fast Train passage is an intent statement, not an observed structural change.",
+      "status": "verified",
+      "verificationPlan": "Feed the exact production passage through extraction and validation; assert ValidatedFact, no structural dimension, and no StructuralEvidenceContract."
+    },
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "https://www.microsoft.com/insidetrack/blog/category/frontier-firm/",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact category summary remains ValidatedFact with no structural dimension or contract.",
+      "required": true,
+      "scenario": "MSFT /category/frontier-firm/ passage is a category-page summary and intent statement.",
+      "status": "verified",
+      "verificationPlan": "Feed the exact category-page passage through extraction and validation; assert it cannot enter Structural Evidence."
+    },
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact 25 gigawatts of IT load to deploy NVIDIA DSX passage remains ValidatedFact with no structural dimension or contract.",
+      "required": true,
+      "scenario": "NVDA DSX passage describes planned deployment of a platform, not NVIDIA's own observed production-system transition.",
+      "status": "verified",
+      "verificationPlan": "Feed the exact SEC passage through extraction and validation; assert platform/customer deployment does not become NVIDIA Structural Evidence."
+    },
+    {
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The existing positive Meta/Acme-style production change remains StructuralEvidence with a complete before_state, after_state, production_unit, source, and core_value_link.",
+      "required": true,
+      "scenario": "A same-subject observed Meta production change remains promotable.",
+      "status": "verified",
+      "verificationPlan": "Run the existing positive structural-contract regressions and assert same-subject attribution plus all required semantic contract fields."
+    }
+  ],
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T10:35:20Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-observed-change-gate"
+}

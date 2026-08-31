@@ -1,0 +1,58 @@
+{
+  "actor": "user-authorized-agent",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "Current user request and explicit permission to proceed",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "996245bf29969e885e2be4ae58fdbdddb1223846",
+    "name": "codex/wi-telegram-splitter-overflow",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:8fc9989752a565453377898f441c28c17052acd3a4ec30e6f250449848c155e4",
+  "operationId": "wi-telegram-splitter-overflow-cleanup-20260831",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "ec548f65358f5c8fa123ad0a8a23572c77bbe356",
+    "headRevision": "996245bf29969e885e2be4ae58fdbdddb1223846",
+    "mergeCommit": "4e961579d8c67b215152a6b9d679c97cb69a2d8d",
+    "number": 105,
+    "url": "https://github.com/xinglun/ORG-X/pull/105"
+  },
+  "reason": "PR #105 merged after all hosted checks passed; the exact remote/local branch and dedicated worktree were then removed.",
+  "receiptId": "wi-telegram-splitter-overflow-finalization-20260831",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-telegram-splitter-overflow",
+    "provider": "github",
+    "pullRequest": "https://github.com/xinglun/ORG-X/pull/105",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-splitter-overflow"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:6b3bd6617c6372a17b1edf6f9dc9dbc016779146f67262265fd12d2a488bbc53",
+  "runtimeVersion": "0.2.47",
+  "schemaVersion": 1,
+  "timestamp": "2026-08-31T04:20:00Z",
+  "workItemId": "wi-telegram-splitter-overflow",
+  "worktree": {
+    "branch": "codex/wi-telegram-splitter-overflow",
+    "headRevision": "996245bf29969e885e2be4ae58fdbdddb1223846",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-splitter-overflow",
+    "worktreeId": "wi-telegram-splitter-overflow"
+  }
+}

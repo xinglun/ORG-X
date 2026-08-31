@@ -2414,7 +2414,23 @@ fn task4_telegram_delivery_preserves_chunk_order_and_redacts_errors() {
     assert!(sent
         .join("\n")
         .contains("https://example.test/evidence/2026"));
-    assert_eq!(sent[0], report.markdown()[..sent[0].len()]);
+    let total_pages = sent.len();
+    for (index, page) in sent.iter().enumerate() {
+        assert!(
+            page.starts_with(&format!("{}/{}\n", index + 1, total_pages)),
+            "page {} should start with its one-based number and total",
+            index + 1
+        );
+    }
+    let unnumbered = sent
+        .iter()
+        .map(|page| {
+            page.split_once('\n')
+                .expect("numbered page should contain a header newline")
+                .1
+        })
+        .collect::<String>();
+    assert_eq!(unnumbered, report.markdown());
     for pair in sent.windows(2) {
         assert_ne!(pair[0], pair[1]);
     }

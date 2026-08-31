@@ -102,6 +102,11 @@ impl SemanticMessageChunk {
         &self.markdown
     }
 
+    /// Rebuilds this chunk with caller-supplied Markdown while retaining its semantic boundary.
+    pub(crate) fn with_markdown(&self, markdown: String) -> Self {
+        Self::new(self.boundary, markdown)
+    }
+
     /// Returns the Unicode scalar character count.
     pub const fn character_count(&self) -> usize {
         self.character_count

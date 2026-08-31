@@ -1,0 +1,45 @@
+{
+  "acceptanceCriteria": [
+    "A1: 每个 Telegram 分页消息首行显示从 1 开始的 n/total 页号。",
+    "A2: 8 页场景显示 1/8 至 8/8，正文、顺序和语义边界不变。",
+    "A3: 页号纳入字符数和行数预算，失败重试仍只重试当前页。",
+    "A4: 聚焦测试、完整 Rust 测试、fmt、Clippy 和 AI Cockpit 验证通过。"
+  ],
+  "authority": "authorized",
+  "baseRevision": "ca1541140c62dd56b7c1804d5813aede6e9881f6",
+  "createdAt": "2026-08-31T04:50:56Z",
+  "goal": "让每个 Telegram 分页消息首行显示 n/total，同时保持正文、语义边界、限额和重试行为不变。",
+  "intent": "为 Telegram 多页报告增加首行页号，明确当前页和总页数。",
+  "mode": "code",
+  "outOfScope": [
+    "证据主体归属、Structural Evidence Gate 和 Reference Model 语义修复",
+    "Telegram 凭据、真实外部发布和 data 分支"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:9ad91acffda2453fda94bf7727bb9709b13628b2763a35e21af7301088e66d15",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-telegram-page-numbering",
+    "provider": "local",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-page-numbering"
+  },
+  "risk": "normal",
+  "scope": [
+    "src/features/weekly_radar/runtime/telegram.rs",
+    "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+    "tests/weekly_radar_runtime.rs"
+  ],
+  "sources": [],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-telegram-page-numbering"
+}

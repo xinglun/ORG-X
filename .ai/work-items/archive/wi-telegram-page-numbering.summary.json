@@ -1,0 +1,105 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "number_page prefixes each Telegram chunk with n/total on its first line",
+          "path": "src/features/weekly_radar/runtime/telegram.rs",
+          "type": "implementation",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "page_numbering_tests::prefixes_each_of_eight_semantic_pages_with_one_based_number_and_total asserts 1/8 through 8/8 and exact body preservation",
+          "path": "src/features/weekly_radar/runtime/telegram.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "task4_telegram_delivery_preserves_chunk_order_and_redacts_errors asserts numbered headers, body order, redaction, and current-page-only retry",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "passed=true; runtimeVersion=0.2.47; current Contract and repository snapshot bound",
+          "path": ".ai/evidence/wi-telegram-page-numbering.verification.json",
+          "type": "runtime",
+          "verification": "passed"
+        },
+        {
+          "locator": "exit=0",
+          "path": "cargo test --locked --all",
+          "type": "command",
+          "verification": "passed"
+        },
+        {
+          "locator": "exit=0",
+          "path": "cargo fmt --all -- --check",
+          "type": "command",
+          "verification": "passed"
+        },
+        {
+          "locator": "exit=0",
+          "path": "cargo clippy --locked --all-targets --all-features -- -D warnings",
+          "type": "command",
+          "verification": "passed"
+        }
+      ]
+    }
+  ],
+  "changedPaths": [
+    ".ai/work-items/archive/wi-telegram-page-numbering.contract.json",
+    ".ai/work-items/archive/wi-telegram-page-numbering.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T04:51:14Z",
+  "checkpointContractDigest": "sha256:65f9873dfc167ed6a84370e3217de736f263fd9012af4613c2211e7c052f5fa6",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:6d52927e20325d1b779786770c6b30f40f91914eee8defa187b5d116bcbfe0cc",
+  "createdAt": "2026-08-31T04:50:56Z",
+  "failedGate": "finish.governance",
+  "intentAlignment": {
+    "evidence": [
+      "src/features/weekly_radar/runtime/telegram.rs",
+      "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "tests/weekly_radar_runtime.rs",
+      ".ai/evidence/wi-telegram-page-numbering.verification.json"
+    ],
+    "reason": "The implementation adds only the requested Telegram page prefix and its exact budget-aware regression coverage while preserving semantic chunk bodies, ordering, and retry behavior.",
+    "state": "resolved"
+  },
+  "mode": "code",
+  "outcomeState": "blocked",
+  "preflightAt": "2026-08-31T05:10:41Z",
+  "preflightContractDigest": "sha256:65f9873dfc167ed6a84370e3217de736f263fd9012af4613c2211e7c052f5fa6",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:6d52927e20325d1b779786770c6b30f40f91914eee8defa187b5d116bcbfe0cc",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T05:12:40Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-telegram-page-numbering"
+}

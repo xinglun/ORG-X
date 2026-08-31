@@ -1,0 +1,58 @@
+{
+  "actor": "xinglun",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "user confirmation: 按此方案执行即可",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "b0223841ad1568174a8410dff70e624139c7c88e",
+    "name": "codex/wi-cross-subject-attribution",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:65bcdbd3396af911785709de0bd7ac385206be65215ae94f15ee0fab439037a6",
+  "operationId": "github-pr-115-cleanup-20260831",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "346cf3d3fedf00507309b3fb5df78a4591379fcf",
+    "headRevision": "b0223841ad1568174a8410dff70e624139c7c88e",
+    "mergeCommit": "01f17c49fe7a7ec2a2bd3a2cec594b0ab0397bb8",
+    "number": 115,
+    "url": "not_applicable"
+  },
+  "reason": "PR #115 merged by xinglun; exact remote/local branch and worktree removed after merge.",
+  "receiptId": "wi-cross-subject-attribution-cleanup-20260831",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-cross-subject-attribution",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-cross-subject-attribution"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:b0e4183bee2da252a0522ead3e1b5d9e20dd1577e3ce62b08f3e198c542e1176",
+  "runtimeVersion": "0.2.48",
+  "schemaVersion": 1,
+  "timestamp": "2026-08-31T09:55:30Z",
+  "workItemId": "wi-cross-subject-attribution",
+  "worktree": {
+    "branch": "codex/wi-cross-subject-attribution",
+    "headRevision": "b0223841ad1568174a8410dff70e624139c7c88e",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-cross-subject-attribution",
+    "worktreeId": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-cross-subject-attribution"
+  }
+}

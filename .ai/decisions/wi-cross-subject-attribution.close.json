@@ -1,0 +1,134 @@
+{
+  "decisionState": "confirmed",
+  "finalReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-cross-subject-attribution.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:4caf475d768fb0fa65e8ff9ce146ec71bcbb2b85b98f83cc6229de0a52f98ffb",
+      "workItemId": "wi-cross-subject-attribution"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-cross-subject-attribution.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-cross-subject-attribution.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-cross-subject-attribution.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-cross-subject-attribution.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-cross-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-cross-subject-attribution.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-cross-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "Human decision 'approved' by xinglun via user confirmation: 按此方案执行即可 at 2026-08-31T09:56:30Z."
+        }
+      ],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-cross-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-cross-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-cross-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-cross-subject-attribution.contract.json"
+          ],
+          "inference": false,
+          "text": "强制 subject_company == assessed_company 才能进入被评估公司的 Structural Evidence，并用真实生产原句形成回归；外部主体事实仍保留为 ValidatedFact。"
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-cross-subject-attribution.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-cross-subject-attribution"
+  },
+  "finalReportDigest": "sha256:744936d7f6722c4bc7ab4eb3a40090b1065e3463f030250c0d4df4c3ba78371e",
+  "humanDecision": "approved",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceFinalizationHeadDigest": "sha256:3092d4a951428874f7a391beac56eb72d491d54593a02c2d22cac621bdf007f2",
+  "resourceFinalizationHeadPath": ".ai/decisions/wi-cross-subject-attribution.finalize.json",
+  "resourceFinalizationSequence": 0,
+  "state": "closed",
+  "structuredDecision": {
+    "actor": "xinglun",
+    "authoritySource": "user confirmation: 按此方案执行即可",
+    "decidedAt": "2026-08-31T09:56:30Z",
+    "decision": "approved",
+    "evidenceRefs": [
+      ".ai/evidence/wi-cross-subject-attribution.verification.json"
+    ],
+    "policyRefs": [],
+    "reason": "WI-2 verification passed; PR #115 merged by xinglun, exact branch/worktree cleanup verified, and finalization receipt verified.",
+    "resumeCondition": null
+  },
+  "timestamp": "2026-08-31T09:56:00Z",
+  "workItemId": "wi-cross-subject-attribution"
+}

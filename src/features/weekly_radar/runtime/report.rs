@@ -676,7 +676,9 @@ fn is_validated_evidence_fact(fact: &NormalizedFact) -> bool {
 }
 
 fn is_structural_evidence_fact(fact: &NormalizedFact) -> bool {
-    is_validated_evidence_fact(fact) && fact.kind().starts_with("evidence_structural_change_")
+    is_validated_evidence_fact(fact)
+        && fact.kind().starts_with("evidence_structural_change_")
+        && fact.is_structural_evidence()
 }
 
 fn is_confirmed_information_fact(fact: &NormalizedFact) -> bool {

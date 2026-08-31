@@ -765,6 +765,24 @@ impl NormalizedFact {
         self.structural_evidence_contract.as_ref()
     }
 
+    /// Returns whether this fact is allowed to enter the Structural Evidence
+    /// report and its derived structural count.
+    ///
+    /// The dimension and naming convention are metadata only. Promotion is
+    /// fail-closed unless the complete semantic contract is present, valid,
+    /// and matches the fact's dimension.
+    pub fn is_structural_evidence(&self) -> bool {
+        self.status == FactStatus::Known
+            && self.structural_dimension.is_some()
+            && self
+                .structural_evidence_contract
+                .as_ref()
+                .is_some_and(|contract| {
+                    contract.validate().is_ok()
+                        && Some(contract.change_type()) == self.structural_dimension
+                })
+    }
+
     /// Attaches the semantic contract used to promote this fact.
     pub fn with_structural_evidence_contract(
         mut self,

@@ -1,0 +1,58 @@
+{
+  "actor": "xinglun",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "user request: 合并，清理",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "ad6e54abbc2cec600e11f2de096820b2251ff9a6",
+    "name": "codex/wi-telegram-page-numbering",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:414f6bfd27db5d9ea54795be96bdc440cbf24f846804831fe0996dfd16399fad",
+  "operationId": "github-pr-108-cleanup-20260831",
+  "provider": "local",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "ca1541140c62dd56b7c1804d5813aede6e9881f6",
+    "headRevision": "ad6e54abbc2cec600e11f2de096820b2251ff9a6",
+    "mergeCommit": "2baf16724848e5f16a240d73443bb995c14e4aa7",
+    "number": 108,
+    "url": "not_applicable"
+  },
+  "reason": "PR #108 merged by xinglun; exact branch and worktree removed and verified.",
+  "receiptId": "wi-telegram-page-numbering-cleanup-20260831",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-telegram-page-numbering",
+    "provider": "local",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-page-numbering"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:6b3bd6617c6372a17b1edf6f9dc9dbc016779146f67262265fd12d2a488bbc53",
+  "runtimeVersion": "0.2.47",
+  "schemaVersion": 1,
+  "timestamp": "2026-08-31T06:50:07Z",
+  "workItemId": "wi-telegram-page-numbering",
+  "worktree": {
+    "branch": "codex/wi-telegram-page-numbering",
+    "headRevision": "ad6e54abbc2cec600e11f2de096820b2251ff9a6",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-page-numbering",
+    "worktreeId": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-page-numbering"
+  }
+}

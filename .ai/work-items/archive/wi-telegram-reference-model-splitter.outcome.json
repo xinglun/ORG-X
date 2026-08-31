@@ -129,7 +129,7 @@
     "workItemId": "wi-telegram-reference-model-splitter"
   },
   "taskReportDigest": "sha256:b8ac791487c813296083f9903b5877ff992c3f6e18a7600846f972c78e50bf35",
-  "taskReportMarkdownDigest": "sha256:e9d5bddba0a0d4284dc7cf7b0e2d08df7239af1af90568ec3b07b72b03fbc1e8",
+  "taskReportMarkdownDigest": "sha256:6fda5dd8ba5fba6bd007cfc8d80e99ce8c54e448c3669850ba82f3713c839475",
   "unknowns": [
     "user_visible_benefit_not_declared"
   ],

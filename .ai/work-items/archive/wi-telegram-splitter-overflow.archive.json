@@ -8,7 +8,7 @@
     "contractPath": ".ai/work-items/archive/wi-telegram-splitter-overflow.contract.json",
     "eventsDigest": "sha256:e662efe443d6975852be57b1aea3b78109f04d7d8818a822eb1f8696ea5885c4",
     "eventsPath": ".ai/work-items/archive/wi-telegram-splitter-overflow.events.jsonl",
-    "outcomeDigest": "sha256:23dc06dbc903c57e8e22d3c82211830bc1df1be6c975fd73396db4da80b9e7c9",
+    "outcomeDigest": "sha256:64d88f4aee922a6802a834da0e42331947e4983c1cb0a2f3707718e8634bd49d",
     "outcomePath": ".ai/work-items/archive/wi-telegram-splitter-overflow.outcome.json",
     "summaryDigest": "sha256:9fa29cc4a03c90434b16ddeb947b05dc6acd405db9a031d5087bf466e3c94d21",
     "summaryPath": ".ai/work-items/archive/wi-telegram-splitter-overflow.summary.json",

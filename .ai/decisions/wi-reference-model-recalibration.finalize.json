@@ -1,0 +1,58 @@
+{
+  "actor": "xinglun",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "user request: 合并，清理",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "b983b572c62a33fc6230167cc1ad90378810d495",
+    "name": "codex/wi-reference-model-recalibration",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:b3e70f7f0d9b1e563586a686f694644f51a5f553d6490c1ad7ecc5385f170247",
+  "operationId": "probe",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "ca1541140c62dd56b7c1804d5813aede6e9881f6",
+    "headRevision": "b983b572c62a33fc6230167cc1ad90378810d495",
+    "mergeCommit": "dea6e9ae82204f6f106c8be2ff7447e7a17ee2fa",
+    "number": 111,
+    "url": "not_applicable"
+  },
+  "reason": "Merged PR #111 and removed the exact branch and worktree after verification.",
+  "receiptId": "probe",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-reference-model-recalibration",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-reference-model-recalibration"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:6b3bd6617c6372a17b1edf6f9dc9dbc016779146f67262265fd12d2a488bbc53",
+  "runtimeVersion": "0.2.47",
+  "schemaVersion": 1,
+  "timestamp": "2026-08-31T06:30:00Z",
+  "workItemId": "wi-reference-model-recalibration",
+  "worktree": {
+    "branch": "codex/wi-reference-model-recalibration",
+    "headRevision": "b983b572c62a33fc6230167cc1ad90378810d495",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-reference-model-recalibration",
+    "worktreeId": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-reference-model-recalibration"
+  }
+}

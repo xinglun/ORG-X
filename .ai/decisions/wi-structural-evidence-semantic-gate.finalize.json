@@ -1,0 +1,58 @@
+{
+  "actor": "xinglun",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "user request: 合并，清理",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "cb9e29dfc293fcc9792c132e3f29576af6c4343e",
+    "name": "codex/wi-structural-evidence-semantic-gate",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:8729cb57b2efba4be807504496cb73220d82ee233b2aa620a43516a47d0d7770",
+  "operationId": "probe",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "ca1541140c62dd56b7c1804d5813aede6e9881f6",
+    "headRevision": "cb9e29dfc293fcc9792c132e3f29576af6c4343e",
+    "mergeCommit": "3731895219bbac46201b15117078ad5961385433",
+    "number": 110,
+    "url": "not_applicable"
+  },
+  "reason": "Merged PR #110 and removed the exact branch and worktree after verification.",
+  "receiptId": "probe",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-structural-evidence-semantic-gate",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-structural-evidence-semantic-gate"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:6b3bd6617c6372a17b1edf6f9dc9dbc016779146f67262265fd12d2a488bbc53",
+  "runtimeVersion": "0.2.47",
+  "schemaVersion": 1,
+  "timestamp": "2026-08-31T06:30:00Z",
+  "workItemId": "wi-structural-evidence-semantic-gate",
+  "worktree": {
+    "branch": "codex/wi-structural-evidence-semantic-gate",
+    "headRevision": "cb9e29dfc293fcc9792c132e3f29576af6c4343e",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-structural-evidence-semantic-gate",
+    "worktreeId": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-structural-evidence-semantic-gate"
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "decisionState": "confirmed",
+  "finalReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:8ff5a34f74823f9bf50d6293f507dc72b84641c5b4122b14b4e65da26e153f79",
+      "workItemId": "wi-structural-evidence-semantic-gate"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-evidence-semantic-gate.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-structural-evidence-semantic-gate.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-evidence-semantic-gate.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-structural-evidence-semantic-gate.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [
+        {
+          "evidenceRefs": [
+            ".ai/decisions/wi-structural-evidence-semantic-gate.finalize.json",
+            ".ai/work-items/archive/wi-structural-evidence-semantic-gate.archive.json"
+          ],
+          "inference": false,
+          "text": "Human decision 'approved' by xinglun via user request: 合并，清理 at 2026-08-31T06:30:00Z."
+        }
+      ],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-evidence-semantic-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-evidence-semantic-gate.contract.json"
+          ],
+          "inference": false,
+          "text": "让每条 Structural Evidence 具备主体、变化类型、生产单元、before/after 状态、来源角色和结构相关性，并仅在自身证据满足 Gate 时升级。"
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-evidence-semantic-gate.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-structural-evidence-semantic-gate"
+  },
+  "finalReportDigest": "sha256:a94e4d08fdf67c5b3111992655a8c5c70c82f87ac7f08ce4f52c02b817278df5",
+  "humanDecision": "approved",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceFinalizationHeadDigest": "sha256:981b34955a3088e06642bc54e265b76df5aabf50c584786183768e8bc7ce8729",
+  "resourceFinalizationHeadPath": ".ai/decisions/wi-structural-evidence-semantic-gate.finalize.json",
+  "resourceFinalizationSequence": 0,
+  "state": "closed",
+  "structuredDecision": {
+    "actor": "xinglun",
+    "authoritySource": "user request: 合并，清理",
+    "decidedAt": "2026-08-31T06:30:00Z",
+    "decision": "approved",
+    "evidenceRefs": [
+      ".ai/decisions/wi-structural-evidence-semantic-gate.finalize.json",
+      ".ai/work-items/archive/wi-structural-evidence-semantic-gate.archive.json"
+    ],
+    "policyRefs": [],
+    "reason": "PR #110 merged by xinglun; exact branch and worktree removed and verified.",
+    "resumeCondition": null
+  },
+  "timestamp": "2026-08-31T06:40:52Z",
+  "workItemId": "wi-structural-evidence-semantic-gate"
+}

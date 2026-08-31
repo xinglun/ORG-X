@@ -1,0 +1,58 @@
+{
+  "actor": "xinglun",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "user confirmation: 按此方案执行即可",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "d07231eed859dfd60d108e8e147abe17e3eaf00e",
+    "name": "codex/wi-structural-promotion-hard-gate",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:3d7feed62c8ea89108822a69bff43703ac05190bfde9f10cbc90ab4ae1eeeb92",
+  "operationId": "github-pr-114-cleanup-20260831",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "135fcae2991f28b780934cbb7f2a5dbd88f9fe3d",
+    "headRevision": "d07231eed859dfd60d108e8e147abe17e3eaf00e",
+    "mergeCommit": "f0dcc7ecb8966d2783b881f0153eb997f51c7864",
+    "number": 114,
+    "url": "not_applicable"
+  },
+  "reason": "PR #114 merged by xinglun; exact remote/local branch and worktree removed after merge.",
+  "receiptId": "wi-structural-promotion-hard-gate-cleanup-20260831",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-structural-promotion-hard-gate",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-structural-promotion-hard-gate"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:b0e4183bee2da252a0522ead3e1b5d9e20dd1577e3ce62b08f3e198c542e1176",
+  "runtimeVersion": "0.2.48",
+  "schemaVersion": 1,
+  "timestamp": "2026-08-31T09:34:45Z",
+  "workItemId": "wi-structural-promotion-hard-gate",
+  "worktree": {
+    "branch": "codex/wi-structural-promotion-hard-gate",
+    "headRevision": "d07231eed859dfd60d108e8e147abe17e3eaf00e",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-structural-promotion-hard-gate",
+    "worktreeId": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-structural-promotion-hard-gate"
+  }
+}

@@ -15,13 +15,34 @@ use crate::features::weekly_radar::infrastructure::telegram_publisher::{
     TelegramTransportError, TELEGRAM_BOT_TOKEN_ENV, TELEGRAM_CHAT_ID_ENV,
 };
 use crate::features::weekly_radar::interface::semantic_message_splitter::{
-    SemanticMessageSplitter, SemanticSplitError, SemanticSplitLimits,
+    SemanticMessageChunk, SemanticMessageSplit, SemanticMessageSplitter, SemanticSplitError,
+    SemanticSplitLimits,
 };
 
 const TELEGRAM_API: &str = "https://api.telegram.org";
 const MAX_TELEGRAM_RESPONSE_BYTES: usize = 64 * 1024;
 const TELEGRAM_MAX_CHARACTERS: usize = 4_096;
 const TELEGRAM_MAX_LINES: usize = 120;
+
+fn page_header(page_number: usize, total_pages: usize) -> String {
+    format!("{page_number}/{total_pages}\n")
+}
+
+fn number_page(page_number: usize, total_pages: usize, markdown: &str) -> String {
+    format!("{}{markdown}", page_header(page_number, total_pages))
+}
+
+fn numbered_chunks(split: &SemanticMessageSplit) -> Vec<SemanticMessageChunk> {
+    let total_pages = split.chunks().len();
+    split
+        .chunks()
+        .iter()
+        .enumerate()
+        .map(|(index, chunk)| {
+            chunk.with_markdown(number_page(index + 1, total_pages, chunk.markdown()))
+        })
+        .collect()
+}
 
 /// Public, secret-safe failures for report rendering and delivery.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -347,6 +368,37 @@ fn map_publisher_error(
     })
 }
 
+fn split_for_telegram_delivery(
+    report: &RenderedReport,
+) -> Result<Vec<SemanticMessageChunk>, TelegramError> {
+    let max_lines = TELEGRAM_MAX_LINES
+        .checked_sub(1)
+        .ok_or(TelegramError::InvalidReport)?;
+    let mut max_characters = TELEGRAM_MAX_CHARACTERS;
+
+    loop {
+        let limits =
+            SemanticSplitLimits::new(max_characters, max_lines).map_err(map_split_error)?;
+        let split =
+            SemanticMessageSplitter::split(report.markdown(), limits).map_err(map_split_error)?;
+        if split.is_empty() {
+            return Err(TelegramError::InvalidReport);
+        }
+
+        let total_pages = split.chunks().len();
+        let page_header_characters = page_header(total_pages, total_pages).chars().count();
+        let required_max_characters = TELEGRAM_MAX_CHARACTERS
+            .checked_sub(page_header_characters)
+            .ok_or(TelegramError::InvalidReport)?;
+        if max_characters != required_max_characters {
+            max_characters = required_max_characters;
+            continue;
+        }
+
+        return Ok(numbered_chunks(&split));
+    }
+}
+
 /// Splits and delivers a rendered report using credentials from the environment.
 pub fn send_rendered_report(
     report: &RenderedReport,
@@ -369,19 +421,13 @@ pub fn send_rendered_report_with_transport<T: TelegramTransport + ?Sized>(
     transport: &T,
     policy: TelegramRetryPolicy,
 ) -> Result<TelegramDeliveryReceipt, TelegramError> {
-    let limits = SemanticSplitLimits::new(TELEGRAM_MAX_CHARACTERS, TELEGRAM_MAX_LINES)
-        .expect("Telegram delivery limits are non-zero");
-    let split =
-        SemanticMessageSplitter::split(report.markdown(), limits).map_err(map_split_error)?;
-    if split.is_empty() {
-        return Err(TelegramError::InvalidReport);
-    }
+    let numbered_chunks = split_for_telegram_delivery(report)?;
     let publisher = TelegramPublisherAdapter::new(destination, BorrowedTransport(transport))
         .map_err(|_| TelegramError::InvalidReport)?;
-    let mut message_ids = Vec::with_capacity(split.chunks().len());
-    let mut attempts_used = Vec::with_capacity(split.chunks().len());
+    let mut message_ids = Vec::with_capacity(numbered_chunks.len());
+    let mut attempts_used = Vec::with_capacity(numbered_chunks.len());
 
-    for (chunk_index, chunk) in split.chunks().iter().enumerate() {
+    for (chunk_index, chunk) in numbered_chunks.iter().enumerate() {
         let mut delivered = None;
         for attempt in 1..=policy.max_attempts() {
             match publisher.publish_chunks_with_ids(std::slice::from_ref(chunk)) {
@@ -428,4 +474,52 @@ pub fn send_rendered_report_with_transport<T: TelegramTransport + ?Sized>(
         message_ids,
         attempts: attempts_used,
     })
+}
+
+#[cfg(test)]
+mod page_numbering_tests {
+    use super::{numbered_chunks, SemanticMessageSplitter, SemanticSplitLimits};
+
+    #[test]
+    fn prefixes_each_of_eight_semantic_pages_with_one_based_number_and_total() {
+        let rendered = concat!(
+            "## AI 时代范本验证\n",
+            "### Acme\n- one\n- two\n- three\n",
+            "### Beta\n- one\n- two\n- three\n",
+            "### Gamma\n- one\n- two\n- three\n",
+            "### Delta\n- one\n- two\n- three\n",
+            "### Epsilon\n- one\n- two\n- three\n",
+            "### Zeta\n- one\n- two\n- three\n",
+            "### Eta\n- one\n- two\n- three\n",
+            "### Theta\n- one\n- two\n- three\n",
+        );
+        let split = SemanticMessageSplitter::split(
+            rendered,
+            SemanticSplitLimits::new(4_096, 5).expect("test limits should be valid"),
+        )
+        .expect("eight complete entries should become eight pages");
+        assert_eq!(split.chunks().len(), 8);
+
+        let numbered = numbered_chunks(&split);
+        let headers = numbered
+            .iter()
+            .map(|chunk| chunk.markdown().lines().next().expect("page has a header"))
+            .collect::<Vec<_>>();
+        assert_eq!(
+            headers,
+            ["1/8", "2/8", "3/8", "4/8", "5/8", "6/8", "7/8", "8/8"]
+        );
+
+        let unnumbered = numbered
+            .iter()
+            .map(|chunk| {
+                chunk
+                    .markdown()
+                    .split_once('\n')
+                    .expect("page should contain a header newline")
+                    .1
+            })
+            .collect::<String>();
+        assert_eq!(unnumbered, rendered);
+    }
 }

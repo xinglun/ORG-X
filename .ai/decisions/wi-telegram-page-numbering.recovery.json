@@ -1,0 +1,29 @@
+{
+  "actor": "human:owner",
+  "authoritySource": "user-request-2026-08-31",
+  "decidedAt": "2026-08-31T05:08:53Z",
+  "decision": "retry",
+  "decisionId": "work-item-recovery",
+  "evidenceRefs": [
+    ".ai/work-items/active/wi-telegram-page-numbering.outcome.json",
+    ".ai/evidence/wi-telegram-page-numbering.verification.json",
+    ".ai/work-items/active/wi-telegram-page-numbering.contract.json"
+  ],
+  "policyRefs": [
+    "AGENTS.md",
+    ".ai/README.md",
+    ".ai/glossary.md"
+  ],
+  "predecessorContractDigest": "sha256:65f9873dfc167ed6a84370e3217de736f263fd9012af4613c2211e7c052f5fa6",
+  "predecessorEventsDigest": "sha256:3b8d28daf7f16b520d165892e75561da39a370a0fdaab503a08629e705368eda",
+  "predecessorOutcomeDigest": "sha256:19130f0f0b0c97a491e7316363efef0f395d4a380fdc4106daa938bf43e4baf3",
+  "predecessorSummaryDigest": "sha256:581c1cc094ebae8077cd353e648aa42b12c73dc02ff3e4ed85a462abea60c91e",
+  "predecessorWorkItemId": "wi-telegram-page-numbering",
+  "reason": "Retry the current Telegram page-numbering Work Item after binding its complete local finalization context and recovering the persisted finish governance failure.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resumeCondition": "Rerun preflight and fresh verification, then retry finish after the current Contract and recovery bindings pass.",
+  "runtimeDigest": "sha256:6b3bd6617c6372a17b1edf6f9dc9dbc016779146f67262265fd12d2a488bbc53",
+  "runtimeVersion": "0.2.47",
+  "schemaVersion": 1,
+  "workItemId": "wi-telegram-page-numbering"
+}

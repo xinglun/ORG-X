@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-08-31T05:17:09Z",
+  "files": {
+    "contractDigest": "sha256:414f6bfd27db5d9ea54795be96bdc440cbf24f846804831fe0996dfd16399fad",
+    "contractPath": ".ai/work-items/archive/wi-telegram-page-numbering.contract.json",
+    "eventsDigest": "sha256:0e13e90328fb357acfb3ba338939e506804f72b87cdb3394181678e43f45bd1b",
+    "eventsPath": ".ai/work-items/archive/wi-telegram-page-numbering.events.jsonl",
+    "outcomeDigest": "sha256:dc8af05658b86cda05019796229a29ee0854376d9c92599964df83f7569510a9",
+    "outcomePath": ".ai/work-items/archive/wi-telegram-page-numbering.outcome.json",
+    "summaryDigest": "sha256:22932864eb367f591681195db11699fca2d158fd3b0c89d575591b6ebe59416a",
+    "summaryPath": ".ai/work-items/archive/wi-telegram-page-numbering.summary.json",
+    "taskReportDigest": "sha256:6f49d0858a42fa3277351ee7aa2484e57c5ee9b19815bdc4b0daf0ac5c349715",
+    "taskReportMarkdownDigest": "sha256:f72df1c1c3ef9d066d6cb992708eb3ab18c8c086101a64d7edb8e518e665f59e",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-telegram-page-numbering.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-telegram-page-numbering.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-telegram-page-numbering"
+}

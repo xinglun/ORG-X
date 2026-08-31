@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-08-31T05:46:52Z",
+  "files": {
+    "contractDigest": "sha256:4cd61d859ea6c912aa63c558ab6e602d1ec7bd62da93af9a2c1cc1856bda1d52",
+    "contractPath": ".ai/work-items/archive/wi-evidence-subject-attribution.contract.json",
+    "eventsDigest": "sha256:8101b792fa97f6b76a89b9ca9aec8bc62153a1086754c13604969c844c07e2de",
+    "eventsPath": ".ai/work-items/archive/wi-evidence-subject-attribution.events.jsonl",
+    "outcomeDigest": "sha256:0a5814ade6a7a1da2ac066e82720976a3b995d0c277fa00776aa8b07b5690100",
+    "outcomePath": ".ai/work-items/archive/wi-evidence-subject-attribution.outcome.json",
+    "summaryDigest": "sha256:3f6cf663ca3e2349a2f3047630b98ef0dfb0127b1ebb9085eea990be8df8a659",
+    "summaryPath": ".ai/work-items/archive/wi-evidence-subject-attribution.summary.json",
+    "taskReportDigest": "sha256:d6404a9287ac1df3a64f0092a2b57949d2312742fed9d497d8a76ede3d86e255",
+    "taskReportMarkdownDigest": "sha256:f2831af7098ad0ef08f7af55a6127b87e5c5b41f76353f99afa1c49d0f2d9e65",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-evidence-subject-attribution.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-evidence-subject-attribution.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-evidence-subject-attribution"
+}

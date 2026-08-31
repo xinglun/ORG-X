@@ -309,6 +309,102 @@ impl StructuralEvidenceContract {
     }
 }
 
+/// Explicit company-role attribution retained with evidence.
+#[derive(Clone, Debug, Eq, PartialEq, Serialize, Deserialize)]
+pub struct EvidenceAttribution {
+    assessed_company: String,
+    subject_company: String,
+    source_company: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    vendor_company: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    customer_company: Option<String>,
+}
+
+impl EvidenceAttribution {
+    /// Creates an attribution record with required assessed, subject, and source identities.
+    pub fn new(
+        assessed_company: impl Into<String>,
+        subject_company: impl Into<String>,
+        source_company: impl Into<String>,
+        vendor_company: Option<String>,
+        customer_company: Option<String>,
+    ) -> Result<Self, RuntimeError> {
+        let attribution = Self {
+            assessed_company: assessed_company.into(),
+            subject_company: subject_company.into(),
+            source_company: source_company.into(),
+            vendor_company,
+            customer_company,
+        };
+        attribution.validate()?;
+        Ok(attribution)
+    }
+
+    /// Creates an attribution for evidence about the assessed company itself.
+    pub fn same_company(company: impl Into<String>) -> Result<Self, RuntimeError> {
+        let company = company.into();
+        Self::new(company.clone(), company.clone(), company, None, None)
+    }
+
+    /// Validates required identities and optional company roles.
+    pub fn validate(&self) -> Result<(), RuntimeError> {
+        for (field, value) in [
+            ("assessed_company", self.assessed_company.as_str()),
+            ("subject_company", self.subject_company.as_str()),
+            ("source_company", self.source_company.as_str()),
+        ] {
+            if value.trim().is_empty() {
+                return Err(RuntimeError::invalid_model(format!(
+                    "evidence attribution {field} cannot be blank"
+                )));
+            }
+        }
+        for (field, value) in [
+            ("vendor_company", self.vendor_company.as_deref()),
+            ("customer_company", self.customer_company.as_deref()),
+        ] {
+            if value.is_some_and(|value| value.trim().is_empty()) {
+                return Err(RuntimeError::invalid_model(format!(
+                    "evidence attribution {field} cannot be blank"
+                )));
+            }
+        }
+        Ok(())
+    }
+
+    /// Returns the configured company being assessed.
+    pub fn assessed_company(&self) -> &str {
+        &self.assessed_company
+    }
+
+    /// Returns the company the claim is actually about.
+    pub fn subject_company(&self) -> &str {
+        &self.subject_company
+    }
+
+    /// Returns the company publishing or supplying the source.
+    pub fn source_company(&self) -> &str {
+        &self.source_company
+    }
+
+    /// Returns the vendor identity when the claim has an explicit vendor role.
+    pub fn vendor_company(&self) -> Option<&str> {
+        self.vendor_company.as_deref()
+    }
+
+    /// Returns the customer identity when the claim has an explicit customer role.
+    pub fn customer_company(&self) -> Option<&str> {
+        self.customer_company.as_deref()
+    }
+
+    /// Returns whether the claim subject is the assessed company, ignoring case.
+    pub fn subject_is_assessed_company(&self) -> bool {
+        self.assessed_company
+            .eq_ignore_ascii_case(&self.subject_company)
+    }
+}
+
 /// One provider-neutral fact ready for deterministic report assembly.
 #[derive(Clone, Debug, Eq, PartialEq, Serialize)]
 pub struct NormalizedFact {
@@ -327,6 +423,8 @@ pub struct NormalizedFact {
     reference_model_periods: Vec<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     structural_evidence_contract: Option<StructuralEvidenceContract>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    attribution: Option<EvidenceAttribution>,
     status: FactStatus,
     confidence: Confidence,
     provenance: Provenance,
@@ -354,6 +452,7 @@ impl<'de> Deserialize<'de> for NormalizedFact {
             reference_model_periods: Vec<String>,
             #[serde(default)]
             structural_evidence_contract: Option<StructuralEvidenceContract>,
+            attribution: Option<EvidenceAttribution>,
             status: FactStatus,
             confidence: Confidence,
             provenance: Provenance,
@@ -376,7 +475,10 @@ impl<'de> Deserialize<'de> for NormalizedFact {
         let fact = fact
             .with_reference_model_periods(wire.reference_model_periods)
             .map_err(|error| D::Error::custom(error.to_string()))?;
-        fact.with_optional_structural_evidence_contract(wire.structural_evidence_contract)
+        let fact = fact
+            .with_optional_structural_evidence_contract(wire.structural_evidence_contract)
+            .map_err(|error| D::Error::custom(error.to_string()))?;
+        fact.with_optional_attribution(wire.attribution)
             .map_err(|error| D::Error::custom(error.to_string()))
     }
 }
@@ -498,14 +600,18 @@ impl NormalizedFact {
         confidence: Confidence,
         provenance: Provenance,
     ) -> Result<Self, RuntimeError> {
+        let company_id = company_id.into();
         let value = match status {
             FactStatus::Known => Some(value.ok_or_else(|| {
                 RuntimeError::invalid_model("confirmed fact value cannot be absent")
             })?),
             FactStatus::Unknown | FactStatus::Unavailable | FactStatus::Unconfirmed => None,
         };
+        let attribution = structural_dimension
+            .map(|_| EvidenceAttribution::same_company(&company_id))
+            .transpose()?;
         let fact = Self {
-            company_id: company_id.into(),
+            company_id,
             kind: kind.into(),
             value,
             structural_dimension,
@@ -514,6 +620,7 @@ impl NormalizedFact {
             reference_model_source_role,
             reference_model_periods: Vec::new(),
             structural_evidence_contract: None,
+            attribution,
             status,
             confidence,
             provenance,
@@ -537,6 +644,14 @@ impl NormalizedFact {
             if self.structural_dimension != Some(contract.change_type()) {
                 return Err(RuntimeError::invalid_model(
                     "structural evidence contract change type must match fact dimension",
+                ));
+            }
+        }
+        if let Some(attribution) = &self.attribution {
+            attribution.validate()?;
+            if self.structural_dimension.is_some() && !attribution.subject_is_assessed_company() {
+                return Err(RuntimeError::invalid_model(
+                    "structural fact subject must match assessed company",
                 ));
             }
         }
@@ -576,6 +691,34 @@ impl NormalizedFact {
     /// Returns the optional source provenance role retained for reference-model claims.
     pub const fn reference_model_source_role(&self) -> Option<ReferenceModelSourceRole> {
         self.reference_model_source_role
+    }
+
+    /// Returns explicit company-role attribution when retained.
+    pub fn attribution(&self) -> Option<&EvidenceAttribution> {
+        self.attribution.as_ref()
+    }
+
+    /// Attaches explicit company-role attribution to this fact.
+    pub fn with_attribution(
+        mut self,
+        attribution: EvidenceAttribution,
+    ) -> Result<Self, RuntimeError> {
+        attribution.validate()?;
+        self.attribution = Some(attribution);
+        self.validate()?;
+        Ok(self)
+    }
+
+    fn with_optional_attribution(
+        mut self,
+        attribution: Option<EvidenceAttribution>,
+    ) -> Result<Self, RuntimeError> {
+        if let Some(attribution) = attribution {
+            attribution.validate()?;
+            self.attribution = Some(attribution);
+        }
+        self.validate()?;
+        Ok(self)
     }
 
     /// Attaches an explicit provenance role without changing the fact identity.

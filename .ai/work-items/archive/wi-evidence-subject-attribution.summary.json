@@ -1,0 +1,128 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "EvidenceAttribution and NormalizedFact::attribution",
+          "path": "src/features/weekly_radar/runtime/model.rs",
+          "type": "implementation",
+          "verification": "passed"
+        },
+        {
+          "locator": "project-command-0; passed=true",
+          "path": ".ai/evidence/wi-evidence-subject-attribution.verification.json",
+          "type": "command",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "ValidatedEvidence::structural_dimension",
+          "path": "src/features/weekly_radar/runtime/evidence.rs",
+          "type": "implementation",
+          "verification": "passed"
+        },
+        {
+          "locator": "supplier_customer_story_records_explicit_subject_attribution",
+          "path": "src/features/weekly_radar/runtime/evidence.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "supplier_customer_story_records_explicit_subject_attribution",
+          "path": "src/features/weekly_radar/runtime/evidence.rs",
+          "type": "test",
+          "verification": "passed"
+        },
+        {
+          "locator": "passed=true",
+          "path": ".ai/evidence/wi-evidence-subject-attribution.verification.json",
+          "type": "runtime",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "No Telegram changes; only weekly_radar evidence/model paths changed",
+          "path": "src/features/weekly_radar/runtime/evidence.rs",
+          "type": "scope",
+          "verification": "passed"
+        }
+      ]
+    }
+  ],
+  "changedPaths": [
+    ".ai/work-items/archive/wi-evidence-subject-attribution.contract.json",
+    ".ai/work-items/archive/wi-evidence-subject-attribution.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T05:30:57Z",
+  "checkpointContractDigest": "sha256:8ea0a39e282fc856fa562a5d921d8f03d9e1bd9af53302c271854701bdbe14f7",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:14315d7f4c2d41cdfee249b9b42cb4997e5054e2c3e87e55f814f8c31f6133c8",
+  "createdAt": "2026-08-31T04:48:36Z",
+  "failedGate": "finish.governance",
+  "intentAlignment": {
+    "constraintsRespected": true,
+    "evidence": [
+      "src/features/weekly_radar/runtime/model.rs",
+      "src/features/weekly_radar/runtime/evidence.rs",
+      ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+    ],
+    "nonGoalsAvoided": true,
+    "problemResolved": true,
+    "rationaleValidated": "Evidence now carries explicit company-role attribution and suppresses external-subject structural promotion.",
+    "reason": "The focused regression and full workspace verification directly exercise the cross-company supplier/customer case and compatibility behavior.",
+    "state": "resolved"
+  },
+  "mode": "code",
+  "outcomeState": "blocked",
+  "preflightAt": "2026-08-31T05:46:36Z",
+  "preflightContractDigest": "sha256:8ea0a39e282fc856fa562a5d921d8f03d9e1bd9af53302c271854701bdbe14f7",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:14315d7f4c2d41cdfee249b9b42cb4997e5054e2c3e87e55f814f8c31f6133c8",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "scenarioCoverage": [
+    {
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs::tests::supplier_customer_story_records_explicit_subject_attribution",
+        "cargo test --locked --workspace"
+      ],
+      "required": true,
+      "scenario": "供应商客户案例保留真实 subject_company 关系",
+      "status": "verified"
+    },
+    {
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs::tests::supplier_customer_story_records_explicit_subject_attribution",
+        "cargo test --locked --workspace"
+      ],
+      "required": true,
+      "scenario": "外部客户主体不得升级为 assessed company 的结构性证据",
+      "status": "verified"
+    }
+  ],
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T05:46:41Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-evidence-subject-attribution"
+}

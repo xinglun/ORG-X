@@ -6,7 +6,7 @@ use std::fmt;
 
 use super::discovery::DocumentKind;
 use super::model::{
-    Confidence, FactStatus, NormalizedFact, Provenance, StructuralDimension,
+    Confidence, EvidenceAttribution, FactStatus, NormalizedFact, Provenance, StructuralDimension,
     StructuralEvidenceContract,
 };
 use super::sources::{SourceKind, SourceMaterialKind, SourceObservation, SourceStatus, SourceTier};
@@ -292,6 +292,7 @@ pub struct EvidenceCandidate {
     reference_model_named_peer: Option<String>,
     reference_model_source_role: Option<ReferenceModelSourceRole>,
     structural_evidence_contract: Option<StructuralEvidenceContract>,
+    attribution: EvidenceAttribution,
     provenance: Provenance,
 }
 
@@ -329,6 +330,7 @@ impl EvidenceCandidate {
             Utc::now(),
             effective_date,
         )?;
+        let attribution = EvidenceAttribution::same_company(&company_id)?;
         Ok(Self {
             company_id,
             company_name,
@@ -346,6 +348,7 @@ impl EvidenceCandidate {
             reference_model_named_peer: None,
             reference_model_source_role: None,
             structural_evidence_contract: None,
+            attribution,
             provenance,
         })
     }
@@ -403,6 +406,17 @@ impl EvidenceCandidate {
     ) -> Result<Self, RuntimeError> {
         contract.validate()?;
         self.structural_evidence_contract = Some(contract);
+
+        Ok(self)
+    }
+
+    /// Adds explicit company-role attribution after the claim is bounded.
+    pub fn with_attribution(
+        mut self,
+        attribution: EvidenceAttribution,
+    ) -> Result<Self, RuntimeError> {
+        attribution.validate()?;
+        self.attribution = attribution;
         Ok(self)
     }
 
@@ -424,6 +438,11 @@ impl EvidenceCandidate {
     /// Returns the optional effective date.
     pub const fn effective_date(&self) -> Option<&NaiveDate> {
         self.effective_date.as_ref()
+    }
+
+    /// Returns explicit company-role attribution.
+    pub fn attribution(&self) -> &EvidenceAttribution {
+        &self.attribution
     }
 
     /// Returns the production-system area.
@@ -502,6 +521,11 @@ impl ValidatedEvidence {
 
     /// Returns the deterministic structural domain, when the claim is structural.
     pub fn structural_dimension(&self) -> Option<StructuralDimension> {
+        if self.candidate.document_kind == Some(DocumentKind::Careers)
+            || !self.candidate.attribution.subject_is_assessed_company()
+        {
+            return None;
+        }
         self.structural_evidence_contract
             .as_ref()
             .map(StructuralEvidenceContract::change_type)
@@ -525,6 +549,11 @@ impl ValidatedEvidence {
     /// Returns the source provenance role retained for the validated claim.
     pub const fn reference_model_source_role(&self) -> Option<ReferenceModelSourceRole> {
         self.candidate.reference_model_source_role
+    }
+
+    /// Returns explicit company-role attribution.
+    pub fn attribution(&self) -> &EvidenceAttribution {
+        self.candidate.attribution()
     }
 
     /// Returns the validated effective date.
@@ -590,10 +619,11 @@ impl ValidatedEvidence {
             provenance,
         )?
         .with_reference_model_source_role(self.reference_model_source_role())?;
-        match self.structural_evidence_contract() {
-            Some(contract) => fact.with_structural_evidence_contract(contract.clone()),
-            None => Ok(fact),
-        }
+        let fact = match self.structural_evidence_contract() {
+            Some(contract) => fact.with_structural_evidence_contract(contract.clone())?,
+            None => fact,
+        };
+        fact.with_attribution(self.attribution().clone())
     }
 }
 
@@ -646,10 +676,17 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     candidate.source_title = bounded(title.to_owned());
     candidate.passage = passage.clone();
     candidate.document_kind = Some(document_kind);
-    if let Some(family) = reference_model_family_for_text(document_kind, &passage) {
-        let named_peer = (family == ReferenceModelEvidenceFamily::IndustryDiffusion)
-            .then(|| reference_model_named_peer_for_text(&passage))
-            .flatten();
+    let family = reference_model_family_for_text(document_kind, &passage);
+    let named_peer = (family == Some(ReferenceModelEvidenceFamily::IndustryDiffusion))
+        .then(|| reference_model_named_peer_for_text(&passage))
+        .flatten();
+    candidate = candidate
+        .with_attribution(attribution_for_observation(
+            observation,
+            named_peer.as_deref(),
+        ))
+        .ok()?;
+    if let Some(family) = family {
         candidate = candidate
             .with_reference_model_metadata(family, named_peer)
             .ok()?;
@@ -665,6 +702,44 @@ pub fn extract_evidence_candidate(observation: &SourceObservation) -> Option<Evi
     )
     .ok()?;
     Some(candidate)
+}
+
+fn attribution_for_observation(
+    observation: &SourceObservation,
+    named_peer: Option<&str>,
+) -> EvidenceAttribution {
+    let assessed_company = observation.company_id().to_owned();
+    let subject_company = named_peer
+        .filter(|peer| !same_company_identity(peer, &assessed_company))
+        .unwrap_or(&assessed_company)
+        .to_owned();
+    let subject_is_external = !same_company_identity(&subject_company, &assessed_company);
+    let (source_company, vendor_company, customer_company) =
+        match (observation.kind(), subject_is_external) {
+            (SourceKind::IndependentResearch, true) => (
+                subject_company.clone(),
+                Some(assessed_company.clone()),
+                Some(subject_company.clone()),
+            ),
+            (SourceKind::OfficialResearch, true) => (
+                assessed_company.clone(),
+                Some(assessed_company.clone()),
+                Some(subject_company.clone()),
+            ),
+            _ => (assessed_company.clone(), None, None),
+        };
+    EvidenceAttribution::new(
+        assessed_company,
+        subject_company,
+        source_company,
+        vendor_company,
+        customer_company,
+    )
+    .expect("observation company identity must be nonblank")
+}
+
+fn same_company_identity(left: &str, right: &str) -> bool {
+    left.trim().eq_ignore_ascii_case(right.trim())
 }
 
 fn reference_model_source_role_for_observation(
@@ -775,6 +850,11 @@ pub fn validate_evidence_candidate(
     if candidate.passage.trim().is_empty() {
         return Err(EvidenceValidationError::MissingRequiredField { field: "passage" });
     }
+    candidate.attribution.validate().map_err(|_| {
+        EvidenceValidationError::MissingRequiredField {
+            field: "attribution",
+        }
+    })?;
     if !candidate.source_tier.is_authoritative() {
         return Err(EvidenceValidationError::UnsupportedAuthority);
     }
@@ -809,6 +889,9 @@ fn bounded(mut value: String) -> String {
 fn structural_evidence_contract_for_candidate(
     candidate: &EvidenceCandidate,
 ) -> Option<StructuralEvidenceContract> {
+    if !candidate.attribution.subject_is_assessed_company() {
+        return None;
+    }
     let dimension = structural_dimension_for_text(&candidate.passage)?;
     if !passes_structural_semantic_gate(candidate) {
         return None;
@@ -1192,5 +1275,41 @@ mod tests {
             assert_eq!(validated.structural_evidence_contract(), None);
             assert_eq!(validated.structural_dimension(), None);
         }
+    }
+
+    #[test]
+    fn supplier_customer_story_records_explicit_subject_attribution() {
+        let observation = document_observation(DocumentObservationInput {
+            company_id: "msft".to_owned(),
+            kind: SourceKind::OfficialResearch,
+            tier: SourceTier::OfficialPrimary,
+            url: "https://www.microsoft.com/en/customers/story/pwc-copilot".to_owned(),
+            title: "PwC deploys Microsoft Copilot at enterprise scale".to_owned(),
+            text: "PwC rolled out Microsoft 365 with Copilot across the entire firm and deployed an AI workflow into production operations.".to_owned(),
+            status: SourceStatus::Known,
+            status_reason: "fixture document".to_owned(),
+            document_kind: DocumentKind::ProductPlatform,
+            source_field_or_passage: "customer disclosure".to_owned(),
+            observed_at: Utc::now(),
+            effective_date: Some(NaiveDate::from_ymd_opt(2026, 2, 25).unwrap()),
+        });
+        let candidate = extract_evidence_candidate(&observation).expect("rollout claim expected");
+        let validated =
+            validate_evidence_candidate(&candidate, NaiveDate::from_ymd_opt(2026, 8, 25).unwrap())
+                .expect("official rollout claim should validate");
+
+        let attribution = validated.attribution();
+        assert_eq!(attribution.assessed_company(), "msft");
+        assert_eq!(attribution.subject_company(), "PwC");
+        assert_eq!(attribution.source_company(), "msft");
+        assert_eq!(attribution.vendor_company(), Some("msft"));
+        assert_eq!(attribution.customer_company(), Some("PwC"));
+        assert_eq!(validated.structural_dimension(), None);
+        assert_eq!(validated.evidence_class(), EvidenceClass::ValidatedFact);
+
+        let fact = validated.to_normalized_fact(1).unwrap();
+        assert_eq!(fact.attribution(), Some(attribution));
+        let serialized = serde_json::to_value(&fact).unwrap();
+        assert_eq!(serialized["attribution"]["subject_company"], "PwC");
     }
 }

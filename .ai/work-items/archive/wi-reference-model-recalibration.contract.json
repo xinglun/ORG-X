@@ -1,0 +1,49 @@
+{
+  "acceptanceCriteria": [
+    "明确 Product Diffusion 与 Production Model Diffusion 的类型和 Gate 权重，Operating Model Imitation 不得由产品采用替代。",
+    "REFERENCE_MODEL 至少要求 Organization Rewrite、Production System Rewrite、持续结果、两家独立公司 Operating Model Imitation、两条独立来源、反证审查和无关键缺口。",
+    "补充 MSFT、NVIDIA、WMT、META 的边界回归测试，并保留不足证据的候选/Unknown 输出。",
+    "不改变 Telegram、凭据、数据分支和无关 Work Item。"
+  ],
+  "authority": "authorized",
+  "baseRevision": "ca1541140c62dd56b7c1804d5813aede6e9881f6",
+  "createdAt": "2026-08-31T04:49:11Z",
+  "goal": "让 REFERENCE_MODEL 只在组织重写、生产系统重写、持续结果和至少两家独立公司 Operating Model Imitation 等证据同时满足时成立，并将不足证据降级为候选或 Unknown。",
+  "intent": "重新校准 Reference Model Stage，严格区分 Product Adoption、Platform Adoption、Practice Adoption 与 Operating Model Imitation，避免客户购买供应商产品被误判为供应商自身生产范式扩散。",
+  "mode": "code",
+  "outOfScope": [
+    "Evidence 主体归属字段与抽取模型的独立实现",
+    "Structural Evidence 逐条语义 Gate 的独立实现",
+    "Telegram 分页、发布和凭据"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:9ad91acffda2453fda94bf7727bb9709b13628b2763a35e21af7301088e66d15",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-reference-model-recalibration",
+    "provider": "github",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-reference-model-recalibration"
+  },
+  "risk": "normal",
+  "scope": [
+    "src/features/weekly_radar/**",
+    "src/features/transformation/**",
+    "tests/weekly_radar/**",
+    "tests/transformation/**",
+    "docs/domain/**",
+    "docs/superpowers/**"
+  ],
+  "sources": [],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-reference-model-recalibration"
+}

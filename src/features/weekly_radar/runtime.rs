@@ -44,8 +44,8 @@ pub use judgment::{
     JudgmentSnapshot, MachineStage,
 };
 pub use model::{
-    CompanyIdentity, Confidence, FactStatus, NormalizedFact, Provenance, ResearchMetrics,
-    RuntimeReportInput, SourceCoverage, SourceFailure, StructuralDimension,
+    CompanyIdentity, Confidence, EvidenceAttribution, FactStatus, NormalizedFact, Provenance,
+    ResearchMetrics, RuntimeReportInput, SourceCoverage, SourceFailure, StructuralDimension,
     StructuralEvidenceContract,
 };
 pub use report::{

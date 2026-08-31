@@ -100,6 +100,10 @@ pub enum TransformationDomainError {
     DuplicateIdentity { entity: &'static str, id: String },
     /// A transition attempted to move from a stage to itself.
     SameStageTransition { stage: Stage },
+    /// A diffusion kind was attached to a non-diffusion evidence family.
+    InvalidDiffusionKind {
+        family: ReferenceModelEvidenceFamily,
+    },
 }
 
 impl fmt::Display for TransformationDomainError {
@@ -111,6 +115,12 @@ impl fmt::Display for TransformationDomainError {
             }
             Self::SameStageTransition { stage } => {
                 write!(formatter, "stage transition cannot remain at {stage:?}")
+            }
+            Self::InvalidDiffusionKind { family } => {
+                write!(
+                    formatter,
+                    "diffusion kind is invalid for evidence family {family:?}"
+                )
             }
         }
     }
@@ -187,6 +197,38 @@ impl ReferenceModelEvidenceFamily {
     }
 }
 
+/// Diffusion type used to distinguish product adoption from operating-model
+/// imitation.
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum DiffusionEvidenceKind {
+    /// A company uses or purchases a product or tool.
+    ProductAdoption,
+    /// A company adopts a supplier platform without copying its operating model.
+    PlatformAdoption,
+    /// A company adopts a practice, playbook, or isolated method.
+    PracticeAdoption,
+    /// A company imitates the producer's operating model in production.
+    OperatingModelImitation,
+}
+
+impl DiffusionEvidenceKind {
+    /// Returns the gate weight; only the highest weight can satisfy the hard gate.
+    pub const fn gate_weight(self) -> u8 {
+        match self {
+            Self::ProductAdoption => 0,
+            Self::PlatformAdoption => 0,
+            Self::PracticeAdoption => 1,
+            Self::OperatingModelImitation => 2,
+        }
+    }
+
+    /// Returns whether this evidence can satisfy the Reference Model diffusion gate.
+    pub const fn supports_operating_model_imitation(self) -> bool {
+        matches!(self, Self::OperatingModelImitation)
+    }
+}
+
 /// Provenance role used to keep supplier attribution separate from
 /// independent diffusion corroboration.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, Serialize, Deserialize)]
@@ -237,6 +279,8 @@ pub struct ReferenceModelEvidence {
     authoritative: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     source_role: Option<ReferenceModelSourceRole>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    diffusion_kind: Option<DiffusionEvidenceKind>,
 }
 
 impl ReferenceModelEvidence {
@@ -274,15 +318,20 @@ impl ReferenceModelEvidence {
         authoritative: bool,
         source_role: Option<ReferenceModelSourceRole>,
     ) -> Result<Self, TransformationDomainError> {
+        let description = description.into();
+        let diffusion_kind = (family == ReferenceModelEvidenceFamily::IndustryDiffusion)
+            .then(|| infer_diffusion_kind(&description))
+            .flatten();
         let evidence = Self {
             id: id.into(),
             family,
-            description: description.into(),
+            description,
             source_uri: source_uri.into(),
             period,
             named_peer,
             authoritative,
             source_role,
+            diffusion_kind,
         };
         evidence.validate()?;
         Ok(evidence)
@@ -297,6 +346,13 @@ impl ReferenceModelEvidence {
             if value.trim().is_empty() {
                 return Err(TransformationDomainError::EmptyValue { field });
             }
+        }
+        if self.family != ReferenceModelEvidenceFamily::IndustryDiffusion
+            && self.diffusion_kind.is_some()
+        {
+            return Err(TransformationDomainError::InvalidDiffusionKind {
+                family: self.family,
+            });
         }
         for (field, value) in [
             ("reference-model evidence period", self.period.as_ref()),
@@ -351,6 +407,76 @@ impl ReferenceModelEvidence {
     pub const fn source_role(&self) -> Option<ReferenceModelSourceRole> {
         self.source_role
     }
+
+    /// Returns the typed diffusion kind used by the Reference Model gate.
+    pub const fn diffusion_kind(&self) -> Option<DiffusionEvidenceKind> {
+        self.diffusion_kind
+    }
+
+    /// Binds an explicit diffusion kind when source semantics are known.
+    pub fn with_diffusion_kind(
+        mut self,
+        diffusion_kind: DiffusionEvidenceKind,
+    ) -> Result<Self, TransformationDomainError> {
+        if self.family != ReferenceModelEvidenceFamily::IndustryDiffusion {
+            return Err(TransformationDomainError::InvalidDiffusionKind {
+                family: self.family,
+            });
+        }
+        self.diffusion_kind = Some(diffusion_kind);
+        self.validate()?;
+        Ok(self)
+    }
+}
+
+fn infer_diffusion_kind(description: &str) -> Option<DiffusionEvidenceKind> {
+    let lower = description.to_ascii_lowercase();
+    if [
+        "copilot",
+        "foundry",
+        "software",
+        "tool",
+        "license",
+        "application",
+    ]
+    .iter()
+    .any(|signal| lower.contains(signal))
+        || contains_word(&lower, "product")
+    {
+        return Some(DiffusionEvidenceKind::ProductAdoption);
+    }
+    if ["platform", "cloud service"]
+        .iter()
+        .any(|signal| lower.contains(signal))
+    {
+        return Some(DiffusionEvidenceKind::PlatformAdoption);
+    }
+    if ["practice", "playbook", "method", "habit"]
+        .iter()
+        .any(|signal| lower.contains(signal))
+    {
+        return Some(DiffusionEvidenceKind::PracticeAdoption);
+    }
+    if [
+        "operating model",
+        "production system",
+        "production workflow",
+        "workflow",
+        "decision rights",
+        "reporting lines",
+        "operating organization",
+    ]
+    .iter()
+    .any(|signal| lower.contains(signal))
+    {
+        return Some(DiffusionEvidenceKind::OperatingModelImitation);
+    }
+    None
+}
+
+fn contains_word(text: &str, word: &str) -> bool {
+    text.split(|character: char| !character.is_ascii_alphanumeric())
+        .any(|part| part == word)
 }
 
 /// Explicit supporting, counter, and missing proof for one reference-model claim.
@@ -451,6 +577,13 @@ impl ReferenceModelEvidenceBundle {
         let mut diffusion_peers = std::collections::BTreeSet::new();
         let mut supplier_attribution_sources = std::collections::BTreeSet::new();
         for evidence in authoritative {
+            if evidence.family() == ReferenceModelEvidenceFamily::IndustryDiffusion
+                && !evidence
+                    .diffusion_kind()
+                    .is_some_and(DiffusionEvidenceKind::supports_operating_model_imitation)
+            {
+                continue;
+            }
             if evidence.source_role() == Some(ReferenceModelSourceRole::SupplierAttribution) {
                 supplier_attribution_sources.insert(evidence.source_uri().to_owned());
             }

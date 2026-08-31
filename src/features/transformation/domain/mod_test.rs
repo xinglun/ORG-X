@@ -35,7 +35,7 @@ fn reference_evidence_with_role(
     peer: Option<&str>,
     source_role: Option<ReferenceModelSourceRole>,
 ) -> ReferenceModelEvidence {
-    ReferenceModelEvidence::new_with_source_role(
+    let evidence = ReferenceModelEvidence::new_with_source_role(
         id,
         family,
         format!("{id} claim"),
@@ -45,7 +45,14 @@ fn reference_evidence_with_role(
         true,
         source_role,
     )
-    .unwrap()
+    .unwrap();
+    if family == ReferenceModelEvidenceFamily::IndustryDiffusion {
+        evidence
+            .with_diffusion_kind(DiffusionEvidenceKind::OperatingModelImitation)
+            .unwrap()
+    } else {
+        evidence
+    }
 }
 
 fn complete_reference_bundle() -> ReferenceModelEvidenceBundle {
@@ -102,6 +109,48 @@ fn complete_reference_bundle() -> ReferenceModelEvidenceBundle {
             "https://peer-b.test/adoption",
             Some("2026-02-10"),
             Some("Peer B"),
+        ))
+        .unwrap();
+    bundle.set_counter_reviewed(true);
+    bundle
+}
+
+fn core_reference_bundle_without_diffusion() -> ReferenceModelEvidenceBundle {
+    let mut bundle = ReferenceModelEvidenceBundle::new();
+    bundle
+        .add_supporting(reference_evidence(
+            "org",
+            ReferenceModelEvidenceFamily::OrganizationRewrite,
+            "https://example.test/org",
+            Some("2025-01-13"),
+            None,
+        ))
+        .unwrap();
+    bundle
+        .add_supporting(reference_evidence(
+            "production",
+            ReferenceModelEvidenceFamily::ProductionSystemRewrite,
+            "https://example.test/production",
+            Some("2025-02-18"),
+            None,
+        ))
+        .unwrap();
+    bundle
+        .add_supporting(reference_evidence(
+            "outcome-1",
+            ReferenceModelEvidenceFamily::SustainedOutcome,
+            "https://example.test/10q-1",
+            Some("2025-06-30"),
+            None,
+        ))
+        .unwrap();
+    bundle
+        .add_supporting(reference_evidence(
+            "outcome-2",
+            ReferenceModelEvidenceFamily::SustainedOutcome,
+            "https://example.test/10q-2",
+            Some("2025-12-31"),
+            None,
         ))
         .unwrap();
     bundle.set_counter_reviewed(true);
@@ -208,6 +257,115 @@ fn source_role_is_serialized_and_exposed() {
         serialized["source_role"],
         serde_json::json!("independent_customer_disclosure")
     );
+}
+
+#[test]
+fn diffusion_kinds_have_explicit_weights_and_operating_model_is_the_only_hard_gate() {
+    assert_eq!(DiffusionEvidenceKind::ProductAdoption.gate_weight(), 0);
+    assert_eq!(DiffusionEvidenceKind::PlatformAdoption.gate_weight(), 0);
+    assert_eq!(DiffusionEvidenceKind::PracticeAdoption.gate_weight(), 1);
+    assert_eq!(
+        DiffusionEvidenceKind::OperatingModelImitation.gate_weight(),
+        2
+    );
+    assert!(!DiffusionEvidenceKind::ProductAdoption.supports_operating_model_imitation());
+    assert!(DiffusionEvidenceKind::OperatingModelImitation.supports_operating_model_imitation());
+
+    let product = ReferenceModelEvidence::new(
+        "product",
+        ReferenceModelEvidenceFamily::IndustryDiffusion,
+        "MSFT adopted Microsoft Copilot for its customer support team.",
+        "https://example.test/product",
+        Some("2026-01-10".to_owned()),
+        Some("MSFT".to_owned()),
+        true,
+    )
+    .unwrap();
+    let operating = ReferenceModelEvidence::new(
+        "operating",
+        ReferenceModelEvidenceFamily::IndustryDiffusion,
+        "META adopted the operating model and rebuilt its production workflow.",
+        "https://example.test/operating",
+        Some("2026-01-10".to_owned()),
+        Some("META".to_owned()),
+        true,
+    )
+    .unwrap();
+
+    assert_eq!(
+        product.diffusion_kind(),
+        Some(DiffusionEvidenceKind::ProductAdoption)
+    );
+    assert_eq!(
+        operating.diffusion_kind(),
+        Some(DiffusionEvidenceKind::OperatingModelImitation)
+    );
+}
+
+#[test]
+fn msft_nvidia_wmt_and_meta_boundaries_do_not_promote_without_two_operating_imitation_peers() {
+    let cases = [
+        (
+            "MSFT",
+            "MSFT adopted Microsoft Copilot for its customer support team.",
+            "https://example.test/msft",
+            "MSFT customer",
+        ),
+        (
+            "NVIDIA",
+            "NVIDIA adopted a cloud platform for model serving.",
+            "https://example.test/nvidia",
+            "NVIDIA customer",
+        ),
+        (
+            "WMT",
+            "WMT adopted an AI practice for selected merchandising teams.",
+            "https://example.test/wmt",
+            "WMT customer",
+        ),
+        (
+            "META",
+            "META adopted the operating model and rebuilt its production workflow.",
+            "https://example.test/meta",
+            "META",
+        ),
+    ];
+
+    for (company, description, source, peer) in cases {
+        let mut bundle = core_reference_bundle_without_diffusion();
+        bundle
+            .add_supporting(
+                ReferenceModelEvidence::new_with_source_role(
+                    format!("{company}-diffusion"),
+                    ReferenceModelEvidenceFamily::IndustryDiffusion,
+                    description,
+                    source,
+                    Some("2026-01-10".to_owned()),
+                    Some(peer.to_owned()),
+                    true,
+                    Some(ReferenceModelSourceRole::IndependentCustomerDisclosure),
+                )
+                .unwrap(),
+            )
+            .unwrap();
+
+        let assessment = bundle.assess();
+        assert_eq!(
+            assessment.eligibility(),
+            ReferenceModelEligibility::Candidate
+        );
+        if company == "META" {
+            assert!(assessment
+                .missing()
+                .iter()
+                .any(|item| item == "independent_diffusion_sources"));
+        } else {
+            assert!(assessment
+                .missing()
+                .iter()
+                .any(|item| item == "industry_diffusion"));
+        }
+    }
 }
 
 #[test]

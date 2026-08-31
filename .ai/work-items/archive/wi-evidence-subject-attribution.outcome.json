@@ -1,0 +1,143 @@
+{
+  "acceptanceResults": [
+    "每条结构性证据明确记录并校验 assessed_company、subject_company、source_company、vendor_company、customer_company 的关系。",
+    "vendor/customer evidence 不得作为 assessed company 的 Organization Rewrite 或 Production System Rewrite 证据。",
+    "补充跨主体污染回归测试，并对现有受影响事实完成归属重跑或明确保留原因。",
+    "不修改 Telegram、凭据、数据分支和无关 Work Item。"
+  ],
+  "createdAt": "2026-08-31T05:46:41Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:581ce3d3e5ea3c5cd4a9b7d0188369215da0156d7bd2d7f45dd689b92ca367aa",
+  "evidenceRefs": [
+    ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+  ],
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+    ],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:14315d7f4c2d41cdfee249b9b42cb4997e5054e2c3e87e55f814f8c31f6133c8",
+      "workItemId": "wi-evidence-subject-attribution"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-evidence-subject-attribution.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-evidence-subject-attribution.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-evidence-subject-attribution.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-evidence-subject-attribution.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-evidence-subject-attribution.contract.json"
+          ],
+          "inference": false,
+          "text": "建立主体归属边界并重跑相关事实，使每条 Structural Evidence 只服务于其真实 subject_company。"
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-evidence-subject-attribution.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-evidence-subject-attribution"
+  },
+  "taskReportDigest": "sha256:d6404a9287ac1df3a64f0092a2b57949d2312742fed9d497d8a76ede3d86e255",
+  "taskReportMarkdownDigest": "sha256:f2831af7098ad0ef08f7af55a6127b87e5c5b41f76353f99afa1c49d0f2d9e65",
+  "unknowns": [
+    "user_visible_benefit_not_declared"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-evidence-subject-attribution.verification.json",
+    "required": true,
+    "status": "verified"
+  },
+  "workItemId": "wi-evidence-subject-attribution"
+}

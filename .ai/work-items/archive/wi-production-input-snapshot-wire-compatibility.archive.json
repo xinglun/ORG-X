@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-08-31T08:47:12Z",
+  "files": {
+    "contractDigest": "sha256:aaf063b781bab0439d786d2336130a753047ce77875eae97a257de264e202ab0",
+    "contractPath": ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.contract.json",
+    "eventsDigest": "sha256:ea25ea62fb5b9b5a740be8b975b84a00bea4a18c971ea454290b0dbd96826f21",
+    "eventsPath": ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.events.jsonl",
+    "outcomeDigest": "sha256:1d5a0a1d158730d21bd2c2c5c92047b9a26575c11db6ae9daf1b88e89fee8ca1",
+    "outcomePath": ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.outcome.json",
+    "summaryDigest": "sha256:ac8f8d080692c189dbc6dd465ec5733c636c26750d5ae76531e7e35c34fd7417",
+    "summaryPath": ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.summary.json",
+    "taskReportDigest": "sha256:6c925f06bebc0290bdad864ddac50f8abba8a297ec344d6bafa1bf59f1c172e1",
+    "taskReportMarkdownDigest": "sha256:a0d8341a63f1ac6aafcba4ce0cf8c02a728aa542b17a2161ab6e923f4a7e73e2",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-production-input-snapshot-wire-compatibility.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-production-input-snapshot-wire-compatibility"
+}

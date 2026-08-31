@@ -1,0 +1,64 @@
+{
+  "acceptanceCriteria": [
+    "A1: 已发布历史 input snapshot 的 snapshot_id 若绑定旧版 input JSON wire 字节布局，当前 Runtime 仍可读取、校验并参与同日 replacement，且不改写历史 snapshot bytes。",
+    "A2: 当前版本新建 input snapshot 继续使用当前 canonical identity algorithm 并可 round-trip。",
+    "A3: 历史 snapshot 的 input 内容或 snapshot_id 被篡改时仍 fail-closed，不能产生 archive side effect。",
+    "A4: 合法历史 snapshot 存在时，同日 replacement 能完成 archive replacement 流程。",
+    "A5: 聚焦回归、完整 locked workspace tests、fmt、Clippy 和 AI Cockpit verification 全部有新鲜证据；生产补跑在代码 WI 归档后作为操作验收。"
+  ],
+  "authority": "authorized",
+  "baseRevision": "10ba4251cab24e29194efbae33996f24a33e9866",
+  "createdAt": "2026-08-31T08:27:32Z",
+  "goal": "恢复 Weekly Radar 对实际历史 input JSON wire 快照的生产补跑能力。",
+  "intent": "修复生产 run 33366276957 在已合并的单字段兼容修复后仍因历史 input JSON wire 布局演进而拒绝 snapshot 的问题；兼容已发布历史 snapshot 的原始 input wire identity，同时保留当前 canonical identity、篡改 fail-closed 和历史字节不改写约束。",
+  "mode": "code",
+  "outOfScope": [
+    "weekly-radar-pending 和既有 data 内容",
+    ".github/workflows/weekly-radar.yml 的 provider、权限、Telegram 格式或 source acquisition 规则",
+    "Reference Model、Structural Evidence、source coverage 业务规则本身",
+    "删除或重写历史 input snapshot",
+    "前任 WI 的治理残留、其他 WI、其他 worktree 和生产分支"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:c1c31ae77de9c66fdc2401a304e3ae77eb93b04723c3420094d0784848e457ce",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-production-input-snapshot-wire-compatibility",
+    "provider": "local",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-production-input-snapshot-wire-compatibility"
+  },
+  "risk": "medium",
+  "scope": [
+    ".ai/work-items/active/wi-production-input-snapshot-wire-compatibility.contract.json",
+    ".ai/work-items/active/wi-production-input-snapshot-wire-compatibility.summary.json",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/evidence/**",
+    ".ai/decisions/**",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "tests/weekly_radar_runtime.rs"
+  ],
+  "sources": [
+    "https://github.com/xinglun/ORG-X/actions/runs/33366276957",
+    "https://github.com/xinglun/ORG-X/blob/data/weekly-radar/snapshots/2026-08-31.input.json",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/features/weekly_radar/runtime/model.rs",
+    "tests/weekly_radar_runtime.rs",
+    "AGENTS.md",
+    ".ai/README.md",
+    ".ai/glossary.md"
+  ],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-production-input-snapshot-wire-compatibility"
+}

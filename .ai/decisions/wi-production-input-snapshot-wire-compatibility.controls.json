@@ -1,0 +1,73 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "task5_historical_input_snapshot_wire_identity_survives_model_reordering loads a historical input wire identity and preserves the exact snapshot bytes",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        },
+        {
+          "locator": "historical_input_wire_id validates the compact original input JSON wire without rewriting the stored snapshot",
+          "path": "src/features/weekly_radar/runtime/archive.rs",
+          "type": "implementation",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "task5_input_snapshot_round_trips_and_is_idempotent and task5_new_not_applicable_input_snapshot_round_trips_with_bound_identity",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "task5_tampered_input_snapshot_is_rejected_before_archive_side_effects and task5_cli_rejects_tampered_legacy_archive_without_creating_lock_metadata",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "task5_historical_input_snapshot_identity_allows_same_day_replacement exercises ensure_run_replace_available and replace_run_with_input_snapshot",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A5",
+      "evidence": [
+        {
+          "locator": "AI Cockpit verification ran cargo fmt --all -- --check, cargo clippy --all-targets --all-features -- -D warnings, and cargo test --locked --workspace against the current branch snapshot",
+          "path": ".ai/evidence/wi-production-input-snapshot-wire-compatibility.verification.json",
+          "type": "runtime",
+          "verification": "passed"
+        }
+      ]
+    }
+  ],
+  "intentAlignment": {
+    "state": "resolved",
+    "reason": "The implementation validates the original historical input wire identity, keeps current canonical identity generation and fail-closed checks, and preserves historical snapshot bytes.",
+    "evidence": [
+      "src/features/weekly_radar/runtime/archive.rs",
+      "tests/weekly_radar_runtime.rs"
+    ]
+  }
+}

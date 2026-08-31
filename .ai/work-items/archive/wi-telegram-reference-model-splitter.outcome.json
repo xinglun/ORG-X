@@ -6,7 +6,7 @@
   ],
   "createdAt": "2026-08-31T02:43:03Z",
   "decisionState": "green",
-  "evidenceDigest": "sha256:3f3a9efb637e3f56822736810e6637829a6333a58e011bee03d5682a6a5801c9",
+  "evidenceDigest": "sha256:d72ce97d26ae043ed0e8b78d95faa05b86164055df57514bc8700e083e02cfe4",
   "evidenceRefs": [
     ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
   ],

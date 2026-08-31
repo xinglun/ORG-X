@@ -1,7 +1,7 @@
 {
   "captureMode": "full_capture",
-  "contractDigest": "sha256:f93821ac234cf58c2be727e3da9cb633116848e2d79a277cff8035dadd857b84",
-  "createdAt": "2026-08-31T02:43:03Z",
+  "contractDigest": "sha256:6945c40bc372f7f009bba41a9ae186b9e1bfe3c701c4b8e2120bcf41d3592eb1",
+  "createdAt": "2026-08-31T03:14:40Z",
   "evidenceSchemaVersion": 2,
   "passed": true,
   "protocolVersion": 1,
@@ -9,8 +9,8 @@
     "costObservation": {
       "advisoryOnly": true,
       "confidence": "complete",
-      "elapsedMs": 5009,
-      "executionElapsedMs": 4824,
+      "elapsedMs": 3942,
+      "executionElapsedMs": 3761,
       "maxConcurrentProcesses": 1,
       "nodesExecuted": 1,
       "nodesPlanned": 1,
@@ -25,10 +25,10 @@
       "schemaVersion": 1,
       "unknowns": []
     },
-    "elapsedMs": 5009,
-    "executionElapsedMs": 4824,
-    "filesHashed": 11,
-    "filesRead": 11,
+    "elapsedMs": 3942,
+    "executionElapsedMs": 3761,
+    "filesHashed": 5,
+    "filesRead": 5,
     "gitCalls": 8,
     "maxConcurrentProcesses": 1,
     "nodesExecuted": 1,
@@ -36,11 +36,7 @@
     "nodesReused": 0,
     "passed": true,
     "planReceipt": {
-      "affectedPaths": [
-        "docs/superpowers/plans/2026-08-31-telegram-reference-model-splitter.md",
-        "src/features/weekly_radar/interface/semantic_message_splitter.rs",
-        "tests/weekly_radar_semantic_message_splitter.rs"
-      ],
+      "affectedPaths": [],
       "assurance": "repository_verified",
       "baseRevision": "47cb12e1de38f43b64bd3e7a50e66fd1b421bf56",
       "dependencyConfidence": "unknown",
@@ -48,13 +44,13 @@
       "executedNodes": [
         "project-command-0"
       ],
-      "executionElapsedMs": 4824,
+      "executionElapsedMs": 3761,
       "finalTier": "T0",
       "initialTier": "T0",
       "planningElapsedMs": 0,
       "policyRefs": [],
       "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
-      "repositorySnapshotDigest": "sha256:673204cf702524a515895c0e28b8e003a9b3427a234e2ec1ffa2847034af2f75",
+      "repositorySnapshotDigest": "sha256:fd416daa0ada2ecc5c7428dcfe06e85ee94dfb9fe555e2fc4e6c39b317769198",
       "requiredAssurance": null,
       "requiredTier": null,
       "reusedNodes": [],
@@ -80,7 +76,7 @@
       {
         "action": "execute",
         "nodeId": "project-command-0",
-        "outputDigest": "sha256:e58e1fe151c1045285386e3ee3908301cf12c9b003a624e06a6a2c314d8d3d90",
+        "outputDigest": "sha256:30896342697f8f10eafe1c680829524b9f65434f5bac7c84213c6e03ed8dab07",
         "outputTruncated": false,
         "passed": true,
         "protected": false,
@@ -96,9 +92,9 @@
     "runtimeVersion": "0.2.47",
     "workItemId": "wi-telegram-reference-model-splitter"
   },
-  "receiptDigest": "sha256:8ca8d382e9c42def2f5a255fe546a29f0912d677f36b71bc91a7f3921827e6e7",
+  "receiptDigest": "sha256:f657c8ab483802f190393f7339781c1e96311f79c950dc037a25c6ca38cd4e73",
   "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
-  "repositorySnapshotDigest": "sha256:673204cf702524a515895c0e28b8e003a9b3427a234e2ec1ffa2847034af2f75",
+  "repositorySnapshotDigest": "sha256:fd416daa0ada2ecc5c7428dcfe06e85ee94dfb9fe555e2fc4e6c39b317769198",
   "runtimeDigest": "sha256:6b3bd6617c6372a17b1edf6f9dc9dbc016779146f67262265fd12d2a488bbc53",
   "runtimeVersion": "0.2.47",
   "workItemId": "wi-telegram-reference-model-splitter"

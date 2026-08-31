@@ -8,7 +8,7 @@
     "contractPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json",
     "eventsDigest": "sha256:bd6a74b684ab228163ced7ac30576bfbc5f83785f18d1783c2a6417c70475e26",
     "eventsPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.events.jsonl",
-    "outcomeDigest": "sha256:c167a72dbf70c068d9e2e3ea80af7eac0ef49d48a14d1707627cc4923345adf3",
+    "outcomeDigest": "sha256:f5cde9cf05ad69232c779a7e144d7d329d7bca185d1ad0e8e5f12f0183165b34",
     "outcomePath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.outcome.json",
     "summaryDigest": "sha256:c38973fa607e33846e8190c7a4945d86b88191ce03910c805dc6d5ff34631775",
     "summaryPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.summary.json",

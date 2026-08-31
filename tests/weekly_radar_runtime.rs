@@ -2136,6 +2136,101 @@ fn rewrite_snapshot_with_historical_identity(path: &Path) -> String {
     snapshot_id
 }
 
+fn historical_wire_snapshot_id(input_wire: &str) -> String {
+    let mut digest = 14_695_981_039_346_656_037_u64;
+    for byte in input_wire.as_bytes() {
+        digest ^= u64::from(*byte);
+        digest = digest.wrapping_mul(1_099_511_628_211);
+    }
+    format!("wr-input-{digest:016x}")
+}
+
+fn json_value_end(bytes: &[u8], start: usize) -> usize {
+    let mut stack = Vec::new();
+    let mut in_string = false;
+    let mut escaped = false;
+    for (offset, byte) in bytes.iter().enumerate().skip(start) {
+        if in_string {
+            if escaped {
+                escaped = false;
+            } else if *byte == b'\\' {
+                escaped = true;
+            } else if *byte == b'"' {
+                in_string = false;
+            }
+            continue;
+        }
+        match *byte {
+            b'"' => in_string = true,
+            b'{' | b'[' => stack.push(*byte),
+            b'}' if stack.pop() == Some(b'{') && stack.is_empty() => return offset + 1,
+            b']' if stack.pop() == Some(b'[') && stack.is_empty() => return offset + 1,
+            _ => {}
+        }
+    }
+    panic!("JSON value should have a matching closing delimiter");
+}
+
+fn rewrite_snapshot_with_historical_wire(path: &Path) -> (String, Vec<u8>) {
+    let content = fs::read_to_string(path).expect("snapshot should be readable");
+    let snapshot: Value = serde_json::from_str(&content).expect("snapshot should be JSON");
+    let input = snapshot
+        .get("input")
+        .and_then(Value::as_object)
+        .expect("snapshot should contain an input object");
+    let order = [
+        "research_metrics",
+        "source_failures",
+        "source_coverage",
+        "facts",
+        "companies",
+        "as_of",
+    ];
+    let input_wire = format!(
+        "{{{}}}",
+        order
+            .iter()
+            .filter_map(|key| {
+                input
+                    .get(*key)
+                    .map(|value| format!("\"{key}\":{}", serde_json::to_string(value).unwrap()))
+            })
+            .collect::<Vec<_>>()
+            .join(",")
+    );
+    let snapshot_id = historical_wire_snapshot_id(&input_wire);
+    let mut rewritten = serde_json::to_string_pretty(&snapshot).expect("snapshot should encode");
+    let marker = "\"input\":";
+    let marker_start = rewritten
+        .find(marker)
+        .expect("snapshot should contain input key");
+    let value_start = rewritten[marker_start + marker.len()..]
+        .find('{')
+        .map(|offset| marker_start + marker.len() + offset)
+        .expect("input should be an object");
+    let value_end = json_value_end(rewritten.as_bytes(), value_start);
+    rewritten.replace_range(value_start..value_end, &input_wire);
+    let mut snapshot_bytes = rewritten.into_bytes();
+    snapshot_bytes.push(b'\n');
+    let mut snapshot_value: Value =
+        serde_json::from_slice(&snapshot_bytes).expect("rewritten snapshot should be JSON");
+    snapshot_value["snapshot_id"] = Value::String(snapshot_id.clone());
+    let mut rewritten =
+        serde_json::to_string_pretty(&snapshot_value).expect("snapshot should encode");
+    let marker_start = rewritten
+        .find(marker)
+        .expect("snapshot should contain input key");
+    let value_start = rewritten[marker_start + marker.len()..]
+        .find('{')
+        .map(|offset| marker_start + marker.len() + offset)
+        .expect("input should be an object");
+    let value_end = json_value_end(rewritten.as_bytes(), value_start);
+    rewritten.replace_range(value_start..value_end, &input_wire);
+    let bytes = (rewritten + "\n").into_bytes();
+    fs::write(path, &bytes).expect("historical wire snapshot should be written");
+    (snapshot_id, bytes)
+}
+
 fn rewrite_snapshot_as_legacy(path: &Path) -> String {
     let content = fs::read_to_string(path).expect("snapshot should be readable");
     let mut snapshot: Value = serde_json::from_str(&content).expect("snapshot should be JSON");
@@ -2772,6 +2867,28 @@ fn task5_historical_input_snapshot_identity_allows_same_day_replacement() {
 }
 
 #[test]
+fn task5_historical_input_snapshot_wire_identity_survives_model_reordering() {
+    let root = task4_temp_root("historical-input-wire");
+    let input = task4_report_input();
+    let current_snapshot =
+        persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+            .expect("input snapshot should persist");
+    let path = root.join("weekly-radar/snapshots/2026-08-17.input.json");
+    let (historical_id, historical_bytes) = rewrite_snapshot_with_historical_wire(&path);
+    assert_ne!(current_snapshot.snapshot_id(), historical_id);
+
+    let loaded = load_input_snapshot(&root, "data", input.as_of())
+        .expect("historical wire identity should remain verifiable");
+    assert_eq!(loaded.snapshot_id(), historical_id);
+    assert_eq!(
+        fs::read(&path).expect("historical snapshot should remain readable"),
+        historical_bytes
+    );
+
+    fs::remove_dir_all(root).expect("historical wire fixture should be removable");
+}
+
+#[test]
 fn task5_new_not_applicable_input_snapshot_round_trips_with_bound_identity() {
     let root = task4_temp_root("new-input-snapshot");
     let mut input = RuntimeReportInput::new("2026-08-17").expect("date should be valid");
@@ -2824,6 +2941,50 @@ fn task5_tampered_input_snapshot_is_rejected_before_archive_side_effects() {
     assert!(!root.join("weekly-radar/receipts").exists());
 
     fs::remove_dir_all(root).expect("tampered snapshot fixture should be removable");
+}
+
+#[test]
+fn task5_duplicate_input_members_are_rejected_before_archive_side_effects() {
+    let root = task4_temp_root("duplicate-input-snapshot");
+    let input = task4_report_input();
+    persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+        .expect("input snapshot should persist");
+    let path = root.join("weekly-radar/snapshots/2026-08-17.input.json");
+    let mut duplicate_input = input.clone();
+    duplicate_input
+        .add_fact(
+            NormalizedFact::new(
+                "omega",
+                "revenue",
+                "99000000",
+                FactStatus::Known,
+                Confidence::Medium,
+                task4_provenance("facts.revenue"),
+            )
+            .expect("duplicate fixture fact should be valid"),
+        )
+        .expect("duplicate fixture fact should be unique");
+    let duplicate_wire =
+        serde_json::to_string(&duplicate_input).expect("duplicate input should be serializable");
+    let mut content = fs::read_to_string(&path).expect("snapshot should be readable");
+    let closing_brace = content
+        .rfind('}')
+        .expect("snapshot envelope should have a closing brace");
+    content.insert_str(closing_brace, &format!(",\"input\":{duplicate_wire}"));
+    fs::write(&path, content).expect("duplicate snapshot should be written");
+
+    let error = load_input_snapshot(&root, "data", input.as_of())
+        .expect_err("duplicate input members must be rejected");
+    assert!(matches!(
+        error,
+        ArchiveError::InvalidInputSnapshot {
+            reason: "JSON decoding failed"
+        }
+    ));
+    assert!(!root.join("weekly-radar/reports").exists());
+    assert!(!root.join("weekly-radar/receipts").exists());
+
+    fs::remove_dir_all(root).expect("duplicate snapshot fixture should be removable");
 }
 
 #[test]

@@ -1,0 +1,142 @@
+{
+  "acceptanceResults": [
+    "The splitter maps AI 时代范本验证, AI 時代の参照モデル検証, and AI-era Reference Model Validation to the existing JudgmentReference boundary.",
+    "A regression test exercises all three localized headings and proves the original headings remain in the resulting semantic chunks.",
+    "Focused tests and the repository quality gate pass without unrelated source or workflow changes."
+  ],
+  "createdAt": "2026-08-31T02:43:03Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:3f3a9efb637e3f56822736810e6637829a6333a58e011bee03d5682a6a5801c9",
+  "evidenceRefs": [
+    ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+  ],
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+    ],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:673204cf702524a515895c0e28b8e003a9b3427a234e2ec1ffa2847034af2f75",
+      "workItemId": "wi-telegram-reference-model-splitter"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-telegram-reference-model-splitter.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-telegram-reference-model-splitter.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-telegram-reference-model-splitter.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json"
+          ],
+          "inference": false,
+          "text": "Preserve fail-closed Telegram report delivery while accepting the Chinese, Japanese, and English reference-model validation section headings and lock the behavior with regression coverage."
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-telegram-reference-model-splitter"
+  },
+  "taskReportDigest": "sha256:b8ac791487c813296083f9903b5877ff992c3f6e18a7600846f972c78e50bf35",
+  "taskReportMarkdownDigest": "sha256:e9d5bddba0a0d4284dc7cf7b0e2d08df7239af1af90568ec3b07b72b03fbc1e8",
+  "unknowns": [
+    "user_visible_benefit_not_declared"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-telegram-reference-model-splitter.verification.json",
+    "required": true,
+    "status": "verified"
+  },
+  "workItemId": "wi-telegram-reference-model-splitter"
+}

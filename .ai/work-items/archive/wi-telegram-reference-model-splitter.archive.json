@@ -1,0 +1,24 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-08-31T02:43:17Z",
+  "files": {
+    "approachDigest": "sha256:a02d94807dc83ba9f27d98ff0087fab4efd007b29b222b309d0f99d40fdd4e73",
+    "approachPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.approach.json",
+    "contractDigest": "sha256:c48cf619a3c049be483cec191214f8855b2ec687b972892b96115580ca0a8620",
+    "contractPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json",
+    "eventsDigest": "sha256:bd6a74b684ab228163ced7ac30576bfbc5f83785f18d1783c2a6417c70475e26",
+    "eventsPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.events.jsonl",
+    "outcomeDigest": "sha256:c07351e391260fe8868060c1a535b51ae8bb880959555e68613b422ef92843d9",
+    "outcomePath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.outcome.json",
+    "summaryDigest": "sha256:c38973fa607e33846e8190c7a4945d86b88191ce03910c805dc6d5ff34631775",
+    "summaryPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.summary.json",
+    "taskReportDigest": "sha256:b8ac791487c813296083f9903b5877ff992c3f6e18a7600846f972c78e50bf35",
+    "taskReportMarkdownDigest": "sha256:e9d5bddba0a0d4284dc7cf7b0e2d08df7239af1af90568ec3b07b72b03fbc1e8",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-telegram-reference-model-splitter.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-telegram-reference-model-splitter"
+}

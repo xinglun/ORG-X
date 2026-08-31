@@ -1,0 +1,104 @@
+{
+  "acceptanceCriteria": [
+    "The splitter maps AI 时代范本验证, AI 時代の参照モデル検証, and AI-era Reference Model Validation to the existing JudgmentReference boundary.",
+    "A regression test exercises all three localized headings and proves the original headings remain in the resulting semantic chunks.",
+    "Focused tests and the repository quality gate pass without unrelated source or workflow changes."
+  ],
+  "authority": "authorized",
+  "baseRevision": "47cb12e1de38f43b64bd3e7a50e66fd1b421bf56",
+  "createdAt": "2026-08-31T02:25:24Z",
+  "goal": "Preserve fail-closed Telegram report delivery while accepting the Chinese, Japanese, and English reference-model validation section headings and lock the behavior with regression coverage.",
+  "intent": "Repair production report delivery by teaching the semantic message splitter to recognize the three localized AI-era reference model validation headings introduced by the current report renderer.",
+  "mode": "code",
+  "outOfScope": [
+    "Do not change report rendering",
+    " section semantics outside these aliases",
+    " Telegram transport",
+    " workflow scheduling",
+    " credentials",
+    " data publication",
+    " or unrelated Work Items."
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:34a2707d7fd5c73fc05bac6d51829c1bb8f4f6107e86159b32f470411ccbea7d",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-telegram-reference-model-splitter",
+    "provider": "github",
+    "pullRequest": "pending",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-reference-model-splitter"
+  },
+  "risk": "normal",
+  "scope": [
+    ".ai/work-items/active/wi-telegram-reference-model-splitter.contract.json",
+    ".ai/work-items/active/wi-telegram-reference-model-splitter.summary.json",
+    ".ai/work-items/active/wi-telegram-reference-model-splitter.outcome.json",
+    ".ai/work-items/active/wi-telegram-reference-model-splitter.outcome.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/evidence/reference-impact/**",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    "docs/superpowers/plans/2026-08-31-telegram-reference-model-splitter.md",
+    "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+    "tests/weekly_radar_semantic_message_splitter.rs"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository governance requires a bounded Work Item, reviewed PR, merge, cleanup, and evidence-backed handoff."
+    },
+    {
+      "path": ".ai/README.md",
+      "reason": "Repository-local AI Cockpit lifecycle and evidence rules."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Repository-local terminology and architecture boundaries."
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "Installed Rust Runtime command sequence and preflight pause rules."
+    },
+    {
+      "path": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "reason": "The fail-closed heading-to-semantic-boundary mapping that rejected the new report section."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "reason": "The current renderer emits the Chinese, Japanese, and English AI-era reference model validation headings."
+    },
+    {
+      "path": "src/features/weekly_radar/interface/telegram.rs",
+      "reason": "Telegram delivery invokes the semantic splitter before sending, exposing the production failure."
+    },
+    {
+      "path": "tests/weekly_radar_semantic_message_splitter.rs",
+      "reason": "Existing localized-heading and semantic-boundary regression coverage."
+    },
+    {
+      "path": "docs/operations/WEEKLY_RADAR.md",
+      "reason": "Production report and delivery behavior documentation."
+    },
+    {
+      "path": "https://github.com/xinglun/ORG-X/actions/runs/33349818764",
+      "reason": "The authorized production rerun failed before delivery because the rendered report was rejected as unsafe."
+    }
+  ],
+  "state": "implementation_active",
+  "unknowns": [],
+  "verification": [
+    {
+      "check": "verification",
+      "required": true
+    }
+  ],
+  "workItemId": "wi-telegram-reference-model-splitter"
+}

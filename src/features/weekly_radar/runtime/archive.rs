@@ -654,6 +654,35 @@ fn input_snapshot_id(input: &RuntimeReportInput) -> String {
     digest_bytes(bytes)
 }
 
+// v1 snapshots were hashed before zero-valued `not_applicable` coverage became
+// `skip_serializing_if`; reproduce that wire representation without changing
+// the current canonical serialization or the stored historical bytes.
+fn legacy_input_snapshot_id(input: &RuntimeReportInput) -> String {
+    let bytes = serde_json::to_vec(input).expect("runtime input contains only serializable values");
+    let marker = b",\"not_configured\":";
+    let field = b",\"not_applicable\":0";
+    let mut legacy_bytes = Vec::with_capacity(bytes.len() + field.len() * 3);
+    let mut cursor = 0;
+    while cursor < bytes.len() {
+        if bytes[cursor..].starts_with(marker) {
+            let value_start = cursor + marker.len();
+            let mut value_end = value_start;
+            while bytes.get(value_end).is_some_and(u8::is_ascii_digit) {
+                value_end += 1;
+            }
+            if bytes.get(value_end) == Some(&b'}') {
+                legacy_bytes.extend_from_slice(&bytes[cursor..value_end]);
+                legacy_bytes.extend_from_slice(field);
+                cursor = value_end;
+                continue;
+            }
+        }
+        legacy_bytes.push(bytes[cursor]);
+        cursor += 1;
+    }
+    digest_bytes(legacy_bytes)
+}
+
 fn validate_input_snapshot(snapshot: &InputSnapshot) -> Result<(), ArchiveError> {
     if snapshot.schema_version != INPUT_SNAPSHOT_SCHEMA_VERSION {
         return Err(ArchiveError::InvalidInputSnapshot {
@@ -676,7 +705,9 @@ fn validate_input_snapshot(snapshot: &InputSnapshot) -> Result<(), ArchiveError>
             reason: "unsupported language",
         });
     }
-    if snapshot.snapshot_id != input_snapshot_id(&snapshot.input) {
+    let current_id = input_snapshot_id(&snapshot.input);
+    let legacy_id = legacy_input_snapshot_id(&snapshot.input);
+    if snapshot.snapshot_id != current_id && snapshot.snapshot_id != legacy_id {
         return Err(ArchiveError::InvalidInputSnapshot {
             reason: "input identity does not match content",
         });

@@ -1,0 +1,140 @@
+{
+  "decisionState": "confirmed",
+  "finalReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:673204cf702524a515895c0e28b8e003a9b3427a234e2ec1ffa2847034af2f75",
+      "workItemId": "wi-telegram-reference-model-splitter"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-telegram-reference-model-splitter.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-telegram-reference-model-splitter.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-telegram-reference-model-splitter.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-reference-model-splitter.verification.json",
+            "https://github.com/xinglun/ORG-X/pull/98",
+            "https://github.com/xinglun/ORG-X/actions/runs/33351757703"
+          ],
+          "inference": false,
+          "text": "Human decision 'approved' by user via current conversation user request at 2026-08-31T03:06:37Z."
+        }
+      ],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-reference-model-splitter.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json"
+          ],
+          "inference": false,
+          "text": "Preserve fail-closed Telegram report delivery while accepting the Chinese, Japanese, and English reference-model validation section headings and lock the behavior with regression coverage."
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-telegram-reference-model-splitter.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-telegram-reference-model-splitter"
+  },
+  "finalReportDigest": "sha256:09f8ea7fdee8d8427061a87d9f2d4322ce1565ee0cc305695cea87b3c9ee39d4",
+  "humanDecision": "approved",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceFinalizationHeadDigest": "sha256:c384b7dd7d46e06d186ef2bd751e68edb35d4220ae9b8aa49459f136f05e4d38",
+  "resourceFinalizationHeadPath": ".ai/decisions/wi-telegram-reference-model-splitter.finalize.json",
+  "resourceFinalizationSequence": 0,
+  "state": "closed",
+  "structuredDecision": {
+    "actor": "user",
+    "authoritySource": "current conversation user request",
+    "decidedAt": "2026-08-31T03:06:37Z",
+    "decision": "approved",
+    "evidenceRefs": [
+      ".ai/evidence/wi-telegram-reference-model-splitter.verification.json",
+      "https://github.com/xinglun/ORG-X/pull/98",
+      "https://github.com/xinglun/ORG-X/actions/runs/33351757703"
+    ],
+    "policyRefs": [
+      "AGENTS.md"
+    ],
+    "reason": "PR #98 and archive binding corrections #99, #100, #101, #102, and #103 were reviewed and merged; finalization and cleanup were verified.",
+    "resumeCondition": "None; Work Item is closed."
+  },
+  "timestamp": "2026-08-31T03:18:25Z",
+  "workItemId": "wi-telegram-reference-model-splitter"
+}

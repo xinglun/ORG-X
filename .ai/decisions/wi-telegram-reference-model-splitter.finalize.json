@@ -1,0 +1,58 @@
+{
+  "actor": "user-authorized-agent",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "Current user request and explicit permission to proceed",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "4d1f86245dc3b25d3559353ac982d32f5adfb98a",
+    "name": "codex/wi-telegram-reference-model-splitter",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:ad9c072df5da7e9c980896782b2d92c1f779eb535c740db9ff3ca1ebbf4f42fa",
+  "operationId": "wi-telegram-reference-model-splitter-cleanup-20260831",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "47cb12e1de38f43b64bd3e7a50e66fd1b421bf56",
+    "headRevision": "4d1f86245dc3b25d3559353ac982d32f5adfb98a",
+    "mergeCommit": "00fc5e013fdc09f9bac25a54696eb1377e180040",
+    "number": 98,
+    "url": "https://github.com/xinglun/ORG-X/pull/98"
+  },
+  "reason": "PR #98 merged after all applicable checks passed; archive binding corrections were merged in PRs #99, #100, and #101; exact remote/local branches and dedicated worktrees were then removed.",
+  "receiptId": "wi-telegram-reference-model-splitter-finalization-20260831",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-telegram-reference-model-splitter",
+    "provider": "github",
+    "pullRequest": "https://github.com/xinglun/ORG-X/pull/98",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-reference-model-splitter"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:6b3bd6617c6372a17b1edf6f9dc9dbc016779146f67262265fd12d2a488bbc53",
+  "runtimeVersion": "0.2.47",
+  "schemaVersion": 1,
+  "timestamp": "2026-08-31T02:50:29Z",
+  "workItemId": "wi-telegram-reference-model-splitter",
+  "worktree": {
+    "branch": "codex/wi-telegram-reference-model-splitter",
+    "headRevision": "4d1f86245dc3b25d3559353ac982d32f5adfb98a",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-reference-model-splitter",
+    "worktreeId": "wi-telegram-reference-model-splitter"
+  }
+}

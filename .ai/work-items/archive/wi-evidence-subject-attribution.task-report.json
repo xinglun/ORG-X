@@ -1,0 +1,102 @@
+{
+  "bindings": {
+    "evidenceRefs": [
+      ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+    ],
+    "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+    "repositorySnapshotDigest": "sha256:14315d7f4c2d41cdfee249b9b42cb4997e5054e2c3e87e55f814f8c31f6133c8",
+    "workItemId": "wi-evidence-subject-attribution"
+  },
+  "format": "ai-cockpit.task-outcome",
+  "humanStatusColor": "green",
+  "schemaVersion": 1,
+  "sections": {
+    "avoidedImpact": [],
+    "deliveredChanges": [
+      {
+        "evidenceRefs": [
+          ".ai/work-items/archive/wi-evidence-subject-attribution.summary.json"
+        ],
+        "inference": false,
+        "text": "Changed path: .ai/work-items/archive/wi-evidence-subject-attribution.contract.json"
+      },
+      {
+        "evidenceRefs": [
+          ".ai/work-items/archive/wi-evidence-subject-attribution.summary.json"
+        ],
+        "inference": false,
+        "text": "Changed path: .ai/work-items/archive/wi-evidence-subject-attribution.summary.json"
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceRefs": [
+          ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+        ],
+        "inference": false,
+        "text": ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+      }
+    ],
+    "findings": [],
+    "forbiddenClaims": [
+      "merge_authorized_without_human_decision",
+      "release_published_without_release_evidence",
+      "provider_or_enterprise_approval_inferred_from_local_records",
+      "user_visible_benefit_invented_from_implementation_facts"
+    ],
+    "forcedStops": [],
+    "humanDecisions": [],
+    "interventions": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "outcomeSummary": [
+      {
+        "evidenceRefs": [
+          ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+        ],
+        "inference": false,
+        "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+      }
+    ],
+    "recurrencePrevention": [],
+    "residualRisks": [
+      {
+        "evidenceRefs": [
+          ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+        ],
+        "inference": false,
+        "text": "Remaining unknown: user_visible_benefit_not_declared"
+      }
+    ],
+    "resolutions": [
+      {
+        "evidenceRefs": [
+          ".ai/evidence/wi-evidence-subject-attribution.verification.json"
+        ],
+        "inference": false,
+        "text": "The current verification evidence is valid for this repository and Work Item."
+      }
+    ],
+    "risks": [],
+    "taskOverview": [
+      {
+        "evidenceRefs": [
+          ".ai/work-items/archive/wi-evidence-subject-attribution.contract.json"
+        ],
+        "inference": false,
+        "text": "建立主体归属边界并重跑相关事实，使每条 Structural Evidence 只服务于其真实 subject_company。"
+      }
+    ],
+    "warnings": [
+      {
+        "evidenceRefs": [
+          ".ai/work-items/archive/wi-evidence-subject-attribution.contract.json"
+        ],
+        "inference": false,
+        "text": "User-visible benefit is not declared by the Work Item owner."
+      }
+    ]
+  },
+  "status": "verified",
+  "workItemId": "wi-evidence-subject-attribution"
+}

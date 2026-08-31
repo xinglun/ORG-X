@@ -1,0 +1,99 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "task5_historical_input_snapshot_identity_allows_same_day_replacement loads an explicit-zero historical identity and preserves the historical snapshot bytes through replacement",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        },
+        {
+          "locator": "legacy_input_snapshot_id accepts only the known pre-skip_serializing_if v1 identity representation",
+          "path": "src/features/weekly_radar/runtime/archive.rs",
+          "type": "implementation",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "task5_input_snapshot_round_trips_and_is_idempotent and task5_new_not_applicable_input_snapshot_round_trips_with_bound_identity",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "task5_tampered_input_snapshot_is_rejected_before_archive_side_effects and task5_cli_rejects_tampered_legacy_archive_without_creating_lock_metadata",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "task5_historical_input_snapshot_identity_allows_same_day_replacement completes ensure_run_replace_available and replace_run_with_input_snapshot",
+          "path": "tests/weekly_radar_runtime.rs",
+          "type": "test",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A5",
+      "evidence": [
+        {
+          "locator": "Fresh AI Cockpit verification will bind fmt, Clippy, and cargo test --locked --workspace to this Contract and repository snapshot",
+          "path": ".ai/evidence/wi-production-input-snapshot-compatibility-retry.verification.json",
+          "type": "runtime",
+          "verification": "pending"
+        }
+      ]
+    }
+  ],
+  "changedPaths": [
+    ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.contract.json",
+    ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T08:04:28Z",
+  "checkpointContractDigest": "sha256:0ed885353280bec4f2cdf817073cf017b888e1654e006d2d0b75a5ea8e01e9b3",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:c1c31ae77de9c66fdc2401a304e3ae77eb93b04723c3420094d0784848e457ce",
+  "createdAt": "2026-08-31T08:01:59Z",
+  "intentAlignment": {
+    "evidence": [
+      "src/features/weekly_radar/runtime/archive.rs",
+      "tests/weekly_radar_runtime.rs"
+    ],
+    "reason": "The implementation accepts only the known historical serialization identity, preserves current identity generation and fail-closed tamper checks, and verifies same-day replacement without rewriting historical bytes.",
+    "state": "resolved"
+  },
+  "mode": "code",
+  "preflightAt": "2026-08-31T08:07:02Z",
+  "preflightContractDigest": "sha256:0ed885353280bec4f2cdf817073cf017b888e1654e006d2d0b75a5ea8e01e9b3",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:c1c31ae77de9c66fdc2401a304e3ae77eb93b04723c3420094d0784848e457ce",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T08:07:16Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-production-input-snapshot-compatibility-retry"
+}

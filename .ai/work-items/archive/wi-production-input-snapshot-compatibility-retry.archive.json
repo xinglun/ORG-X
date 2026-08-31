@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-08-31T08:07:22Z",
+  "files": {
+    "contractDigest": "sha256:57d2260fd9fb7c174fadfc72564aa3fb813ffdf2e39c1db7639e74ca27c58c8c",
+    "contractPath": ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.contract.json",
+    "eventsDigest": "sha256:cbc5f1c8a701a8fe52bbdf218b847106393a67df829260ff0de4c0cf1102e662",
+    "eventsPath": ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.events.jsonl",
+    "outcomeDigest": "sha256:21fe2b072f301be097c41486d4ed3882dffefdd9138d81269a04b0753c4c989e",
+    "outcomePath": ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.outcome.json",
+    "summaryDigest": "sha256:174279f098d7e2b33b8bd098d090989ef3705cdcc59c61e491d6a771aae7f745",
+    "summaryPath": ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.summary.json",
+    "taskReportDigest": "sha256:5c0040798fd4a0556f9a0f564a7f17f762d23595d62e7d07d91b5c13670ce41e",
+    "taskReportMarkdownDigest": "sha256:c998bc6861a6b30ab51f19caa11bf52310642816fb314e79f6ae08104f389e7d",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-production-input-snapshot-compatibility-retry.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-production-input-snapshot-compatibility-retry"
+}

@@ -11,9 +11,9 @@ use org_x::features::weekly_radar::infrastructure::telegram_publisher::{
     TelegramMessageId, TelegramTransport, TelegramTransportError,
 };
 use org_x::features::weekly_radar::runtime::archive::{
-    build_input_snapshot, ensure_run_available, load_input_snapshot, persist_input_snapshot,
-    recover_pending_run, replace_run_with_input_snapshot, retain_recent, write_run,
-    write_run_with_input_snapshot, ArchiveError,
+    build_input_snapshot, ensure_run_available, ensure_run_replace_available, load_input_snapshot,
+    persist_input_snapshot, recover_pending_run, replace_run_with_input_snapshot, retain_recent,
+    write_run, write_run_with_input_snapshot, ArchiveError,
 };
 use org_x::features::weekly_radar::runtime::config::{CompanyConfig, CompanySourceRegistry};
 use org_x::features::weekly_radar::runtime::discovery::{
@@ -2085,6 +2085,57 @@ fn legacy_input_snapshot_id(input: &RuntimeReportInput) -> String {
     format!("wr-input-{digest:016x}")
 }
 
+fn historical_input_snapshot_id_with_explicit_zero_not_applicable(
+    input: &RuntimeReportInput,
+) -> String {
+    let bytes = serde_json::to_vec(input).expect("historical input should be serializable");
+    let marker = b",\"not_configured\":";
+    let field = b",\"not_applicable\":0";
+    let mut historical_bytes = Vec::with_capacity(bytes.len() + field.len() * 3);
+    let mut cursor = 0;
+    while cursor < bytes.len() {
+        if bytes[cursor..].starts_with(marker) {
+            let value_start = cursor + marker.len();
+            let mut value_end = value_start;
+            while bytes.get(value_end).is_some_and(u8::is_ascii_digit) {
+                value_end += 1;
+            }
+            if bytes.get(value_end) == Some(&b'}') {
+                historical_bytes.extend_from_slice(&bytes[cursor..value_end]);
+                historical_bytes.extend_from_slice(field);
+                cursor = value_end;
+                continue;
+            }
+        }
+        historical_bytes.push(bytes[cursor]);
+        cursor += 1;
+    }
+
+    let mut digest = 14_695_981_039_346_656_037_u64;
+    for byte in historical_bytes {
+        digest ^= u64::from(byte);
+        digest = digest.wrapping_mul(1_099_511_628_211);
+    }
+    format!("wr-input-{digest:016x}")
+}
+
+fn rewrite_snapshot_with_historical_identity(path: &Path) -> String {
+    let content = fs::read_to_string(path).expect("snapshot should be readable");
+    let mut snapshot: Value = serde_json::from_str(&content).expect("snapshot should be JSON");
+    let input: RuntimeReportInput = serde_json::from_value(
+        snapshot
+            .get("input")
+            .cloned()
+            .expect("snapshot should contain input"),
+    )
+    .expect("historical input should decode");
+    let snapshot_id = historical_input_snapshot_id_with_explicit_zero_not_applicable(&input);
+    snapshot["snapshot_id"] = Value::String(snapshot_id.clone());
+    let rewritten = serde_json::to_string_pretty(&snapshot).expect("snapshot should encode") + "\n";
+    fs::write(path, rewritten).expect("historical snapshot should be written");
+    snapshot_id
+}
+
 fn rewrite_snapshot_as_legacy(path: &Path) -> String {
     let content = fs::read_to_string(path).expect("snapshot should be readable");
     let mut snapshot: Value = serde_json::from_str(&content).expect("snapshot should be JSON");
@@ -2638,6 +2689,86 @@ fn task5_legacy_input_snapshot_without_not_applicable_remains_verifiable() {
         .all(|coverage| coverage.not_applicable() == 0));
 
     fs::remove_dir_all(root).expect("legacy snapshot fixture should be removable");
+}
+
+#[test]
+fn task5_historical_input_snapshot_identity_allows_same_day_replacement() {
+    let root = task4_temp_root("historical-input-snapshot-replacement");
+    let input = task4_report_input();
+    let current_snapshot =
+        persist_input_snapshot(&root, "data", &input, ReportLanguage::Chinese, true)
+            .expect("input snapshot should persist");
+    let input_path = root.join("weekly-radar/snapshots/2026-08-17.input.json");
+    let historical_id = rewrite_snapshot_with_historical_identity(&input_path);
+    let historical_bytes = fs::read(&input_path).expect("historical snapshot bytes should exist");
+    assert_ne!(current_snapshot.snapshot_id(), historical_id);
+
+    let historical_snapshot = load_input_snapshot(&root, "data", input.as_of())
+        .expect("historical input snapshot should remain verifiable");
+    assert_eq!(historical_snapshot.snapshot_id(), historical_id);
+    let first_report =
+        render_report_in_language(historical_snapshot.input(), historical_snapshot.language());
+    let first_receipt = send_rendered_report_with_transport(
+        &first_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("historical report should have a receipt");
+    write_run_with_input_snapshot(
+        &root,
+        "data",
+        &first_report,
+        &first_receipt,
+        Some(&historical_snapshot),
+    )
+    .expect("historical snapshot run should archive");
+    ensure_run_replace_available(&root, "data", input.as_of())
+        .expect("verified historical run should allow same-day replacement");
+    assert_eq!(
+        fs::read(&input_path).expect("historical snapshot should remain readable"),
+        historical_bytes
+    );
+
+    let mut replacement_input = input.clone();
+    replacement_input
+        .add_fact(
+            NormalizedFact::new(
+                "omega",
+                "revenue",
+                "99000000",
+                FactStatus::Known,
+                Confidence::Medium,
+                task4_provenance("facts.revenue"),
+            )
+            .expect("replacement fact should be valid"),
+        )
+        .expect("replacement fact should be unique");
+    let replacement_snapshot =
+        build_input_snapshot(&replacement_input, ReportLanguage::Chinese, true)
+            .expect("replacement snapshot should be buildable");
+    let replacement_report = render_report_in_language(&replacement_input, ReportLanguage::Chinese);
+    let replacement_receipt = send_rendered_report_with_transport(
+        &replacement_report,
+        "chat-123",
+        &Task4RecordingTransport::default(),
+        TelegramRetryPolicy::new(1, Duration::ZERO),
+    )
+    .expect("replacement report should have a receipt");
+    let manifest = replace_run_with_input_snapshot(
+        &root,
+        "data",
+        &replacement_report,
+        &replacement_receipt,
+        &replacement_snapshot,
+    )
+    .expect("same-day replacement should complete after historical verification");
+    assert_eq!(
+        manifest.snapshot_id(),
+        Some(replacement_snapshot.snapshot_id())
+    );
+
+    fs::remove_dir_all(root).expect("historical replacement fixture should be removable");
 }
 
 #[test]

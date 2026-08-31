@@ -1,0 +1,64 @@
+{
+  "acceptanceCriteria": [
+    "A1: 已发布历史 v1 input snapshot 在 source_coverage.not_applicable=0 的身份算法演进后仍可读取、校验和参与同日 replacement，且不改写历史 snapshot bytes。",
+    "A2: 当前版本新建 input snapshot 继续使用当前 canonical identity algorithm 并可 round-trip。",
+    "A3: 历史 snapshot 内容或 snapshot_id 被篡改时仍 fail-closed，不能产生 archive side effect。",
+    "A4: 合法历史 snapshot 存在时，同日 replacement 能完成 archive replacement 流程。",
+    "A5: 聚焦回归、完整 locked workspace tests、fmt、Clippy 和 AI Cockpit verification 全部有新鲜证据；生产补跑在代码 WI 归档后作为操作验收。"
+  ],
+  "authority": "authorized",
+  "baseRevision": "89d542a4ee2041d808d085d7abdab739b779eeae",
+  "createdAt": "2026-08-31T08:01:59Z",
+  "goal": "恢复 Weekly Radar 对现有历史输入快照的生产补跑能力。",
+  "intent": "在不改变当前 snapshot identity、不放宽篡改校验、不改写历史 data 的前提下，兼容已发布 v1 input snapshot 使用的旧 not_applicable=0 序列化身份；补充真实身份漂移回归并完成受审查的 PR 与生产补跑。",
+  "mode": "code",
+  "outOfScope": [
+    "weekly-radar-pending 和既有 data 内容",
+    ".github/workflows/weekly-radar.yml 的 provider、权限、Telegram 格式或 source acquisition 规则",
+    "Reference Model、Structural Evidence、source coverage 业务规则本身",
+    "删除或重写历史 input snapshot",
+    "前任 wi-production-input-snapshot-compatibility 的治理残留、其他 WI、其他 worktree 和生产分支"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:c1733b417301ce16052ad5f21ee1b853f6b4d94921b214bd650d9303bb9da340",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-production-input-snapshot-compatibility-retry",
+    "provider": "local",
+    "pullRequest": "not_applicable",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-production-input-snapshot-compatibility-retry"
+  },
+  "risk": "medium",
+  "scope": [
+    ".ai/work-items/active/wi-production-input-snapshot-compatibility-retry.contract.json",
+    ".ai/work-items/active/wi-production-input-snapshot-compatibility-retry.summary.json",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    ".ai/knowledge/**",
+    ".ai/evidence/**",
+    ".ai/decisions/**",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "tests/weekly_radar_runtime.rs"
+  ],
+  "sources": [
+    "https://github.com/xinglun/ORG-X/actions/runs/33366276957",
+    "https://github.com/xinglun/ORG-X/blob/main/weekly-radar/snapshots/2026-08-31.input.json",
+    "src/features/weekly_radar/runtime/archive.rs",
+    "src/features/weekly_radar/domain/system_health.rs",
+    "tests/weekly_radar_runtime.rs",
+    "AGENTS.md",
+    ".ai/README.md",
+    ".ai/glossary.md"
+  ],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-production-input-snapshot-compatibility-retry"
+}

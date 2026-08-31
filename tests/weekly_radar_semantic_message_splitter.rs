@@ -135,6 +135,74 @@ fn splitter_accepts_ai_era_reference_model_validation_heading_for_each_report_la
 }
 
 #[test]
+fn splitter_splits_oversized_reference_model_section_at_complete_entries() {
+    let rendered = "## AI 时代范本验证\n### Acme\n- 资格状态：已确认\n- 来源：a\n\n### Beta\n- 资格状态：候选\n- 来源：b\n\n### Gamma\n- 资格状态：不具备资格\n- 来源：c\n";
+    let split = SemanticMessageSplitter::split(rendered, SemanticSplitLimits::new(120, 5).unwrap())
+        .expect("oversized sections should split between complete entries");
+
+    assert_eq!(split.chunks().len(), 3);
+    assert!(split
+        .chunks()
+        .iter()
+        .all(|chunk| chunk.boundary() == SemanticBoundary::JudgmentReference));
+    assert!(split
+        .chunks()
+        .iter()
+        .all(|chunk| chunk.character_count() <= 120 && chunk.line_count() <= 5));
+    assert!(split.chunks()[0].markdown().contains("### Acme"));
+    assert!(!split.chunks()[0].markdown().contains("### Beta"));
+    assert!(split.chunks()[1].markdown().contains("### Beta"));
+    assert!(!split.chunks()[1].markdown().contains("### Gamma"));
+    assert!(split.chunks()[2].markdown().contains("### Gamma"));
+
+    let joined = split
+        .chunks()
+        .iter()
+        .map(|chunk| chunk.markdown())
+        .collect::<String>();
+    assert_eq!(joined, rendered);
+}
+
+#[test]
+fn splitter_handles_code_fences_without_trailing_newlines() {
+    let closed = "## AI 时代范本验证\n```markdown\n### not an entry\n```";
+    assert!(
+        SemanticMessageSplitter::split(closed, SemanticSplitLimits::new(120, 5).unwrap()).is_ok()
+    );
+
+    let unclosed = "## AI 时代范本验证\n```markdown\n### not an entry";
+    assert_eq!(
+        SemanticMessageSplitter::split(unclosed, SemanticSplitLimits::new(120, 5).unwrap()),
+        Err(SemanticSplitError::UnclosedCodeFence)
+    );
+}
+
+#[test]
+fn splitter_does_not_use_fenced_nested_headings_as_split_points() {
+    let rendered = "## AI 时代范本验证\n```markdown\n### not an entry\n- still fenced\n```\n### Acme\n- 资格状态：已确认\n";
+    let split = SemanticMessageSplitter::split(rendered, SemanticSplitLimits::new(120, 5).unwrap())
+        .expect("fenced headings must not create partial chunks");
+
+    assert_eq!(split.chunks().len(), 2);
+    assert!(split.chunks()[0].markdown().contains("### not an entry"));
+    assert!(split.chunks()[0].markdown().contains("still fenced"));
+    assert!(!split.chunks()[0].markdown().contains("### Acme"));
+    assert!(split.chunks()[1].markdown().contains("### Acme"));
+}
+
+#[test]
+fn splitter_keeps_an_oversized_nested_entry_fail_closed() {
+    let rendered = "## AI 时代范本验证\n### Acme\n- 这是一个无法放入单条 Telegram 消息的完整条目\n";
+    assert!(matches!(
+        SemanticMessageSplitter::split(rendered, SemanticSplitLimits::new(20, 5).unwrap()),
+        Err(SemanticSplitError::AtomicSectionTooLarge {
+            boundary: SemanticBoundary::JudgmentReference,
+            ..
+        })
+    ));
+}
+
+#[test]
 fn splitter_rejects_zero_limits_unknown_sections_and_unclosed_fences() {
     assert_eq!(
         SemanticSplitLimits::new(0, 10),

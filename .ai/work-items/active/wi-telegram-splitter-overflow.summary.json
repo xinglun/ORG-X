@@ -1,0 +1,32 @@
+{
+  "changedPaths": [
+    ".ai/work-items/active/wi-telegram-splitter-overflow.approach.json",
+    ".ai/work-items/active/wi-telegram-splitter-overflow.contract.json",
+    ".ai/work-items/active/wi-telegram-splitter-overflow.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T03:47:51Z",
+  "checkpointContractDigest": "sha256:d2875951ce616c4fe4cbb5dad496e3c4c5ab781c64effeddc923bd8af0041eeb",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:3d610bfb0d915c4be9c68be890cf760cf8247d25a67ac8aaeba56b3988fe741b",
+  "createdAt": "2026-08-31T03:45:02Z",
+  "failedGate": "finish.governance",
+  "mode": "code",
+  "outcomeState": "blocked",
+  "preflightAt": "2026-08-31T03:54:25Z",
+  "preflightContractDigest": "sha256:d2875951ce616c4fe4cbb5dad496e3c4c5ab781c64effeddc923bd8af0041eeb",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:3d610bfb0d915c4be9c68be890cf760cf8247d25a67ac8aaeba56b3988fe741b",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "checkpointed",
+  "updatedAt": "2026-08-31T03:57:22Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-telegram-splitter-overflow"
+}

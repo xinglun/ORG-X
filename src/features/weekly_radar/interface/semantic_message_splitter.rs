@@ -142,7 +142,7 @@ pub enum SemanticSplitError {
     UnknownSection { heading: String },
     /// A fenced Markdown block was opened but not closed.
     UnclosedCodeFence,
-    /// One complete section cannot fit within the caller's atomic limits.
+    /// One complete section or nested entry cannot fit within the caller's atomic limits.
     AtomicSectionTooLarge {
         boundary: SemanticBoundary,
         characters: usize,
@@ -196,6 +196,18 @@ fn top_level_heading(line: &str) -> Option<&str> {
     }
 }
 
+fn nested_heading(line: &str) -> bool {
+    let trimmed = line.trim_start();
+    trimmed.starts_with("### ")
+}
+
+fn line_without_ending(line_with_ending: &str) -> &str {
+    let line = line_with_ending
+        .strip_suffix('\n')
+        .unwrap_or(line_with_ending);
+    line.strip_suffix('\r').unwrap_or(line)
+}
+
 fn boundary_for_heading(heading: &str) -> Result<SemanticBoundary, SemanticSplitError> {
     match heading {
         "Important Structural Change"
@@ -239,6 +251,24 @@ fn boundary_for_heading(heading: &str) -> Result<SemanticBoundary, SemanticSplit
     }
 }
 
+fn nested_heading_starts(source: &str) -> Vec<usize> {
+    let mut starts = Vec::new();
+    let mut offset = 0usize;
+    let mut fenced = false;
+
+    for line_with_ending in source.split_inclusive('\n') {
+        let line = line_without_ending(line_with_ending);
+        if !fenced && nested_heading(line) {
+            starts.push(offset);
+        }
+        if fence_marker(line) {
+            fenced = !fenced;
+        }
+        offset += line_with_ending.len();
+    }
+    starts
+}
+
 fn raw_sections(source: &str) -> Result<Vec<RawSection<'_>>, SemanticSplitError> {
     let mut starts = Vec::new();
     let mut headings = Vec::new();
@@ -246,15 +276,7 @@ fn raw_sections(source: &str) -> Result<Vec<RawSection<'_>>, SemanticSplitError>
     let mut fenced = false;
 
     for line_with_ending in source.split_inclusive('\n') {
-        let line = line_with_ending
-            .strip_suffix('\n')
-            .unwrap_or(line_with_ending)
-            .strip_suffix('\r')
-            .unwrap_or_else(|| {
-                line_with_ending
-                    .strip_suffix('\n')
-                    .unwrap_or(line_with_ending)
-            });
+        let line = line_without_ending(line_with_ending);
         if !fenced {
             if let Some(heading) = top_level_heading(line) {
                 starts.push(offset);
@@ -265,20 +287,6 @@ fn raw_sections(source: &str) -> Result<Vec<RawSection<'_>>, SemanticSplitError>
             fenced = !fenced;
         }
         offset += line_with_ending.len();
-    }
-    if !source.ends_with('\n') {
-        let line = source.rsplit('\n').next().unwrap_or(source);
-        if !fenced {
-            if let Some(heading) = top_level_heading(line) {
-                if starts.last().copied() != Some(source.len() - line.len()) {
-                    starts.push(source.len() - line.len());
-                    headings.push(heading.to_owned());
-                }
-            }
-        }
-        if fence_marker(line) {
-            fenced = !fenced;
-        }
     }
     if fenced {
         return Err(SemanticSplitError::UnclosedCodeFence);
@@ -307,11 +315,61 @@ fn raw_sections(source: &str) -> Result<Vec<RawSection<'_>>, SemanticSplitError>
     Ok(sections)
 }
 
+fn split_section<'a>(
+    section: RawSection<'a>,
+    limits: SemanticSplitLimits,
+) -> Result<Vec<RawSection<'a>>, SemanticSplitError> {
+    let characters = section.markdown.chars().count();
+    let lines = section.markdown.lines().count();
+    if characters <= limits.max_characters && lines <= limits.max_lines {
+        return Ok(vec![section]);
+    }
+
+    let nested_starts = nested_heading_starts(section.markdown);
+    if nested_starts.is_empty() {
+        return Err(SemanticSplitError::AtomicSectionTooLarge {
+            boundary: section.boundary,
+            characters,
+            lines,
+        });
+    }
+
+    let mut starts = Vec::with_capacity(nested_starts.len() + 1);
+    starts.push(0);
+    starts.extend(nested_starts);
+    let mut parts = Vec::with_capacity(starts.len());
+    for index in 0..starts.len() {
+        let start = starts[index];
+        let end = starts
+            .get(index + 1)
+            .copied()
+            .unwrap_or(section.markdown.len());
+        let markdown = &section.markdown[start..end];
+        let characters = markdown.chars().count();
+        let lines = markdown.lines().count();
+        if characters > limits.max_characters || lines > limits.max_lines {
+            return Err(SemanticSplitError::AtomicSectionTooLarge {
+                boundary: section.boundary,
+                characters,
+                lines,
+            });
+        }
+        if !markdown.trim().is_empty() {
+            parts.push(RawSection {
+                boundary: section.boundary,
+                markdown,
+            });
+        }
+    }
+    Ok(parts)
+}
+
 /// Stateless source-preserving semantic splitter.
 pub struct SemanticMessageSplitter;
 
 impl SemanticMessageSplitter {
-    /// Splits a rendered Markdown message only between complete top-level sections.
+    /// Splits a rendered Markdown message between complete top-level sections or
+    /// complete level-three entries when a top-level section exceeds the limits.
     pub fn split(
         source: &str,
         limits: SemanticSplitLimits,
@@ -323,31 +381,25 @@ impl SemanticMessageSplitter {
         let mut chunks = Vec::new();
 
         for section in sections {
-            let characters = section.markdown.chars().count();
-            let lines = section.markdown.lines().count();
-            if characters > limits.max_characters || lines > limits.max_lines {
-                return Err(SemanticSplitError::AtomicSectionTooLarge {
-                    boundary: section.boundary,
-                    characters,
-                    lines,
+            for part in split_section(section, limits)? {
+                let characters = part.markdown.chars().count();
+                let lines = part.markdown.lines().count();
+                let can_append = chunks.last().is_some_and(|chunk: &SemanticMessageChunk| {
+                    chunk.boundary == part.boundary
+                        && chunk.character_count + characters <= limits.max_characters
+                        && chunk.line_count + lines <= limits.max_lines
                 });
-            }
-
-            let can_append = chunks.last().is_some_and(|chunk: &SemanticMessageChunk| {
-                chunk.boundary == section.boundary
-                    && chunk.character_count + characters <= limits.max_characters
-                    && chunk.line_count + lines <= limits.max_lines
-            });
-            if can_append {
-                let chunk = chunks.last_mut().expect("checked above");
-                chunk.markdown.push_str(section.markdown);
-                chunk.character_count += characters;
-                chunk.line_count += lines;
-            } else {
-                chunks.push(SemanticMessageChunk::new(
-                    section.boundary,
-                    section.markdown.to_owned(),
-                ));
+                if can_append {
+                    let chunk = chunks.last_mut().expect("checked above");
+                    chunk.markdown.push_str(part.markdown);
+                    chunk.character_count += characters;
+                    chunk.line_count += lines;
+                } else {
+                    chunks.push(SemanticMessageChunk::new(
+                        part.boundary,
+                        part.markdown.to_owned(),
+                    ));
+                }
             }
         }
 

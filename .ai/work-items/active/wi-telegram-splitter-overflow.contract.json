@@ -1,0 +1,101 @@
+{
+  "acceptanceCriteria": [
+    "When one rendered top-level report section exceeds the Telegram character or line limit but contains complete level-three entries, the splitter divides it only between those entries, preserves exact source bytes and order, retains the existing semantic boundary, and keeps every emitted chunk within both limits.",
+    "A regression test covers an oversized AI-era reference-model section with multiple company entries and proves no entry is truncated or reordered; existing localized-heading, unknown-section, fenced-heading, and atomic-too-large behavior remains covered.",
+    "Focused splitter tests, repository formatting, clippy, and the full Rust test suite pass without changing report rendering, Telegram credentials, transport retry semantics, workflow scheduling, or archive policy.",
+    "The reviewed pull request is merged into main, the dedicated branch and worktree are removed, main is synchronized and clean, and the authorized non-dry-run Weekly Radar rerun for 2026-08-31 is verified from its workflow result and data-branch publication evidence."
+  ],
+  "authority": "authorized",
+  "baseRevision": "ec548f65358f5c8fa123ad0a8a23572c77bbe356",
+  "createdAt": "2026-08-31T03:45:02Z",
+  "goal": "Restore production Weekly Radar delivery when a valid rendered report section exceeds the Telegram per-message limits, while preserving semantic boundaries, exact source content, and fail-closed behavior for unsupported input.",
+  "intent": "Repair the semantic message splitter after production evidence showed that valid rendered reports can contain sections exceeding the Telegram per-message limits.",
+  "mode": "code",
+  "outOfScope": [
+    "Changing report rendering or report content limits",
+    "Changing Telegram credentials",
+    " transport",
+    " retry behavior",
+    " or provider payloads",
+    "Changing workflow scheduling",
+    " archive retention",
+    " data-branch policy",
+    " or source acquisition",
+    "Splitting inside a complete level-three entry or silently truncating an entry that cannot fit",
+    "Unrelated Work Items or historical data artifacts"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:fd416daa0ada2ecc5c7428dcfe06e85ee94dfb9fe555e2fc4e6c39b317769198",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "unknown",
+    "baseRemote": "unknown",
+    "branch": "codex/wi-telegram-splitter-overflow",
+    "provider": "unknown",
+    "pullRequest": "unknown",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-telegram-splitter-overflow"
+  },
+  "risk": "normal",
+  "scope": [
+    ".ai/work-items/active/wi-telegram-splitter-overflow.contract.json",
+    ".ai/work-items/active/wi-telegram-splitter-overflow.summary.json",
+    ".ai/work-items/active/wi-telegram-splitter-overflow.outcome.json",
+    ".ai/work-items/active/wi-telegram-splitter-overflow.outcome.md",
+    ".ai/cockpit/current_status.md",
+    ".ai/cockpit/task_report.json",
+    ".ai/cockpit/task_report.md",
+    ".ai/evidence/reference-impact/**",
+    ".ai/work-items/starts/**",
+    ".ai/work-items/archive/**",
+    "docs/superpowers/plans/2026-08-31-telegram-splitter-overflow.md",
+    "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+    "tests/weekly_radar_semantic_message_splitter.rs"
+  ],
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "reason": "Repository governance requires a bounded Work Item, reviewed PR, merge, cleanup, and evidence-backed handoff."
+    },
+    {
+      "path": ".ai/README.md",
+      "reason": "Repository-local AI Cockpit lifecycle and evidence rules."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Repository-local terminology and architecture boundaries."
+    },
+    {
+      "path": ".ai/cockpit/README.md",
+      "reason": "Installed Rust Runtime command sequence and preflight pause rules."
+    },
+    {
+      "path": "src/features/weekly_radar/interface/semantic_message_splitter.rs",
+      "reason": "The splitter currently rejects an otherwise valid report section when it exceeds the Telegram line limit."
+    },
+    {
+      "path": "src/features/weekly_radar/runtime/report.rs",
+      "reason": "The renderer emits repeatable level-three company entries inside the affected report sections."
+    },
+    {
+      "path": "src/features/weekly_radar/interface/telegram.rs",
+      "reason": "Telegram delivery applies the 4096-character and 120-line splitter limits before sending."
+    },
+    {
+      "path": "tests/weekly_radar_semantic_message_splitter.rs",
+      "reason": "Existing source-preserving, localized-heading, fail-closed, and size-boundary regression coverage."
+    },
+    {
+      "path": "https://github.com/xinglun/ORG-X/actions/runs/33353608029",
+      "reason": "The post-merge production rerun reached the delivery stage and failed with the redacted rendered-report safety error after the report exceeded the configured splitter limits."
+    }
+  ],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-telegram-splitter-overflow"
+}

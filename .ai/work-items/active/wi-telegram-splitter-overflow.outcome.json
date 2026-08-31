@@ -1,0 +1,148 @@
+{
+  "acceptanceResults": [
+    "When one rendered top-level report section exceeds the Telegram character or line limit but contains complete level-three entries, the splitter divides it only between those entries, preserves exact source bytes and order, retains the existing semantic boundary, and keeps every emitted chunk within both limits.",
+    "A regression test covers an oversized AI-era reference-model section with multiple company entries and proves no entry is truncated or reordered; existing localized-heading, unknown-section, fenced-heading, and atomic-too-large behavior remains covered.",
+    "Focused splitter tests, repository formatting, clippy, and the full Rust test suite pass without changing report rendering, Telegram credentials, transport retry semantics, workflow scheduling, or archive policy.",
+    "The reviewed pull request is merged into main, the dedicated branch and worktree are removed, main is synchronized and clean, and the authorized non-dry-run Weekly Radar rerun for 2026-08-31 is verified from its workflow result and data-branch publication evidence."
+  ],
+  "decisionState": "red",
+  "evidenceRefs": [
+    ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
+  ],
+  "failedGate": "finish.governance",
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "blocked",
+  "summary": "A lifecycle gate failed; completion is not claimed and the Work Item remains recoverable.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:3d610bfb0d915c4be9c68be890cf760cf8247d25a67ac8aaeba56b3988fe741b",
+      "workItemId": "wi-telegram-splitter-overflow"
+    },
+    "failedGate": "finish.governance",
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "red",
+    "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/active/wi-telegram-splitter-overflow.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/active/wi-telegram-splitter-overflow.approach.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/active/wi-telegram-splitter-overflow.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/active/wi-telegram-splitter-overflow.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/active/wi-telegram-splitter-overflow.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/active/wi-telegram-splitter-overflow.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
+          ],
+          "inference": false,
+          "text": "A required evidence or identity control failed; remain stopped."
+        }
+      ],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
+          ],
+          "inference": false,
+          "text": "A lifecycle gate failed; completion is not claimed and the Work Item remains recoverable."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-telegram-splitter-overflow.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: lifecycle_gate_failed"
+        }
+      ],
+      "resolutions": [],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/active/wi-telegram-splitter-overflow.contract.json"
+          ],
+          "inference": false,
+          "text": "Restore production Weekly Radar delivery when a valid rendered report section exceeds the Telegram per-message limits, while preserving semantic boundaries, exact source content, and fail-closed behavior for unsupported input."
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/active/wi-telegram-splitter-overflow.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "unknown",
+    "workItemId": "wi-telegram-splitter-overflow"
+  },
+  "unknowns": [
+    "lifecycle_gate_failed"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-telegram-splitter-overflow.verification.json",
+    "required": true,
+    "status": "blocked"
+  },
+  "workItemId": "wi-telegram-splitter-overflow"
+}

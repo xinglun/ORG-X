@@ -1,0 +1,24 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-08-31T09:27:38Z",
+  "files": {
+    "approachDigest": "sha256:0f1733ea984d42c317476179bfe493bd21067198cf6384a5212ad55a3fa08a66",
+    "approachPath": ".ai/work-items/archive/wi-structural-promotion-hard-gate.approach.json",
+    "contractDigest": "sha256:3d7feed62c8ea89108822a69bff43703ac05190bfde9f10cbc90ab4ae1eeeb92",
+    "contractPath": ".ai/work-items/archive/wi-structural-promotion-hard-gate.contract.json",
+    "eventsDigest": "sha256:0902b705ee723a3480ccf18a674fb9566a7e62f4c186496a38abeb086940cfe3",
+    "eventsPath": ".ai/work-items/archive/wi-structural-promotion-hard-gate.events.jsonl",
+    "outcomeDigest": "sha256:1c648ad7ffb55073a1489d5d1c40f2fe0e28334b1777cc18935214fc2d416580",
+    "outcomePath": ".ai/work-items/archive/wi-structural-promotion-hard-gate.outcome.json",
+    "summaryDigest": "sha256:32a7447376294cdc006722fecf22504eb47b9d8aa405699879fa0ec351290045",
+    "summaryPath": ".ai/work-items/archive/wi-structural-promotion-hard-gate.summary.json",
+    "taskReportDigest": "sha256:3ff63e153f0226affe8c2b6490fe415cab5ea8ad9a95118e53745935787c3803",
+    "taskReportMarkdownDigest": "sha256:662eec4ebf7bd3f2f7c0ae93f611a2aad99178c4bbeda9dffd697bf732cf22ba",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-structural-promotion-hard-gate.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-structural-promotion-hard-gate.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-structural-promotion-hard-gate"
+}

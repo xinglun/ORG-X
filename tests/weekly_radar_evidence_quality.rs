@@ -11,7 +11,7 @@ use org_x::features::weekly_radar::runtime::evidence::{
 use org_x::features::weekly_radar::runtime::http::{FixtureHttpClient, HttpResponse};
 use org_x::features::weekly_radar::runtime::model::{
     Confidence, FactStatus, NormalizedFact, Provenance, ResearchMetrics, RuntimeReportInput,
-    StructuralDimension,
+    StructuralDimension, StructuralEvidenceContract,
 };
 use org_x::features::weekly_radar::runtime::normalize_source_observation;
 use org_x::features::weekly_radar::runtime::report::{render_report_in_language, ReportLanguage};
@@ -1359,6 +1359,136 @@ fn page_level_observation_cannot_create_an_evidence_candidate() {
     assert!(extract_evidence_candidate(&entry).is_none());
 }
 
+fn production_acceptance_document(
+    company_id: &str,
+    source_kind: SourceKind,
+    document_kind: DocumentKind,
+    source_uri: &str,
+    title: &str,
+    passage: &str,
+    effective_date: &str,
+) -> org_x::features::weekly_radar::runtime::SourceObservation {
+    document_observation(DocumentObservationInput {
+        company_id: company_id.to_owned(),
+        kind: source_kind,
+        tier: SourceTier::OfficialPrimary,
+        url: source_uri.to_owned(),
+        title: title.to_owned(),
+        text: passage.to_owned(),
+        status: SourceStatus::Known,
+        status_reason: "2026-08-31 production acceptance fixture".to_owned(),
+        document_kind,
+        source_field_or_passage: "2026-08-31 production report fact".to_owned(),
+        observed_at: Utc::now(),
+        effective_date: Some(
+            NaiveDate::parse_from_str(effective_date, "%Y-%m-%d")
+                .expect("production acceptance date should parse"),
+        ),
+    })
+}
+
+#[test]
+fn production_acceptance_structural_false_positives_are_not_promoted() {
+    let cases = [
+        (
+            "amzn",
+            SourceKind::Sec,
+            DocumentKind::Filing,
+            "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+            "Amazon.com, Inc. Form 10-Q",
+            "Financial Statements 3 Consolidated Statements of Cash Flows 3 Consolidated Statements of Operations 4 Consolidated Statements of Comprehensive Income 5 Consolidated Balance Sheets 6 Notes to Consolidated Financial Statements 7 Item&#160;2.",
+            "2026-07-31",
+        ),
+        (
+            "goog",
+            SourceKind::Sec,
+            DocumentKind::Filing,
+            "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+            "Alphabet Inc. Form 10-Q",
+            "FINANCIAL INFORMATION Item&#160;1 Financial Statements 4 Consolidated Balance Sheets - December&#160;31, 2025 and June&#160;30, 2026 4 Consolidated Statements of Income - Three and Six Months Ended June 30 , 2025 and 2026 5 Consolidated Statements of Comprehensive Income.",
+            "2026-07-23",
+        ),
+        (
+            "wmt",
+            SourceKind::Sec,
+            DocumentKind::Filing,
+            "https://www.sec.gov/Archives/edgar/data/104169/000010416926000111/wmt-20260604.htm",
+            "Walmart Inc. Proxy Statement",
+            "The votes on this proposal were as follows: For Against Abstain Broker Non-Votes 278,449,353 6,174,725,696 77,400,387 633,971,647 Finally, the Company's shareholders then voted upon and rejected a shareholder proposal requesting a report on the matter.",
+            "2026-06-05",
+        ),
+        (
+            "msft",
+            SourceKind::Sec,
+            DocumentKind::Earnings,
+            "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-20260729.htm",
+            "Microsoft Corporation Form 8-K",
+            "Results of Operations and Financial Condition On July 29, 2026, Microsoft Corporation issued a press release announcing its financial results for the fiscal quarter and year ended June 30, 2026.",
+            "2026-07-29",
+        ),
+    ];
+
+    for (company_id, source_kind, document_kind, source_uri, title, passage, effective_date) in
+        cases
+    {
+        let observation = production_acceptance_document(
+            company_id,
+            source_kind,
+            document_kind,
+            source_uri,
+            title,
+            passage,
+            effective_date,
+        );
+        let Some(candidate) = extract_evidence_candidate(&observation) else {
+            continue;
+        };
+        let validated = validate_evidence_candidate(
+            &candidate,
+            NaiveDate::from_ymd_opt(2026, 8, 31).expect("cutoff should be valid"),
+        )
+        .expect("production passage should remain a validated fact");
+        assert_eq!(validated.evidence_class(), EvidenceClass::ValidatedFact);
+        assert_eq!(validated.structural_evidence_contract(), None);
+        assert!(validated
+            .to_normalized_fact(1)
+            .expect("validated fact should normalize")
+            .kind()
+            .starts_with("evidence_official_material_"));
+    }
+}
+
+#[test]
+fn structural_report_requires_a_valid_semantic_contract() {
+    let passage = "Financial Statements 3 Consolidated Statements of Cash Flows 3 Consolidated Statements of Operations 4 Consolidated Statements of Comprehensive Income 5 Consolidated Balance Sheets 6 Notes to Consolidated Financial Statements 7 Item&#160;2.";
+    let fact = NormalizedFact::new_with_structural_dimension(
+        "amzn",
+        "evidence_structural_change_001",
+        passage,
+        Some(StructuralDimension::OperatingMetric),
+        FactStatus::Known,
+        Confidence::High,
+        Provenance::new(
+            "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+            passage,
+            Utc::now(),
+            Some(NaiveDate::from_ymd_opt(2026, 7, 31).expect("date should be valid")),
+        )
+        .expect("production passage provenance should be valid"),
+    )
+    .expect("dimension-only fixture should be constructible for the boundary test");
+    let mut input = input_with_metrics(ResearchMetrics::new(1, 1, 1, 0, 0));
+    input
+        .add_fact(fact)
+        .expect("dimension-only fixture should be retained as a fact");
+
+    let report = render_report_in_language(&input, ReportLanguage::Chinese);
+
+    assert!(!report.markdown().contains("## 结构性证据"));
+    assert!(report.markdown().contains("## 已验证事实"));
+    assert!(report.markdown().contains(passage));
+}
+
 fn input_with_metrics(metrics: ResearchMetrics) -> RuntimeReportInput {
     let mut input = RuntimeReportInput::new("2026-08-25").expect("report date should be valid");
     input.set_research_metrics(metrics);
@@ -1413,10 +1543,11 @@ fn report_separates_validated_facts_from_structural_evidence() {
     let mut input = input_with_raw_and_validated_evidence();
     input
         .add_fact(
-            NormalizedFact::new(
+            NormalizedFact::new_with_structural_dimension(
                 "acme",
                 "evidence_structural_change_002",
                 "Acme deployed an agent-assisted scheduler to production.",
+                Some(StructuralDimension::ProductionSystem),
                 FactStatus::Known,
                 Confidence::High,
                 Provenance::new(
@@ -1427,7 +1558,25 @@ fn report_separates_validated_facts_from_structural_evidence() {
                 )
                 .expect("structural evidence provenance should be valid"),
             )
-            .expect("structural evidence should be valid"),
+            .expect("structural evidence should be valid")
+            .with_structural_evidence_contract(
+                StructuralEvidenceContract::new(
+                    "acme",
+                    "acme",
+                    "Acme deployed an agent-assisted scheduler to production.",
+                    StructuralDimension::ProductionSystem,
+                    "agent-assisted scheduler",
+                    "manual scheduling",
+                    "agent-assisted scheduler in production",
+                    NaiveDate::from_ymd_opt(2026, 8, 20).expect("date should be valid"),
+                    "https://ir.example.test/organization/update",
+                    "official_company_material",
+                    "production_system:agent-assisted scheduler",
+                    true,
+                )
+                .expect("structural evidence contract should be valid"),
+            )
+            .expect("structural evidence should retain its contract"),
         )
         .expect("structural evidence should be added");
     input.set_research_metrics(

@@ -1,0 +1,329 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "normalized fact structural hard gate",
+          "path": "src/features/weekly_radar/runtime/model.rs",
+          "type": "runtime-boundary",
+          "verification": "is_structural_evidence requires a known fact, a structural dimension, a present valid contract, and matching contract dimension."
+        },
+        {
+          "locator": "report promotion filter",
+          "path": "src/features/weekly_radar/runtime/report.rs",
+          "type": "report-regression",
+          "verification": "Structural Evidence rendering uses the hard-gate predicate instead of the kind prefix alone."
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "2026-08-31 production false positives",
+          "path": "tests/weekly_radar_evidence_quality.rs",
+          "type": "production-regression",
+          "verification": "The exact Amazon, Alphabet, Walmart, and Microsoft report passages are asserted to remain ValidatedFact."
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "positive structural contract",
+          "path": "src/features/weekly_radar/runtime/evidence.rs",
+          "type": "positive-regression",
+          "verification": "A genuine engineering production change still retains the complete structural contract."
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "dimension-only report boundary",
+          "path": "tests/weekly_radar_evidence_quality.rs",
+          "type": "fail-closed-regression",
+          "verification": "A structural kind without a valid contract is retained as a validated fact and omitted from Structural Evidence."
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A5",
+      "evidence": [
+        {
+          "locator": "workspace quality",
+          "path": ".ai/work-items/active/wi-structural-promotion-hard-gate.controls.json",
+          "type": "verification-plan",
+          "verification": "Targeted regression, cargo fmt, cargo clippy -D warnings, and cargo test --locked --workspace are the declared verification set; Runtime receipts will bind their results."
+        }
+      ]
+    }
+  ],
+  "changedPaths": [
+    ".ai/work-items/archive/wi-structural-promotion-hard-gate.approach.json",
+    ".ai/work-items/archive/wi-structural-promotion-hard-gate.contract.json",
+    ".ai/work-items/archive/wi-structural-promotion-hard-gate.summary.json"
+  ],
+  "checkpointAt": "2026-08-31T09:15:37Z",
+  "checkpointContractDigest": "sha256:281e8f6ddae7da5d93e76e6a08d480b77e4a31dbc3608e62a75684f98a3b4b67",
+  "checkpointCount": 1,
+  "checkpointEvidence": [
+    {
+      "acceptanceCount": 5,
+      "contractHash": "sha256:e4f287fa3d85dfcb09ab161c35aec55715fc4eb2fc6551eeadc0adfd5a68bd67",
+      "recorded": true,
+      "recordedAt": "2026-08-31T09:15:37Z",
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:b7c6325bcdfd942a8edee55b598ef6c7de60f867a1fe6117e60aa1e2988c67b9",
+      "requiredChecks": 0,
+      "requiredChecksPassed": 0,
+      "schemaVersion": 1,
+      "stage": "before_edit",
+      "unknownCount": 0,
+      "workItemId": "wi-structural-promotion-hard-gate"
+    },
+    {
+      "acceptanceCount": 5,
+      "contractHash": "sha256:281e8f6ddae7da5d93e76e6a08d480b77e4a31dbc3608e62a75684f98a3b4b67",
+      "invalidatedRequiredChecks": [],
+      "originalBeforeEditContractHash": "sha256:e4f287fa3d85dfcb09ab161c35aec55715fc4eb2fc6551eeadc0adfd5a68bd67",
+      "previousContractHash": "sha256:e4f287fa3d85dfcb09ab161c35aec55715fc4eb2fc6551eeadc0adfd5a68bd67",
+      "reason": "Normalize required evidence class to the Runtime standard verification and record the owner-confirmed user-visible benefit dimensions required for Finish.",
+      "recorded": true,
+      "recordedAt": "2026-08-31T09:24:41Z",
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:b7c6325bcdfd942a8edee55b598ef6c7de60f867a1fe6117e60aa1e2988c67b9",
+      "requiredChecks": 0,
+      "requiredChecksPassed": 0,
+      "requiredChecksPassedAtAmendment": null,
+      "schemaVersion": 1,
+      "stage": "contract_amendment_revalidation",
+      "unknownCount": 0,
+      "verificationStarted": false,
+      "workItemId": "wi-structural-promotion-hard-gate"
+    }
+  ],
+  "checkpointRepositorySnapshotDigest": "sha256:b7c6325bcdfd942a8edee55b598ef6c7de60f867a1fe6117e60aa1e2988c67b9",
+  "createdAt": "2026-08-31T09:12:15Z",
+  "failedGate": "finish.governance",
+  "finalDimensions": {
+    "contractDigest": "sha256:281e8f6ddae7da5d93e76e6a08d480b77e4a31dbc3608e62a75684f98a3b4b67",
+    "decision": "CONDITIONAL_GO",
+    "dimensions": {
+      "absurd_tests": {
+        "evidence": [
+          "tests/weekly_radar_evidence_quality.rs"
+        ],
+        "status": "verified"
+      },
+      "agent_self_assertion": {
+        "evidence": [
+          "ai-cockpit agent doctor --repo <repo> --json"
+        ],
+        "status": "verified"
+      },
+      "capability_truth": {
+        "evidence": [
+          "tests/weekly_radar_evidence_quality.rs"
+        ],
+        "status": "verified"
+      },
+      "code_quality": {
+        "evidence": [
+          "cargo fmt --all -- --check",
+          "cargo clippy --all-targets --all-features -- -D warnings",
+          "cargo test --locked --workspace"
+        ],
+        "status": "verified"
+      },
+      "documentation": {
+        "evidence": [
+          "docs/superpowers/plans/2026-08-31-structural-promotion-hard-gate.md"
+        ],
+        "status": "verified"
+      },
+      "enterprise_boundary": {
+        "evidence": [
+          "src/features/weekly_radar/runtime/evidence.rs",
+          "src/features/weekly_radar/runtime/model.rs",
+          "src/features/weekly_radar/runtime/report.rs"
+        ],
+        "status": "verified"
+      },
+      "injection": {
+        "evidence": [
+          "out of scope: no input-trust behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "installation": {
+        "evidence": [
+          "out of scope: no installation behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "lifecycle": {
+        "evidence": [
+          "docs/superpowers/plans/2026-08-31-structural-promotion-hard-gate.md"
+        ],
+        "status": "conditional"
+      },
+      "multilingual": {
+        "evidence": [
+          "out of scope: existing localized labels remain unchanged"
+        ],
+        "status": "conditional"
+      },
+      "north_star": {
+        "evidence": [
+          "out of scope: no ranking or Reference Model behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "performance": {
+        "evidence": [
+          "out of scope: no performance-sensitive algorithm changed"
+        ],
+        "status": "conditional"
+      },
+      "provider_evidence": {
+        "evidence": [
+          "out of scope: no provider acquisition behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "real_adopter": {
+        "evidence": [
+          "out of scope: production acceptance follows both remediation WIs"
+        ],
+        "status": "conditional"
+      },
+      "recovery": {
+        "evidence": [
+          ".ai/work-items/active/wi-structural-promotion-hard-gate.summary.json"
+        ],
+        "status": "verified"
+      },
+      "stale_assets": {
+        "evidence": [
+          "ai-cockpit preflight --repo <repo> --contract <contract> returned green"
+        ],
+        "status": "verified"
+      },
+      "task_outcome": {
+        "evidence": [
+          ".ai/evidence/wi-structural-promotion-hard-gate.verification.json"
+        ],
+        "status": "verified"
+      },
+      "uninstall": {
+        "evidence": [
+          "out of scope: no uninstall behavior changed"
+        ],
+        "status": "conditional"
+      },
+      "unknown": {
+        "evidence": [
+          "ai-cockpit work-item validate --repo <repo> --id wi-structural-promotion-hard-gate --json"
+        ],
+        "status": "verified"
+      },
+      "upgrade": {
+        "evidence": [
+          "out of scope: no upgrade behavior changed"
+        ],
+        "status": "conditional"
+      }
+    },
+    "limitations": [
+      "WI-2 cross-subject attribution is a separate authorized Work Item.",
+      "2026-08-31 Production Acceptance will be rerun only after both remediation WIs merge."
+    ],
+    "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+    "runtimeDigest": "sha256:b0e4183bee2da252a0522ead3e1b5d9e20dd1577e3ce62b08f3e198c542e1176",
+    "runtimeVersion": "0.2.48",
+    "schemaVersion": 1,
+    "summaryDigest": "sha256:e4bf1990c574a9533d92e2f179e30982ac67ce0dc67bb104f578df4376c7551d",
+    "workItemId": "wi-structural-promotion-hard-gate"
+  },
+  "intentAlignment": {
+    "evidence": [
+      ".ai/work-items/active/wi-structural-promotion-hard-gate.contract.json",
+      "src/features/weekly_radar/runtime/evidence.rs",
+      "src/features/weekly_radar/runtime/report.rs",
+      "tests/weekly_radar_evidence_quality.rs"
+    ],
+    "reason": "The implementation directly closes the two observed Structural Evidence bypasses: lexical noise promotion and report-level dimension-only promotion, while retaining valid structural contracts and leaving WI-2 attribution separate.",
+    "state": "resolved"
+  },
+  "mode": "code",
+  "outcomeState": "blocked",
+  "preflightAt": "2026-08-31T09:25:19Z",
+  "preflightContractDigest": "sha256:281e8f6ddae7da5d93e76e6a08d480b77e4a31dbc3608e62a75684f98a3b4b67",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:b7c6325bcdfd942a8edee55b598ef6c7de60f867a1fe6117e60aa1e2988c67b9",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "scenarioCoverage": [
+    {
+      "evidence": [
+        "tests/weekly_radar_evidence_quality.rs",
+        "cargo test --locked --test weekly_radar_evidence_quality production_acceptance_structural_false_positives_are_not_promoted"
+      ],
+      "expected": "The exact 2026-08-31 Amazon and Alphabet passages remain ValidatedFact and never StructuralEvidence.",
+      "required": true,
+      "scenario": "Amazon and Alphabet SEC table-of-contents passages are extracted as document leads.",
+      "status": "verified",
+      "verificationPlan": "Run the production-sentence regression fixture through extraction and validation."
+    },
+    {
+      "evidence": [
+        "origin/data:weekly-radar/reports/2026-08-31.md",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "The exact vote and financial-results announcement passages remain ValidatedFact and never StructuralEvidence.",
+      "required": true,
+      "scenario": "Walmart shareholder-vote and Microsoft earnings-announcement passages are extracted as document leads.",
+      "status": "verified",
+      "verificationPlan": "Run the same production-sentence regression fixture and inspect the resulting evidence class."
+    },
+    {
+      "evidence": [
+        "src/features/weekly_radar/runtime/evidence.rs",
+        "tests/weekly_radar_evidence_quality.rs",
+        "cargo test --locked --workspace"
+      ],
+      "expected": "A genuine change retains a valid contract with the required semantic fields.",
+      "required": true,
+      "scenario": "A genuine production-system sentence with complete semantics is promoted.",
+      "status": "verified",
+      "verificationPlan": "Run existing positive structural-contract tests and the full workspace suite."
+    },
+    {
+      "evidence": [
+        "src/features/weekly_radar/runtime/model.rs",
+        "src/features/weekly_radar/runtime/report.rs",
+        "tests/weekly_radar_evidence_quality.rs"
+      ],
+      "expected": "A missing or invalid contract is fail-closed and does not affect the structural report section.",
+      "required": true,
+      "scenario": "Legacy or manually constructed dimension-only facts cannot enter the Structural Evidence report.",
+      "status": "verified",
+      "verificationPlan": "Render the dimension-only production fixture and assert it appears only under Validated Facts."
+    }
+  ],
+  "state": "finish_ready",
+  "updatedAt": "2026-08-31T09:27:26Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-structural-promotion-hard-gate"
+}

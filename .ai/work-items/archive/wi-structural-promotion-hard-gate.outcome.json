@@ -1,0 +1,151 @@
+{
+  "acceptanceResults": [
+    "A1: 任何进入 StructuralEvidence 的 NormalizedFact 必须同时具备 structural_evidence_contract、contract.validate() 成功且结构证据归属通过；否则只能作为 ValidatedFact 输出。",
+    "A2: Amazon Financial Statements 3 Consolidated Statements of Cash Flows...、Alphabet FINANCIAL INFORMATION Item 1 Financial Statements...、Walmart shareholder vote 原句、Microsoft issued a press release announcing its financial results 原句均不得进入 Structural Evidence。",
+    "A3: 真实结构变化仍可晋升，并保留可解释的 before_state、after_state、production_unit、effective_date、source 与 core_value_link。",
+    "A4: promotion gate fail-closed，不丢失已验证事实，不产生结构性证据计数或报告条目副作用。",
+    "A5: 通过 targeted RED/GREEN 回归、cargo fmt、cargo clippy -D warnings、cargo test --locked --workspace 及 Runtime preflight/verify/finish/archive 证据。"
+  ],
+  "createdAt": "2026-08-31T09:27:26Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:95fbeb1dab88e4301a9e90f997943ba8cba47d560867f10271698eea3ba806fb",
+  "evidenceRefs": [
+    ".ai/evidence/wi-structural-promotion-hard-gate.verification.json"
+  ],
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-structural-promotion-hard-gate.verification.json"
+    ],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-structural-promotion-hard-gate.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:b7c6325bcdfd942a8edee55b598ef6c7de60f867a1fe6117e60aa1e2988c67b9",
+      "workItemId": "wi-structural-promotion-hard-gate"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-promotion-hard-gate.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-structural-promotion-hard-gate.approach.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-promotion-hard-gate.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-structural-promotion-hard-gate.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-promotion-hard-gate.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-structural-promotion-hard-gate.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-promotion-hard-gate.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-structural-promotion-hard-gate.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-promotion-hard-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-promotion-hard-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-structural-promotion-hard-gate.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-promotion-hard-gate.contract.json"
+          ],
+          "inference": false,
+          "text": "在 runtime StructuralEvidence promotion boundary 强制 contract 存在且可验证、结构契约字段完整，并用本次生产报告四条原句形成 RED 回归；保持真实合格的 before/after、production_unit、core_value_link 结构证据可晋升。"
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-structural-promotion-hard-gate.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-structural-promotion-hard-gate"
+  },
+  "taskReportDigest": "sha256:3ff63e153f0226affe8c2b6490fe415cab5ea8ad9a95118e53745935787c3803",
+  "taskReportMarkdownDigest": "sha256:662eec4ebf7bd3f2f7c0ae93f611a2aad99178c4bbeda9dffd697bf732cf22ba",
+  "unknowns": [
+    "user_visible_benefit_not_declared"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-structural-promotion-hard-gate.verification.json",
+    "required": true,
+    "status": "verified"
+  },
+  "workItemId": "wi-structural-promotion-hard-gate"
+}

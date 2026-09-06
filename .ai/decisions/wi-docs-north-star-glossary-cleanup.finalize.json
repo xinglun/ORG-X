@@ -1,0 +1,58 @@
+{
+  "actor": "Ray <sei-rinn@7andinm.co.jp>",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "User /goal directive: fix everything per WI process and confirm cleanliness.",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "2a8976b1633f856e44aa6af23d86fc436053ecfb",
+    "name": "codex/wi-docs-north-star-glossary-cleanup",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:89ed3fb8b8abba4979a4922f0cee0965b078c7ccdf5dd626a8eb14fb7c803b36",
+  "operationId": "sha256:3c5fbff012d0bf4e95351c56dcfd2c6fb4b58e85d274daf41631cf1142972ec2",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "42fba16e2dfa42178554d1c2e34a6372a91c4de2",
+    "headRevision": "2a8976b1633f856e44aa6af23d86fc436053ecfb",
+    "mergeCommit": "2943d411c5ee555b85af95e191054f97455c52c5",
+    "number": 117,
+    "url": "https://github.com/xinglun/ORG-X/pull/117"
+  },
+  "reason": "PR #117 and #118 merged into main; branch and worktree deleted locally and on origin.",
+  "receiptId": "sha256:215a20e909310e5a2af523a859b5a688410ad8e2b58f51065f26e411e6fbbb41",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-docs-north-star-glossary-cleanup",
+    "provider": "github",
+    "pullRequest": "https://github.com/xinglun/ORG-X/pull/117",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-docs-north-star-glossary-cleanup"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:c799c7f1caa42d2e9124c46751cf3d4baa2c60d14d0695bc1d85acd964a4aa63",
+  "runtimeVersion": "0.2.79",
+  "schemaVersion": 1,
+  "timestamp": "2026-09-06T10:40:00+09:00",
+  "workItemId": "wi-docs-north-star-glossary-cleanup",
+  "worktree": {
+    "branch": "codex/wi-docs-north-star-glossary-cleanup",
+    "headRevision": "2a8976b1633f856e44aa6af23d86fc436053ecfb",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-docs-north-star-glossary-cleanup",
+    "worktreeId": "wi-docs-north-star-glossary-cleanup"
+  }
+}

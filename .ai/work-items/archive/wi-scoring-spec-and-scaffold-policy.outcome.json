@@ -1,0 +1,142 @@
+{
+  "acceptanceResults": [
+    "SCORING_SPEC.md formulas match src/features/weekly_radar/runtime/judgment.rs exactly (evidence_confidence, transformation_score, counter_evidence_risk, evidence_freshness)",
+    "ADR-011 exists and documents the 10 unconnected contexts as intentional scaffolding with a re-review trigger",
+    "No Rust source changes; cargo check --workspace --tests remains clean"
+  ],
+  "createdAt": "2026-09-06T02:02:50Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:df7106092c2c96c5c4f3e8c236d50fe5ef09538f42ec1e26c85edb98af291915",
+  "evidenceRefs": [
+    ".ai/evidence/wi-scoring-spec-and-scaffold-policy.verification.json"
+  ],
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-scoring-spec-and-scaffold-policy.verification.json"
+    ],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-scoring-spec-and-scaffold-policy.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:df8fa1c39270bb0839c0917561928d29460ac4e9ef50ea3591db1113d5cfe9dd",
+      "workItemId": "wi-scoring-spec-and-scaffold-policy"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-scoring-spec-and-scaffold-policy.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-scoring-spec-and-scaffold-policy.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-scoring-spec-and-scaffold-policy.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-scoring-spec-and-scaffold-policy.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-scoring-spec-and-scaffold-policy.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.contract.json"
+          ],
+          "inference": false,
+          "text": "Rewrite SCORING_SPEC.md to mirror the real Transformation Score/Evidence Confidence/Counter Evidence Risk/Evidence Freshness formulas in judgment.rs, and add an ADR documenting the 10 unconnected contexts as intentional future-expansion scaffolding."
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-scoring-spec-and-scaffold-policy"
+  },
+  "taskReportDigest": "sha256:c9f9c712577994963dcd87ef12e40a65166137d0448cdddb363c1ad5aa7b91d0",
+  "taskReportMarkdownDigest": "sha256:b297c4b5d47bbaa8a582349849cddfbad63b831d5588a9b9ed738cdb8a16527e",
+  "unknowns": [
+    "user_visible_benefit_not_declared"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-scoring-spec-and-scaffold-policy.verification.json",
+    "required": true,
+    "status": "verified"
+  },
+  "workItemId": "wi-scoring-spec-and-scaffold-policy"
+}

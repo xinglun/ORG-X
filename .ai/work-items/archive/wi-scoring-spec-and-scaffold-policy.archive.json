@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-09-06T02:02:50Z",
+  "files": {
+    "contractDigest": "sha256:e3adaec1c225812b64eb853b5c130f20caa11727618967f411c1d08f97826109",
+    "contractPath": ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.contract.json",
+    "eventsDigest": "sha256:1f59ec397ca7e703c6e54d0639c3a72a9ab29fac729757f3ebef9c15eadc7f97",
+    "eventsPath": ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.events.jsonl",
+    "outcomeDigest": "sha256:43742b4e436336ae09a178fff2acc6cde431f8accb5845183849defc421c3cc0",
+    "outcomePath": ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.outcome.json",
+    "summaryDigest": "sha256:a203df4bbd4db5c45e9c362d068e82991b59ad29ecd0678b8aadf1a80b4746b0",
+    "summaryPath": ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.summary.json",
+    "taskReportDigest": "sha256:c9f9c712577994963dcd87ef12e40a65166137d0448cdddb363c1ad5aa7b91d0",
+    "taskReportMarkdownDigest": "sha256:b297c4b5d47bbaa8a582349849cddfbad63b831d5588a9b9ed738cdb8a16527e",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-scoring-spec-and-scaffold-policy"
+}

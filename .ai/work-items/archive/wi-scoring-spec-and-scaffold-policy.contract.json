@@ -1,0 +1,69 @@
+{
+  "acceptanceCriteria": [
+    "SCORING_SPEC.md formulas match src/features/weekly_radar/runtime/judgment.rs exactly (evidence_confidence, transformation_score, counter_evidence_risk, evidence_freshness)",
+    "ADR-011 exists and documents the 10 unconnected contexts as intentional scaffolding with a re-review trigger",
+    "No Rust source changes; cargo check --workspace --tests remains clean"
+  ],
+  "authority": "granted",
+  "authorityEvidence": {
+    "actor": "Ray <sei-rinn@7andinm.co.jp>",
+    "assurance": "repository_verified",
+    "authoritySource": "Explicit in-chat decisions via AskUserQuestion: (1) 'rewrite the spec to match the implementation' for the scoring formula discrepancy; (2) 'document policy as intentional future-expansion scaffolding' for the 10 unconnected contexts.",
+    "evidenceRefs": [],
+    "operations": [
+      "edit_documentation"
+    ],
+    "policyRefs": []
+  },
+  "baseRevision": "d49d0f08f77b7d3954ed995d54cd36eafa9e3eb8",
+  "createdAt": "2026-09-06T01:59:25Z",
+  "goal": "Rewrite SCORING_SPEC.md to mirror the real Transformation Score/Evidence Confidence/Counter Evidence Risk/Evidence Freshness formulas in judgment.rs, and add an ADR documenting the 10 unconnected contexts as intentional future-expansion scaffolding.",
+  "intent": "Resolve two findings from a full-project evaluation, per the repo owner's explicit decisions: (1) docs/scoring/SCORING_SPEC.md described a 7-dimension weighted formula that does not match the actual judgment.rs implementation; (2) 10 of 12 bounded contexts remain domain-only scaffolds with no documented policy.",
+  "mode": "code",
+  "outOfScope": [],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:f68f1efc157792488c3762d1842ed94d73cfab73f708926a6cd0025ca9293550",
+  "requiredEvidenceClasses": [],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-scoring-spec-and-scaffold-policy",
+    "provider": "github",
+    "pullRequest": "https://github.com/xinglun/ORG-X/pull/121",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-scoring-spec-and-scaffold-policy"
+  },
+  "risk": "normal",
+  "scope": [
+    "docs/scoring/SCORING_SPEC.md",
+    "docs/adr/ADR-011-unconnected-context-scaffolds.md"
+  ],
+  "sources": [
+    {
+      "path": "src/features/weekly_radar/runtime/judgment.rs",
+      "reason": "Actual implementation of build_ranking_candidate and freshness_score that the rewritten spec must mirror exactly."
+    },
+    {
+      "path": "docs/domain/RANKING_MODEL.md",
+      "reason": "Defines the ranking order that Transformation Score is subordinate to."
+    },
+    {
+      "path": "docs/domain/EVIDENCE_MODEL.md",
+      "reason": "Defines the three evidence classes referenced by the independent-dimensions section."
+    },
+    {
+      "path": "docs/adr/ADR-001-ddd-clean-architecture.md",
+      "reason": "Establishes the 5-layer bounded-context pattern that ADR-011 explains the scaffold status of."
+    },
+    {
+      "path": "tests/architecture/module_boundaries.rs",
+      "reason": "Confirms the 5-layer structure is mechanically enforced even for scaffold-only contexts."
+    }
+  ],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-scoring-spec-and-scaffold-policy"
+}

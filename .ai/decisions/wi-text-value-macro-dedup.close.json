@@ -1,0 +1,130 @@
+{
+  "decisionState": "confirmed",
+  "finalReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-text-value-macro-dedup.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:f68f1efc157792488c3762d1842ed94d73cfab73f708926a6cd0025ca9293550",
+      "workItemId": "wi-text-value-macro-dedup"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-text-value-macro-dedup.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-text-value-macro-dedup.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-text-value-macro-dedup.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-text-value-macro-dedup.summary.json"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-text-value-macro-dedup.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-text-value-macro-dedup.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [
+        {
+          "evidenceRefs": [],
+          "inference": true,
+          "text": "Human decision 'approved' by Ray <sei-rinn@7andinm.co.jp> via User /goal directive in session: 按WI流程全部修复，最后确认是否清理干净。 at 2026-09-06T11:10:00+09:00."
+        }
+      ],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-text-value-macro-dedup.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-text-value-macro-dedup.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-text-value-macro-dedup.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-text-value-macro-dedup.contract.json"
+          ],
+          "inference": false,
+          "text": "Consolidate the identical text_value! macro body into src/shared/domain and have each domain module forward to it with its own error type, without changing any public API or behavior."
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-text-value-macro-dedup.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-text-value-macro-dedup"
+  },
+  "finalReportDigest": "sha256:20ef3a8604a8fbc7f6075b25baec934eb83f6fb38e803cf0756d80c6227e4f92",
+  "humanDecision": "approved",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceFinalizationHeadDigest": "sha256:775cd97be43c2d96bf392563ab3ef8cc5b04a8a9f5b818c6bb477584f1b45545",
+  "resourceFinalizationHeadPath": ".ai/decisions/wi-text-value-macro-dedup.finalize.json",
+  "resourceFinalizationSequence": 0,
+  "state": "closed",
+  "structuredDecision": {
+    "actor": "Ray <sei-rinn@7andinm.co.jp>",
+    "authoritySource": "User /goal directive in session: 按WI流程全部修复，最后确认是否清理干净。",
+    "decidedAt": "2026-09-06T11:10:00+09:00",
+    "decision": "approved",
+    "evidenceRefs": [],
+    "policyRefs": [],
+    "reason": "text_value! macro dedup merged via PR #119 and #120; CI green; branch/worktree cleaned up.",
+    "resumeCondition": null
+  },
+  "timestamp": "2026-09-06T01:55:54Z",
+  "workItemId": "wi-text-value-macro-dedup"
+}

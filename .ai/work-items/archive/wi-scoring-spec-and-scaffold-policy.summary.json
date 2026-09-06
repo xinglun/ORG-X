@@ -1,0 +1,28 @@
+{
+  "changedPaths": [
+    ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.contract.json",
+    ".ai/work-items/archive/wi-scoring-spec-and-scaffold-policy.summary.json"
+  ],
+  "checkpointAt": "2026-09-06T02:00:30Z",
+  "checkpointContractDigest": "sha256:7c6f758aa13901e81b79460cf494ab40e6cd49ca8cda1a3eff5c2f4cf68c7034",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:df8fa1c39270bb0839c0917561928d29460ac4e9ef50ea3591db1113d5cfe9dd",
+  "createdAt": "2026-09-06T01:59:25Z",
+  "mode": "code",
+  "preflightAt": "2026-09-06T02:02:47Z",
+  "preflightContractDigest": "sha256:7c6f758aa13901e81b79460cf494ab40e6cd49ca8cda1a3eff5c2f4cf68c7034",
+  "preflightDecisionDigest": "sha256:20b4b742353bcc748008ea6dbb9f63bdf18a5136367959ab2a0ae37d53adb025",
+  "preflightRepositorySnapshotDigest": "sha256:df8fa1c39270bb0839c0917561928d29460ac4e9ef50ea3591db1113d5cfe9dd",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "finish_ready",
+  "updatedAt": "2026-09-06T02:02:50Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-scoring-spec-and-scaffold-policy"
+}

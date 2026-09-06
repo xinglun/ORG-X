@@ -1,0 +1,32 @@
+{
+  "changedPaths": [
+    ".ai/work-items/active/wi-text-value-macro-dedup.contract.json",
+    ".ai/work-items/active/wi-text-value-macro-dedup.summary.json"
+  ],
+  "checkpointAt": "2026-09-06T01:49:18Z",
+  "checkpointContractDigest": "sha256:731ee1167e03de3a592d008d53c987219a553db45fa643801a3fd38cdaaf7f84",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:f68f1efc157792488c3762d1842ed94d73cfab73f708926a6cd0025ca9293550",
+  "createdAt": "2026-09-06T01:48:02Z",
+  "failedGate": "finish.governance",
+  "mode": "code",
+  "outcomeState": "blocked",
+  "preflightAt": "2026-09-06T01:49:59Z",
+  "preflightContractDigest": "sha256:731ee1167e03de3a592d008d53c987219a553db45fa643801a3fd38cdaaf7f84",
+  "preflightDecisionDigest": "sha256:20b4b742353bcc748008ea6dbb9f63bdf18a5136367959ab2a0ae37d53adb025",
+  "preflightRepositorySnapshotDigest": "sha256:f68f1efc157792488c3762d1842ed94d73cfab73f708926a6cd0025ca9293550",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "checkpointed",
+  "updatedAt": "2026-09-06T01:50:02Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "verificationRecoveryReconciled": "sha256:ec9ec30961577335ba2c3c3afb1a1b99508cac780d8b9f4911ee13d609136523",
+  "workItemId": "wi-text-value-macro-dedup"
+}

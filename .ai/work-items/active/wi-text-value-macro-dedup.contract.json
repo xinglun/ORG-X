@@ -1,0 +1,60 @@
+{
+  "acceptanceCriteria": [
+    "cargo check --workspace --tests, cargo fmt --check, cargo clippy -D warnings, and cargo test --workspace all remain clean",
+    "tests/architecture/dependency_rules.rs and module_boundaries.rs continue to pass",
+    "No public struct/function signatures change; only internal macro definition location changes"
+  ],
+  "authority": "granted",
+  "authorityEvidence": {
+    "actor": "Ray <sei-rinn@7andinm.co.jp>",
+    "authoritySource": "User /goal directive in session: fix everything per WI process and confirm cleanliness, following a full-project evaluation the same user requested.",
+    "assurance": "repository_verified",
+    "operations": ["edit_source"],
+    "policyRefs": [],
+    "evidenceRefs": []
+  },
+  "baseRevision": "428d213ee39863af0f4b4ebeb3403d9565a56c5f",
+  "createdAt": "2026-09-06T01:48:02Z",
+  "goal": "Consolidate the identical text_value! macro body into src/shared/domain and have each domain module forward to it with its own error type, without changing any public API or behavior.",
+  "intent": "Reduce duplicated text_value! newtype macro definitions across bounded-context domain modules identified in a full-project code-quality review.",
+  "mode": "code",
+  "outOfScope": [],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
+  "requiredEvidenceClasses": [],
+  "resourceContext": {
+    "baseBranch": "unknown",
+    "baseRemote": "unknown",
+    "branch": "codex/wi-text-value-macro-dedup",
+    "provider": "unknown",
+    "pullRequest": "unknown",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-text-value-macro-dedup"
+  },
+  "risk": "normal",
+  "scope": [
+    "src/shared/domain/mod.rs",
+    "src/features/diffusion/domain/mod.rs",
+    "src/features/evidence/domain/mod.rs",
+    "src/features/ingestion/domain/mod.rs",
+    "src/features/organization/domain/mod.rs",
+    "src/features/production_system/domain/mod.rs",
+    "src/features/productivity/domain/mod.rs",
+    "src/features/ranking/domain/mod.rs",
+    "src/features/reporting/domain/mod.rs",
+    "src/features/transformation/domain/mod.rs",
+    "src/features/weekly_radar/domain/mod.rs",
+    "src/features/weekly_radar/domain/system_health.rs"
+  ],
+  "sources": [
+    {"path": "src/features/evidence/domain/mod.rs", "reason": "One of 17 files with a duplicated text_value! macro; representative case."},
+    {"path": "tests/architecture/dependency_rules.rs", "reason": "Confirms shared::domain is not a forbidden token for any bounded context."},
+    {"path": "tests/weekly_radar_threshold_distance.rs", "reason": "Discovered #[path] module-local test re-inclusion constraint that makes 6 weekly_radar files unable to use crate::-relative imports; those 6 are intentionally left as self-contained duplicates."}
+  ],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-text-value-macro-dedup"
+}

@@ -1,46 +1,42 @@
 {
   "changedPaths": [
     ".ai/decisions/wi-docs-north-star-glossary-cleanup.preflight-review.json",
-    ".ai/work-items/active/wi-docs-north-star-glossary-cleanup.contract.json",
-    ".ai/work-items/active/wi-docs-north-star-glossary-cleanup.summary.json"
+    ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.contract.json",
+    ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.summary.json"
   ],
   "checkpointAt": "2026-09-06T01:23:39Z",
-  "checkpointContractDigest": "sha256:bee77dd786a2300008360659d24e8620a8e52d6c90df4ad8bc18a958dc668689",
+  "checkpointContractDigest": "sha256:3ea11759cb7b0990405615600983dee0414c217be023e6bddab01aa6ad857332",
   "checkpointCount": 1,
   "checkpointRepositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
   "createdAt": "2026-09-06T01:16:32Z",
   "decisionEvidence": {
-    "contractDigest": "sha256:bee77dd786a2300008360659d24e8620a8e52d6c90df4ad8bc18a958dc668689",
+    "contractDigest": "sha256:3ea11759cb7b0990405615600983dee0414c217be023e6bddab01aa6ad857332",
     "decision": "confirm_review",
     "decisionId": "contract-preflight-review",
     "preflightDecisionDigest": "sha256:20b4b742353bcc748008ea6dbb9f63bdf18a5136367959ab2a0ae37d53adb025",
-    "reason": "Re-recorded after finalize-plan bound branch/worktree/provider context and changed the Contract digest.",
-    "recordedAt": "2026-09-06T10:00:00+09:00",
+    "reason": "Re-recorded after verification passed against the finalized PR #117 plan.",
+    "recordedAt": "2026-09-06T10:45:00+09:00",
     "recordedBy": "Ray <sei-rinn@7andinm.co.jp>",
     "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
     "repositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
     "schemaVersion": 1,
     "workItemId": "wi-docs-north-star-glossary-cleanup"
   },
-  "failedGate": "finish.governance",
   "mode": "code",
-  "outcomeState": "blocked",
-  "preflightAt": "2026-09-06T01:27:01Z",
-  "preflightContractDigest": "sha256:bee77dd786a2300008360659d24e8620a8e52d6c90df4ad8bc18a958dc668689",
+  "preflightAt": "2026-09-06T01:32:29Z",
+  "preflightContractDigest": "sha256:3ea11759cb7b0990405615600983dee0414c217be023e6bddab01aa6ad857332",
   "preflightDecisionDigest": "sha256:20b4b742353bcc748008ea6dbb9f63bdf18a5136367959ab2a0ae37d53adb025",
   "preflightRepositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
   "preflightState": "green",
   "protocolVersion": 1,
-  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
   "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
-  "state": "checkpointed",
-  "updatedAt": "2026-09-06T01:27:28Z",
+  "state": "finish_ready",
+  "updatedAt": "2026-09-06T01:32:31Z",
   "verification": [
     {
       "check": "project-command-0",
       "result": "passed"
     }
   ],
-  "verificationRecoveryReconciled": "sha256:d39b21b5e8fd2ae49d623d3599cdff1bea4156fb52b3eca9c440e142cf1366ce",
   "workItemId": "wi-docs-north-star-glossary-cleanup"
 }

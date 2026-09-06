@@ -1,7 +1,7 @@
 {
   "captureMode": "full_capture",
-  "contractDigest": "sha256:bee77dd786a2300008360659d24e8620a8e52d6c90df4ad8bc18a958dc668689",
-  "createdAt": "2026-09-06T01:26:41Z",
+  "contractDigest": "sha256:3ea11759cb7b0990405615600983dee0414c217be023e6bddab01aa6ad857332",
+  "createdAt": "2026-09-06T01:32:08Z",
   "evidenceSchemaVersion": 2,
   "passed": true,
   "protocolVersion": 1,
@@ -9,15 +9,15 @@
     "costObservation": {
       "advisoryOnly": true,
       "confidence": "complete",
-      "elapsedMs": 295,
-      "executionElapsedMs": 0,
-      "maxConcurrentProcesses": 0,
-      "nodesExecuted": 0,
+      "elapsedMs": 61653,
+      "executionElapsedMs": 61110,
+      "maxConcurrentProcesses": 1,
+      "nodesExecuted": 1,
       "nodesPlanned": 1,
-      "nodesReused": 1,
+      "nodesReused": 0,
       "passed": true,
       "planningElapsedMs": 0,
-      "processesSpawned": 0,
+      "processesSpawned": 1,
       "protectedNodesExecuted": 0,
       "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
       "runtimeDigest": "sha256:c799c7f1caa42d2e9124c46751cf3d4baa2c60d14d0695bc1d85acd964a4aa63",
@@ -25,27 +25,26 @@
       "schemaVersion": 1,
       "unknowns": []
     },
-    "elapsedMs": 295,
-    "executionElapsedMs": 0,
-    "filesHashed": 14,
-    "filesRead": 16,
+    "elapsedMs": 61653,
+    "executionElapsedMs": 61110,
+    "filesHashed": 10,
+    "filesRead": 13,
     "gitCalls": 8,
-    "maxConcurrentProcesses": 0,
-    "nodesExecuted": 0,
+    "maxConcurrentProcesses": 1,
+    "nodesExecuted": 1,
     "nodesPlanned": 1,
-    "nodesReused": 1,
+    "nodesReused": 0,
     "passed": true,
     "planReceipt": {
-      "affectedPaths": [
-        "NORTH_STAR.md",
-        "docs/product/NORTH_STAR.md"
-      ],
+      "affectedPaths": [],
       "assurance": "repository_verified",
       "baseRevision": "42fba16e2dfa42178554d1c2e34a6372a91c4de2",
       "dependencyConfidence": "unknown",
       "escalations": [],
-      "executedNodes": [],
-      "executionElapsedMs": 0,
+      "executedNodes": [
+        "project-command-0"
+      ],
+      "executionElapsedMs": 61110,
       "finalTier": "T0",
       "initialTier": "T0",
       "planningElapsedMs": 0,
@@ -54,10 +53,8 @@
       "repositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
       "requiredAssurance": null,
       "requiredTier": null,
-      "reusedNodes": [
-        "project-command-0"
-      ],
-      "savedExecutions": 1,
+      "reusedNodes": [],
+      "savedExecutions": 0,
       "schemaVersion": 1,
       "selectionReasons": [
         "cli_route_stage_explicit"
@@ -68,26 +65,53 @@
     },
     "planningElapsedMs": 0,
     "processSpawnFailures": 0,
-    "processesSpawned": 0,
+    "processesSpawned": 1,
     "protectedNodesExecuted": 0,
     "protectedNodesSkipped": 0,
-    "receiptCandidates": [],
+    "receiptCandidates": [
+      {
+        "context": {
+          "commandDigest": "sha256:9b297c30d93c009ba18844c324540e4e1fc7f05ecb2a912192fb21d431f9bba4",
+          "contentDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
+          "diff": {
+            "baseCommit": "2a8976b1633f856e44aa6af23d86fc436053ecfb",
+            "changedPathsDigest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "headCommit": "2a8976b1633f856e44aa6af23d86fc436053ecfb"
+          },
+          "environmentDigest": "sha256:b056645c9db9515958f944ee78cc30fb4d54dff1b5738c15a772ba6955bbc354",
+          "governanceDigest": "sha256:fe7c8bedc0080e39a016344b8b77c333d4eb3b6f0525a617fb7595fa845f1ff3",
+          "policyDigest": "sha256:6566d24c8ac0490db544ad1fb217b57f344ea25dc70f61058d4b5e5430c0054f",
+          "profileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+          "runner": "local",
+          "scopeDigest": "sha256:1078c140b996b711424671640de5d8a0fed342fc5d0027e16717b7016384f8fd",
+          "stage": "task",
+          "toolchainDigest": "sha256:fbb40d7fbfc53fb698d5651e30786da4b921fb761be834ff8cf4b8ffdcca7775"
+        },
+        "createdAtEpochSeconds": 1788658266,
+        "expiresAtEpochSeconds": 1788744666,
+        "nodeId": "project-command-0",
+        "outputDigest": "sha256:56041352cdafa72eb5ca0f0413c810856accdf2247a6860fa626eac45e6b9697",
+        "passed": true,
+        "receiptId": "sha256:18c94d14cb36fbb199b2e6c0acb3ad326b22a553b3b2d3fccdf9632a97644935",
+        "schemaVersion": 2
+      }
+    ],
     "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
-    "rerunStale": 0,
+    "rerunStale": 1,
     "rerunUnknown": 0,
     "results": [
       {
-        "action": "reuse",
+        "action": "execute",
         "nodeId": "project-command-0",
-        "outputDigest": null,
+        "outputDigest": "sha256:56041352cdafa72eb5ca0f0413c810856accdf2247a6860fa626eac45e6b9697",
         "outputTruncated": false,
         "passed": true,
         "protected": false,
-        "reason": "fresh_exact_binding",
-        "receiptId": "sha256:f878fd183b4ac012368d75560c4e61e914e606d6854cb5d8bc2659ecd31aa64b",
-        "reused": true,
-        "satisfiedBy": "reused_receipt",
-        "state": "fresh",
+        "reason": "binding_mismatch",
+        "receiptId": "sha256:18c94d14cb36fbb199b2e6c0acb3ad326b22a553b3b2d3fccdf9632a97644935",
+        "reused": false,
+        "satisfiedBy": "execution",
+        "state": "stale",
         "timedOut": false
       }
     ],
@@ -95,7 +119,7 @@
     "runtimeVersion": "0.2.79",
     "workItemId": "wi-docs-north-star-glossary-cleanup"
   },
-  "receiptDigest": "sha256:06b4cb9cb2155bdb1de7b61c3a48ede114dd38aea2676c9fab32551afec85618",
+  "receiptDigest": "sha256:b4635248551c6587210b919196f2c63b1fd8c29e43c80edb1138d4631d543670",
   "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
   "repositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
   "runtimeDigest": "sha256:c799c7f1caa42d2e9124c46751cf3d4baa2c60d14d0695bc1d85acd964a4aa63",

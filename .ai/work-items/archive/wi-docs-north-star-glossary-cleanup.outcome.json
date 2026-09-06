@@ -4,14 +4,17 @@
     ".ai/glossary.md no longer contains template placeholder text and defines real domain terms and the actual 5-layer architecture boundary",
     "cargo check --workspace --tests remains clean"
   ],
-  "decisionState": "red",
+  "createdAt": "2026-09-06T01:32:31Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:819468bcb47a0cc48930748926e5eb19209bcffa526de78f451c023d71a30894",
   "evidenceRefs": [
     ".ai/evidence/wi-docs-north-star-glossary-cleanup.verification.json"
   ],
-  "failedGate": "finish.governance",
   "humanBenefitReport": {
     "affectedUsers": [],
-    "evidenceRefs": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-docs-north-star-glossary-cleanup.verification.json"
+    ],
     "state": "unknown",
     "unknowns": [
       "user_visible_benefit_not_declared"
@@ -19,11 +22,10 @@
     "userVisibleChanges": []
   },
   "protocolVersion": 1,
-  "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
   "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
   "schemaVersion": 2,
-  "state": "blocked",
-  "summary": "A lifecycle gate failed; completion is not claimed and the Work Item remains recoverable.",
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
   "taskOutcomeReport": {
     "bindings": {
       "evidenceRefs": [
@@ -33,34 +35,32 @@
       "repositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
       "workItemId": "wi-docs-north-star-glossary-cleanup"
     },
-    "failedGate": "finish.governance",
     "format": "ai-cockpit.task-outcome",
-    "humanStatusColor": "red",
-    "recoveryCondition": "Repair the Contract or governance projection, rerun preflight, and retry finish.",
+    "humanStatusColor": "green",
     "schemaVersion": 1,
     "sections": {
       "avoidedImpact": [],
       "deliveredChanges": [
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-docs-north-star-glossary-cleanup.summary.json"
+            ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.summary.json"
           ],
           "inference": false,
           "text": "Changed path: .ai/decisions/wi-docs-north-star-glossary-cleanup.preflight-review.json"
         },
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-docs-north-star-glossary-cleanup.summary.json"
+            ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.summary.json"
           ],
           "inference": false,
-          "text": "Changed path: .ai/work-items/active/wi-docs-north-star-glossary-cleanup.contract.json"
+          "text": "Changed path: .ai/work-items/archive/wi-docs-north-star-glossary-cleanup.contract.json"
         },
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-docs-north-star-glossary-cleanup.summary.json"
+            ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.summary.json"
           ],
           "inference": false,
-          "text": "Changed path: .ai/work-items/active/wi-docs-north-star-glossary-cleanup.summary.json"
+          "text": "Changed path: .ai/work-items/archive/wi-docs-north-star-glossary-cleanup.summary.json"
         }
       ],
       "evidence": [
@@ -79,15 +79,7 @@
         "provider_or_enterprise_approval_inferred_from_local_records",
         "user_visible_benefit_invented_from_implementation_facts"
       ],
-      "forcedStops": [
-        {
-          "evidenceRefs": [
-            ".ai/evidence/wi-docs-north-star-glossary-cleanup.verification.json"
-          ],
-          "inference": false,
-          "text": "A required evidence or identity control failed; remain stopped."
-        }
-      ],
+      "forcedStops": [],
       "humanDecisions": [],
       "interventions": [],
       "limitations": [],
@@ -98,7 +90,7 @@
             ".ai/evidence/wi-docs-north-star-glossary-cleanup.verification.json"
           ],
           "inference": false,
-          "text": "A lifecycle gate failed; completion is not claimed and the Work Item remains recoverable."
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
         }
       ],
       "recurrencePrevention": [],
@@ -108,15 +100,23 @@
             ".ai/evidence/wi-docs-north-star-glossary-cleanup.verification.json"
           ],
           "inference": false,
-          "text": "Remaining unknown: lifecycle_gate_failed"
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
         }
       ],
-      "resolutions": [],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-docs-north-star-glossary-cleanup.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
       "risks": [],
       "taskOverview": [
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-docs-north-star-glossary-cleanup.contract.json"
+            ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.contract.json"
           ],
           "inference": false,
           "text": "Consolidate the North Star duplication and replace the glossary template placeholders with the project's actual domain terms and architecture boundaries."
@@ -125,23 +125,25 @@
       "warnings": [
         {
           "evidenceRefs": [
-            ".ai/work-items/active/wi-docs-north-star-glossary-cleanup.contract.json"
+            ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.contract.json"
           ],
           "inference": false,
           "text": "User-visible benefit is not declared by the Work Item owner."
         }
       ]
     },
-    "status": "unknown",
+    "status": "verified",
     "workItemId": "wi-docs-north-star-glossary-cleanup"
   },
+  "taskReportDigest": "sha256:bbeadb91ed4be33a087f0c6250cfb36ef499699907bf8e725b581a68a55cae4a",
+  "taskReportMarkdownDigest": "sha256:81bb60f9a3d5594bd00a298845487ab30f2c70a1bc95c5237dace7e24047ec1e",
   "unknowns": [
-    "lifecycle_gate_failed"
+    "user_visible_benefit_not_declared"
   ],
   "verification": {
     "evidencePath": ".ai/evidence/wi-docs-north-star-glossary-cleanup.verification.json",
     "required": true,
-    "status": "blocked"
+    "status": "verified"
   },
   "workItemId": "wi-docs-north-star-glossary-cleanup"
 }

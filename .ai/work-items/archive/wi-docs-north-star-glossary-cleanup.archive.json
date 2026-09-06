@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-09-06T01:32:35Z",
+  "files": {
+    "contractDigest": "sha256:89ed3fb8b8abba4979a4922f0cee0965b078c7ccdf5dd626a8eb14fb7c803b36",
+    "contractPath": ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.contract.json",
+    "eventsDigest": "sha256:070dc5973ad92382e0f51dd45094092bdf47fe1e70259301d1c091ffd794d030",
+    "eventsPath": ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.events.jsonl",
+    "outcomeDigest": "sha256:9ea269b811e4a7afeb64c863f9326720cc71f90d597b45537667faaa4c422df2",
+    "outcomePath": ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.outcome.json",
+    "summaryDigest": "sha256:92c1493ed2ccde476a25eee5d386b686ee06da6dec7bb6a0694e301faf39b884",
+    "summaryPath": ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.summary.json",
+    "taskReportDigest": "sha256:bbeadb91ed4be33a087f0c6250cfb36ef499699907bf8e725b581a68a55cae4a",
+    "taskReportMarkdownDigest": "sha256:81bb60f9a3d5594bd00a298845487ab30f2c70a1bc95c5237dace7e24047ec1e",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-docs-north-star-glossary-cleanup.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-docs-north-star-glossary-cleanup"
+}

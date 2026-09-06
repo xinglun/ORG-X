@@ -1,0 +1,58 @@
+{
+  "actor": "Ray <sei-rinn@7andinm.co.jp>",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "User /goal directive: fix everything per WI process and confirm cleanliness.",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "bd24b8a",
+    "name": "codex/wi-scoring-spec-and-scaffold-policy",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:e3adaec1c225812b64eb853b5c130f20caa11727618967f411c1d08f97826109",
+  "operationId": "sha256:3b5d7f9c1e3b5d7f9c1e3b5d7f9c1e3b5d7f9c1e3b5d7f9c1e3b5d7f9c1e3b5d",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "d49d0f08f77b7d3954ed995d54cd36eafa9e3eb8",
+    "headRevision": "bd24b8a",
+    "mergeCommit": "003fad4224913bd3f364d7b3452dc9b2b6efa33c",
+    "number": 121,
+    "url": "https://github.com/xinglun/ORG-X/pull/121"
+  },
+  "reason": "PR #121 and #122 merged into main; branch and worktree deleted locally and on origin.",
+  "receiptId": "sha256:2f4e6a8c0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4b6d8f0a2c4e6b8d0f2a4c",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-scoring-spec-and-scaffold-policy",
+    "provider": "github",
+    "pullRequest": "https://github.com/xinglun/ORG-X/pull/121",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-scoring-spec-and-scaffold-policy"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:c799c7f1caa42d2e9124c46751cf3d4baa2c60d14d0695bc1d85acd964a4aa63",
+  "runtimeVersion": "0.2.79",
+  "schemaVersion": 1,
+  "timestamp": "2026-09-06T11:20:00+09:00",
+  "workItemId": "wi-scoring-spec-and-scaffold-policy",
+  "worktree": {
+    "branch": "codex/wi-scoring-spec-and-scaffold-policy",
+    "headRevision": "bd24b8a",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-scoring-spec-and-scaffold-policy",
+    "worktreeId": "wi-scoring-spec-and-scaffold-policy"
+  }
+}

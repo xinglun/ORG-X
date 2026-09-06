@@ -1,0 +1,13 @@
+{
+  "contractDigest": "sha256:d0d028958add7dffac099a074bfdfcb09c99a15236415e9ab23bae505d2ad97a",
+  "decision": "confirm_review",
+  "decisionId": "contract-preflight-review",
+  "preflightDecisionDigest": "sha256:20b4b742353bcc748008ea6dbb9f63bdf18a5136367959ab2a0ae37d53adb025",
+  "reason": "User issued explicit session /goal directive to fix documentation findings from the completed project evaluation via the WI process and confirm cleanliness at the end. Re-recorded after start updated the Contract digest.",
+  "recordedAt": "2026-09-06T09:35:00+09:00",
+  "recordedBy": "Ray <sei-rinn@7andinm.co.jp>",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
+  "schemaVersion": 1,
+  "workItemId": "wi-docs-north-star-glossary-cleanup"
+}

@@ -1,0 +1,110 @@
+{
+  "acceptanceCriteria": [
+    "docs/product/NORTH_STAR.md and NORTH_STAR.md explicitly state their canonical/derived relationship",
+    ".ai/glossary.md no longer contains template placeholder text and defines real domain terms and the actual 5-layer architecture boundary",
+    "cargo check --workspace --tests remains clean"
+  ],
+  "authority": "granted",
+  "authorityEvidence": {
+    "actor": "Ray <sei-rinn@7andinm.co.jp>",
+    "assurance": "repository_verified",
+    "authoritySource": "User /goal directive in the current session: '按WI流程全部修复，最后确认是否清理干净。' (fix everything per the WI process, finally confirm cleanliness), following a full-project evaluation the same user requested.",
+    "evidenceRefs": [],
+    "operations": [
+      "edit_documentation"
+    ],
+    "policyRefs": []
+  },
+  "baseRevision": "42fba16e2dfa42178554d1c2e34a6372a91c4de2",
+  "createdAt": "2026-09-06T01:16:32Z",
+  "goal": "Consolidate the North Star duplication and replace the glossary template placeholders with the project's actual domain terms and architecture boundaries.",
+  "intent": "Repair documentation quality issues identified in a comprehensive project review: the diverged NORTH_STAR.md / docs/product/NORTH_STAR.md pair, and the unedited template placeholder in .ai/glossary.md.",
+  "mode": "code",
+  "notCodable": false,
+  "outOfScope": [
+    "root README.md / docs/README.md navigation restructuring",
+    "docs/scoring/SCORING_SPEC.md vs src/features/weekly_radar/runtime/judgment.rs formula discrepancy (separate Work Item, requires a human decision on which is authoritative)",
+    "policy decision on the 10 unconnected DDD context scaffolds (separate Work Item, requires a human decision)",
+    "src/ Rust source changes of any kind",
+    "text_value! macro consolidation (separate Work Item)"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:123348ff5781f12f6ad0fb18813339cbdafbdf9fe689011e390468fce3688d83",
+  "requiredEvidenceClasses": [],
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-docs-north-star-glossary-cleanup",
+    "provider": "github",
+    "pullRequest": "pending",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-docs-north-star-glossary-cleanup"
+  },
+  "risk": "normal",
+  "scope": [
+    "NORTH_STAR.md",
+    "docs/product/NORTH_STAR.md",
+    ".ai/glossary.md"
+  ],
+  "sources": [
+    {
+      "path": "NORTH_STAR.md",
+      "reason": "Root North Star content that docs/product/NORTH_STAR.md was designed to repeat and elaborate on."
+    },
+    {
+      "path": "docs/product/NORTH_STAR.md",
+      "reason": "Product-level elaboration that had drifted out of sync with the root file."
+    },
+    {
+      "path": "docs/superpowers/plans/2026-08-17-phase-0-foundation.md",
+      "reason": "Original design intent: docs/product/NORTH_STAR.md repeats the root North Star and adds the three research questions."
+    },
+    {
+      "path": "docs/adr/ADR-009-no-trading-decisions.md",
+      "reason": "Defines exactly which files jointly enforce the no-trading-decision boundary language."
+    },
+    {
+      "path": "docs/product/SCOPE.md",
+      "reason": "Already carries the Sentinel-independence boundary statement; confirms it does not need duplicating into docs/product/NORTH_STAR.md."
+    },
+    {
+      "path": ".ai/glossary.md",
+      "reason": "Target file containing unedited template placeholder sections 1 and 2."
+    },
+    {
+      "path": "docs/domain/EVIDENCE_MODEL.md",
+      "reason": "Source of real domain terms (EvidenceRecord, Supporting/Counter/Missing Evidence, Evidence Candidate)."
+    },
+    {
+      "path": "docs/domain/PRODUCTION_SYSTEM_MODEL.md",
+      "reason": "Source of ProductionSystem/ProductionUnit/ControlPoint/ReferenceModel terms."
+    },
+    {
+      "path": "docs/domain/TRANSFORMATION_STAGE_MODEL.md",
+      "reason": "Source of the six-stage TransformationStage vocabulary."
+    },
+    {
+      "path": "docs/domain/RANKING_MODEL.md",
+      "reason": "Source of Ranking Order and Transformation Score definitions."
+    },
+    {
+      "path": "docs/scoring/SCORING_SPEC.md",
+      "reason": "Source of the AI_THEATER_RISK term."
+    },
+    {
+      "path": "tests/architecture/module_boundaries.rs",
+      "reason": "Confirms the actual 5-layer (domain/application/infrastructure/interface/acl) rule enforced on src/features/*."
+    },
+    {
+      "path": "tests/architecture/dependency_rules.rs",
+      "reason": "Confirms the actual dependency-direction rule enforced between layers."
+    }
+  ],
+  "state": "implementation_active",
+  "unknowns": [],
+  "verification": [
+    "cargo test --locked --workspace"
+  ],
+  "workItemId": "wi-docs-north-star-glossary-cleanup"
+}

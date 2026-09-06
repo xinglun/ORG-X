@@ -1,0 +1,13 @@
+{
+  "contractDigest": "sha256:bee77dd786a2300008360659d24e8620a8e52d6c90df4ad8bc18a958dc668689",
+  "decision": "confirm_review",
+  "decisionId": "contract-preflight-review",
+  "preflightDecisionDigest": "sha256:20b4b742353bcc748008ea6dbb9f63bdf18a5136367959ab2a0ae37d53adb025",
+  "reason": "Re-recorded after finalize-plan bound branch/worktree/provider context and changed the Contract digest.",
+  "recordedAt": "2026-09-06T10:00:00+09:00",
+  "recordedBy": "Ray <sei-rinn@7andinm.co.jp>",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
+  "schemaVersion": 1,
+  "workItemId": "wi-docs-north-star-glossary-cleanup"
+}

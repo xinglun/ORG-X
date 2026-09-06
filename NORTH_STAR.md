@@ -1,5 +1,7 @@
 # ORG-X North Star
 
+产品层的展开版本见 [`docs/product/NORTH_STAR.md`](docs/product/NORTH_STAR.md)；本文件是权威版本。
+
 ORG-X 寻找 AI 从工具变成生产方式的临界点：哪些美国上市公司正在围绕 AI 重构核心生产系统，并逐渐形成可验证的生产率差异。
 
 ## 研究问题

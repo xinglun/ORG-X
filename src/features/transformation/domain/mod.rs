@@ -7,17 +7,6 @@ use serde::{Deserialize, Serialize};
 #[cfg(test)]
 mod mod_test;
 
-fn non_empty(
-    field: &'static str,
-    value: impl Into<String>,
-) -> Result<String, TransformationDomainError> {
-    let value = value.into();
-    if value.trim().is_empty() {
-        return Err(TransformationDomainError::EmptyValue { field });
-    }
-    Ok(value)
-}
-
 fn duplicate_identity(entity: &'static str, id: impl Into<String>) -> TransformationDomainError {
     TransformationDomainError::DuplicateIdentity {
         entity,
@@ -25,23 +14,11 @@ fn duplicate_identity(entity: &'static str, id: impl Into<String>) -> Transforma
     }
 }
 
+use crate::shared::domain::text_value as shared_text_value;
+
 macro_rules! text_value {
     ($name:ident, $field:literal, $description:literal) => {
-        #[doc = $description]
-        #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-        pub struct $name(String);
-
-        impl $name {
-            /// Creates the value and rejects blank input.
-            pub fn new(value: impl Into<String>) -> Result<Self, TransformationDomainError> {
-                Ok(Self(non_empty($field, value)?))
-            }
-
-            /// Returns the original value supplied at the boundary.
-            pub fn as_str(&self) -> &str {
-                &self.0
-            }
-        }
+        shared_text_value!($name, $field, $description, TransformationDomainError);
     };
 }
 

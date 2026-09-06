@@ -6,34 +6,11 @@ use std::fmt;
 #[path = "system_health_test.rs"]
 mod module_tests;
 
-fn non_empty(
-    field: &'static str,
-    value: impl Into<String>,
-) -> Result<String, SystemHealthDomainError> {
-    let value = value.into();
-    if value.trim().is_empty() {
-        return Err(SystemHealthDomainError::EmptyValue { field });
-    }
-    Ok(value)
-}
+use crate::shared::domain::text_value as shared_text_value;
 
 macro_rules! text_value {
     ($name:ident, $field:literal, $description:literal) => {
-        #[doc = $description]
-        #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-        pub struct $name(String);
-
-        impl $name {
-            /// Creates the value and rejects blank input.
-            pub fn new(value: impl Into<String>) -> Result<Self, SystemHealthDomainError> {
-                Ok(Self(non_empty($field, value)?))
-            }
-
-            /// Returns the original value supplied at the boundary.
-            pub fn as_str(&self) -> &str {
-                &self.0
-            }
-        }
+        shared_text_value!($name, $field, $description, SystemHealthDomainError);
     };
 }
 

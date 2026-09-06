@@ -7,11 +7,13 @@
   "authority": "granted",
   "authorityEvidence": {
     "actor": "Ray <sei-rinn@7andinm.co.jp>",
-    "authoritySource": "User /goal directive in session: fix everything per WI process and confirm cleanliness, following a full-project evaluation the same user requested.",
     "assurance": "repository_verified",
-    "operations": ["edit_source"],
-    "policyRefs": [],
-    "evidenceRefs": []
+    "authoritySource": "User /goal directive in session: fix everything per WI process and confirm cleanliness, following a full-project evaluation the same user requested.",
+    "evidenceRefs": [],
+    "operations": [
+      "edit_source"
+    ],
+    "policyRefs": []
   },
   "baseRevision": "428d213ee39863af0f4b4ebeb3403d9565a56c5f",
   "createdAt": "2026-09-06T01:48:02Z",
@@ -25,11 +27,11 @@
   "repositorySnapshotDigest": "sha256:4be1a2627e0835bee2653c0e90dad8ce258bf0a731dd1e3bc10fec6efa0b92f0",
   "requiredEvidenceClasses": [],
   "resourceContext": {
-    "baseBranch": "unknown",
-    "baseRemote": "unknown",
+    "baseBranch": "main",
+    "baseRemote": "origin",
     "branch": "codex/wi-text-value-macro-dedup",
-    "provider": "unknown",
-    "pullRequest": "unknown",
+    "provider": "github",
+    "pullRequest": "https://github.com/xinglun/ORG-X/pull/119",
     "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X/.worktrees/wi-text-value-macro-dedup"
   },
   "risk": "normal",
@@ -48,9 +50,18 @@
     "src/features/weekly_radar/domain/system_health.rs"
   ],
   "sources": [
-    {"path": "src/features/evidence/domain/mod.rs", "reason": "One of 17 files with a duplicated text_value! macro; representative case."},
-    {"path": "tests/architecture/dependency_rules.rs", "reason": "Confirms shared::domain is not a forbidden token for any bounded context."},
-    {"path": "tests/weekly_radar_threshold_distance.rs", "reason": "Discovered #[path] module-local test re-inclusion constraint that makes 6 weekly_radar files unable to use crate::-relative imports; those 6 are intentionally left as self-contained duplicates."}
+    {
+      "path": "src/features/evidence/domain/mod.rs",
+      "reason": "One of 17 files with a duplicated text_value! macro; representative case."
+    },
+    {
+      "path": "tests/architecture/dependency_rules.rs",
+      "reason": "Confirms shared::domain is not a forbidden token for any bounded context."
+    },
+    {
+      "path": "tests/weekly_radar_threshold_distance.rs",
+      "reason": "Discovered #[path] module-local test re-inclusion constraint that makes 6 weekly_radar files unable to use crate::-relative imports; those 6 are intentionally left as self-contained duplicates."
+    }
   ],
   "state": "implementation_active",
   "verification": [

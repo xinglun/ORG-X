@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-09-06T01:53:37Z",
+  "files": {
+    "contractDigest": "sha256:5c1929cf1efce26645bde239c81ca92bf7f28ca26658d37209092db37fe3e700",
+    "contractPath": ".ai/work-items/archive/wi-text-value-macro-dedup.contract.json",
+    "eventsDigest": "sha256:475228ae77f4a5678395c3ab615f314f2f41035b835153598ab1e373675d0910",
+    "eventsPath": ".ai/work-items/archive/wi-text-value-macro-dedup.events.jsonl",
+    "outcomeDigest": "sha256:98b5cf3ac38e0e3ae73f38e3c5082a3517a03883568ecc4d7a62956841557e5a",
+    "outcomePath": ".ai/work-items/archive/wi-text-value-macro-dedup.outcome.json",
+    "summaryDigest": "sha256:09baf2c4f1a4963fdd56fff6a76b1e1edeca5033b60941548fcd5f7a9b5efb4b",
+    "summaryPath": ".ai/work-items/archive/wi-text-value-macro-dedup.summary.json",
+    "taskReportDigest": "sha256:6a712bb5a90282792a29b6fb2ccf00befd93cc05d851509af889ec74c8d5c45a",
+    "taskReportMarkdownDigest": "sha256:6df114fb0023d0a9c4c28a38af4168da9b066239a58bbff0bda42479b1fd5a42",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-text-value-macro-dedup.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-text-value-macro-dedup.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-text-value-macro-dedup"
+}

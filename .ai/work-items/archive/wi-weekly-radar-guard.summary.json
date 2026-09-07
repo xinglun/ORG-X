@@ -1,0 +1,154 @@
+{
+  "acceptanceEvidence": [
+    {
+      "acceptanceId": "A1",
+      "evidence": [
+        {
+          "locator": "on.schedule cron '30 0 * * 1' (00:30 UTC / 09:30 JST), on.workflow_dispatch present, permissions.contents: read (no write permission granted)",
+          "path": ".github/workflows/weekly-radar-guard.yml",
+          "type": "implementation",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A2",
+      "evidence": [
+        {
+          "locator": "'Reconstruct the data tree' step only untars origin/data's weekly-radar/ path; 'Verify today's report was published' step runs cargo run -- weekly-radar --verify-published-as-of \"$as_of\" (the existing read-only CLI command) and never invokes the publish/Telegram-report send path",
+          "path": ".github/workflows/weekly-radar-guard.yml",
+          "type": "implementation",
+          "verification": "passed"
+        },
+        {
+          "locator": "job-level permissions: contents: read structurally prevents any push to data",
+          "path": ".github/workflows/weekly-radar-guard.yml",
+          "type": "scope",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A3",
+      "evidence": [
+        {
+          "locator": "'Alert on Telegram if missing' step (if: steps.verify.outputs.published == 'false') issues exactly one curl POST to the Telegram sendMessage API with alert-specific wording; 'Fail closed when unpublished' step then exits 1",
+          "path": ".github/workflows/weekly-radar-guard.yml",
+          "type": "implementation",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A4",
+      "evidence": [
+        {
+          "locator": "New '## Weekly Radar Guard（定时任务哨兵）' section documents the schedule, what the guard checks, that it never publishes or duplicates the report, and the manual recovery command",
+          "path": "docs/operations/WEEKLY_RADAR.md",
+          "type": "documentation",
+          "verification": "passed"
+        }
+      ]
+    },
+    {
+      "acceptanceId": "A5",
+      "evidence": [
+        {
+          "locator": "exit=0",
+          "path": "make check",
+          "type": "command",
+          "verification": "passed"
+        },
+        {
+          "locator": "exit=0; yaml.safe_load succeeded",
+          "path": "python3 -c \"import yaml,sys; yaml.safe_load(open('.github/workflows/weekly-radar-guard.yml'))\"",
+          "type": "command",
+          "verification": "passed"
+        },
+        {
+          "locator": "actionlint was not available in this environment (brew install blocked by /opt/homebrew ownership); not run",
+          "path": ".github/workflows/weekly-radar-guard.yml",
+          "type": "command",
+          "verification": "pending"
+        },
+        {
+          "locator": "PR opened, not yet merged; branch/worktree not yet removed; main not yet re-synchronized",
+          "path": "https://github.com/xinglun/ORG-X/pull/123",
+          "type": "runtime",
+          "verification": "pending"
+        }
+      ]
+    }
+  ],
+  "changedPaths": [
+    ".github/workflows/weekly-radar-guard.yml",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "checkpointAt": "2026-09-07T02:28:31Z",
+  "checkpointContractDigest": "sha256:c592d70edc5925b08413408448c45213f243c4eab3552e8f8eee467e6f87a4cd",
+  "checkpointCount": 1,
+  "checkpointEvidence": [
+    {
+      "acceptanceCount": 5,
+      "contractHash": "sha256:6c5bf468f4c7600c51a79856c54140daaac19763eb41258c18eb454762826864",
+      "recorded": true,
+      "recordedAt": "2026-09-07T02:28:31Z",
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:64d5c00309de5ed5efa4448a37f511045587f692cc799a5ee1769c878f2913d8",
+      "requiredChecks": 0,
+      "requiredChecksPassed": 0,
+      "schemaVersion": 1,
+      "stage": "before_edit",
+      "unknownCount": 0,
+      "workItemId": "wi-weekly-radar-guard"
+    },
+    {
+      "acceptanceCount": 5,
+      "contractHash": "sha256:c592d70edc5925b08413408448c45213f243c4eab3552e8f8eee467e6f87a4cd",
+      "invalidatedRequiredChecks": [],
+      "originalBeforeEditContractHash": "sha256:6c5bf468f4c7600c51a79856c54140daaac19763eb41258c18eb454762826864",
+      "previousContractHash": "sha256:6c5bf468f4c7600c51a79856c54140daaac19763eb41258c18eb454762826864",
+      "reason": "Amended Contract to add human-owned sources/verification fields, fix a comma-split outOfScope entry, and number acceptanceCriteria (A1-A5) so Summary acceptanceEvidence can bind to them; no scope/goal/intent change.",
+      "recorded": true,
+      "recordedAt": "2026-09-07T02:36:02Z",
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:64d5c00309de5ed5efa4448a37f511045587f692cc799a5ee1769c878f2913d8",
+      "requiredChecks": 0,
+      "requiredChecksPassed": 0,
+      "requiredChecksPassedAtAmendment": null,
+      "schemaVersion": 1,
+      "stage": "contract_amendment_revalidation",
+      "unknownCount": 0,
+      "verificationStarted": false,
+      "workItemId": "wi-weekly-radar-guard"
+    }
+  ],
+  "checkpointRepositorySnapshotDigest": "sha256:64d5c00309de5ed5efa4448a37f511045587f692cc799a5ee1769c878f2913d8",
+  "createdAt": "2026-09-07T02:28:23Z",
+  "intentAlignment": {
+    "evidence": [
+      ".ai/work-items/active/wi-weekly-radar-guard.contract.json",
+      ".github/workflows/weekly-radar-guard.yml",
+      "docs/operations/WEEKLY_RADAR.md",
+      "https://github.com/xinglun/ORG-X/pull/123"
+    ],
+    "state": "resolved"
+  },
+  "mode": "implementation",
+  "preflightAt": "2026-09-07T02:36:12Z",
+  "preflightContractDigest": "sha256:c592d70edc5925b08413408448c45213f243c4eab3552e8f8eee467e6f87a4cd",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:64d5c00309de5ed5efa4448a37f511045587f692cc799a5ee1769c878f2913d8",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "finish_ready",
+  "updatedAt": "2026-09-07T02:36:14Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-weekly-radar-guard"
+}

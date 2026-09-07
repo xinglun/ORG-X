@@ -181,6 +181,22 @@ authoritative 的客户/采用者来源 URI 和两个命名采用者。报告分
 
 “没有确认到组织变化”“证据不足”和“来源暂不可用”含义不同：前者表示当前可用资料中没有确认事实，后两者表示不能据此判断没有变化。没有明确选择重点公司时，不显示排名，也不生成交易或资本行动结论。报告正文不显示 `source_*`、内部状态枚举、覆盖率分数或逐项采集诊断；完整事实、来源、状态、`research_metrics`、系统参考依据和逐项 review 明细仍在 snapshot。Publisher 有限重试、保留消息顺序和 message IDs，并在失败时记录已接受的部分 ID。
 
+## Weekly Radar Guard（定时任务哨兵）
+
+`schedule` 触发是 best-effort：GitHub 在负载较高或仓库活跃度不足时可能延迟数小时甚至跳过某次定时运行，且这不受本仓库配置影响。2026-08-24、2026-08-31、2026-09-07 三周内分别出现过“触发但失败”“延迟 4.5 小时才触发”“完全未触发”，其中最后一种没有任何自动信号，只能靠人工发现并手动补发。
+
+`.github/workflows/weekly-radar-guard.yml` 是一个独立的只读哨兵，在主发布窗口 30 分钟后运行（`cron: '30 0 * * 1'`，即 09:30 JST），也支持 `workflow_dispatch` 手动测试。它只做三件事：从 `data` 分支重建 `weekly-radar/` 树、调用既有的只读命令 `--verify-published-as-of` 确认今天是否已有正本、如果没有确认到正本就发一条 Telegram 提醒并让本次 Actions 运行显示失败。
+
+Guard 的权限只有 `contents: read`，结构上不可能写入 `data` 分支；它不获取来源、不生成报告、不调用 Telegram 的报告发送路径,因此不会与主流程产生重复发布或重复发送的风险。提醒消息的措辞与正式报告明显不同，只是一次运维提示,不计入 archive、receipt 或 manifest。
+
+Guard 触发提醒后，人工按现有紧急路径手动补发即可（见上文“调度与命令”）：
+
+```sh
+gh workflow run weekly-radar.yml --ref main
+```
+
+Guard 本身也依赖 GitHub 的 `schedule` 机制，因此不能完全消除“两个定时都被跳过”的极端情况；它把单次静默失败的窗口从“无限期直到有人手动检查”缩短为“最多 30 分钟后有一条明确的 Telegram 提醒”。
+
 ## data 分支保留
 
 每次成功运行写入 report、sanitized snapshot、绑定的 `PUBLISHED` receipt 和 manifest；manifest 会记录输入快照路径及其稳定 `snapshot_id`。同一日期允许由普通 schedule 或手动运行更新，但只有完整成功 transaction 才会替换旧正本；冲突或写入失败不会先执行 retention。transaction 只有在全部公共 artifact（包括有输入快照时的输入文件）完成后才变为 committed，retention 也只在该提交点之后执行。retention 只删除日期前缀文件中超过 365 天的 input snapshot、report、snapshot 和 receipt；最近文件保持不动。dry-run 不执行 recovery、归档或 retention。

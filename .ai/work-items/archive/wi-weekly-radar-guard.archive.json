@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-09-07T02:36:23Z",
+  "files": {
+    "contractDigest": "sha256:8d817b9ae2b2a020c526e819290f3cf81a9db9c39c70de8c76e39aebbc2650f7",
+    "contractPath": ".ai/work-items/archive/wi-weekly-radar-guard.contract.json",
+    "eventsDigest": "sha256:09f292b4f7a7b0b7e385bea04037ac5ba5de537b4b6d5a6590f9fc1374b23fc0",
+    "eventsPath": ".ai/work-items/archive/wi-weekly-radar-guard.events.jsonl",
+    "outcomeDigest": "sha256:8558ebc563255d6e4a446cb1e9ecda5a65e5d234617b073f94dc235f2b82f80b",
+    "outcomePath": ".ai/work-items/archive/wi-weekly-radar-guard.outcome.json",
+    "summaryDigest": "sha256:f48ffb8a8ae069affbb80dd3811c8f92bec50d9bf3294944c37ccbfaaacc399f",
+    "summaryPath": ".ai/work-items/archive/wi-weekly-radar-guard.summary.json",
+    "taskReportDigest": "sha256:43d68aaa734225c508c5a00f32c8a6a817a8821c1f4c46740fe084321b14df46",
+    "taskReportMarkdownDigest": "sha256:a8ad2a1538c081b03eb125417e030f76b6a02761b75ef5fa4283ba623399e8e2",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-weekly-radar-guard.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-weekly-radar-guard.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-weekly-radar-guard"
+}

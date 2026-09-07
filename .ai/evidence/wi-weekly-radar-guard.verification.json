@@ -1,7 +1,7 @@
 {
   "captureMode": "full_capture",
-  "contractDigest": "sha256:0b09fb578ea17e0034c2ca43ac6b942593cb419869130d551e0d84f7ec88e3f9",
-  "createdAt": "2026-09-07T02:30:14Z",
+  "contractDigest": "sha256:c592d70edc5925b08413408448c45213f243c4eab3552e8f8eee467e6f87a4cd",
+  "createdAt": "2026-09-07T02:36:12Z",
   "evidenceSchemaVersion": 2,
   "passed": true,
   "protocolVersion": 1,
@@ -9,8 +9,8 @@
     "costObservation": {
       "advisoryOnly": true,
       "confidence": "complete",
-      "elapsedMs": 5192,
-      "executionElapsedMs": 5115,
+      "elapsedMs": 5395,
+      "executionElapsedMs": 5320,
       "maxConcurrentProcesses": 1,
       "nodesExecuted": 1,
       "nodesPlanned": 1,
@@ -25,10 +25,10 @@
       "schemaVersion": 1,
       "unknowns": []
     },
-    "elapsedMs": 5192,
-    "executionElapsedMs": 5115,
-    "filesHashed": 9,
-    "filesRead": 9,
+    "elapsedMs": 5395,
+    "executionElapsedMs": 5320,
+    "filesHashed": 5,
+    "filesRead": 5,
     "gitCalls": 8,
     "maxConcurrentProcesses": 1,
     "nodesExecuted": 1,
@@ -36,10 +36,7 @@
     "nodesReused": 0,
     "passed": true,
     "planReceipt": {
-      "affectedPaths": [
-        ".github/workflows/weekly-radar-guard.yml",
-        "docs/operations/WEEKLY_RADAR.md"
-      ],
+      "affectedPaths": [],
       "assurance": "repository_verified",
       "baseRevision": "585571ef1588fb81936052e6df73d12dc94c3f9c",
       "dependencyConfidence": "unknown",
@@ -47,7 +44,7 @@
       "executedNodes": [
         "project-command-0"
       ],
-      "executionElapsedMs": 5115,
+      "executionElapsedMs": 5320,
       "finalTier": "T0",
       "initialTier": "T0",
       "planningElapsedMs": 0,
@@ -79,7 +76,7 @@
       {
         "action": "execute",
         "nodeId": "project-command-0",
-        "outputDigest": "sha256:df615ed6b0ae2e821ae5f5bbdfcd6943d93977715675a0ae117c02262a740351",
+        "outputDigest": "sha256:149e3f81acc0da895db109566197275ef8bace7c79bcd576557731005202f1b7",
         "outputTruncated": false,
         "passed": true,
         "protected": false,
@@ -95,7 +92,7 @@
     "runtimeVersion": "0.2.85",
     "workItemId": "wi-weekly-radar-guard"
   },
-  "receiptDigest": "sha256:9beeab95c43fb5b3600bb559d20222223c3bc00a7d42f9138d67e638d97e3dc8",
+  "receiptDigest": "sha256:b07935220009cfdd94d5945c8d88b57ef30565773b5a50464104310b2bf215a6",
   "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
   "repositorySnapshotDigest": "sha256:64d5c00309de5ed5efa4448a37f511045587f692cc799a5ee1769c878f2913d8",
   "runtimeDigest": "sha256:ece00d0b596c4674eaf37225e95a83aacec66a4c33f0bb89857f5dcaecde3a50",

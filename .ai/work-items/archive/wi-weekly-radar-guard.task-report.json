@@ -1,0 +1,102 @@
+{
+  "bindings": {
+    "evidenceRefs": [
+      ".ai/evidence/wi-weekly-radar-guard.verification.json"
+    ],
+    "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+    "repositorySnapshotDigest": "sha256:64d5c00309de5ed5efa4448a37f511045587f692cc799a5ee1769c878f2913d8",
+    "workItemId": "wi-weekly-radar-guard"
+  },
+  "format": "ai-cockpit.task-outcome",
+  "humanStatusColor": "green",
+  "schemaVersion": 1,
+  "sections": {
+    "avoidedImpact": [],
+    "deliveredChanges": [
+      {
+        "evidenceRefs": [
+          ".ai/work-items/archive/wi-weekly-radar-guard.summary.json"
+        ],
+        "inference": false,
+        "text": "Changed path: .github/workflows/weekly-radar-guard.yml"
+      },
+      {
+        "evidenceRefs": [
+          ".ai/work-items/archive/wi-weekly-radar-guard.summary.json"
+        ],
+        "inference": false,
+        "text": "Changed path: docs/operations/WEEKLY_RADAR.md"
+      }
+    ],
+    "evidence": [
+      {
+        "evidenceRefs": [
+          ".ai/evidence/wi-weekly-radar-guard.verification.json"
+        ],
+        "inference": false,
+        "text": ".ai/evidence/wi-weekly-radar-guard.verification.json"
+      }
+    ],
+    "findings": [],
+    "forbiddenClaims": [
+      "merge_authorized_without_human_decision",
+      "release_published_without_release_evidence",
+      "provider_or_enterprise_approval_inferred_from_local_records",
+      "user_visible_benefit_invented_from_implementation_facts"
+    ],
+    "forcedStops": [],
+    "humanDecisions": [],
+    "interventions": [],
+    "limitations": [],
+    "nonRiskExplanations": [],
+    "outcomeSummary": [
+      {
+        "evidenceRefs": [
+          ".ai/evidence/wi-weekly-radar-guard.verification.json"
+        ],
+        "inference": false,
+        "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+      }
+    ],
+    "recurrencePrevention": [],
+    "residualRisks": [
+      {
+        "evidenceRefs": [
+          ".ai/evidence/wi-weekly-radar-guard.verification.json"
+        ],
+        "inference": false,
+        "text": "Remaining unknown: user_visible_benefit_not_declared"
+      }
+    ],
+    "resolutions": [
+      {
+        "evidenceRefs": [
+          ".ai/evidence/wi-weekly-radar-guard.verification.json"
+        ],
+        "inference": false,
+        "text": "The current verification evidence is valid for this repository and Work Item."
+      }
+    ],
+    "risks": [],
+    "taskOverview": [
+      {
+        "evidenceRefs": [
+          ".ai/work-items/archive/wi-weekly-radar-guard.contract.json"
+        ],
+        "inference": false,
+        "text": "Add a read-only monitoring workflow that checks, shortly after the scheduled publish window, whether today's Weekly Radar report was actually published, and sends a Telegram alert (distinct from the report itself) when it was not, without ever re-publishing, re-acquiring sources, or writing to the data branch."
+      }
+    ],
+    "warnings": [
+      {
+        "evidenceRefs": [
+          ".ai/work-items/archive/wi-weekly-radar-guard.contract.json"
+        ],
+        "inference": false,
+        "text": "User-visible benefit is not declared by the Work Item owner."
+      }
+    ]
+  },
+  "status": "verified",
+  "workItemId": "wi-weekly-radar-guard"
+}

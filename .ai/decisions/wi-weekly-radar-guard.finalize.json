@@ -1,0 +1,58 @@
+{
+  "actor": "Ray <sei-rinn@7andinm.co.jp>",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "User explicitly authorized merging PR #123, closing the Work Item, and cleanup (sync main, remove worktree, delete branch), relayed via the coordinating session.",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "7b2d1f4",
+    "name": "wi-weekly-radar-guard",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:8d817b9ae2b2a020c526e819290f3cf81a9db9c39c70de8c76e39aebbc2650f7",
+  "operationId": "sha256:509544b755688cd45234646f84ca275136fbd57fe48f50105699ad1fc2a0462b",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "585571ef1588fb81936052e6df73d12dc94c3f9c",
+    "headRevision": "7b2d1f4",
+    "mergeCommit": "86f64294c0fbb98f7e32ff242c473f3af6ba5d6d",
+    "number": 123,
+    "url": "https://github.com/xinglun/ORG-X/pull/123"
+  },
+  "reason": "PR #123 merged into main (86f64294c0fbb98f7e32ff242c473f3af6ba5d6d); branch and worktree to be deleted locally and on origin.",
+  "receiptId": "sha256:578b8350e00b52b1cb2dd9e919f79902085204169b3fcf19fbc2e4bfcc7e315d",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "wi-weekly-radar-guard",
+    "provider": "github",
+    "pullRequest": "https://github.com/xinglun/ORG-X/pull/123",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X-wi-weekly-radar-guard"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:ece00d0b596c4674eaf37225e95a83aacec66a4c33f0bb89857f5dcaecde3a50",
+  "runtimeVersion": "0.2.85",
+  "schemaVersion": 1,
+  "timestamp": "2026-09-07T02:59:41Z",
+  "workItemId": "wi-weekly-radar-guard",
+  "worktree": {
+    "branch": "wi-weekly-radar-guard",
+    "headRevision": "7b2d1f4",
+    "path": "/Users/sei-rinn/dev/workspace_rust/ORG-X-wi-weekly-radar-guard",
+    "worktreeId": "wi-weekly-radar-guard"
+  }
+}

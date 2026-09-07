@@ -1,0 +1,47 @@
+{
+  "acceptanceCriteria": [
+    "A new .github/workflows/weekly-radar-guard.yml exists, triggered by schedule (00:30 UTC Monday, 30 minutes after the primary publish window) and workflow_dispatch, with permissions: contents: read only",
+    "The guard reconstructs only the data branch's weekly-radar tree and runs the existing --verify-published-as-of check; it never contacts Telegram's report-send path and never writes to data",
+    "When verification does not confirm publication for today, the guard sends exactly one plain-text Telegram alert message (reusing the existing ORGX_TELEGRAM_BOT_TOKEN/ORGX_TELEGRAM_CHAT_ID secrets) with wording distinct from the actual report, then exits non-zero so the run shows red in Actions",
+    "docs/operations/WEEKLY_RADAR.md documents the guard: schedule, what it checks, that it never publishes or duplicates the report, and the human recovery step (manual gh workflow run weekly-radar.yml)",
+    "actionlint/yaml validation and make check pass; the reviewed PR is merged into main, the dedicated branch and worktree are removed, and main is synchronized and clean"
+  ],
+  "authority": "authorized",
+  "baseRevision": "585571ef1588fb81936052e6df73d12dc94c3f9c",
+  "createdAt": "2026-09-07T02:28:23Z",
+  "goal": "Add a read-only monitoring workflow that checks, shortly after the scheduled publish window, whether today's Weekly Radar report was actually published, and sends a Telegram alert (distinct from the report itself) when it was not, without ever re-publishing, re-acquiring sources, or writing to the data branch.",
+  "intent": "Weekly Radar's scheduled GitHub Actions publish (cron 0 0 * * 1, 09:00 JST Monday) has been unreliable for three consecutive weeks: 2026-08-24 the schedule fired but failed on a since-fixed bug, 2026-08-31 it fired 4.5 hours late, 2026-09-07 it never fired at all and required a manual workflow_dispatch to send today's Telegram report. There is currently no automated signal when the scheduled report fails to arrive.",
+  "mode": "implementation",
+  "outOfScope": [
+    "Changing weekly-radar.yml",
+    " its schedule",
+    " or its publish/archive logic",
+    "Changing the Rust CLI or the existing --verify-published-as-of command",
+    "Any auto re-publish or auto re-trigger of the real report send",
+    "Any third-party external cron/monitoring service"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:df8fa1c39270bb0839c0917561928d29460ac4e9ef50ea3591db1113d5cfe9dd",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "resourceContext": {
+    "baseBranch": "unknown",
+    "baseRemote": "unknown",
+    "branch": "wi-weekly-radar-guard",
+    "provider": "unknown",
+    "pullRequest": "unknown",
+    "worktree": "/Users/sei-rinn/dev/workspace_rust/ORG-X-wi-weekly-radar-guard"
+  },
+  "risk": "normal",
+  "scope": [
+    ".github/workflows/weekly-radar-guard.yml",
+    "docs/operations/WEEKLY_RADAR.md"
+  ],
+  "sources": [],
+  "state": "implementation_active",
+  "verification": [],
+  "workItemId": "wi-weekly-radar-guard"
+}

@@ -1,0 +1,1079 @@
+{
+  "language": "zh-CN",
+  "metadata": {
+    "as_of": "2026-08-24",
+    "fact_count": 69,
+    "company_count": 10
+  },
+  "companies": [
+    {
+      "id": "adbe",
+      "name": "Adobe Inc.",
+      "ticker": "ADBE"
+    },
+    {
+      "id": "amzn",
+      "name": "Amazon.com, Inc.",
+      "ticker": "AMZN"
+    },
+    {
+      "id": "crm",
+      "name": "Salesforce, Inc.",
+      "ticker": "CRM"
+    },
+    {
+      "id": "goog",
+      "name": "Alphabet Inc.",
+      "ticker": "GOOG"
+    },
+    {
+      "id": "ibm",
+      "name": "International Business Machines Corporation",
+      "ticker": "IBM"
+    },
+    {
+      "id": "meta",
+      "name": "Meta Platforms, Inc.",
+      "ticker": "META"
+    },
+    {
+      "id": "msft",
+      "name": "Microsoft Corporation",
+      "ticker": "MSFT"
+    },
+    {
+      "id": "nvda",
+      "name": "NVIDIA Corporation",
+      "ticker": "NVDA"
+    },
+    {
+      "id": "pltr",
+      "name": "Palantir Technologies Inc.",
+      "ticker": "PLTR"
+    },
+    {
+      "id": "wmt",
+      "name": "Walmart Inc.",
+      "ticker": "WMT"
+    }
+  ],
+  "facts": [
+    {
+      "company_id": "adbe",
+      "kind": "source_careers_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://www.adobe.com/careers.html",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "adbe",
+      "kind": "source_engineering_ai_blog_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/adbe/engineering_ai_blog",
+      "source_field_or_passage": "optional official source is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "adbe",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "source_field_or_passage": "GDELT discovery request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "adbe",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/adbe/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "adbe",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/adbe/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "adbe",
+      "kind": "source_official_ir_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://www.adobe.com/investor-relations.html",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "amzn",
+      "kind": "source_careers_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://www.amazon.jobs/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "amzn",
+      "kind": "source_engineering_ai_blog_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/amzn/engineering_ai_blog",
+      "source_field_or_passage": "optional official source is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "amzn",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "source_field_or_passage": "GDELT discovery request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "amzn",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/amzn/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "amzn",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/amzn/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "amzn",
+      "kind": "source_official_ir_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://ir.aboutamazon.com/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "crm",
+      "kind": "source_careers_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://careers.salesforce.com/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "crm",
+      "kind": "source_engineering_ai_blog_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/crm/engineering_ai_blog",
+      "source_field_or_passage": "optional official source is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "crm",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "source_field_or_passage": "GDELT discovery request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "crm",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/crm/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "crm",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/crm/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "crm",
+      "kind": "source_official_ir_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://investor.salesforce.com/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "goog",
+      "kind": "source_careers_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://careers.google.com/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "goog",
+      "kind": "source_engineering_ai_blog_001",
+      "value": "Google Research - Explore Our Latest Research in Science and AI Skip to main content Explore our many areas of focus Explore all research areas Applied AI & sciences Earth AI Health AI Science AI Sustainability & crisis resilience Foundatio…",
+      "status": "KNOWN",
+      "confidence": "HIGH",
+      "source_uri": "https://research.google/",
+      "source_field_or_passage": "official page text",
+      "effective_date": null
+    },
+    {
+      "company_id": "goog",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "source_field_or_passage": "GDELT discovery request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "goog",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/goog/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "goog",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/goog/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "goog",
+      "kind": "source_official_ir_001",
+      "value": "Alphabet Investor Relations - Investors Skip to main content Home Investors Results & Financials Earnings SEC Filings Updates News Events Governance Board & Governance Annual Meeting Founders’ Letters Other FAQs Additional Information Email…",
+      "status": "KNOWN",
+      "confidence": "HIGH",
+      "source_uri": "https://abc.xyz/investor/",
+      "source_field_or_passage": "official page text",
+      "effective_date": null
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_careers_001",
+      "value": "Define your career with IBM Home Careers Search jobs Join us and create incredible things that alter the future for us, for each other, for our clients and for the world. Search Jobs Career Areas From Research and Consulting to Software Eng…",
+      "status": "KNOWN",
+      "confidence": "HIGH",
+      "source_uri": "https://www.ibm.com/careers",
+      "source_field_or_passage": "official page text",
+      "effective_date": null
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_engineering_ai_blog_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/ibm/engineering_ai_blog",
+      "source_field_or_passage": "optional official source is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://www.insidermonkey.com/blog/jim-cramer-is-still-recommending-international-business-machines-corporation-ibms-shares-1799795/",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: Jim Cramer Is Still Recommending International Bu…",
+      "effective_date": "2026-07-11"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_002",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://finance.yahoo.com/markets/stocks/articles/international-business-machines-ibm-upgraded-134647365.html",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: International Business Machines ( IBM ) Upgraded …",
+      "effective_date": "2026-06-24"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_003",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://www.insidermonkey.com/blog/morgan-stanley-raises-pt-on-international-business-machines-ibm-stock-1790124/",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: Morgan Stanley Raises PT on International Busines…",
+      "effective_date": "2026-06-28"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_004",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://finance.yahoo.com/sectors/technology/articles/citi-sees-ibm-strengthening-position-144806159.html",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: Citi Sees IBM Strengthening its Position in the E…",
+      "effective_date": "2026-06-04"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_005",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-ibm-stronger-software-033119970.html",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: JPMorgan Upgrades IBM on Stronger Software Growth…",
+      "effective_date": "2026-06-26"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_006",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://www.insidermonkey.com/blog/ibm-bets-10-billion-on-quantum-computing-as-race-for-next-generation-technology-intensifies-1772631/",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: IBM Bets $10 Billion on Quantum Computing as Race…",
+      "effective_date": "2026-06-01"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_007",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://www.insidermonkey.com/blog/citi-sees-ibm-strengthening-its-position-in-the-emerging-quantum-computing-market-1774991/",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: Citi Sees IBM Strengthening its Position in the E…",
+      "effective_date": "2026-06-04"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_008",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://www.insidermonkey.com/blog/international-business-machines-ibm-among-the-best-quantum-stocks-to-buy-1801918/",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: International Business Machines ( IBM ) Among the…",
+      "effective_date": "2026-07-15"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_009",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://seekingalpha.com/news/4615946-here-are-the-major-earnings-after-the-close-wednesday",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: Here are the major earnings after the close Wedne…",
+      "effective_date": "2026-07-22"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_gdelt_010",
+      "value": null,
+      "status": "UNCONFIRMED",
+      "confidence": "LOW",
+      "source_uri": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-ibm-inexpensive-arvind-152555444.html",
+      "source_field_or_passage": "GDELT query context: https://api.gdeltproject.org/api/v2/doc/doc?query=%22International%20Business%20Machines%20Corporation%22&mode=artlist&format=json&maxrecords=10&sort=HybridRel; passage: Jim Cramer on IBM : It Inexpensive and Arvind Kri…",
+      "effective_date": "2026-07-15"
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/ibm/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/ibm/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "ibm",
+      "kind": "source_official_ir_001",
+      "value": "Investor Relations | IBM Investor Relations Today’s IBM has defined a clear strategy to lead in the era of hybrid cloud and AI 2Q 2026 Letter to Investors 2Q 2026 Earnings Announcement 2025 Investor Day Quantum Day Events and presentations …",
+      "status": "KNOWN",
+      "confidence": "HIGH",
+      "source_uri": "https://www.ibm.com/investor",
+      "source_field_or_passage": "official page text",
+      "effective_date": null
+    },
+    {
+      "company_id": "meta",
+      "kind": "source_careers_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/meta/careers",
+      "source_field_or_passage": "optional official source is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "meta",
+      "kind": "source_engineering_ai_blog_001",
+      "value": "Engineering at Meta - Engineering at Meta Blog Skip to content Search this site Open Source Open Source Meta Open Source Platforms Android iOS Web Infrastructure Systems Core Infra Data Infrastructure DevInfra Production Engineering Securit…",
+      "status": "KNOWN",
+      "confidence": "HIGH",
+      "source_uri": "https://engineering.fb.com/",
+      "source_field_or_passage": "official page text",
+      "effective_date": null
+    },
+    {
+      "company_id": "meta",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "source_field_or_passage": "GDELT discovery request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "meta",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/meta/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "meta",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/meta/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "meta",
+      "kind": "source_official_ir_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://investor.atmeta.com/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "msft",
+      "kind": "source_careers_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://jobs.careers.microsoft.com/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "msft",
+      "kind": "source_engineering_ai_blog_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/msft/engineering_ai_blog",
+      "source_field_or_passage": "optional official source is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "msft",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "source_field_or_passage": "GDELT discovery request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "msft",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/msft/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "msft",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/msft/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "msft",
+      "kind": "source_official_ir_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://www.microsoft.com/en-us/Investor/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "nvda",
+      "kind": "source_careers_001",
+      "value": "--> Jobs at NVIDIA | NVIDIA Careers NVIDIA Home NVIDIA Home Menu Menu icon Menu Menu icon Close Close icon Close Close icon Close Close icon Caret down icon Accordion is closed, click to open. Caret down icon Accordion is closed, click to o…",
+      "status": "KNOWN",
+      "confidence": "HIGH",
+      "source_uri": "https://www.nvidia.com/en-us/about-nvidia/careers/",
+      "source_field_or_passage": "official page text",
+      "effective_date": null
+    },
+    {
+      "company_id": "nvda",
+      "kind": "source_engineering_ai_blog_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/nvda/engineering_ai_blog",
+      "source_field_or_passage": "optional official source is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "nvda",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "source_field_or_passage": "GDELT discovery request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "nvda",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/nvda/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "nvda",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/nvda/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "nvda",
+      "kind": "source_official_ir_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://investor.nvidia.com/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "pltr",
+      "kind": "source_careers_001",
+      "value": "Careers /sitemap.xml",
+      "status": "KNOWN",
+      "confidence": "HIGH",
+      "source_uri": "https://www.palantir.com/careers/",
+      "source_field_or_passage": "official page text",
+      "effective_date": null
+    },
+    {
+      "company_id": "pltr",
+      "kind": "source_engineering_ai_blog_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/pltr/engineering_ai_blog",
+      "source_field_or_passage": "optional official source is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "pltr",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "source_field_or_passage": "GDELT discovery request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "pltr",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/pltr/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "pltr",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/pltr/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "pltr",
+      "kind": "source_official_ir_001",
+      "value": "Palantir IR Palantir Investor Relations News / Events / Financials Quarterly Results SEC Filings / Governance Governance Documents Executive Management Board of Directors Committee Composition / Resources Analyst Coverage Information Reques…",
+      "status": "KNOWN",
+      "confidence": "HIGH",
+      "source_uri": "https://investors.palantir.com/",
+      "source_field_or_passage": "official page text",
+      "effective_date": null
+    },
+    {
+      "company_id": "wmt",
+      "kind": "source_careers_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://careers.walmart.com/",
+      "source_field_or_passage": "official page request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "wmt",
+      "kind": "source_engineering_ai_blog_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/wmt/engineering_ai_blog",
+      "source_field_or_passage": "optional official source is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "wmt",
+      "kind": "source_gdelt_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "https://api.gdeltproject.org/api/v2/doc/doc",
+      "source_field_or_passage": "GDELT discovery request unavailable",
+      "effective_date": null
+    },
+    {
+      "company_id": "wmt",
+      "kind": "source_greenhouse_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/wmt/greenhouse",
+      "source_field_or_passage": "optional Greenhouse board is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "wmt",
+      "kind": "source_lever_001",
+      "value": null,
+      "status": "UNAVAILABLE",
+      "confidence": "UNKNOWN",
+      "source_uri": "source://weekly-radar/wmt/lever",
+      "source_field_or_passage": "optional Lever site is not configured",
+      "effective_date": null
+    },
+    {
+      "company_id": "wmt",
+      "kind": "source_official_ir_001",
+      "value": "Walmart Inc. (WMT) Skip to main content Skip to section navigation Skip to footer About Business of Better Leadership Board of Directors Sam Walton Walmart Museum New Home Office Working at Walmart Sam's Club Walmart International Location …",
+      "status": "KNOWN",
+      "confidence": "HIGH",
+      "source_uri": "https://stock.walmart.com/",
+      "source_field_or_passage": "official page text",
+      "effective_date": null
+    }
+  ],
+  "source_coverage": [
+    {
+      "source": "careers",
+      "expected": 10,
+      "available": 3,
+      "not_configured": 1,
+      "not_applicable": 0,
+      "unavailable": 6
+    },
+    {
+      "source": "engineering_ai_blog",
+      "expected": 10,
+      "available": 2,
+      "not_configured": 8,
+      "not_applicable": 0,
+      "unavailable": 0
+    },
+    {
+      "source": "gdelt",
+      "expected": 10,
+      "available": 1,
+      "not_configured": 0,
+      "not_applicable": 0,
+      "unavailable": 9
+    },
+    {
+      "source": "greenhouse",
+      "expected": 10,
+      "available": 0,
+      "not_configured": 10,
+      "not_applicable": 0,
+      "unavailable": 0
+    },
+    {
+      "source": "lever",
+      "expected": 10,
+      "available": 0,
+      "not_configured": 10,
+      "not_applicable": 0,
+      "unavailable": 0
+    },
+    {
+      "source": "official_ir",
+      "expected": 10,
+      "available": 4,
+      "not_configured": 0,
+      "not_applicable": 0,
+      "unavailable": 6
+    },
+    {
+      "source": "sec",
+      "expected": 10,
+      "available": 0,
+      "not_configured": 0,
+      "not_applicable": 0,
+      "unavailable": 10
+    }
+  ],
+  "health": {
+    "confirmed": 9,
+    "unknown": 0,
+    "unavailable": 50,
+    "unconfirmed": 10,
+    "discovery_only": 1,
+    "top5_selection_missing": true,
+    "review_items": [
+      "adbe / source_careers_001 — UNAVAILABLE",
+      "adbe / source_engineering_ai_blog_001 — UNAVAILABLE",
+      "adbe / source_gdelt_001 — UNAVAILABLE",
+      "adbe / source_greenhouse_001 — UNAVAILABLE",
+      "adbe / source_lever_001 — UNAVAILABLE",
+      "adbe / source_official_ir_001 — UNAVAILABLE",
+      "amzn / source_careers_001 — UNAVAILABLE",
+      "amzn / source_engineering_ai_blog_001 — UNAVAILABLE",
+      "amzn / source_gdelt_001 — UNAVAILABLE",
+      "amzn / source_greenhouse_001 — UNAVAILABLE",
+      "amzn / source_lever_001 — UNAVAILABLE",
+      "amzn / source_official_ir_001 — UNAVAILABLE",
+      "crm / source_careers_001 — UNAVAILABLE",
+      "crm / source_engineering_ai_blog_001 — UNAVAILABLE",
+      "crm / source_gdelt_001 — UNAVAILABLE",
+      "crm / source_greenhouse_001 — UNAVAILABLE",
+      "crm / source_lever_001 — UNAVAILABLE",
+      "crm / source_official_ir_001 — UNAVAILABLE",
+      "goog / source_careers_001 — UNAVAILABLE",
+      "goog / source_gdelt_001 — UNAVAILABLE",
+      "goog / source_greenhouse_001 — UNAVAILABLE",
+      "goog / source_lever_001 — UNAVAILABLE",
+      "ibm / source_engineering_ai_blog_001 — UNAVAILABLE",
+      "ibm / source_gdelt_001 — UNCONFIRMED",
+      "ibm / source_gdelt_002 — UNCONFIRMED",
+      "ibm / source_gdelt_003 — UNCONFIRMED",
+      "ibm / source_gdelt_004 — UNCONFIRMED",
+      "ibm / source_gdelt_005 — UNCONFIRMED",
+      "ibm / source_gdelt_006 — UNCONFIRMED",
+      "ibm / source_gdelt_007 — UNCONFIRMED",
+      "ibm / source_gdelt_008 — UNCONFIRMED",
+      "ibm / source_gdelt_009 — UNCONFIRMED",
+      "ibm / source_gdelt_010 — UNCONFIRMED",
+      "ibm / source_greenhouse_001 — UNAVAILABLE",
+      "ibm / source_lever_001 — UNAVAILABLE",
+      "meta / source_careers_001 — UNAVAILABLE",
+      "meta / source_gdelt_001 — UNAVAILABLE",
+      "meta / source_greenhouse_001 — UNAVAILABLE",
+      "meta / source_lever_001 — UNAVAILABLE",
+      "meta / source_official_ir_001 — UNAVAILABLE",
+      "msft / source_careers_001 — UNAVAILABLE",
+      "msft / source_engineering_ai_blog_001 — UNAVAILABLE",
+      "msft / source_gdelt_001 — UNAVAILABLE",
+      "msft / source_greenhouse_001 — UNAVAILABLE",
+      "msft / source_lever_001 — UNAVAILABLE",
+      "msft / source_official_ir_001 — UNAVAILABLE",
+      "nvda / source_engineering_ai_blog_001 — UNAVAILABLE",
+      "nvda / source_gdelt_001 — UNAVAILABLE",
+      "nvda / source_greenhouse_001 — UNAVAILABLE",
+      "nvda / source_lever_001 — UNAVAILABLE",
+      "nvda / source_official_ir_001 — UNAVAILABLE",
+      "pltr / source_engineering_ai_blog_001 — UNAVAILABLE",
+      "pltr / source_gdelt_001 — UNAVAILABLE",
+      "pltr / source_greenhouse_001 — UNAVAILABLE",
+      "pltr / source_lever_001 — UNAVAILABLE",
+      "wmt / source_careers_001 — UNAVAILABLE",
+      "wmt / source_engineering_ai_blog_001 — UNAVAILABLE",
+      "wmt / source_gdelt_001 — UNAVAILABLE",
+      "wmt / source_greenhouse_001 — UNAVAILABLE",
+      "wmt / source_lever_001 — UNAVAILABLE"
+    ],
+    "source_failures": [
+      {
+        "source": "sec",
+        "company_id": "adbe",
+        "reason": "HTTP response body exceeded configured limit"
+      },
+      {
+        "source": "sec",
+        "company_id": "amzn",
+        "reason": "HTTP response body exceeded configured limit"
+      },
+      {
+        "source": "sec",
+        "company_id": "crm",
+        "reason": "HTTP response body exceeded configured limit"
+      },
+      {
+        "source": "sec",
+        "company_id": "goog",
+        "reason": "HTTP response body exceeded configured limit"
+      },
+      {
+        "source": "sec",
+        "company_id": "ibm",
+        "reason": "HTTP response body exceeded configured limit"
+      },
+      {
+        "source": "sec",
+        "company_id": "meta",
+        "reason": "HTTP response body exceeded configured limit"
+      },
+      {
+        "source": "sec",
+        "company_id": "msft",
+        "reason": "HTTP response body exceeded configured limit"
+      },
+      {
+        "source": "sec",
+        "company_id": "nvda",
+        "reason": "HTTP response body exceeded configured limit"
+      },
+      {
+        "source": "sec",
+        "company_id": "pltr",
+        "reason": "HTTP response body exceeded configured limit"
+      },
+      {
+        "source": "sec",
+        "company_id": "wmt",
+        "reason": "HTTP response body exceeded configured limit"
+      }
+    ]
+  },
+  "judgment": {
+    "evidence_cutoff": "2026-08-24",
+    "machine_rule_version": "weekly-radar-machine-reference/v1",
+    "companies": [
+      {
+        "company_id": "adbe",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      },
+      {
+        "company_id": "amzn",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      },
+      {
+        "company_id": "crm",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      },
+      {
+        "company_id": "goog",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      },
+      {
+        "company_id": "ibm",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      },
+      {
+        "company_id": "meta",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      },
+      {
+        "company_id": "msft",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      },
+      {
+        "company_id": "nvda",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      },
+      {
+        "company_id": "pltr",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      },
+      {
+        "company_id": "wmt",
+        "machine_stage": {
+          "Undetermined": {
+            "reason": "automatic gate requires two independent supporting sources, one counter signal, and one missing-proof inventory"
+          }
+        },
+        "stage_reason": "automatic gate not satisfied; no machine Ranking emitted",
+        "evidence_cutoff": "2026-08-24",
+        "supporting_proof": [],
+        "counter_proof": [],
+        "missing_proof": [],
+        "ranked_candidates": []
+      }
+    ],
+    "human_references": []
+  }
+}

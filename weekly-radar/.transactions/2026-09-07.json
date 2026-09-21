@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "as_of": "2026-09-07",
+  "transaction_id": "2026-09-07-2395-1788752549524997105-0",
+  "state": "committed",
+  "staging_directory": ".transactions/2026-09-07-2395-1788752549524997105-0",
+  "artifacts": [
+    {
+      "final_path": "reports/2026-09-07.md",
+      "staged_path": ".transactions/2026-09-07-2395-1788752549524997105-0/report.md",
+      "digest": "wr-input-130966d96e1560e6"
+    },
+    {
+      "final_path": "snapshots/2026-09-07.json",
+      "staged_path": ".transactions/2026-09-07-2395-1788752549524997105-0/snapshot.json",
+      "digest": "wr-input-251535fa63fb9d59"
+    },
+    {
+      "final_path": "receipts/2026-09-07.json",
+      "staged_path": ".transactions/2026-09-07-2395-1788752549524997105-0/receipt.json",
+      "digest": "wr-input-f5d6dd87b7089f3b"
+    },
+    {
+      "final_path": "snapshots/2026-09-07.input.json",
+      "staged_path": ".transactions/2026-09-07-2395-1788752549524997105-0/input_snapshot.json",
+      "digest": "wr-input-084ffe7d4a7e9291"
+    },
+    {
+      "final_path": "manifest.json",
+      "staged_path": ".transactions/2026-09-07-2395-1788752549524997105-0/manifest.json",
+      "digest": "wr-input-091e5485f016d4a0"
+    }
+  ],
+  "manifest": {
+    "as_of": "2026-09-07",
+    "report": "weekly-radar/reports/2026-09-07.md",
+    "snapshot": "weekly-radar/snapshots/2026-09-07.json",
+    "receipt": "weekly-radar/receipts/2026-09-07.json",
+    "input_snapshot": "weekly-radar/snapshots/2026-09-07.input.json",
+    "snapshot_id": "wr-input-1e9cad5dbc91c994"
+  },
+  "replace_existing": true,
+  "previous_artifacts": [
+    {
+      "final_path": "reports/2026-09-07.md",
+      "digest": "wr-input-74da0e58a53f6411"
+    },
+    {
+      "final_path": "snapshots/2026-09-07.json",
+      "digest": "wr-input-e36360ff1bd23600"
+    },
+    {
+      "final_path": "receipts/2026-09-07.json",
+      "digest": "wr-input-77032df164b29c08"
+    },
+    {
+      "final_path": "snapshots/2026-09-07.input.json",
+      "digest": "wr-input-c23f9ed293578227"
+    },
+    {
+      "final_path": "manifest.json",
+      "digest": "wr-input-63cbb6faab4e8383"
+    }
+  ]
+}

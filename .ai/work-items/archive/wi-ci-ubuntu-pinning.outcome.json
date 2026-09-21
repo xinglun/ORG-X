@@ -1,0 +1,185 @@
+{
+  "acceptanceResults": [
+    "All four current GitHub Actions jobs use exactly ubuntu-24.04.",
+    "The CI regression test fails when any workflow contains ubuntu-latest or a non-pinned runs-on value, and passes for the repository workflows.",
+    "cargo fmt, cargo clippy -D warnings, cargo test --locked --all, and Runtime verification provide fresh evidence.",
+    "The obsolete codex/wi-production-provider-e2e-cadence local and remote refs are removed only after a recoverable bundle and exact-ref checks; origin/data remains."
+  ],
+  "createdAt": "2026-09-21T21:41:15Z",
+  "decisionState": "green",
+  "evidenceDigest": "sha256:7556c12508f89505c02ea8b58a3f70c8e5a00892324199b3eef027cf7030a278",
+  "evidenceRefs": [
+    ".ai/evidence/wi-ci-ubuntu-pinning.verification.json"
+  ],
+  "humanBenefitReport": {
+    "affectedUsers": [],
+    "evidenceRefs": [
+      ".ai/evidence/wi-ci-ubuntu-pinning.verification.json"
+    ],
+    "state": "unknown",
+    "unknowns": [
+      "user_visible_benefit_not_declared"
+    ],
+    "userVisibleChanges": []
+  },
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "schemaVersion": 2,
+  "state": "finish_ready",
+  "summary": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner.",
+  "taskOutcomeReport": {
+    "bindings": {
+      "evidenceRefs": [
+        ".ai/evidence/wi-ci-ubuntu-pinning.verification.json"
+      ],
+      "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+      "repositorySnapshotDigest": "sha256:b153ad5e24907bf260dce44c4d0035f93f70f082a50af86315a0c045bc69b707",
+      "workItemId": "wi-ci-ubuntu-pinning"
+    },
+    "format": "ai-cockpit.task-outcome",
+    "humanStatusColor": "green",
+    "schemaVersion": 1,
+    "sections": {
+      "avoidedImpact": [],
+      "deliveredChanges": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/decisions/observer-snapshot.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/evidence/wi-ci-ubuntu-pinning.verification-attempt.849afa48c6cc91ed38fb45a135c62aa59b17d772e44a8f39230f0f47e59241c1.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-ci-ubuntu-pinning.contract.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .github/workflows/ai-cockpit.yml"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .github/workflows/weekly-radar-guard.yml"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: .github/workflows/weekly-radar.yml"
+        },
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json"
+          ],
+          "inference": false,
+          "text": "Changed path: tests/ci_runner_pinning.rs"
+        }
+      ],
+      "evidence": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-ci-ubuntu-pinning.verification.json"
+          ],
+          "inference": false,
+          "text": ".ai/evidence/wi-ci-ubuntu-pinning.verification.json"
+        }
+      ],
+      "findings": [],
+      "forbiddenClaims": [
+        "merge_authorized_without_human_decision",
+        "release_published_without_release_evidence",
+        "provider_or_enterprise_approval_inferred_from_local_records",
+        "user_visible_benefit_invented_from_implementation_facts"
+      ],
+      "forcedStops": [],
+      "humanDecisions": [],
+      "interventions": [],
+      "limitations": [],
+      "nonRiskExplanations": [],
+      "outcomeSummary": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-ci-ubuntu-pinning.verification.json"
+          ],
+          "inference": false,
+          "text": "Verification evidence passed; human-visible benefit remains explicitly unknown unless declared by the Work Item owner."
+        }
+      ],
+      "recurrencePrevention": [],
+      "residualRisks": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-ci-ubuntu-pinning.verification.json"
+          ],
+          "inference": false,
+          "text": "Remaining unknown: user_visible_benefit_not_declared"
+        }
+      ],
+      "resolutions": [
+        {
+          "evidenceRefs": [
+            ".ai/evidence/wi-ci-ubuntu-pinning.verification.json"
+          ],
+          "inference": false,
+          "text": "The current verification evidence is valid for this repository and Work Item."
+        }
+      ],
+      "risks": [],
+      "taskOverview": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.contract.json"
+          ],
+          "inference": false,
+          "text": "Make CI runner selection deterministic against the Ubuntu 26.04 rollout and leave no stale cadence work branch, with evidence-backed verification and preserved recovery history."
+        }
+      ],
+      "warnings": [
+        {
+          "evidenceRefs": [
+            ".ai/work-items/archive/wi-ci-ubuntu-pinning.contract.json"
+          ],
+          "inference": false,
+          "text": "User-visible benefit is not declared by the Work Item owner."
+        }
+      ]
+    },
+    "status": "verified",
+    "workItemId": "wi-ci-ubuntu-pinning"
+  },
+  "taskReportDigest": "sha256:8b240846be94623abf28977961581b072bdf4c8deb1867bb895147dfac1a1ded",
+  "taskReportMarkdownDigest": "sha256:2e07dac581a65262931e54e8d75e446c115a9aff1a1b125ae98a2315ddf7f152",
+  "unknowns": [
+    "user_visible_benefit_not_declared"
+  ],
+  "verification": {
+    "evidencePath": ".ai/evidence/wi-ci-ubuntu-pinning.verification.json",
+    "required": true,
+    "status": "verified"
+  },
+  "workItemId": "wi-ci-ubuntu-pinning"
+}

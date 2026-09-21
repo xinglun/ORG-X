@@ -1,0 +1,22 @@
+{
+  "closeRequired": true,
+  "createdAt": "2026-09-21T21:42:02Z",
+  "files": {
+    "contractDigest": "sha256:9ab8c58c6481fe8f4c6f8168e0ae8df5e5530475de3247bb2d79d7211547a042",
+    "contractPath": ".ai/work-items/archive/wi-ci-ubuntu-pinning.contract.json",
+    "eventsDigest": "sha256:74bad6869473d1531cec361c3cf0fb2d929039610662a578298b905e9aa93555",
+    "eventsPath": ".ai/work-items/archive/wi-ci-ubuntu-pinning.events.jsonl",
+    "outcomeDigest": "sha256:897674dc7c5c47cce6419ca766dd038656256f2a998eec6b2d4be9fc452e9583",
+    "outcomePath": ".ai/work-items/archive/wi-ci-ubuntu-pinning.outcome.json",
+    "summaryDigest": "sha256:7044c576d21cf410977b18ea5a361c57db4317e7a84d32c0f9fae3ae24e14650",
+    "summaryPath": ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json",
+    "taskReportDigest": "sha256:8b240846be94623abf28977961581b072bdf4c8deb1867bb895147dfac1a1ded",
+    "taskReportMarkdownDigest": "sha256:2e07dac581a65262931e54e8d75e446c115a9aff1a1b125ae98a2315ddf7f152",
+    "taskReportMarkdownPath": ".ai/work-items/archive/wi-ci-ubuntu-pinning.task-report.md",
+    "taskReportPath": ".ai/work-items/archive/wi-ci-ubuntu-pinning.task-report.json"
+  },
+  "historicalArtifacts": [],
+  "protocolVersion": 1,
+  "state": "archived",
+  "workItemId": "wi-ci-ubuntu-pinning"
+}

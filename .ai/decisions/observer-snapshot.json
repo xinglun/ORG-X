@@ -1,0 +1,42 @@
+{
+  "dependencyFingerprint": "sha256:ed46543305ba9263944af04a115715408c8144b25e0126b6ac63e9e2a6ce2fb6",
+  "diffDigest": "sha256:dfcce092ad87deeb6a297ee0d7d4d1de3698c941cfc2e307891a81680c6a46e8",
+  "observation": {
+    "buildSystems": [
+      "Cargo",
+      "Make"
+    ],
+    "cacheHit": false,
+    "ciSurfaces": [
+      ".github/workflows/ai-cockpit.yml",
+      ".github/workflows/weekly-radar-guard.yml",
+      ".github/workflows/weekly-radar.yml"
+    ],
+    "criticalDomains": [
+      "identity",
+      "production",
+      "release"
+    ],
+    "dependencyFingerprint": "sha256:ed46543305ba9263944af04a115715408c8144b25e0126b6ac63e9e2a6ce2fb6",
+    "filesRead": 1251,
+    "languages": [
+      "Python",
+      "Rust"
+    ],
+    "qualityCommands": [
+      {
+        "args": [
+          "test",
+          "--workspace"
+        ],
+        "program": "cargo",
+        "state": "detected"
+      }
+    ],
+    "snapshotDigest": "sha256:048429d1c07e0dc8b97775a8cffd3c69dfe9f4764e720325841d3f400d3b29ef",
+    "testRoots": [
+      "tests/**"
+    ]
+  },
+  "treeDigest": "sha256:d210421c728c50632c7c67a61b272220b8bb6896f605dd66786923ced11fed09"
+}

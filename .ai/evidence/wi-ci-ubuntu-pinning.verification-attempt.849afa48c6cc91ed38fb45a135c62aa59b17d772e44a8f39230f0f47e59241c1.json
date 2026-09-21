@@ -1,0 +1,102 @@
+{
+  "attemptId": "sha256:849afa48c6cc91ed38fb45a135c62aa59b17d772e44a8f39230f0f47e59241c1",
+  "commands": [
+    {
+      "args": [
+        "test",
+        "--locked",
+        "--test",
+        "ci_runner_pinning"
+      ],
+      "baseCommit": "27b06157da577599e91bbdeaafecceab4f6ee521",
+      "commandDigest": "sha256:fdc8812ae3eb48efcd31b73d8d7c35d90af2e00971fd51f1a59aee1cde5fdcbf",
+      "nodeId": "project-command-0",
+      "program": "cargo",
+      "runner": "local",
+      "runtimeDigest": "sha256:43a8ed731ac3187868e8d0c021be2a1a1b72986885d13bf3373f2ed5a0296b04",
+      "scope": [
+        "**"
+      ],
+      "stage": "task",
+      "timeoutSeconds": 300
+    },
+    {
+      "args": [
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "baseCommit": "27b06157da577599e91bbdeaafecceab4f6ee521",
+      "commandDigest": "sha256:804378d36cbc69109d2f303353c6742951b1337bbd4d40db9efff86fd913faa1",
+      "nodeId": "project-command-1",
+      "program": "cargo",
+      "runner": "local",
+      "runtimeDigest": "sha256:43a8ed731ac3187868e8d0c021be2a1a1b72986885d13bf3373f2ed5a0296b04",
+      "scope": [
+        "**"
+      ],
+      "stage": "task",
+      "timeoutSeconds": 300
+    },
+    {
+      "args": [
+        "clippy",
+        "--all-targets",
+        "--all-features",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "baseCommit": "27b06157da577599e91bbdeaafecceab4f6ee521",
+      "commandDigest": "sha256:c7412810f6d20ff5847779ad3be51029441dcf10d24b647de6e62138534610fc",
+      "nodeId": "project-command-2",
+      "program": "cargo",
+      "runner": "local",
+      "runtimeDigest": "sha256:43a8ed731ac3187868e8d0c021be2a1a1b72986885d13bf3373f2ed5a0296b04",
+      "scope": [
+        "**"
+      ],
+      "stage": "task",
+      "timeoutSeconds": 300
+    },
+    {
+      "args": [
+        "test",
+        "--locked",
+        "--all"
+      ],
+      "baseCommit": "27b06157da577599e91bbdeaafecceab4f6ee521",
+      "commandDigest": "sha256:ef8442435cc05db75a15bee0fa31fd99a21674531501263b9510c609891828a0",
+      "nodeId": "project-command-3",
+      "program": "cargo",
+      "runner": "local",
+      "runtimeDigest": "sha256:43a8ed731ac3187868e8d0c021be2a1a1b72986885d13bf3373f2ed5a0296b04",
+      "scope": [
+        "**"
+      ],
+      "stage": "task",
+      "timeoutSeconds": 300
+    }
+  ],
+  "contractDigest": "sha256:9b07f175fed53b920d3ce9e9e61d7616fcc0a2105cb24c61c07e1e7ea9b3b7cc",
+  "contractExecutionScopeDigest": "sha256:060547d84dadbdf890e5d65b2404765382ce492e6327504328183c0afe9b3be8",
+  "createdAt": "2026-09-21T21:40:16Z",
+  "diagnostic": {
+    "code": "verification_preconditions",
+    "message": "repository protocol state error at /Users/sei-rinn/.codex/worktrees/ci-ubuntu-pinning/ORG-X/.ai/work-items/active/wi-ci-ubuntu-pinning.summary.json: verification requires a preflight result for the current repository snapshot"
+  },
+  "executionRecords": [],
+  "kind": "verification_attempt",
+  "passed": false,
+  "processesSpawned": 0,
+  "protocolVersion": 1,
+  "receipt": null,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:b153ad5e24907bf260dce44c4d0035f93f70f082a50af86315a0c045bc69b707",
+  "runtimeDigest": "sha256:43a8ed731ac3187868e8d0c021be2a1a1b72986885d13bf3373f2ed5a0296b04",
+  "runtimeVersion": "0.2.105",
+  "schemaVersion": 1,
+  "state": "precondition_rejected",
+  "workItemId": "wi-ci-ubuntu-pinning"
+}

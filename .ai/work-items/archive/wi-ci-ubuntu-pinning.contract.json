@@ -1,0 +1,56 @@
+{
+  "acceptanceCriteria": [
+    "All four current GitHub Actions jobs use exactly ubuntu-24.04.",
+    "The CI regression test fails when any workflow contains ubuntu-latest or a non-pinned runs-on value, and passes for the repository workflows.",
+    "cargo fmt, cargo clippy -D warnings, cargo test --locked --all, and Runtime verification provide fresh evidence.",
+    "The obsolete codex/wi-production-provider-e2e-cadence local and remote refs are removed only after a recoverable bundle and exact-ref checks; origin/data remains."
+  ],
+  "authority": "authorized",
+  "baseRevision": "27b06157da577599e91bbdeaafecceab4f6ee521",
+  "createdAt": "2026-09-21T21:37:37Z",
+  "goal": "Make CI runner selection deterministic against the Ubuntu 26.04 rollout and leave no stale cadence work branch, with evidence-backed verification and preserved recovery history.",
+  "intent": "Pin GitHub Actions Rust and system-tool jobs to ubuntu-24.04 and add a CI regression guard that rejects ubuntu-latest; clean the obsolete local and remote cadence work branch while preserving the dedicated data archive branch and PR history.",
+  "mode": "implementation",
+  "outOfScope": [
+    "Rust business logic",
+    "Cargo dependencies",
+    "Protobuf behavior",
+    "the origin/data archive branch",
+    "GitHub PR history",
+    "other branches without work-branch evidence"
+  ],
+  "projectProfileDigest": "sha256:30e9cc9e3fc8a19ef54c76e4b5b9164c69c23807ecdec8e6c1a3b0468b09523d",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "repositorySnapshotDigest": "sha256:64d5c00309de5ed5efa4448a37f511045587f692cc799a5ee1769c878f2913d8",
+  "requiredEvidenceClasses": [
+    "verification"
+  ],
+  "risk": "normal",
+  "scope": [
+    ".github/workflows/ai-cockpit.yml",
+    ".github/workflows/weekly-radar.yml",
+    ".github/workflows/weekly-radar-guard.yml",
+    "tests/ci_runner_pinning.rs"
+  ],
+  "sources": [
+    "AGENTS.md",
+    ".ai/README.md",
+    ".ai/glossary.md",
+    ".github/workflows/ai-cockpit.yml",
+    ".github/workflows/weekly-radar.yml",
+    ".github/workflows/weekly-radar-guard.yml",
+    "tests/weekly_radar_runtime.rs",
+    "origin/main at 27b06157da577599e91bbdeaafecceab4f6ee521",
+    "GitHub PR #56 closed and unmerged",
+    "origin/data is the Weekly Radar archive branch"
+  ],
+  "state": "implementation_active",
+  "verification": [
+    "cargo test --locked --test ci_runner_pinning",
+    "cargo fmt --all -- --check",
+    "cargo clippy --all-targets --all-features -- -D warnings",
+    "cargo test --locked --all"
+  ],
+  "workItemId": "wi-ci-ubuntu-pinning"
+}

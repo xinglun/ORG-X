@@ -1,0 +1,46 @@
+{
+  "changedPaths": [
+    ".ai/decisions/observer-snapshot.json",
+    ".ai/evidence/wi-ci-ubuntu-pinning.verification-attempt.849afa48c6cc91ed38fb45a135c62aa59b17d772e44a8f39230f0f47e59241c1.json",
+    ".ai/work-items/archive/wi-ci-ubuntu-pinning.contract.json",
+    ".ai/work-items/archive/wi-ci-ubuntu-pinning.summary.json",
+    ".github/workflows/ai-cockpit.yml",
+    ".github/workflows/weekly-radar-guard.yml",
+    ".github/workflows/weekly-radar.yml",
+    "tests/ci_runner_pinning.rs"
+  ],
+  "checkpointAt": "2026-09-21T21:37:37Z",
+  "checkpointContractDigest": "sha256:9b07f175fed53b920d3ce9e9e61d7616fcc0a2105cb24c61c07e1e7ea9b3b7cc",
+  "checkpointCount": 1,
+  "checkpointRepositorySnapshotDigest": "sha256:b153ad5e24907bf260dce44c4d0035f93f70f082a50af86315a0c045bc69b707",
+  "createdAt": "2026-09-21T21:37:37Z",
+  "mode": "implementation",
+  "preflightAt": "2026-09-21T21:41:05Z",
+  "preflightContractDigest": "sha256:9b07f175fed53b920d3ce9e9e61d7616fcc0a2105cb24c61c07e1e7ea9b3b7cc",
+  "preflightDecisionDigest": "sha256:87984c0a1a26d0916db4f2c1b13f031eb89189e9b24d41497391ad35de9cf55e",
+  "preflightRepositorySnapshotDigest": "sha256:b153ad5e24907bf260dce44c4d0035f93f70f082a50af86315a0c045bc69b707",
+  "preflightState": "green",
+  "protocolVersion": 1,
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "state": "finish_ready",
+  "updatedAt": "2026-09-21T21:41:15Z",
+  "verification": [
+    {
+      "check": "project-command-0",
+      "result": "passed"
+    },
+    {
+      "check": "project-command-1",
+      "result": "passed"
+    },
+    {
+      "check": "project-command-2",
+      "result": "passed"
+    },
+    {
+      "check": "project-command-3",
+      "result": "passed"
+    }
+  ],
+  "workItemId": "wi-ci-ubuntu-pinning"
+}

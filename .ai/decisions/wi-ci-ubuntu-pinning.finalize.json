@@ -1,0 +1,58 @@
+{
+  "actor": "xinglun",
+  "after": {
+    "branch": "deleted",
+    "pullRequest": "merged",
+    "worktree": "removed"
+  },
+  "authoritySource": "Current user request: 开始; requested CI hardening and local/remote work-branch cleanup",
+  "before": {
+    "branch": "present",
+    "pullRequest": "merged",
+    "worktree": "clean"
+  },
+  "branch": {
+    "headRevision": "f1fa4ba855771b07e9e529b8b91b1ee1b7d9f222",
+    "name": "codex/wi-ci-ubuntu-pinning",
+    "remote": "origin"
+  },
+  "contractDigest": "sha256:9ab8c58c6481fe8f4c6f8168e0ae8df5e5530475de3247bb2d79d7211547a042",
+  "operationId": "wi-ci-ubuntu-pinning-cleanup-20260922",
+  "provider": "github",
+  "pullRequest": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "baseRevision": "27b06157da577599e91bbdeaafecceab4f6ee521",
+    "headRevision": "f1fa4ba855771b07e9e529b8b91b1ee1b7d9f222",
+    "mergeCommit": "4a73e2a4d72475c4fff7c75c1f08bdd9720058f8",
+    "number": 124,
+    "url": "https://github.com/xinglun/ORG-X/pull/124"
+  },
+  "reason": "PR #124 merged after hosted checks passed; the exact remote branch, local branch, and dedicated worktree were then removed.",
+  "receiptId": "wi-ci-ubuntu-pinning-finalization-20260922",
+  "repositoryId": "sha256:c1643cea4f2eb905bfd6694cfdbea37a08f6b7d79ad18a4047063ccc53c2bf68",
+  "resourceContext": {
+    "baseBranch": "main",
+    "baseRemote": "origin",
+    "branch": "codex/wi-ci-ubuntu-pinning",
+    "provider": "github",
+    "pullRequest": "https://github.com/xinglun/ORG-X/pull/124",
+    "worktree": "/Users/sei-rinn/.codex/worktrees/ci-ubuntu-pinning/ORG-X"
+  },
+  "result": {
+    "disposition": "deleted",
+    "failureCodes": [],
+    "unknownCodes": []
+  },
+  "runtimeDigest": "sha256:43a8ed731ac3187868e8d0c021be2a1a1b72986885d13bf3373f2ed5a0296b04",
+  "runtimeVersion": "0.2.105",
+  "schemaVersion": 1,
+  "timestamp": "2026-09-21T22:00:46Z",
+  "workItemId": "wi-ci-ubuntu-pinning",
+  "worktree": {
+    "branch": "codex/wi-ci-ubuntu-pinning",
+    "headRevision": "f1fa4ba855771b07e9e529b8b91b1ee1b7d9f222",
+    "path": "/Users/sei-rinn/.codex/worktrees/ci-ubuntu-pinning/ORG-X",
+    "worktreeId": "ci-ubuntu-pinning"
+  }
+}

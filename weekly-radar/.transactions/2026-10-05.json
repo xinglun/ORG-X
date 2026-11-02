@@ -1,0 +1,49 @@
+{
+  "schema_version": 2,
+  "as_of": "2026-10-05",
+  "transaction_id": "2026-10-05-2540-1791175858847226112-0",
+  "state": "committed",
+  "staging_directory": ".transactions/2026-10-05-2540-1791175858847226112-0",
+  "artifacts": [
+    {
+      "final_path": "reports/2026-10-05.md",
+      "staged_path": ".transactions/2026-10-05-2540-1791175858847226112-0/report.md",
+      "digest": "wr-input-1b4a7d9a9537728a"
+    },
+    {
+      "final_path": "snapshots/2026-10-05.json",
+      "staged_path": ".transactions/2026-10-05-2540-1791175858847226112-0/snapshot.json",
+      "digest": "wr-input-2abfe3b746c245d7"
+    },
+    {
+      "final_path": "receipts/2026-10-05.json",
+      "staged_path": ".transactions/2026-10-05-2540-1791175858847226112-0/receipt.json",
+      "digest": "wr-input-1ff663f58ea58f15"
+    },
+    {
+      "final_path": "snapshots/2026-10-05.input.json",
+      "staged_path": ".transactions/2026-10-05-2540-1791175858847226112-0/input_snapshot.json",
+      "digest": "wr-input-3c4e2c69ee6a288c"
+    },
+    {
+      "final_path": "manifest.json",
+      "staged_path": ".transactions/2026-10-05-2540-1791175858847226112-0/manifest.json",
+      "digest": "wr-input-5047f30ceefa4584"
+    }
+  ],
+  "manifest": {
+    "as_of": "2026-10-05",
+    "report": "weekly-radar/reports/2026-10-05.md",
+    "snapshot": "weekly-radar/snapshots/2026-10-05.json",
+    "receipt": "weekly-radar/receipts/2026-10-05.json",
+    "input_snapshot": "weekly-radar/snapshots/2026-10-05.input.json",
+    "snapshot_id": "wr-input-977de531a4d91acd"
+  },
+  "replace_existing": true,
+  "previous_artifacts": [
+    {
+      "final_path": "manifest.json",
+      "digest": "wr-input-41401062a3973d5c"
+    }
+  ]
+}
